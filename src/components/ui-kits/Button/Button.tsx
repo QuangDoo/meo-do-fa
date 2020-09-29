@@ -6,7 +6,7 @@ interface ButtonProps {
   onClick?(e: React.MouseEvent<HTMLElement>): void
 }
 
-const Button: React.FC = (props: ButtonProps) => {
+const Button: React.FC<ButtonProps> = (props) => {
   return <StyledButton>{props.children}</StyledButton>
 }
 

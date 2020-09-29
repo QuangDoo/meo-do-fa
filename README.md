@@ -1,4 +1,4 @@
-## STRANGS Template with:
+## THUOCN Template with:
 - ✅ **S**torybook
 - ✅ **T**ypeScript
 - ✅ **R**eactJS
@@ -10,11 +10,6 @@
 
 ## Getting Started
 
-### How to install
-```
-npx create-react-app <your-project-name> --template strangs
-```
-
 ### To run DEV Mode the server in local:
 
 ```
@@ -23,23 +18,6 @@ yarn OR yarn install
 
 ```
 yarn dev OR yarn dev 
-```
-
-
-### To run DEV Mode the server in docker:
-1. Change Dockerfile
-```bash
-....
-# For Dev mode: 
-#     CMD "yarn" "dev"
-# For Prod mode: 
-#     CMD "yarn" "start"
-CMD "npm" "run" "dev"
-```
-
-2. Run command
-```bash
-docker-compose up --build
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
