@@ -19,6 +19,7 @@
     "@types/react": "^16.9.38",
     "@typescript-eslint/eslint-plugin": "^3.3.0",
     "@typescript-eslint/parser": "^3.3.0",
+    "antd": "^4.6.6",
     "apollo-boost": "^0.4.9",
     "awesome-typescript-loader": "^5.2.1",
     "babel-loader": "^8.1.0",
