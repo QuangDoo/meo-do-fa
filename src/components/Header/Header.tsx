@@ -51,10 +51,10 @@ const Header: React.FC = () => {
                 <img
                   alt="thuocsi.vn"
                   className="img-fluid lozad"
-                  data-src="https://assets.thuocsi.vn/assets/buymed/logos/logo-49156a6a8b6688f3eb1098b08d406267e8770cffd64b6f07bb31e2e52536346d.svg"
+                   
                   title="thuocsi.vn"
                   src="/assets/images/logo-49156a6a8b6688f3eb1098b08d406267e8770cffd64b6f07bb31e2e52536346d.svg"
-                  data-loaded="true"
+                   
                 />
               </a>
             </div>
@@ -62,22 +62,22 @@ const Header: React.FC = () => {
           <div>
             <a
               className="btn btn-secondary btn-sm mr-2"
-              data-modal="true"
+               
               href="https://thuocsi.vn/authentications/login"
             >
               Đăng nhập
             </a>
             <a
               className="btn btn-primary btn-sm mr-2"
-              data-modal="true"
+               
               href="https://thuocsi.vn/authentications/signup"
             >
               Tạo tài khoản
             </a>
             <button
               className="btn btn-outline-primary btn-sm"
-              data-action="click->demo#startDemo"
-              data-controller="demo"
+               
+               
             >
               Dùng Thử
             </button>

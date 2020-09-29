@@ -24,7 +24,7 @@ const Parner = () => {
           <div className="col-12 text-center mb-3">
             <h2 className="text-primary">Đối tác của thuocsi.vn</h2>
           </div>
-          <div className="col-12" data-controller="sliders">
+          <div className="col-12">
             <StyledPartnerList>
               <StyledPartner>
                 <img style={partnerImgStyles} src="assets/images/partner1.jpg" />

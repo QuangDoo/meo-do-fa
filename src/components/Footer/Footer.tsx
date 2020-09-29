@@ -50,7 +50,7 @@ const Footer: React.FC = () => {
                   <img
                     alt="Dấu đỏ của Bộ Công Thương"
                     className="img-fluid lozad"
-                    data-src="https://assets.thuocsi.vn/assets/bct-150ac1809a7ae41e0a4b21f1e1e21a26a2f93ee0c79e5c99cc197dd2fdc988c8.png"
+                     
                     src="/assets/images/bct-150ac1809a7ae41e0a4b21f1e1e21a26a2f93ee0c79e5c99cc197dd2fdc988c8.png"
                     title="Dấu đỏ của Bộ Công Thương"
                   />
@@ -66,7 +66,7 @@ const Footer: React.FC = () => {
                   </a>
                   <a
                     className="footer__link"
-                    data-modal="true"
+                     
                     href="https://thuocsi.vn/privacy-policy"
                   >
                     Chính sách bảo mật
@@ -79,7 +79,7 @@ const Footer: React.FC = () => {
                   </a>
                   <a
                     className="footer__link"
-                    data-modal="true"
+                     
                     href="https://thuocsi.vn/general-policy"
                   >
                     Chính sách quy định chung
@@ -91,28 +91,28 @@ const Footer: React.FC = () => {
                 <div className="col-12 col-sm-6">
                   <a
                     className="footer__link"
-                    data-modal="true"
+                     
                     href="https://thuocsi.vn/conditions-of-use"
                   >
                     Điều khoản sử dụng
                   </a>
                   <a
                     className="footer__link"
-                    data-modal="true"
+                     
                     href="https://thuocsi.vn/dispute-resolution"
                   >
                     Cơ chế giải quyết tranh chấp
                   </a>
                   <a
                     className="footer__link"
-                    data-modal="true"
+                     
                     href="https://thuocsi.vn/terms-and-condition"
                   >
                     Thỏa thuận về dịch vụ TMDT
                   </a>
                   <a
                     className="footer__link"
-                    data-modal="true"
+                     
                     href="https://thuocsi.vn/regulations"
                   >
                     Quy chế hoạt động
@@ -137,31 +137,31 @@ const Footer: React.FC = () => {
                 />
                 <img
                   className="img-fluid footer__delivery lozad"
-                  data-src="https://assets.thuocsi.vn/assets/delivery/ahamove-da817db210e5d075aed3853aeed370863737426a27abc6e91c16ccc8a89e6e2f.png"
+                   
                   src="/assets/images/ahamove-da817db210e5d075aed3853aeed370863737426a27abc6e91c16ccc8a89e6e2f.png"
                   alt="thuocN"
                 />
                 <img
                   className="img-fluid footer__delivery lozad"
-                  data-src="https://assets.thuocsi.vn/assets/delivery/grab-0d623c296e4838dd4d67984a580fa1b244962d8e5e8de76f3acb548cddbf0c6c.png"
+                   
                   src="/assets/images/grab-0d623c296e4838dd4d67984a580fa1b244962d8e5e8de76f3acb548cddbf0c6c.png"
                   alt="thuocN"
                 />
                 <img
                   className="img-fluid footer__delivery lozad"
-                  data-src="https://assets.thuocsi.vn/assets/delivery/ghn-7c7a86d8247685ce42bf1dd7eea07970b502b4a21be9ab6a15787dc0899a3b79.png"
+                   
                   src="/assets/images/ghn-7c7a86d8247685ce42bf1dd7eea07970b502b4a21be9ab6a15787dc0899a3b79.png"
                   alt="thuocN"
                 />
                 <img
                   className="img-fluid footer__delivery lozad"
-                  data-src="https://assets.thuocsi.vn/assets/delivery/viettelpost-7e17e215b6fb2451347c386209259806b03dd68db90c636c9d800439cf195b0c.png"
+                   
                   src="/assets/images/viettelpost-7e17e215b6fb2451347c386209259806b03dd68db90c636c9d800439cf195b0c.png"
                   alt="thuocN"
                 />
                 <img
                   className="img-fluid footer__delivery lozad"
-                  data-src="https://assets.thuocsi.vn/assets/delivery/ninjavan-df8ca83378c8c4f339ac240d845807ef5cfdef493b0e0a1762b8cb4ccce8feea.png"
+                   
                   src="/assets/images/ninjavan-df8ca83378c8c4f339ac240d845807ef5cfdef493b0e0a1762b8cb4ccce8feea.png"
                   alt="thuocN"
                 />

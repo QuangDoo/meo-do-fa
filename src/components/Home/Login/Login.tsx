@@ -11,7 +11,7 @@ const Login = () => {
           <div className="col-12">
             <a
               className="login btn btn-secondary home__cta-btn m-2"
-              data-modal="true"
+               
               href="https://thuocsi.vn/authentications/login"
             >
               <i className="fas fa-sign-in-alt mr-1" />
@@ -19,7 +19,7 @@ const Login = () => {
             </a>
             <a
               className="register btn btn-primary home__cta-btn m-2"
-              data-modal="true"
+               
               href="https://thuocsi.vn/authentications/signup"
             >
               <i className="fas fa-user-md mr-1" />
@@ -27,8 +27,8 @@ const Login = () => {
             </a>
             <button
               className="btn btn-info home__cta-btn m-2"
-              data-action="demo#startDemo"
-              data-controller="demo"
+               
+               
             >
               <i className="fas fa-eye mr-1" />
               Dùng Thử
