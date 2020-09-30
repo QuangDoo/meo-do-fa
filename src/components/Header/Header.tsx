@@ -47,14 +47,12 @@ const Header: React.FC = () => {
         <div className="d-flex align-items-center justify-content-between">
           <div className="mr-3">
             <div className="buymed-logo">
-              <a href="https://thuocsi.vn/" title="thuocsi.vn">
+              <a href="/" title="thuocsi.vn">
                 <img
                   alt="thuocsi.vn"
                   className="img-fluid lozad"
-                   
                   title="thuocsi.vn"
                   src="/assets/images/logo-49156a6a8b6688f3eb1098b08d406267e8770cffd64b6f07bb31e2e52536346d.svg"
-                   
                 />
               </a>
             </div>
@@ -62,25 +60,17 @@ const Header: React.FC = () => {
           <div>
             <a
               className="btn btn-secondary btn-sm mr-2"
-               
               href="https://thuocsi.vn/authentications/login"
             >
               Đăng nhập
             </a>
             <a
               className="btn btn-primary btn-sm mr-2"
-               
               href="https://thuocsi.vn/authentications/signup"
             >
               Tạo tài khoản
             </a>
-            <button
-              className="btn btn-outline-primary btn-sm"
-               
-               
-            >
-              Dùng Thử
-            </button>
+            <button className="btn btn-outline-primary btn-sm">Dùng Thử</button>
           </div>
         </div>
       </div>
