@@ -13,7 +13,6 @@ const Item = () => {
                 style={{
                   backgroundImage: 'url("https://images.thuocsi.vn/Lg9NokKW5SY2TGdtiEKFCNeR")',
                 }}
-                data-loaded="true"
               />
             </a>
             <div>
