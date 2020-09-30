@@ -7,6 +7,7 @@ import { Header } from './Header'
 import { PaginateStatus } from './Pagination/PaginateStatus'
 import { FilterTags } from './FilterTags'
 import { Pagination } from './Pagination'
+import { ProductList } from './ProductList'
 
 const StyledProductsWrap = styled.div`
   padding: 3rem;
@@ -23,6 +24,8 @@ const Products = () => {
           <Header name="Tất cả sản phẩm" />
           <PaginateStatus start={1} end={20} total={100} />
           <FilterTags />
+          <Pagination />
+          <ProductList />
           <Pagination />
         </Col>
       </Row>
