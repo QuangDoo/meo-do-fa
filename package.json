@@ -53,7 +53,8 @@
     "eject": "react-scripts eject",
     "dev": "next dev",
     "storybook": "start-storybook -p 9009 -s public",
-    "build-storybook": "build-storybook -s public"
+    "build-storybook": "build-storybook -s public",
+    "start-prod": "npm run build & npm run start"
   },
   "eslintConfig": {
     "extends": "react-app"

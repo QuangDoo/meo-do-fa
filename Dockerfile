@@ -17,8 +17,4 @@ COPY ./ ./
 RUN yarn build
 EXPOSE 3000
 
-# For Dev mode: 
-#     CMD "yarn" "dev"
-# For Prod mode: 
-#     CMD "yarn" "start-prod"
 CMD "yarn" "start-prod"
