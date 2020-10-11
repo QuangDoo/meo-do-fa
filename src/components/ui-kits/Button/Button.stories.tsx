@@ -1,22 +1,27 @@
-import React from 'react'
-import Button from './Button'
 import { action } from '@storybook/addon-actions'
-import { withA11y } from '@storybook/addon-a11y'
+import { Meta, Story } from '@storybook/react/types-6-0'
+import React from 'react'
+import Button, { ButtonProps } from './Button'
 
 export default {
   title: 'Button',
   component: Button,
-  decorators: [withA11y],
+} as Meta
+
+const Template: Story<ButtonProps> = (args) => <Button {...args} />
+
+export const WithText: Story<ButtonProps> = Template.bind({})
+WithText.args = {
+  onClick: action('Hello Button'),
+  children: 'Hello Button',
 }
 
-export const withText: React.FC = () => (
-  <Button onClick={action('Hello Button')}>Hello Button</Button>
-)
-
-export const withEmoji: React.FC = () => (
-  <Button onClick={action('Hello emoji')}>
+export const WithEmoji: Story<ButtonProps> = Template.bind({})
+WithEmoji.args = {
+  onClick: action('Hello emoji'),
+  children: (
     <span role="img" aria-label="so cool">
       😀 😎 👍 💯
     </span>
-  </Button>
-)
+  ),
+}
