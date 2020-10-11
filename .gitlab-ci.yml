@@ -28,7 +28,8 @@ stages:
 build-service:
   stage: build
   only:
-    - master
+    - develop
+    # - master
 
   extends:
     - .build_image
