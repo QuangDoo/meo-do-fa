@@ -4,6 +4,7 @@ import { theme } from '../src/theme'
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
+  background: {},
 }
 
 export const decorators = [

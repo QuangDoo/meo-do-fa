@@ -10,23 +10,15 @@ export default {
 
 const Template: Story<ButtonProps> = (args) => <Button {...args} />
 
-export const Primary: Story<ButtonProps> = Template.bind({})
-Primary.args = {
-  onClick: action('Clicked Primary'),
-  children: 'Primary',
-  variant: 'primary',
+export const Default: Story<ButtonProps> = Template.bind({})
+Default.args = {
+  onClick: action('Clicked'),
+  children: 'Default Button',
 }
 
-export const Secondary: Story<ButtonProps> = Template.bind({})
-Secondary.args = {
-  onClick: action('Clicked Secondary'),
-  children: 'Secondary',
-  variant: 'secondary',
-}
-
-export const Tertiary: Story<ButtonProps> = Template.bind({})
-Tertiary.args = {
-  onClick: action('Clicked Tertiary'),
-  children: 'Tertiary',
-  variant: 'tertiary',
+export const Outline: Story<ButtonProps> = Template.bind({})
+Outline.args = {
+  onClick: action('Clicked'),
+  children: 'Outlined Button',
+  outline: true,
 }

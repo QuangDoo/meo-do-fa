@@ -6,7 +6,7 @@ const theme: DefaultTheme = {
     secondary: '#f9b514',
     tertiary: '#17a2b8',
     white: '#ffffff',
-    black: '#000000',
+    black: '#212529',
     transparent: 'transparent',
   },
 }
