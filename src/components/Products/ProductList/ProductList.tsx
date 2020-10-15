@@ -1,7 +1,7 @@
 import React from 'react'
-import ProductCard, { ProductCardProps } from '../../Shared/ProductCard'
+import ProductCard, { Product } from '../../Shared/ProductCard'
 
-const productCardProps: ProductCardProps = {
+export const productExample: Product = {
   new: true,
   name: 'egudin solifenacin succinat 5mg medisun (h/30v)',
   imageUrl: 'https://images.thuocsi.vn/Lg9NokKW5SY2TGdtiEKFCNeR',
@@ -16,12 +16,12 @@ const productCardProps: ProductCardProps = {
 const ProductList = () => {
   return (
     <div className="products__cards mb-3">
-      <ProductCard {...productCardProps} />
-      <ProductCard {...productCardProps} />
-      <ProductCard {...productCardProps} />
-      <ProductCard {...productCardProps} />
-      <ProductCard {...productCardProps} />
-      <ProductCard {...productCardProps} />
+      <ProductCard {...productExample} />
+      <ProductCard {...productExample} />
+      <ProductCard {...productExample} />
+      <ProductCard {...productExample} />
+      <ProductCard {...productExample} />
+      <ProductCard {...productExample} />
     </div>
   )
 }

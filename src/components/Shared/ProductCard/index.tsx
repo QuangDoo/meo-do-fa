@@ -6,7 +6,7 @@ import { ProductImage } from './ProductImage'
 import { ProductPrice } from './ProductPrice'
 import { QuantityInput } from './QuantityInput'
 
-export type ProductCardProps = {
+export type Product = {
   name: string
   price: string
   unit: string
@@ -24,7 +24,7 @@ export type ProductCardProps = {
   expirationDate?: string
 }
 
-const ProductCard = ({ badges = [], ...props }: ProductCardProps) => {
+const ProductCard = ({ badges = [], ...props }: Product) => {
   return (
     <div className="product-card-container">
       <article className={`product-card card ${props.deal ? 'deal-card' : ''}`}>
