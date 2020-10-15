@@ -1,18 +1,11 @@
 import React from 'react'
 import Slider from 'react-slick'
+import styled from 'styled-components'
 import ProductCard, { Product } from '../Shared/ProductCard'
+import { PrevArrow } from './PrevArrow'
 
 type ProductsCarouselProps = {
   products: Product[]
-}
-
-const PrevArrow = (props) => {
-  const { className, style, onClick } = props
-  return (
-    <button onClick={onClick} className={className} aria-disabled="true" style={{ ...style }}>
-      <i className="fas fa-chevron-left"></i>
-    </button>
-  )
 }
 
 const NextArrow = (props) => {
@@ -32,6 +25,7 @@ export const ProductsCarousel = ({ products }: ProductsCarouselProps) => {
       slidesToScroll={3}
       prevArrow={<PrevArrow />}
       nextArrow={<NextArrow />}
+      className="m-0 p-0 slider_products"
     >
       {products.map((product, index) => (
         <ProductCard key={index} {...product} />

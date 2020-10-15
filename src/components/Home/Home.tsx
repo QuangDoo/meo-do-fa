@@ -1,6 +1,7 @@
 import React from 'react'
 import { productExample } from '../Products/ProductList/ProductList'
 import { ProductsCarousel } from '../ProductsCarousel'
+import { BestSelling } from './BestSelling'
 import { Customer } from './Customer'
 import { Login } from './Login'
 import { Partner } from './Partner'
@@ -9,13 +10,11 @@ import { Slider } from './Slider'
 import { Social } from './Social'
 import { Strength } from './Strength'
 
-const products = [...new Array(10)].map(() => ({ ...productExample }))
-
 const Home: React.FC = () => {
   return (
     <div>
       <Slider />
-      <ProductsCarousel products={products} />
+      <BestSelling />
       <Strength />
       <Login />
       <Question />
