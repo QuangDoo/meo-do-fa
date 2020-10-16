@@ -1,7 +1,7 @@
 import React from 'react'
 import ProductCard, { Product } from '../../Shared/ProductCard'
 
-export const productExample: Product = {
+const productListProduct: Product = {
   new: true,
   name: 'egudin solifenacin succinat 5mg medisun (h/30v)',
   imageUrl: 'https://images.thuocsi.vn/Lg9NokKW5SY2TGdtiEKFCNeR',
@@ -13,15 +13,16 @@ export const productExample: Product = {
   badges: ['common', 'invoice_exportable', 'change_style', 'flash_sale'],
 }
 
+export const productListProducts: Product[] = [...new Array(10)].map(() => ({
+  ...productListProduct,
+}))
+
 const ProductList = () => {
   return (
     <div className="products__cards mb-3">
-      <ProductCard {...productExample} />
-      <ProductCard {...productExample} />
-      <ProductCard {...productExample} />
-      <ProductCard {...productExample} />
-      <ProductCard {...productExample} />
-      <ProductCard {...productExample} />
+      {productListProducts.map((product, index) => (
+        <ProductCard key={index} {...product} />
+      ))}
     </div>
   )
 }

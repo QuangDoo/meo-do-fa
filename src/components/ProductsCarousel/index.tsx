@@ -2,6 +2,7 @@ import React from 'react'
 import Slider from 'react-slick'
 import styled from 'styled-components'
 import ProductCard, { Product } from '../Shared/ProductCard'
+import { ArrowButton } from './ArrowButton'
 import { PrevArrow } from './PrevArrow'
 
 type ProductsCarouselProps = {
@@ -23,12 +24,14 @@ export const ProductsCarousel = ({ products }: ProductsCarouselProps) => {
       speed={500}
       slidesToShow={5}
       slidesToScroll={3}
-      prevArrow={<PrevArrow />}
-      nextArrow={<NextArrow />}
+      prevArrow={<ArrowButton />}
+      nextArrow={<ArrowButton type="next" />}
       className="m-0 p-0 slider_products"
     >
       {products.map((product, index) => (
-        <ProductCard key={index} {...product} />
+        <div key={index} className="p-2">
+          <ProductCard {...product} />
+        </div>
       ))}
     </Slider>
   )
