@@ -1,8 +1,12 @@
-import Link from 'next/link'
-import React from 'react'
-import { Button } from '../Shared/Button'
+import { TFunction } from 'next-i18next'
+import React, { FC } from 'react'
+import { withTranslation } from '../../../i18n'
 
-const Header: React.FC = () => {
+type HeaderProps = {
+  readonly t: TFunction
+}
+
+const Header: FC<HeaderProps> = ({ t }) => {
   return (
     <header className="header bg-white">
       <nav className="promotion-nav">
@@ -14,30 +18,30 @@ const Header: React.FC = () => {
                   <a
                     className="promotion-nav__link"
                     href="https://news.thuocsi.vn/"
-                    title="Tin tức"
+                    title={t('news')}
                   >
                     <i className="promotion-nav__icon icomoon icon-news" />
-                    <span>Tin tức</span>
+                    <span>{t('news')}</span>
                   </a>
                 </li>
                 <li className="promotion-nav__item">
                   <a
                     className="promotion-nav__link"
                     href="https://career.thuocsi.vn/"
-                    title="Tuyển dụng | Recruitment"
+                    title={t('recruitment')}
                   >
                     <i className="promotion-nav__icon fas fa-briefcase" />
-                    <span>Tuyển dụng | Recruitment</span>
+                    <span>{t('recruitment')}</span>
                   </a>
                 </li>
                 <li className="promotion-nav__item">
                   <a
                     className="promotion-nav__link"
                     href="https://supplier.thuocsi.vn/"
-                    title="Đăng ký bán hàng cùng thuocsi"
+                    title={t('supply')}
                   >
                     <i className="promotion-nav__icon fas fa-store-alt" />
-                    <span>Đăng ký bán hàng cùng thuocsi</span>
+                    <span>{t('supply')}</span>
                   </a>
                 </li>
               </ul>
@@ -64,15 +68,15 @@ const Header: React.FC = () => {
               className="btn btn-secondary btn-sm mr-2"
               href="https://thuocsi.vn/authentications/login"
             >
-              Đăng nhập
+              {t('login')}
             </a>
             <a
               className="btn btn-primary btn-sm mr-2"
               href="https://thuocsi.vn/authentications/signup"
             >
-              Tạo tài khoản
+              {t('register')}
             </a>
-            <button className="btn btn-outline-primary btn-sm">Dùng Thử</button>
+            <button className="btn btn-outline-primary btn-sm">{t('try')}</button>
           </div>
         </div>
       </div>
@@ -80,4 +84,4 @@ const Header: React.FC = () => {
   )
 }
 
-export default Header
+export default withTranslation('header')(Header)
