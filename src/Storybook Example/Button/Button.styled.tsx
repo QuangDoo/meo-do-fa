@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components'
 import { ButtonProps } from './Button'
 import Color from 'color'
 
+// Pass in props first
 export const StyledButton = styled.button<ButtonProps>`
   ${({ theme, variant, outline, size }) => css`
     font-family: 'Roboto', sans-serif;

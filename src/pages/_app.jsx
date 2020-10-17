@@ -6,6 +6,7 @@ import { ThemeProvider } from 'styled-components'
 import { appWithTranslation } from '../../i18n'
 import '../assets/scss/custom-styles.scss'
 import { theme } from '../theme'
+import App from 'next/app'
 
 const MyApp = ({ Component, pageProps }) => {
   return (
@@ -14,5 +15,7 @@ const MyApp = ({ Component, pageProps }) => {
     </ThemeProvider>
   )
 }
+
+MyApp.getInitialProps = async (appContext) => ({ ...(await App.getInitialProps(appContext)) })
 
 export default appWithTranslation(MyApp)
