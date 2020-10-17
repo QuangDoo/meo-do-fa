@@ -4,7 +4,7 @@ import React from 'react'
 import Button, { ButtonProps } from './Button'
 
 export default {
-  title: 'Button',
+  title: 'Shared/Button',
   component: Button,
 } as Meta
 

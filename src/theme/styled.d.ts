@@ -8,8 +8,9 @@ declare module 'styled-components' {
       primary: string
       secondary: string
       tertiary: string
-      white: string
+      danger: string
       black: string
+      white: string
       transparent: string
     }
   }
