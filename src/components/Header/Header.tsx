@@ -1,4 +1,6 @@
+import Link from 'next/link'
 import React from 'react'
+import { Button } from '../Shared/Button'
 
 const Header: React.FC = () => {
   return (
@@ -58,6 +60,11 @@ const Header: React.FC = () => {
             </div>
           </div>
           <div>
+            <Link href="#">
+              <Button variant="secondary" size="small">
+                Đăng nhập
+              </Button>
+            </Link>
             <a
               className="btn btn-secondary btn-sm mr-2"
               href="https://thuocsi.vn/authentications/login"
