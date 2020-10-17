@@ -1,10 +1,26 @@
+import { Dropdown, Menu } from 'antd'
 import { TFunction } from 'next-i18next'
 import React, { FC } from 'react'
-import { withTranslation } from '../../../i18n'
+import { i18n, withTranslation } from '../../../i18n'
 
 type HeaderProps = {
   readonly t: TFunction
 }
+
+const languageNames = {
+  vi: 'Tiếng Việt',
+  en: 'English',
+}
+
+const LanguageDropdown = (
+  <Menu>
+    {Object.keys(languageNames).map((code) => (
+      <Menu.Item key={code} onClick={() => i18n.changeLanguage(code)}>
+        {languageNames[code]}
+      </Menu.Item>
+    ))}
+  </Menu>
+)
 
 const Header: FC<HeaderProps> = ({ t }) => {
   return (
@@ -24,6 +40,7 @@ const Header: FC<HeaderProps> = ({ t }) => {
                     <span>{t('news')}</span>
                   </a>
                 </li>
+
                 <li className="promotion-nav__item">
                   <a
                     className="promotion-nav__link"
@@ -34,6 +51,7 @@ const Header: FC<HeaderProps> = ({ t }) => {
                     <span>{t('recruitment')}</span>
                   </a>
                 </li>
+
                 <li className="promotion-nav__item">
                   <a
                     className="promotion-nav__link"
@@ -43,6 +61,15 @@ const Header: FC<HeaderProps> = ({ t }) => {
                     <i className="promotion-nav__icon fas fa-store-alt" />
                     <span>{t('supply')}</span>
                   </a>
+                </li>
+
+                <li className="promotion-nav__item">
+                  <Dropdown overlay={LanguageDropdown}>
+                    <a className="promotion-nav__link" title={t('language')}>
+                      <i className="promotion-nav__icon fas fa-language" />
+                      <span>{t('language')}</span>
+                    </a>
+                  </Dropdown>
                 </li>
               </ul>
             </div>
