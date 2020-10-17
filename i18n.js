@@ -10,5 +10,4 @@ module.exports = new NextI18Next({
   otherLanguages: ['en'],
   localeSubpaths,
   localePath: path.resolve('./public/locales'),
-  defaultNS: 'header',
 })
