@@ -1,20 +1,18 @@
 import React from 'react'
-import styled from 'styled-components'
+import Slider from 'react-slick'
+import PartnerImg from './PartnerImg'
 
-const StyledPartnerList = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`
-
-const StyledPartner = styled.div`
-  width: 180px;
-  margin: 0 20px;
-`
-
-const partnerImgStyles = {
-  width: '100%'
-}
+const examplePartners = [
+  'assets/images/partner1.jpg',
+  'assets/images/partner2.jpg',
+  'assets/images/partner3.jpg',
+  'assets/images/partner1.jpg',
+  'assets/images/partner2.jpg',
+  'assets/images/partner3.jpg',
+  'assets/images/partner1.jpg',
+  'assets/images/partner2.jpg',
+  'assets/images/partner3.jpg',
+]
 
 const Parner = () => {
   return (
@@ -25,17 +23,11 @@ const Parner = () => {
             <h2 className="text-primary">Đối tác của thuocsi.vn</h2>
           </div>
           <div className="col-12">
-            <StyledPartnerList>
-              <StyledPartner>
-                <img style={partnerImgStyles} src="assets/images/partner1.jpg" />
-              </StyledPartner>
-              <StyledPartner>
-                <img style={partnerImgStyles} src="assets/images/partner2.jpg" />
-              </StyledPartner>
-              <StyledPartner>
-                <img style={partnerImgStyles} src="assets/images/partner3.jpg" />
-              </StyledPartner>
-            </StyledPartnerList>
+            <Slider slidesToShow={6} slidesToScroll={3} arrows={false}>
+              {examplePartners.map((url, index) => (
+                <PartnerImg key={index} imgUrl={url} />
+              ))}
+            </Slider>
           </div>
         </div>
       </div>

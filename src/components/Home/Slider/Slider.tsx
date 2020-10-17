@@ -1,36 +1,20 @@
 import React from 'react'
-import { Carousel } from 'antd'
-import styled from 'styled-components'
-
-const StyledBanner = styled.div`
-  width: 100%;
-`
-
-const StyledSlider = styled.div`
-  width: 100%;
-  padding: 0;
-`
-
-const imgStyles = {
-  margin: '0 auto',
-  height: 500,
-}
+import SlickSlider from 'react-slick'
+import SliderItem from './SliderItem'
 
 const Slider: React.FC = () => {
   return (
-    <StyledSlider>
-      <Carousel autoplay>
-        <StyledBanner>
-          <img style={imgStyles} src="assets/images/slider1.png" />
-        </StyledBanner>
-        <StyledBanner>
-          <img style={imgStyles} src="assets/images/slider2.png" />
-        </StyledBanner>
-        <StyledBanner>
-          <img style={imgStyles} src="assets/images/slider3.png" />
-        </StyledBanner>
-      </Carousel>
-    </StyledSlider>
+    <SlickSlider
+      arrows={false}
+      autoplay
+      dots
+      dotsClass="slick__dots bullet slick-dots"
+      className="align-items-center mb-0 slick-dotted"
+    >
+      <SliderItem imageUrl="https://images.thuocsi.vn/oXdHydi6aC3P9nHYududVJw9" />
+      <SliderItem imageUrl="https://images.thuocsi.vn/htbavM8nVz1Z697x6DAXmrYa" />
+      <SliderItem imageUrl="https://images.thuocsi.vn/AfxNH2kUp1EXcDuMrVFgzsuA" />
+    </SlickSlider>
   )
 }
 
