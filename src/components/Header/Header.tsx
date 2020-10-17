@@ -76,6 +76,7 @@ const Header: FC<HeaderProps> = ({ t }) => {
           </div>
         </div>
       </nav>
+
       <div className="container py-4">
         <div className="d-flex align-items-center justify-content-between">
           <div className="mr-3">
@@ -90,6 +91,7 @@ const Header: FC<HeaderProps> = ({ t }) => {
               </a>
             </div>
           </div>
+
           <div>
             <a
               className="btn btn-secondary btn-sm mr-2"
@@ -97,6 +99,7 @@ const Header: FC<HeaderProps> = ({ t }) => {
             >
               {t('login')}
             </a>
+
             <a
               className="btn btn-primary btn-sm mr-2"
               href="https://thuocsi.vn/authentications/signup"
