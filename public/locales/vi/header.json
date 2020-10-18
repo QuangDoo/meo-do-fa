@@ -1,9 +1,11 @@
 {
-  "news": "Tin tức",
-  "recruitment": "Tuyển dụng",
-  "supply": "Đăng ký bán hàng cùng thuocsi",
-  "login": "Đăng nhập",
-  "register": "Tạo tài khoản",
-  "try": "Dùng thử",
-  "language": "Ngôn ngữ"
+  "HEADER": {
+    "NEWS": "Tin tức",
+    "RECRUITMENT": "Tuyển dụng",
+    "SUPPLY": "Đăng ký bán hàng cùng thuocsi",
+    "LOGIN": "Đăng nhập",
+    "REGISTER": "Tạo tài khoản",
+    "TRY": "Dùng thử",
+    "LANGUAGE": "Ngôn ngữ"
+  }
 }

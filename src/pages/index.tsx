@@ -1,12 +1,11 @@
 import React from 'react'
-
-import { Header } from '../components/Header'
 import { Footer } from '../components/Footer'
-import { HomePage } from '../components/Home'
 import Head from '../components/Head'
+import { Header } from '../components/Header'
+import { HomePage } from '../components/Home'
 import { Nav } from '../components/Nav'
 
-function Home() {
+const Home = () => {
   return (
     <>
       <Head>
@@ -19,5 +18,9 @@ function Home() {
     </>
   )
 }
+
+Home.getInitialProps = async () => ({
+  namespacesRequired: ['common', 'header', 'footer'],
+})
 
 export default Home

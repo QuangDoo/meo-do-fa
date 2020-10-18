@@ -34,10 +34,10 @@ const Header: FC<HeaderProps> = ({ t }) => {
                   <a
                     className="promotion-nav__link"
                     href="https://news.thuocsi.vn/"
-                    title={t('news')}
+                    title={t('HEADER.NEWS')}
                   >
                     <i className="promotion-nav__icon icomoon icon-news" />
-                    <span>{t('news')}</span>
+                    <span>{t('HEADER.NEWS')}</span>
                   </a>
                 </li>
 
@@ -45,10 +45,10 @@ const Header: FC<HeaderProps> = ({ t }) => {
                   <a
                     className="promotion-nav__link"
                     href="https://career.thuocsi.vn/"
-                    title={t('recruitment')}
+                    title={t('HEADER.RECRUITMENT')}
                   >
                     <i className="promotion-nav__icon fas fa-briefcase" />
-                    <span>{t('recruitment')}</span>
+                    <span>{t('HEADER.RECRUITMENT')}</span>
                   </a>
                 </li>
 
@@ -56,18 +56,18 @@ const Header: FC<HeaderProps> = ({ t }) => {
                   <a
                     className="promotion-nav__link"
                     href="https://supplier.thuocsi.vn/"
-                    title={t('supply')}
+                    title={t('HEADER.SUPPLY')}
                   >
                     <i className="promotion-nav__icon fas fa-store-alt" />
-                    <span>{t('supply')}</span>
+                    <span>{t('HEADER.SUPPLY')}</span>
                   </a>
                 </li>
 
                 <li className="promotion-nav__item">
                   <Dropdown overlay={LanguageDropdown}>
-                    <a className="promotion-nav__link" title={t('language')}>
+                    <a className="promotion-nav__link" title={t('HEADER.LANGUAGE')}>
                       <i className="promotion-nav__icon fas fa-language" />
-                      <span>{t('language')}</span>
+                      <span>{t('HEADER.LANGUAGE')}</span>
                     </a>
                   </Dropdown>
                 </li>
@@ -97,16 +97,16 @@ const Header: FC<HeaderProps> = ({ t }) => {
               className="btn btn-secondary btn-sm mr-2"
               href="https://thuocsi.vn/authentications/login"
             >
-              {t('login')}
+              {t('HEADER.LOGIN')}
             </a>
 
             <a
               className="btn btn-primary btn-sm mr-2"
               href="https://thuocsi.vn/authentications/signup"
             >
-              {t('register')}
+              {t('HEADER.REGISTER')}
             </a>
-            <button className="btn btn-outline-primary btn-sm">{t('try')}</button>
+            <button className="btn btn-outline-primary btn-sm">{t('HEADER.TRY')}</button>
           </div>
         </div>
       </div>
