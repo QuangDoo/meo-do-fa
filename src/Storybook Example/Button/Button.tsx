@@ -1,8 +1,8 @@
 import React, { HTMLAttributes } from 'react'
 import { StyledButton } from './Button.styled'
 
-// Has all normal button props
-export type ButtonProps = Omit<HTMLAttributes<HTMLButtonElement>, 'type'> & {
+// Has all normal button props AND our custom props
+export type ButtonProps = HTMLAttributes<HTMLButtonElement> & {
   // Button theme color
   variant?: 'primary' | 'secondary' | 'tertiary' | 'white'
 
