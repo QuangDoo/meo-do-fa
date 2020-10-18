@@ -1,10 +1,12 @@
 import React from 'react'
-
+import { useQuery } from '@apollo/react-hooks'
 import { Header } from '../components/Header'
 import { Footer } from '../components/Footer'
 import { HomePage } from '../components/Home'
 import Head from '../components/Head'
 import { Nav } from '../components/Nav'
+import withApollo from '../utils/withApollo'
+import { GET_CATEGORIES } from '../graphql/category/category.query'
 
 function Home() {
   return (
@@ -20,4 +22,4 @@ function Home() {
   )
 }
 
-export default Home
+export default withApollo({ ssr: true })(Home)
