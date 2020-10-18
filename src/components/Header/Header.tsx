@@ -2,6 +2,7 @@ import { Dropdown, Menu } from 'antd'
 import { TFunction } from 'next-i18next'
 import React, { FC } from 'react'
 import { i18n, withTranslation } from '../../../i18n'
+import Register from '../Register'
 
 type HeaderProps = {
   readonly t: TFunction
@@ -100,12 +101,14 @@ const Header: FC<HeaderProps> = ({ t }) => {
               {t('header:login')}
             </a>
 
-            <a
+            {/* <a
               className="btn btn-primary btn-sm mr-2"
               href="https://thuocsi.vn/authentications/signup"
             >
               {t('header:register')}
-            </a>
+            </a> */}
+            <Register />
+
             <button className="btn btn-outline-primary btn-sm">{t('header:try')}</button>
           </div>
         </div>
