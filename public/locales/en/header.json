@@ -1,9 +1,11 @@
 {
-  "news": "News",
-  "recruitment": "Recruitment",
-  "supply": "Become a supplier",
-  "login": "Login",
-  "register": "Register",
-  "try": "Try",
-  "language": "Language"
+  "HEADER": {
+    "NEWS": "News",
+    "RECRUITMENT": "Recruitment",
+    "SUPPLY": "Become a supplier",
+    "LOGIN": "Login",
+    "REGISTER": "Register",
+    "TRY": "Try",
+    "LANGUAGE": "Language"
+  }
 }
