@@ -45,10 +45,10 @@ const Header: FC<HeaderProps> = ({ t }) => {
                   <a
                     className="promotion-nav__link"
                     href="https://career.thuocsi.vn/"
-                    title={t('HEADER.RECRUITMENT')}
+                    title={t('common:COMMON.RECRUITMENT')}
                   >
                     <i className="promotion-nav__icon fas fa-briefcase" />
-                    <span>{t('HEADER.RECRUITMENT')}</span>
+                    <span>{t('common:COMMON.RECRUITMENT')}</span>
                   </a>
                 </li>
 
@@ -56,10 +56,10 @@ const Header: FC<HeaderProps> = ({ t }) => {
                   <a
                     className="promotion-nav__link"
                     href="https://supplier.thuocsi.vn/"
-                    title={t('HEADER.SUPPLY')}
+                    title={t('common:COMMON.SUPPLY')}
                   >
                     <i className="promotion-nav__icon fas fa-store-alt" />
-                    <span>{t('HEADER.SUPPLY')}</span>
+                    <span>{t('common:COMMON.SUPPLY')}</span>
                   </a>
                 </li>
 
@@ -114,4 +114,4 @@ const Header: FC<HeaderProps> = ({ t }) => {
   )
 }
 
-export default withTranslation('header')(Header)
+export default withTranslation(['header', 'common'])(Header)
