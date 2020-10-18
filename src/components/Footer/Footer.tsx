@@ -111,8 +111,12 @@ const Footer: React.FC<FooterProps> = ({ t }) => {
 
                   <br />
 
-                  <a className="footer__link" href="https://career.thuocsi.vn/">
-                    {t('FOOTER.RECRUITMENT')}
+                  <a
+                    className="footer__link"
+                    href="https://career.thuocsi.vn/"
+                    title={t('header:HEADER.RECRUITMENT')}
+                  >
+                    {t('common:COMMON.RECRUITMENT')}
                   </a>
                 </div>
 
@@ -136,9 +140,9 @@ const Footer: React.FC<FooterProps> = ({ t }) => {
                   <a
                     className="footer__link"
                     href="https://supplier.thuocsi.vn/"
-                    title="Đăng ký bán hàng cùng thuocsi"
+                    title={t('header:HEADER.SUPPLY')}
                   >
-                    {t('FOOTER.SUPPLY')}
+                    {t('common:COMMON.SUPPLY')}
                   </a>
                 </div>
               </div>
@@ -254,4 +258,4 @@ const Footer: React.FC<FooterProps> = ({ t }) => {
   )
 }
 
-export default withTranslation('footer')(Footer)
+export default withTranslation(['footer', 'common'])(Footer)
