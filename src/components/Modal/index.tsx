@@ -3,16 +3,9 @@ import React, { FC } from 'react'
 import ModalHeader from './ModalHeader'
 
 type ModalProps = {
-  // Modal is open
   open: boolean
-
-  // Modal title
   title: string
-
-  // On modal close
-  onClose: () => void
-
-  // Additional classname for modal content container
+  closeModal: () => void
   className?: string
 }
 
@@ -20,7 +13,7 @@ const Modal: FC<ModalProps> = (props) => {
   return (
     <MaterialModal
       open={props.open}
-      onClose={props.onClose}
+      onClose={props.closeModal}
       closeAfterTransition
       BackdropComponent={Backdrop}
       BackdropProps={{
@@ -30,7 +23,7 @@ const Modal: FC<ModalProps> = (props) => {
       <Fade in={props.open} timeout={300}>
         <div className={`modal-dialog modal-dialog-centered ${props.className}`}>
           <div className="modal-content">
-            <ModalHeader title={props.title} onClose={props.onClose} />
+            <ModalHeader title={props.title} closeModal={props.closeModal} />
 
             <div className="modal-body">{props.children}</div>
           </div>
