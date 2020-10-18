@@ -1,14 +1,16 @@
-import { Carousel } from 'antd'
 import React from 'react'
-import styled from 'styled-components'
+import Slider from 'react-slick'
+import CustomerCard from './CustomerCard'
 
-const StyledCustomer = styled.div`
-  width: 50%;
-`
+// Example testimonial object
+const exampleTestimonial = {
+  customerName: 'Anh Trường',
+  customerLocation: 'Nhà thuốc tây số 2 - Vĩnh Long',
+  customerComment: 'Hàng hóa đa dạng dễ dàng tra cứu giá và đặt hàng thuốc.',
+}
 
-const StyledCustomerBlock = styled.div`
-  display: flex !important;
-`
+// Example testimonials array
+const testimonials = [...new Array(5)].map(() => ({ ...exampleTestimonial }))
 
 const Customer = () => {
   return (
@@ -19,115 +21,19 @@ const Customer = () => {
             <h2 className="text-primary">Khách hàng nói gì về thuocsi</h2>
           </div>
           <div className="col-12">
-            <Carousel autoplay className="home-customer-carousel">
-              <StyledCustomerBlock>
-                <StyledCustomer>
-                  <div className="testimonial d-flex mb-3">
-                    <img
-                      alt="Anh Trường"
-                      className="img-fluid lozad testimonial__avatar"
-                      src="assets/images/customer1.jpg"
-                    />
-                    <div className="testimonial__content px-3">
-                      <div className="testimonial__customer">Anh Trường</div>
-                      <div className="testimonial__title">Nhà thuốc tây số 2 - Vĩnh Long</div>
-                      <div className="testimonial__comment quote">
-                        Hàng hóa đa dạng dễ dàng tra cứu giá và đặt hàng thuốc.
-                      </div>
-                    </div>
-                  </div>
-                </StyledCustomer>
-
-                <StyledCustomer>
-                  <div className="testimonial d-flex mb-3">
-                    <img
-                      alt="Anh Trường"
-                      className="img-fluid lozad testimonial__avatar"
-                      src="assets/images/customer1.jpg"
-                    />
-                    <div className="testimonial__content px-3">
-                      <div className="testimonial__customer">Anh Trường</div>
-                      <div className="testimonial__title">Nhà thuốc tây số 2 - Vĩnh Long</div>
-                      <div className="testimonial__comment quote">
-                        Hàng hóa đa dạng dễ dàng tra cứu giá và đặt hàng thuốc.
-                      </div>
-                    </div>
-                  </div>
-                </StyledCustomer>
-              </StyledCustomerBlock>
-
-              <StyledCustomerBlock>
-                <StyledCustomer>
-                  <div className="testimonial d-flex mb-3">
-                    <img
-                      alt="Anh Trường"
-                      className="img-fluid lozad testimonial__avatar"
-                      src="assets/images/customer1.jpg"
-                    />
-                    <div className="testimonial__content px-3">
-                      <div className="testimonial__customer">Anh Trường</div>
-                      <div className="testimonial__title">Nhà thuốc tây số 2 - Vĩnh Long</div>
-                      <div className="testimonial__comment quote">
-                        Hàng hóa đa dạng dễ dàng tra cứu giá và đặt hàng thuốc.
-                      </div>
-                    </div>
-                  </div>
-                </StyledCustomer>
-
-                <StyledCustomer>
-                  <div className="testimonial d-flex mb-3">
-                    <img
-                      alt="Anh Trường"
-                      className="img-fluid lozad testimonial__avatar"
-                      src="assets/images/customer1.jpg"
-                    />
-                    <div className="testimonial__content px-3">
-                      <div className="testimonial__customer">Anh Trường</div>
-                      <div className="testimonial__title">Nhà thuốc tây số 2 - Vĩnh Long</div>
-                      <div className="testimonial__comment quote">
-                        Hàng hóa đa dạng dễ dàng tra cứu giá và đặt hàng thuốc.
-                      </div>
-                    </div>
-                  </div>
-                </StyledCustomer>
-              </StyledCustomerBlock>
-
-              <StyledCustomerBlock>
-                <StyledCustomer>
-                  <div className="testimonial d-flex mb-3">
-                    <img
-                      alt="Anh Trường"
-                      className="img-fluid lozad testimonial__avatar"
-                      src="assets/images/customer1.jpg"
-                    />
-                    <div className="testimonial__content px-3">
-                      <div className="testimonial__customer">Anh Trường</div>
-                      <div className="testimonial__title">Nhà thuốc tây số 2 - Vĩnh Long</div>
-                      <div className="testimonial__comment quote">
-                        Hàng hóa đa dạng dễ dàng tra cứu giá và đặt hàng thuốc.
-                      </div>
-                    </div>
-                  </div>
-                </StyledCustomer>
-
-                <StyledCustomer>
-                  <div className="testimonial d-flex mb-3">
-                    <img
-                      alt="Anh Trường"
-                      className="img-fluid lozad testimonial__avatar"
-                      src="assets/images/customer1.jpg"
-                    />
-                    <div className="testimonial__content px-3">
-                      <div className="testimonial__customer">Anh Trường</div>
-                      <div className="testimonial__title">Nhà thuốc tây số 2 - Vĩnh Long</div>
-                      <div className="testimonial__comment quote">
-                        Hàng hóa đa dạng dễ dàng tra cứu giá và đặt hàng thuốc.
-                      </div>
-                    </div>
-                  </div>
-                </StyledCustomer>
-              </StyledCustomerBlock>
-            </Carousel>
+            <Slider
+              arrows={false}
+              slidesToShow={2}
+              slidesToScroll={1}
+              autoplay
+              dots
+              dotsClass="slick__dots slick-dots"
+              className="slick-dotted"
+            >
+              {testimonials.map((testimonial, index) => (
+                <CustomerCard key={index} {...testimonial} />
+              ))}
+            </Slider>
           </div>
         </div>
       </div>
