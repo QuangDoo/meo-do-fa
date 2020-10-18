@@ -1,6 +1,4 @@
 {
-  "COMMON": {
-    "SUPPLY": "Become a supplier",
-    "RECRUITMENT": "Recruitment"
-  }
+  "supply": "Become a supplier",
+  "recruitment": "Recruitment"
 }

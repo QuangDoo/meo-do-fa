@@ -28,39 +28,39 @@ const Footer: React.FC<FooterProps> = ({ t }) => {
                 </div>
               </div>
               <div className="footer__info-title mb-3">
-                <b className="text-primary">thuocsi.vn</b> {t('FOOTER.WEBSITE_OWNERSHIP')}
+                <b className="text-primary">thuocsi.vn</b> {t('footer:website_ownership')}
               </div>
               <p className="footer__info-company">
-                <b>{t('FOOTER.COMPANY_NAME')}</b>
+                <b>{t('footer:company_name')}</b>
 
                 <br />
 
-                {t('FOOTER.COMPANY_ADDRESS_LABEL') + ': '}
-                <b>{t('FOOTER.COMPANY_ADDRESS')}</b>
+                {t('footer:company_address_label') + ': '}
+                <b>{t('footer:company_address')}</b>
 
                 <br />
 
-                {t('FOOTER.BUSINESS_CERTIFICATE_LABEL') + ': '}
+                {t('footer:business_certificate_label') + ': '}
                 <b>
-                  {t('FOOTER.BUSINESS_CERTIFICATE_NUMBER') +
+                  {t('footer:business_certificate_number') +
                     ', ' +
-                    t('FOOTER.BUSINESS_CERTIFICATE_ISSUE_DATE') +
+                    t('footer:business_certificate_issue_date') +
                     ', '}
                 </b>
 
                 <br />
 
-                {t('FOOTER.BUSINESS_CERTIFICATE_ISSUED_AT')}
+                {t('footer:business_certificate_issued_at')}
 
                 <br />
 
-                {t('FOOTER.ECOMMERCE_LICENSE_LABEL') + ': '}
+                {t('footer:ecommerce_license_label') + ': '}
                 <b>
                   <a
                     className="footer__link"
                     href="https://buymed-storage.s3-ap-southeast-1.amazonaws.com/trading_license/1.+Trading+License+-+Buymed+(GC+20+June+2019)+(VN).pdf"
                   >
-                    {t('FOOTER.ECOMMERCE_LICENSE_NUMBER')}
+                    {t('footer:ecommerce_license_number')}
                   </a>
                 </b>
               </p>
@@ -80,18 +80,18 @@ const Footer: React.FC<FooterProps> = ({ t }) => {
               </div>
             </div>
             <div className="mb-5">
-              <div className="footer__header mb-3">{t('FOOTER.GENERAL_INFO')}</div>
+              <div className="footer__header mb-3">{t('footer:general_info')}</div>
 
               <div className="row">
                 <div className="col-12 col-sm-6">
-                  <a className="footer__link" href="https://thuocsi.vn/FOOTER.ABOUT_US">
-                    {t('FOOTER.ABOUT_US')}
+                  <a className="footer__link" href="https://thuocsi.vn/footer:about_us">
+                    {t('footer:about_us')}
                   </a>
 
                   <br />
 
                   <a className="footer__link" href="https://thuocsi.vn/privacy-policy">
-                    {t('FOOTER.PRIVACY_POLICY')}
+                    {t('footer:privacy_policy')}
                   </a>
 
                   <br />
@@ -100,13 +100,13 @@ const Footer: React.FC<FooterProps> = ({ t }) => {
                     className="footer__link"
                     href="https://thuocsi.zendesk.com/hc/vi/categories/360001885792-C%C3%A2u-h%E1%BB%8Fi-th%C6%B0%E1%BB%9Dng-g%E1%BA%B7p-Q-A-"
                   >
-                    {t('FOOTER.FAQ')}
+                    {t('footer:faq')}
                   </a>
 
                   <br />
 
                   <a className="footer__link" href="https://thuocsi.vn/general-policy">
-                    {t('FOOTER.GENERAL_POLICY')}
+                    {t('footer:general_policy')}
                   </a>
 
                   <br />
@@ -114,41 +114,41 @@ const Footer: React.FC<FooterProps> = ({ t }) => {
                   <a
                     className="footer__link"
                     href="https://career.thuocsi.vn/"
-                    title={t('header:HEADER.RECRUITMENT')}
+                    title={t('header:recruitment')}
                   >
-                    {t('common:COMMON.RECRUITMENT')}
+                    {t('common:recruitment')}
                   </a>
                 </div>
 
                 <div className="col-12 col-sm-6">
                   <a className="footer__link" href="https://thuocsi.vn/conditions-of-use">
-                    {t('FOOTER.TERMS_OF_SERVICE')}
+                    {t('footer:terms_of_service')}
                   </a>
 
                   <a className="footer__link" href="https://thuocsi.vn/dispute-resolution">
-                    {t('FOOTER.DISPUTE_RESOLUTION')}
+                    {t('footer:dispute_resolution')}
                   </a>
 
                   <a className="footer__link" href="https://thuocsi.vn/terms-and-condition">
-                    {t('FOOTER.TERMS_AND_CONDITIONS')}
+                    {t('footer:terms_and_conditions')}
                   </a>
 
                   <a className="footer__link" href="https://thuocsi.vn/regulations">
-                    {t('FOOTER.OPERATING_REGULATIONS')}
+                    {t('footer:operating_regulations')}
                   </a>
 
                   <a
                     className="footer__link"
                     href="https://supplier.thuocsi.vn/"
-                    title={t('header:HEADER.SUPPLY')}
+                    title={t('header:supply')}
                   >
-                    {t('common:COMMON.SUPPLY')}
+                    {t('common:supply')}
                   </a>
                 </div>
               </div>
             </div>
             <div className="mb-5 mb-sm-0">
-              <div className="footer__header mb-3">{t('FOOTER.DELIVERY')}</div>
+              <div className="footer__header mb-3">{t('footer:delivery')}</div>
 
               <div>
                 <img
@@ -190,7 +190,7 @@ const Footer: React.FC<FooterProps> = ({ t }) => {
             </div>
           </div>
           <div className="col-xl-4 col-lg-5 col-md-6">
-            <div className="footer__header mb-3">{t('FOOTER.CONTACTS')}</div>
+            <div className="footer__header mb-3">{t('footer:contacts')}</div>
 
             <div className="mb-3">
               <p className="d-flex align-items-center">
@@ -217,7 +217,7 @@ const Footer: React.FC<FooterProps> = ({ t }) => {
                   02 873 008 840
                 </a>
               </div>
-              <small>{t('FOOTER.WORK_TIME')}</small>
+              <small>{t('footer:work_time')}</small>
               <p />
             </div>
             <div className="footer__app mb-3">
@@ -253,7 +253,7 @@ const Footer: React.FC<FooterProps> = ({ t }) => {
           </div>
         </div>
       </div>
-      <div className="copyright">{t('FOOTER.COPYRIGHT')}</div>
+      <div className="copyright">{t('footer:copyright')}</div>
     </div>
   )
 }

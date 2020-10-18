@@ -1,9 +1,7 @@
 {
-  "HEADER": {
-    "NEWS": "Tin tức",
-    "LOGIN": "Đăng nhập",
-    "REGISTER": "Tạo tài khoản",
-    "TRY": "Dùng thử",
-    "LANGUAGE": "Ngôn ngữ"
-  }
+  "news": "Tin tức",
+  "login": "Đăng nhập",
+  "register": "Tạo tài khoản",
+  "try": "Dùng thử",
+  "language": "Ngôn ngữ"
 }

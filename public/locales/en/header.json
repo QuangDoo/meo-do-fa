@@ -1,9 +1,7 @@
 {
-  "HEADER": {
-    "NEWS": "News",
-    "LOGIN": "Login",
-    "REGISTER": "Register",
-    "TRY": "Try",
-    "LANGUAGE": "Language"
-  }
+  "news": "News",
+  "login": "Login",
+  "register": "Register",
+  "try": "Try",
+  "language": "Language"
 }
