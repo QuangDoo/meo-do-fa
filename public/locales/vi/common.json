@@ -1,6 +1,4 @@
 {
-  "COMMON": {
-    "SUPPLY": "Đăng ký bán hàng cùng thuocsi",
-    "RECRUITMENT": "Tuyển dụng"
-  }
+  "supply": "Đăng ký bán hàng cùng thuocsi",
+  "recruitment": "Tuyển dụng"
 }
