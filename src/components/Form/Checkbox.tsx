@@ -3,6 +3,7 @@ import React from 'react'
 type CheckboxProps = {
   required?: boolean
   name: string
+  label: React.ReactNode
 }
 
 const Checkbox = (props: CheckboxProps, ref) => {
@@ -17,11 +18,7 @@ const Checkbox = (props: CheckboxProps, ref) => {
       />
 
       <label className="custom-control-label pt-1" htmlFor={props.name}>
-        Tôi đã đọc và đồng ý với{' '}
-        <a href="/terms-and-condition" target="_blank">
-          Điều khoản sử dụng
-        </a>
-        <span className="text-danger"> *</span>
+        {props.label}
       </label>
     </div>
   )
