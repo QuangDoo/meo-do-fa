@@ -1,9 +1,9 @@
 import styled, { css } from 'styled-components'
-import { ButtonProps } from './Button'
+import { ExampleButtonProps } from './Button'
 import Color from 'color'
 
 // Pass in props first
-export const StyledButton = styled.button<ButtonProps>`
+export const StyledButton = styled.button<ExampleButtonProps>`
   ${({ theme, variant, outline, size }) => css`
     font-family: 'Roboto', sans-serif;
     display: inline-block;

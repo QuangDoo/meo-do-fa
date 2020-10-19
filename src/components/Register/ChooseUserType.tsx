@@ -1,11 +1,20 @@
-import React, { FC } from 'react'
+import React, { Dispatch, FC, SetStateAction } from 'react'
+import { UserType } from '.'
 import UserTypeCard from './UserTypeCard'
 
 type ChooseUserTypeProps = {
-  setUserType: (userType: string) => void
+  setUserType: Dispatch<SetStateAction<UserType>>
+}
+
+export const userTypeMap = {
+  pharmacy: 'Nhà thuốc',
+  clinic: 'Phòng khám',
+  drugstore: 'Quầy thuốc',
 }
 
 const ChooseUserType: FC<ChooseUserTypeProps> = (props) => {
+  const { setUserType } = props
+
   return (
     <div className="business-group">
       <div className="container text-center">
@@ -18,21 +27,23 @@ const ChooseUserType: FC<ChooseUserTypeProps> = (props) => {
         <div className="row no-gutters">
           {/* Nhà thuốc */}
           <UserTypeCard
-            text="Nhà thuốc"
+            text={userTypeMap['pharmacy']}
             imgUrl="https://assets.thuocsi.vn/assets/business/pharmacy-75ebf6ea2091b10eafea512cd9d77debf72723e9888d8b2afc7e90885609b1fe.png"
-            onClick={() => setUserType('Nhà thuốc')}
+            onClick={() => setUserType('pharmacy')}
           />
 
           {/* Phòng khám */}
           <UserTypeCard
-            text="Phòng khám"
+            text={userTypeMap['clinic']}
             imgUrl="https://assets.thuocsi.vn/assets/business/clinic-c2c574f6034efe31a30f33476ba2581cc85b24fb2d7b0abe2be2367cc175c2ed.png"
+            onClick={() => setUserType('clinic')}
           />
 
           {/* Quầy thuốc */}
           <UserTypeCard
-            text="Quầy thuốc"
+            text={userTypeMap['drugstore']}
             imgUrl="https://assets.thuocsi.vn/assets/business/drugstore-1aada7d824b614c706a01efccb7608e67107a36623a14def79bdfebeacdc02d0.png"
+            onClick={() => setUserType('drugstore')}
           />
         </div>
       </div>

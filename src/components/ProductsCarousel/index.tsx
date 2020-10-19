@@ -1,6 +1,6 @@
 import React from 'react'
 import Slider from 'react-slick'
-import ProductCard, { Product } from '../Shared/ProductCard'
+import ProductCard, { Product } from '../ProductCard'
 import { ArrowButton } from './ArrowButton'
 
 type ProductsCarouselProps = {

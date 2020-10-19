@@ -1,5 +1,5 @@
 import React from 'react'
-import ProductCard, { Product } from '../../Shared/ProductCard'
+import ProductCard, { Product } from '../../ProductCard'
 
 const productListProduct: Product = {
   new: true,

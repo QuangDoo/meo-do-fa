@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 
 type ModalHeaderProps = {
-  closeModal: () => void
+  onClose: () => void
   title: string
 }
 
@@ -9,7 +9,7 @@ const ModalHeader: FC<ModalHeaderProps> = (props) => {
   return (
     <div className="modal-header">
       <header className="modal-title text-capitalize">{props.title}</header>
-      <button onClick={props.closeModal} aria-label="Close" className="close" type="button">
+      <button onClick={props.onClose} aria-label="Close" className="close" type="button">
         <span aria-hidden="true">
           <i className="fas fa-times"></i>
         </span>

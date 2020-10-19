@@ -1,12 +1,16 @@
 import { TFunction } from 'next-i18next'
 import React, { FC, useState } from 'react'
 import { withTranslation } from '../../../i18n'
-import Modal from '../Shared/Modal'
+import Button from '../Button'
+import Modal from '../Modal'
 import ChooseUserType from './ChooseUserType'
+import RegisterForm from './RegisterForm'
 
 type RegisterModalProps = {
   readonly t: TFunction
 }
+
+export type UserType = 'pharmacy' | 'clinic' | 'drugstore'
 
 const Register: FC<RegisterModalProps> = (props) => {
   const { t } = props
@@ -15,7 +19,7 @@ const Register: FC<RegisterModalProps> = (props) => {
   const [open, setOpen] = useState(false)
 
   // User type
-  const [userType, setUserType] = useState<string>()
+  const [userType, setUserType] = useState<UserType>()
 
   const openModal = () => setOpen(true)
 
@@ -24,19 +28,23 @@ const Register: FC<RegisterModalProps> = (props) => {
   return (
     <>
       {/* Register button to open modal */}
-      <button onClick={openModal} className="btn btn-primary btn-sm mr-2">
+      <Button onClick={openModal} size="sm" variant="primary" className="mr-2">
         {t('header:register')}
-      </button>
+      </Button>
 
       {/* Register modal */}
       <Modal
         open={open}
         title="Tạo Tài Khoản"
-        closeModal={closeModal}
+        onClose={closeModal}
         className="authentication signup"
       >
         <form className="new_account">
-          {userType && <ChooseUserType setUserType={setUserType} />}
+          {userType ? (
+            <RegisterForm userType={userType} setUserType={setUserType} />
+          ) : (
+            <ChooseUserType setUserType={setUserType} />
+          )}
         </form>
       </Modal>
     </>
