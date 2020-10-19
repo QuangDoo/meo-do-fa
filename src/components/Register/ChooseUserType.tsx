@@ -6,7 +6,7 @@ type ChooseUserTypeProps = {
   setUserType: Dispatch<SetStateAction<UserType>>
 }
 
-export const userTypeMap = {
+export const userTypeMap: Record<UserType, string> = {
   pharmacy: 'Nhà thuốc',
   clinic: 'Phòng khám',
   drugstore: 'Quầy thuốc',
