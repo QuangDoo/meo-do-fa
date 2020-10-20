@@ -9,12 +9,12 @@ const AccountLoginInformation = (props: Props, formRef) => {
             <Input name="name"
                 ref={formRef}
                 containerClass="mb-4"
-                icon="user"
+                iconClass="icomoon icon-user"
                 placeholder="Nhập số điện thoại hoặc email" />
             <Input name="password"
                 ref={formRef}
                 containerClass="mb-4"
-                icon="lock"
+                iconClass="icomoon icon-lock"
                 placeholder="Nhập mật khẩu"
                 type="password" />
         </>
