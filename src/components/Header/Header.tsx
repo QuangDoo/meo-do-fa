@@ -2,6 +2,7 @@ import { Dropdown, Menu } from 'antd'
 import { TFunction } from 'next-i18next'
 import React, { FC } from 'react'
 import { i18n, withTranslation } from '../../../i18n'
+import Login from '../Login'
 import Register from '../Register'
 
 type HeaderProps = {
@@ -94,12 +95,7 @@ const Header: FC<HeaderProps> = ({ t }) => {
           </div>
 
           <div>
-            <a
-              className="btn btn-secondary btn-sm mr-2"
-              href="https://thuocsi.vn/authentications/login"
-            >
-              {t('header:login')}
-            </a>
+            <Login />
 
             <Register />
 
