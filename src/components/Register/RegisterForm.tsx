@@ -1,21 +1,36 @@
 import React, { FC } from 'react'
 import { useForm } from 'react-hook-form'
+import AccountInformation from './AccountInformation'
 import ChooseUserType from './ChooseUserType'
-import { UserType, userTypeMap } from './UserTypeCard'
+import WelcomeAccount from './WelcomeAccount'
 
-type RegisterFormProps = {}
+export type UserType = 'pharmacy' | 'clinic' | 'drugstore'
 
-type FormInputs = {
-  userType: UserType
+export const userTypeMap: Record<UserType, string> = {
+  pharmacy: 'Nhà thuốc',
+  clinic: 'Phòng khám',
+  drugstore: 'Quầy thuốc',
 }
 
-const RegisterForm: FC<RegisterFormProps> = (props) => {
-  const { register, getValues, handleSubmit, setValue } = useForm<FormInputs>()
+type Props = {}
 
-  const onSubmit = (data) => console.log(data)
+type Inputs = {
+  userType: string
+}
 
-  const onEditClick = () => {
-    setValue('userType', undefined)
+const RegisterForm: FC<Props> = (props) => {
+  const { register, handleSubmit, setValue, watch } = useForm<Inputs>({
+    defaultValues: {
+      userType: '',
+    },
+  })
+
+  const watchUserType = watch('userType', undefined)
+
+  console.log(watch())
+
+  const onSubmit = (data) => {
+    console.log(data)
   }
 
   // Set user type on UserTypeCard click (in ChooseUserType)
@@ -23,28 +38,24 @@ const RegisterForm: FC<RegisterFormProps> = (props) => {
     setValue('userType', value)
   }
 
-  console.log(getValues('userType'))
-
   return (
     <form className="new_account" onSubmit={handleSubmit(onSubmit)}>
-      {/* Show ChooseUserype if userType is not chosen (undefined) */}
-      {!getValues('userType') && <ChooseUserType ref={register} setUserType={setUserType} />}
+      {/**
+       *  Show ChooseUserType if userType is not chosen (empty string)
+       *  Else show AccountInformationForm
+       */}
 
-      {/* Show Input fields if userType is chosen */}
-      {getValues('userType') && (
-        <div className="account-information">
-          <div className="welcome-account mb-3">
-            Xin chào
-            <span className="welcome-account__business">
-              {' '}
-              {userTypeMap[getValues('userType')]}!
-            </span>
-            {/* <u onClick={onEditClick} className="font-weight-bold text-primary ml-2">
-              Chỉnh sửa
-            </u> */}
-          </div>
-        </div>
-      )}
+      <div hidden={!!watchUserType} className="business-group">
+        <ChooseUserType setUserType={setUserType} ref={register} />
+      </div>
+
+      <div hidden={!watchUserType} className="account-information">
+        <WelcomeAccount
+          userTypeName={userTypeMap[watchUserType]}
+          onEditClick={() => setUserType(undefined)}
+        />
+        <AccountInformation ref={register} />
+      </div>
     </form>
   )
 }
