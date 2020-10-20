@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 type Props = {
   name: string
-  icon: string
+  iconClass: string
   placeholder?: string
   required?: boolean
   type?: 'text' | 'number' | 'password'
@@ -20,16 +20,17 @@ const Input = (props: Props, ref) => {
 
   return (
     <div className={`input-group form__input-group ${containerClass}`}>
-      <i className={`icomoon icon-${props.icon} form__input-icon`}></i>
+      <i className={`${props.iconClass} form__input-icon`}></i>
       <input
         name={props.name}
         ref={ref}
-        className="form-control"
+        className="form-control no-spinner"
         placeholder={props.placeholder}
         required={props.required}
-        type={type === 'password' ? (showPassword ? type : 'text') : type}
+        type={type === 'password' ? (showPassword ? 'text' : 'password') : type}
       />
 
+      {/* Show password checkbox */}
       {type === 'password' && (
         <div
           className="form__password-label"
@@ -38,6 +39,7 @@ const Input = (props: Props, ref) => {
           role="checkbox"
           aria-checked={showPassword}
           tabIndex={0}
+          style={{ zIndex: 4 }} // Because focused input has z-index: 3
         >
           {showPassword ? (
             <span className="form__password-label-hide">
