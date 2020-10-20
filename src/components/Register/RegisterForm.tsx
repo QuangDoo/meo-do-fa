@@ -30,7 +30,7 @@ const RegisterForm: FC<Props> = (props) => {
   console.log(watch())
 
   const onSubmit = (data) => {
-    console.log(data)
+    console.log('submit data:', data)
   }
 
   // Set user type on UserTypeCard click (in ChooseUserType)

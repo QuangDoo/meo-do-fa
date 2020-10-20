@@ -6,6 +6,7 @@ type ButtonProps = {
   size?: 'sm' | 'md'
   block?: boolean
   className?: string
+  type?: 'button' | 'submit'
 }
 
 const Button: FC<ButtonProps> = (props) => {
