@@ -1,10 +1,11 @@
-import React, { FC } from 'react'
+import React, { FC, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
+import { emailRegex } from '../../assets/regex/email'
+import { viPhoneNumberRegex } from '../../assets/regex/viPhoneNumber'
 import Button from '../Button'
 import Checkbox from '../Form/Checkbox'
 import Input from '../Form/Input'
-import AccountInformation from './AccountInformation'
 import ChooseUserType from './ChooseUserType'
 import WelcomeAccount from './WelcomeAccount'
 
@@ -35,16 +36,24 @@ const initialUserType = ''
 type Props = undefined
 
 const RegisterForm: FC<Props> = (props) => {
-  const { register, handleSubmit, setValue, watch } = useForm<Inputs>()
+  const { register, handleSubmit, setValue, watch, errors } = useForm<Inputs>()
 
   // Watch userType value, with initial state
   // This component re-renders when userType changes
   const watchUserType = watch('userType', initialUserType)
 
+  // Show error toasts when error changes
+  useEffect(() => {
+    if (!errors) return
+
+    Object.keys(errors).forEach((errorField) => toast.error(errors[errorField].message))
+  }, [errors])
+
   // On submit button click
   const onSubmit = (data: Inputs) => {
-    console.log('submit data:', data)
-    toast.error('Clicked submit data')
+    console.log('Register Submit data:', data)
+
+    // Integrate with backend
   }
 
   // Set user type on UserTypeCard click (in ChooseUserType)
@@ -70,10 +79,7 @@ const RegisterForm: FC<Props> = (props) => {
 
       {/* Hide AccountInformation form if userType is chosen (NOT in initial state) */}
       <div hidden={watchUserType === initialUserType} className="account-information">
-        <WelcomeAccount
-          userTypeName={userTypeMap[watchUserType]} // Map from userType to text (to use on translation later)
-          onEditClick={resetUserType}
-        />
+        <WelcomeAccount userTypeName={userTypeMap[watchUserType]} onEditClick={resetUserType} />
 
         <Input
           name="name"
@@ -87,7 +93,12 @@ const RegisterForm: FC<Props> = (props) => {
         <Input
           name="phone"
           type="number"
-          ref={register}
+          ref={register({
+            pattern: {
+              value: viPhoneNumberRegex,
+              message: 'Xin nhập số điện thoại hợp lệ.',
+            },
+          })}
           containerClass="mb-4"
           iconClass="icomoon icon-phone"
           placeholder="Nhập số điện thoại (bắt buộc)"
@@ -96,7 +107,12 @@ const RegisterForm: FC<Props> = (props) => {
 
         <Input
           name="email"
-          ref={register}
+          ref={register({
+            pattern: {
+              value: emailRegex,
+              message: 'Xin nhập email hợp lệ.',
+            },
+          })}
           containerClass="mb-4"
           iconClass="icomoon icon-mail"
           placeholder="Nhập email"
@@ -104,7 +120,12 @@ const RegisterForm: FC<Props> = (props) => {
 
         <Input
           name="password"
-          ref={register}
+          ref={register({
+            minLength: {
+              value: 6,
+              message: 'Xin nhập mật khẩu tối thiểu 6 kí tự.',
+            },
+          })}
           containerClass="mb-4"
           iconClass="icomoon icon-lock"
           placeholder="Nhập mật khẩu (bắt buộc)"
@@ -114,7 +135,9 @@ const RegisterForm: FC<Props> = (props) => {
 
         <Input
           name="referPhone"
-          ref={register}
+          ref={register({
+            validate: () => true, // Check with backend if referer phone number exists
+          })}
           containerClass="mb-4"
           iconClass="fas fa-user-friends"
           placeholder="Số điện thoại người giới thiệu hoặc mã nhóm"
