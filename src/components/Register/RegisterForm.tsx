@@ -6,30 +6,38 @@ import WelcomeAccount from './WelcomeAccount'
 
 export type UserType = 'pharmacy' | 'clinic' | 'drugstore'
 
+// Map from userType to text (replace with translation later like t('pharmacy') or something)
 export const userTypeMap: Record<UserType, string> = {
   pharmacy: 'Nhà thuốc',
   clinic: 'Phòng khám',
   drugstore: 'Quầy thuốc',
 }
 
+// RegisterForm Props
 type Props = {}
 
+// Form input fields
 type Inputs = {
   userType: string
+  name: string
+  email: string
+  password: string
+  phone: number
+  referPhone: number
 }
 
+// Initial userType state
+const initialUserType = ''
+
 const RegisterForm: FC<Props> = (props) => {
-  const { register, handleSubmit, setValue, watch } = useForm<Inputs>({
-    defaultValues: {
-      userType: '',
-    },
-  })
+  const { register, handleSubmit, setValue, watch } = useForm<Inputs>()
 
-  const watchUserType = watch('userType', undefined)
+  // Watch userType value, with initial state
+  // This component re-renders when userType changes
+  const watchUserType = watch('userType', initialUserType)
 
-  console.log(watch())
-
-  const onSubmit = (data) => {
+  // On submit button click
+  const onSubmit = (data: Inputs) => {
     console.log('submit data:', data)
   }
 
@@ -38,21 +46,21 @@ const RegisterForm: FC<Props> = (props) => {
     setValue('userType', value)
   }
 
+  // Reset userType to initial state
+  const resetUserType = () => setValue('userType', initialUserType)
+
   return (
     <form className="new_account" onSubmit={handleSubmit(onSubmit)}>
-      {/**
-       *  Show ChooseUserType if userType is not chosen (empty string)
-       *  Else show AccountInformationForm
-       */}
-
-      <div hidden={!!watchUserType} className="business-group">
+      {/* Hide ChooseUserType if userType is in initial state */}
+      <div hidden={watchUserType !== initialUserType} className="business-group">
         <ChooseUserType setUserType={setUserType} ref={register} />
       </div>
 
-      <div hidden={!watchUserType} className="account-information">
+      {/* Hide AccountInformation form if userType is chosen (NOT in initial state) */}
+      <div hidden={watchUserType === initialUserType} className="account-information">
         <WelcomeAccount
-          userTypeName={userTypeMap[watchUserType]}
-          onEditClick={() => setUserType(undefined)}
+          userTypeName={userTypeMap[watchUserType]} // Map from userType to text (to use on translation later)
+          onEditClick={resetUserType}
         />
         <AccountInformation ref={register} />
       </div>
@@ -61,11 +69,3 @@ const RegisterForm: FC<Props> = (props) => {
 }
 
 export default RegisterForm
-
-{
-  /* Tôi đã đọc và đồng ý với{' '}
-        <a href="/terms-and-condition" target="_blank">
-        Điều khoản sử dụng
-        </a>
-      <span className="text-danger"> *</span> */
-}

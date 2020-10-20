@@ -19,6 +19,7 @@ const AccountInformation = (props: Props, formRef) => {
 
       <Input
         name="phone"
+        type="number"
         ref={formRef}
         containerClass="mb-4"
         iconClass="icomoon icon-phone"
@@ -55,8 +56,6 @@ const AccountInformation = (props: Props, formRef) => {
 
       <Checkbox
         required
-        ref={formRef}
-        name="terms-and-conditions"
         label={
           <>
             Tôi đã đọc và đồng ý với{' '}
