@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React from 'react'
 import { DiscountRibbon } from './DiscountRibbon'
 
@@ -11,9 +12,9 @@ export type Product = {
   price: string
   unit: string
   category: string
-  categoryUrl: string
-  imageUrl: string
-  productUrl: string
+  categoryId: string
+  imageId: string
+  productId: string
 
   badges?: BadgeType[]
   new?: boolean
@@ -34,10 +35,12 @@ const ProductCard = ({ badges = [], ...props }: Product) => {
 
             {props.discountPercent && <DiscountRibbon discountPercent={props.discountPercent} />}
 
-            <ProductImage productUrl={props.productUrl} imageUrl={props.imageUrl} />
+            <Link href={`/products/${props.productId}`}>
+              <ProductImage imageId={props.imageId} />
+            </Link>
 
             <div>
-              <a className="text-decoration-none" href={props.productUrl}>
+              <a className="text-decoration-none" href={props.productId}>
                 <h6 className="product-card__name">{props.name}</h6>
               </a>
 
@@ -56,7 +59,7 @@ const ProductCard = ({ badges = [], ...props }: Product) => {
               <br />
 
               <small className="text-muted product-card__category">
-                Nhóm: <a href={props.categoryUrl}>{props.category}</a>
+                Nhóm: <Link href={`/products?category=${props.categoryId}`}>{props.category}</Link>
               </small>
             </div>
           </div>
