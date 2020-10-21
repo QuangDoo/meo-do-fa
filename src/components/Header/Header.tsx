@@ -41,7 +41,6 @@ const Header: FC<HeaderProps> = ({ t }) => {
                     <span>{t('header:news')}</span>
                   </a>
                 </li>
-
                 <li className="promotion-nav__item">
                   <a
                     className="promotion-nav__link"
@@ -52,7 +51,6 @@ const Header: FC<HeaderProps> = ({ t }) => {
                     <span>{t('common:recruitment')}</span>
                   </a>
                 </li>
-
                 <li className="promotion-nav__item">
                   <a
                     className="promotion-nav__link"
@@ -63,20 +61,15 @@ const Header: FC<HeaderProps> = ({ t }) => {
                     <span>{t('common:supply')}</span>
                   </a>
                 </li>
-
-<<<<<<< HEAD
-                <Dropdown overlay={LanguageDropdown}>
-                  <li className="promotion-nav__item">
-=======
+                ;
                 <li className="promotion-nav__item">
                   <Dropdown overlay={LanguageDropdown}>
->>>>>>> b31e61f2724b6ebb5180e04fee9545dca589e7f8
                     <a className="promotion-nav__link" title={t('header:language')}>
                       <i className="promotion-nav__icon fas fa-language" />
                       <span>{t('header:language')}</span>
                     </a>
-                  </li>
-                </Dropdown>
+                  </Dropdown>
+                </li>
               </ul>
             </div>
           </div>
