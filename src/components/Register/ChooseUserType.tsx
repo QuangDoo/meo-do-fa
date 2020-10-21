@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react'
+import React from 'react'
 import { UserType, userTypeMap } from './RegisterForm'
 import UserTypeCard from './UserTypeCard'
 
@@ -6,7 +6,7 @@ type Props = {
   setUserType: (value: UserType) => void
 }
 
-const ChooseUserType = (props: Props, formRef) => {
+const ChooseUserType = (props: Props) => {
   const { setUserType } = props
 
   return (
@@ -16,12 +16,6 @@ const ChooseUserType = (props: Props, formRef) => {
           <h6>Bạn là</h6>
         </div>
       </div>
-
-      {/**
-       * Hidden input
-       * Value changes when clicking a UserTypeCard
-       */}
-      <input name="userType" hidden type="text" ref={formRef} />
 
       <div className="row no-gutters">
         {/* Nhà thuốc */}
@@ -49,4 +43,4 @@ const ChooseUserType = (props: Props, formRef) => {
   )
 }
 
-export default forwardRef(ChooseUserType)
+export default ChooseUserType

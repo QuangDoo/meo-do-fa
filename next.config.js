@@ -9,4 +9,7 @@ module.exports = {
   publicRuntimeConfig: {
     localeSubpaths,
   },
+  env: {
+    GRAPHQL_GATEWAY: process.env.GRAPHQL_GATEWAY,
+  },
 }

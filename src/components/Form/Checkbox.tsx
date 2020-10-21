@@ -3,7 +3,7 @@ import { v4 as uuid } from 'uuid'
 
 type CheckboxProps = {
   required?: boolean
-  name: string
+  name?: string
   label: React.ReactNode
   className?: string
 }
