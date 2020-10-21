@@ -2,7 +2,7 @@ import React, { HTMLAttributes } from 'react'
 import { StyledButton } from './Button.styled'
 
 // Has all normal button props AND our custom props
-export type ButtonProps = HTMLAttributes<HTMLButtonElement> & {
+export type ExampleButtonProps = HTMLAttributes<HTMLButtonElement> & {
   // Button theme color
   variant?: 'primary' | 'secondary' | 'tertiary' | 'white'
 
@@ -13,13 +13,13 @@ export type ButtonProps = HTMLAttributes<HTMLButtonElement> & {
   size?: 'normal' | 'small'
 }
 
-const Button = ({
+const ExampleButton = ({
   variant = 'primary',
   outline = false,
   size = 'normal',
   ...rest
-}: ButtonProps) => {
+}: ExampleButtonProps) => {
   return <StyledButton size={size} outline={outline} variant={variant} {...rest}></StyledButton>
 }
 
-export default Button
+export default ExampleButton
