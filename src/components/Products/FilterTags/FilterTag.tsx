@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import { useRouter } from 'next/router'
 import React from 'react'
 
@@ -14,10 +15,7 @@ const FilterTag = (props: Props) => {
   const router = useRouter()
 
   // This tag is active if it's the current tab
-  const active = router.query.tab === tab
-
-  // Add 'active' class to tag if it's active
-  const activeClass = active ? 'active' : ''
+  const isActive = router.query.tab === tab
 
   // Change tab query when clicked
   const onClick = () => {
@@ -40,7 +38,7 @@ const FilterTag = (props: Props) => {
   }
 
   return (
-    <button className={`btn products__filter-btn ${activeClass}`} onClick={onClick}>
+    <button className={clsx('btn products__filter-btn', isActive && 'active')} onClick={onClick}>
       {children}
     </button>
   )

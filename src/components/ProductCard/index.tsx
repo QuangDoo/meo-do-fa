@@ -35,9 +35,7 @@ const ProductCard = ({ badges = [], ...props }: Product) => {
 
             {props.discountPercent && <DiscountRibbon discountPercent={props.discountPercent} />}
 
-            <Link href={`/products/${props.productId}`}>
-              <ProductImage imageId={props.imageId} />
-            </Link>
+            <ProductImage imageId={props.imageId} productId={props.productId} />
 
             <div>
               <a className="text-decoration-none" href={props.productId}>

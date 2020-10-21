@@ -44,6 +44,8 @@ const Products = () => {
     // Get products again based on query
   }, [router.query])
 
+  console.log('Rendered')
+
   return (
     <StyledProductsWrap>
       <Row>

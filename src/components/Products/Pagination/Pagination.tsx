@@ -1,21 +1,19 @@
-import React from 'react'
+import { useRouter } from 'next/router'
+import React, { useState } from 'react'
 import PageButton from './PageButton'
+import PrevNextButton from './PrevNextButton'
 
 const Pagination = () => {
+  const router = useRouter()
+
+  const [maxPage, setMaxPage] = useState(10)
+
   return (
     <div className="d-flex justify-content-center mb-3">
       <nav aria-label="pager" className="pagy-nav pagination" role="navigation">
-        <span className="page prev disabled">
-          <i className="fas fa-arrow-left" />{' '}
-        </span>
+        <PrevNextButton type="prev" hidden={!router.query.page || router.query.page === '1'} />
 
-        <span className="page current">1 </span>
-
-        <span className="page">
-          <a href="https://thuocsi.vn/products?current_tab=new_arrival&page=2" rel="next">
-            2
-          </a>
-        </span>
+        <PageButton page={1} />
 
         <PageButton page={2} />
 
@@ -32,7 +30,8 @@ const Pagination = () => {
         <span className="page">
           <a href="https://thuocsi.vn/products?current_tab=new_arrival&page=52">52</a>
         </span>
-        <span className="page next">
+
+        {/* <span className="page next">
           <a
             href="https://thuocsi.vn/products?current_tab=new_arrival&page=2"
             rel="next"
@@ -40,7 +39,9 @@ const Pagination = () => {
           >
             <i className="fas fa-arrow-right" />
           </a>
-        </span>
+        </span> */}
+
+        <PrevNextButton type="next" hidden={router.query.page === maxPage.toString()} />
       </nav>
     </div>
   )
