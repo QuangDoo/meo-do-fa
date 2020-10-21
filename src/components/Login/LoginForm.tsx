@@ -1,3 +1,4 @@
+import { error } from 'console'
 import React, { FC } from 'react'
 import { useForm } from 'react-hook-form'
 import Button from '../Button'
@@ -6,6 +7,8 @@ import AccountLoginInformation from './AccountLoginInformation'
 type Props = {}
 type Inputs = {
     data: string
+   
+    username:string
 }
 const LoginForm: FC<Props> = (props) => {
     const { register, handleSubmit, setValue, watch, errors } = useForm<Inputs>({
@@ -14,7 +17,7 @@ const LoginForm: FC<Props> = (props) => {
         },
     })
     console.log('errors', errors)
-    console.log('watch', watch())
+    console.log('watch', watch('data'))
     const submit = (data) => {
         console.log('data', data)
         
@@ -23,7 +26,8 @@ const LoginForm: FC<Props> = (props) => {
         <div>
             <form className="new_account" id="new_account" onSubmit={handleSubmit(submit)}>
 
-                <AccountLoginInformation ref={register} />
+                <AccountLoginInformation ref={register} error={errors.username?.type}/>
+
 
                 <Checkbox name="remember_password" label="Nhớ mật khẩu" />
                 <div className="mb-4">
@@ -32,7 +36,6 @@ const LoginForm: FC<Props> = (props) => {
                 <Button variant="gradient" block>Đăng nhập</Button>
                 <span className="text-capitalize ">
                     Để nhận ưu đãi hấp dẫn,
-                    
                     <a className="text-secondary ml-1" data-modal="true" href="/authentications/signup">
                         <b>đăng ký thành viên</b>
                     </a>.
