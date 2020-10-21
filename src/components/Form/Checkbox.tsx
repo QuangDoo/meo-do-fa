@@ -5,13 +5,14 @@ type CheckboxProps = {
   required?: boolean
   name: string
   label: React.ReactNode
+  className?: string
 }
 
 const Checkbox = (props: CheckboxProps, ref) => {
   const [id] = useState(uuid())
 
   return (
-    <div className="form-group custom-control custom-checkbox">
+    <div className={`form-group custom-control custom-checkbox ${props.className}`}>
       <input
         className="custom-control-input"
         required={props.required}
