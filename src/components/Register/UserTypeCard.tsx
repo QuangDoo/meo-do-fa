@@ -8,10 +8,16 @@ type UserTypeCardProps = {
 
 const UserTypeCard: FC<UserTypeCardProps> = ({ text, onClick, imgUrl }) => {
   return (
-    <button type="button" className="col-6 business-group__item p-2" onClick={onClick}>
+    <div
+      className="col-6 business-group__item p-2"
+      onKeyPress={onClick}
+      onClick={onClick}
+      role="button"
+      tabIndex={0}
+    >
       <img alt="" className="img-fluid" src={imgUrl} />
       <h6 className="business-group__item__text font-weight-bold">{text}</h6>
-    </button>
+    </div>
   )
 }
 
