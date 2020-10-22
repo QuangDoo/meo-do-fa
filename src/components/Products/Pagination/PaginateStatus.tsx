@@ -1,13 +1,20 @@
+import { useRouter } from 'next/router'
 import React from 'react'
+import { productsPageSize } from '..'
 
-interface PaginateStatusProps {
-  start: number
-  end: number
+interface Props {
   total: number
 }
 
-export const PaginateStatus: React.FC<PaginateStatusProps> = (props) => {
-  const { start, end, total } = props
+export const PaginateStatus = ({ total }: Props) => {
+  const router = useRouter()
+
+  const currentPage = +(router.query.page as string) || 1
+
+  const start = (currentPage - 1) * productsPageSize + 1
+
+  const end = Math.min(start + productsPageSize - 1, total)
+
   return (
     <div className="mb-2">
       Hiển thị{' '}

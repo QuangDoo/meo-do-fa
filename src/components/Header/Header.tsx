@@ -1,28 +1,14 @@
-import { Dropdown, Menu } from 'antd'
+import { Menu } from 'antd'
 import { TFunction } from 'next-i18next'
 import React, { FC } from 'react'
 import { i18n, withTranslation } from '../../../i18n'
 import Login from '../Login'
 import Register from '../Register'
+import LanguagePicker from './LanguagePicker'
 
 type HeaderProps = {
   readonly t: TFunction
 }
-
-const languageNames = {
-  vi: 'Tiếng Việt',
-  en: 'English',
-}
-
-const LanguageDropdown = (
-  <Menu>
-    {Object.keys(languageNames).map((code) => (
-      <Menu.Item key={code} onClick={() => i18n.changeLanguage(code)}>
-        {languageNames[code]}
-      </Menu.Item>
-    ))}
-  </Menu>
-)
 
 const Header: FC<HeaderProps> = ({ t }) => {
   return (
@@ -62,14 +48,9 @@ const Header: FC<HeaderProps> = ({ t }) => {
                     <span>{t('common:supply')}</span>
                   </a>
                 </li>
-                ;
+
                 <li className="promotion-nav__item">
-                  <Dropdown overlay={LanguageDropdown}>
-                    <a className="promotion-nav__link" title={t('header:language')}>
-                      <i className="promotion-nav__icon fas fa-language" />
-                      <span>{t('header:language')}</span>
-                    </a>
-                  </Dropdown>
+                  <LanguagePicker />
                 </li>
               </ul>
             </div>

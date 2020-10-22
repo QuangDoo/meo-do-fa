@@ -12,7 +12,7 @@ const producerData = [
   { name: 'Tất cả sản phẩm', href: '#' },
   { name: 'Domesco', href: '#' },
   { name: 'Vidipha', href: '#' },
-  { name: 'Xem thêm', href: '/manufacturers' }
+  { name: 'Xem thêm', href: '/manufacturers' },
 ]
 
 const SideBar = () => {
@@ -24,11 +24,17 @@ const SideBar = () => {
           Bộ lọc tìm kiếm
         </header>
       </div>
+
       <hr className="hr mb-3" />
+
       <Sorter />
+
       <hr className="hr mb-3" />
+
       <Filter header="Nhóm thuốc" data={drugGroupData} />
+
       <hr className="hr mb-3" />
+
       <Filter header="Nhà sản xuất" data={producerData} />
     </aside>
   )
