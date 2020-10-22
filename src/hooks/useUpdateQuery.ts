@@ -3,6 +3,8 @@ import { ParsedUrlQuery } from 'querystring'
 
 type Query = ParsedUrlQuery
 
+// Update the query on page url without reloading the page
+
 const useUpdateQuery = () => {
   const router = useRouter()
 

@@ -2,6 +2,7 @@ import { Menu } from 'antd'
 import { TFunction } from 'next-i18next'
 import React, { FC } from 'react'
 import { i18n, withTranslation } from '../../../i18n'
+import Login from '../Login'
 import Register from '../Register'
 import LanguagePicker from './LanguagePicker'
 
@@ -27,7 +28,6 @@ const Header: FC<HeaderProps> = ({ t }) => {
                     <span>{t('header:news')}</span>
                   </a>
                 </li>
-
                 <li className="promotion-nav__item">
                   <a
                     className="promotion-nav__link"
@@ -38,7 +38,6 @@ const Header: FC<HeaderProps> = ({ t }) => {
                     <span>{t('common:recruitment')}</span>
                   </a>
                 </li>
-
                 <li className="promotion-nav__item">
                   <a
                     className="promotion-nav__link"
@@ -75,12 +74,7 @@ const Header: FC<HeaderProps> = ({ t }) => {
           </div>
 
           <div>
-            <a
-              className="btn btn-secondary btn-sm mr-2"
-              href="https://thuocsi.vn/authentications/login"
-            >
-              {t('header:login')}
-            </a>
+            <Login />
 
             <Register />
 
