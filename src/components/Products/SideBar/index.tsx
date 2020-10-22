@@ -12,7 +12,7 @@ const producerData = [
   { name: 'Tất cả sản phẩm', href: '#' },
   { name: 'Domesco', href: '#' },
   { name: 'Vidipha', href: '#' },
-  { name: 'Xem thêm', href: '/manufacturers' }
+  { name: 'Xem thêm', href: '/manufacturers' },
 ]
 
 const SideBar = () => {

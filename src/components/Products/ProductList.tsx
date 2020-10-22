@@ -1,5 +1,5 @@
 import React from 'react'
-import ProductCard, { Product } from '../../ProductCard'
+import ProductCard, { Product } from '../ProductCard'
 
 type Props = {
   products: Product[]

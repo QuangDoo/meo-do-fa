@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { Col, Row } from 'antd'
 import styled from 'styled-components'
 
-import { SideBar } from './SideBar'
-import { Header } from './Header'
+import SideBar from './SideBar'
+import ProductsHeader from './ProductsHeader'
 import { PaginateStatus } from './Pagination/PaginateStatus'
-import { FilterTags } from './FilterTags'
-import { Pagination } from './Pagination'
-import { ProductList } from './ProductList'
+import FilterTags from './FilterTags'
+import Pagination from './Pagination'
+import ProductList from './ProductList'
 import { Product } from '../ProductCard'
 import { useRouter } from 'next/router'
 
@@ -31,17 +31,26 @@ export const exampleProducts: Product[] = [...new Array(10)].map(() => ({
   ...productListProduct,
 }))
 
+export const productsPageSize = 20
+
+const exampleTotalProducts = 311
+
 const Products = () => {
-  const [products, setProducts] = useState(exampleProducts)
-
-  const [headerName, setHeaderName] = useState('Tất cả sản phẩm')
-
   const router = useRouter()
 
-  useEffect(() => {
-    console.log('Products query:', router.query)
+  // TODO: Integration
+  const [products, setProducts] = useState<Product[]>([])
 
-    // Get products again based on query
+  // TODO: Integration
+  const [totalProducts, setTotalProducts] = useState<number>(0)
+
+  useEffect(() => {
+    console.log('Products query changed:', router.query)
+
+    // Get products again when query changes
+    // TODO: Integration
+    setTotalProducts(exampleTotalProducts)
+    setProducts(exampleProducts)
   }, [router.query])
 
   return (
@@ -51,12 +60,17 @@ const Products = () => {
           <SideBar />
         </Col>
         <Col span={20} style={{ paddingLeft: '1.5rem' }}>
-          <Header name={headerName} />
-          <PaginateStatus start={1} end={20} total={100} />
+          <ProductsHeader />
+
+          <PaginateStatus total={totalProducts} />
+
           <FilterTags />
-          <Pagination />
+
+          <Pagination totalProducts={exampleTotalProducts} />
+
           <ProductList products={products} />
-          <Pagination />
+
+          <Pagination totalProducts={exampleTotalProducts} />
         </Col>
       </Row>
     </StyledProductsWrap>

@@ -1,6 +1,6 @@
 import React from 'react'
 import ProductCard from '../ProductCard'
-import { exampleProducts } from '../Products/Products'
+import { exampleProducts } from '../Products'
 import { ProductsContainer } from './ProductsContainer'
 
 export const Promotion = () => {

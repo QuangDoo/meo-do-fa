@@ -1,5 +1,5 @@
 import React from 'react'
-import { exampleProducts } from '../Products/Products'
+import { exampleProducts } from '../Products'
 import { ProductsCarousel } from '../ProductsCarousel'
 import { ProductsContainer } from './ProductsContainer'
 

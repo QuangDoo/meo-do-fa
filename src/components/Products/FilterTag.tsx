@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import { useRouter } from 'next/router'
 import React from 'react'
-import useUpdateQuery from '../../../hooks/useUpdateQuery'
+import useUpdateQuery from '../../hooks/useUpdateQuery'
 
 type Props = {
   tab?: string // The tab to change when this tag is clicked

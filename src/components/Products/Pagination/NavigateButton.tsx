@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+
 import clsx from 'clsx'
 import { useRouter } from 'next/router'
 import React from 'react'
@@ -8,7 +10,7 @@ type Props = {
   hidden: boolean
 }
 
-const PrevNextButton = (props: Props) => {
+const NavigateButton = (props: Props) => {
   const { type, hidden } = props
 
   const router = useRouter()
@@ -22,13 +24,13 @@ const PrevNextButton = (props: Props) => {
 
     updateQuery({
       ...router.query,
-      page: newPage,
+      page: newPage.toString(),
     })
   }
 
   return (
-    <span hidden={hidden} className="page" onClick={onClick}>
-      <a href="">
+    <button hidden={hidden} className="page" onClick={onClick} style={{ border: 'none' }}>
+      <a href="#">
         <i
           className={clsx('fas', {
             'fa-arrow-left': type === 'prev',
@@ -36,8 +38,8 @@ const PrevNextButton = (props: Props) => {
           })}
         />
       </a>
-    </span>
+    </button>
   )
 }
 
-export default PrevNextButton
+export default NavigateButton
