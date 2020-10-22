@@ -6,12 +6,11 @@ const Login = () => {
       <div className="container-fluid py-5 home__cta-overlay">
         <div className="row text-center text-white">
           <div className="col-12">
-            <h4 style={{color: 'white'}}>Đăng nhập để tìm hiểu sản phẩm</h4>
+            <h4 style={{ color: 'white' }}>Đăng nhập để tìm hiểu sản phẩm</h4>
           </div>
           <div className="col-12">
             <a
               className="login btn btn-secondary home__cta-btn m-2"
-               
               href="https://thuocsi.vn/authentications/login"
             >
               <i className="fas fa-sign-in-alt mr-1" />
@@ -19,17 +18,12 @@ const Login = () => {
             </a>
             <a
               className="register btn btn-primary home__cta-btn m-2"
-               
               href="https://thuocsi.vn/authentications/signup"
             >
               <i className="fas fa-user-md mr-1" />
               Tạo tài khoản
             </a>
-            <button
-              className="btn btn-info home__cta-btn m-2"
-               
-               
-            >
+            <button className="btn btn-info home__cta-btn m-2">
               <i className="fas fa-eye mr-1" />
               Dùng Thử
             </button>

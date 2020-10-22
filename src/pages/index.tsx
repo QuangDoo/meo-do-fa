@@ -7,7 +7,7 @@ import { Nav } from '../components/Nav'
 import withApollo from '../utils/withApollo'
 
 
-function Home() {
+const Home = () => {
   return (
     <>
       <Head>
@@ -21,4 +21,8 @@ function Home() {
   )
 }
 
-export default withApollo({ ssr: true })(Home)
+Home.getInitialProps = async () => ({
+  namespacesRequired: ['common', 'header', 'footer'],
+})
+
+export default Home

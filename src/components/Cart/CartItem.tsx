@@ -1,8 +1,17 @@
-import React from 'react'
-import { ProductPrice } from './Shared/ProductCard/ProductPrice'
-import { QuantityInput } from './Shared/ProductCard/QuantityInput'
+import { Button, Icon } from '@material-ui/core'
+import DeleteIcon from '@material-ui/icons/Delete'
+import React, { useState } from 'react'
+import { ProductPrice } from '../ProductCard/ProductPrice'
+import QuantityInput from '../ProductCard/QuantityInput'
+
+import RemoveModal from './Modal'
 
 function CartItem(props) {
+  const [open, setOpen] = useState(false)
+  const openModal = () => setOpen(true)
+  const closeModal = () => setOpen(false)
+ 
+  
   return (
     <div
       className="cart-item"
@@ -55,19 +64,11 @@ function CartItem(props) {
                 )}
               </div>
               <div className="cart-item__qty">
-                <QuantityInput />
+                <QuantityInput {...props} quantity={props.quantity} />
               </div>
             </div>
           </div>
-          <div className="ml-3">
-            <div
-              className="cart-item__remove"
-              data-action="click->cart#removeCartItem"
-              data-remove-dialog="#cart-item-remove-dialog-3206540"
-            >
-              <i className="fas fa-trash" />
-            </div>
-          </div>
+          <DeleteIcon className="cart-item__remove" onClick={() => setOpen(true)} />
         </div>
         {props.limit && (
           <div className="col-12">
@@ -77,7 +78,8 @@ function CartItem(props) {
           </div>
         )}
       </div>
-      <div className="d-none">
+      <RemoveModal open={open} onClose={closeModal} title="Tạo Tài Khoản" {...props} />
+      {/* <div className="d-none">
         <div className="cart-item-remove-dialog" id="cart-item-remove-dialog-3206540">
           <div className="container-fluid">
             <div className="mb-3">Bạn có chắc muốn xoá sản phẩm này khỏi giỏ hàng?</div>
@@ -101,7 +103,7 @@ function CartItem(props) {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   )
 }

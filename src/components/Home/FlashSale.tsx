@@ -1,7 +1,7 @@
 import React from 'react'
-import { ProductsCarousel } from '../../ProductsCarousel'
-import { Product } from '../../Shared/ProductCard'
-import { ProductsContainer } from '../ProductsContainer'
+import { ProductsCarousel } from '../ProductsCarousel'
+import { Product } from '../ProductCard'
+import { ProductsContainer } from './ProductsContainer'
 
 export const flashSaleProducts = [...new Array(10)].map(
   () =>

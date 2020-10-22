@@ -4,7 +4,7 @@ import { Header } from '../components/Header'
 import { Footer } from '../components/Footer'
 import Head from '../components/Head'
 import { Nav } from '../components/Nav'
-import CartItem from '../components/CartItem'
+import CartItem from '../components/Cart/CartItem'
 
 function Cart() {
   const cartItem = [
@@ -15,7 +15,7 @@ function Cart() {
       quantity: 3,
       description: 'Hộp 26 gói x 20gr',
       slug: 'phosphalugel-boehringer-ingelheim-h-26g',
-      image:'https://images.thuocsi.vn/FrWZN5xT53QQ8Cs66rKHT228',
+      image: 'https://images.thuocsi.vn/FrWZN5xT53QQ8Cs66rKHT228',
     },
     {
       productName: 'phosphalugel boehringer ingelheim (h/26g)',
@@ -25,7 +25,7 @@ function Cart() {
       description: 'Hộp 26 gói x 20gr',
       slug: 'phosphalugel-boehringer-ingelheim-h-26g',
       oldPrice: 123456,
-      image:'https://images.thuocsi.vn/FrWZN5xT53QQ8Cs66rKHT228',
+      image: 'https://images.thuocsi.vn/FrWZN5xT53QQ8Cs66rKHT228',
     },
     {
       productName: 'phosphalugel boehringer ingelheim (h/26g)',
@@ -35,7 +35,7 @@ function Cart() {
       description: 'Hộp 26 gói x 20gr',
       slug: 'phosphalugel-boehringer-ingelheim-h-26g',
       limit: true,
-      image:'https://images.thuocsi.vn/FrWZN5xT53QQ8Cs66rKHT228',
+      image: 'https://images.thuocsi.vn/FrWZN5xT53QQ8Cs66rKHT228',
     },
   ]
   return (
@@ -70,167 +70,9 @@ function Cart() {
                 data-target="cart.items"
                 data-url="/api/cart_data/cart_items?page=1"
               >
-                {cartItem.map((item) => (
-                  <CartItem {...item} />
+                {cartItem.map((item, index) => (
+                  <CartItem key={index} {...item} />
                 ))}
-                <div
-                  className="cart-item"
-                  data-price={99600}
-                  data-product-id={1768}
-                  data-qty={12}
-                  data-target="cart.item"
-                >
-                  <div className="row align-items-center">
-                    <div className="col-7 d-flex align-items-center pl-4">
-                      <div
-                        className="cart-item__important-btn inactive"
-                        data-action="click->cart#updateImportantButton"
-                        data-item-id={3206540}
-                      >
-                        <i className="fas fa-star" />
-                      </div>
-                      <div
-                        className="cart-item__image lozad mr-2 loaded"
-                        data-background-image="https://images.thuocsi.vn/FrWZN5xT53QQ8Cs66rKHT228"
-                        style={{
-                          backgroundImage:
-                            'url("https://images.thuocsi.vn/FrWZN5xT53QQ8Cs66rKHT228")',
-                        }}
-                        data-loaded="true"
-                      />
-                      <div>
-                        <a
-                          className="cart-item__name"
-                          href="/products/phosphalugel-boehringer-ingelheim-h-26g"
-                          title="phosphalugel boehringer ingelheim (h/26g)"
-                        >
-                          phosphalugel boehringer ingelheim (h/26g)
-                        </a>
-                        <div className="cart-item__package">
-                          <small>Hộp 26 gói x 20gr</small>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-5 d-flex justify-content-between align-items-center">
-                      <div className="w-100">
-                        <div className="d-flex justify-content-between align-items-center">
-                          <div>
-                            {' '}
-                            <span className="cart-item__price">
-                              99.600<span className="unit">đ</span>
-                            </span>{' '}
-                            <span className="cart-item__old-price">
-                              100.600<span className="unit">đ</span>
-                            </span>
-                          </div>
-                          <div className="cart-item__qty">
-                            <div
-                              className="qty js-qty"
-                              data-action="cart:reload@window->qty#renderHTML
-qty:updating:1768@window->qty#showUpdating
-qty:updated:1768@window->qty#showUpdated
-qty:error:1768@window->qty#showError"
-                              data-controller="qty"
-                              data-qty-has-deal="true"
-                              data-qty-price={99600}
-                              data-qty-product-id={1768}
-                              data-target="qty.qty"
-                            >
-                              <button
-                                className="btn btn-sm qty__button qty__button--minus"
-                                data-action="qty#updateQtyViaButton"
-                                data-operation="-"
-                                data-target="qty.qtyBtn"
-                              >
-                                <i className="fas fa-minus" />
-                              </button>
-                              <input
-                                type="tel"
-                                name="item_quantity"
-                                defaultValue={12}
-                                className="form-control px-1 no-spinner text-center qty__input"
-                                inputMode="numeric"
-                                min={1}
-                                max={100000}
-                                step={1}
-                                autoComplete="off"
-                                placeholder={'0'}
-                                data-target="qty.qtyInput"
-                                data-action="qty#updateQtyViaInput"
-                              />
-                              <button
-                                className="btn btn-sm qty__button qty__button--plus"
-                                data-action="qty#updateQtyViaButton"
-                                data-operation="+"
-                                data-target="qty.qtyBtn"
-                              >
-                                <i className="fas fa-plus" />
-                              </button>
-                              <div
-                                className="qty__status text-center"
-                                data-product-id={1768}
-                                data-target="qty.status"
-                              >
-                                <small className="text-danger qty__status-updating">
-                                  <i className="fas fa-spinner fa-spin mr-1" />
-                                  Đang cập nhật
-                                </small>
-                                <small className="text-primary qty__status-updated">
-                                  <i className="fas fa-check-circle mr-1" />
-                                  Đã cập nhật
-                                </small>
-                                <small className="text-danger qty__status-error">
-                                  <i className="fas fa-exclamation-circle mr-1" />
-                                  Lỗi cập nhật
-                                </small>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="ml-3">
-                        <div
-                          className="cart-item__remove"
-                          data-action="click->cart#removeCartItem"
-                          data-remove-dialog="#cart-item-remove-dialog-3206540"
-                        >
-                          <i className="fas fa-trash" />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-12">
-                      <small className="text-danger">
-                        Số lượng có hạn! Hãy mau thanh toán để được hưởng giá ưu đãi.
-                      </small>
-                    </div>
-                  </div>
-                  <div className="d-none">
-                    <div className="cart-item-remove-dialog" id="cart-item-remove-dialog-3206540">
-                      <div className="container-fluid">
-                        <div className="mb-3">Bạn có chắc muốn xoá sản phẩm này khỏi giỏ hàng?</div>
-                        <div className="elevated p-3 d-flex">
-                          <div className="mr-3">
-                            <img
-                              alt="phosphalugel boehringer ingelheim (h/26g)"
-                              className="lozad img-fluid"
-                              data-src="https://images.thuocsi.vn/FrWZN5xT53QQ8Cs66rKHT228"
-                              src="https://assets.thuocsi.vn/assets/loader/spinner-loop-0323eb4af313e2798aa1311ac1a415c5739b445120b4d6f68a9dd22e085f40d5.gif"
-                              width={100}
-                            />
-                          </div>
-                          <div className="text-left">
-                            <div className="cart-item__name mb-2">
-                              phosphalugel boehringer ingelheim (h/26g)
-                            </div>
-                            <div className="cart-item__price">
-                              99.600<span className="unit">đ</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
               </div>
               <div className="elevated text-muted p-3 mb-4">
                 <i className="fas fa-exclamation-circle mr-1" />
