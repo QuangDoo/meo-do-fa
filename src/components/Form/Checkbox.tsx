@@ -1,12 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { v4 as uuid } from 'uuid'
 
 type CheckboxProps = {
   required?: boolean
-  name: string
+  name?: string
   label: React.ReactNode
 }
 
 const Checkbox = (props: CheckboxProps, ref) => {
+  const [id] = useState(uuid())
+
   return (
     <div className="form-group custom-control custom-checkbox">
       <input
@@ -15,9 +18,10 @@ const Checkbox = (props: CheckboxProps, ref) => {
         name={props.name}
         type="checkbox"
         ref={ref}
+        id={id}
       />
 
-      <label className="custom-control-label pt-1" htmlFor={props.name}>
+      <label className="custom-control-label pt-1" htmlFor={id}>
         {props.label}
       </label>
     </div>

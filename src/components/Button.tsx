@@ -6,15 +6,17 @@ type ButtonProps = {
   size?: 'sm' | 'md'
   block?: boolean
   className?: string
+  type?: 'button' | 'submit'
 }
 
 const Button: FC<ButtonProps> = (props) => {
-  const { variant = 'primary', size = 'md', className = '', block } = props
+  const { variant = 'primary', size = 'md', className = '', block, type = 'button' } = props
 
   return (
     <button
       onClick={props.onClick}
       className={`btn btn-${variant} btn-${size} ${block ? 'btn-block' : ''} ${className}`}
+      type={type}
     >
       {props.children}
     </button>

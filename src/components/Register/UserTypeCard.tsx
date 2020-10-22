@@ -1,24 +1,22 @@
 import React, { FC } from 'react'
 
-export type UserType = 'pharmacy' | 'clinic' | 'drugstore'
-
-export const userTypeMap: Record<UserType, string> = {
-  pharmacy: 'Nhà thuốc',
-  clinic: 'Phòng khám',
-  drugstore: 'Quầy thuốc',
-}
-
 type UserTypeCardProps = {
-  userType: UserType
+  text: string
   imgUrl: string
-  setUserType: (value: UserType) => void
+  onClick: () => void
 }
 
-const UserTypeCard: FC<UserTypeCardProps> = ({ userType, setUserType, imgUrl }) => {
+const UserTypeCard: FC<UserTypeCardProps> = ({ text, onClick, imgUrl }) => {
   return (
-    <div className="col-6 business-group__item p-2" onClick={() => setUserType(userType)}>
+    <div
+      className="col-6 business-group__item p-2"
+      onKeyPress={onClick}
+      onClick={onClick}
+      role="button"
+      tabIndex={0}
+    >
       <img alt="" className="img-fluid" src={imgUrl} />
-      <h6 className="business-group__item__text font-weight-bold">{userTypeMap[userType]}</h6>
+      <h6 className="business-group__item__text font-weight-bold">{text}</h6>
     </div>
   )
 }

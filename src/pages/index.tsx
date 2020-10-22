@@ -5,7 +5,7 @@ import { Header } from '../components/Header'
 import { HomePage } from '../components/Home'
 import { Nav } from '../components/Nav'
 import withApollo from '../utils/withApollo'
-
+import { GET_CATEGORIES } from '../graphql/category/category.query'
 
 const Home = () => {
   return (
