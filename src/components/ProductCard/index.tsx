@@ -57,7 +57,10 @@ const ProductCard = ({ badges = [], ...props }: Product) => {
               <br />
 
               <small className="text-muted product-card__category">
-                Nhóm: <Link href={`/products?category=${props.categoryId}`}>{props.category}</Link>
+                Nhóm:{' '}
+                <Link href={`/products?category=${props.categoryId}`}>
+                  <a>{props.category}</a>
+                </Link>
               </small>
             </div>
           </div>

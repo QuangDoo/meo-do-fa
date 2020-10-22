@@ -23,11 +23,17 @@ const SideBar = () => {
           Bộ lọc tìm kiếm
         </header>
       </div>
+
       <hr className="hr mb-3" />
+
       <Sorter />
+
       <hr className="hr mb-3" />
+
       <Filter header="Nhóm thuốc" data={drugGroupData} />
+
       <hr className="hr mb-3" />
+
       <Filter header="Nhà sản xuất" data={producerData} />
     </aside>
   )
