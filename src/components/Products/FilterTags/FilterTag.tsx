@@ -20,19 +20,11 @@ const FilterTag = (props: Props) => {
   // Undefined tab means all products tab
   const isActive = router.query.tab === tab
 
-  // Change tab query when clicked
-  const onClick = () => {
-    const newQuery = { ...router.query }
-
-    // Delete tab query if clicking "All products" tab
-    if (!tab) {
-      delete newQuery.tab
-    } else {
-      newQuery.tab = tab
-    }
-
-    updateQuery(newQuery)
-  }
+  // Update tab query when clicked
+  const onClick = () =>
+    updateQuery({
+      tab: tab,
+    })
 
   return (
     <button className={clsx('btn products__filter-btn', isActive && 'active')} onClick={onClick}>
