@@ -8,7 +8,7 @@ import React from 'react'
 import useUpdateQuery from '../../../hooks/useUpdateQuery'
 
 type Props = {
-  page?: number
+  page?: any
 }
 
 const PageButton = (props: Props) => {
