@@ -55,3 +55,7 @@ deploy-frontend:
     - mkdir -p $HOME/.kube
     - cp $KUBE_CONFIG $HOME/.kube/config
     - kubectl config view
+    - git clone https://${DOCKER_USER}:${DOCKER_PASSWORD}@gitlab.com:bebuy.vn/clients/thuocn/deployments.git
+    - cd ./deployments/charts/frontend
+    - helm upgrade --install -n medofa frontend "./" -f "./custom-values.prod.yaml"
+
