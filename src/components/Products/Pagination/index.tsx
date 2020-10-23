@@ -41,14 +41,14 @@ const Pagination = ({ totalProducts }: Props) => {
 
   // Populate siblings before current page
   for (let i = currentPage - 1; i > 1; i--) {
-    siblingsBefore.unshift(<PageButton page={i} />)
+    siblingsBefore.unshift(<PageButton key={i} page={i} />)
 
     if (!beforeGapHidden && siblingsBefore.length === siblingCount) break
   }
 
   // Populate siblings after current page
   for (let i = currentPage + 1; i < lastPage; i++) {
-    siblingsAfter.push(<PageButton page={i} />)
+    siblingsAfter.push(<PageButton key={i} page={i} />)
 
     if (!afterGapHidden && siblingsAfter.length === siblingCount) break
   }
@@ -59,7 +59,7 @@ const Pagination = ({ totalProducts }: Props) => {
         {/* Previous page button */}
         <NavigateButton type="prev" hidden={!router.query.page || router.query.page === '1'} />
 
-        {/* Page 1 always shown */}
+        {/* First page always shown */}
         <PageButton page={1} />
 
         <PageGap hidden={beforeGapHidden} />
