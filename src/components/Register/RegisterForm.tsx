@@ -1,8 +1,11 @@
+import { useQuery, useMutation } from '@apollo/react-hooks'
 import React, { FC, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import { emailRegex } from '../../assets/regex/email'
 import { viPhoneNumberRegex } from '../../assets/regex/viPhoneNumber'
+import { REGISTER_USER } from '../../graphql/user/register.mutation'
+import withApollo from '../../utils/withApollo'
 import Button from '../Button'
 import Checkbox from '../Form/Checkbox'
 import Input from '../Form/Input'
@@ -33,29 +36,44 @@ type Inputs = {
 const initialUserType = ''
 
 // RegisterForm Props
-type Props = undefined
+type Props = {}
 
-const RegisterForm: FC<Props> = (props) => {
+const RegisterForm = (props: Props) => {
   const { register, handleSubmit, setValue, watch, errors } = useForm<Inputs>()
 
+  const [regiterUser, { data: dataUser, loading: loadingUser, error: errorUser }] = useMutation(
+    REGISTER_USER
+  )
   // Watch userType value, with initial state
   // This component re-renders when userType changes
   const watchUserType = watch('userType', initialUserType)
 
   // Show error toasts when error changes
   useEffect(() => {
-    if (!errors) return
+    const errorNames = Object.keys(errors)
 
-    Object.keys(errors).forEach((errorField) => toast.error(errors[errorField].message))
+    if (!errorNames.length) return
+
+    const errorMessage = errorNames.map((name) => errors[name].message).join('\n')
+
+    toast.error(<div style={{ whiteSpace: 'pre-line' }}>{errorMessage}</div>)
   }, [errors])
 
   // On submit button click
   const onSubmit = (data: Inputs) => {
     console.log('Register Submit data:', data)
-
+    regiterUser({
+      variables: {
+        accountType: data.userType,
+        name: data.name,
+        email: data.email,
+        password: data.password,
+        phone: data.phone
+      },
+    });
     // Integrate with backend
   }
-
+console.log('dataUser', dataUser)
   // Set user type on UserTypeCard click (in ChooseUserType)
   const setUserType = (value: UserType) => {
     setValue('userType', value)
@@ -172,4 +190,4 @@ const RegisterForm: FC<Props> = (props) => {
   )
 }
 
-export default RegisterForm
+export default withApollo({ ssr: true })(RegisterForm)

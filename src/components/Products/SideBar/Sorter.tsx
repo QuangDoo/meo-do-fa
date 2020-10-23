@@ -1,6 +1,19 @@
+import { useRouter } from 'next/router'
 import React from 'react'
+import useUpdateQuery from '../../../hooks/useUpdateQuery'
 
 const Sorter = () => {
+  const router = useRouter()
+
+  const updateQuery = useUpdateQuery()
+
+  const onChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    updateQuery({
+      ...router.query,
+      sort: event.currentTarget.value,
+    })
+  }
+
   return (
     <div className="mb-3">
       <form
@@ -14,7 +27,7 @@ const Sorter = () => {
             Sắp xếp
           </label>
         </div>
-        <select name="sort" className="custom-select" style={{ width: '100%' }}>
+        <select name="sort" className="custom-select" style={{ width: '100%' }} onChange={onChange}>
           <option value="new_arrival">Sản phẩm mới</option>
           <option value="bestsellers">Bán chạy nhất</option>
           <option value="best_match">Phù hợp nhất</option>
