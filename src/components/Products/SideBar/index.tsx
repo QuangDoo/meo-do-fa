@@ -27,7 +27,9 @@ const SideBar = () => {
 
       <hr className="hr mb-3" />
 
-      <Sorter />
+      <div className="mb-3">
+        <Sorter />
+      </div>
 
       <hr className="hr mb-3" />
 

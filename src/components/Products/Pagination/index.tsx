@@ -57,7 +57,7 @@ const Pagination = ({ totalProducts }: Props) => {
     <div className="d-flex justify-content-center mb-3">
       <nav aria-label="pager" className="pagy-nav pagination" role="navigation">
         {/* Previous page button */}
-        <NavigateButton type="prev" hidden={!router.query.page || router.query.page === '1'} />
+        <NavigateButton type="prev" hidden={currentPage === 1} />
 
         {/* First page always shown */}
         <PageButton page={1} />
@@ -76,10 +76,10 @@ const Pagination = ({ totalProducts }: Props) => {
         <PageGap hidden={afterGapHidden} />
 
         {/* Last page always shown */}
-        <PageButton page={lastPage} />
+        {currentPage != lastPage && <PageButton page={lastPage} />}
 
         {/* Next page button */}
-        <NavigateButton type="next" hidden={router.query.page === lastPage.toString()} />
+        <NavigateButton type="next" hidden={currentPage === lastPage} />
       </nav>
     </div>
   )
