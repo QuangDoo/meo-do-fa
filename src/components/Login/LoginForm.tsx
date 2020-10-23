@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import Button from '../Button'
@@ -8,6 +8,11 @@ import Input from '../Form/Input'
 import { viPhoneNumberRegex } from '../../assets/regex/viPhoneNumber'
 import { emailRegex } from '../../assets/regex/email'
 
+import { useRouter } from 'next/router'
+import { useLazyQuery, useMutation } from '@apollo/react-hooks'
+import { LOGIN_USER } from '../../graphql/user/login.mutation'
+import withApollo from '../../utils/withApollo'
+
 type Props = {}
 
 type Inputs = {
@@ -15,15 +20,34 @@ type Inputs = {
   password: string
 }
 
-const LoginForm: FC<Props> = (props) => {
+const LoginForm = (props: Props) => {
+  const router = useRouter()
   const { register, handleSubmit, errors } = useForm<Inputs>()
+  const [login, { data: dataLogin, loading: loadingLogin, error: errorLogin }] = useMutation(
+    LOGIN_USER
+  )
+
   useEffect(() => {
     if (!errors) return
 
     Object.keys(errors).forEach((errorField) => toast.error(errors[errorField].message))
   }, [errors])
-  const onSubmit = (data) => {
-    console.log('data', data)
+
+  useEffect(() => {
+    if (dataLogin?.login?.token) {
+      router.push('/quick-order')
+      window.localStorage.setItem('token', dataLogin.login.token)
+    }
+  }, [dataLogin])
+
+  const onSubmit = async (data: Inputs) => {
+    // console.log('data :>> ', data)
+    await login({
+      variables: {
+        phone: data.username,
+        password: data.password,
+      },
+    })
   }
 
   return (
@@ -33,23 +57,24 @@ const LoginForm: FC<Props> = (props) => {
           name="username"
           ref={register({
             pattern: {
-              value: emailRegex || viPhoneNumberRegex,
-              message: 'Xin email hoặc số điện thoại hợp lệ.',
+              value: viPhoneNumberRegex,
+              message: 'Xin nhập số điện thoại hợp lệ.',
             },
           })}
           containerClass="mb-4"
           iconClass="icomoon icon-user"
           required
-          placeholder="Nhập số điện thoại hoặc email."
+          placeholder="Nhập số điện thoại."
         />
-
 
         <Input
           name="password"
-          ref={register({minLength:{
-            value: 6,
-            message: 'Xin nhập mật khẩu tối thiểu 6 kí tự.'
-          }})}
+          ref={register({
+            minLength: {
+              value: 6,
+              message: 'Xin nhập mật khẩu tối thiểu 6 kí tự.',
+            },
+          })}
           containerClass="mb-3"
           required={true}
           iconClass="icomoon icon-lock"
@@ -81,4 +106,4 @@ const LoginForm: FC<Props> = (props) => {
   )
 }
 
-export default LoginForm
+export default withApollo({ ssr: true })(LoginForm)

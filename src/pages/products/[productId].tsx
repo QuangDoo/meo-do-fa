@@ -10,6 +10,7 @@ import { useQuery } from '@apollo/react-hooks'
 import { GET_PRODUCT } from '../../graphql/product/product.query'
 import { useRouter } from 'next/router'
 
+
 function ProductDetail() {
   const [product, setProduct] = useState({})
   const router = useRouter()
@@ -29,6 +30,7 @@ function ProductDetail() {
     }
   }, [dataProduct])
   console.log('errorProduct', errorProduct)
+
 
   return (
     <>
