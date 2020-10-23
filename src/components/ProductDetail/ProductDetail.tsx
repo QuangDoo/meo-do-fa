@@ -6,19 +6,8 @@ type IngredientsType = {
     name: string,
     content: number
 }
-type PropsType = {
-    imageUrl: string,
-    titleImage: string,
-    altImage: string
-    name: string,
-    description: string,
-    views: number,
-    totalOrders: number
-    producer: string
-    category: string
-    ingredients: IngredientsType[]
-}
-const ProductDetailComponent = (props: PropsType) => {
+
+const ProductDetailComponent = (props) => {
 
     return (
         <>

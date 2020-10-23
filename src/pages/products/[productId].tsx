@@ -1,25 +1,35 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Layout from '../../components/Layout/Layout'
 import { Header } from '../../components/Header'
 import { Footer } from '../../components/Footer'
 import Head from '../../components/Head'
 import { Nav } from '../../components/Nav'
 import ProductDetailComponent from '../../components/ProductDetail/ProductDetail'
-
+import withApollo from '../../utils/withApollo'
+import { useQuery } from '@apollo/react-hooks'
+import { GET_PRODUCT } from '../../graphql/product/product.query'
+import { useRouter } from 'next/router'
 
 function ProductDetail() {
-  const product = {
-    imageUrl: 'https://images.thuocsi.vn/qefH9wdrY1UZzaa9MWJ9pJoi',
-    titleImage: 'Kidney Cap Bát Vị Bổ Thận Dương Opc (H/50v) 1',
-    altImage: 'Kidney Cap Bát Vị Bổ Thận Dương Opc (H/50v) 1',
-    name: 'Kidney Cap Bát Vị Bổ Thận Dương Opc (H/50v)',
-    description: 'Kidney Cap Bát Vị Bổ Thận Dương Opc (H/50v)',
-    views: 1,
-    totalOrders: 10,
-    producer: 'Công Ty Cổ Phần Dược Phẩm OPC',
-    category: 'Thực Phẩm Chức Năng',
-    ingredients: [{ name: 'Thục đại', content: 265 }, { name: 'Hoài sơn', content: 265 }, { name: 'Sơn thù', content: 265 }]
-  }
+  const [product, setProduct] = useState({})
+  const router = useRouter()
+  const { productId } = router.query
+  console.log('productId', productId)
+  const { data: dataProduct, loading: loadingProduct, error: errorProduct } = useQuery(
+    GET_PRODUCT,
+    {
+      variables: {
+        id: productId,
+      },
+    }
+  )
+  useEffect(() => {
+    if (dataProduct) {
+      setProduct(dataProduct)
+    }
+  }, [dataProduct])
+  console.log('errorProduct', errorProduct)
+
   return (
     <>
       <Head>
@@ -28,11 +38,11 @@ function ProductDetail() {
       <Header />
       <Nav />
       <Layout>
-        <ProductDetailComponent  {...product} />
+        <ProductDetailComponent {...product} />
       </Layout>
       <Footer />
     </>
   )
 }
 
-export default ProductDetail
+export default withApollo({ ssr: true })(ProductDetail)

@@ -1,11 +1,7 @@
 import React from 'react'
-type PropsType = {
-    imageUrl: string
-    alt?: string
-    titleImage?: string
-}
-const ProuductDetailImage = (props: PropsType) => {
-    console.log('props.src', props.imageUrl)
+
+const ProuductDetailImage = (props) => {
+    
     return (
         <div className="col-md-4">
             <div className="d-flex justify-content-between mb-2">
