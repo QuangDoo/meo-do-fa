@@ -1,7 +1,7 @@
 import clsx from 'clsx'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React from 'react'
-import useUpdateQuery from '../../hooks/useUpdateQuery'
 
 type Props = {
   tab?: string // The tab to change when this tag is clicked
@@ -14,22 +14,28 @@ const FilterTag = (props: Props) => {
 
   const router = useRouter()
 
-  const updateQuery = useUpdateQuery()
-
   // This tag is active if it's the current tab
-  // Undefined tab means all products tab
+  // Undefined means 'All products'
   const isActive = router.query.tab === tab
 
-  // Update tab query when clicked
-  const onClick = () =>
-    updateQuery({
-      tab: tab,
-    })
+  // Add tab to query
+  const newQuery = {
+    ...router.query,
+    tab: tab,
+  }
+
+  // If tab is undefined, remove it from query
+  if (tab === undefined) delete newQuery.tab
 
   return (
-    <button className={clsx('btn products__filter-btn', isActive && 'active')} onClick={onClick}>
-      {children}
-    </button>
+    <Link
+      href={{
+        pathname: router.pathname,
+        query: newQuery,
+      }}
+    >
+      <a className={clsx('btn products__filter-btn', isActive && 'active')}>{children}</a>
+    </Link>
   )
 }
 

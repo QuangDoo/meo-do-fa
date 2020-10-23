@@ -1,7 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-
 import { Menu, MenuItem } from '@material-ui/core'
 import { TFunction } from 'next-i18next'
 import React, { MouseEvent, useState } from 'react'
@@ -32,10 +28,10 @@ const LanguagePicker = ({ t }: Props) => {
 
   return (
     <>
-      <a className="promotion-nav__link" onClick={openMenu}>
+      <button className="promotion-nav__link" onClick={openMenu} style={{ border: 'none' }}>
         <i className="promotion-nav__icon fas fa-language" />
         <span>{t('header:language')}</span>
-      </a>
+      </button>
 
       <Menu id="simple-menu" anchorEl={anchorEl} keepMounted open={!!anchorEl} onClose={closeMenu}>
         {Object.keys(languageNames).map((code: LanguageCode) => (

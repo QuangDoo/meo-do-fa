@@ -4,23 +4,20 @@ import styled from 'styled-components'
 
 import SideBar from './SideBar'
 import ProductsHeader from './ProductsHeader'
-import { PaginateStatus } from './Pagination/PaginateStatus'
 import FilterTags from './FilterTags'
 import Pagination from './Pagination'
 import ProductList from './ProductList'
 import { Product } from '../ProductCard'
 import { useRouter } from 'next/router'
-
-const StyledProductsWrap = styled.div`
-  padding: 3rem;
-`
+import { useLazyQuery } from '@apollo/react-hooks'
+import { GET_PRODUCTS } from '../../graphql/product/product.query'
 
 const productListProduct: Product = {
   new: true,
   name: 'egudin solifenacin succinat 5mg medisun (h/30v)',
-  imageId: 'Lg9NokKW5SY2TGdtiEKFCNeR',
+  image: 'Lg9NokKW5SY2TGdtiEKFCNeR',
   price: '430.500',
-  productId: 'egudin-solifenacin-succinat-5mg-medisun-h-30v',
+  id: 'egudin-solifenacin-succinat-5mg-medisun-h-30v',
   unit: 'Hộp 3 vỉ x 10 viên',
   category: 'thận, tiết niệu',
   categoryId: 'than-tiet-nieu',
@@ -33,7 +30,7 @@ export const exampleProducts: Product[] = [...new Array(10)].map(() => ({
 
 export const productsPageSize = 20
 
-const exampleTotalProducts = 311
+// const exampleTotalProducts = 311
 
 const Products = () => {
   const router = useRouter()
@@ -44,36 +41,58 @@ const Products = () => {
   // TODO: Integration
   const [totalProducts, setTotalProducts] = useState<number>(0)
 
+  const [getProducts, { data, loading }] = useLazyQuery(GET_PRODUCTS)
+
+  // Loading products
   useEffect(() => {
-    console.log('Products query changed:', router.query)
+    console.log('Loading products:', loading)
+  }, [loading])
+
+  // Update products state when data arrives
+  useEffect(() => {
+    if (!data) return
+
+    console.log('Products data:', data.getProducts)
+
+    setProducts(data.getProducts)
+    setTotalProducts(data.getProducts.length)
+  }, [data])
+
+  useEffect(() => {
+    console.log('Products query:', router.query)
 
     // Get products again when query changes
-    // TODO: Integration
-    setTotalProducts(exampleTotalProducts)
-    setProducts(exampleProducts)
+    getProducts({
+      variables: {
+        page: +(router.query.page as string) || 1,
+        pageSize: productsPageSize,
+      },
+    })
   }, [router.query])
 
   return (
-    <StyledProductsWrap>
-      <Row>
-        <Col span={4}>
+    <div className="products container-fluid mobile-content my-3 my-sm-5">
+      <div className="row flex-nowrap justify-content-between px-lg-5 px-sm-3">
+        <div className="products__sidebar pr-4 d-none d-sm-block">
           <SideBar />
-        </Col>
+        </div>
         <Col span={20} style={{ paddingLeft: '1.5rem' }}>
-          <ProductsHeader />
-
-          <PaginateStatus total={totalProducts} />
+          <ProductsHeader totalProducts={totalProducts} />
 
           <FilterTags />
 
-          <Pagination totalProducts={exampleTotalProducts} />
+          {products.length > 0 && (
+            <Col>
+              <Pagination totalProducts={totalProducts} />
 
-          <ProductList products={products} />
+              <ProductList products={products} />
 
-          <Pagination totalProducts={exampleTotalProducts} />
+              <Pagination totalProducts={totalProducts} />
+            </Col>
+          )}
         </Col>
-      </Row>
-    </StyledProductsWrap>
+      </div>
+    </div>
   )
 }
 
