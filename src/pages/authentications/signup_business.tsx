@@ -18,7 +18,7 @@ function SignupBusiness() {
         if (e.target.files.length > 0) {
           // Accessed .name from file
           setFileName(e.target.files[0].name)
-          console.log(e.target.files[0].name)
+          // console.log(e.target.files[0].name)
         }
         break
       default:
@@ -110,10 +110,10 @@ function SignupBusiness() {
                 <a href="/" title="thuocsi.vn">
                   <img
                     alt="thuocsi.vn"
+                    data-src="/assets/images/logo-49156a6a8b6688f3eb1098b08d406267e8770cffd64b6f07bb31e2e52536346d.svg"
                     className="img-fluid lozad"
-                    data-src="https://assets.thuocsi.vn/assets/buymed/logos/logo-49156a6a8b6688f3eb1098b08d406267e8770cffd64b6f07bb31e2e52536346d.svg"
                     title="thuocsi.vn"
-                    src="https://assets.thuocsi.vn/assets/buymed/logos/logo-49156a6a8b6688f3eb1098b08d406267e8770cffd64b6f07bb31e2e52536346d.svg"
+                    src="/assets/images/logo-49156a6a8b6688f3eb1098b08d406267e8770cffd64b6f07bb31e2e52536346d.svg"
                     data-loaded="true"
                   />
                 </a>
@@ -133,7 +133,6 @@ function SignupBusiness() {
       {/* <Nav /> */}
       <Layout>
         <form
-          id="edit_user_65238"
           encType="multipart/form-data"
           action="/signup_business"
           acceptCharset="UTF-8"
@@ -141,11 +140,7 @@ function SignupBusiness() {
           onSubmit={handleSubmit(onSubmit)}
         >
           <input type="hidden" name="_method" defaultValue="put" />
-          <input
-            type="hidden"
-            name="authenticity_token"
-            defaultValue="QewCyZZABe/EE7TPkdeD4tgTxASHz2+N2FV9Bq6eFg6b/suK94jMdxjRE9UYQASbxijoDwCkR2yQkGRTuddpJg=="
-          />
+          <input type="hidden" name="authenticity_token" />
           <div className="container signup-business py-3 py-sm-5">
             <div className="row justify-content-center">
               <div className="col-12 col-sm-9 mb-3">
@@ -172,12 +167,9 @@ function SignupBusiness() {
                           aria-describedby="businessNameHelpBlock"
                           type="text"
                           name="user[businesses_attributes][0][name]"
-                          id="user_businesses_attributes_0_name"
                           ref={register}
                         />
-                        <small className="form-text text-muted" id="businessNameHelpBlock">
-                          Vd: Dược Hoàng Vũ
-                        </small>
+                        <small className="form-text text-muted">Vd: Dược Hoàng Vũ</small>
                       </div>
                     </div>
                     <div className="form-group">
@@ -192,12 +184,9 @@ function SignupBusiness() {
                         aria-describedby="representativeHelpBlock"
                         type="text"
                         name="user[businesses_attributes][0][representative]"
-                        id="user_businesses_attributes_0_representative"
                         ref={register}
                       />
-                      <small className="form-text text-muted" id="representativeHelpBlock">
-                        Vd. Trần Thị B
-                      </small>
+                      <small className="form-text text-muted">Vd. Trần Thị B</small>
                     </div>
                     <div className="form-group">
                       <label
@@ -214,12 +203,9 @@ function SignupBusiness() {
                         size={14}
                         type="text"
                         name="user[businesses_attributes][0][tax_number]"
-                        id="user_businesses_attributes_0_tax_number"
                         ref={register}
                       />
-                      <small className="form-text text-muted" id="taxNumberHelpBlock">
-                        Vd. 8026906145
-                      </small>
+                      <small className="form-text text-muted">Vd. 8026906145</small>
                     </div>
                     <div className="form-group">
                       <label className="form__label" htmlFor="user_businesses_attributes_0_">
@@ -230,7 +216,6 @@ function SignupBusiness() {
                           className="custom-file-input"
                           type="file"
                           name="user[businesses_attributes][0][license_file]"
-                          id="user_businesses_attributes_0_license_file"
                           onChange={(event) => handleChange(event)}
                           ref={register}
                         />
@@ -252,14 +237,13 @@ function SignupBusiness() {
                         required
                         type="text"
                         name="user[businesses_attributes][0][address]"
-                        id="user_businesses_attributes_0_address"
                         ref={register}
                       />
-                      <small className="form-text text-muted" id="addressHelpBlock">
+                      <small className="form-text text-muted">
                         Vd. 11 Ngô Quyền, Tân Lợi, Tp. Buôn Ma Thuột, Đắk Lắk
                       </small>
                     </div>
-                    <div className="row" data-controller="address">
+                    <div className="row">
                       <div className="col-md-4 form-group">
                         <label
                           className="form__label required"
@@ -270,10 +254,7 @@ function SignupBusiness() {
                         <select
                           className="custom-select d-block"
                           required
-                          data-target="address.city"
-                          data-action="address#selectCity"
                           name="user[businesses_attributes][0][city_id]"
-                          id="user_businesses_attributes_0_city_id"
                           ref={register}
                           onChange={(e) => {
                             e.target.value
@@ -304,10 +285,7 @@ function SignupBusiness() {
                           className="custom-select d-block"
                           disabled={disabledDistrict}
                           required
-                          data-target="address.district"
-                          data-action="address#selectDistrict"
                           name="user[businesses_attributes][0][district_id]"
-                          id="user_businesses_attributes_0_district_id"
                           ref={register}
                           onChange={(e) => {
                             e.target.value ? setDisabledWard(false) : setDisabledWard(true)
@@ -331,9 +309,7 @@ function SignupBusiness() {
                           className="custom-select d-block"
                           disabled={disabledWard}
                           required
-                          data-target="address.ward"
                           name="user[businesses_attributes][0][ward_id]"
-                          id="user_businesses_attributes_0_ward_id"
                           ref={register}
                         >
                           {ward.map((item, index) => (
@@ -362,14 +338,12 @@ function SignupBusiness() {
           </div>
         </form>
         <input
-          data-controller="flash"
-          data-target="flash.message"
           type="hidden"
           defaultValue='{"messages":[{"type":"notice","body":"Xin chào! Bạn đã đăng ký thành công."}]}'
         />
-        <div data-resource-id={63628} id="resource" />
+        <div id="resource" />
         <div id="modal-holder" />
-        <div data-turbolinks-permanent id="fb-root" className=" fb_reset">
+        <div className=" fb_reset">
           <div style={{ position: 'absolute', top: '-10000px', width: '0px', height: '0px' }}>
             <div />
           </div>
@@ -379,8 +353,8 @@ function SignupBusiness() {
           &lt;iframe height="0" src="https://www.googletagmanager.com/ns.html?id=GTM-TBKGGQF"
           style="display:none;visibility:hidden" width="0"&gt;&lt;/iframe&gt;
         </noscript> */}
-        {/* <div className="iziToast-wrapper iziToast-wrapper-topRight" /> */}
-        {/* <iframe
+      {/* <div className="iziToast-wrapper iziToast-wrapper-topRight" /> */}
+      {/* <iframe
           id="insider-worker"
           src="https://thuocsivn.api.useinsider.com/worker-new.html"
           style={{ display: 'none' }}

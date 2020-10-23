@@ -13,13 +13,7 @@ function CartItem(props) {
 
   console.log('props :>> ', props)
   return (
-    <div
-      className="cart-item"
-      data-price={props.productName}
-      data-product-id={props.price}
-      data-qty={props.quantity}
-      data-target="cart.item"
-    >
+    <div className="cart-item">
       <div className="row align-items-center">
         <div className="col-7 d-flex align-items-center pl-4">
           <div
