@@ -7,9 +7,9 @@ export const flashSaleProducts = [...new Array(10)].map(
   () =>
     ({
       new: true,
-      imageId: 'gV7ACwEuH8vkfEJVV8tMbix3',
+      image: 'gV7ACwEuH8vkfEJVV8tMbix3',
       price: '783.200',
-      productId:
+      id:
         'combo-eucerin-tri-mun-kem-kiem-soat-dau-giam-mun-pro-acne-a-i-matt-fluid-50ml-tinh-chat-tri-mun-viem-proacne-ai-clearing-treatment-40ml-tang-nuoc-tay-trang-200ml',
       category: 'dược mỹ phẩm',
       categoryId: 'duoc-my-pham',

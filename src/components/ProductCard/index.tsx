@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import React from 'react'
 import { DiscountRibbon } from './DiscountRibbon'
 
@@ -13,8 +14,8 @@ export type Product = {
   unit: string
   category: string
   categoryId: string
-  imageId: string
-  productId: string
+  image: string
+  id: string
 
   badges?: BadgeType[]
   new?: boolean
@@ -26,6 +27,14 @@ export type Product = {
 }
 
 const ProductCard = ({ badges = [], ...props }: Product) => {
+  console.log('Product card data:', props)
+
+  const router = useRouter()
+
+  const onClick = () => {
+    router.push(`/products/${props.id}`)
+  }
+
   return (
     <div className="product-card-container">
       <article className={`product-card card ${props.deal ? 'deal-card' : ''}`}>
@@ -35,12 +44,14 @@ const ProductCard = ({ badges = [], ...props }: Product) => {
 
             {props.discountPercent && <DiscountRibbon discountPercent={props.discountPercent} />}
 
-            <ProductImage imageId={props.imageId} productId={props.productId} />
+            <ProductImage imageId={props.image} productId={props.id} />
 
             <div>
-              <a className="text-decoration-none" href={props.productId}>
-                <h6 className="product-card__name">{props.name}</h6>
-              </a>
+              <Link href={`/products/${props.id}`}>
+                <a className="text-decoration-none">
+                  <h6 className="product-card__name">{props.name}</h6>
+                </a>
+              </Link>
 
               <div className="product__status mb-2">
                 {badges.map((badgeType) => (

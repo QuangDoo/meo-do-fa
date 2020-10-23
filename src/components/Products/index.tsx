@@ -15,9 +15,9 @@ import { GET_PRODUCTS } from '../../graphql/product/product.query'
 const productListProduct: Product = {
   new: true,
   name: 'egudin solifenacin succinat 5mg medisun (h/30v)',
-  imageId: 'Lg9NokKW5SY2TGdtiEKFCNeR',
+  image: 'Lg9NokKW5SY2TGdtiEKFCNeR',
   price: '430.500',
-  productId: 'egudin-solifenacin-succinat-5mg-medisun-h-30v',
+  id: 'egudin-solifenacin-succinat-5mg-medisun-h-30v',
   unit: 'Hộp 3 vỉ x 10 viên',
   category: 'thận, tiết niệu',
   categoryId: 'than-tiet-nieu',

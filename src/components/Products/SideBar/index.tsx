@@ -33,7 +33,9 @@ const SideBar = () => {
 
       <hr className="hr mb-3" />
 
-      <Filter header="Nhóm thuốc" data={drugGroupData} />
+      <div className="mb-3">
+        <Filter header="Nhóm thuốc" data={drugGroupData} />
+      </div>
 
       <hr className="hr mb-3" />
 
