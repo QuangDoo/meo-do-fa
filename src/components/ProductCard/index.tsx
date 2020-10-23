@@ -26,6 +26,12 @@ export type Product = {
 }
 
 const ProductCard = ({ badges = [], ...props }: Product) => {
+  let token = ''
+  // console.log(localStorage.getItem('token'))
+  if (typeof window !== 'undefined') {
+    token = localStorage.getItem('token')
+  }
+
   return (
     <div className="product-card-container">
       <article className={`product-card card ${props.deal ? 'deal-card' : ''}`}>
@@ -43,13 +49,15 @@ const ProductCard = ({ badges = [], ...props }: Product) => {
               </a>
 
               <div className="product__status mb-2">
-                {badges.map((badgeType) => (
-                  <ProductBadge
-                    key={badgeType}
-                    type={badgeType}
-                    expirationDate={props.expirationDate}
-                  />
-                ))}
+                {token
+                  ? badges.map((badgeType) => (
+                      <ProductBadge
+                        key={badgeType}
+                        type={badgeType}
+                        expirationDate={props.expirationDate}
+                      />
+                    ))
+                  : null}
               </div>
 
               <small className="text-muted">{props.unit}</small>
@@ -64,14 +72,25 @@ const ProductCard = ({ badges = [], ...props }: Product) => {
               </small>
             </div>
           </div>
+          {token ? (
+            <div className="product-card__buy">
+              <div className="mb-2">
+                <ProductPrice price={props.price} />
+              </div>
 
-          <div className="product-card__buy">
-            <div className="mb-2">
-              <ProductPrice price={props.price} />
+              <QuantityInput />
             </div>
-
-            <QuantityInput />
-          </div>
+          ) : (
+            <div className="product-card__buy">
+              <a
+                className="btn btn-block btn-sm btn-outline-primary"
+                data-modal="true"
+                href="/authentications/login"
+              >
+                Đăng nhập để có giá tốt
+              </a>
+            </div>
+          )}
         </div>
       </article>
     </div>

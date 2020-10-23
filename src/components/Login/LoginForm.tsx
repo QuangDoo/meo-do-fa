@@ -41,13 +41,13 @@ const LoginForm = (props: Props) => {
   }, [dataLogin])
 
   const onSubmit = async (data: Inputs) => {
-    // console.log('data :>> ', data)
     await login({
       variables: {
         phone: data.username,
         password: data.password,
       },
     })
+    console.log('data :>> ', errorLogin)
   }
 
   return (
