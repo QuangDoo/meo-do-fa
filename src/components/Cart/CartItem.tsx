@@ -10,8 +10,8 @@ function CartItem(props) {
   const [open, setOpen] = useState(false)
   const openModal = () => setOpen(true)
   const closeModal = () => setOpen(false)
- 
-  
+
+  console.log('props :>> ', props)
   return (
     <div
       className="cart-item"
@@ -55,10 +55,10 @@ function CartItem(props) {
             <div className="d-flex justify-content-between align-items-center">
               <div>
                 {' '}
-                <ProductPrice price={props.price} />{' '}
-                {props.oldPrice && (
+                <ProductPrice price={props.price.toLocaleString('de-DE')} />{' '}
+                {props.oldPrice > props.price && (
                   <span className="cart-item__old-price">
-                    {props.oldPrice}
+                    {props.oldPrice.toLocaleString('de-DE')}
                     <span className="unit">đ</span>
                   </span>
                 )}

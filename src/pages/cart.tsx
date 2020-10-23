@@ -11,11 +11,13 @@ function Cart() {
     {
       productName: 'phosphalugel boehringer ingelheim (h/26g)',
       price: 99600,
+      oldPrice: 99600,
       id: 123,
       quantity: 3,
       description: 'Hộp 26 gói x 20gr',
       slug: 'phosphalugel-boehringer-ingelheim-h-26g',
       image: 'https://images.thuocsi.vn/FrWZN5xT53QQ8Cs66rKHT228',
+      important: false,
     },
     {
       productName: 'phosphalugel boehringer ingelheim (h/26g)',
@@ -26,18 +28,30 @@ function Cart() {
       slug: 'phosphalugel-boehringer-ingelheim-h-26g',
       oldPrice: 123456,
       image: 'https://images.thuocsi.vn/FrWZN5xT53QQ8Cs66rKHT228',
+      important: false,
     },
     {
       productName: 'phosphalugel boehringer ingelheim (h/26g)',
       price: 99600,
+      oldPrice: 99600,
       id: 123,
       quantity: 3,
       description: 'Hộp 26 gói x 20gr',
       slug: 'phosphalugel-boehringer-ingelheim-h-26g',
       limit: true,
       image: 'https://images.thuocsi.vn/FrWZN5xT53QQ8Cs66rKHT228',
+      important: false,
     },
   ]
+  const totalQuantity = cartItem.reduce((current, total) => {
+    return current + total.quantity
+  }, 0)
+  const totalAfterDiscount = cartItem.reduce((current, total) => {
+    return current + total.quantity * total.price
+  }, 0)
+  const totalBeforeDiscount = cartItem.reduce((current, total) => {
+    return current + total.quantity * total.oldPrice
+  }, 0)
   return (
     <>
       <Head>
@@ -114,7 +128,8 @@ function Cart() {
                         <small>Số lượng</small>
                       </div>
                       <div className="cart__quantity text-secondary">
-                        <b data-target="cart.cartQty">57</b>
+                        {totalQuantity}
+                        {/* <b data-target="cart.cartQty">57</b> */}
                       </div>
                     </div>
                   </div>
@@ -124,10 +139,11 @@ function Cart() {
                         <small>Tổng tiền</small>
                       </div>
                       <div className="cart__total" data-target="cart.cartTotal">
-                        13.565.360<span className="unit">đ</span>
+                        {totalAfterDiscount.toLocaleString('de-DE')} <span className="unit">đ</span>
                       </div>
                       <div className="cart__old-total" data-target="cart.cartOldTotal">
-                        13.665.360<span className="unit">đ</span>
+                        {totalBeforeDiscount.toLocaleString('de-DE')}{' '}
+                        <span className="unit">đ</span>
                       </div>
                     </div>
                   </div>

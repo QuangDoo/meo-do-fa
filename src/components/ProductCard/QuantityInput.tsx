@@ -1,9 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 function QuantityInput(props) {
+  const [quantity, setQuantity] = useState(props.quantity)
+  const plus = () => {
+    setQuantity(quantity + 1)
+  }
+  const minus = () => {
+    setQuantity(quantity - 1)
+  }
   return (
     <div className="qty js-qty">
-      <button className="btn btn-sm qty__button qty__button--minus">
+      <button className="btn btn-sm qty__button qty__button--minus" onClick={minus}>
         <i className="fas fa-minus" />
       </button>
 
@@ -18,9 +25,10 @@ function QuantityInput(props) {
         autoComplete="off"
         placeholder="0"
         defaultValue={props.quantity}
+        value={quantity}
       />
 
-      <button className="btn btn-sm qty__button qty__button--plus">
+      <button className="btn btn-sm qty__button qty__button--plus" onClick={plus}>
         <i className="fas fa-plus" />
       </button>
 

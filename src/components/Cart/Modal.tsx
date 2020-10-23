@@ -47,7 +47,7 @@ const RemoveModal: FC<RemoveModalProps> = (props) => {
                 </div>
                 <div className="swal2-icon swal2-info" style={{ display: 'none' }} />
                 <div className="swal2-icon swal2-success" style={{ display: 'none' }} />
-                <img className="swal2-image" style={{ display: 'none' }} />
+                <img className="swal2-image" style={{ display: 'none' }} alt="" />
                 <h2 className="swal2-title" id="swal2-title" style={{ display: 'flex' }}>
                   Xin xác nhận
                 </h2>
@@ -56,6 +56,7 @@ const RemoveModal: FC<RemoveModalProps> = (props) => {
                   className="swal2-close"
                   aria-label="Close this dialog"
                   style={{ display: 'flex' }}
+                  onClick={props.onClose}
                 >
                   ×
                 </button>

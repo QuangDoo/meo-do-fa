@@ -374,7 +374,8 @@ function SignupBusiness() {
             <div />
           </div>
         </div>
-        {/* <noscript>
+      </Layout>
+      {/* <noscript>
           &lt;iframe height="0" src="https://www.googletagmanager.com/ns.html?id=GTM-TBKGGQF"
           style="display:none;visibility:hidden" width="0"&gt;&lt;/iframe&gt;
         </noscript> */}
@@ -441,7 +442,6 @@ function SignupBusiness() {
           />
         </div>
         <style id="ins-free-style" innerhtml dangerouslySetInnerHTML={{ __html: '' }} /> */}
-      </Layout>
       {/* <Footer /> */}
     </>
   )
