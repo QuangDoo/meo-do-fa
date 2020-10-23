@@ -74,7 +74,7 @@ const RegisterForm = (props: Props) => {
     // Integrate with backend
   }
   useEffect(() => {
-    if (dataUser?.login?.token) {
+    if (dataUser?.createUser?.token) {
       window.localStorage.setItem('token', dataUser.createUser.token)
     }
   }, [dataUser])
