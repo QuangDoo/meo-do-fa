@@ -36,9 +36,9 @@ type Inputs = {
 const initialUserType = ''
 
 // RegisterForm Props
-type Props = undefined
+type Props = {}
 
-const RegisterForm: FC<Props> = (props) => {
+const RegisterForm = (props: Props) => {
   const { register, handleSubmit, setValue, watch, errors } = useForm<Inputs>()
 
   const [regiterUser, { data: dataUser, loading: loadingUser, error: errorUser }] = useMutation(
@@ -50,9 +50,13 @@ const RegisterForm: FC<Props> = (props) => {
 
   // Show error toasts when error changes
   useEffect(() => {
-    if (!errors) return
+    const errorNames = Object.keys(errors)
 
-    Object.keys(errors).forEach((errorField) => toast.error(errors[errorField].message))
+    if (!errorNames.length) return
+
+    const errorMessage = errorNames.map((name) => errors[name].message).join('\n')
+
+    toast.error(<div style={{ whiteSpace: 'pre-line' }}>{errorMessage}</div>)
   }, [errors])
 
   // On submit button click
