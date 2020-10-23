@@ -68,12 +68,17 @@ const RegisterForm = (props: Props) => {
         name: data.name,
         email: data.email,
         password: data.password,
-        phone: data.phone
+        phone: data.phone,
       },
-    });
+    })
     // Integrate with backend
   }
-console.log('dataUser', dataUser)
+  useEffect(() => {
+    if (dataUser?.login?.token) {
+      window.localStorage.setItem('token', dataUser.createUser.token)
+    }
+  }, [dataUser])
+  console.log('dataUser', dataUser)
   // Set user type on UserTypeCard click (in ChooseUserType)
   const setUserType = (value: UserType) => {
     setValue('userType', value)

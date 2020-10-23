@@ -16,3 +16,17 @@ export const GET_PRODUCTS = gql`
     }
   }
 `
+
+export const GET_PRODUCTS_LAB = gql`
+  query getProducts($page: Int!, $limit: Int!) {
+    getProducts(page: $page, limit: $limit) {
+      name
+      categories {
+        name
+        slug
+      }
+      slug
+      price
+    }
+  }
+`

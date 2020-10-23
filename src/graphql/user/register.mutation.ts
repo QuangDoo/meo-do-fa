@@ -19,6 +19,7 @@ export const REGISTER_USER = gql`
     ) {
       code
       status
+      token
     }
   }
 `

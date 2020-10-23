@@ -5,7 +5,7 @@ import { DiscountRibbon } from './DiscountRibbon'
 import { BadgeType, ProductBadge } from './ProductBadge'
 import { ProductImage } from './ProductImage'
 import { ProductPrice } from './ProductPrice'
-import { QuantityInput } from './QuantityInput'
+import QuantityInput from './QuantityInput'
 
 export type Product = {
   name: string
