@@ -2,15 +2,31 @@ import { TFunction } from 'next-i18next'
 import Link from 'next/link'
 import React from 'react'
 import { withTranslation } from '../../../i18n'
+import FooterLink from './FooterLink'
 
 // Wrap YourComponent with "withTranslate([namespaces])(YourComponent)"
 // YourComponent will then receive "t" prop
 // use t('namespace:id') to translate message
-type FooterProps = {
+type Props = {
   readonly t: TFunction
 }
 
-const Footer = ({ t }: FooterProps) => {
+const generalInformationTexts = [
+  'footer:about_us',
+  'footer:privacy_policy',
+  'footer:faq',
+  'footer:general_policy',
+  'common:recruitment',
+  'footer:terms_of_service',
+  'footer:dispute_resolution',
+  'footer:terms_and_conditions',
+  'footer:operating_regulations',
+  'common:supply',
+]
+
+const halfLength = generalInformationTexts.length / 2
+
+const Footer = ({ t }: Props) => {
   return (
     <div className="footer">
       <div className="container pb-5">
@@ -60,7 +76,7 @@ const Footer = ({ t }: FooterProps) => {
 
                 {t('footer:ecommerce_license_label') + ': '}
                 <b>
-                  <a className="footer__link">{t('footer:ecommerce_license_number')}</a>
+                  <FooterLink href="" text={t('footer:ecommerce_license_number')} />
                 </b>
               </p>
 
@@ -80,39 +96,21 @@ const Footer = ({ t }: FooterProps) => {
 
               <div className="row">
                 <div className="col-12 col-sm-6">
-                  <a className="footer__link">{t('footer:about_us')}</a>
-
-                  <br />
-
-                  <a className="footer__link">{t('footer:privacy_policy')}</a>
-
-                  <br />
-
-                  <a className="footer__link">{t('footer:faq')}</a>
-
-                  <br />
-
-                  <a className="footer__link">{t('footer:general_policy')}</a>
-
-                  <br />
-
-                  <a className="footer__link" title={t('common:recruitment')}>
-                    {t('common:recruitment')}
-                  </a>
+                  {generalInformationTexts.slice(0, halfLength).map((text, index) => (
+                    <>
+                      <FooterLink href="" text={t(text)} />
+                      {index < halfLength - 1 && <br />}
+                    </>
+                  ))}
                 </div>
 
                 <div className="col-12 col-sm-6">
-                  <a className="footer__link">{t('footer:terms_of_service')}</a>
-
-                  <a className="footer__link">{t('footer:dispute_resolution')}</a>
-
-                  <a className="footer__link">{t('footer:terms_and_conditions')}</a>
-
-                  <a className="footer__link">{t('footer:operating_regulations')}</a>
-
-                  <a className="footer__link" title={t('common:supply')}>
-                    {t('common:supply')}
-                  </a>
+                  {generalInformationTexts.slice(halfLength).map((text, index) => (
+                    <>
+                      <FooterLink href="" text={t(text)} />
+                      {index < halfLength * 2 - 1 && <br />}
+                    </>
+                  ))}
                 </div>
               </div>
             </div>
