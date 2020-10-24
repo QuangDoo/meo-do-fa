@@ -27,14 +27,6 @@ export type Product = {
 }
 
 const ProductCard = ({ badges = [], ...props }: Product) => {
-  console.log('Product card data:', props)
-
-  const router = useRouter()
-
-  const onClick = () => {
-    router.push(`/products/${props.id}`)
-  }
-
   return (
     <div className="product-card-container">
       <article className={`product-card card ${props.deal ? 'deal-card' : ''}`}>

@@ -1,7 +1,6 @@
-import { Menu } from 'antd'
 import { TFunction } from 'next-i18next'
-import React, { FC } from 'react'
-import { i18n, withTranslation } from '../../../i18n'
+import React from 'react'
+import { withTranslation } from '../../../i18n'
 import Login from '../Login'
 import Register from '../Register'
 import LanguagePicker from './LanguagePicker'
@@ -10,7 +9,7 @@ type HeaderProps = {
   readonly t: TFunction
 }
 
-const Header: FC<HeaderProps> = ({ t }) => {
+const Header = ({ t }: HeaderProps) => {
   return (
     <header className="header bg-white">
       <nav className="promotion-nav">

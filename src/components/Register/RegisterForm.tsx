@@ -1,8 +1,12 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+
 import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
+import styled from 'styled-components'
 import { emailRegex } from '../../assets/regex/email'
 import { viPhoneNumberRegex } from '../../assets/regex/viPhoneNumber'
+import { useModalControlDispatch } from '../../contexts/ModalControl'
 import Button from '../Button'
 import Checkbox from '../Checkbox'
 import Input from '../Input'
@@ -27,19 +31,25 @@ type Inputs = {
   password: string
   phone: number
   referPhone: number
+  acceptTerms: boolean
 }
 
-// Initial userType state
+const ErrorToast = styled.div`
+  white-space: pre-line;
+`
+
+// Initial value for userType
 const initialUserType = ''
 
-// RegisterForm Props
-type Props = {}
-
-const RegisterForm = (props: Props) => {
+const RegisterForm = () => {
   const { register, handleSubmit, setValue, watch, errors } = useForm<Inputs>()
 
-  // Watch userType value, with initial state
-  // This component re-renders when userType changes
+  const modalControlDispatch = useModalControlDispatch()
+
+  const openLoginModal = () => modalControlDispatch({ type: 'OPEN_LOGIN_MODAL' })
+
+  // Watch userType value, with initial state as ''
+  // This component will re-render when userType changes
   const watchUserType = watch('userType', initialUserType)
 
   // Show error toasts when error changes
@@ -50,7 +60,7 @@ const RegisterForm = (props: Props) => {
 
     const errorMessage = errorNames.map((name) => errors[name].message).join('\n')
 
-    toast.error(<div style={{ whiteSpace: 'pre-line' }}>{errorMessage}</div>)
+    toast.error(<ErrorToast>{errorMessage}</ErrorToast>)
   }, [errors])
 
   // On submit button click
@@ -87,11 +97,12 @@ const RegisterForm = (props: Props) => {
 
         <Input
           name="name"
-          ref={register}
+          ref={register({
+            required: 'Xin nhập tên.',
+          })}
           containerClass="mb-4"
           iconClass="icomoon icon-user"
           placeholder="Nhập tên (bắt buộc)"
-          required
         />
 
         <Input
@@ -102,11 +113,11 @@ const RegisterForm = (props: Props) => {
               value: viPhoneNumberRegex,
               message: 'Xin nhập số điện thoại hợp lệ.',
             },
+            required: 'Xin nhập số điện thoại.',
           })}
           containerClass="mb-4"
           iconClass="icomoon icon-phone"
           placeholder="Nhập số điện thoại (bắt buộc)"
-          required
         />
 
         <Input
@@ -125,6 +136,7 @@ const RegisterForm = (props: Props) => {
         <Input
           name="password"
           ref={register({
+            required: 'Xin nhập mật khẩu.',
             minLength: {
               value: 6,
               message: 'Xin nhập mật khẩu tối thiểu 6 kí tự.',
@@ -134,12 +146,15 @@ const RegisterForm = (props: Props) => {
           iconClass="icomoon icon-lock"
           placeholder="Nhập mật khẩu (bắt buộc)"
           type="password"
-          required
         />
 
         <Input
           name="referPhone"
           ref={register({
+            pattern: {
+              value: viPhoneNumberRegex,
+              message: 'Xin nhập số điện thoại giới thiệu hợp lệ.',
+            },
             validate: () => true, // Check with backend if referer phone number exists
           })}
           containerClass="mb-4"
@@ -149,13 +164,13 @@ const RegisterForm = (props: Props) => {
         />
 
         <Checkbox
-          required
+          ref={register({
+            required: 'Xin đồng ý với Điều khoản sử dụng.',
+          })}
+          name="acceptTerms"
           label={
             <>
-              Tôi đã đọc và đồng ý với{' '}
-              <a href="/terms-and-condition" target="_blank">
-                Điều khoản sử dụng
-              </a>
+              Tôi đã đọc và đồng ý với <a>Điều khoản sử dụng</a>
               <span className="text-danger"> *</span>
             </>
           }
@@ -163,7 +178,14 @@ const RegisterForm = (props: Props) => {
 
         <div className="mb-4">
           Nếu bạn đã có tài khoản, vui lòng{' '}
-          <a className="text-secondary" data-modal="true" href="/authentications/login">
+          <a
+            className="text-secondary"
+            data-modal="true"
+            onClick={openLoginModal}
+            onKeyPress={openLoginModal}
+            role="button"
+            tabIndex={0}
+          >
             Đăng nhập
           </a>
         </div>
