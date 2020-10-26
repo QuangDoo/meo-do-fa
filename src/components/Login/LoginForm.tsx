@@ -86,7 +86,13 @@ const LoginForm = () => {
           type="password"
         />
 
-        <Checkbox name="remember_password" label="Nhớ mật khẩu" className="align-self-start" />
+        <Checkbox
+          name="remember_password"
+          ref={register}
+          label="Nhớ mật khẩu"
+          containerClass="form-group align-self-start"
+          labelClass="pt-1"
+        />
 
         <div className="mb-4">
           <a data-modal="true" href="/authentications/reset_password">

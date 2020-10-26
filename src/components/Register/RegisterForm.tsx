@@ -186,6 +186,8 @@ const RegisterForm = () => {
             required: 'Xin đồng ý với Điều khoản sử dụng.',
           })}
           name="acceptTerms"
+          containerClass="form-group"
+          labelClass="pt-1"
           label={
             <>
               Tôi đã đọc và đồng ý với <a>Điều khoản sử dụng</a>
