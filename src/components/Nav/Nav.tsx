@@ -2,6 +2,10 @@ import React from 'react'
 import Link from 'next/link'
 
 export default function Nav() {
+  const logOut = () => {
+    localStorage.removeItem('token')
+    window.location.reload()
+  }
   return (
     <nav className="buymed-nav shrink">
       <div className="container">
@@ -57,7 +61,7 @@ export default function Nav() {
             <div className="buymed-search-container" />
             <div className="header-right header-right--guest">
               <ul className="nav align-items-center">
-                <li className="nav-item mr-3">
+                <li className="nav-item mr-3" onClick={logOut}>
                   <a className="buymed-nav__link">
                     <i className="fas fa-sign-in-alt buymed-nav__icon" />
                   </a>

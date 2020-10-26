@@ -8,7 +8,7 @@ import LoginToSeePrice from './LoginToSeePrice'
 import ProductBadge, { BadgeType } from './ProductBadge'
 import { ProductImage } from './ProductImage'
 import { ProductPrice } from './ProductPrice'
-import { QuantityInput } from './QuantityInput'
+import QuantityInput from './QuantityInput'
 
 export interface Product extends WithTranslation {
   name: string
@@ -51,13 +51,14 @@ const ProductCard = ({ badges = [], t, ...props }: Product) => {
               </Link>
 
               <div className="product__status mb-2">
-                {badges.map((badgeType) => (
-                  <ProductBadge
-                    key={badgeType}
-                    type={badgeType}
-                    expirationDate={props.expirationDate}
-                  />
-                ))}
+                {isLoggedIn &&
+                  badges.map((badgeType) => (
+                    <ProductBadge
+                      key={badgeType}
+                      type={badgeType}
+                      expirationDate={props.expirationDate}
+                    />
+                  ))}
               </div>
 
               <small className="text-muted">{props.unit}</small>
