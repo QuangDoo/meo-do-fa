@@ -4,6 +4,7 @@ import React from 'react'
 import { withTranslation } from '../../../i18n'
 import useIsLoggedIn from '../../hooks/useIsLoggedIn'
 import { DiscountRibbon } from './DiscountRibbon'
+import LoginToSeePrice from './LoginToSeePrice'
 import ProductBadge, { BadgeType } from './ProductBadge'
 import { ProductImage } from './ProductImage'
 import { ProductPrice } from './ProductPrice'
@@ -81,9 +82,7 @@ const ProductCard = ({ badges = [], t, ...props }: Product) => {
                 <QuantityInput />
               </>
             ) : (
-              <a className="btn btn-block btn-sm btn-outline-primary">
-                {t('productCard:loginToSeePrice')}
-              </a>
+              <LoginToSeePrice />
             )}
           </div>
         </div>

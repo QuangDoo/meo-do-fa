@@ -22,7 +22,7 @@ const Home = () => {
 }
 
 Home.getInitialProps = async () => ({
-  namespacesRequired: ['common', 'header', 'footer'],
+  namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge'],
 })
 
 export default Home

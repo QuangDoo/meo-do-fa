@@ -97,19 +97,19 @@ const Footer = ({ t }: Props) => {
               <div className="row">
                 <div className="col-12 col-sm-6">
                   {generalInformationTexts.slice(0, halfLength).map((text, index) => (
-                    <>
-                      <FooterLink key={index} href="" text={t(text)} />
+                    <React.Fragment key={index}>
+                      <FooterLink href="" text={t(text)} />
                       {index < halfLength - 1 && <br />}
-                    </>
+                    </React.Fragment>
                   ))}
                 </div>
 
                 <div className="col-12 col-sm-6">
                   {generalInformationTexts.slice(halfLength).map((text, index) => (
-                    <>
-                      <FooterLink key={index} href="" text={t(text)} />
+                    <React.Fragment key={index}>
+                      <FooterLink href="" text={t(text)} />
                       {index < halfLength * 2 - 1 && <br />}
-                    </>
+                    </React.Fragment>
                   ))}
                 </div>
               </div>
