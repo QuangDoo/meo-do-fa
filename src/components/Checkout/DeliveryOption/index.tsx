@@ -21,6 +21,7 @@ const DeliveryOption = (props, ref) => {
             label: <FastDeliveryLabel />,
             value: 'fast',
             children: <FastDeliveryRules />,
+            disabled: true, // Disable fast delivery or not
           },
         ]}
       />
