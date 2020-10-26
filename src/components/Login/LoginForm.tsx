@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
@@ -12,15 +13,18 @@ import { useRouter } from 'next/router'
 import { useLazyQuery, useMutation } from '@apollo/react-hooks'
 import { LOGIN_USER } from '../../graphql/user/login.mutation'
 import withApollo from '../../utils/withApollo'
-
-type Props = {}
+import { useModalControlDispatch } from '../../contexts/ModalControl'
 
 type Inputs = {
   username: string
   password: string
 }
 
-const LoginForm = (props: Props) => {
+const LoginForm = () => {
+  const dispatch = useModalControlDispatch()
+
+  const openRegisterModal = () => dispatch({ type: 'OPEN_REGISTER_MODAL' })
+
   const router = useRouter()
   const { register, handleSubmit, errors } = useForm<Inputs>()
   const [login, { data: dataLogin, loading: loadingLogin, error: errorLogin }] = useMutation(
@@ -96,7 +100,13 @@ const LoginForm = (props: Props) => {
 
         <span className="text-capitalize ">
           Để nhận ưu đãi hấp dẫn,
-          <a className="text-secondary ml-1" data-modal="true" href="/authentications/signup">
+          <a
+            className="text-secondary ml-1"
+            onKeyPress={openRegisterModal}
+            onClick={openRegisterModal}
+            role="button"
+            tabIndex={0}
+          >
             <b>đăng ký thành viên</b>
           </a>
           .
