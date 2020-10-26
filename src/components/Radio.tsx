@@ -18,6 +18,7 @@ const RadioInput = (props: Props, ref) => {
     <>
       {props.options.map((option) => {
         const id = `${props.name}_option_${option.value}`
+
         return (
           <div key={id} className="custom-control custom-radio">
             <input

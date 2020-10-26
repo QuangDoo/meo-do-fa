@@ -1,8 +1,9 @@
 import React from 'react'
+import DescriptionBox from '../DescriptionBox'
 
 const CheckoutWarning = () => {
   return (
-    <div className="checkout__description checkout__description--white mt-2">
+    <DescriptionBox white>
       <ol className="pl-4 mb-0">
         <li>Thuocsi có thể hủy đơn hàng của bạn nếu chênh lệch hơn 5% giá trị sản phẩm.</li>
 
@@ -11,7 +12,7 @@ const CheckoutWarning = () => {
           cung cấp.
         </li>
       </ol>
-    </div>
+    </DescriptionBox>
   )
 }
 

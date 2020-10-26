@@ -1,14 +1,14 @@
 import React, { forwardRef } from 'react'
-import InputCard from './InputCard'
-import RadioInput from './RadioInput'
+import Radio from '../../Radio'
+import InputCard from '../InputCard'
 import TransferPaymentInfo from './TransferPaymentInfo'
 import TransferPaymentLabel from './TransferPaymentLabel'
 
 const PaymentOption = (props, ref) => {
   return (
     <InputCard title="Hình thức thanh toán">
-      <RadioInput
-        name="deliveryOption"
+      <Radio
+        name="paymentOption"
         ref={ref({
           required: 'Xin chọn hình thức thanh toán.',
         })}

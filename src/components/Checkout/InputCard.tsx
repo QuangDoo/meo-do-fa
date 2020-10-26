@@ -6,6 +6,7 @@ type Props = {
   title: string
   titleChildren?: React.ReactNode
   hasRequired?: boolean
+  description?: string
 }
 
 const InputCard = (props: Props) => {
@@ -23,7 +24,12 @@ const InputCard = (props: Props) => {
           </small>
         )}
 
-        {props.titleChildren}
+        {props.description && (
+          <small className="text-muted mb-2 d-inline-block">
+            Trường hợp không tìm được thuốc mong muốn, Quý khách vui lòng điền yêu cầu bên dưới.
+            Chúng tôi sẽ liên hệ mua thuốc và báo giá sớm nhất có thể.
+          </small>
+        )}
       </div>
 
       {props.children}

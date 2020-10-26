@@ -1,8 +1,8 @@
 import React, { forwardRef } from 'react'
+import InputCard from '../InputCard'
+import RadioInput from '../../Radio'
 import FastDeliveryLabel from './FastDeliveryLabel'
 import FastDeliveryRules from './FastDeliveryRules'
-import InputCard from './InputCard'
-import RadioInput from './RadioInput'
 
 const DeliveryOption = (props, ref) => {
   return (

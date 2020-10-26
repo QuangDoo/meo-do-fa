@@ -1,10 +1,10 @@
 import React from 'react'
-import { emailRegex } from '../../assets/regex/email'
-import { viPhoneNumberRegex } from '../../assets/regex/viPhoneNumber'
-import Checkbox from '../Checkbox'
-import InputCard from './InputCard'
-import SelectWithLabel from './SelectWithLabel'
-import InputWithLabel from './InputWithLabel'
+import { emailRegex } from '../../../assets/regex/email'
+import { viPhoneNumberRegex } from '../../../assets/regex/viPhoneNumber'
+import Checkbox from '../../Checkbox'
+import InputCard from '../InputCard'
+import InputWithLabel from '../InputWithLabel'
+import SelectWithLabel from '../SelectWithLabel'
 
 const mockCities = [
   {
@@ -74,8 +74,8 @@ const DeliveryInfo = (props, register) => {
         })}
         label="Họ Tên khách hàng"
         type="text"
-        labelClass="required"
         placeholder="Vd. Nguyễn Văn B"
+        required
       />
 
       <div className="row">
@@ -92,8 +92,8 @@ const DeliveryInfo = (props, register) => {
           type="number"
           label="Số điện thoại"
           containerClass="col-sm-4"
-          labelClass="required"
           placeholder="Vd. 0999123456"
+          required
         />
 
         {/* Email input */}
@@ -118,10 +118,16 @@ const DeliveryInfo = (props, register) => {
         ref={register({
           required: 'Xin nhập địa chỉ giao hàng.',
         })}
-        label="Địa chỉ giao hàng"
+        label={
+          <>
+            Địa chỉ giao hàng{' '}
+            <span className="text-muted">
+              (Nhập địa chỉ, tên đường. Rồi chọn tỉnh/thành phố, phường/xã, quận/huyện)
+            </span>
+          </>
+        }
         type="text"
-        instructions="Nhập địa chỉ, tên đường. Rồi chọn tỉnh/thành phố, phường/xã, quận/huyện"
-        labelClass="required"
+        required
       />
 
       <div className="row">
@@ -132,8 +138,8 @@ const DeliveryInfo = (props, register) => {
             required: 'Xin chọn tỉnh/thành phố.',
           })}
           label="Tỉnh/Thành phố"
-          labelClass="required"
           containerClass="col-md-4"
+          required
         >
           <option value="">Chọn tỉnh/thành phố...</option>
 

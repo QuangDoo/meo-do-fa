@@ -1,9 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import Link from 'next/link'
 import React from 'react'
 import { useForm } from 'react-hook-form'
-import Checkbox from '../Checkbox'
-import CheckoutWarning from './CheckoutWarning'
+import Agreement from './Agreement'
 import CustomerNotes from './CustomerNotes'
 import DeliveryInfo from './DeliveryInfo'
 import DeliveryOption from './DeliveryOption'
@@ -14,6 +12,7 @@ const CheckoutPage = () => {
   const { register, handleSubmit } = useForm({
     defaultValues: {
       deliveryOption: 'standard',
+      paymentOption: 'bank_transfer',
       saveInfo: true,
     },
   })
@@ -48,20 +47,7 @@ const CheckoutPage = () => {
             </div>
 
             <div className="form-group">
-              <Checkbox
-                ref={register}
-                name="agreement"
-                label={
-                  <>
-                    Tôi đồng ý với{' '}
-                    <Link href="#">
-                      <a>Điều khoản sử dụng</a>
-                    </Link>
-                  </>
-                }
-              >
-                <CheckoutWarning />
-              </Checkbox>
+              <Agreement ref={register} />
             </div>
           </div>
 

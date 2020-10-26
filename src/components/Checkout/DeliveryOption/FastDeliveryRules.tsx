@@ -1,5 +1,6 @@
 import clsx from 'clsx'
 import React from 'react'
+import DescriptionBox from '../DescriptionBox'
 
 const rules = [
   <span key={0}>
@@ -22,14 +23,14 @@ const rules = [
 
 const FastDeliveryRules = () => {
   return (
-    <div className="checkout__description mt-2">
+    <DescriptionBox>
       {rules.map((rule, index) => (
         <p key={index} className={clsx(index < rules.length - 1 ? 'mb-2' : 'mb-0')}>
           <i className="fa fa-info-circle text-info mr-2"></i>
           {rule}
         </p>
       ))}
-    </div>
+    </DescriptionBox>
   )
 }
 

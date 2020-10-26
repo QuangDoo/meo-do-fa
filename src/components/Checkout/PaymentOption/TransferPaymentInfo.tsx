@@ -1,5 +1,6 @@
 import clsx from 'clsx'
 import React from 'react'
+import DescriptionBox from '../DescriptionBox'
 
 type Line = {
   label: string
@@ -32,7 +33,7 @@ const TransferPaymentInfo = () => {
 
       <small className="text-muted">Giảm 0.5% cho đơn hàng chuyển khoản trước.</small>
 
-      <div className="checkout__description mt-2">
+      <DescriptionBox>
         <div className="bank-info">
           {lines.map((line, index) => (
             <div key={index} className={clsx('d-flex', index < lines.length - 1 && 'mb-2')}>
@@ -41,7 +42,7 @@ const TransferPaymentInfo = () => {
             </div>
           ))}
         </div>
-      </div>
+      </DescriptionBox>
     </>
   )
 }
