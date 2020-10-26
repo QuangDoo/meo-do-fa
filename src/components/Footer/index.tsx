@@ -98,7 +98,7 @@ const Footer = ({ t }: Props) => {
                 <div className="col-12 col-sm-6">
                   {generalInformationTexts.slice(0, halfLength).map((text, index) => (
                     <>
-                      <FooterLink href="" text={t(text)} />
+                      <FooterLink key={index} href="" text={t(text)} />
                       {index < halfLength - 1 && <br />}
                     </>
                   ))}
@@ -107,7 +107,7 @@ const Footer = ({ t }: Props) => {
                 <div className="col-12 col-sm-6">
                   {generalInformationTexts.slice(halfLength).map((text, index) => (
                     <>
-                      <FooterLink href="" text={t(text)} />
+                      <FooterLink key={index} href="" text={t(text)} />
                       {index < halfLength * 2 - 1 && <br />}
                     </>
                   ))}

@@ -1,14 +1,15 @@
+import { TFunction, WithTranslation, WithTranslationHocType } from 'next-i18next'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 import React from 'react'
+import { withTranslation } from '../../../i18n'
+import useIsLoggedIn from '../../hooks/useIsLoggedIn'
 import { DiscountRibbon } from './DiscountRibbon'
-
 import { BadgeType, ProductBadge } from './ProductBadge'
 import { ProductImage } from './ProductImage'
 import { ProductPrice } from './ProductPrice'
 import { QuantityInput } from './QuantityInput'
 
-export type Product = {
+export interface Product extends WithTranslation {
   name: string
   price: string
   unit: string
@@ -24,15 +25,18 @@ export type Product = {
   oldPrice?: string
   deal?: boolean
   expirationDate?: string
+  readonly t: TFunction
 }
 
-const ProductCard = ({ badges = [], ...props }: Product) => {
+const ProductCard = ({ badges = [], t, ...props }: Product) => {
+  const isLoggedIn = useIsLoggedIn()
+
   return (
     <div className="product-card-container">
       <article className={`product-card card ${props.deal ? 'deal-card' : ''}`}>
         <div className="product-card__main">
           <div className="product-card__description mb-3">
-            {props.new && <div className="product-card__new-arrival">Mới</div>}
+            {props.new && <div className="product-card__new-arrival">{t('productCard:new')}</div>}
 
             {props.discountPercent && <DiscountRibbon discountPercent={props.discountPercent} />}
 
@@ -60,7 +64,7 @@ const ProductCard = ({ badges = [], ...props }: Product) => {
               <br />
 
               <small className="text-muted product-card__category">
-                Nhóm:{' '}
+                {t('productCard:category')}:{' '}
                 <Link href={`/products?category=${props.categoryId}`}>
                   <a>{props.category}</a>
                 </Link>
@@ -69,11 +73,18 @@ const ProductCard = ({ badges = [], ...props }: Product) => {
           </div>
 
           <div className="product-card__buy">
-            <div className="mb-2">
-              <ProductPrice price={props.price} />
-            </div>
-
-            <QuantityInput />
+            {isLoggedIn ? (
+              <>
+                <div className="mb-2">
+                  <ProductPrice price={props.price} />
+                </div>
+                <QuantityInput />
+              </>
+            ) : (
+              <a className="btn btn-block btn-sm btn-outline-primary">
+                {t('productCard:loginToSeePrice')}
+              </a>
+            )}
           </div>
         </div>
       </article>
@@ -81,4 +92,4 @@ const ProductCard = ({ badges = [], ...props }: Product) => {
   )
 }
 
-export default ProductCard
+export default withTranslation(['productCard'])(ProductCard)

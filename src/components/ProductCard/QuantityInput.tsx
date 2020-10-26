@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const QuantityInput = (props) => (
+export const QuantityInput = () => (
   <div className="qty js-qty">
     <button className="btn btn-sm qty__button qty__button--minus">
       <i className="fas fa-minus" />
