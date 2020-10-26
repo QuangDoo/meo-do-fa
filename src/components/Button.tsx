@@ -1,7 +1,8 @@
-import React, { FC } from 'react'
+import React, { forwardRef } from 'react'
 
-type ButtonProps = {
+type Props = {
   onClick?: () => void
+  children: React.ReactNode
   variant: 'primary' | 'secondary' | 'gradient' | 'light' | 'outline-primary' | 'outline-light'
   size?: 'sm' | 'md'
   block?: boolean
@@ -9,7 +10,7 @@ type ButtonProps = {
   type?: 'button' | 'submit'
 }
 
-const Button: FC<ButtonProps> = (props) => {
+const Button = (props: Props, ref) => {
   const { variant = 'primary', size = 'md', className = '', block, type = 'button' } = props
 
   return (
@@ -23,4 +24,4 @@ const Button: FC<ButtonProps> = (props) => {
   )
 }
 
-export default Button
+export default forwardRef(Button)

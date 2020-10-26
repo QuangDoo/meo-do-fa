@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import React from 'react'
+import Button from '../../Button'
 
 const StickyHeader = () => {
   return (
@@ -10,8 +11,10 @@ const StickyHeader = () => {
       </h4>
 
       <div>
-        <Link href="/cart">
-          <a className="btn btn-primary btn-sm">Sửa</a>
+        <Link href="/cart" passHref>
+          <Button size="sm" variant="primary">
+            Sửa
+          </Button>
         </Link>
       </div>
     </div>
