@@ -7,6 +7,7 @@ type CheckboxProps = {
   label: React.ReactNode
   containerClass?: string
   labelClass?: string
+  children?: React.ReactNode
 }
 
 const Checkbox = (props: CheckboxProps, ref) => {
@@ -19,6 +20,8 @@ const Checkbox = (props: CheckboxProps, ref) => {
       <label className={clsx('custom-control-label', props.labelClass)} htmlFor={id}>
         {props.label}
       </label>
+
+      {props.children}
     </div>
   )
 }

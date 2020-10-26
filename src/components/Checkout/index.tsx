@@ -1,11 +1,19 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import Link from 'next/link'
 import React from 'react'
 import { useForm } from 'react-hook-form'
-import Agreement from './Agreement'
+import Checkbox from '../Checkbox'
+import CheckoutWarning from './CheckoutWarning'
+import CustomerNotes from './CustomerNotes'
 import DeliveryInfo from './DeliveryInfo'
+import DeliveryOption from './DeliveryOption'
+import PaymentOption from './PaymentOption'
+import StickySidebar from './StickySidebar'
 
 const CheckoutPage = () => {
   const { register, handleSubmit } = useForm({
     defaultValues: {
+      deliveryOption: 'standard',
       saveInfo: true,
     },
   })
@@ -27,23 +35,39 @@ const CheckoutPage = () => {
               <DeliveryInfo ref={register} />
             </div>
 
-            <div className="mb-4">{/* Form of delivery */}</div>
+            <div className="mb-4">
+              <DeliveryOption ref={register} />
+            </div>
 
-            <div className="mb-4">{/* Form of payment */}</div>
+            <div className="mb-4">
+              <PaymentOption ref={register} />
+            </div>
 
-            <div className="mb-4">{/* Customer notes */}</div>
+            <div className="mb-4">
+              <CustomerNotes ref={register} />
+            </div>
 
             <div className="form-group">
-              <Agreement
+              <Checkbox
+                ref={register}
                 name="agreement"
-                ref={register({
-                  required: 'Xin đồng ý với Điều khoản sử dụng',
-                })}
-              />
+                label={
+                  <>
+                    Tôi đồng ý với{' '}
+                    <Link href="#">
+                      <a>Điều khoản sử dụng</a>
+                    </Link>
+                  </>
+                }
+              >
+                <CheckoutWarning />
+              </Checkbox>
             </div>
           </div>
 
-          <div className="col-md-4 mb-3">{/* Sticky sidebar */}</div>
+          <div className="col-md-4 mb-3">
+            <StickySidebar ref={register} />
+          </div>
         </div>
       </div>
     </form>

@@ -23,4 +23,8 @@ const Checkout = () => {
   )
 }
 
+Checkout.getInitialProps = async () => ({
+  namespacesRequired: [''],
+})
+
 export default Checkout
