@@ -1,7 +1,7 @@
 import React from 'react'
 import Layout from '../components/Layout/Layout'
 import { Header } from '../components/Header'
-import { Footer } from '../components/Footer'
+import Footer from '../components/Footer'
 import Head from '../components/Head'
 import { Nav } from '../components/Nav'
 

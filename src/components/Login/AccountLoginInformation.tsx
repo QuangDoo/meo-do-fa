@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react'
-import Input from '../Form/Input'
+import Input from '../Input'
 type Props = {
   error?: string
 }

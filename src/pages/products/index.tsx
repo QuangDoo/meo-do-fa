@@ -1,10 +1,11 @@
 import React from 'react'
 import { Header } from '../../components/Header'
-import { Footer } from '../../components/Footer'
+import Footer from '../../components/Footer'
 import Head from '../../components/Head'
 import { Nav } from '../../components/Nav'
 import ProductsPage from '../../components/Products'
 import { withTranslation } from '../../../i18n'
+import withApollo from '../../utils/withApollo'
 
 function Products() {
   return (
@@ -20,4 +21,6 @@ function Products() {
   )
 }
 
-export default withTranslation('')(Products)
+const WithTranslation = withTranslation('')(Products)
+
+export default withApollo({ ssr: true })(WithTranslation)

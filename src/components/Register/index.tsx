@@ -1,6 +1,7 @@
 import { TFunction } from 'next-i18next'
-import React, { FC, useState } from 'react'
+import React from 'react'
 import { withTranslation } from '../../../i18n'
+import { useModalControlDispatch, useModalControlState } from '../../contexts/ModalControl'
 import Button from '../Button'
 import Modal from '../Modal'
 import RegisterForm from './RegisterForm'
@@ -9,15 +10,24 @@ type RegisterModalProps = {
   readonly t: TFunction
 }
 
-const Register: FC<RegisterModalProps> = (props) => {
-  const { t } = props
+const Register = ({ t }: RegisterModalProps) => {
+  // Modal is open or not
+  const { registerIsOpen } = useModalControlState()
 
-  // Open modal or not
-  const [open, setOpen] = useState(false)
+  // Dispatch to update ModalControl context
+  const dispatch = useModalControlDispatch()
 
-  const openModal = () => setOpen(true)
+  const openModal = () => {
+    dispatch({
+      type: 'OPEN_REGISTER_MODAL',
+    })
+    console.log('opened register modal')
+  }
 
-  const closeModal = () => setOpen(false)
+  const closeModal = () =>
+    dispatch({
+      type: 'CLOSE_REGISTER_MODAL',
+    })
 
   return (
     <>
@@ -28,7 +38,7 @@ const Register: FC<RegisterModalProps> = (props) => {
 
       {/* Register modal */}
       <Modal
-        open={open}
+        open={registerIsOpen}
         title="Tạo Tài Khoản"
         onClose={closeModal}
         className="authentication signup"
