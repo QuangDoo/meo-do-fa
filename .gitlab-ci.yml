@@ -19,6 +19,15 @@ stages:
   # - test
   - deploy
 
+.pre-dev-deploy:
+  before_script:
+    - apk update  && apk add --no-cache curl git
+    - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+    - chmod +x ./kubectl && mv ./kubectl /usr/local/bin/kubectl
+    - mkdir -p $HOME/.kube
+    - cp $KUBE_CONFIG $HOME/.kube/config
+    - git clone https://${DOCKER_USER}:${DOCKER_PASSWORD}@gitlab.com/bebuy.vn/clients/thuocn/deployments.git
+
 build-frontend:
   stage: build
   only:
@@ -42,38 +51,14 @@ deploy-dev-frontend:
   image: alpine/helm
   only:
     - develop
-    # - master
 
   tags:
     - bebuy-gitlab-ci
     - bb-gitlab-ci
   
-  script:
-    - apk update  && apk add --no-cache curl git
-    - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
-    - chmod +x ./kubectl && mv ./kubectl /usr/local/bin/kubectl
-    - mkdir -p $HOME/.kube
-    - cp $KUBE_CONFIG $HOME/.kube/config
-    - git clone https://${DOCKER_USER}:${DOCKER_PASSWORD}@gitlab.com/bebuy.vn/clients/thuocn/deployments.git
-    - cd ./deployments/charts/frontend
-    - helm upgrade --install -n medofa frontend "./" -f "./custom-values.dev.yaml"
+  extends:
+    - .pre-dev-deploy
 
-deploy-prod-frontend:
-  stage: deploy
-  image: alpine/helm
-  only:
-    - master
-
-  tags:
-    - bebuy-gitlab-ci
-    - bb-gitlab-ci
-  
   script:
-    - apk update  && apk add --no-cache curl git
-    - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
-    - chmod +x ./kubectl && mv ./kubectl /usr/local/bin/kubectl
-    - mkdir -p $HOME/.kube
-    - cp $KUBE_CONFIG_PROD $HOME/.kube/config
-    - git clone https://${DOCKER_USER}:${DOCKER_PASSWORD}@gitlab.com/bebuy.vn/clients/thuocn/deployments.git
     - cd ./deployments/charts/frontend
     - helm upgrade --install -n medofa frontend "./" -f "./custom-values.dev.yaml"

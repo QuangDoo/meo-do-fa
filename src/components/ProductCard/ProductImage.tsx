@@ -1,4 +1,4 @@
-import { useRouter } from 'next/router'
+import Link from 'next/link'
 import React from 'react'
 
 type ProductImageProps = {
@@ -7,21 +7,17 @@ type ProductImageProps = {
 }
 
 export const ProductImage = (props: ProductImageProps) => {
-  const router = useRouter()
-
-  const onClick = () => {
-    router.push(`/products/${props.productId}`)
-  }
-
   return (
-    <a onClick={onClick}>
-      <div
-        className="product-card__image mb-3 lozad"
-        style={{
-          backgroundImage: `url(https://images.thuocsi.vn/${props.imageId})`,
-          cursor: 'pointer',
-        }}
-      />
-    </a>
+    <Link href={`/products/${props.productId}`}>
+      <a>
+        <div
+          className="product-card__image mb-3 lozad"
+          style={{
+            backgroundImage: `url(https://images.thuocsi.vn/${props.imageId})`,
+            cursor: 'pointer',
+          }}
+        />
+      </a>
+    </Link>
   )
 }

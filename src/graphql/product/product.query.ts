@@ -42,3 +42,20 @@ export const GET_PRODUCT = gql`
     }
   }
 `
+
+// export const GET_PRODUCTS = gql`
+//   query getAllProduct($input: GetAllProductInput!) {
+//     getProducts(input: $input) {
+//       data {
+//         id
+//         sku
+//         name
+//         price
+//         finalPrice
+//         promotionPercent
+//         namePath
+//         image
+//       }
+//     }
+//   }
+// `
