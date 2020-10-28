@@ -12,11 +12,11 @@ import QuantityInput from './QuantityInput'
 
 export interface Product extends WithTranslation {
   name: string
-  price: string
+  list_price: string
   unit: string
   category: string
   categoryId: string
-  image: string
+  image_128: string
   id: string
 
   badges?: BadgeType[]
@@ -31,7 +31,7 @@ export interface Product extends WithTranslation {
 
 const ProductCard = ({ badges = [], t, ...props }: Product) => {
   const isLoggedIn = useIsLoggedIn()
-
+  console.log('props', props)
   return (
     <div className="product-card-container">
       <article className={`product-card card ${props.deal ? 'deal-card' : ''}`}>
@@ -41,7 +41,7 @@ const ProductCard = ({ badges = [], t, ...props }: Product) => {
 
             {props.discountPercent && <DiscountRibbon discountPercent={props.discountPercent} />}
 
-            <ProductImage imageId={props.image} productId={props.id} />
+            <ProductImage imageId={props.image_128} productId={props.id} />
 
             <div>
               <Link href={`/products/${props.id}`}>
@@ -78,7 +78,7 @@ const ProductCard = ({ badges = [], t, ...props }: Product) => {
             {isLoggedIn ? (
               <>
                 <div className="mb-2">
-                  <ProductPrice price={props.price} />
+                  <ProductPrice price={props.list_price} />
                 </div>
                 <QuantityInput />
               </>
