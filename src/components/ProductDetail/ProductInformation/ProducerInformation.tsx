@@ -1,8 +1,6 @@
 import React from 'react'
 
-type Props = {
-
-}
+type Props = {}
 
 const ProducerInformation = (props: Props) => {
   return (
@@ -59,22 +57,22 @@ const ProducerInformation = (props: Props) => {
           <div className="tab__item active" data-toggle="description">
             Thông tin chung
           </div>
-          <div className="tab__item" data-toggle="uses" >
+          <div className="tab__item" data-toggle="uses">
             Chỉ định
           </div>
-          <div className="tab__item" data-toggle="tab" >
+          <div className="tab__item" data-toggle="tab">
             Liều lượng - Cách dùng
           </div>
-          <div className="tab__item" data-toggle="tab" >
+          <div className="tab__item" data-toggle="tab">
             Chống chỉ định
           </div>
-          <div className="tab__item" data-toggle="tab" >
+          <div className="tab__item" data-toggle="tab">
             Tương tác thuốc
           </div>
-          <div className="tab__item" data-toggle="tab" >
+          <div className="tab__item" data-toggle="tab">
             Bảo quản
           </div>
-          <div className="tab__item" data-toggle="tab" >
+          <div className="tab__item" data-toggle="tab">
             Quá liều
           </div>
         </div>

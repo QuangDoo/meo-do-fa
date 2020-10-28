@@ -68,7 +68,7 @@ const ProductCard = ({ badges = [], t, ...props }: Product) => {
               <small className="text-muted product-card__category">
                 {t('productCard:category')}:{' '}
                 <Link href={`/products?category=${props.categoryId}`}>
-                  <a>{props.categ_id[1]}</a>
+                  <a>{props?.categ_id?.map((item) => item)}</a>
                 </Link>
               </small>
             </div>
