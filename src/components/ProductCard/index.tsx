@@ -14,7 +14,7 @@ export interface Product extends WithTranslation {
   name: string
   list_price: string
   unit: string
-  category: string
+  categ_id: string[]
   categoryId: string
   image_128: string
   id: string
@@ -68,7 +68,7 @@ const ProductCard = ({ badges = [], t, ...props }: Product) => {
               <small className="text-muted product-card__category">
                 {t('productCard:category')}:{' '}
                 <Link href={`/products?category=${props.categoryId}`}>
-                  <a>{props.category}</a>
+                  <a>{props.categ_id[1]}</a>
                 </Link>
               </small>
             </div>

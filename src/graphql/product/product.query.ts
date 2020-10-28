@@ -11,6 +11,7 @@ export const GET_PRODUCTS = gql`
       description
       description_purchase
       description_sale
+      categ_id
       type
       active
       rental
