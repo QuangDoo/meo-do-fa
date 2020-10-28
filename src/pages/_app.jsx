@@ -9,13 +9,16 @@ import 'react-toastify/dist/ReactToastify.css'
 import { theme } from '../theme'
 import App from 'next/app'
 import ToastContainer from '../components/ToastContainer'
+import { ModalControlProvider } from '../contexts/ModalControl'
 
 const MyApp = ({ Component, pageProps }) => {
   return (
     <ThemeProvider theme={theme}>
-      <Component {...pageProps} />
+      <ModalControlProvider>
+        <Component {...pageProps} />
 
-      <ToastContainer />
+        <ToastContainer />
+      </ModalControlProvider>
     </ThemeProvider>
   )
 }

@@ -1,14 +1,32 @@
 import { TFunction } from 'next-i18next'
+import Link from 'next/link'
 import React from 'react'
 import { withTranslation } from '../../../i18n'
+import FooterLink from './FooterLink'
 
-// All components needs "t" prop from next-i18n
-// use t('id') to translate message
-type FooterProps = {
+// Wrap YourComponent with "withTranslate([namespaces])(YourComponent)"
+// YourComponent will then receive "t" prop
+// use t('namespace:id') to translate message
+type Props = {
   readonly t: TFunction
 }
 
-const Footer: React.FC<FooterProps> = ({ t }) => {
+const generalInformationTexts = [
+  'footer:about_us',
+  'footer:privacy_policy',
+  'footer:faq',
+  'footer:general_policy',
+  'common:recruitment',
+  'footer:terms_of_service',
+  'footer:dispute_resolution',
+  'footer:terms_and_conditions',
+  'footer:operating_regulations',
+  'common:supply',
+]
+
+const halfLength = generalInformationTexts.length / 2
+
+const Footer = ({ t }: Props) => {
   return (
     <div className="footer">
       <div className="container pb-5">
@@ -17,14 +35,16 @@ const Footer: React.FC<FooterProps> = ({ t }) => {
             <div className="footer__info mb-5">
               <div className="footer__info-logo mb-3">
                 <div className="buymed-logo d-inline-block">
-                  <a href="https://thuocsi.vn/" title="thuocsi.vn">
-                    <img
-                      alt="thuocsi.vn"
-                      className="img-fluid"
-                      title="thuocsi.vn"
-                      src="/assets/images/logo-49156a6a8b6688f3eb1098b08d406267e8770cffd64b6f07bb31e2e52536346d(1).svg"
-                    />
-                  </a>
+                  <Link href="/">
+                    <a title="thuocsi.vn">
+                      <img
+                        alt="thuocsi.vn"
+                        className="img-fluid"
+                        title="thuocsi.vn"
+                        src="/assets/images/logo-49156a6a8b6688f3eb1098b08d406267e8770cffd64b6f07bb31e2e52536346d(1).svg"
+                      />
+                    </a>
+                  </Link>
                 </div>
               </div>
               <div className="footer__info-title mb-3">
@@ -56,20 +76,12 @@ const Footer: React.FC<FooterProps> = ({ t }) => {
 
                 {t('footer:ecommerce_license_label') + ': '}
                 <b>
-                  <a
-                    className="footer__link"
-                    href="https://buymed-storage.s3-ap-southeast-1.amazonaws.com/trading_license/1.+Trading+License+-+Buymed+(GC+20+June+2019)+(VN).pdf"
-                  >
-                    {t('footer:ecommerce_license_number')}
-                  </a>
+                  <FooterLink href="" text={t('footer:ecommerce_license_number')} />
                 </b>
               </p>
 
               <div className="footer__bct">
-                <a
-                  href="http://online.gov.vn/HomePage/WebsiteDisplay.aspx?DocId=52200"
-                  rel="nofollow"
-                >
+                <a rel="nofollow">
                   <img
                     alt="Dấu đỏ của Bộ Công Thương"
                     className="img-fluid"
@@ -84,66 +96,21 @@ const Footer: React.FC<FooterProps> = ({ t }) => {
 
               <div className="row">
                 <div className="col-12 col-sm-6">
-                  <a className="footer__link" href="https://thuocsi.vn/footer:about_us">
-                    {t('footer:about_us')}
-                  </a>
-
-                  <br />
-
-                  <a className="footer__link" href="https://thuocsi.vn/privacy-policy">
-                    {t('footer:privacy_policy')}
-                  </a>
-
-                  <br />
-
-                  <a
-                    className="footer__link"
-                    href="https://thuocsi.zendesk.com/hc/vi/categories/360001885792-C%C3%A2u-h%E1%BB%8Fi-th%C6%B0%E1%BB%9Dng-g%E1%BA%B7p-Q-A-"
-                  >
-                    {t('footer:faq')}
-                  </a>
-
-                  <br />
-
-                  <a className="footer__link" href="https://thuocsi.vn/general-policy">
-                    {t('footer:general_policy')}
-                  </a>
-
-                  <br />
-
-                  <a
-                    className="footer__link"
-                    href="https://career.thuocsi.vn/"
-                    title={t('header:recruitment')}
-                  >
-                    {t('common:recruitment')}
-                  </a>
+                  {generalInformationTexts.slice(0, halfLength).map((text, index) => (
+                    <React.Fragment key={index}>
+                      <FooterLink href="" text={t(text)} />
+                      {index < halfLength - 1 && <br />}
+                    </React.Fragment>
+                  ))}
                 </div>
 
                 <div className="col-12 col-sm-6">
-                  <a className="footer__link" href="https://thuocsi.vn/conditions-of-use">
-                    {t('footer:terms_of_service')}
-                  </a>
-
-                  <a className="footer__link" href="https://thuocsi.vn/dispute-resolution">
-                    {t('footer:dispute_resolution')}
-                  </a>
-
-                  <a className="footer__link" href="https://thuocsi.vn/terms-and-condition">
-                    {t('footer:terms_and_conditions')}
-                  </a>
-
-                  <a className="footer__link" href="https://thuocsi.vn/regulations">
-                    {t('footer:operating_regulations')}
-                  </a>
-
-                  <a
-                    className="footer__link"
-                    href="https://supplier.thuocsi.vn/"
-                    title={t('header:supply')}
-                  >
-                    {t('common:supply')}
-                  </a>
+                  {generalInformationTexts.slice(halfLength).map((text, index) => (
+                    <React.Fragment key={index}>
+                      <FooterLink href="" text={t(text)} />
+                      {index < halfLength * 2 - 1 && <br />}
+                    </React.Fragment>
+                  ))}
                 </div>
               </div>
             </div>
@@ -196,17 +163,9 @@ const Footer: React.FC<FooterProps> = ({ t }) => {
               <p className="d-flex align-items-center">
                 <i className="far fa-envelope footer__icon footer__icon--email" />
 
-                <a
-                  className="footer__link footer__link--email px-2 mr-2"
-                  href="mailto:hotro@thuocsi.vn"
-                >
-                  hotro@thuocsi.vn
-                </a>
+                <a className="footer__link footer__link--email px-2 mr-2">hotro@thuocsi.vn</a>
 
-                <a
-                  className="footer__icon footer__icon--fb"
-                  href="https://www.facebook.com/thuocsivn/"
-                >
+                <a className="footer__icon footer__icon--fb">
                   <i className="fab fa-facebook-f" />
                 </a>
               </p>
@@ -235,14 +194,14 @@ const Footer: React.FC<FooterProps> = ({ t }) => {
               </div>
             </div>
             <div className="d-flex justify-content-around flex-wrap">
-              <a href="https://apps.apple.com/vn/app/thuocsi/id1518730923">
+              <a>
                 <img
                   className="img-fluid"
                   src="/assets/images/app_store-df16e1f9024ceb5d5e123c0921d28b347703ca506f48eadf987013eac135ae0f.png"
                   alt="thuocN"
                 />
               </a>
-              <a href="https://play.google.com/store/apps/details?id=com.buymed.app&hl=en_US">
+              <a>
                 <img
                   className="img-fluid"
                   src="/assets/images/google_store-a423ff0891a18d965fd4037cad14a26b0e4f4e05b344d20ae6eb59e999e19e4d.png"

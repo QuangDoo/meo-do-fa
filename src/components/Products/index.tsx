@@ -9,8 +9,9 @@ import Pagination from './Pagination'
 import ProductList from './ProductList'
 import { Product } from '../ProductCard'
 import { useRouter } from 'next/router'
-import { useLazyQuery } from '@apollo/react-hooks'
+import { useQuery } from '@apollo/react-hooks'
 import { GET_PRODUCTS } from '../../graphql/product/product.query'
+import withApollo from '../../utils/withApollo'
 
 const productListProduct: Product = {
   new: true,
@@ -41,8 +42,13 @@ const Products = () => {
   // TODO: Integration
   const [totalProducts, setTotalProducts] = useState<number>(0)
 
-  const [getProducts, { data, loading }] = useLazyQuery(GET_PRODUCTS)
-
+  const { data, loading } = useQuery(GET_PRODUCTS, {
+    variables: {
+      page: +(router.query.page as string) || 1,
+      pageSize: productsPageSize,
+    },
+  })
+  
   // Loading products
   useEffect(() => {
     console.log('Loading products:', loading)
@@ -62,12 +68,7 @@ const Products = () => {
     console.log('Products query:', router.query)
 
     // Get products again when query changes
-    getProducts({
-      variables: {
-        page: +(router.query.page as string) || 1,
-        pageSize: productsPageSize,
-      },
-    })
+    // getProducts()
   }, [router.query])
 
   return (
@@ -96,4 +97,4 @@ const Products = () => {
   )
 }
 
-export default Products
+export default withApollo({ ssr: true })(Products)

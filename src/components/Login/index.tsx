@@ -1,20 +1,32 @@
 import { TFunction } from 'next-i18next'
-import React, { FC, useState } from 'react'
+import React from 'react'
 import { withTranslation } from '../../../i18n'
+import { useModalControlDispatch, useModalControlState } from '../../contexts/ModalControl'
 import Button from '../Button'
 import Modal from '../Modal'
 import LoginForm from './LoginForm'
+
 type LoginModalProps = {
   readonly t?: TFunction
 }
-const Login: FC<LoginModalProps> = (props) => {
-  const { t } = props
 
-  const [open, setOpen] = useState(false)
+const Login = ({ t }: LoginModalProps) => {
+  // Modal is open or not
+  const { loginIsOpen } = useModalControlState()
 
-  const openModal = () => setOpen(true)
+  // Dispatch to update ModalControl context
+  const dispatch = useModalControlDispatch()
 
-  const closeModal = () => setOpen(false)
+  const openModal = () => {
+    dispatch({
+      type: 'OPEN_LOGIN_MODAL',
+    })
+  }
+
+  const closeModal = () =>
+    dispatch({
+      type: 'CLOSE_LOGIN_MODAL',
+    })
 
   return (
     <>
@@ -23,7 +35,7 @@ const Login: FC<LoginModalProps> = (props) => {
       </Button>
 
       <Modal
-        open={open}
+        open={loginIsOpen}
         title="Đăng Nhập Thành Viên"
         onClose={closeModal}
         className="authentication login"

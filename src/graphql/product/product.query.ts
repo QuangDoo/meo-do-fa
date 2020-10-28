@@ -5,6 +5,24 @@ export const GET_PRODUCTS = gql`
     getProducts(page: $page, pageSize: $pageSize) {
       id
       name
+      list_price
+      sequence
+      color
+      description
+      description_purchase
+      description_sale
+      categ_id
+      type
+      active
+      rental
+      sale_ok
+      purchase_ok
+      volume
+      weight
+      create_date
+      image_128
+      image_512
+      image_256
     }
   }
 `
