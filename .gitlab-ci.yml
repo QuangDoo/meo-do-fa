@@ -33,7 +33,7 @@ lint-frontend:
   image: node:12-alpine
   only:
     - merge_request
-    # - master
+    - develop
 
   interruptible: true
 
