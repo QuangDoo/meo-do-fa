@@ -1,13 +1,14 @@
-import React from 'react'
-import { UserType, userTypeMap } from './RegisterForm'
-import UserTypeCard from './UserTypeCard'
+import React from 'react';
+
+import { UserType, userTypeMap } from './RegisterForm';
+import UserTypeCard from './UserTypeCard';
 
 type Props = {
-  setUserType: (value: UserType) => void
-}
+  setUserType: (value: UserType) => void;
+};
 
 const ChooseUserType = (props: Props) => {
-  const { setUserType } = props
+  const { setUserType } = props;
 
   return (
     <div className="container text-center">
@@ -40,7 +41,7 @@ const ChooseUserType = (props: Props) => {
         />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ChooseUserType
+export default ChooseUserType;

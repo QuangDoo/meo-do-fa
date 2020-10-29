@@ -1,10 +1,10 @@
-import React, { FC } from 'react'
+import React, { FC } from 'react';
 
 type UserTypeCardProps = {
-  text: string
-  imgUrl: string
-  onClick: () => void
-}
+  text: string;
+  imgUrl: string;
+  onClick: () => void;
+};
 
 const UserTypeCard: FC<UserTypeCardProps> = ({ text, onClick, imgUrl }) => {
   return (
@@ -13,12 +13,11 @@ const UserTypeCard: FC<UserTypeCardProps> = ({ text, onClick, imgUrl }) => {
       onKeyPress={onClick}
       onClick={onClick}
       role="button"
-      tabIndex={0}
-    >
+      tabIndex={0}>
       <img alt="" className="img-fluid" src={imgUrl} />
       <h6 className="business-group__item__text font-weight-bold">{text}</h6>
     </div>
-  )
-}
+  );
+};
 
-export default UserTypeCard
+export default UserTypeCard;

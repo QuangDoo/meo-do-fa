@@ -1,7 +1,7 @@
-import React from 'react'
+import React from 'react';
 type PropsType = {
-  placeholder: string
-}
+  placeholder: string;
+};
 function InputSearch(props: PropsType) {
   return (
     <div className="filter-search__search text-right mb-4">
@@ -19,6 +19,6 @@ function InputSearch(props: PropsType) {
         <i className="fa fa-search" />
       </button>
     </div>
-  )
+  );
 }
-export default InputSearch
+export default InputSearch;

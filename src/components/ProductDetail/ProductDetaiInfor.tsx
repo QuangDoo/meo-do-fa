@@ -1,15 +1,15 @@
-import Link from 'next/link'
+import Link from 'next/link';
+import React from 'react';
 
-import React from 'react'
-import QuantityInput from '../ProductCard/QuantityInput'
+import QuantityInput from '../ProductCard/QuantityInput';
 type PropsType = {
-  name: string
-  price: number
-}
+  name: string;
+  price: number;
+};
 const ProductDetailInfor = (props: PropsType) => {
-  let token = ''
+  let token = '';
   if (typeof window !== 'undefined') {
-    token = localStorage.getItem('token')
+    token = localStorage.getItem('token');
   }
 
   return (
@@ -62,8 +62,7 @@ const ProductDetailInfor = (props: PropsType) => {
                       data-action="price-feedback#feedbackPrice"
                       data-feedback-type="high"
                       data-product-id={12799}
-                      data-target="price-feedback.feedbackBtn"
-                    >
+                      data-target="price-feedback.feedbackBtn">
                       <i className="fas fa-thumbs-down mr-1" />
                       Cao
                     </button>
@@ -72,8 +71,7 @@ const ProductDetailInfor = (props: PropsType) => {
                       data-action="price-feedback#feedbackPrice"
                       data-feedback-type="normal"
                       data-product-id={12799}
-                      data-target="price-feedback.feedbackBtn"
-                    >
+                      data-target="price-feedback.feedbackBtn">
                       <i className="fas fa-thumbs-up mr-1" />
                       Hợp lý
                     </button>
@@ -103,6 +101,6 @@ const ProductDetailInfor = (props: PropsType) => {
         </div>
       </div>
     </div>
-  )
-}
-export default ProductDetailInfor
+  );
+};
+export default ProductDetailInfor;

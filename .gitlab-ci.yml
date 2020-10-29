@@ -14,8 +14,8 @@ variables:
 
 stages:
   # - prepare
+  - lint
   - build
-  # - lint
   # - test
   - deploy
 
@@ -27,6 +27,24 @@ stages:
     - mkdir -p $HOME/.kube
     - cp $KUBE_CONFIG $HOME/.kube/config
     - git clone https://${DOCKER_USER}:${DOCKER_PASSWORD}@gitlab.com/bebuy.vn/clients/thuocn/deployments.git
+
+lint-frontend:
+  image: node:12-alpine
+  only:
+    - merge_request
+    # - master
+
+  interruptible: true
+
+  tags:
+    - bebuy-gitlab-ci
+    - bb-gitlab-ci
+
+  script:
+    - apk update && apk add yarn && rm -rf /var/cache/apk/*
+    - yarn
+    - yarn lint
+
 
 build-frontend:
   stage: build

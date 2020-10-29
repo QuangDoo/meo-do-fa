@@ -1,37 +1,38 @@
-import { TFunction, WithTranslation } from 'next-i18next'
-import Link from 'next/link'
-import React from 'react'
-import { withTranslation } from '../../../i18n'
-import useIsLoggedIn from '../../hooks/useIsLoggedIn'
-import { DiscountRibbon } from './DiscountRibbon'
-import LoginToSeePrice from './LoginToSeePrice'
-import ProductBadge, { BadgeType } from './ProductBadge'
-import { ProductImage } from './ProductImage'
-import { ProductPrice } from './ProductPrice'
-import QuantityInput from './QuantityInput'
+import { TFunction, WithTranslation } from 'next-i18next';
+import Link from 'next/link';
+import React from 'react';
+
+import { withTranslation } from '../../../i18n';
+import useIsLoggedIn from '../../hooks/useIsLoggedIn';
+import { DiscountRibbon } from './DiscountRibbon';
+import LoginToSeePrice from './LoginToSeePrice';
+import ProductBadge, { BadgeType } from './ProductBadge';
+import { ProductImage } from './ProductImage';
+import { ProductPrice } from './ProductPrice';
+import QuantityInput from './QuantityInput';
 
 export interface Product extends WithTranslation {
-  name: string
-  list_price: string
-  unit: string
-  categ_id: string[]
-  categoryId: string
-  image_128: string
-  id: string
+  name: string;
+  list_price: string;
+  unit: string;
+  categ_id: string[];
+  categoryId: string;
+  image_128: string;
+  id: string;
 
-  badges?: BadgeType[]
-  new?: boolean
-  discountPercent?: number
-  supplier?: string
-  oldPrice?: string
-  deal?: boolean
-  expirationDate?: string
-  readonly t: TFunction
+  badges?: BadgeType[];
+  new?: boolean;
+  discountPercent?: number;
+  supplier?: string;
+  oldPrice?: string;
+  deal?: boolean;
+  expirationDate?: string;
+  readonly t: TFunction;
 }
 
 const ProductCard = ({ badges = [], t, ...props }: Product) => {
-  const isLoggedIn = useIsLoggedIn()
-  console.log('props', props)
+  const isLoggedIn = useIsLoggedIn();
+  console.log('props', props);
   return (
     <div className="product-card-container">
       <article className={`product-card card ${props.deal ? 'deal-card' : ''}`}>
@@ -89,7 +90,7 @@ const ProductCard = ({ badges = [], t, ...props }: Product) => {
         </div>
       </article>
     </div>
-  )
-}
+  );
+};
 
-export default withTranslation(['productCard'])(ProductCard)
+export default withTranslation(['productCard'])(ProductCard);

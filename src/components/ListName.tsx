@@ -1,9 +1,9 @@
-import Link from 'next/link'
-import React from 'react'
+import Link from 'next/link';
+import React from 'react';
 
 type ListType = {
-  name: string
-}
+  name: string;
+};
 
 function ListName(props: ListType) {
   return (
@@ -12,7 +12,7 @@ function ListName(props: ListType) {
         {props.name}
       </a>
     </Link>
-  )
+  );
 }
 
-export default ListName
+export default ListName;

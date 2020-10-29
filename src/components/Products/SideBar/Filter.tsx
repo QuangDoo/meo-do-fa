@@ -1,22 +1,22 @@
-import clsx from 'clsx'
-import React, { useState } from 'react'
+import clsx from 'clsx';
+import React, { useState } from 'react';
 
 interface FilterItem {
-  name: string
-  href: string
+  name: string;
+  href: string;
 }
 
 interface FilterProps {
-  header: string
-  data: FilterItem[]
+  header: string;
+  data: FilterItem[];
 }
 
 const Filter = (props: FilterProps) => {
-  const { header, data } = props
-  const [show, setShow] = useState(true)
+  const { header, data } = props;
+  const [show, setShow] = useState(true);
 
   function toggleShow() {
-    setShow((show) => !show)
+    setShow((show) => !show);
   }
 
   return (
@@ -26,8 +26,7 @@ const Filter = (props: FilterProps) => {
         onKeyPress={toggleShow}
         className={clsx('products__filter-header with-toggle', !show && 'collapsed')}
         role="button"
-        tabIndex={0}
-      >
+        tabIndex={0}>
         {header}
         <i className="fas fa-chevron-right products__filter-expand" />
       </div>
@@ -41,7 +40,7 @@ const Filter = (props: FilterProps) => {
         ))}
       </div>
     </>
-  )
-}
+  );
+};
 
-export default Filter
+export default Filter;

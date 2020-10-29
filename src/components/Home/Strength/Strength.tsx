@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 const Strength = () => {
   return (
@@ -60,7 +60,7 @@ const Strength = () => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default Strength
+export default Strength;

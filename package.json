@@ -37,8 +37,9 @@
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public",
     "start-prod": "npm run build && npm run start",
-    "lint": "eslint . --fix",
-    "format": "prettier --write '.src/**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc"
+    "lint": "eslint --ext .ts --ext .tsx ./src --ignore-path .eslintignore --fix",
+    "lint:fix": "npm run lint --fix",
+    "format": "prettier --write './src/**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc"
   },
   "browserslist": [
     ">0.3%",
@@ -85,7 +86,7 @@
   },
   "lint-staged": {
     "./src/**/*.{js,jsx,ts,tsx}": [
-      "eslint --fix",
+      "npm run lint:fix",
       "git add ."
     ]
   }

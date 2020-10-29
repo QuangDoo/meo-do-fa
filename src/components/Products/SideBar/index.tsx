@@ -1,19 +1,20 @@
-import React from 'react'
-import Filter from './Filter'
-import Sorter from './Sorter'
+import React from 'react';
+
+import Filter from './Filter';
+import Sorter from './Sorter';
 
 const drugGroupData = [
   { name: 'Tất cả sản phẩm', href: '#' },
   { name: 'Cơ Xương Khớp', href: '#' },
-  { name: 'Da Liễu', href: '#' },
-]
+  { name: 'Da Liễu', href: '#' }
+];
 
 const producerData = [
   { name: 'Tất cả sản phẩm', href: '#' },
   { name: 'Domesco', href: '#' },
   { name: 'Vidipha', href: '#' },
-  { name: 'Xem thêm', href: '/manufacturers' },
-]
+  { name: 'Xem thêm', href: '/manufacturers' }
+];
 
 const SideBar = () => {
   return (
@@ -41,7 +42,7 @@ const SideBar = () => {
 
       <Filter header="Nhà sản xuất" data={producerData} />
     </aside>
-  )
-}
+  );
+};
 
-export default SideBar
+export default SideBar;

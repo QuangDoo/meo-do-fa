@@ -1,4 +1,4 @@
-import { gql } from 'apollo-boost'
+import { gql } from 'apollo-boost';
 
 export const GET_PRODUCTS = gql`
   query getAllProduct($page: Int!, $pageSize: Int!) {
@@ -25,7 +25,7 @@ export const GET_PRODUCTS = gql`
       image_256
     }
   }
-`
+`;
 export const GET_PRODUCT = gql`
   query getProduct($id: Int!) {
     getProduct(id: $id) {
@@ -51,7 +51,7 @@ export const GET_PRODUCT = gql`
       image_256
     }
   }
-`
+`;
 // export const GET_PRODUCTS = gql`
 //   query getAllProduct($input: GetAllProductInput!) {
 //     getProducts(input: $input) {

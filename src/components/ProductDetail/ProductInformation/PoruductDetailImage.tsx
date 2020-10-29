@@ -1,7 +1,7 @@
-import React from 'react'
+import React from 'react';
 
 const ProuductDetailImage = (props) => {
-  console.log('imageUrl', props.imageUrl)
+  console.log('imageUrl', props.imageUrl);
   return (
     <div className="col-md-4">
       <div className="d-flex justify-content-between mb-2">
@@ -31,6 +31,6 @@ const ProuductDetailImage = (props) => {
       </div>
       <small className="text-muted">* Hình sản phẩm có thể thay đổi theo thời gian</small>
     </div>
-  )
-}
-export default ProuductDetailImage
+  );
+};
+export default ProuductDetailImage;

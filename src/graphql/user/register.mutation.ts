@@ -1,4 +1,4 @@
-import { gql } from 'apollo-boost'
+import { gql } from 'apollo-boost';
 
 export const REGISTER_USER = gql`
   mutation createUser(
@@ -22,4 +22,4 @@ export const REGISTER_USER = gql`
       token
     }
   }
-`
+`;

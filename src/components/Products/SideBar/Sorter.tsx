@@ -1,8 +1,8 @@
-import { useRouter } from 'next/router'
-import React from 'react'
+import { useRouter } from 'next/router';
+import React from 'react';
 
 const Sorter = () => {
-  const router = useRouter()
+  const router = useRouter();
 
   const onChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     router.push(
@@ -10,13 +10,13 @@ const Sorter = () => {
         pathname: router.pathname,
         query: {
           ...router.query,
-          sort: event.currentTarget.value,
-        },
+          sort: event.currentTarget.value
+        }
       },
       undefined,
       { shallow: true }
-    )
-  }
+    );
+  };
 
   return (
     <form className="form-inline justify-content-between">
@@ -36,7 +36,7 @@ const Sorter = () => {
         <option value="alphabet_za">Tên: Z-A</option>
       </select>
     </form>
-  )
-}
+  );
+};
 
-export default Sorter
+export default Sorter;

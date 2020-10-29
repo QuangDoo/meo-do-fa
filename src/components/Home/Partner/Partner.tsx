@@ -1,6 +1,7 @@
-import React from 'react'
-import Slider from 'react-slick'
-import PartnerImg from './PartnerImg'
+import React from 'react';
+import Slider from 'react-slick';
+
+import PartnerImg from './PartnerImg';
 
 const examplePartners = [
   'assets/images/partner1.jpg',
@@ -11,8 +12,8 @@ const examplePartners = [
   'assets/images/partner3.jpg',
   'assets/images/partner1.jpg',
   'assets/images/partner2.jpg',
-  'assets/images/partner3.jpg',
-]
+  'assets/images/partner3.jpg'
+];
 
 const Parner = () => {
   return (
@@ -32,7 +33,7 @@ const Parner = () => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default Parner
+export default Parner;

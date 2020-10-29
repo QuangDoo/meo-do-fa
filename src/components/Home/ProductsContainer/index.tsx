@@ -1,15 +1,16 @@
-import React, { FC } from 'react'
-import Button from '../../Button'
+import React, { FC } from 'react';
+
+import Button from '../../Button';
 
 type ProductsContainerProps = {
-  deals?: boolean
-  className?: string
-  seeMoreUrl: string
-  title: string
-}
+  deals?: boolean;
+  className?: string;
+  seeMoreUrl: string;
+  title: string;
+};
 
 export const ProductsContainer: FC<ProductsContainerProps> = (props) => {
-  const dealsClass = props.deals ? 'deals' : ''
+  const dealsClass = props.deals ? 'deals' : '';
 
   return (
     <section className={`py-5 container-fluid ${dealsClass} ${props.className}`}>
@@ -23,12 +24,11 @@ export const ProductsContainer: FC<ProductsContainerProps> = (props) => {
         <div className="text-center">
           <Button
             variant={props.deals ? 'outline-light' : 'outline-primary'}
-            className={props.deals ? 'btn-transparent' : 'btn-white'}
-          >
+            className={props.deals ? 'btn-transparent' : 'btn-white'}>
             Xem tất cả
           </Button>
         </div>
       </div>
     </section>
-  )
-}
+  );
+};

@@ -1,6 +1,7 @@
-import { WithTranslation } from 'next-i18next'
-import React from 'react'
-import { withTranslation } from '../../../i18n'
+import { WithTranslation } from 'next-i18next';
+import React from 'react';
+
+import { withTranslation } from '../../../i18n';
 
 // BadgeType must be the same as badge types in productBadge.json translation file
 export type BadgeType =
@@ -12,17 +13,17 @@ export type BadgeType =
   | 'common'
   | 'change_style'
   | 'close_date'
-  | 'use_vietnamese'
+  | 'use_vietnamese';
 
 interface ProductBadgeProps extends WithTranslation {
-  type: BadgeType
-  expirationDate?: string
+  type: BadgeType;
+  expirationDate?: string;
 }
 
 const ProductBadge = (props: ProductBadgeProps) => {
-  const { t } = props
+  const { t } = props;
   if (props.type === 'promotion')
-    return <span className="badge badge-danger mr-2">{t('productBadge:promotion')}</span>
+    return <span className="badge badge-danger mr-2">{t('productBadge:promotion')}</span>;
 
   return (
     <span className={`badge badge-light display-status mr-1 mb-1 ${props.type}`}>
@@ -39,7 +40,7 @@ const ProductBadge = (props: ProductBadgeProps) => {
         t(`productBadge:${props.type}`)
       )}
     </span>
-  )
-}
+  );
+};
 
-export default withTranslation('productBadge')(ProductBadge)
+export default withTranslation('productBadge')(ProductBadge);

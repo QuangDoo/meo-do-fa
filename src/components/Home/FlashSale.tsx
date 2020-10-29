@@ -1,7 +1,8 @@
-import React from 'react'
-import { ProductsCarousel } from '../ProductsCarousel'
-import { Product } from '../ProductCard'
-import { ProductsContainer } from './ProductsContainer'
+import React from 'react';
+
+import { Product } from '../ProductCard';
+import { ProductsCarousel } from '../ProductsCarousel';
+import { ProductsContainer } from './ProductsContainer';
 
 export const flashSaleProducts = [...new Array(10)].map(
   () =>
@@ -16,14 +17,14 @@ export const flashSaleProducts = [...new Array(10)].map(
       unit: 'Combo',
       name:
         'combo eucerin trị mụn (kem kiểm soát dầu giảm mụn pro acne a.i matt fluid 50ml+ tinh chất trị mụn viêm proacne ai clearing treatment 40ml) tặng nước tẩy trang 200ml',
-      badges: ['invoice_exportable', 'only_thuocsi', 'flash_sale'],
+      badges: ['invoice_exportable', 'only_thuocsi', 'flash_sale']
     } as unknown) as Product)
-)
+);
 
 export const FlashSale = () => {
   return (
     <ProductsContainer title="Flash Sale" seeMoreUrl="#" deals>
       <ProductsCarousel products={flashSaleProducts} />
     </ProductsContainer>
-  )
-}
+  );
+};

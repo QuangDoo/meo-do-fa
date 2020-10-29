@@ -1,10 +1,11 @@
-import React from 'react'
-import Layout from '../components/Layout/Layout'
-import { Header } from '../components/Header'
-import Footer from '../components/Footer'
-import Head from '../components/Head'
-import { Nav } from '../components/Nav'
-import CartItem from '../components/Cart/CartItem'
+import React from 'react';
+
+import CartItem from '../components/Cart/CartItem';
+import Footer from '../components/Footer';
+import Head from '../components/Head';
+import { Header } from '../components/Header';
+import Layout from '../components/Layout/Layout';
+import { Nav } from '../components/Nav';
 
 function Cart() {
   const cartItem = [
@@ -17,7 +18,7 @@ function Cart() {
       description: 'Hộp 26 gói x 20gr',
       slug: 'phosphalugel-boehringer-ingelheim-h-26g',
       image: 'https://images.thuocsi.vn/FrWZN5xT53QQ8Cs66rKHT228',
-      important: false,
+      important: false
     },
     {
       productName: 'phosphalugel boehringer ingelheim (h/26g)',
@@ -28,7 +29,7 @@ function Cart() {
       slug: 'phosphalugel-boehringer-ingelheim-h-26g',
       oldPrice: 123456,
       image: 'https://images.thuocsi.vn/FrWZN5xT53QQ8Cs66rKHT228',
-      important: false,
+      important: false
     },
     {
       productName: 'phosphalugel boehringer ingelheim (h/26g)',
@@ -40,18 +41,18 @@ function Cart() {
       slug: 'phosphalugel-boehringer-ingelheim-h-26g',
       limit: true,
       image: 'https://images.thuocsi.vn/FrWZN5xT53QQ8Cs66rKHT228',
-      important: false,
-    },
-  ]
+      important: false
+    }
+  ];
   const totalQuantity = cartItem.reduce((current, total) => {
-    return current + total.quantity
-  }, 0)
+    return current + total.quantity;
+  }, 0);
   const totalAfterDiscount = cartItem.reduce((current, total) => {
-    return current + total.quantity * total.price
-  }, 0)
+    return current + total.quantity * total.price;
+  }, 0);
   const totalBeforeDiscount = cartItem.reduce((current, total) => {
-    return current + total.quantity * total.oldPrice
-  }, 0)
+    return current + total.quantity * total.oldPrice;
+  }, 0);
   return (
     <>
       <Head>
@@ -82,8 +83,7 @@ function Cart() {
                 className="elevated cart__items mb-3"
                 data-action
                 data-target="cart.items"
-                data-url="/api/cart_data/cart_items?page=1"
-              >
+                data-url="/api/cart_data/cart_items?page=1">
                 {cartItem.map((item, index) => (
                   <CartItem key={index} {...item} />
                 ))}
@@ -153,8 +153,7 @@ function Cart() {
                       <a
                         className="cart__info-promo-code flex-grow-1 ins-init-condition-tracking"
                         data-modal="true"
-                        href="/cart/promo-codes"
-                      >
+                        href="/cart/promo-codes">
                         NEWBEE100K
                       </a>
                       <i
@@ -170,8 +169,7 @@ function Cart() {
                         className="btn btn-secondary btn-block"
                         data-action="cart#proceedToCheckout"
                         data-target="cart.submit"
-                        href="/checkout"
-                      >
+                        href="/checkout">
                         Tiếp tục thanh toán
                       </a>
                     </div>
@@ -185,7 +183,7 @@ function Cart() {
       </Layout>
       <Footer />
     </>
-  )
+  );
 }
 
-export default Cart
+export default Cart;

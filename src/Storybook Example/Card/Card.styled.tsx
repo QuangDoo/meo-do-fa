@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 export const StyledCard = styled.div`
   position: relative;
@@ -12,16 +12,16 @@ export const StyledCard = styled.div`
   grid-template-rows: 1fr auto;
   padding: 10px;
   grid-gap: 10px;
-`
+`;
 
 export const StyledCardImage = styled.img`
   max-width: 100px;
   justify-self: center;
-`
+`;
 
-export const StyledCardBody = styled.div``
+export const StyledCardBody = styled.div``;
 
 export const StyledCardButtonGroup = styled.div`
   display: grid;
   grid-gap: 5px;
-`
+`;

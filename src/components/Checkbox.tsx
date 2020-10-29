@@ -1,15 +1,15 @@
-import React, { useState } from 'react'
-import { v4 as uuid } from 'uuid'
+import React, { useState } from 'react';
+import { v4 as uuid } from 'uuid';
 
 type CheckboxProps = {
-  required?: boolean
-  name?: string
-  label: React.ReactNode
-  className?: string
-}
+  required?: boolean;
+  name?: string;
+  label: React.ReactNode;
+  className?: string;
+};
 
 const Checkbox = (props: CheckboxProps, ref) => {
-  const [id] = useState(uuid())
+  const [id] = useState(uuid());
 
   return (
     <div className={`form-group custom-control custom-checkbox ${props.className}`}>
@@ -26,7 +26,7 @@ const Checkbox = (props: CheckboxProps, ref) => {
         {props.label}
       </label>
     </div>
-  )
-}
+  );
+};
 
-export default React.forwardRef(Checkbox)
+export default React.forwardRef(Checkbox);

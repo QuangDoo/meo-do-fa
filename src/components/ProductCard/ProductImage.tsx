@@ -1,10 +1,10 @@
-import Link from 'next/link'
-import React from 'react'
+import Link from 'next/link';
+import React from 'react';
 
 type ProductImageProps = {
-  imageId: string
-  productId: string
-}
+  imageId: string;
+  productId: string;
+};
 
 export const ProductImage = (props: ProductImageProps) => {
   return (
@@ -14,10 +14,10 @@ export const ProductImage = (props: ProductImageProps) => {
           className="product-card__image mb-3 lozad"
           style={{
             backgroundImage: `url(data:image/jpeg;base64,${props.imageId})`,
-            cursor: 'pointer',
+            cursor: 'pointer'
           }}
         />
       </a>
     </Link>
-  )
-}
+  );
+};

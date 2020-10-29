@@ -1,21 +1,21 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 
 type Props = {
-  name: string
-  iconClass: string
-  placeholder?: string
-  required?: boolean
-  type?: 'text' | 'number' | 'password'
-  containerClass?: string
-}
+  name: string;
+  iconClass: string;
+  placeholder?: string;
+  required?: boolean;
+  type?: 'text' | 'number' | 'password';
+  containerClass?: string;
+};
 
 const Input = (props: Props, ref) => {
-  const { containerClass = '', type = 'text' } = props
+  const { containerClass = '', type = 'text' } = props;
 
-  const [showPassword, setShowPassword] = useState(false)
+  const [showPassword, setShowPassword] = useState(false);
 
   function toggleShowPassword() {
-    setShowPassword(!showPassword)
+    setShowPassword(!showPassword);
   }
 
   return (
@@ -53,7 +53,7 @@ const Input = (props: Props, ref) => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default React.forwardRef(Input)
+export default React.forwardRef(Input);

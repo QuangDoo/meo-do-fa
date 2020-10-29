@@ -1,9 +1,10 @@
-import React from 'react'
-import Layout from '../components/Layout/Layout'
-import { Header } from '../components/Header'
-import Footer from '../components/Footer'
-import Head from '../components/Head'
-import { Nav } from '../components/Nav'
+import React from 'react';
+
+import Footer from '../components/Footer';
+import Head from '../components/Head';
+import { Header } from '../components/Header';
+import Layout from '../components/Layout/Layout';
+import { Nav } from '../components/Nav';
 
 function PromotionCode() {
   return (
@@ -18,7 +19,7 @@ function PromotionCode() {
       </Layout>
       <Footer />
     </>
-  )
+  );
 }
 
-export default PromotionCode
+export default PromotionCode;

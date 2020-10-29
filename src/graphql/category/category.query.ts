@@ -1,4 +1,4 @@
-import { gql } from 'apollo-boost'
+import { gql } from 'apollo-boost';
 
 export const GET_CATEGORIES = gql`
   query getAllCategories {
@@ -7,4 +7,4 @@ export const GET_CATEGORIES = gql`
       slug
     }
   }
-`
+`;

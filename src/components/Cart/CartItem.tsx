@@ -1,17 +1,17 @@
-import { Button, Icon } from '@material-ui/core'
-import DeleteIcon from '@material-ui/icons/Delete'
-import React, { useState } from 'react'
-import { ProductPrice } from '../ProductCard/ProductPrice'
-import QuantityInput from '../ProductCard/QuantityInput'
+import { Button, Icon } from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
+import React, { useState } from 'react';
 
-import RemoveModal from './Modal'
+import { ProductPrice } from '../ProductCard/ProductPrice';
+import QuantityInput from '../ProductCard/QuantityInput';
+import RemoveModal from './Modal';
 
 function CartItem(props) {
-  const [open, setOpen] = useState(false)
-  const openModal = () => setOpen(true)
-  const closeModal = () => setOpen(false)
+  const [open, setOpen] = useState(false);
+  const openModal = () => setOpen(true);
+  const closeModal = () => setOpen(false);
 
-  console.log('props :>> ', props)
+  console.log('props :>> ', props);
   return (
     <div className="cart-item">
       <div className="row align-items-center">
@@ -19,15 +19,14 @@ function CartItem(props) {
           <div
             className="cart-item__important-btn inactive"
             data-action="click->cart#updateImportantButton"
-            data-item-id={3206540}
-          >
+            data-item-id={3206540}>
             <i className="fas fa-star" />
           </div>
           <div
             className="cart-item__image lozad mr-2 loaded"
             data-background-image={props.image}
             style={{
-              backgroundImage: `url(${props.image})`,
+              backgroundImage: `url(${props.image})`
             }}
             data-loaded="true"
           />
@@ -35,8 +34,7 @@ function CartItem(props) {
             <a
               className="cart-item__name"
               href={'products/' + props.slug}
-              title={props.productName}
-            >
+              title={props.productName}>
               {props.productName}
             </a>
             <div className="cart-item__package">
@@ -99,7 +97,7 @@ function CartItem(props) {
         </div>
       </div> */}
     </div>
-  )
+  );
 }
 
-export default CartItem
+export default CartItem;

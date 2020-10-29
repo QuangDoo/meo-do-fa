@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from 'react'
-import Layout from '../../components/Layout/Layout'
-import { Header } from '../../components/Header'
-import Footer from '../../components/Footer'
-import Head from '../../components/Head'
-import { Nav } from '../../components/Nav'
-import Tab from '../../components/Tab/Tab'
-import { ProductsContainer } from '../../components/Home/ProductsContainer'
-import { ProductsCarousel } from '../../components/ProductsCarousel'
-import { exampleProducts } from '../../components/Products'
+import React, { useEffect, useState } from 'react';
+
+import Footer from '../../components/Footer';
+import Head from '../../components/Head';
+import { Header } from '../../components/Header';
+import { ProductsContainer } from '../../components/Home/ProductsContainer';
+import Layout from '../../components/Layout/Layout';
+import { Nav } from '../../components/Nav';
+import { exampleProducts } from '../../components/Products';
+import { ProductsCarousel } from '../../components/ProductsCarousel';
+import Tab from '../../components/Tab/Tab';
 
 export default function IngredientDetail(props) {
-  const tabContent = { thongTinChung: 'abc' }
+  const tabContent = { thongTinChung: 'abc' };
   return (
     <>
       <Head>
@@ -34,5 +35,5 @@ export default function IngredientDetail(props) {
       </Layout>
       <Footer />
     </>
-  )
+  );
 }

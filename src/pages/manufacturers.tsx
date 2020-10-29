@@ -1,10 +1,11 @@
-import React from 'react'
-import Layout from '../components/Layout/Layout'
-import { Header } from '../components/Header'
-import Footer from '../components/Footer'
-import Head from '../components/Head'
-import { Nav } from '../components/Nav'
-import SearchScreen from '../components/SearchScreen'
+import React from 'react';
+
+import Footer from '../components/Footer';
+import Head from '../components/Head';
+import { Header } from '../components/Header';
+import Layout from '../components/Layout/Layout';
+import { Nav } from '../components/Nav';
+import SearchScreen from '../components/SearchScreen';
 
 function Manufactures() {
   const manufactures = [
@@ -30,8 +31,8 @@ function Manufactures() {
     { name: 'Wlamingo' },
     { name: 'Xlamingo' },
     { name: 'Ylamingo' },
-    { name: 'Zlamingo' },
-  ]
+    { name: 'Zlamingo' }
+  ];
   const characters = [
     { character: 'A', dataValue: 'a' },
     { character: 'B', dataValue: 'b' },
@@ -58,8 +59,8 @@ function Manufactures() {
     { character: 'X', dataValue: 'x' },
     { character: 'Y', dataValue: 'y' },
     { character: 'Z', dataValue: 'z' },
-    { character: '#', dataValue: '#' },
-  ]
+    { character: '#', dataValue: '#' }
+  ];
   return (
     <>
       <Head>
@@ -72,7 +73,7 @@ function Manufactures() {
       </Layout>
       <Footer />
     </>
-  )
+  );
 }
 
-export default Manufactures
+export default Manufactures;

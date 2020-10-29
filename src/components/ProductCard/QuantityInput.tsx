@@ -1,13 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 
 function QuantityInput(props) {
-  const [quantity, setQuantity] = useState(props.quantity)
+  const [quantity, setQuantity] = useState(props.quantity);
   const plus = () => {
-    setQuantity(quantity + 1)
-  }
+    setQuantity(quantity + 1);
+  };
   const minus = () => {
-    setQuantity(quantity - 1)
-  }
+    setQuantity(quantity - 1);
+  };
   return (
     <div className="qty js-qty">
       <button className="btn btn-sm qty__button qty__button--minus" onClick={minus}>
@@ -47,6 +47,6 @@ function QuantityInput(props) {
         </small>
       </div>
     </div>
-  )
+  );
 }
-export default QuantityInput
+export default QuantityInput;

@@ -1,16 +1,17 @@
-import React from 'react'
-import Slider from 'react-slick'
-import CustomerCard from './CustomerCard'
+import React from 'react';
+import Slider from 'react-slick';
+
+import CustomerCard from './CustomerCard';
 
 // Example testimonial object
 const exampleTestimonial = {
   customerName: 'Anh Trường',
   customerLocation: 'Nhà thuốc tây số 2 - Vĩnh Long',
-  customerComment: 'Hàng hóa đa dạng dễ dàng tra cứu giá và đặt hàng thuốc.',
-}
+  customerComment: 'Hàng hóa đa dạng dễ dàng tra cứu giá và đặt hàng thuốc.'
+};
 
 // Example testimonials array
-const testimonials = [...new Array(5)].map(() => ({ ...exampleTestimonial }))
+const testimonials = [...new Array(5)].map(() => ({ ...exampleTestimonial }));
 
 const Customer = () => {
   return (
@@ -28,8 +29,7 @@ const Customer = () => {
               autoplay
               dots
               dotsClass="slick__dots slick-dots"
-              className="slick-dotted"
-            >
+              className="slick-dotted">
               {testimonials.map((testimonial, index) => (
                 <CustomerCard key={index} {...testimonial} />
               ))}
@@ -38,7 +38,7 @@ const Customer = () => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default Customer
+export default Customer;

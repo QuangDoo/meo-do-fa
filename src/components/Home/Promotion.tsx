@@ -1,7 +1,8 @@
-import React from 'react'
-import ProductCard from '../ProductCard'
-import { exampleProducts } from '../Products'
-import { ProductsContainer } from './ProductsContainer'
+import React from 'react';
+
+import ProductCard from '../ProductCard';
+import { exampleProducts } from '../Products';
+import { ProductsContainer } from './ProductsContainer';
 
 export const Promotion = () => {
   return (
@@ -12,5 +13,5 @@ export const Promotion = () => {
         ))}
       </div>
     </ProductsContainer>
-  )
-}
+  );
+};
