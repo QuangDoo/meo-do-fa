@@ -29,6 +29,7 @@ stages:
     - git clone https://${DOCKER_USER}:${DOCKER_PASSWORD}@gitlab.com/bebuy.vn/clients/thuocn/deployments.git
 
 lint-frontend:
+  stage: lint
   image: node:12-alpine
   only:
     - merge_request
