@@ -11,9 +11,9 @@ function InputSearch(props: PropsType) {
         id="search"
         className="search "
         placeholder={props.placeholder}
-        data-action="keyup->filter-search#doSearch"
-        data-target="filter-search.search"
-        data-value
+        // data-action="keyup->filter-search#doSearch"
+        // data-target="filter-search.search"
+        // data-value
       />
       <button className="btn-search">
         <i className="fa fa-search" />
