@@ -1,13 +1,13 @@
 import React from 'react'
-import Layout from '../components/Layout/Layout'
-import { Header } from '../components/Header'
-import Footer from '../components/Footer'
-import Head from '../components/Head'
-import { Nav } from '../components/Nav'
-import { ManufacturesComponent } from '../components/Manufactures'
+import Layout from '../../components/Layout/Layout'
+import { Header } from '../../components/Header'
+import Footer from '../../components/Footer'
+import Head from '../../components/Head'
+import { Nav } from '../../components/Nav'
+import { IngredientsComponent } from '../../components/Ingredients'
 
-function Manufactures() {
-  const manufactures = [
+function Ingredients() {
+  const ingredients = [
     { name: 'Alamingo' },
     { name: 'Blamingo' },
     { name: 'Clamingo' },
@@ -68,11 +68,11 @@ function Manufactures() {
       <Header />
       <Nav />
       <Layout>
-        <ManufacturesComponent dataList={manufactures} characters={characters} />
+        <IngredientsComponent dataList={ingredients} characters={characters} />
       </Layout>
       <Footer />
     </>
   )
 }
 
-export default Manufactures
+export default Ingredients

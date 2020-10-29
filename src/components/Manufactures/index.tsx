@@ -1,1 +1,1 @@
-export { default as ManufacturesComponent } from './Manufactures';
+export { default as ManufacturesComponent } from '../Manufactures'
