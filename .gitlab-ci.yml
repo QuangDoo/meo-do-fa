@@ -15,8 +15,8 @@ variables:
 stages:
   # - prepare
   - lint
+  - sonar
   - build
-  # - test
   - deploy
 
 .pre-dev-deploy:
@@ -46,6 +46,25 @@ lint-frontend:
     - yarn
     - yarn lint
 
+sonar:
+  stage: sonar
+  image: sonarsource/sonar-scanner-cli
+  only:
+    - merge_request
+  script:
+    - echo $SONAR_HOST_URL
+    - sonar-scanner -D sonar.projectKey=bb-medofa-frontend -D sonar.sources=. -D sonar.host.url=${SONAR_HOST_URL} -D sonar.login=${SONAR_KEY} -D sonar.exclusions=src/__source_html__/** -D sonar.gitlab.commit_sha=$CI_COMMIT_SHA -D sonar.gitlab.ref_name=$CI_COMMIT_REF_NAME -D sonar.gitlab.project_id=$CI_PROJECT_ID -D sonar.gitlab.unique_issue_per_inline=true
+  
+  interruptible: true
+  # allow_failure: true
+  variables:
+    SONAR_PROJECT_BASE_DIR: "${CI_PROJECT_DIR}"
+    GIT_DEPTH: 0
+  cache:
+    key: "sonar-${CI_PROJECT_ID}"
+    paths:
+      - ".scannerwork"
+      - ".sonar"
 
 build-frontend:
   stage: build
