@@ -34,6 +34,8 @@ build-frontend:
     - develop
     # - master
 
+  interruptible: true
+
   tags:
     - bebuy-gitlab-ci
     - bb-gitlab-ci
@@ -51,6 +53,8 @@ deploy-dev-frontend:
   image: alpine/helm
   only:
     - develop
+
+  interruptible: true
 
   tags:
     - bebuy-gitlab-ci
