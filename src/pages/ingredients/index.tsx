@@ -4,7 +4,7 @@ import { Header } from '../../components/Header'
 import Footer from '../../components/Footer'
 import Head from '../../components/Head'
 import { Nav } from '../../components/Nav'
-import { IngredientsComponent } from '../../components/Ingredients'
+import SearchScreen from '../../components/SearchScreen'
 
 function Ingredients() {
   const ingredients = [
@@ -68,7 +68,7 @@ function Ingredients() {
       <Header />
       <Nav />
       <Layout>
-        <IngredientsComponent dataList={ingredients} characters={characters} />
+        <SearchScreen dataList={ingredients} characters={characters} />
       </Layout>
       <Footer />
     </>
