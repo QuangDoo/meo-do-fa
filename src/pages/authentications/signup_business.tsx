@@ -93,7 +93,8 @@ function SignupBusiness() {
   const { register, setValue, handleSubmit } = useForm()
   const fileInput = createRef()
   const onSubmit = (data) => {
-    console.log(data), console.log(fileInput.current)
+    console.log(data)
+    console.log(fileInput.current)
   }
   const [disabledDistrict, setDisabledDistrict] = useState(true)
   const [disabledWard, setDisabledWard] = useState(true)

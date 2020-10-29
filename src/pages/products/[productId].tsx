@@ -25,7 +25,6 @@ function ProductDetail() {
       setProduct(dataProduct.getProduct)
     }
   }, [dataProduct])
-  console.log('product', product)
   return (
     <>
       <Head>
