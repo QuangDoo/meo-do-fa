@@ -7,7 +7,7 @@ type Props = {
 
 const ProductList = (props: Props) => {
   const { products } = props
-
+  
   return (
     <div className="products__cards mb-3">
       {products.map((product, index) => (

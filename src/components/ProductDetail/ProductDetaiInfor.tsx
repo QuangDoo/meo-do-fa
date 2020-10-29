@@ -1,8 +1,12 @@
 import Link from 'next/link'
+
 import React from 'react'
 import QuantityInput from '../ProductCard/QuantityInput'
-
-const ProductDetailInfor = () => {
+type PropsType = {
+  name: string
+  price: number
+}
+const ProductDetailInfor = (props: PropsType) => {
   let token = ''
   if (typeof window !== 'undefined') {
     token = localStorage.getItem('token')
@@ -12,7 +16,7 @@ const ProductDetailInfor = () => {
     <div className="col-md-8">
       <div className="row">
         <div className="col-12">
-          <h1 className="h3 text-capitalize">kidney cap bát vị bổ thận dương opc (h/50v)</h1>
+          <h1 className="h3 text-capitalize">{props.name}</h1>
           <div className="product__status mb-1" />
         </div>
         <div className="col-md-7">
@@ -40,11 +44,12 @@ const ProductDetailInfor = () => {
                 </a>
               </Link>
             ) : (
-              <div  className="d-flex align-items-center flex-wrap justify-content-between mb-4">
+              <div className="d-flex align-items-center flex-wrap justify-content-between mb-4">
                 <div>
                   <div className="product__price-group">
                     <span className="product__price">
-                      158.900<span className="unit">đ</span>
+                      {props.price}
+                      <span className="unit">đ</span>
                     </span>
                   </div>
                 </div>
