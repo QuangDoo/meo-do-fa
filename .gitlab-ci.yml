@@ -16,7 +16,7 @@ stages:
   # - prepare
   - lint
   - build
-  # - test
+  - sonar
   - deploy
 
 .pre-dev-deploy:
@@ -46,6 +46,26 @@ lint-frontend:
     - yarn
     - yarn lint
 
+sonar:
+  image: sonarsource/sonar-scanner-cli
+  needs: []
+  dependencies: []
+  script:
+    - sonar-scanner \
+      -Dsonar.qualitygate.wait=true
+      -Dsonar.projectKey=bb-medofa \
+      -Dsonar.sources=. \
+      -Dsonar.host.url=https://sonar.medofa.bedigital.vn \
+      -Dsonar.login=${SONAR_KEY}
+  allow_failure: true
+  variables:
+    SONAR_PROJECT_BASE_DIR: "${CI_PROJECT_DIR}"
+    GIT_DEPTH: 0
+  cache:
+    key: "sonar-${CI_PROJECT_ID}"
+    paths:
+      - ".scannerwork"
+      - ".sonar"
 
 build-frontend:
   stage: build
