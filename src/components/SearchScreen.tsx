@@ -15,7 +15,7 @@ type PropsType = {
   characters: Characters[]
 }
 
-export default function Manufactures(props: PropsType) {
+export default function SearchScreen(props: PropsType) {
   const [cloneData, setCloneData] = useState(props.dataList)
 
   const filterByCharacter = (character) => {
