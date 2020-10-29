@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from 'react'
-import { Col, Row } from 'antd'
-import styled from 'styled-components'
+import { useQuery } from '@apollo/react-hooks';
+import { Col, Row } from 'antd';
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
 
-import SideBar from './SideBar'
-import ProductsHeader from './ProductsHeader'
-import FilterTags from './FilterTags'
-import Pagination from './Pagination'
-import ProductList from './ProductList'
-import { Product } from '../ProductCard'
-import { useRouter } from 'next/router'
-import { useQuery } from '@apollo/react-hooks'
-import { GET_PRODUCTS } from '../../graphql/product/product.query'
-import withApollo from '../../utils/withApollo'
+import { GET_PRODUCTS } from '../../graphql/product/product.query';
+import withApollo from '../../utils/withApollo';
+import { Product } from '../ProductCard';
+import FilterTags from './FilterTags';
+import Pagination from './Pagination';
+import ProductList from './ProductList';
+import ProductsHeader from './ProductsHeader';
+import SideBar from './SideBar';
 
-const productListProduct: Product = {
+const productListProduct: any = {
   new: true,
   name: 'egudin solifenacin succinat 5mg medisun (h/30v)',
   image: 'Lg9NokKW5SY2TGdtiEKFCNeR',
@@ -22,54 +22,54 @@ const productListProduct: Product = {
   unit: 'Hộp 3 vỉ x 10 viên',
   category: 'thận, tiết niệu',
   categoryId: 'than-tiet-nieu',
-  badges: ['common', 'invoice_exportable', 'change_style', 'flash_sale'],
-}
+  badges: ['common', 'invoice_exportable', 'change_style', 'flash_sale']
+};
 
 export const exampleProducts: Product[] = [...new Array(10)].map(() => ({
-  ...productListProduct,
-}))
+  ...productListProduct
+}));
 
-export const productsPageSize = 20
+export const productsPageSize = 20;
 
 // const exampleTotalProducts = 311
 
 const Products = () => {
-  const router = useRouter()
+  const router = useRouter();
 
   // TODO: Integration
-  const [products, setProducts] = useState<Product[]>([])
+  const [products, setProducts] = useState<Product[]>([]);
 
   // TODO: Integration
-  const [totalProducts, setTotalProducts] = useState<number>(0)
+  const [totalProducts, setTotalProducts] = useState<number>(0);
 
   const { data, loading } = useQuery(GET_PRODUCTS, {
     variables: {
       page: +(router.query.page as string) || 1,
-      pageSize: productsPageSize,
-    },
-  })
-  
+      pageSize: productsPageSize
+    }
+  });
+
   // Loading products
   useEffect(() => {
-    console.log('Loading products:', loading)
-  }, [loading])
+    console.log('Loading products:', loading);
+  }, [loading]);
 
   // Update products state when data arrives
   useEffect(() => {
-    if (!data) return
+    if (!data) return;
 
-    console.log('Products data:', data.getProducts)
+    console.log('Products data:', data.getProducts);
 
-    setProducts(data.getProducts)
-    setTotalProducts(data.getProducts.length)
-  }, [data])
+    setProducts(data.getProducts);
+    setTotalProducts(data.getProducts.length);
+  }, [data]);
 
   useEffect(() => {
-    console.log('Products query:', router.query)
+    console.log('Products query:', router.query);
 
     // Get products again when query changes
     // getProducts()
-  }, [router.query])
+  }, [router.query]);
 
   return (
     <div className="products container-fluid mobile-content my-3 my-sm-5">
@@ -94,7 +94,7 @@ const Products = () => {
         </Col>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default withApollo({ ssr: true })(Products)
+export default withApollo({ ssr: true })(Products);

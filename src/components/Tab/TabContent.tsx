@@ -1,9 +1,8 @@
-import React from 'react'
+import React from 'react';
 type PropsType = {
-  data: string[]
-}
+  data: string[];
+};
 export default function TabContent(props: PropsType) {
-  
   return (
     <div className="tab-content">
       {props.data.map((item, index) => {
@@ -11,10 +10,10 @@ export default function TabContent(props: PropsType) {
           <div className={index && `tab-pane fade active show`} id="description" key={index}>
             {item ? item : 'Dang cap nhat'}
           </div>
-        )
+        );
       })}
     </div>
-  )
+  );
 }
 
 {

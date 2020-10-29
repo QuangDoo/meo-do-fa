@@ -1,30 +1,31 @@
-import React, { useEffect, useState } from 'react'
-import Layout from '../../components/Layout/Layout'
-import { Header } from '../../components/Header'
-import Footer from '../../components/Footer'
-import Head from '../../components/Head'
-import { Nav } from '../../components/Nav'
-import ProductDetailComponent from '../../components/ProductDetail/ProductDetail'
-import withApollo from '../../utils/withApollo'
-import { useQuery } from '@apollo/react-hooks'
-import { GET_PRODUCT } from '../../graphql/product/product.query'
-import { useRouter } from 'next/router'
+import { useQuery } from '@apollo/react-hooks';
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
+
+import Footer from '../../components/Footer';
+import Head from '../../components/Head';
+import { Header } from '../../components/Header';
+import Layout from '../../components/Layout/Layout';
+import { Nav } from '../../components/Nav';
+import ProductDetailComponent from '../../components/ProductDetail/ProductDetail';
+import { GET_PRODUCT } from '../../graphql/product/product.query';
+import withApollo from '../../utils/withApollo';
 
 function ProductDetail() {
-  const [product, setProduct] = useState({})
-  const router = useRouter()
-  const { productId } = router.query
+  const [product, setProduct] = useState({});
+  const router = useRouter();
+  const { productId } = router.query;
 
   const { data: dataProduct, loading: loadingProduct, error: errorProduct } = useQuery(
     GET_PRODUCT,
     { variables: { id: Number(productId) } }
-  )
+  );
 
   useEffect(() => {
     if (dataProduct) {
-      setProduct(dataProduct.getProduct)
+      setProduct(dataProduct.getProduct);
     }
-  }, [dataProduct])
+  }, [dataProduct]);
   return (
     <>
       <Head>
@@ -37,7 +38,7 @@ function ProductDetail() {
       </Layout>
       <Footer />
     </>
-  )
+  );
 }
 
-export default withApollo({ ssr: true })(ProductDetail)
+export default withApollo({ ssr: true })(ProductDetail);

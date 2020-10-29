@@ -31,6 +31,21 @@ stages:
 build-frontend:
   stage: build
   only:
+    - merge_request
+    # - master
+
+  interruptible: true
+
+  tags:
+    - bebuy-gitlab-ci
+    - bb-gitlab-ci
+
+  script:
+    - docker build -t $REGISTRY .  --no-cache
+
+build-dev-frontend:
+  stage: build
+  only:
     - develop
     # - master
 

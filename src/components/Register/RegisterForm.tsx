@@ -1,100 +1,100 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-import { useQuery, useMutation } from '@apollo/react-hooks'
-import React, { FC, useEffect } from 'react'
-import { useForm } from 'react-hook-form'
-import { toast } from 'react-toastify'
-import styled from 'styled-components'
-import { emailRegex } from '../../assets/regex/email'
-import { viPhoneNumberRegex } from '../../assets/regex/viPhoneNumber'
-import { useModalControlDispatch } from '../../contexts/ModalControl'
-import { REGISTER_USER } from '../../graphql/user/register.mutation'
-import withApollo from '../../utils/withApollo'
-import Button from '../Button'
-import Checkbox from '../Checkbox'
-import Input from '../Input'
-import ChooseUserType from './ChooseUserType'
-import WelcomeAccount from './WelcomeAccount'
+import { useMutation, useQuery } from '@apollo/react-hooks';
+import React, { FC, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
+import styled from 'styled-components';
 
-export type UserType = 'pharmacy' | 'clinic' | 'drugstore'
+import { emailRegex } from '../../assets/regex/email';
+import { viPhoneNumberRegex } from '../../assets/regex/viPhoneNumber';
+import { useModalControlDispatch } from '../../contexts/ModalControl';
+import { REGISTER_USER } from '../../graphql/user/register.mutation';
+import withApollo from '../../utils/withApollo';
+import Button from '../Button';
+import Checkbox from '../Checkbox';
+import Input from '../Input';
+import ChooseUserType from './ChooseUserType';
+import WelcomeAccount from './WelcomeAccount';
+
+export type UserType = 'pharmacy' | 'clinic' | 'drugstore';
 
 // Map from UserType to text
 // (replace with translation later like t('pharmacy') or something)
 export const userTypeMap: Record<UserType, string> = {
   pharmacy: 'Nhà thuốc',
   clinic: 'Phòng khám',
-  drugstore: 'Quầy thuốc',
-}
+  drugstore: 'Quầy thuốc'
+};
 
 // Form input fields
 type Inputs = {
-  userType: string
-  name: string
-  email: string
-  password: string
-  phone: number
-  referPhone: number
-  acceptTerms: boolean
-}
+  userType: string;
+  name: string;
+  email: string;
+  password: string;
+  phone: number;
+  referPhone: number;
+  acceptTerms: boolean;
+};
 
 const ErrorToast = styled.div`
   white-space: pre-line;
-`
+`;
 
 // Initial value for userType
-const initialUserType = ''
+const initialUserType = '';
 
 const RegisterForm = () => {
-  const { register, handleSubmit, setValue, watch, errors } = useForm<Inputs>()
+  const { register, handleSubmit, setValue, watch, errors } = useForm<Inputs>();
 
-  const modalControlDispatch = useModalControlDispatch()
+  const modalControlDispatch = useModalControlDispatch();
 
-  const openLoginModal = () => modalControlDispatch({ type: 'OPEN_LOGIN_MODAL' })
+  const openLoginModal = () => modalControlDispatch({ type: 'OPEN_LOGIN_MODAL' });
 
   const [regiterUser, { data: dataUser, loading: loadingUser, error: errorUser }] = useMutation(
     REGISTER_USER
-  )
+  );
   // Watch userType value, with initial state
   // This component re-renders when userType changes
-  const watchUserType = watch('userType', initialUserType)
+  const watchUserType = watch('userType', initialUserType);
 
   // Show error toasts when error changes
   useEffect(() => {
-    const errorNames = Object.keys(errors)
+    const errorNames = Object.keys(errors);
 
-    if (!errorNames.length) return
+    if (!errorNames.length) return;
 
-    const errorMessage = errorNames.map((name) => errors[name].message).join('\n')
+    const errorMessage = errorNames.map((name) => errors[name].message).join('\n');
 
-    toast.error(<ErrorToast>{errorMessage}</ErrorToast>)
-  }, [errors])
+    toast.error(<ErrorToast>{errorMessage}</ErrorToast>);
+  }, [errors]);
 
   // On submit button click
   const onSubmit = (data: Inputs) => {
-    console.log('Register Submit data:', data)
+    console.log('Register Submit data:', data);
     regiterUser({
       variables: {
         accountType: data.userType,
         name: data.name,
         email: data.email,
         password: data.password,
-        phone: data.phone,
-      },
-    })
+        phone: data.phone
+      }
+    });
     // Integrate with backend
-  }
+  };
   useEffect(() => {
     if (dataUser?.createUser?.token) {
-      window.localStorage.setItem('token', dataUser.createUser.token)
+      window.localStorage.setItem('token', dataUser.createUser.token);
     }
-  }, [dataUser])
-  console.log('dataUser', dataUser)
+  }, [dataUser]);
+  console.log('dataUser', dataUser);
   // Set user type on UserTypeCard click (in ChooseUserType)
   const setUserType = (value: UserType) => {
-    setValue('userType', value)
-  }
+    setValue('userType', value);
+  };
 
   // Reset userType to initial state
-  const resetUserType = () => setValue('userType', initialUserType)
+  const resetUserType = () => setValue('userType', initialUserType);
 
   return (
     <form className="new_account" onSubmit={handleSubmit(onSubmit)}>
@@ -116,7 +116,7 @@ const RegisterForm = () => {
         <Input
           name="name"
           ref={register({
-            required: 'Xin nhập tên.',
+            required: 'Xin nhập tên.'
           })}
           containerClass="mb-4"
           iconClass="icomoon icon-user"
@@ -129,9 +129,9 @@ const RegisterForm = () => {
           ref={register({
             pattern: {
               value: viPhoneNumberRegex,
-              message: 'Xin nhập số điện thoại hợp lệ.',
+              message: 'Xin nhập số điện thoại hợp lệ.'
             },
-            required: 'Xin nhập số điện thoại.',
+            required: 'Xin nhập số điện thoại.'
           })}
           containerClass="mb-4"
           iconClass="icomoon icon-phone"
@@ -143,8 +143,8 @@ const RegisterForm = () => {
           ref={register({
             pattern: {
               value: emailRegex,
-              message: 'Xin nhập email hợp lệ.',
-            },
+              message: 'Xin nhập email hợp lệ.'
+            }
           })}
           containerClass="mb-4"
           iconClass="icomoon icon-mail"
@@ -157,8 +157,8 @@ const RegisterForm = () => {
             required: 'Xin nhập mật khẩu.',
             minLength: {
               value: 6,
-              message: 'Xin nhập mật khẩu tối thiểu 6 kí tự.',
-            },
+              message: 'Xin nhập mật khẩu tối thiểu 6 kí tự.'
+            }
           })}
           containerClass="mb-4"
           iconClass="icomoon icon-lock"
@@ -171,9 +171,9 @@ const RegisterForm = () => {
           ref={register({
             pattern: {
               value: viPhoneNumberRegex,
-              message: 'Xin nhập số điện thoại giới thiệu hợp lệ.',
+              message: 'Xin nhập số điện thoại giới thiệu hợp lệ.'
             },
-            validate: () => true, // Check with backend if referer phone number exists
+            validate: () => true // Check with backend if referer phone number exists
           })}
           containerClass="mb-4"
           iconClass="fas fa-user-friends"
@@ -183,7 +183,7 @@ const RegisterForm = () => {
 
         <Checkbox
           ref={register({
-            required: 'Xin đồng ý với Điều khoản sử dụng.',
+            required: 'Xin đồng ý với Điều khoản sử dụng.'
           })}
           name="acceptTerms"
           label={
@@ -196,15 +196,13 @@ const RegisterForm = () => {
 
         <div className="mb-4">
           Nếu bạn đã có tài khoản, vui lòng{' '}
-          <a
+          <button
             className="text-secondary"
             onClick={openLoginModal}
             onKeyPress={openLoginModal}
-            role="button"
-            tabIndex={0}
-          >
+            tabIndex={0}>
             Đăng nhập
-          </a>
+          </button>
         </div>
 
         <Button type="submit" variant="gradient" block>
@@ -212,7 +210,7 @@ const RegisterForm = () => {
         </Button>
       </div>
     </form>
-  )
-}
+  );
+};
 
-export default withApollo({ ssr: true })(RegisterForm)
+export default withApollo({ ssr: true })(RegisterForm);
