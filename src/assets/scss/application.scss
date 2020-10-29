@@ -34,6 +34,7 @@ a:hover {
 .no-scrollbar::-webkit-scrollbar {
   display: none;
   scrollbar-width: none;
+  
 }
 .scrollbar-on-hover {
   overflow: auto !important;
@@ -18842,4 +18843,12 @@ abbr[title] {
 }
 .swal2-show {
   animation: swal2-show .3s;
+}
+.tab-header{
+  white-space: nowrap;
+    overflow-x: auto;
+    display: block;
+    border-bottom: 1px solid #dee2e6;
+    margin-right: -88px;
+    margin-left: -15px;
 }
