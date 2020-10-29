@@ -3,10 +3,13 @@ import React, { useState } from 'react'
 function QuantityInput(props) {
   const [quantity, setQuantity] = useState(props.quantity)
   const plus = () => {
-    setQuantity(quantity + 1)
+    setQuantity(Number(quantity) + 1)
   }
   const minus = () => {
-    setQuantity(quantity - 1)
+    setQuantity(Number(quantity) - 1)
+  }
+  const handleChange = (elm) => {
+    setQuantity(elm.target.value)
   }
   return (
     <div className="qty js-qty">
@@ -26,6 +29,7 @@ function QuantityInput(props) {
         placeholder="0"
         defaultValue={props.quantity}
         value={quantity}
+        onChange={handleChange}
       />
 
       <button className="btn btn-sm qty__button qty__button--plus" onClick={plus}>

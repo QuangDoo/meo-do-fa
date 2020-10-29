@@ -2,7 +2,7 @@ import { withApollo } from 'next-apollo'
 import ApolloClient, { InMemoryCache } from 'apollo-boost'
 
 const apolloClient = new ApolloClient({
-  uri: 'http://192.168.1.11:3907',
+  uri: 'https://odoo.medofa.bedigital.vn/web',
   cache: new InMemoryCache(),
 })
 

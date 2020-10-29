@@ -13,7 +13,7 @@ function Cart() {
       price: 99600,
       oldPrice: 99600,
       id: 123,
-      quantity: 3,
+      quantity: 4,
       description: 'Hộp 26 gói x 20gr',
       slug: 'phosphalugel-boehringer-ingelheim-h-26g',
       image: 'https://images.thuocsi.vn/FrWZN5xT53QQ8Cs66rKHT228',
@@ -52,6 +52,9 @@ function Cart() {
   const totalBeforeDiscount = cartItem.reduce((current, total) => {
     return current + total.quantity * total.oldPrice
   }, 0)
+  const checkOut = (e) => {
+    totalAfterDiscount < 2000000 && e.preventDefault(), console.log('chua du 2tr :>> ')
+  }
   return (
     <>
       <Head>
@@ -128,8 +131,7 @@ function Cart() {
                         <small>Số lượng</small>
                       </div>
                       <div className="cart__quantity text-secondary">
-                        {totalQuantity}
-                        {/* <b data-target="cart.cartQty">57</b> */}
+                        <b data-target="cart.cartQty">{totalQuantity}</b>
                       </div>
                     </div>
                   </div>
@@ -168,9 +170,8 @@ function Cart() {
                     <div className="cart__info-item">
                       <a
                         className="btn btn-secondary btn-block"
-                        data-action="cart#proceedToCheckout"
-                        data-target="cart.submit"
                         href="/checkout"
+                        onClick={checkOut}
                       >
                         Tiếp tục thanh toán
                       </a>

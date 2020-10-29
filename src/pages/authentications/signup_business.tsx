@@ -90,7 +90,7 @@ function SignupBusiness() {
     },
   ]
 
-  const { register, setValue, handleSubmit } = useForm()
+  const { register, setValue, handleSubmit, getValues } = useForm()
   const fileInput = createRef()
   const onSubmit = (data) => {
     console.log(data), console.log(fileInput.current)
@@ -254,17 +254,15 @@ function SignupBusiness() {
                         <select
                           className="custom-select d-block"
                           required
-                          name="user[businesses_attributes][0][city_id]"
+                          name="city"
                           ref={register}
                           onChange={(e) => {
                             e.target.value
                               ? setDisabledDistrict(false)
                               : (setDisabledDistrict(true),
                                 setDisabledWard(true),
-                                setValue(
-                                  'user[businesses_attributes][0][district_id]',
-                                  district[0].districtName
-                                ))
+                                setValue('district', district[0].id),
+                                setValue('ward', ward[0].id))
                           }}
                         >
                           {city.map((item, index) => (
@@ -285,10 +283,12 @@ function SignupBusiness() {
                           className="custom-select d-block"
                           disabled={disabledDistrict}
                           required
-                          name="user[businesses_attributes][0][district_id]"
+                          name="district"
                           ref={register}
                           onChange={(e) => {
-                            e.target.value ? setDisabledWard(false) : setDisabledWard(true)
+                            e.target.value
+                              ? setDisabledWard(false)
+                              : (setDisabledWard(true), setValue('ward', ward[0].id))
                           }}
                         >
                           {district.map((item, index) => (
@@ -309,7 +309,7 @@ function SignupBusiness() {
                           className="custom-select d-block"
                           disabled={disabledWard}
                           required
-                          name="user[businesses_attributes][0][ward_id]"
+                          name="ward"
                           ref={register}
                         >
                           {ward.map((item, index) => (
