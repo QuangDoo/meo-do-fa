@@ -4,7 +4,7 @@ import { Header } from '../components/Header'
 import Footer from '../components/Footer'
 import Head from '../components/Head'
 import { Nav } from '../components/Nav'
-import { ManufacturesComponent } from '../components/Manufactures'
+import SearchScreen from '../components/SearchScreen'
 
 function Manufactures() {
   const manufactures = [
@@ -68,7 +68,7 @@ function Manufactures() {
       <Header />
       <Nav />
       <Layout>
-        <ManufacturesComponent dataList={manufactures} characters={characters} />
+        <SearchScreen dataList={manufactures} characters={characters} />
       </Layout>
       <Footer />
     </>
