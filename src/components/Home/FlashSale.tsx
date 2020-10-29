@@ -5,7 +5,7 @@ import { ProductsContainer } from './ProductsContainer'
 
 export const flashSaleProducts = [...new Array(10)].map(
   () =>
-    ({
+    (({
       new: true,
       image: 'gV7ACwEuH8vkfEJVV8tMbix3',
       price: '783.200',
@@ -17,7 +17,7 @@ export const flashSaleProducts = [...new Array(10)].map(
       name:
         'combo eucerin trị mụn (kem kiểm soát dầu giảm mụn pro acne a.i matt fluid 50ml+ tinh chất trị mụn viêm proacne ai clearing treatment 40ml) tặng nước tẩy trang 200ml',
       badges: ['invoice_exportable', 'only_thuocsi', 'flash_sale'],
-    } as Product)
+    } as unknown) as Product)
 )
 
 export const FlashSale = () => {
