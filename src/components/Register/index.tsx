@@ -1,33 +1,33 @@
-import { TFunction } from 'next-i18next'
-import React from 'react'
-import { withTranslation } from '../../../i18n'
-import { useModalControlDispatch, useModalControlState } from '../../contexts/ModalControl'
-import Button from '../Button'
-import Modal from '../Modal'
-import RegisterForm from './RegisterForm'
+import { TFunction } from 'next-i18next';
+import React from 'react';
+
+import { withTranslation } from '../../../i18n';
+import { useModalControlDispatch, useModalControlState } from '../../contexts/ModalControl';
+import Button from '../Button';
+import Modal from '../Modal';
+import RegisterForm from './RegisterForm';
 
 type RegisterModalProps = {
-  readonly t: TFunction
-}
+  readonly t: TFunction;
+};
 
-const Register = ({ t }: RegisterModalProps) => {
+const Register = ({ t }: RegisterModalProps): JSX.Element => {
   // Modal is open or not
-  const { registerIsOpen } = useModalControlState()
+  const { registerIsOpen } = useModalControlState();
 
   // Dispatch to update ModalControl context
-  const dispatch = useModalControlDispatch()
+  const dispatch = useModalControlDispatch();
 
   const openModal = () => {
     dispatch({
-      type: 'OPEN_REGISTER_MODAL',
-    })
-    console.log('opened register modal')
-  }
+      type: 'OPEN_REGISTER_MODAL'
+    });
+  };
 
   const closeModal = () =>
     dispatch({
-      type: 'CLOSE_REGISTER_MODAL',
-    })
+      type: 'CLOSE_REGISTER_MODAL'
+    });
 
   return (
     <>
@@ -39,14 +39,13 @@ const Register = ({ t }: RegisterModalProps) => {
       {/* Register modal */}
       <Modal
         open={registerIsOpen}
-        title="Tạo Tài Khoản"
+        title={t('register:create_an_account')}
         onClose={closeModal}
-        className="authentication signup"
-      >
+        className="authentication signup">
         <RegisterForm />
       </Modal>
     </>
-  )
-}
+  );
+};
 
-export default withTranslation('header')(Register)
+export default withTranslation(['header', 'register'])(Register);

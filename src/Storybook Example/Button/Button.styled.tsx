@@ -1,6 +1,7 @@
-import styled, { css } from 'styled-components'
-import { ExampleButtonProps } from './Button'
-import Color from 'color'
+import Color from 'color';
+import styled, { css } from 'styled-components';
+
+import { ExampleButtonProps } from './Button';
 
 // Pass in props first
 export const StyledButton = styled.button<ExampleButtonProps>`
@@ -54,4 +55,4 @@ export const StyledButton = styled.button<ExampleButtonProps>`
       cursor: pointer;
     }
   `}
-`
+`;

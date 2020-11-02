@@ -1,4 +1,4 @@
-import { gql } from 'apollo-boost'
+import { gql } from 'apollo-boost';
 
 export const LOGIN_USER = gql`
   mutation login($phone: String!, $password: String!) {
@@ -8,4 +8,4 @@ export const LOGIN_USER = gql`
       status
     }
   }
-`
+`;

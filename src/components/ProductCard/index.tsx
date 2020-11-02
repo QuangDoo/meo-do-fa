@@ -1,37 +1,39 @@
-import { TFunction, WithTranslation } from 'next-i18next'
-import Link from 'next/link'
-import React from 'react'
-import { withTranslation } from '../../../i18n'
-import useIsLoggedIn from '../../hooks/useIsLoggedIn'
-import { DiscountRibbon } from './DiscountRibbon'
-import LoginToSeePrice from './LoginToSeePrice'
-import ProductBadge, { BadgeType } from './ProductBadge'
-import { ProductImage } from './ProductImage'
-import { ProductPrice } from './ProductPrice'
-import QuantityInput from './QuantityInput'
+import { WithTranslation } from 'next-i18next';
+import Link from 'next/link';
+import React from 'react';
 
-export interface Product extends WithTranslation {
-  name: string
-  price: string
-  unit: string
-  category: string
-  categoryId: string
-  image: string
-  id: string
+import { withTranslation } from '../../../i18n';
+import useIsLoggedIn from '../../hooks/useIsLoggedIn';
+import { Product } from '../../types/Product';
+import { DiscountRibbon } from './DiscountRibbon';
+import LoginToSeePrice from './LoginToSeePrice';
+import ProductBadge, { BadgeType } from './ProductBadge';
+import { ProductImage } from './ProductImage';
+import { ProductPrice } from './ProductPrice';
+import QuantityInput from './QuantityInput';
 
-  badges?: BadgeType[]
-  new?: boolean
-  discountPercent?: number
-  supplier?: string
-  oldPrice?: string
-  deal?: boolean
-  expirationDate?: string
-  readonly t: TFunction
-}
+// export interface Product extends WithTranslation {
+//   name: string;
+//   list_price: string;
+//   unit: string;
+//   categ_id: string[];
+//   categoryId: string;
+//   image_128: string;
+//   id: string;
 
-const ProductCard = ({ badges = [], t, ...props }: Product) => {
-  const isLoggedIn = useIsLoggedIn()
+//   badges?: BadgeType[];
+//   new?: boolean;
+//   discountPercent?: number;
+//   supplier?: string;
+//   oldPrice?: string;
+//   deal?: boolean;
+//   expirationDate?: string;
+// }
 
+type Props = Product & WithTranslation;
+
+const ProductCard = ({ badges = [], t, ...props }: Props): JSX.Element => {
+  const isLoggedIn = useIsLoggedIn();
   return (
     <div className="product-card-container">
       <article className={`product-card card ${props.deal ? 'deal-card' : ''}`}>
@@ -41,7 +43,7 @@ const ProductCard = ({ badges = [], t, ...props }: Product) => {
 
             {props.discountPercent && <DiscountRibbon discountPercent={props.discountPercent} />}
 
-            <ProductImage imageId={props.image} productId={props.id} />
+            <ProductImage imageId={props.image_128} productId={props.id} />
 
             <div>
               <Link href={`/products/${props.id}`}>
@@ -68,7 +70,7 @@ const ProductCard = ({ badges = [], t, ...props }: Product) => {
               <small className="text-muted product-card__category">
                 {t('productCard:category')}:{' '}
                 <Link href={`/products?category=${props.categoryId}`}>
-                  <a>{props.category}</a>
+                  <a>{props?.categ_id?.map((item) => item)}</a>
                 </Link>
               </small>
             </div>
@@ -78,7 +80,7 @@ const ProductCard = ({ badges = [], t, ...props }: Product) => {
             {isLoggedIn ? (
               <>
                 <div className="mb-2">
-                  <ProductPrice price={props.price} />
+                  <ProductPrice price={props.list_price} />
                 </div>
                 <QuantityInput />
               </>
@@ -89,7 +91,7 @@ const ProductCard = ({ badges = [], t, ...props }: Product) => {
         </div>
       </article>
     </div>
-  )
-}
+  );
+};
 
-export default withTranslation(['productCard'])(ProductCard)
+export default withTranslation(['productCard'])(ProductCard);

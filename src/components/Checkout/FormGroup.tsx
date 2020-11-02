@@ -1,13 +1,13 @@
-import clsx from 'clsx'
-import React from 'react'
+import clsx from 'clsx';
+import React from 'react';
 
 type Props = {
-  children: React.ReactNode
-  className?: string
-}
+  children: React.ReactNode;
+  className?: string;
+};
 
-const FormGroup = (props: Props) => {
-  return <div className={clsx('form-group', props.className)}>{props.children}</div>
-}
+const FormGroup = (props: Props): JSX.Element => {
+  return <div className={clsx('form-group', props.className)}>{props.children}</div>;
+};
 
-export default FormGroup
+export default FormGroup;

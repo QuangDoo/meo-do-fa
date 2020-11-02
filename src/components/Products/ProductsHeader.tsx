@@ -1,21 +1,22 @@
-import { useRouter } from 'next/router'
-import React from 'react'
-import { productsPageSize } from '.'
+import { useRouter } from 'next/router';
+import React from 'react';
+
+import { productsPageSize } from '.';
 
 type Props = {
-  totalProducts: number
-}
+  totalProducts: number;
+};
 
-const Header = (props: Props) => {
-  const { totalProducts } = props
+const Header = (props: Props): JSX.Element => {
+  const { totalProducts } = props;
 
-  const router = useRouter()
+  const router = useRouter();
 
-  const currentPage = +(router.query.page as string) || 1
+  const currentPage = +(router.query.page as string) || 1;
 
-  const start = (currentPage - 1) * productsPageSize + 1
+  const start = (currentPage - 1) * productsPageSize + 1;
 
-  const end = Math.min(start + productsPageSize - 1, totalProducts)
+  const end = Math.min(start + productsPageSize - 1, totalProducts);
 
   return (
     <div className="px-2 px-sm-0">
@@ -35,7 +36,7 @@ const Header = (props: Props) => {
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

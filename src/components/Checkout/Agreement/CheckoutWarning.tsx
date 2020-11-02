@@ -1,7 +1,8 @@
-import React from 'react'
-import DescriptionBox from '../DescriptionBox'
+import React from 'react';
 
-const CheckoutWarning = () => {
+import DescriptionBox from '../DescriptionBox';
+
+const CheckoutWarning = (): JSX.Element => {
   return (
     <DescriptionBox white>
       <ol className="pl-4 mb-0">
@@ -13,7 +14,7 @@ const CheckoutWarning = () => {
         </li>
       </ol>
     </DescriptionBox>
-  )
-}
+  );
+};
 
-export default CheckoutWarning
+export default CheckoutWarning;

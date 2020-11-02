@@ -1,14 +1,18 @@
-import { useEffect, useState } from 'react'
-import useLocalStorage from './useLocalStorage'
+import { useEffect, useState } from 'react';
 
-export default function useIsLoggedIn() {
-  const [token, setToken] = useLocalStorage('token')
+import useLocalStorage from './useLocalStorage';
 
-  const [isLoggedIn, setIsLoggedIn] = useState(!!token)
+export default function useIsLoggedIn(): boolean {
+  const [token] = useLocalStorage('token');
+
+  const [isLoggedIn, setIsLoggedIn] = useState(!!token);
+
+  console.log('Token:', token);
+  console.log('Is logged in:', !!token);
 
   useEffect(() => {
-    setIsLoggedIn(!!token)
-  }, [token])
+    setIsLoggedIn(!!token);
+  }, [token]);
 
-  return isLoggedIn
+  return isLoggedIn;
 }

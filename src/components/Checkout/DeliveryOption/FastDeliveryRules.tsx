@@ -1,6 +1,7 @@
-import clsx from 'clsx'
-import React from 'react'
-import DescriptionBox from '../DescriptionBox'
+import clsx from 'clsx';
+import React from 'react';
+
+import DescriptionBox from '../DescriptionBox';
 
 const rules = [
   <span key={0}>
@@ -18,10 +19,10 @@ const rules = [
 
   <span key={3}>
     Không áp dụng giao hàng nhanh <b>ngày thứ bảy</b>, <b>chủ nhật</b> và các ngày <b>lễ tết</b>.
-  </span>,
-]
+  </span>
+];
 
-const FastDeliveryRules = () => {
+const FastDeliveryRules = (): JSX.Element => {
   return (
     <DescriptionBox>
       {rules.map((rule, index) => (
@@ -31,7 +32,7 @@ const FastDeliveryRules = () => {
         </p>
       ))}
     </DescriptionBox>
-  )
-}
+  );
+};
 
-export default FastDeliveryRules
+export default FastDeliveryRules;

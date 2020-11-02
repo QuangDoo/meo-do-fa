@@ -1,8 +1,9 @@
-import Link from 'next/link'
-import React from 'react'
-import Button from '../../Button'
+import Link from 'next/link';
+import React from 'react';
 
-const StickyHeader = () => {
+import Button from '../../Button';
+
+const StickyHeader = (): JSX.Element => {
   return (
     <div className="d-flex justify-content-between mb-3">
       <h4 className="d-flex flex-wrap align-items-center">
@@ -18,7 +19,7 @@ const StickyHeader = () => {
         </Link>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default StickyHeader
+export default StickyHeader;

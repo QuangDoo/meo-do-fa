@@ -1,102 +1,102 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable jsx-a11y/no-onchange */
-import React, { createRef, useState } from 'react'
-import Layout from '../../components/Layout/Layout'
-import { Header } from '../../components/Header'
-import { Footer } from '../../components/Footer'
-import Head from '../../components/Head'
-import { Nav } from '../../components/Nav'
-import CartItem from '../../components/Cart/CartItem'
-import { useForm } from 'react-hook-form'
+import React, { createRef, useState } from 'react';
+import { useForm } from 'react-hook-form';
 
-function SignupBusiness() {
-  const [fileName, setFileName] = useState('')
+import CartItem from '../../components/Cart/CartItem';
+import Footer from '../../components/Footer';
+import Head from '../../components/Head';
+import { Header } from '../../components/Header';
+import Layout from '../../components/Layout/Layout';
+import { Nav } from '../../components/Nav';
+
+function SignupBusiness(): JSX.Element {
+  const [fileName, setFileName] = useState('');
   const handleChange = (e) => {
     switch (e.target.name) {
       // Updated this
       case 'selectedFile':
         if (e.target.files.length > 0) {
           // Accessed .name from file
-          setFileName(e.target.files[0].name)
+          setFileName(e.target.files[0].name);
           // console.log(e.target.files[0].name)
         }
-        break
+        break;
       default:
-        setFileName(e.target.value)
+        setFileName(e.target.value);
     }
-  }
-  let file = null
-  file = fileName ? <span>File Selected - {fileName}</span> : <span>Chọn file...</span>
+  };
+  let file = null;
+  file = fileName ? <span>File Selected - {fileName}</span> : <span>Chọn file...</span>;
   const city = [
     {
       cityName: 'Chọn tỉnh/thành phố...',
-      id: '',
+      id: ''
     },
     {
       cityName: 'An Giang',
-      id: 9131,
+      id: 9131
     },
     {
       cityName: 'TP Hồ Chí Minh',
-      id: 1475,
+      id: 1475
     },
     {
       cityName: 'Bắc Kạn',
-      id: 9402,
+      id: 9402
     },
     {
       cityName: 'Bạc Liêu',
-      id: 9533,
-    },
-  ]
+      id: 9533
+    }
+  ];
   const district = [
     {
       districtName: 'Chọn quận/huyện...',
-      id: '',
+      id: ''
     },
     {
       districtName: 'Quận 1',
-      id: 1476,
+      id: 1476
     },
     {
       districtName: 'Quận 2',
-      id: 1487,
+      id: 1487
     },
     {
       districtName: 'Quận 3',
-      id: 1499,
+      id: 1499
     },
     {
       districtName: 'Quận 4',
-      id: 1514,
-    },
-  ]
+      id: 1514
+    }
+  ];
   const ward = [
     {
       wardName: 'Chọn phường/xã...',
-      id: 123,
+      id: 123
     },
     {
       wardName: 'Phường 2',
-      id: 11234,
+      id: 11234
     },
     {
       wardName: 'Phường 3',
-      id: 12388,
+      id: 12388
     },
     {
       wardName: 'Phường 4',
-      id: 14523,
-    },
-  ]
+      id: 14523
+    }
+  ];
 
-  const { register, setValue, handleSubmit } = useForm()
-  const fileInput = createRef()
+  const { register, setValue, handleSubmit } = useForm();
+  const fileInput = createRef();
   const onSubmit = (data) => {
-    console.log(data), console.log(fileInput.current)
-  }
-  const [disabledDistrict, setDisabledDistrict] = useState(true)
-  const [disabledWard, setDisabledWard] = useState(true)
+    console.log(data);
+    console.log(fileInput.current);
+  };
+  const [disabledDistrict, setDisabledDistrict] = useState(true);
+  const [disabledWard, setDisabledWard] = useState(true);
   return (
     <>
       <Head>
@@ -137,8 +137,7 @@ function SignupBusiness() {
           action="/signup_business"
           acceptCharset="UTF-8"
           method="post"
-          onSubmit={handleSubmit(onSubmit)}
-        >
+          onSubmit={handleSubmit(onSubmit)}>
           <input type="hidden" name="_method" defaultValue="put" />
           <input type="hidden" name="authenticity_token" />
           <div className="container signup-business py-3 py-sm-5">
@@ -155,7 +154,9 @@ function SignupBusiness() {
                   <div className="col-12">
                     <div className="row">
                       <div className="col-md-4 form-group">
-                        <label className="form__label">Bạn là</label>
+                        <label htmlFor="ban" className="form__label">
+                          Bạn là
+                        </label>
                         <div className="form-control d-block w-100">Người tiêu dùng</div>
                       </div>
                       <div className="col-md-8 form-group">
@@ -175,8 +176,7 @@ function SignupBusiness() {
                     <div className="form-group">
                       <label
                         className="form__label"
-                        htmlFor="user_businesses_attributes_0_representative"
-                      >
+                        htmlFor="user_businesses_attributes_0_representative">
                         Tên người đại diện pháp luật
                       </label>
                       <input
@@ -191,8 +191,7 @@ function SignupBusiness() {
                     <div className="form-group">
                       <label
                         className="form__label"
-                        htmlFor="user_businesses_attributes_0_tax_number"
-                      >
+                        htmlFor="user_businesses_attributes_0_tax_number">
                         Mã số thuế
                       </label>
                       <input
@@ -227,8 +226,7 @@ function SignupBusiness() {
                     <div className="form-group">
                       <label
                         className="form__label required"
-                        htmlFor="user_businesses_attributes_0_address"
-                      >
+                        htmlFor="user_businesses_attributes_0_address">
                         Địa chỉ nhà thuốc/phòng khám
                       </label>
                       <input
@@ -247,8 +245,7 @@ function SignupBusiness() {
                       <div className="col-md-4 form-group">
                         <label
                           className="form__label required"
-                          htmlFor="user_businesses_attributes_0_city_id"
-                        >
+                          htmlFor="user_businesses_attributes_0_city_id">
                           Tỉnh/Thành phố
                         </label>
                         <select
@@ -256,7 +253,7 @@ function SignupBusiness() {
                           required
                           name="user[businesses_attributes][0][city_id]"
                           ref={register}
-                          onChange={(e) => {
+                          onBlur={(e) => {
                             e.target.value
                               ? setDisabledDistrict(false)
                               : (setDisabledDistrict(true),
@@ -264,9 +261,8 @@ function SignupBusiness() {
                                 setValue(
                                   'user[businesses_attributes][0][district_id]',
                                   district[0].districtName
-                                ))
-                          }}
-                        >
+                                ));
+                          }}>
                           {city.map((item, index) => (
                             <option key={index} value={item.id}>
                               {item.cityName}
@@ -277,8 +273,7 @@ function SignupBusiness() {
                       <div className="col-md-4 form-group">
                         <label
                           className="form__label required"
-                          htmlFor="user_businesses_attributes_0_district_id"
-                        >
+                          htmlFor="user_businesses_attributes_0_district_id">
                           Quận/Huyện
                         </label>
                         <select
@@ -287,10 +282,9 @@ function SignupBusiness() {
                           required
                           name="user[businesses_attributes][0][district_id]"
                           ref={register}
-                          onChange={(e) => {
-                            e.target.value ? setDisabledWard(false) : setDisabledWard(true)
-                          }}
-                        >
+                          onBlur={(e) => {
+                            e.target.value ? setDisabledWard(false) : setDisabledWard(true);
+                          }}>
                           {district.map((item, index) => (
                             <option key={index} value={item.id}>
                               {item.districtName}
@@ -301,8 +295,7 @@ function SignupBusiness() {
                       <div className="col-md-4 form-group">
                         <label
                           className="form__label required"
-                          htmlFor="user_businesses_attributes_0_ward_id"
-                        >
+                          htmlFor="user_businesses_attributes_0_ward_id">
                           Phường/Xã
                         </label>
                         <select
@@ -310,8 +303,7 @@ function SignupBusiness() {
                           disabled={disabledWard}
                           required
                           name="user[businesses_attributes][0][ward_id]"
-                          ref={register}
-                        >
+                          ref={register}>
                           {ward.map((item, index) => (
                             <option key={index} value={item.id}>
                               {item.wardName}
@@ -418,7 +410,7 @@ function SignupBusiness() {
         <style id="ins-free-style" innerhtml dangerouslySetInnerHTML={{ __html: '' }} /> */}
       {/* <Footer /> */}
     </>
-  )
+  );
 }
 
-export default SignupBusiness
+export default SignupBusiness;

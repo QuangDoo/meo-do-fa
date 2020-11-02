@@ -1,6 +1,6 @@
-import React from 'react'
+import React from 'react';
 
-const FastDeliveryLabel = () => (
+const FastDeliveryLabel = (): JSX.Element => (
   <>
     Giao hàng nhanh{' '}
     <span className="text-muted checkout__option-fast-shipping-info">
@@ -11,6 +11,6 @@ const FastDeliveryLabel = () => (
       )
     </span>
   </>
-)
+);
 
-export default FastDeliveryLabel
+export default FastDeliveryLabel;

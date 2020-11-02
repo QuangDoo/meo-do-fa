@@ -1,6 +1,7 @@
-import React from 'react'
-import Slider from 'react-slick'
-import PartnerImg from './PartnerImg'
+import React from 'react';
+import Slider from 'react-slick';
+
+import PartnerImg from './PartnerImg';
 
 const examplePartners = [
   'assets/images/partner1.jpg',
@@ -11,10 +12,10 @@ const examplePartners = [
   'assets/images/partner3.jpg',
   'assets/images/partner1.jpg',
   'assets/images/partner2.jpg',
-  'assets/images/partner3.jpg',
-]
+  'assets/images/partner3.jpg'
+];
 
-const Parner = () => {
+const Parner = (): JSX.Element => {
   return (
     <section className="bg-white py-5 home__partner">
       <div className="container">
@@ -32,7 +33,7 @@ const Parner = () => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default Parner
+export default Parner;

@@ -1,11 +1,11 @@
-import React from 'react'
-import Link from 'next/link'
+import Link from 'next/link';
+import React from 'react';
 
-export default function Nav() {
+export default function Nav(): JSX.Element {
   const logOut = () => {
-    localStorage.removeItem('token')
-    window.location.reload()
-  }
+    localStorage.removeItem('token');
+    window.location.reload();
+  };
   return (
     <nav className="buymed-nav shrink">
       <div className="container">
@@ -41,8 +41,7 @@ export default function Nav() {
                   <a
                     className="buymed-nav__link"
                     href="https://thuocsi.vn/deals"
-                    title="Khuyến mãi"
-                  >
+                    title="Khuyến mãi">
                     <i className="buymed-nav__icon fab fa-hotjar" />
                     <span className="buymed-nav__title">Khuyến mãi</span>
                   </a>
@@ -61,10 +60,10 @@ export default function Nav() {
             <div className="buymed-search-container" />
             <div className="header-right header-right--guest">
               <ul className="nav align-items-center">
-                <li className="nav-item mr-3" onClick={logOut}>
-                  <a className="buymed-nav__link">
+                <li className="nav-item mr-3">
+                  <button className="buymed-nav__link" onClick={logOut}>
                     <i className="fas fa-sign-in-alt buymed-nav__icon" />
-                  </a>
+                  </button>
                 </li>
                 <li className="nav-item mr-3">
                   <a className="buymed-nav__link">
@@ -82,5 +81,5 @@ export default function Nav() {
         </div>
       </div>
     </nav>
-  )
+  );
 }

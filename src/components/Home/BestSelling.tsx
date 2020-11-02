@@ -1,12 +1,13 @@
-import React from 'react'
-import { exampleProducts } from '../Products'
-import { ProductsCarousel } from '../ProductsCarousel'
-import { ProductsContainer } from './ProductsContainer'
+import React from 'react';
 
-export const BestSelling = () => {
+import { exampleProducts } from '../Products';
+import { ProductsCarousel } from '../ProductsCarousel';
+import { ProductsContainer } from './ProductsContainer';
+
+export const BestSelling = (): JSX.Element => {
   return (
     <ProductsContainer title="Sản phẩm bán chạy" seeMoreUrl="#">
       <ProductsCarousel products={exampleProducts} />
     </ProductsContainer>
-  )
-}
+  );
+};

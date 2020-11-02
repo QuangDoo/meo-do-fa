@@ -1,32 +1,33 @@
-import { TFunction } from 'next-i18next'
-import React from 'react'
-import { withTranslation } from '../../../i18n'
-import { useModalControlDispatch, useModalControlState } from '../../contexts/ModalControl'
-import Button from '../Button'
-import Modal from '../Modal'
-import LoginForm from './LoginForm'
+import { TFunction } from 'next-i18next';
+import React from 'react';
+
+import { withTranslation } from '../../../i18n';
+import { useModalControlDispatch, useModalControlState } from '../../contexts/ModalControl';
+import Button from '../Button';
+import Modal from '../Modal';
+import LoginForm from './LoginForm';
 
 type LoginModalProps = {
-  readonly t?: TFunction
-}
+  readonly t?: TFunction;
+};
 
-const Login = ({ t }: LoginModalProps) => {
+const Login = ({ t }: LoginModalProps): JSX.Element => {
   // Modal is open or not
-  const { loginIsOpen } = useModalControlState()
+  const { loginIsOpen } = useModalControlState();
 
   // Dispatch to update ModalControl context
-  const dispatch = useModalControlDispatch()
+  const dispatch = useModalControlDispatch();
 
   const openModal = () => {
     dispatch({
-      type: 'OPEN_LOGIN_MODAL',
-    })
-  }
+      type: 'OPEN_LOGIN_MODAL'
+    });
+  };
 
   const closeModal = () =>
     dispatch({
-      type: 'CLOSE_LOGIN_MODAL',
-    })
+      type: 'CLOSE_LOGIN_MODAL'
+    });
 
   return (
     <>
@@ -38,11 +39,10 @@ const Login = ({ t }: LoginModalProps) => {
         open={loginIsOpen}
         title="Đăng Nhập Thành Viên"
         onClose={closeModal}
-        className="authentication login"
-      >
+        className="authentication login">
         <LoginForm />
       </Modal>
     </>
-  )
-}
-export default withTranslation('header')(Login)
+  );
+};
+export default withTranslation('header')(Login);

@@ -1,3 +1,3 @@
-export default function combineRegex(...regexs: RegExp[]) {
-  return new RegExp(regexs.map((regex) => regex.source).join('|'))
+export default function combineRegex(...regexs: RegExp[]): RegExpMatchArray {
+  return new RegExp(regexs.map((regex) => regex.source).join('|'));
 }

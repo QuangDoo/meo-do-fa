@@ -34,6 +34,7 @@ a:hover {
 .no-scrollbar::-webkit-scrollbar {
   display: none;
   scrollbar-width: none;
+  
 }
 .scrollbar-on-hover {
   overflow: auto !important;
@@ -18228,8 +18229,8 @@ abbr[title] {
   left: 0;
   height: 100vh;
   height: -moz-available;
-  height: -webkit-fill-available;
-  height: fill-available;
+  height: -webkit-stretch;
+  height: stretch;
   z-index: 900;
   background-color: white;
   transition: top 0.4s;
@@ -18842,4 +18843,12 @@ abbr[title] {
 }
 .swal2-show {
   animation: swal2-show .3s;
+}
+.tab-header{
+  white-space: nowrap;
+    overflow-x: auto;
+    display: block;
+    border-bottom: 1px solid #dee2e6;
+    margin-right: -88px;
+    margin-left: -15px;
 }

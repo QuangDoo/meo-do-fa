@@ -1,17 +1,17 @@
-import clsx from 'clsx'
-import React, { useState } from 'react'
-import { v4 as uuid } from 'uuid'
+import clsx from 'clsx';
+import React, { forwardRef, useState } from 'react';
+import { v4 as uuid } from 'uuid';
 
 type CheckboxProps = {
-  name?: string
-  label: React.ReactNode
-  containerClass?: string
-  labelClass?: string
-  children?: React.ReactNode
-}
+  name?: string;
+  label: React.ReactNode;
+  containerClass?: string;
+  labelClass?: string;
+  children?: React.ReactNode;
+};
 
-const Checkbox = (props: CheckboxProps, ref) => {
-  const [id] = useState(uuid())
+const Checkbox = (props: CheckboxProps, ref): JSX.Element => {
+  const [id] = useState(uuid());
 
   return (
     <div className={clsx('custom-control custom-checkbox', props.containerClass)}>
@@ -23,7 +23,7 @@ const Checkbox = (props: CheckboxProps, ref) => {
 
       {props.children}
     </div>
-  )
-}
+  );
+};
 
-export default React.forwardRef(Checkbox)
+export default forwardRef(Checkbox);

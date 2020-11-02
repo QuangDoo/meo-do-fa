@@ -1,15 +1,16 @@
-import { TFunction } from 'next-i18next'
-import Link from 'next/link'
-import React from 'react'
-import { withTranslation } from '../../../i18n'
-import FooterLink from './FooterLink'
+import { TFunction } from 'next-i18next';
+import Link from 'next/link';
+import React from 'react';
+
+import { withTranslation } from '../../../i18n';
+import FooterLink from './FooterLink';
 
 // Wrap YourComponent with "withTranslate([namespaces])(YourComponent)"
 // YourComponent will then receive "t" prop
 // use t('namespace:id') to translate message
 type Props = {
-  readonly t: TFunction
-}
+  readonly t: TFunction;
+};
 
 const generalInformationTexts = [
   'footer:about_us',
@@ -21,12 +22,12 @@ const generalInformationTexts = [
   'footer:dispute_resolution',
   'footer:terms_and_conditions',
   'footer:operating_regulations',
-  'common:supply',
-]
+  'common:supply'
+];
 
-const halfLength = generalInformationTexts.length / 2
+const halfLength = generalInformationTexts.length / 2;
 
-const Footer = ({ t }: Props) => {
+const Footer = ({ t }: Props): JSX.Element => {
   return (
     <div className="footer">
       <div className="container pb-5">
@@ -214,7 +215,7 @@ const Footer = ({ t }: Props) => {
       </div>
       <div className="copyright">{t('footer:copyright')}</div>
     </div>
-  )
-}
+  );
+};
 
-export default withTranslation(['footer', 'common'])(Footer)
+export default withTranslation(['footer', 'common'])(Footer);

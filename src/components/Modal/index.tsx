@@ -1,20 +1,21 @@
-import { Backdrop, Fade, Modal as MaterialModal } from '@material-ui/core'
-import React, { FC } from 'react'
-import ModalHeader from './ModalHeader'
+import { Backdrop, Fade, Modal as MaterialModal } from '@material-ui/core';
+import React, { FC } from 'react';
+
+import ModalHeader from './ModalHeader';
 
 type ModalProps = {
   // Modal is open
-  open: boolean
+  open: boolean;
 
   // Modal title
-  title: string
+  title: string;
 
   // On modal close
-  onClose: () => void
+  onClose: () => void;
 
   // Additional classname for modal content container
-  className?: string
-}
+  className?: string;
+};
 
 const Modal: FC<ModalProps> = (props) => {
   return (
@@ -24,9 +25,8 @@ const Modal: FC<ModalProps> = (props) => {
       closeAfterTransition
       BackdropComponent={Backdrop}
       BackdropProps={{
-        timeout: 300,
-      }}
-    >
+        timeout: 300
+      }}>
       <Fade in={props.open} timeout={300}>
         <div className={`modal-dialog modal-dialog-centered ${props.className}`}>
           <div className="modal-content">
@@ -37,7 +37,7 @@ const Modal: FC<ModalProps> = (props) => {
         </div>
       </Fade>
     </MaterialModal>
-  )
-}
+  );
+};
 
-export default Modal
+export default Modal;

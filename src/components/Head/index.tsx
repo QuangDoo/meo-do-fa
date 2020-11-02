@@ -1,5 +1,5 @@
-import React from 'react'
-import { default as HeadNext } from 'next/head'
+import { default as HeadNext } from 'next/head';
+import React from 'react';
 
 export default function Head(props) {
   return (
@@ -37,5 +37,5 @@ export default function Head(props) {
 
       {props.children}
     </HeadNext>
-  )
+  );
 }

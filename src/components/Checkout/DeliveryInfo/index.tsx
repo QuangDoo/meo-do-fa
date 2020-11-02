@@ -1,76 +1,77 @@
-import React from 'react'
-import { emailRegex } from '../../../assets/regex/email'
-import { viPhoneNumberRegex } from '../../../assets/regex/viPhoneNumber'
-import Checkbox from '../../Checkbox'
-import InputCard from '../InputCard'
-import InputWithLabel from '../InputWithLabel'
-import SelectWithLabel from '../SelectWithLabel'
+import React from 'react';
+
+import { emailRegex } from '../../../assets/regex/email';
+import { viPhoneNumberRegex } from '../../../assets/regex/viPhoneNumber';
+import Checkbox from '../../Checkbox';
+import InputCard from '../InputCard';
+import InputWithLabel from '../InputWithLabel';
+import SelectWithLabel from '../SelectWithLabel';
 
 const mockCities = [
   {
     id: 1,
-    name: 'TP Hồ Chí Minh',
+    name: 'TP Hồ Chí Minh'
   },
   {
     id: 2,
-    name: 'Hà Nội',
+    name: 'Hà Nội'
   },
   {
     id: 3,
-    name: 'Đà Nẵng',
+    name: 'Đà Nẵng'
   },
   {
     id: 4,
-    name: 'Bà Rịa - Vũng Tàu',
-  },
-]
+    name: 'Bà Rịa - Vũng Tàu'
+  }
+];
 
 const mockDistricts = [
   {
     id: 1,
-    name: 'Quận 1',
+    name: 'Quận 1'
   },
   {
     id: 2,
-    name: 'Quận 10',
+    name: 'Quận 10'
   },
   {
     id: 3,
-    name: 'Quận 3',
+    name: 'Quận 3'
   },
   {
     id: 4,
-    name: 'Huyện Nhà Bè',
-  },
-]
+    name: 'Huyện Nhà Bè'
+  }
+];
 
 const mockWards = [
   {
     id: 1,
-    name: 'Phường 1',
+    name: 'Phường 1'
   },
   {
     id: 2,
-    name: 'Phường 2',
+    name: 'Phường 2'
   },
   {
     id: 3,
-    name: 'Phường 3',
+    name: 'Phường 3'
   },
   {
     id: 4,
-    name: 'Phường 4',
-  },
-]
+    name: 'Phường 4'
+  }
+];
 
-const DeliveryInfo = (props, register) => {
+const DeliveryInfo = (props, register): JSX.Element => {
   return (
     <InputCard title="Thông tin giao hàng" hasRequired>
       {/* Name input */}
       <InputWithLabel
         name="name"
         ref={register({
-          required: 'Xin nhập họ tên.',
+          required: 'Xin nhập họ tên.'
         })}
         label="Họ Tên khách hàng"
         type="text"
@@ -86,8 +87,8 @@ const DeliveryInfo = (props, register) => {
             required: 'Xin nhập số điện thoại.',
             pattern: {
               value: viPhoneNumberRegex,
-              message: 'Xin nhập số điện thoại hợp lệ.',
-            },
+              message: 'Xin nhập số điện thoại hợp lệ.'
+            }
           })}
           type="number"
           label="Số điện thoại"
@@ -102,8 +103,8 @@ const DeliveryInfo = (props, register) => {
           ref={register({
             pattern: {
               value: emailRegex,
-              message: 'Xin nhập email hợp lệ',
-            },
+              message: 'Xin nhập email hợp lệ'
+            }
           })}
           type="text"
           label="Email"
@@ -116,7 +117,7 @@ const DeliveryInfo = (props, register) => {
       <InputWithLabel
         name="address"
         ref={register({
-          required: 'Xin nhập địa chỉ giao hàng.',
+          required: 'Xin nhập địa chỉ giao hàng.'
         })}
         label={
           <>
@@ -135,12 +136,11 @@ const DeliveryInfo = (props, register) => {
         <SelectWithLabel
           name="cityId"
           ref={register({
-            required: 'Xin chọn tỉnh/thành phố.',
+            required: 'Xin chọn tỉnh/thành phố.'
           })}
           label="Tỉnh/Thành phố"
           containerClass="col-md-4"
-          required
-        >
+          required>
           <option value="">Chọn tỉnh/thành phố...</option>
 
           {/* Map cities from api */}
@@ -155,12 +155,11 @@ const DeliveryInfo = (props, register) => {
         <SelectWithLabel
           name="districtId"
           ref={register({
-            required: 'Xin chọn quận/huyện.',
+            required: 'Xin chọn quận/huyện.'
           })}
           label="Quận/Huyện"
           labelClass="required"
-          containerClass="col-md-4"
-        >
+          containerClass="col-md-4">
           <option value="">Chọn quận/huyện...</option>
 
           {/* Map districts from chosen city */}
@@ -175,12 +174,11 @@ const DeliveryInfo = (props, register) => {
         <SelectWithLabel
           name="wardId"
           ref={register({
-            required: 'Xin chọn phường/xã.',
+            required: 'Xin chọn phường/xã.'
           })}
           label="Phường/Xã"
           labelClass="required"
-          containerClass="col-md-4"
-        >
+          containerClass="col-md-4">
           <option value="">Chọn phường/xã...</option>
 
           {/* Map wards from chosen district */}
@@ -201,7 +199,7 @@ const DeliveryInfo = (props, register) => {
         labelClass="form__label"
       />
     </InputCard>
-  )
-}
+  );
+};
 
-export default React.forwardRef(DeliveryInfo)
+export default React.forwardRef(DeliveryInfo);

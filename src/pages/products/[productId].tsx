@@ -1,28 +1,31 @@
-import React from 'react'
-import Layout from '../../components/Layout/Layout'
-import { Header } from '../../components/Header'
-import Footer from '../../components/Footer'
-import Head from '../../components/Head'
-import { Nav } from '../../components/Nav'
-import ProductDetailComponent from '../../components/ProductDetail/ProductDetail'
+import { useQuery } from '@apollo/react-hooks';
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
 
-function ProductDetail() {
-  const product = {
-    imageUrl: 'https://images.thuocsi.vn/qefH9wdrY1UZzaa9MWJ9pJoi',
-    titleImage: 'Kidney Cap Bát Vị Bổ Thận Dương Opc (H/50v) 1',
-    altImage: 'Kidney Cap Bát Vị Bổ Thận Dương Opc (H/50v) 1',
-    name: 'Kidney Cap Bát Vị Bổ Thận Dương Opc (H/50v)',
-    description: 'Kidney Cap Bát Vị Bổ Thận Dương Opc (H/50v)',
-    views: 1,
-    totalOrders: 10,
-    producer: 'Công Ty Cổ Phần Dược Phẩm OPC',
-    category: 'Thực Phẩm Chức Năng',
-    ingredients: [
-      { name: 'Thục đại', content: 265 },
-      { name: 'Hoài sơn', content: 265 },
-      { name: 'Sơn thù', content: 265 },
-    ],
-  }
+import Footer from '../../components/Footer';
+import Head from '../../components/Head';
+import { Header } from '../../components/Header';
+import Layout from '../../components/Layout/Layout';
+import { Nav } from '../../components/Nav';
+import ProductDetailComponent from '../../components/ProductDetail/ProductDetail';
+import { GET_PRODUCT } from '../../graphql/product/product.query';
+import withApollo from '../../utils/withApollo';
+
+function ProductDetail(): JSX.Element {
+  const [product, setProduct] = useState({});
+  const router = useRouter();
+  const { productId } = router.query;
+
+  const { data: dataProduct, loading: loadingProduct, error: errorProduct } = useQuery(
+    GET_PRODUCT,
+    { variables: { id: Number(productId) } }
+  );
+
+  useEffect(() => {
+    if (dataProduct) {
+      setProduct(dataProduct.getProduct);
+    }
+  }, [dataProduct]);
   return (
     <>
       <Head>
@@ -35,7 +38,7 @@ function ProductDetail() {
       </Layout>
       <Footer />
     </>
-  )
+  );
 }
 
-export default ProductDetail
+export default withApollo({ ssr: true })(ProductDetail);

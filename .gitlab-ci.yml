@@ -14,9 +14,9 @@ variables:
 
 stages:
   # - prepare
+  - lint
+  - sonar
   - build
-  # - lint
-  # - test
   - deploy
 
 .pre-dev-deploy:
@@ -28,11 +28,66 @@ stages:
     - cp $KUBE_CONFIG $HOME/.kube/config
     - git clone https://${DOCKER_USER}:${DOCKER_PASSWORD}@gitlab.com/bebuy.vn/clients/thuocn/deployments.git
 
+lint-frontend:
+  stage: lint
+  image: node:12-alpine
+  only:
+    - merge_request
+    - develop
+
+  interruptible: true
+
+  tags:
+    - bebuy-gitlab-ci
+    - bb-gitlab-ci
+
+  script:
+    - apk update && apk add yarn && rm -rf /var/cache/apk/*
+    - yarn
+    - yarn lint
+
+sonar:
+  stage: sonar
+  image: sonarsource/sonar-scanner-cli
+  only:
+    - merge_request
+  script:
+    - echo $SONAR_HOST_URL
+    - sonar-scanner -D sonar.projectKey=bb-medofa-frontend -D sonar.sources=. -D sonar.host.url=${SONAR_HOST_URL} -D sonar.login=${SONAR_KEY} -D sonar.exclusions=src/__source_html__/** -D sonar.gitlab.commit_sha=$CI_COMMIT_SHA -D sonar.gitlab.ref_name=$CI_COMMIT_REF_NAME -D sonar.gitlab.project_id=$CI_PROJECT_ID -D sonar.gitlab.unique_issue_per_inline=true
+  
+  interruptible: true
+  # allow_failure: true
+  variables:
+    SONAR_PROJECT_BASE_DIR: "${CI_PROJECT_DIR}"
+    GIT_DEPTH: 0
+  cache:
+    key: "sonar-${CI_PROJECT_ID}"
+    paths:
+      - ".scannerwork"
+      - ".sonar"
+
 build-frontend:
+  stage: build
+  only:
+    - merge_request
+    # - master
+
+  interruptible: true
+
+  tags:
+    - bebuy-gitlab-ci
+    - bb-gitlab-ci
+
+  script:
+    - docker build -t $REGISTRY .  --no-cache
+
+build-dev-frontend:
   stage: build
   only:
     - develop
     # - master
+
+  interruptible: true
 
   tags:
     - bebuy-gitlab-ci
@@ -51,6 +106,8 @@ deploy-dev-frontend:
   image: alpine/helm
   only:
     - develop
+
+  interruptible: true
 
   tags:
     - bebuy-gitlab-ci

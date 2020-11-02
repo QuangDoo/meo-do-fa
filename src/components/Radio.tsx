@@ -1,23 +1,23 @@
-import React, { forwardRef } from 'react'
+import React, { forwardRef } from 'react';
 
 type Option = {
-  value: any
-  label: React.ReactNode
-  disabled?: boolean
-  children?: React.ReactNode
-}
+  value: any;
+  label: React.ReactNode;
+  disabled?: boolean;
+  children?: React.ReactNode;
+};
 
 type Props = {
-  children?: React.ReactNode
-  options: Option[]
-  name: string
-}
+  children?: React.ReactNode;
+  options: Option[];
+  name: string;
+};
 
-const RadioInput = (props: Props, ref) => {
+const RadioInput = (props: Props, ref): JSX.Element => {
   return (
     <>
       {props.options.map((option) => {
-        const id = `${props.name}_option_${option.value}`
+        const id = `${props.name}_option_${option.value}`;
 
         return (
           <div key={id} className="custom-control custom-radio">
@@ -37,10 +37,10 @@ const RadioInput = (props: Props, ref) => {
 
             {option.children}
           </div>
-        )
+        );
       })}
     </>
-  )
-}
+  );
+};
 
-export default forwardRef(RadioInput)
+export default forwardRef(RadioInput);

@@ -1,58 +1,55 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useEffect } from 'react'
-import { useForm } from 'react-hook-form'
-import { toast } from 'react-toastify'
-import Button from '../Button'
-import Checkbox from '../Checkbox'
-import AccountLoginInformation from './AccountLoginInformation'
-import Input from '../Input'
-import { viPhoneNumberRegex } from '../../assets/regex/viPhoneNumber'
-import { emailRegex } from '../../assets/regex/email'
+import { useMutation } from '@apollo/react-hooks';
+// import { emailRegex } from '../../assets/regex/email'
+import { useRouter } from 'next/router';
+import React, { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 
-import { useRouter } from 'next/router'
-import { useLazyQuery, useMutation } from '@apollo/react-hooks'
-import { LOGIN_USER } from '../../graphql/user/login.mutation'
-import withApollo from '../../utils/withApollo'
-import { useModalControlDispatch } from '../../contexts/ModalControl'
+import { viPhoneNumberRegex } from '../../assets/regex/viPhoneNumber';
+import { useModalControlDispatch } from '../../contexts/ModalControl';
+import { LOGIN_USER } from '../../graphql/user/login.mutation';
+import withApollo from '../../utils/withApollo';
+import Button from '../Button';
+import Checkbox from '../Checkbox';
+// import AccountLoginInformation from './AccountLoginInformation'
+import Input from '../Input';
 
 type Inputs = {
-  username: string
-  password: string
-}
+  username: string;
+  password: string;
+};
 
-const LoginForm = () => {
-  const dispatch = useModalControlDispatch()
+const LoginForm = (): JSX.Element => {
+  const dispatch = useModalControlDispatch();
 
-  const openRegisterModal = () => dispatch({ type: 'OPEN_REGISTER_MODAL' })
+  const openRegisterModal = () => dispatch({ type: 'OPEN_REGISTER_MODAL' });
 
-  const router = useRouter()
-  const { register, handleSubmit, errors } = useForm<Inputs>()
-  const [login, { data: dataLogin, loading: loadingLogin, error: errorLogin }] = useMutation(
-    LOGIN_USER
-  )
+  const router = useRouter();
+  const { register, handleSubmit, errors } = useForm<Inputs>();
+  const [login, { data: loginData, error: loginError }] = useMutation(LOGIN_USER);
 
   useEffect(() => {
-    if (!errors) return
+    if (!errors) return;
 
-    Object.keys(errors).forEach((errorField) => toast.error(errors[errorField].message))
-  }, [errors])
+    Object.keys(errors).forEach((errorField) => toast.error(errors[errorField].message));
+  }, [errors]);
 
   useEffect(() => {
-    if (dataLogin?.login?.token) {
-      router.push('/quick-order')
-      window.localStorage.setItem('token', dataLogin.login.token)
+    if (loginData?.login?.token) {
+      router.push('/quick-order');
+      window.localStorage.setItem('token', loginData.login.token);
     }
-  }, [dataLogin])
+  }, [loginData]);
 
   const onSubmit = async (data: Inputs) => {
     await login({
       variables: {
         phone: data.username,
-        password: data.password,
-      },
-    })
-    console.log('data :>> ', errorLogin)
-  }
+        password: data.password
+      }
+    });
+    console.log('data :>> ', loginError);
+  };
 
   return (
     <div>
@@ -62,8 +59,8 @@ const LoginForm = () => {
           ref={register({
             pattern: {
               value: viPhoneNumberRegex,
-              message: 'Xin nhập số điện thoại hợp lệ.',
-            },
+              message: 'Xin nhập số điện thoại hợp lệ.'
+            }
           })}
           containerClass="mb-4"
           iconClass="icomoon icon-user"
@@ -76,8 +73,8 @@ const LoginForm = () => {
           ref={register({
             minLength: {
               value: 6,
-              message: 'Xin nhập mật khẩu tối thiểu 6 kí tự.',
-            },
+              message: 'Xin nhập mật khẩu tối thiểu 6 kí tự.'
+            }
           })}
           containerClass="mb-3"
           required={true}
@@ -106,20 +103,14 @@ const LoginForm = () => {
 
         <span className="text-capitalize ">
           Để nhận ưu đãi hấp dẫn,
-          <a
-            className="text-secondary ml-1"
-            onKeyPress={openRegisterModal}
-            onClick={openRegisterModal}
-            role="button"
-            tabIndex={0}
-          >
+          <button className="text-secondary ml-1" onClick={openRegisterModal} type="button">
             <b>đăng ký thành viên</b>
-          </a>
+          </button>
           .
         </span>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default withApollo({ ssr: true })(LoginForm)
+export default withApollo({ ssr: true })(LoginForm);

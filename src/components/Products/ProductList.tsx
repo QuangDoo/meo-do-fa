@@ -1,12 +1,13 @@
-import React from 'react'
-import ProductCard, { Product } from '../ProductCard'
+import React from 'react';
+
+import ProductCard, { Product } from '../ProductCard';
 
 type Props = {
-  products: Product[]
-}
+  products: Product[];
+};
 
-const ProductList = (props: Props) => {
-  const { products } = props
+const ProductList = (props: Props): JSX.Element => {
+  const { products } = props;
 
   return (
     <div className="products__cards mb-3">
@@ -14,7 +15,7 @@ const ProductList = (props: Props) => {
         <ProductCard key={index} {...product} />
       ))}
     </div>
-  )
-}
+  );
+};
 
-export default ProductList
+export default ProductList;

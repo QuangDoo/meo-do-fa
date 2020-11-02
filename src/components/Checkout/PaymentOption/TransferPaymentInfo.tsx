@@ -1,32 +1,33 @@
-import clsx from 'clsx'
-import React from 'react'
-import DescriptionBox from '../DescriptionBox'
+import clsx from 'clsx';
+import React from 'react';
+
+import DescriptionBox from '../DescriptionBox';
 
 type Line = {
-  label: string
-  content: string
-}
+  label: string;
+  content: string;
+};
 
 const lines: Line[] = [
   {
     label: 'Chủ tài khoản',
-    content: 'Công Ty TNHH BuyMed',
+    content: 'Công Ty TNHH BuyMed'
   },
   {
     label: 'Số tài khoản',
-    content: '1913 45430 30020',
+    content: '1913 45430 30020'
   },
   {
     label: 'Ngân hàng',
-    content: 'Ngân hàng Techcombank - Chi nhánh Bắc Hải',
+    content: 'Ngân hàng Techcombank - Chi nhánh Bắc Hải'
   },
   {
     label: 'Nội dung',
-    content: 'Mã đơn hàng - Tên nhà thuốc',
-  },
-]
+    content: 'Mã đơn hàng - Tên nhà thuốc'
+  }
+];
 
-const TransferPaymentInfo = () => {
+const TransferPaymentInfo = (): JSX.Element => {
   return (
     <>
       <br />
@@ -44,7 +45,7 @@ const TransferPaymentInfo = () => {
         </div>
       </DescriptionBox>
     </>
-  )
-}
+  );
+};
 
-export default TransferPaymentInfo
+export default TransferPaymentInfo;

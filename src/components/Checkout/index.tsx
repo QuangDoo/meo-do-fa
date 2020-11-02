@@ -1,25 +1,26 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react'
-import { useForm } from 'react-hook-form'
-import Agreement from './Agreement'
-import CustomerNotes from './CustomerNotes'
-import DeliveryInfo from './DeliveryInfo'
-import DeliveryOption from './DeliveryOption'
-import PaymentOption from './PaymentOption'
-import StickySidebar from './StickySidebar'
+import React from 'react';
+import { useForm } from 'react-hook-form';
 
-const CheckoutPage = () => {
+import Agreement from './Agreement';
+import CustomerNotes from './CustomerNotes';
+import DeliveryInfo from './DeliveryInfo';
+import DeliveryOption from './DeliveryOption';
+import PaymentOption from './PaymentOption';
+import StickySidebar from './StickySidebar';
+
+const CheckoutPage = (): JSX.Element => {
   const { register, handleSubmit } = useForm({
     defaultValues: {
       deliveryOption: 'standard',
       paymentOption: 'bank_transfer',
-      saveInfo: true,
-    },
-  })
+      saveInfo: true
+    }
+  });
 
   const onSubmit = (data) => {
-    console.log('Checkout data:', data)
-  }
+    console.log('Checkout data:', data);
+  };
 
   return (
     <form className="checkout__form" onSubmit={handleSubmit(onSubmit)}>
@@ -57,7 +58,7 @@ const CheckoutPage = () => {
         </div>
       </div>
     </form>
-  )
-}
+  );
+};
 
-export default CheckoutPage
+export default CheckoutPage;

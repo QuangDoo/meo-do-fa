@@ -1,5 +1,5 @@
-import { ToastContainer as DefaultToastContainer } from 'react-toastify'
-import styled from 'styled-components'
+import { ToastContainer as DefaultToastContainer } from 'react-toastify';
+import styled from 'styled-components';
 
 // HOW TO STYLE:
 //   https://fkhadra.github.io/react-toastify/how-to-style/
@@ -27,6 +27,6 @@ const ToastContainer = styled(DefaultToastContainer).attrs({
 
   .Toastify__progress-bar {
   }
-`
+`;
 
-export default ToastContainer
+export default ToastContainer;
