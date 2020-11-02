@@ -4,7 +4,7 @@ import React from 'react';
 import { withTranslation } from '../../../i18n';
 import { useModalControlDispatch } from '../../contexts/ModalControl';
 
-const LoginToSeePrice = ({ t }: WithTranslation) => {
+const LoginToSeePrice = ({ t }: WithTranslation): JSX.Element => {
   const dispatch = useModalControlDispatch();
 
   const openLoginModal = () => dispatch({ type: 'OPEN_LOGIN_MODAL' });

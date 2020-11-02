@@ -4,9 +4,9 @@ import { StyledCard, StyledCardBody, StyledCardButtonGroup, StyledCardImage } fr
 
 interface CardProps {
   children: React.ReactNode;
-  onClick?(e: any): void;
   buttonGroups?: React.ReactNode;
   imageURL: string;
+  onClick?: any;
 }
 
 const Card: React.FC<CardProps> = (props) => {

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ProuductDetailImage = (props) => {
+const ProuductDetailImage = (props): JSX.Element => {
   console.log('imageUrl', props.imageUrl);
   return (
     <div className="col-md-4">

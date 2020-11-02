@@ -1,33 +1,25 @@
-import { useMutation, useQuery } from '@apollo/react-hooks';
-import React, { FC, useEffect } from 'react';
+import { useMutation } from '@apollo/react-hooks';
+import { WithTranslation } from 'next-i18next';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 
+import { Trans, withTranslation } from '../../../i18n';
 import { emailRegex } from '../../assets/regex/email';
 import { viPhoneNumberRegex } from '../../assets/regex/viPhoneNumber';
 import { useModalControlDispatch } from '../../contexts/ModalControl';
+import { AccountType } from '../../enums/AccountType';
 import { REGISTER_USER } from '../../graphql/user/register.mutation';
 import withApollo from '../../utils/withApollo';
 import Button from '../Button';
 import Checkbox from '../Checkbox';
 import Input from '../Input';
-import ChooseUserType from './ChooseUserType';
-import WelcomeAccount from './WelcomeAccount';
-
-export type UserType = 'pharmacy' | 'clinic' | 'drugstore';
-
-// Map from UserType to text
-// (replace with translation later like t('pharmacy') or something)
-export const userTypeMap: Record<UserType, string> = {
-  pharmacy: 'Nhà thuốc',
-  clinic: 'Phòng khám',
-  drugstore: 'Quầy thuốc'
-};
+import UserTypeCard from './UserTypeCard';
 
 // Form input fields
 type Inputs = {
-  userType: string;
+  accountType: string;
   name: string;
   email: string;
   password: string;
@@ -40,24 +32,30 @@ const ErrorToast = styled.div`
   white-space: pre-line;
 `;
 
-// Initial value for userType
-const initialUserType = '';
+// Initial value for accountType
+const initialAccountType = '';
 
-const RegisterForm = () => {
+const RegisterForm = (props: WithTranslation): JSX.Element => {
+  const { t } = props;
+
   const { register, handleSubmit, setValue, watch, errors } = useForm<Inputs>();
 
   const modalControlDispatch = useModalControlDispatch();
 
   const openLoginModal = () => modalControlDispatch({ type: 'OPEN_LOGIN_MODAL' });
 
-  const [regiterUser, { data: dataUser, loading: loadingUser, error: errorUser }] = useMutation(
-    REGISTER_USER
-  );
-  // Watch userType value, with initial state
-  // This component re-renders when userType changes
-  const watchUserType = watch('userType', initialUserType);
+  const closeRegisterModal = () =>
+    modalControlDispatch({
+      type: 'CLOSE_REGISTER_MODAL'
+    });
 
-  // Show error toasts when error changes
+  const [registerUser, { data }] = useMutation(REGISTER_USER);
+
+  // Watch accountType value, with initial state
+  // This component re-renders when userType changes
+  const currentAccountType = watch('accountType', initialAccountType);
+
+  // Shows error toast when error changes
   useEffect(() => {
     const errorNames = Object.keys(errors);
 
@@ -70,31 +68,31 @@ const RegisterForm = () => {
 
   // On submit button click
   const onSubmit = (data: Inputs) => {
-    console.log('Register Submit data:', data);
-    regiterUser({
+    registerUser({
       variables: {
-        accountType: data.userType,
+        accountType: data.accountType,
         name: data.name,
         email: data.email,
         password: data.password,
-        phone: data.phone
+        phone: data.phone.toString()
       }
     });
-    // Integrate with backend
-  };
-  useEffect(() => {
-    if (dataUser?.createUser?.token) {
-      window.localStorage.setItem('token', dataUser.createUser.token);
-    }
-  }, [dataUser]);
-  console.log('dataUser', dataUser);
-  // Set user type on UserTypeCard click (in ChooseUserType)
-  const setUserType = (value: UserType) => {
-    setValue('userType', value);
   };
 
-  // Reset userType to initial state
-  const resetUserType = () => setValue('userType', initialUserType);
+  // Set token when data is returned from backend
+  useEffect(() => {
+    if (!data) return;
+
+    if (data.createUser.code !== 200) {
+      toast.error(`Error ${data.createUser.code}: ${data.createUser.status}`);
+
+      return;
+    }
+
+    localStorage.setItem('token', data.createUser.token);
+
+    closeRegisterModal();
+  }, [data]);
 
   return (
     <form className="new_account" onSubmit={handleSubmit(onSubmit)}>
@@ -102,40 +100,69 @@ const RegisterForm = () => {
        * Hidden input for userType
        * Value changes when clicking a UserTypeCard
        */}
-      <input name="userType" hidden type="text" ref={register} />
+      <input name="accountType" hidden type="text" ref={register} />
 
       {/* Hide ChooseUserType if userType is in initial state */}
-      <div hidden={watchUserType !== initialUserType} className="business-group">
-        <ChooseUserType setUserType={setUserType} />
+      <div hidden={currentAccountType !== initialAccountType} className="business-group">
+        <div className="container text-center">
+          <div className="row">
+            <div className="col-12 mb-3">
+              <h6>{t('register:you_are')}</h6>
+            </div>
+          </div>
+
+          <div className="row no-gutters">
+            {Object.values(AccountType).map((accountType) => (
+              <UserTypeCard
+                key={accountType}
+                text={t(`register:${accountType.toLowerCase()}`)}
+                imgUrl={`/assets/images/account-type__${accountType.toLowerCase()}.png`}
+                onClick={() => setValue('accountType', accountType)}
+              />
+            ))}
+          </div>
+        </div>
       </div>
 
       {/* Hide AccountInformation form if userType is chosen (NOT in initial state) */}
-      <div hidden={watchUserType === initialUserType} className="account-information">
-        <WelcomeAccount userTypeName={userTypeMap[watchUserType]} onEditClick={resetUserType} />
+      <div hidden={currentAccountType === initialAccountType} className="account-information">
+        <div className="welcome-account mb-3">
+          {t('register:welcome')}
+          <span className="welcome-account__business">
+            {' '}
+            {t(`register:${currentAccountType.toLowerCase()}`)}!
+          </span>
+          <button
+            onClick={() => setValue('accountType', initialAccountType)}
+            type="button"
+            className="font-weight-bold text-primary ml-2">
+            {t('register:edit')}
+          </button>
+        </div>
 
         <Input
           name="name"
           ref={register({
-            required: 'Xin nhập tên.'
+            required: `${t('input_name_error_required')}`
           })}
           containerClass="mb-4"
           iconClass="icomoon icon-user"
-          placeholder="Nhập tên (bắt buộc)"
+          placeholder={t('register:input_name_placeholder')}
         />
 
         <Input
           name="phone"
           type="number"
           ref={register({
+            required: `${t('register:input_phone_error_required')}`,
             pattern: {
               value: viPhoneNumberRegex,
-              message: 'Xin nhập số điện thoại hợp lệ.'
-            },
-            required: 'Xin nhập số điện thoại.'
+              message: `${t('register:input_phone_error_invalid')}`
+            }
           })}
           containerClass="mb-4"
           iconClass="icomoon icon-phone"
-          placeholder="Nhập số điện thoại (bắt buộc)"
+          placeholder={t('register:input_phone_placeholder')}
         />
 
         <Input
@@ -143,26 +170,26 @@ const RegisterForm = () => {
           ref={register({
             pattern: {
               value: emailRegex,
-              message: 'Xin nhập email hợp lệ.'
+              message: `${t('register:input_email_error_invalid')}`
             }
           })}
           containerClass="mb-4"
           iconClass="icomoon icon-mail"
-          placeholder="Nhập email"
+          placeholder={t('register:input_email_placeholder')}
         />
 
         <Input
           name="password"
           ref={register({
-            required: 'Xin nhập mật khẩu.',
+            required: `${t('register:input_password_error_required')}`,
             minLength: {
               value: 6,
-              message: 'Xin nhập mật khẩu tối thiểu 6 kí tự.'
+              message: `${t('register:input_password_error_minLength')}`
             }
           })}
           containerClass="mb-4"
           iconClass="icomoon icon-lock"
-          placeholder="Nhập mật khẩu (bắt buộc)"
+          placeholder={t('register:input_password_placeholder')}
           type="password"
         />
 
@@ -171,46 +198,53 @@ const RegisterForm = () => {
           ref={register({
             pattern: {
               value: viPhoneNumberRegex,
-              message: 'Xin nhập số điện thoại giới thiệu hợp lệ.'
+              message: `${t('input_referPhone_error_invalid')}`
             },
             validate: () => true // Check with backend if referer phone number exists
           })}
           containerClass="mb-4"
           iconClass="fas fa-user-friends"
-          placeholder="Số điện thoại người giới thiệu hoặc mã nhóm"
+          placeholder={t('input_referPhone_placeholder')}
           type="number"
         />
 
         <Checkbox
           ref={register({
-            required: 'Xin đồng ý với Điều khoản sử dụng.'
+            required: `${t('checkbox_acceptTerms_error_required')}`
           })}
           name="acceptTerms"
+          containerClass="form-group"
+          labelClass="pt-1"
           label={
             <>
-              Tôi đã đọc và đồng ý với <a>Điều khoản sử dụng</a>
+              <Trans
+                i18nKey="register:checkbox_acceptTerms_label"
+                components={{
+                  Link: <a href="/terms-of-use">Terms of Use</a>
+                }}
+              />
               <span className="text-danger"> *</span>
             </>
           }
         />
 
         <div className="mb-4">
-          Nếu bạn đã có tài khoản, vui lòng{' '}
-          <button
-            className="text-secondary"
-            onClick={openLoginModal}
-            onKeyPress={openLoginModal}
-            tabIndex={0}>
-            Đăng nhập
-          </button>
+          <Trans
+            i18nKey="register:go_to_login"
+            components={{
+              button: <button type="button" className="text-secondary" onClick={openLoginModal} />
+            }}
+          />
         </div>
 
         <Button type="submit" variant="gradient" block>
-          Tạo tài khoản
+          {t('register:submit_button_text')}
         </Button>
       </div>
     </form>
   );
 };
 
-export default withApollo({ ssr: true })(RegisterForm);
+const Translated = withTranslation('register')(RegisterForm);
+
+export default withApollo({ ssr: true })(Translated);

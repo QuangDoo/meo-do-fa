@@ -11,7 +11,7 @@ import ProductDetailComponent from '../../components/ProductDetail/ProductDetail
 import { GET_PRODUCT } from '../../graphql/product/product.query';
 import withApollo from '../../utils/withApollo';
 
-function ProductDetail() {
+function ProductDetail(): JSX.Element {
   const [product, setProduct] = useState({});
   const router = useRouter();
   const { productId } = router.query;

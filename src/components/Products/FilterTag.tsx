@@ -9,7 +9,7 @@ type Props = {
 };
 
 // products/?otherQueries?tab=[tab]
-const FilterTag = (props: Props) => {
+const FilterTag = (props: Props): JSX.Element => {
   const { tab, children } = props;
 
   const router = useRouter();

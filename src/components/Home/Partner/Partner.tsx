@@ -15,7 +15,7 @@ const examplePartners = [
   'assets/images/partner3.jpg'
 ];
 
-const Parner = () => {
+const Parner = (): JSX.Element => {
   return (
     <section className="bg-white py-5 home__partner">
       <div className="container">

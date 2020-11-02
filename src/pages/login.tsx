@@ -6,7 +6,7 @@ import { Header } from '../components/Header';
 import Layout from '../components/Layout/Layout';
 import LoginForm from '../components/Login/LoginForm';
 import { Nav } from '../components/Nav';
-function Login() {
+function Login(): JSX.Element {
   return (
     <>
       <Head>

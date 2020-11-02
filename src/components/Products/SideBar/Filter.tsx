@@ -11,7 +11,7 @@ interface FilterProps {
   data: FilterItem[];
 }
 
-const Filter = (props: FilterProps) => {
+const Filter = (props: FilterProps): JSX.Element => {
   const { header, data } = props;
   const [show, setShow] = useState(true);
 

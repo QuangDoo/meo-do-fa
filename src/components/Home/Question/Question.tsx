@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Question = () => {
+const Question = (): JSX.Element => {
   return (
     <section className="container py-5 home__faq">
       <div className="row">

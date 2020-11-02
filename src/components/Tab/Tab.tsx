@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 export default function Tab(props) {
-  const Tabs = (props) => {
+  const Tabs = (props): JSX.Element => {
     const [activeTab, setActiveTab] = useState(props.children[0].props.label);
     const changeTab = (tab) => {
       setActiveTab(tab);
@@ -21,7 +21,7 @@ export default function Tab(props) {
     );
   };
 
-  const TabButtons = ({ buttons, changeTab, activeTab }) => {
+  const TabButtons = ({ buttons, changeTab, activeTab }): JSX.Element => {
     return (
       <div className="nav tab tab-header no-scrollbar">
         {buttons.map((button, index) => {
@@ -38,7 +38,7 @@ export default function Tab(props) {
       </div>
     );
   };
-  const Tab = (props) => {
+  const Tab = (props): JSX.Element => {
     return (
       <div className="tab-content">
         <div className="tab-pane fade show active" id="description">

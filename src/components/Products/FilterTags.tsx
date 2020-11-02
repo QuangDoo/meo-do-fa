@@ -27,7 +27,7 @@ const filterTags: FilterTagType[] = [
   { children: 'Người Việt dùng hàng Việt', tab: 'use_vietnamese' }
 ];
 
-const FilterTags = () => {
+const FilterTags = (): JSX.Element => {
   return (
     <div className="d-none d-sm-block">
       <div className="d-flex justify-content-between flex-wrap align-items-end mb-4">

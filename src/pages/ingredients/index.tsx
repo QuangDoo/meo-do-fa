@@ -7,7 +7,7 @@ import Layout from '../../components/Layout/Layout';
 import { Nav } from '../../components/Nav';
 import SearchScreen from '../../components/SearchScreen';
 
-function Ingredients() {
+function Ingredients(): JSX.Element {
   const ingredients = [
     { name: 'Alamingo' },
     { name: 'Blamingo' },

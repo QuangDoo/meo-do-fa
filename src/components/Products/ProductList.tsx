@@ -1,12 +1,13 @@
 import React from 'react';
 
-import ProductCard, { Product } from '../ProductCard';
+import { Product } from '../../types/Product';
+import ProductCard from '../ProductCard';
 
 type Props = {
   products: Product[];
 };
 
-const ProductList = (props: Props) => {
+const ProductList = (props: Props): JSX.Element => {
   const { products } = props;
 
   return (

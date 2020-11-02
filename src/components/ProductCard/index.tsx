@@ -1,38 +1,21 @@
-import { TFunction, WithTranslation } from 'next-i18next';
+import { WithTranslation } from 'next-i18next';
 import Link from 'next/link';
 import React from 'react';
 
 import { withTranslation } from '../../../i18n';
 import useIsLoggedIn from '../../hooks/useIsLoggedIn';
+import { Product } from '../../types/Product';
 import { DiscountRibbon } from './DiscountRibbon';
 import LoginToSeePrice from './LoginToSeePrice';
-import ProductBadge, { BadgeType } from './ProductBadge';
+import ProductBadge from './ProductBadge';
 import { ProductImage } from './ProductImage';
 import { ProductPrice } from './ProductPrice';
 import QuantityInput from './QuantityInput';
 
-export interface Product extends WithTranslation {
-  name: string;
-  list_price: string;
-  unit: string;
-  categ_id: string[];
-  categoryId: string;
-  image_128: string;
-  id: string;
+type Props = Product & WithTranslation;
 
-  badges?: BadgeType[];
-  new?: boolean;
-  discountPercent?: number;
-  supplier?: string;
-  oldPrice?: string;
-  deal?: boolean;
-  expirationDate?: string;
-  readonly t: TFunction;
-}
-
-const ProductCard = ({ badges = [], t, ...props }: Product) => {
+const ProductCard = ({ badges = [], t, ...props }: Props): JSX.Element => {
   const isLoggedIn = useIsLoggedIn();
-  console.log('props', props);
   return (
     <div className="product-card-container">
       <article className={`product-card card ${props.deal ? 'deal-card' : ''}`}>
@@ -42,7 +25,7 @@ const ProductCard = ({ badges = [], t, ...props }: Product) => {
 
             {props.discountPercent && <DiscountRibbon discountPercent={props.discountPercent} />}
 
-            <ProductImage imageId={props.image_128} productId={props.id} />
+            <ProductImage imageId={props.image} productId={props.id} />
 
             <div>
               <Link href={`/products/${props.id}`}>
@@ -68,8 +51,8 @@ const ProductCard = ({ badges = [], t, ...props }: Product) => {
 
               <small className="text-muted product-card__category">
                 {t('productCard:category')}:{' '}
-                <Link href={`/products?category=${props.categoryId}`}>
-                  <a>{props?.categ_id?.map((item) => item)}</a>
+                <Link href={`/products?category=${props.category.id}`}>
+                  <a>{props.category.name}</a>
                 </Link>
               </small>
             </div>
@@ -79,7 +62,7 @@ const ProductCard = ({ badges = [], t, ...props }: Product) => {
             {isLoggedIn ? (
               <>
                 <div className="mb-2">
-                  <ProductPrice price={props.list_price} />
+                  <ProductPrice price={props.price} />
                 </div>
                 <QuantityInput />
               </>

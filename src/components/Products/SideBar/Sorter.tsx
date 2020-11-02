@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 
-const Sorter = () => {
+const Sorter = (): JSX.Element => {
   const router = useRouter();
 
   const onChange = (event: React.ChangeEvent<HTMLSelectElement>) => {

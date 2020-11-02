@@ -19,7 +19,7 @@ const maxPagesBeforeShowingGap = 6;
 // The number of sibling pages allowed next to current page when there is gap
 const siblingCount = 4;
 
-const Pagination = ({ totalProducts }: Props) => {
+const Pagination = ({ totalProducts }: Props): JSX.Element => {
   const router = useRouter();
 
   // Maximum amount of pages

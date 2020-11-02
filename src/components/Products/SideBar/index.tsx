@@ -16,7 +16,7 @@ const producerData = [
   { name: 'Xem thêm', href: '/manufacturers' }
 ];
 
-const SideBar = () => {
+const SideBar = (): JSX.Element => {
   return (
     <aside className="text-capitalize w-100">
       <div className="mb-3">

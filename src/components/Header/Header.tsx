@@ -10,7 +10,7 @@ type HeaderProps = {
   readonly t: TFunction;
 };
 
-const Header = ({ t }: HeaderProps) => {
+const Header = ({ t }: HeaderProps): JSX.Element => {
   return (
     <header className="header bg-white">
       <nav className="promotion-nav">

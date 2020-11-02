@@ -5,10 +5,8 @@ import Head from '../components/Head';
 import { Header } from '../components/Header';
 import { HomePage } from '../components/Home';
 import { Nav } from '../components/Nav';
-import { GET_CATEGORIES } from '../graphql/category/category.query';
-import withApollo from '../utils/withApollo';
 
-const Home = () => {
+const Home = (): JSX.Element => {
   return (
     <>
       <Head>

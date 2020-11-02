@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 
 import useLocalStorage from './useLocalStorage';
 
-export default function useIsLoggedIn() {
-  const [token, setToken] = useLocalStorage('token');
+export default function useIsLoggedIn(): boolean {
+  const [token] = useLocalStorage('token');
 
   const [isLoggedIn, setIsLoggedIn] = useState(!!token);
 

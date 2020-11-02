@@ -4,7 +4,7 @@ type Props = {
   hidden: boolean;
 };
 
-const PageGap = ({ hidden }: Props) => {
+const PageGap = ({ hidden }: Props): JSX.Element => {
   return (
     <span
       hidden={hidden}

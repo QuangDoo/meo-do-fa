@@ -6,7 +6,7 @@ type PropsType = {
   name: string;
   price: number;
 };
-const ProductDetailInfor = (props: PropsType) => {
+const ProductDetailInfor = (props: PropsType): JSX.Element => {
   let token = '';
   if (typeof window !== 'undefined') {
     token = localStorage.getItem('token');

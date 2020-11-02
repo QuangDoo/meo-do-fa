@@ -13,7 +13,7 @@ const exampleTestimonial = {
 // Example testimonials array
 const testimonials = [...new Array(5)].map(() => ({ ...exampleTestimonial }));
 
-const Customer = () => {
+const Customer = (): JSX.Element => {
   return (
     <section className="py-5 home__testimonials">
       <div className="container">

@@ -1,4 +1,3 @@
-import { Button, Icon } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import React, { useState } from 'react';
 
@@ -6,12 +5,11 @@ import { ProductPrice } from '../ProductCard/ProductPrice';
 import QuantityInput from '../ProductCard/QuantityInput';
 import RemoveModal from './Modal';
 
-function CartItem(props) {
+function CartItem(props): JSX.Element {
   const [open, setOpen] = useState(false);
   const openModal = () => setOpen(true);
   const closeModal = () => setOpen(false);
 
-  console.log('props :>> ', props);
   return (
     <div className="cart-item">
       <div className="row align-items-center">
@@ -60,7 +58,7 @@ function CartItem(props) {
               </div>
             </div>
           </div>
-          <DeleteIcon className="cart-item__remove" onClick={() => setOpen(true)} />
+          <DeleteIcon className="cart-item__remove" onClick={openModal} />
         </div>
         {props.limit && (
           <div className="col-12">

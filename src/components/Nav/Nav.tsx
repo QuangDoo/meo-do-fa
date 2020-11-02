@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import React from 'react';
 
-export default function Nav() {
+export default function Nav(): JSX.Element {
   const logOut = () => {
     localStorage.removeItem('token');
     window.location.reload();

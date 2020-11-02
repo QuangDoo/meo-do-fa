@@ -19,16 +19,14 @@ type Inputs = {
   password: string;
 };
 
-const LoginForm = () => {
+const LoginForm = (): JSX.Element => {
   const dispatch = useModalControlDispatch();
 
   const openRegisterModal = () => dispatch({ type: 'OPEN_REGISTER_MODAL' });
 
   const router = useRouter();
   const { register, handleSubmit, errors } = useForm<Inputs>();
-  const [login, { data: dataLogin, loading: loadingLogin, error: errorLogin }] = useMutation(
-    LOGIN_USER
-  );
+  const [login, { data: loginData, error: loginError }] = useMutation(LOGIN_USER);
 
   useEffect(() => {
     if (!errors) return;
@@ -37,11 +35,11 @@ const LoginForm = () => {
   }, [errors]);
 
   useEffect(() => {
-    if (dataLogin?.login?.token) {
+    if (loginData?.login?.token) {
       router.push('/quick-order');
-      window.localStorage.setItem('token', dataLogin.login.token);
+      window.localStorage.setItem('token', loginData.login.token);
     }
-  }, [dataLogin]);
+  }, [loginData]);
 
   const onSubmit = async (data: Inputs) => {
     await login({
@@ -50,7 +48,7 @@ const LoginForm = () => {
         password: data.password
       }
     });
-    console.log('data :>> ', errorLogin);
+    console.log('data :>> ', loginError);
   };
 
   return (
@@ -85,7 +83,13 @@ const LoginForm = () => {
           type="password"
         />
 
-        <Checkbox name="remember_password" label="Nhớ mật khẩu" className="align-self-start" />
+        <Checkbox
+          name="remember_password"
+          ref={register}
+          label="Nhớ mật khẩu"
+          containerClass="form-group align-self-start"
+          labelClass="pt-1"
+        />
 
         <div className="mb-4">
           <a data-modal="true" href="/authentications/reset_password">
@@ -99,11 +103,7 @@ const LoginForm = () => {
 
         <span className="text-capitalize ">
           Để nhận ưu đãi hấp dẫn,
-          <button
-            className="text-secondary ml-1"
-            onKeyPress={openRegisterModal}
-            onClick={openRegisterModal}
-            tabIndex={0}>
+          <button className="text-secondary ml-1" onClick={openRegisterModal} type="button">
             <b>đăng ký thành viên</b>
           </button>
           .

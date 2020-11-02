@@ -12,16 +12,17 @@ export type BadgeType =
   | 'flash_sale'
   | 'common'
   | 'change_style'
-  | 'close_date'
-  | 'use_vietnamese';
+  | 'use_vietnamese'
+  | 'close_date';
 
 interface ProductBadgeProps extends WithTranslation {
   type: BadgeType;
   expirationDate?: string;
 }
 
-const ProductBadge = (props: ProductBadgeProps) => {
+const ProductBadge = (props: ProductBadgeProps): JSX.Element => {
   const { t } = props;
+
   if (props.type === 'promotion')
     return <span className="badge badge-danger mr-2">{t('productBadge:promotion')}</span>;
 

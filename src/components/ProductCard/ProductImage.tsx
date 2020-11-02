@@ -6,14 +6,14 @@ type ProductImageProps = {
   productId: string;
 };
 
-export const ProductImage = (props: ProductImageProps) => {
+export const ProductImage = (props: ProductImageProps): JSX.Element => {
   return (
     <Link href={`/products/${props.productId}`}>
       <a>
         <div
           className="product-card__image mb-3 lozad"
           style={{
-            backgroundImage: `url(data:image/jpeg;base64,${props.imageId})`,
+            backgroundImage: `url(https://images.thuocsi.vn/${props.imageId})`,
             cursor: 'pointer'
           }}
         />

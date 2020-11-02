@@ -8,7 +8,7 @@ import { Nav } from '../../components/Nav';
 import ProductsPage from '../../components/Products';
 import withApollo from '../../utils/withApollo';
 
-function Products() {
+function Products(): JSX.Element {
   return (
     <>
       <Head>

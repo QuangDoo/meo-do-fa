@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Social = () => {
+const Social = (): JSX.Element => {
   return (
     <section className="bg-white text-center py-5 home__in-the-news">
       <div className="container">

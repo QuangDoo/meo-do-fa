@@ -1,14 +1,15 @@
-import 'antd/dist/antd.css'
-import 'react-toastify/dist/ReactToastify.css'
-import '../assets/scss/custom-styles.scss'
+import 'antd/dist/antd.css';
+import 'react-toastify/dist/ReactToastify.css';
+import '../assets/scss/custom-styles.scss';
 
-import React from 'react'
-import { ThemeProvider } from 'styled-components'
-import { appWithTranslation } from '../../i18n'
-import { theme } from '../theme'
-import App from 'next/app'
-import ToastContainer from '../components/ToastContainer'
-import { ModalControlProvider } from '../contexts/ModalControl'
+import App from 'next/app';
+import React from 'react';
+import { ThemeProvider } from 'styled-components';
+
+import { appWithTranslation } from '../../i18n';
+import ToastContainer from '../components/ToastContainer';
+import { ModalControlProvider } from '../contexts/ModalControl';
+import { theme } from '../theme';
 
 const MyApp = ({ Component, pageProps }) => {
   return (
@@ -19,9 +20,9 @@ const MyApp = ({ Component, pageProps }) => {
         <ToastContainer />
       </ModalControlProvider>
     </ThemeProvider>
-  )
-}
+  );
+};
 
-MyApp.getInitialProps = async (appContext) => ({ ...(await App.getInitialProps(appContext)) })
+MyApp.getInitialProps = async (appContext) => ({ ...(await App.getInitialProps(appContext)) });
 
-export default appWithTranslation(MyApp)
+export default appWithTranslation(MyApp);

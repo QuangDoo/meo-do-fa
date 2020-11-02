@@ -2,7 +2,7 @@ import React from 'react';
 
 import Tab from '../../Tab/Tab';
 
-const ProducerInformation = (props) => {
+const ProducerInformation = (props): JSX.Element => {
   return (
     <div className="row">
       <div className="col-12 col-sm-3">

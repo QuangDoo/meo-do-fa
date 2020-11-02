@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Strength = () => {
+const Strength = (): JSX.Element => {
   return (
     <section className="buymed-whyus">
       <div className="container">

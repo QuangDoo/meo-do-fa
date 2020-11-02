@@ -27,7 +27,7 @@ const generalInformationTexts = [
 
 const halfLength = generalInformationTexts.length / 2;
 
-const Footer = ({ t }: Props) => {
+const Footer = ({ t }: Props): JSX.Element => {
   return (
     <div className="footer">
       <div className="container pb-5">

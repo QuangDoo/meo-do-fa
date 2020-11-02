@@ -7,7 +7,7 @@ import Layout from '../components/Layout/Layout';
 import { Nav } from '../components/Nav';
 import SearchScreen from '../components/SearchScreen';
 
-function Manufactures() {
+function Manufactures(): JSX.Element {
   const manufactures = [
     { name: 'Alamingo' },
     { name: 'Blamingo' },

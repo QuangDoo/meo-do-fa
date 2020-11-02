@@ -12,7 +12,7 @@ type PropsType = {
   totalOrders: number;
   price: number;
 };
-const ProductInformation = (props: PropsType) => {
+const ProductInformation = (props: PropsType): JSX.Element => {
   return (
     <div className="row py-3 mb-5 elevated">
       <ProuductDetailImage imageUrl={props.image_128} />

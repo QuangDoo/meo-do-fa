@@ -1,14 +1,15 @@
 import React from 'react';
 import Slider from 'react-slick';
 
-import ProductCard, { Product } from '../ProductCard';
+import { Product } from '../../types/Product';
+import ProductCard from '../ProductCard';
 import { ArrowButton } from './ArrowButton';
 
 type ProductsCarouselProps = {
   products: Product[];
 };
 
-export const ProductsCarousel = ({ products }: ProductsCarouselProps) => {
+export const ProductsCarousel = ({ products }: ProductsCarouselProps): JSX.Element => {
   return (
     <Slider
       speed={500}

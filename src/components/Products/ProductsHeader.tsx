@@ -7,7 +7,7 @@ type Props = {
   totalProducts: number;
 };
 
-const Header = (props: Props) => {
+const Header = (props: Props): JSX.Element => {
   const { totalProducts } = props;
 
   const router = useRouter();

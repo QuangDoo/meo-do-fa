@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Login = () => {
+const Login = (): JSX.Element => {
   return (
     <section className="home__cta">
       <div className="container-fluid py-5 home__cta-overlay">

@@ -8,7 +8,7 @@ import { Header } from '../../components/Header';
 import Layout from '../../components/Layout/Layout';
 import { Nav } from '../../components/Nav';
 
-function SignupBusiness() {
+function SignupBusiness(): JSX.Element {
   const [fileName, setFileName] = useState('');
   const handleChange = (e) => {
     switch (e.target.name) {

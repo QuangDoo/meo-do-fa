@@ -11,7 +11,7 @@ type RegisterModalProps = {
   readonly t: TFunction;
 };
 
-const Register = ({ t }: RegisterModalProps) => {
+const Register = ({ t }: RegisterModalProps): JSX.Element => {
   // Modal is open or not
   const { registerIsOpen } = useModalControlState();
 
@@ -22,7 +22,6 @@ const Register = ({ t }: RegisterModalProps) => {
     dispatch({
       type: 'OPEN_REGISTER_MODAL'
     });
-    console.log('opened register modal');
   };
 
   const closeModal = () =>
@@ -40,7 +39,7 @@ const Register = ({ t }: RegisterModalProps) => {
       {/* Register modal */}
       <Modal
         open={registerIsOpen}
-        title="Tạo Tài Khoản"
+        title={t('register:create_an_account')}
         onClose={closeModal}
         className="authentication signup">
         <RegisterForm />
@@ -49,4 +48,4 @@ const Register = ({ t }: RegisterModalProps) => {
   );
 };
 
-export default withTranslation('header')(Register);
+export default withTranslation(['header', 'register'])(Register);

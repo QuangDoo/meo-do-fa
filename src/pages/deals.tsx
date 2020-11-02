@@ -6,7 +6,7 @@ import { Header } from '../components/Header';
 import Layout from '../components/Layout/Layout';
 import { Nav } from '../components/Nav';
 
-function Deal() {
+function Deal(): JSX.Element {
   return (
     <>
       <Head>

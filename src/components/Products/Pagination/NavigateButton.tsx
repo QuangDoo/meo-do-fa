@@ -8,7 +8,7 @@ type Props = {
   hidden: boolean;
 };
 
-const NavigateButton = (props: Props) => {
+const NavigateButton = (props: Props): JSX.Element => {
   const { type, hidden } = props;
 
   const router = useRouter();

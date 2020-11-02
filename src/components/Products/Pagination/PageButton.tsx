@@ -7,7 +7,7 @@ type Props = {
   page?: any;
 };
 
-const PageButton = (props: Props) => {
+const PageButton = (props: Props): JSX.Element => {
   const { page } = props;
 
   const router = useRouter();

@@ -9,7 +9,7 @@ type Props = {
   containerClass?: string;
 };
 
-const Input = (props: Props, ref) => {
+const Input = (props: Props, ref): JSX.Element => {
   const { containerClass = '', type = 'text' } = props;
 
   const [showPassword, setShowPassword] = useState(false);

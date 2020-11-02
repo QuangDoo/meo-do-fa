@@ -5,7 +5,7 @@ type ArrowButtonProps = {
   type?: 'prev' | 'next';
 };
 
-export const ArrowButton = ({ onClick, type = 'prev' }: ArrowButtonProps) => {
+export const ArrowButton = ({ onClick, type = 'prev' }: ArrowButtonProps): JSX.Element => {
   return (
     <button
       onClick={onClick}

@@ -7,7 +7,7 @@ import { Header } from '../components/Header';
 import Layout from '../components/Layout/Layout';
 import { Nav } from '../components/Nav';
 
-function Cart() {
+function Cart(): JSX.Element {
   const cartItem = [
     {
       productName: 'phosphalugel boehringer ingelheim (h/26g)',
