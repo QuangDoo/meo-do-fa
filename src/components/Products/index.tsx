@@ -1,10 +1,11 @@
-import { useLazyQuery } from '@apollo/client';
-import { useQuery } from '@apollo/react-hooks';
+import { useLazyQuery } from '@apollo/react-hooks';
 import { Col } from 'antd';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 
 import { GET_PRODUCTS } from '../../graphql/product/product.query';
+import { mockProducts } from '../../mockData/mockProducts';
+import { mockTotalProducts } from '../../mockData/mockTotalProducts';
 import { Product } from '../../types/Product';
 import withApollo from '../../utils/withApollo';
 import FilterTags from './FilterTags';
@@ -12,6 +13,8 @@ import Pagination from './Pagination';
 import ProductList from './ProductList';
 import ProductsHeader from './ProductsHeader';
 import SideBar from './SideBar';
+
+// TODO: INTEGRATION NOT DONE
 
 export const productsPageSize = 20;
 
@@ -57,17 +60,17 @@ const Products = (): JSX.Element => {
           <SideBar />
         </div>
         <Col span={20} style={{ paddingLeft: '1.5rem' }}>
-          <ProductsHeader totalProducts={totalProducts} />
+          <ProductsHeader totalProducts={mockTotalProducts} />
 
           <FilterTags />
 
-          {products.length > 0 && (
+          {mockProducts.length > 0 && (
             <Col>
-              <Pagination totalProducts={totalProducts} />
+              <Pagination totalProducts={mockTotalProducts} />
 
-              <ProductList products={products} />
+              <ProductList products={mockProducts} />
 
-              <Pagination totalProducts={totalProducts} />
+              <Pagination totalProducts={mockTotalProducts} />
             </Col>
           )}
         </Col>

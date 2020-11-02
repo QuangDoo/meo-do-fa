@@ -77,7 +77,7 @@ const Pagination = ({ totalProducts }: Props): JSX.Element => {
         <PageGap hidden={afterGapHidden} />
 
         {/* Last page always shown */}
-        {currentPage != lastPage && <PageButton page={lastPage} />}
+        {<PageButton page={lastPage} />}
 
         {/* Next page button */}
         <NavigateButton type="next" hidden={currentPage === lastPage} />
