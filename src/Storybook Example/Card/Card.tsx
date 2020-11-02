@@ -6,6 +6,7 @@ interface CardProps {
   children: React.ReactNode;
   buttonGroups?: React.ReactNode;
   imageURL: string;
+  onClick?: any;
 }
 
 const Card: React.FC<CardProps> = (props) => {

@@ -1,7 +1,8 @@
 import React from 'react';
 import Slider from 'react-slick';
 
-import ProductCard, { Product } from '../ProductCard';
+import { Product } from '../../types/Product';
+import ProductCard from '../ProductCard';
 import { ArrowButton } from './ArrowButton';
 
 type ProductsCarouselProps = {

@@ -1,6 +1,7 @@
 import React from 'react';
 
-import ProductCard, { Product } from '../ProductCard';
+import { Product } from '../../types/Product';
+import ProductCard from '../ProductCard';
 
 type Props = {
   products: Product[];

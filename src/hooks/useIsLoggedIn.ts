@@ -7,9 +7,6 @@ export default function useIsLoggedIn(): boolean {
 
   const [isLoggedIn, setIsLoggedIn] = useState(!!token);
 
-  console.log('Token:', token);
-  console.log('Is logged in:', !!token);
-
   useEffect(() => {
     setIsLoggedIn(!!token);
   }, [token]);

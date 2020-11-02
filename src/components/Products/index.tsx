@@ -1,74 +1,53 @@
+import { useLazyQuery } from '@apollo/client';
 import { useQuery } from '@apollo/react-hooks';
-import { Col, Row } from 'antd';
+import { Col } from 'antd';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
 
 import { GET_PRODUCTS } from '../../graphql/product/product.query';
+import { Product } from '../../types/Product';
 import withApollo from '../../utils/withApollo';
-import { Product } from '../ProductCard';
 import FilterTags from './FilterTags';
 import Pagination from './Pagination';
 import ProductList from './ProductList';
 import ProductsHeader from './ProductsHeader';
 import SideBar from './SideBar';
 
-const productListProduct: any = {
-  new: true,
-  name: 'egudin solifenacin succinat 5mg medisun (h/30v)',
-  image: 'Lg9NokKW5SY2TGdtiEKFCNeR',
-  price: '430.500',
-  id: 'egudin-solifenacin-succinat-5mg-medisun-h-30v',
-  unit: 'Hộp 3 vỉ x 10 viên',
-  category: 'thận, tiết niệu',
-  categoryId: 'than-tiet-nieu',
-  badges: ['common', 'invoice_exportable', 'change_style', 'flash_sale']
-};
-
-export const exampleProducts: Product[] = [...new Array(10)].map(() => ({
-  ...productListProduct
-}));
-
 export const productsPageSize = 20;
-
-// const exampleTotalProducts = 311
 
 const Products = (): JSX.Element => {
   const router = useRouter();
 
-  // TODO: Integration
+  // Products of the current pagination
   const [products, setProducts] = useState<Product[]>([]);
 
-  // TODO: Integration
+  // Total products (not just the current products)
   const [totalProducts, setTotalProducts] = useState<number>(0);
 
-  const { data, loading } = useQuery(GET_PRODUCTS, {
-    variables: {
-      page: +(router.query.page as string) || 1,
-      pageSize: productsPageSize
-    }
-  });
-
-  // Loading products
-  useEffect(() => {
-    console.log('Loading products:', loading);
-  }, [loading]);
+  // Get products from api
+  const [getProducts, { data }] = useLazyQuery(GET_PRODUCTS);
 
   // Update products state when data arrives
   useEffect(() => {
     if (!data) return;
 
-    console.log('Products data:', data.getProducts);
-
     setProducts(data.getProducts);
-    setTotalProducts(data.getProducts.length);
+
+    // TODO: Get total products size, not the length of current products
+    setTotalProducts(data.getProducts.totalProducts);
   }, [data]);
 
+  // Get products again when query changes
+  // TODO: Add variables for categories and manufacturers, based on query on router
+  // ?category=abcxyz
+  // ?manufacturer=abcxyz
   useEffect(() => {
-    console.log('Products query:', router.query);
-
-    // Get products again when query changes
-    // getProducts()
+    getProducts({
+      variables: {
+        page: +(router.query.page as string) || 1,
+        pageSize: productsPageSize
+      }
+    });
   }, [router.query]);
 
   return (
