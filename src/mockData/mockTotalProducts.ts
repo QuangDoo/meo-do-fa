@@ -1,1 +1,1 @@
-export const mockTotalProducts = 100;
+export const mockTotalProducts = 200;
