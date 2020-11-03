@@ -3,13 +3,18 @@ import React, { forwardRef } from 'react';
 
 type Props = {
   children: React.ReactNode;
-  name: string;
+  name?: string;
   className?: string;
+  onBlur?: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 };
 
 const Select = (props: Props, ref): JSX.Element => {
   return (
-    <select ref={ref} name={props.name} className={clsx('custom-select d-block', props.className)}>
+    <select
+      onBlur={props.onBlur}
+      ref={ref}
+      name={props.name}
+      className={clsx('custom-select d-block', props.className)}>
       {props.children}
     </select>
   );
