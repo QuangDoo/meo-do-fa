@@ -3,7 +3,7 @@ import React from 'react';
 
 import { withTranslation } from '../../../i18n';
 import { useModalControlDispatch, useModalControlState } from '../../contexts/ModalControl';
-import Button from '../Button';
+import Button from '../Form/Button';
 import Modal from '../Modal';
 import RegisterForm from './RegisterForm';
 
