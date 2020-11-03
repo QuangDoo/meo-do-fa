@@ -1,22 +1,17 @@
-import { useRouter } from 'next/router';
 import React from 'react';
-
-import { productsPageSize } from '.';
 
 type Props = {
   totalProducts: number;
+  page: number;
+  pageSize: number;
 };
 
 const Header = (props: Props): JSX.Element => {
-  const { totalProducts } = props;
+  const { totalProducts, page, pageSize } = props;
 
-  const router = useRouter();
+  const start = (page - 1) * pageSize + 1;
 
-  const currentPage = +(router.query.page as string) || 1;
-
-  const start = (currentPage - 1) * productsPageSize + 1;
-
-  const end = Math.min(start + productsPageSize - 1, totalProducts);
+  const end = Math.min(start + pageSize - 1, totalProducts);
 
   return (
     <div className="px-2 px-sm-0">
@@ -29,7 +24,7 @@ const Header = (props: Props): JSX.Element => {
             <b>
               {start}&nbsp;-&nbsp;{end}
             </b>{' '}
-            trên tổng số <b>{totalProducts}</b> Sản Phẩm
+            trên tổng số <b>{totalProducts}</b> sản Phẩm
           </>
         ) : (
           'Không có Sản Phẩm'

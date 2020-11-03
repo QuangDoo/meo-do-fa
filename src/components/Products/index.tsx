@@ -8,15 +8,13 @@ import { mockProducts } from '../../mockData/mockProducts';
 import { mockTotalProducts } from '../../mockData/mockTotalProducts';
 import { Product } from '../../types/Product';
 import withApollo from '../../utils/withApollo';
+import Pagination from '../Pagination';
 import FilterTags from './FilterTags';
-import Pagination from './Pagination';
 import ProductList from './ProductList';
 import ProductsHeader from './ProductsHeader';
 import SideBar from './SideBar';
 
-// TODO: INTEGRATION NOT DONE
-
-export const productsPageSize = 20;
+const pageSize = 20;
 
 const Products = (): JSX.Element => {
   const router = useRouter();
@@ -48,10 +46,29 @@ const Products = (): JSX.Element => {
     getProducts({
       variables: {
         page: +(router.query.page as string) || 1,
-        pageSize: productsPageSize
+        pageSize: pageSize
       }
     });
   }, [router.query]);
+
+  const page = +(router.query.page as string) || 1;
+
+  const CustomPagination = () => (
+    <Pagination
+      count={Math.ceil(mockTotalProducts / pageSize)}
+      page={page}
+      siblingCount={4}
+      onChange={(page) =>
+        router.push({
+          pathname: router.pathname,
+          query: {
+            ...router.query,
+            page: page
+          }
+        })
+      }
+    />
+  );
 
   return (
     <div className="products container-fluid mobile-content my-3 my-sm-5">
@@ -60,17 +77,17 @@ const Products = (): JSX.Element => {
           <SideBar />
         </div>
         <Col span={20} style={{ paddingLeft: '1.5rem' }}>
-          <ProductsHeader totalProducts={mockTotalProducts} />
+          <ProductsHeader totalProducts={mockTotalProducts} page={page} pageSize={pageSize} />
 
           <FilterTags />
 
           {mockProducts.length > 0 && (
             <Col>
-              <Pagination totalProducts={mockTotalProducts} />
+              <CustomPagination />
 
               <ProductList products={mockProducts} />
 
-              <Pagination totalProducts={mockTotalProducts} />
+              <CustomPagination />
             </Col>
           )}
         </Col>
