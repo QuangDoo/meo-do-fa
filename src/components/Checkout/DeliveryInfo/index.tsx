@@ -2,7 +2,7 @@ import React from 'react';
 
 import { emailRegex } from '../../../assets/regex/email';
 import { viPhoneNumberRegex } from '../../../assets/regex/viPhoneNumber';
-import Checkbox from '../../form/Checkbox';
+import Checkbox from '../../Form/Checkbox';
 import InputCard from '../InputCard';
 import InputWithLabel from '../InputWithLabel';
 import SelectWithLabel from '../SelectWithLabel';

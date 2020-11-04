@@ -3,8 +3,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
 
-import Dropdown from '../form/Dropdown';
-import Select from '../form/Select';
+import Dropdown from '../Form/Dropdown';
+import Select from '../Form/Select';
 
 const categories = [
   { name: 'Cơ Xương Khớp', id: 'co-xuong-khop' },

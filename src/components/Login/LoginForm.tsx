@@ -10,9 +10,9 @@ import { useModalControlDispatch } from '../../contexts/ModalControl';
 import { LOGIN_USER } from '../../graphql/user/login.mutation';
 import withApollo from '../../utils/withApollo';
 import Button from '../form/Button';
-import Checkbox from '../form/Checkbox';
+import Checkbox from '../Form/Checkbox';
 // import AccountLoginInformation from './AccountLoginInformation'
-import Input from '../form/Input';
+import Input from '../Form/Input';
 
 type Inputs = {
   username: string;

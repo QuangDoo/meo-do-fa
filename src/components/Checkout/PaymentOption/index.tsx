@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 
-import Radio from '../../form/Radio';
+import Radio from '../../Form/Radio';
 import InputCard from '../InputCard';
 import TransferPaymentInfo from './TransferPaymentInfo';
 import TransferPaymentLabel from './TransferPaymentLabel';
