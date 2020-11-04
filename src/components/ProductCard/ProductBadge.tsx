@@ -1,5 +1,9 @@
-import React from 'react'
+import { WithTranslation } from 'next-i18next';
+import React from 'react';
 
+import { withTranslation } from '../../../i18n';
+
+// BadgeType must be the same as badge types in productBadge.json translation file
 export type BadgeType =
   | 'invoice_exportable'
   | 'out_of_stocks'
@@ -8,41 +12,36 @@ export type BadgeType =
   | 'flash_sale'
   | 'common'
   | 'change_style'
-  | 'close_date'
   | 'use_vietnamese'
+  | 'close_date';
 
-type ProductBadgeProps = {
-  type: BadgeType
-  expirationDate?: string
+interface ProductBadgeProps extends WithTranslation {
+  type: BadgeType;
+  expirationDate?: string;
 }
 
-const badgeName = {
-  invoice_exportable: ' Hóa đơn nhanh',
-  out_of_stocks: ' Tạm hết hàng',
-  only_thuocsi: ' Chỉ có tại thuocsi',
-  promotion: ' Khuyến mãi',
-  flash_sale: ' Flash Sale',
-  common: ' Bán chạy',
-  change_style: ' Đổi mẫu',
-  use_vietnamese: ' Người Việt dùng hàng Việt',
-}
+const ProductBadge = (props: ProductBadgeProps): JSX.Element => {
+  const { t } = props;
 
-export const ProductBadge = (props: ProductBadgeProps) => {
-  if (props.type === 'promotion') return <span className="badge badge-danger mr-2">Khuyến mãi</span>
+  if (props.type === 'promotion')
+    return <span className="badge badge-danger mr-2">{t('productBadge:promotion')}</span>;
 
   return (
     <span className={`badge badge-light display-status mr-1 mb-1 ${props.type}`}>
       <i className="fas mr-1"></i>
       {props.type === 'flash_sale' ? (
         <>
-          <i className="fas fa-bolt text-secondary mr-1"></i>Flash Sale
+          <i className="fas fa-bolt text-secondary mr-1"></i>
+          {t('productBadge:flash_sale')}
           <i className="fas fa-bolt text-secondary ml-1"></i>
         </>
       ) : props.type === 'close_date' ? (
-        `Cận date: ${props.expirationDate}`
+        `${t('productBadge:close_date')}: ${props.expirationDate}`
       ) : (
-        badgeName[props.type]
+        t(`productBadge:${props.type}`)
       )}
     </span>
-  )
-}
+  );
+};
+
+export default withTranslation('productBadge')(ProductBadge);

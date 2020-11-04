@@ -1,17 +1,15 @@
-import React from 'react'
+import React from 'react';
 
-type Props = {
+import Tab from '../../Tab/Tab';
 
-}
-
-const ProducerInformation = (props: Props) => {
+const ProducerInformation = (props): JSX.Element => {
   return (
     <div className="row">
       <div className="col-12 col-sm-3">
         <div className="mb-3">
           <div className="product__info-label">Nhà sản xuất</div>
           <div className="text-capitalize">
-            <a href="">Công ty Cổ phần Dược phẩm OPC</a>
+            <a href="/">Công ty Cổ phần Dược phẩm OPC</a>
           </div>
         </div>
         <div className="mb-3">
@@ -54,55 +52,8 @@ const ProducerInformation = (props: Props) => {
           </table>
         </div>
       </div>
-      <div className="col-12 col-sm-9 product__details">
-        <div className="nav tab no-scrollbar">
-          <div className="tab__item active" data-toggle="description">
-            Thông tin chung
-          </div>
-          <div className="tab__item" data-toggle="uses" >
-            Chỉ định
-          </div>
-          <div className="tab__item" data-toggle="tab" >
-            Liều lượng - Cách dùng
-          </div>
-          <div className="tab__item" data-toggle="tab" >
-            Chống chỉ định
-          </div>
-          <div className="tab__item" data-toggle="tab" >
-            Tương tác thuốc
-          </div>
-          <div className="tab__item" data-toggle="tab" >
-            Bảo quản
-          </div>
-          <div className="tab__item" data-toggle="tab" >
-            Quá liều
-          </div>
-        </div>
-        <div className="tab-content">
-          <div className="tab-pane fade active show" id="description">
-            Đang cập nhật...
-          </div>
-          <div className="tab-pane fade" id="uses">
-            Đang cập nhật...
-          </div>
-          <div className="tab-pane fade" id="direction">
-            Đang cập nhật...
-          </div>
-          <div className="tab-pane fade" id="do_not_use">
-            Đang cập nhật...
-          </div>
-          <div className="tab-pane fade" id="drug_interactions">
-            Đang cập nhật...
-          </div>
-          <div className="tab-pane fade" id="storage">
-            Đang cập nhật...
-          </div>
-          <div className="tab-pane fade" id="overdose">
-            Đang cập nhật...
-          </div>
-        </div>
-      </div>
+      <Tab />
     </div>
-  )
-}
-export default ProducerInformation
+  );
+};
+export default ProducerInformation;

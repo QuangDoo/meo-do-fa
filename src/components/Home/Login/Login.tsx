@@ -1,6 +1,6 @@
-import React from 'react'
+import React from 'react';
 
-const Login = () => {
+const Login = (): JSX.Element => {
   return (
     <section className="home__cta">
       <div className="container-fluid py-5 home__cta-overlay">
@@ -11,15 +11,13 @@ const Login = () => {
           <div className="col-12">
             <a
               className="login btn btn-secondary home__cta-btn m-2"
-              href="https://thuocsi.vn/authentications/login"
-            >
+              href="https://thuocsi.vn/authentications/login">
               <i className="fas fa-sign-in-alt mr-1" />
               Đăng nhập
             </a>
             <a
               className="register btn btn-primary home__cta-btn m-2"
-              href="https://thuocsi.vn/authentications/signup"
-            >
+              href="https://thuocsi.vn/authentications/signup">
               <i className="fas fa-user-md mr-1" />
               Tạo tài khoản
             </a>
@@ -29,8 +27,7 @@ const Login = () => {
             </button>
             <a
               className="call btn btn-info home__cta-btn m-2 d-inline-block d-sm-none"
-              href="tel:02873008840"
-            >
+              href="tel:02873008840">
               <i className="fas fa-phone mr-1" />
               02 873 008 840
             </a>
@@ -38,7 +35,7 @@ const Login = () => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

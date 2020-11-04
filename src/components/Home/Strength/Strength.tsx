@@ -1,6 +1,6 @@
-import React from 'react'
+import React from 'react';
 
-const Strength = () => {
+const Strength = (): JSX.Element => {
   return (
     <section className="buymed-whyus">
       <div className="container">
@@ -60,7 +60,7 @@ const Strength = () => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default Strength
+export default Strength;

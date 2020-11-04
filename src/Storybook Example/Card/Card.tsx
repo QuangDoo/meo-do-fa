@@ -1,11 +1,12 @@
-import React from 'react'
-import { StyledCard, StyledCardImage, StyledCardBody, StyledCardButtonGroup } from './Card.styled'
+import React from 'react';
+
+import { StyledCard, StyledCardBody, StyledCardButtonGroup, StyledCardImage } from './Card.styled';
 
 interface CardProps {
-  children: React.ReactNode
-  onClick?(e: any): void
-  buttonGroups?: React.ReactNode
-  imageURL: string
+  children: React.ReactNode;
+  buttonGroups?: React.ReactNode;
+  imageURL: string;
+  onClick?: any;
 }
 
 const Card: React.FC<CardProps> = (props) => {
@@ -15,7 +16,7 @@ const Card: React.FC<CardProps> = (props) => {
       <StyledCardBody>{props.children}</StyledCardBody>
       {props.buttonGroups && <StyledCardButtonGroup>{props.buttonGroups}</StyledCardButtonGroup>}
     </StyledCard>
-  )
-}
+  );
+};
 
-export default Card
+export default Card;

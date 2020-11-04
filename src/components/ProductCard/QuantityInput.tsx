@@ -1,16 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 
 function QuantityInput(props) {
-  const [quantity, setQuantity] = useState(props.quantity)
+  const [quantity, setQuantity] = useState(props.quantity);
   const plus = () => {
-    setQuantity(Number(quantity) + 1)
-  }
+    setQuantity(quantity + 1);
+  };
   const minus = () => {
-    setQuantity(Number(quantity) - 1)
-  }
-  const handleChange = (elm) => {
-    setQuantity(elm.target.value)
-  }
+    setQuantity(quantity - 1);
+  };
   return (
     <div className="qty js-qty">
       <button className="btn btn-sm qty__button qty__button--minus" onClick={minus}>
@@ -29,7 +26,7 @@ function QuantityInput(props) {
         placeholder="0"
         defaultValue={props.quantity}
         value={quantity}
-        onChange={handleChange}
+        onChange={props.handleChange}
       />
 
       <button className="btn btn-sm qty__button qty__button--plus" onClick={plus}>
@@ -51,6 +48,6 @@ function QuantityInput(props) {
         </small>
       </div>
     </div>
-  )
+  );
 }
-export default QuantityInput
+export default QuantityInput;

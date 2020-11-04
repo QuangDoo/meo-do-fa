@@ -1,17 +1,17 @@
-import React from 'react'
-import Layout from '../components/Layout/Layout'
-import { Header } from '../components/Header'
-import { Footer } from '../components/Footer'
-import Head from '../components/Head'
-import { Nav } from '../components/Nav'
-import CartItem from '../components/Cart/CartItem'
+import Link from 'next/link';
+import React from 'react';
 
-interface MyOrdersProps { }
+import CartItem from '../components/Cart/CartItem';
+import Footer from '../components/Footer';
+import Head from '../components/Head';
+import { Header } from '../components/Header';
+import Layout from '../components/Layout/Layout';
+import { Nav } from '../components/Nav';
 
-const MyOrders = (props: MyOrdersProps) => {
-  let token = ''
+const MyOrders = (props): JSX.Element => {
+  let token = '';
   if (typeof window !== 'undefined') {
-    token = localStorage.getItem('token')
+    token = localStorage.getItem('token');
     // console.log('Product card data:', props)
   }
   return (
@@ -35,29 +35,25 @@ const MyOrders = (props: MyOrdersProps) => {
                 </a>
                 <a
                   className="my-account__sidebar-item my-account__sidebar-link active"
-                  href="/my-orders"
-                >
+                  href="/my-orders">
                   <i className="icomoon icon-assignment my-account__sidebar-icon" />
                   Đơn hàng của tôi
                 </a>
                 <a
                   className="my-account__sidebar-item my-account__sidebar-link"
-                  href="/users/referrals"
-                >
+                  href="/users/referrals">
                   <i className="icomoon icon-share my-account__sidebar-icon" />
                   Giới thiệu bạn bè
                 </a>
                 <a
                   className="my-account__sidebar-item my-account__sidebar-link"
-                  href="/users/user-promo-codes"
-                >
+                  href="/users/user-promo-codes">
                   <i className="fas fa-tags my-account__sidebar-icon" />
                   Mã giảm giá của tôi
                 </a>
                 <a
                   className="my-account__sidebar-item my-account__sidebar-link"
-                  href="/users/loyalty_points"
-                >
+                  href="/users/loyalty_points">
                   <i className="fas fa-hand-holding-usd my-account__sidebar-icon" />
                   Điểm tích lũy
                 </a>
@@ -73,48 +69,36 @@ const MyOrders = (props: MyOrdersProps) => {
               <div data-controller="my-orders">
                 <h1 className="h2 text-center text-primary mb-3">Đơn hàng của tôi</h1>
                 <p className="my-orders__condition" />
-                <p className="text-muted m-0">
-                  {' '}
-                  Xem thông tin xuất hoá đơn đỏ{' '}
-                  <a
-                    href="https://thuocsi.zendesk.com/hc/vi/articles/360029453432-Xu%E1%BA%A5t-h%C3%B3a-%C4%91%C6%A1n-%C4%91%E1%BB%8F-t%E1%BA%A1i-thuocsi-vn-"
-                    target="_blank"
-                  >
-                    tại đây
-                  </a>
-                </p>
-                <p />
+                <p className="text-muted m-0">Xem thông tin xuất hoá đơn đỏ tại đây</p>
                 <div className="my-orders__filter mt-3">
                   <div
                     className="my-orders__header active"
                     data-action="click->my-orders#show"
                     data-filter="all"
-                    data-target="my-orders.status"
-                  >
-                    <a href="/my-orders">Tất cả</a>
+                    data-target="my-orders.status">
+                    <Link href="/my-orders">
+                      <a>Tất cả</a>
+                    </Link>
                   </div>
                   <div
                     className="my-orders__header"
                     data-action="click->my-orders#show"
                     data-filter="to_confirm"
-                    data-target="my-orders.status"
-                  >
+                    data-target="my-orders.status">
                     <a href="/my-orders?status=to_confirm">Chờ xác nhận</a>
                   </div>
                   <div
                     className="my-orders__header"
                     data-action="click->my-orders#show"
                     data-filter="completed"
-                    data-target="my-orders.status"
-                  >
+                    data-target="my-orders.status">
                     <a href="/my-orders?status=completed">Hoàn tất</a>
                   </div>
                   <div
                     className="my-orders__header"
                     data-action="click->my-orders#show"
                     data-filter="canceled"
-                    data-target="my-orders.status"
-                  >
+                    data-target="my-orders.status">
                     <a href="/my-orders?status=canceled">Hủy</a>
                   </div>
                 </div>
@@ -144,7 +128,9 @@ const MyOrders = (props: MyOrdersProps) => {
                 </div>
                 <p className="my-orders__price">123456789 đ</p>
                 <div className="my-orders__invoice">
-                  <button className="btn btn-secondary btn-sm  mr-2" type="button">Xuất hóa đơn</button>
+                  <button className="btn btn-secondary btn-sm  mr-2" type="button">
+                    Xuất hóa đơn
+                  </button>
                   <button className="btn btn-outline-info btn-sm">Gửi phản hồi</button>
                 </div>
               </div>
@@ -163,6 +149,6 @@ const MyOrders = (props: MyOrdersProps) => {
       </Layout>
       <Footer />
     </>
-  )
-}
-export default MyOrders
+  );
+};
+export default MyOrders;

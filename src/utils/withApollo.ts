@@ -1,9 +1,9 @@
-import { withApollo } from 'next-apollo'
-import ApolloClient, { InMemoryCache } from 'apollo-boost'
+import ApolloClient, { InMemoryCache } from 'apollo-boost';
+import { withApollo } from 'next-apollo';
 
 const apolloClient = new ApolloClient({
-  uri: 'https://odoo.medofa.bedigital.vn/web',
-  cache: new InMemoryCache(),
-})
+  uri: 'https://graphql.medofa.bedigital.vn',
+  cache: new InMemoryCache()
+});
 
-export default withApollo(apolloClient)
+export default withApollo(apolloClient);

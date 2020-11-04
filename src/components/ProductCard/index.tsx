@@ -1,50 +1,27 @@
-import Link from 'next/link'
-import { useRouter } from 'next/router'
-import React from 'react'
-import { DiscountRibbon } from './DiscountRibbon'
+import { WithTranslation } from 'next-i18next';
+import Link from 'next/link';
+import React from 'react';
 
-import { BadgeType, ProductBadge } from './ProductBadge'
-import { ProductImage } from './ProductImage'
-import { ProductPrice } from './ProductPrice'
-import QuantityInput from './QuantityInput'
+import { withTranslation } from '../../../i18n';
+import useIsLoggedIn from '../../hooks/useIsLoggedIn';
+import { Product } from '../../types/Product';
+import { DiscountRibbon } from './DiscountRibbon';
+import LoginToSeePrice from './LoginToSeePrice';
+import ProductBadge from './ProductBadge';
+import { ProductImage } from './ProductImage';
+import { ProductPrice } from './ProductPrice';
+import QuantityInput from './QuantityInput';
 
-export type Product = {
-  name: string
-  price: string
-  unit: string
-  category: string
-  categoryId: string
-  image: string
-  id: string
+type Props = Product & WithTranslation;
 
-  badges?: BadgeType[]
-  new?: boolean
-  discountPercent?: number
-  supplier?: string
-  oldPrice?: string
-  deal?: boolean
-  expirationDate?: string
-}
-
-const ProductCard = ({ badges = [], ...props }: Product) => {
-  let token = ''
-  // console.log(localStorage.getItem('token'))
-  if (typeof window !== 'undefined') {
-    token = localStorage.getItem('token')
-    // console.log('Product card data:', props)
-  }
-  const router = useRouter()
-
-  const onClick = () => {
-    router.push(`/products/${props.id}`)
-  }
-
+const ProductCard = ({ badges = [], t, ...props }: Props): JSX.Element => {
+  const isLoggedIn = useIsLoggedIn();
   return (
     <div className="product-card-container">
       <article className={`product-card card ${props.deal ? 'deal-card' : ''}`}>
         <div className="product-card__main">
           <div className="product-card__description mb-3">
-            {props.new && <div className="product-card__new-arrival">Mới</div>}
+            {props.new && <div className="product-card__new-arrival">{t('productCard:new')}</div>}
 
             {props.discountPercent && <DiscountRibbon discountPercent={props.discountPercent} />}
 
@@ -58,15 +35,14 @@ const ProductCard = ({ badges = [], ...props }: Product) => {
               </Link>
 
               <div className="product__status mb-2">
-                {token
-                  ? badges.map((badgeType) => (
-                      <ProductBadge
-                        key={badgeType}
-                        type={badgeType}
-                        expirationDate={props.expirationDate}
-                      />
-                    ))
-                  : null}
+                {isLoggedIn &&
+                  badges.map((badgeType) => (
+                    <ProductBadge
+                      key={badgeType}
+                      type={badgeType}
+                      expirationDate={props.expirationDate}
+                    />
+                  ))}
               </div>
 
               <small className="text-muted">{props.unit}</small>
@@ -74,36 +50,30 @@ const ProductCard = ({ badges = [], ...props }: Product) => {
               <br />
 
               <small className="text-muted product-card__category">
-                Nhóm:{' '}
-                <Link href={`/products?category=${props.categoryId}`}>
-                  <a>{props.category}</a>
+                {t('productCard:category')}:{' '}
+                <Link href={`/products?category=${props.category.id}`}>
+                  <a>{props.category.name}</a>
                 </Link>
               </small>
             </div>
           </div>
-          {token ? (
-            <div className="product-card__buy">
-              <div className="mb-2">
-                <ProductPrice price={props.price} />
-              </div>
 
-              <QuantityInput />
-            </div>
-          ) : (
-            <div className="product-card__buy">
-              <a
-                className="btn btn-block btn-sm btn-outline-primary"
-                data-modal="true"
-                href="/authentications/login"
-              >
-                Đăng nhập để có giá tốt
-              </a>
-            </div>
-          )}
+          <div className="product-card__buy">
+            {isLoggedIn ? (
+              <>
+                <div className="mb-2">
+                  <ProductPrice price={props.price} />
+                </div>
+                <QuantityInput />
+              </>
+            ) : (
+              <LoginToSeePrice />
+            )}
+          </div>
         </div>
       </article>
     </div>
-  )
-}
+  );
+};
 
-export default ProductCard
+export default withTranslation(['productCard'])(ProductCard);

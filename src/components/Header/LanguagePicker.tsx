@@ -1,30 +1,31 @@
-import { Menu, MenuItem } from '@material-ui/core'
-import { TFunction } from 'next-i18next'
-import React, { MouseEvent, useState } from 'react'
-import { i18n, withTranslation } from '../../../i18n'
+import { Menu, MenuItem } from '@material-ui/core';
+import { TFunction } from 'next-i18next';
+import React, { MouseEvent, useState } from 'react';
+
+import { i18n, withTranslation } from '../../../i18n';
 
 type Props = {
-  readonly t: TFunction
-}
+  readonly t: TFunction;
+};
 
-export type LanguageCode = 'vi' | 'en'
+export type LanguageCode = 'vi' | 'en';
 
 export const languageNames: Record<LanguageCode, string> = {
   vi: 'Tiếng Việt',
-  en: 'English',
-}
+  en: 'English'
+};
 
-const LanguagePicker = ({ t }: Props) => {
-  const [anchorEl, setAnchorEl] = useState(null)
+const LanguagePicker = ({ t }: Props): JSX.Element => {
+  const [anchorEl, setAnchorEl] = useState(null);
 
-  const openMenu = (event: MouseEvent) => setAnchorEl(event.currentTarget)
+  const openMenu = (event: MouseEvent) => setAnchorEl(event.currentTarget);
 
-  const closeMenu = () => setAnchorEl(null)
+  const closeMenu = () => setAnchorEl(null);
 
   const onLanguageClick = (code: LanguageCode) => {
-    i18n.changeLanguage(code)
-    closeMenu()
-  }
+    i18n.changeLanguage(code);
+    closeMenu();
+  };
 
   return (
     <>
@@ -38,14 +39,13 @@ const LanguagePicker = ({ t }: Props) => {
           <MenuItem
             key={code}
             onClick={() => onLanguageClick(code)}
-            selected={code === i18n.language}
-          >
+            selected={code === i18n.language}>
             {languageNames[code]}
           </MenuItem>
         ))}
       </Menu>
     </>
-  )
-}
+  );
+};
 
-export default withTranslation('header')(LanguagePicker)
+export default withTranslation('header')(LanguagePicker);

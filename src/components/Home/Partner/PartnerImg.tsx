@@ -1,11 +1,11 @@
-import React, { FC } from 'react'
+import React, { FC } from 'react';
 
 type PartnerImgProps = {
-  imgUrl: string
-}
+  imgUrl: string;
+};
 
 const PartnerImg: FC<PartnerImgProps> = (props) => {
-  return <img src={props.imgUrl} alt="" className="img-fluid" />
-}
+  return <img src={props.imgUrl} alt="" className="img-fluid" />;
+};
 
-export default PartnerImg
+export default PartnerImg;

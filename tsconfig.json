@@ -17,6 +17,6 @@
     "allowSyntheticDefaultImports": true
   },
   "exclude": ["node_modules"],
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/pages/promo-code.stsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "strict": true
 }

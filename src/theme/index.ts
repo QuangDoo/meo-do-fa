@@ -1,4 +1,4 @@
-import { DefaultTheme } from 'styled-components'
+import { DefaultTheme } from 'styled-components';
 
 const theme: DefaultTheme = {
   colors: {
@@ -8,8 +8,8 @@ const theme: DefaultTheme = {
     danger: '#dc3545',
     black: '#212529',
     white: '#ffffff',
-    transparent: 'transparent',
-  },
-}
+    transparent: 'transparent'
+  }
+};
 
-export { theme }
+export { theme };
