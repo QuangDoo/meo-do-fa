@@ -3,8 +3,8 @@ import React from 'react';
 
 import { withTranslation } from '../../../i18n';
 import { useModalControlDispatch, useModalControlState } from '../../contexts/ModalControl';
-import Button from '../Form/Button';
-import Modal from '../Modal';
+import Button from '../form/Button';
+import ModalWithHeader from '../Modal/ModalWithHeader';
 import LoginForm from './LoginForm';
 
 type LoginModalProps = {
@@ -35,13 +35,13 @@ const Login = ({ t }: LoginModalProps): JSX.Element => {
         {t('header:login')}
       </Button>
 
-      <Modal
+      <ModalWithHeader
         open={loginIsOpen}
         title="Đăng Nhập Thành Viên"
         onClose={closeModal}
         className="authentication login">
         <LoginForm />
-      </Modal>
+      </ModalWithHeader>
     </>
   );
 };

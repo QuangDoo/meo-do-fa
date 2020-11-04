@@ -3,8 +3,8 @@ import React from 'react';
 
 import { withTranslation } from '../../../i18n';
 import { useModalControlDispatch, useModalControlState } from '../../contexts/ModalControl';
-import Button from '../Form/Button';
-import Modal from '../Modal';
+import Button from '../form/Button';
+import ModalWithHeader from '../Modal/ModalWithHeader';
 import RegisterForm from './RegisterForm';
 
 type RegisterModalProps = {
@@ -37,13 +37,13 @@ const Register = ({ t }: RegisterModalProps): JSX.Element => {
       </Button>
 
       {/* Register modal */}
-      <Modal
+      <ModalWithHeader
         open={registerIsOpen}
         title={t('register:create_an_account')}
         onClose={closeModal}
         className="authentication signup">
         <RegisterForm />
-      </Modal>
+      </ModalWithHeader>
     </>
   );
 };

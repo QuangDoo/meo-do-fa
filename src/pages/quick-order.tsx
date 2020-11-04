@@ -3,7 +3,7 @@ import React from 'react';
 import Footer from '../components/Footer';
 import Head from '../components/Head';
 import { Header } from '../components/Header';
-import Layout from '../components/Layout/Layout';
+import PageLayout from '../components/layout/PageLayout';
 import { Nav } from '../components/Nav';
 
 function QuickOrder(): JSX.Element {
@@ -14,9 +14,9 @@ function QuickOrder(): JSX.Element {
       </Head>
       <Header />
       <Nav />
-      <Layout>
+      <PageLayout>
         <h1>PromotionCode Component here !</h1>
-      </Layout>
+      </PageLayout>
       <Footer />
     </>
   );

@@ -9,10 +9,10 @@ import { mockTotalProducts } from '../../mockData/mockTotalProducts';
 import { Product } from '../../types/Product';
 import withApollo from '../../utils/withApollo';
 import Pagination from '../Pagination';
-import FilterTags from './FilterTags';
+import FilterTags from './BadgeTags';
 import ProductList from './ProductList';
 import ProductsHeader from './ProductsHeader';
-import SideBar from './SideBar';
+import SideBar from './SidebarFilter';
 
 const pageSize = 20;
 

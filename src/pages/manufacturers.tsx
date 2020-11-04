@@ -3,7 +3,7 @@ import React from 'react';
 import Footer from '../components/Footer';
 import Head from '../components/Head';
 import { Header } from '../components/Header';
-import Layout from '../components/Layout/Layout';
+import PageLayout from '../components/layout/PageLayout';
 import { Nav } from '../components/Nav';
 import SearchScreen from '../components/SearchScreen';
 
@@ -68,9 +68,9 @@ function Manufactures(): JSX.Element {
       </Head>
       <Header />
       <Nav />
-      <Layout>
+      <PageLayout>
         <SearchScreen dataList={manufactures} characters={characters} />
-      </Layout>
+      </PageLayout>
       <Footer />
     </>
   );
