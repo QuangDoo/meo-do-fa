@@ -51,9 +51,14 @@ const ProductCard = ({ badges = [], t, ...props }: Props): JSX.Element => {
 
               <small className="text-muted product-card__category">
                 {t('productCard:category')}:{' '}
-                <Link href={`/products?category=${props.category.id}`}>
-                  <a>{props.category.name}</a>
-                </Link>
+                {props.categories.map((category, index) => (
+                  <>
+                    <Link key={category.id} href={`/products?category=${category.id}`}>
+                      <a>{category.name}</a>
+                    </Link>
+                    {index < props.categories.length - 1 && '; '}
+                  </>
+                ))}
               </small>
             </div>
           </div>
