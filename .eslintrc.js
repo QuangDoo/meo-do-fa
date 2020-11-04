@@ -32,7 +32,10 @@ module.exports = {
     'prettier/prettier': ['error', {}, { usePrettierrc: true }],
     'react/react-in-jsx-scope': 'off',
     'react/prop-types': 'off',
+    'sort-imports': 'off',
+    'import/order': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
     'simple-import-sort/sort': 'error',
     'jsx-a11y/anchor-is-valid': [
       'error',

@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import React, { forwardRef } from 'react';
 
-import Button from '../Button';
+import Button from '../form/Button';
 import SidebarItem from './SidebarItem';
 
 const StickySidebar = (props, ref): JSX.Element => {

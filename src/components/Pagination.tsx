@@ -9,10 +9,10 @@ type PaginationProps = {
   // Page hiện tại (tự control ở component phía trên)
   page: number;
 
-  // Số nút chuyển page luôn hiển thị kế nút page hiện tại
+  // Số nút chuyển page luôn hiển thị kế nút page hiện tại, default = 4
   // Ví dụ siblingCount = 4 và page hiện tại đang là 8
   //   => 1 ... 4 5 6 7 (8) 9 10 11 12 ... 50
-  siblingCount: number;
+  siblingCount?: number;
 
   // Hàm onChange này sẽ chạy khi click vào một nút chuyển page
   // Nút chuyển page sẽ truyền số trang của nó vào hàm onChange này

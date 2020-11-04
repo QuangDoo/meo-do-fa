@@ -4,8 +4,9 @@ import CartItem from '../components/Cart/CartItem';
 import Footer from '../components/Footer';
 import Head from '../components/Head';
 import { Header } from '../components/Header';
-import Layout from '../components/Layout/Layout';
+import PageLayout from '../components/layout/PageLayout';
 import { Nav } from '../components/Nav';
+import { mockCartItems } from '../mockData/mockCartItems';
 
 function Cart(): JSX.Element {
   const cartItem = [
@@ -47,12 +48,15 @@ function Cart(): JSX.Element {
   const totalQuantity = cartItem.reduce((current, total) => {
     return current + total.quantity;
   }, 0);
-  const totalAfterDiscount = cartItem.reduce((current, total) => {
+
+  const totalAfterDiscount = mockCartItems.reduce((current, total) => {
     return current + total.quantity * total.price;
   }, 0);
-  const totalBeforeDiscount = cartItem.reduce((current, total) => {
+
+  const totalBeforeDiscount = mockCartItems.reduce((current, total) => {
     return current + total.quantity * total.oldPrice;
   }, 0);
+
   return (
     <>
       <Head>
@@ -60,7 +64,7 @@ function Cart(): JSX.Element {
       </Head>
       <Header />
       <Nav />
-      <Layout>
+      <PageLayout>
         <div className="cart" data-target="cart.cart">
           <div className="row">
             <div className="col-12 mb-3">
@@ -84,7 +88,7 @@ function Cart(): JSX.Element {
                 data-action
                 data-target="cart.items"
                 data-url="/api/cart_data/cart_items?page=1">
-                {cartItem.map((item, index) => (
+                {mockCartItems.map((item, index) => (
                   <CartItem key={index} {...item} />
                 ))}
               </div>
@@ -179,7 +183,7 @@ function Cart(): JSX.Element {
             </div>
           </div>
         </div>
-      </Layout>
+      </PageLayout>
       <Footer />
     </>
   );

@@ -5,10 +5,96 @@ import CartItem from '../components/Cart/CartItem';
 import Footer from '../components/Footer';
 import Head from '../components/Head';
 import { Header } from '../components/Header';
-import Layout from '../components/Layout/Layout';
+import PageLayout from '../components/layout/PageLayout';
 import { Nav } from '../components/Nav';
 
+const OrderItem = (props) => {
+  return (
+    <div className="my-orders__item my-orders__item:hover pl-4 mt-1">
+      <div className="my-orders__info">
+        <h2 className="h4 d-flex align-items-center">
+          <Link href="/my-orders/218781">
+            <a className="mr-2">#{props.id}</a>
+          </Link>
+
+          <span
+            className={
+              props.status === 'Đã xác nhận'
+                ? 'badge py-1 text-capitalize my-orders__status--confirmed'
+                : 'badge py-1 text-capitalize my-orders__status--shipped'
+            }>
+            <a href="/my-orders?status=confirmed">{props.status}</a>
+          </span>
+        </h2>
+        <div className="my-orders__detail">
+          <div>
+            <span className="title">Sản phẩm:</span>
+            <span className="content">{props.quantity}</span>
+          </div>
+          <div>
+            <span className="title">Ngày mua:</span>
+            <span className="content">{props.dayByDay}</span>
+          </div>
+          <div>
+            <span className="title">Dự kiến giao ngày:</span>
+            <span className="content">{props.duKienGiaoHang}</span>
+          </div>
+        </div>
+      </div>
+      <p className="my-orders__price">{props.price.toLocaleString()} đ</p>
+      <div className="my-orders__invoice">
+        <button className="btn btn-secondary btn-sm  mr-2" type="button">
+          Xuất hóa đơn
+        </button>
+        <button className="btn btn-outline-info btn-sm">Gửi phản hồi</button>
+      </div>
+    </div>
+  );
+};
+
 const MyOrders = (props): JSX.Element => {
+  const orders = [
+    {
+      id: 218781,
+      status: 'Đã xác nhận',
+      quantity: 20,
+      dayByDay: '04/11/2020 07:19:56',
+      duKienGiaoHang: 'Thứ ba (10/11/2020)',
+      price: 1000000
+    },
+    {
+      id: 218782,
+      status: 'Hoàn tất',
+      quantity: 21,
+      dayByDay: '04/11/2020 07:19:56',
+      duKienGiaoHang: 'Thứ hai (09/11/2020)',
+      price: 14123123
+    },
+    {
+      id: 218783,
+      status: 'Đã xác nhận',
+      quantity: 22,
+      dayByDay: '04/11/2020 07:19:56',
+      duKienGiaoHang: 'Thứ tư (11/11/2020)',
+      price: 124324234
+    },
+    {
+      id: 218784,
+      status: 'Hoàn tất',
+      quantity: 23,
+      dayByDay: '04/11/2020 07:19:56',
+      duKienGiaoHang: 'Thứ năm (12/11/2020)',
+      price: 4562345243
+    },
+    {
+      id: 218785,
+      status: 'Đã xác nhận',
+      quantity: 24,
+      dayByDay: '04/11/2020 07:19:56',
+      duKienGiaoHang: 'Thứ sáu (13/11/2020)',
+      price: 14523452345
+    }
+  ];
   let token = '';
   if (typeof window !== 'undefined') {
     token = localStorage.getItem('token');
@@ -21,7 +107,7 @@ const MyOrders = (props): JSX.Element => {
       </Head>
       <Header />
       <Nav />
-      <Layout>
+      <PageLayout>
         <section className="py-5 order-list container">
           <div className="row">
             <div className="col-xl-3 d-xl-block d-none">
@@ -103,50 +189,23 @@ const MyOrders = (props): JSX.Element => {
                   </div>
                 </div>
               </div>
-              <div className="my-orders__item my-orders__item:hover pl-4 mt-1">
-                <div className="">
-                  <div className="row">
-                    <a>#987654</a>
-                    <div className="my-orders__info">
-                      <span>
-                        <a className="my-orders__status--completed">Hoàn tất</a>
-                      </span>
-                    </div>
-                  </div>
-                  <div className="my-orders__detail row">
-                    <p className="title ">Sản phẩm:</p>
-                    <p className="content ">30</p>
-                  </div>
-                  <div className="my-orders__detail row mt--1">
-                    <p className="title ">Ngày mua:</p>
-                    <p className="content ">03/06/2020</p>
-                  </div>
-                  <div className="my-orders__detail row mt--1">
-                    <p className="title ">Dự kiến giao ngày:</p>
-                    <p className="content ">Thứ bảy (06/06/2020)</p>
-                  </div>
-                </div>
-                <p className="my-orders__price">123456789 đ</p>
-                <div className="my-orders__invoice">
-                  <button className="btn btn-secondary btn-sm  mr-2" type="button">
-                    Xuất hóa đơn
-                  </button>
-                  <button className="btn btn-outline-info btn-sm">Gửi phản hồi</button>
-                </div>
-              </div>
+              {orders.map((item, index) => {
+                return <OrderItem key={index} {...item} />;
+              })}
+
               <div className="col-12 m-3 text-center">
                 <p>
-                  <a className="btn btn-primary" href="/quick-order" role="button">
-                    Về trang đặt hàng nhanh
-                  </a>
+                  <Link href="/quick-order">
+                    <a className="btn btn-primary" role="button">
+                      Về trang đặt hàng nhanh
+                    </a>
+                  </Link>
                 </p>
               </div>
-
-              <div className="col-12 mt-4" />
             </div>
           </div>
         </section>
-      </Layout>
+      </PageLayout>
       <Footer />
     </>
   );

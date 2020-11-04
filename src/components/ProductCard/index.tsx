@@ -12,9 +12,18 @@ import { ProductImage } from './ProductImage';
 import { ProductPrice } from './ProductPrice';
 import QuantityInput from './QuantityInput';
 
-type Props = Product & WithTranslation;
+type Props = Product &
+  WithTranslation & {
+    showBadges?: boolean;
+    showCategories?: boolean;
+  };
 
-const ProductCard = ({ badges = [], t, ...props }: Props): JSX.Element => {
+const ProductCard = ({
+  showBadges = true,
+  showCategories = false,
+  t,
+  ...props
+}: Props): JSX.Element => {
   const isLoggedIn = useIsLoggedIn();
   return (
     <div className="product-card-container">
@@ -34,27 +43,36 @@ const ProductCard = ({ badges = [], t, ...props }: Props): JSX.Element => {
                 </a>
               </Link>
 
-              <div className="product__status mb-2">
-                {isLoggedIn &&
-                  badges.map((badgeType) => (
-                    <ProductBadge
-                      key={badgeType}
-                      type={badgeType}
-                      expirationDate={props.expirationDate}
-                    />
-                  ))}
-              </div>
+              {showBadges && (
+                <div className="product__status mb-2">
+                  {isLoggedIn &&
+                    props.badges.map((badgeType) => (
+                      <ProductBadge
+                        key={badgeType}
+                        type={badgeType}
+                        expirationDate={props.expirationDate}
+                      />
+                    ))}
+                </div>
+              )}
 
               <small className="text-muted">{props.unit}</small>
 
               <br />
 
-              <small className="text-muted product-card__category">
-                {t('productCard:category')}:{' '}
-                <Link href={`/products?category=${props.category.id}`}>
-                  <a>{props.category.name}</a>
-                </Link>
-              </small>
+              {showCategories && (
+                <small className="text-muted product-card__category">
+                  {t('productCard:category')}:{' '}
+                  {props.categories.map((category, index) => (
+                    <>
+                      <Link key={category.id} href={`/products?category=${category.id}`}>
+                        <a>{category.name}</a>
+                      </Link>
+                      {index < props.categories.length - 1 && '; '}
+                    </>
+                  ))}
+                </small>
+              )}
             </div>
           </div>
 
@@ -62,7 +80,7 @@ const ProductCard = ({ badges = [], t, ...props }: Props): JSX.Element => {
             {isLoggedIn ? (
               <>
                 <div className="mb-2">
-                  <ProductPrice price={props.price} />
+                  <ProductPrice price={props.price} oldPrice={props.oldPrice} />
                 </div>
                 <QuantityInput />
               </>

@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import Footer from '../../components/Footer';
 import Head from '../../components/Head';
 import { Header } from '../../components/Header';
-import Layout from '../../components/Layout/Layout';
+import PageLayout from '../../components/layout/PageLayout';
 import { Nav } from '../../components/Nav';
 import ProductDetailComponent from '../../components/ProductDetail/ProductDetail';
 import { GET_PRODUCT } from '../../graphql/product/product.query';
@@ -33,9 +33,9 @@ function ProductDetail(): JSX.Element {
       </Head>
       <Header />
       <Nav />
-      <Layout>
+      <PageLayout>
         <ProductDetailComponent {...product} />
-      </Layout>
+      </PageLayout>
       <Footer />
     </>
   );
