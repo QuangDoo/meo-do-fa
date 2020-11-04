@@ -78,7 +78,7 @@ export default function Nav() {
             </ul>
             <div className="buymed-search-container" />
             <div className="header-right header-right--guest">
-              {!token ? (
+              {token ? (
                 <ul className="nav align-items-center">
                   <li className="nav-item mr-4">
                     <a className="buymed-nav__link notification" href="/cart">
