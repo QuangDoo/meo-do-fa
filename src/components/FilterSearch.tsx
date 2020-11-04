@@ -6,7 +6,7 @@ type PropsType = {
   filter: () => void;
 };
 
-function FilterSearch(props: PropsType) {
+function FilterSearch(props: PropsType): JSX.Element {
   const filter1 = () => {
     return props.filter();
   };
