@@ -1,10 +1,10 @@
-import React, { FC } from 'react'
+import React, { FC } from 'react';
 
 type CustomerCardProps = {
-  customerName: string
-  customerLocation: string
-  customerComment: string
-}
+  customerName: string;
+  customerLocation: string;
+  customerComment: string;
+};
 
 const CustomerCard: FC<CustomerCardProps> = (props) => {
   return (
@@ -20,7 +20,7 @@ const CustomerCard: FC<CustomerCardProps> = (props) => {
         <div className="testimonial__comment quote">{props.customerComment}</div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default CustomerCard
+export default CustomerCard;

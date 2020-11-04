@@ -1,9 +1,9 @@
-import React, { FC } from 'react'
+import React, { FC } from 'react';
 
 type ModalHeaderProps = {
-  onClose: () => void
-  title: string
-}
+  onClose: () => void;
+  title: string;
+};
 
 const ModalHeader: FC<ModalHeaderProps> = (props) => {
   return (
@@ -15,7 +15,7 @@ const ModalHeader: FC<ModalHeaderProps> = (props) => {
         </span>
       </button>
     </div>
-  )
-}
+  );
+};
 
-export default ModalHeader
+export default ModalHeader;

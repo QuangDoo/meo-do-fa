@@ -1,14 +1,15 @@
-import React from 'react'
-import { ProductsContainer } from '../Home/ProductsContainer'
-import { exampleProducts } from '../Products'
-import { ProductsCarousel } from '../ProductsCarousel'
+import React from 'react';
 
-const RelativeProducts = () => {
+import { mockProducts } from '../../mockData/mockProducts';
+import { ProductsContainer } from '../Home/ProductsContainer';
+import { ProductsCarousel } from '../ProductsCarousel';
+
+const RelativeProducts = (): JSX.Element => {
   return (
     <ProductsContainer title="Có thể bạn muốn mua " seeMoreUrl="#">
-      <ProductsCarousel products={exampleProducts} />
+      <ProductsCarousel products={mockProducts} />
     </ProductsContainer>
-  )
-}
+  );
+};
 
-export default RelativeProducts
+export default RelativeProducts;

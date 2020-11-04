@@ -1,12 +1,13 @@
-import React from 'react'
-import { StyledLayout } from './Layout.styled'
+import React from 'react';
+
+import { StyledLayout } from './Layout.styled';
 
 interface LayoutProps {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
 const Layout: React.FC<LayoutProps> = (props) => {
-  return <StyledLayout>{props.children}</StyledLayout>
-}
+  return <StyledLayout>{props.children}</StyledLayout>;
+};
 
-export default Layout
+export default Layout;

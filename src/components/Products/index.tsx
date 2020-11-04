@@ -1,74 +1,74 @@
-import React, { useEffect, useState } from 'react'
-import { Col, Row } from 'antd'
-import styled from 'styled-components'
+import { useLazyQuery } from '@apollo/react-hooks';
+import { Col } from 'antd';
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
 
-import SideBar from './SideBar'
-import ProductsHeader from './ProductsHeader'
-import FilterTags from './FilterTags'
-import Pagination from './Pagination'
-import ProductList from './ProductList'
-import { Product } from '../ProductCard'
-import { useRouter } from 'next/router'
-import { useLazyQuery } from '@apollo/react-hooks'
-import { GET_PRODUCTS } from '../../graphql/product/product.query'
+import { GET_PRODUCTS } from '../../graphql/product/product.query';
+import { mockProducts } from '../../mockData/mockProducts';
+import { mockTotalProducts } from '../../mockData/mockTotalProducts';
+import { Product } from '../../types/Product';
+import withApollo from '../../utils/withApollo';
+import Pagination from '../Pagination';
+import FilterTags from './FilterTags';
+import ProductList from './ProductList';
+import ProductsHeader from './ProductsHeader';
+import SideBar from './SideBar';
 
-const productListProduct: Product = {
-  new: true,
-  name: 'egudin solifenacin succinat 5mg medisun (h/30v)',
-  image: 'Lg9NokKW5SY2TGdtiEKFCNeR',
-  price: '430.500',
-  id: 'egudin-solifenacin-succinat-5mg-medisun-h-30v',
-  unit: 'Hộp 3 vỉ x 10 viên',
-  category: 'thận, tiết niệu',
-  categoryId: 'than-tiet-nieu',
-  badges: ['common', 'invoice_exportable', 'change_style', 'flash_sale'],
-}
+const pageSize = 20;
 
-export const exampleProducts: Product[] = [...new Array(10)].map(() => ({
-  ...productListProduct,
-}))
+const Products = (): JSX.Element => {
+  const router = useRouter();
 
-export const productsPageSize = 20
+  // Products of the current pagination
+  const [products, setProducts] = useState<Product[]>([]);
 
-// const exampleTotalProducts = 311
+  // Total products (not just the current products)
+  const [totalProducts, setTotalProducts] = useState<number>(0);
 
-const Products = () => {
-  const router = useRouter()
-
-  // TODO: Integration
-  const [products, setProducts] = useState<Product[]>([])
-
-  // TODO: Integration
-  const [totalProducts, setTotalProducts] = useState<number>(0)
-
-  const [getProducts, { data, loading }] = useLazyQuery(GET_PRODUCTS)
-
-  // Loading products
-  useEffect(() => {
-    console.log('Loading products:', loading)
-  }, [loading])
+  // Get products from api
+  const [getProducts, { data }] = useLazyQuery(GET_PRODUCTS);
 
   // Update products state when data arrives
   useEffect(() => {
-    if (!data) return
+    if (!data) return;
 
-    console.log('Products data:', data.getProducts)
+    setProducts(data.getProducts);
 
-    setProducts(data.getProducts)
-    setTotalProducts(data.getProducts.length)
-  }, [data])
+    // TODO: Get total products size, not the length of current products
+    setTotalProducts(data.getProducts.totalProducts);
+  }, [data]);
 
+  // Get products again when query changes
+  // TODO: Add variables for categories and manufacturers, based on query on router
+  // ?category=abcxyz
+  // ?manufacturer=abcxyz
   useEffect(() => {
-    console.log('Products query:', router.query)
-
-    // Get products again when query changes
     getProducts({
       variables: {
         page: +(router.query.page as string) || 1,
-        pageSize: productsPageSize,
-      },
-    })
-  }, [router.query])
+        pageSize: pageSize
+      }
+    });
+  }, [router.query]);
+
+  const page = +(router.query.page as string) || 1;
+
+  const CustomPagination = () => (
+    <Pagination
+      count={Math.ceil(mockTotalProducts / pageSize)}
+      page={page}
+      siblingCount={4}
+      onChange={(page) =>
+        router.push({
+          pathname: router.pathname,
+          query: {
+            ...router.query,
+            page: page
+          }
+        })
+      }
+    />
+  );
 
   return (
     <div className="products container-fluid mobile-content my-3 my-sm-5">
@@ -77,23 +77,23 @@ const Products = () => {
           <SideBar />
         </div>
         <Col span={20} style={{ paddingLeft: '1.5rem' }}>
-          <ProductsHeader totalProducts={totalProducts} />
+          <ProductsHeader totalProducts={mockTotalProducts} page={page} pageSize={pageSize} />
 
           <FilterTags />
 
-          {products.length > 0 && (
+          {mockProducts.length > 0 && (
             <Col>
-              <Pagination totalProducts={totalProducts} />
+              <CustomPagination />
 
-              <ProductList products={products} />
+              <ProductList products={mockProducts} />
 
-              <Pagination totalProducts={totalProducts} />
+              <CustomPagination />
             </Col>
           )}
         </Col>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Products
+export default withApollo({ ssr: true })(Products);

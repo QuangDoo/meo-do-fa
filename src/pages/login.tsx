@@ -1,25 +1,25 @@
-import React from 'react'
-import { Footer } from '../components/Footer'
-import Head from '../components/Head'
-import { Header } from '../components/Header'
-import Layout from '../components/Layout/Layout'
-import LoginForm from '../components/Login/LoginForm'
-import { Nav } from '../components/Nav'
-function Login() {
+import React from 'react';
 
-    return (
-        <>
-            <Head>
-                <title>Thuoc N</title>
-            </Head>
-            <Header />
-            <Nav />
-            <Layout>
-                <LoginForm />
-            </Layout>
+import Footer from '../components/Footer';
+import Head from '../components/Head';
+import { Header } from '../components/Header';
+import Layout from '../components/Layout/Layout';
+import LoginForm from '../components/Login/LoginForm';
+import { Nav } from '../components/Nav';
+function Login(): JSX.Element {
+  return (
+    <>
+      <Head>
+        <title>Thuoc N</title>
+      </Head>
+      <Header />
+      <Nav />
+      <Layout>
+        <LoginForm />
+      </Layout>
 
-            <Footer />
-        </>
-    )
+      <Footer />
+    </>
+  );
 }
-export default Login
+export default Login;

@@ -1,8 +1,8 @@
-import React, { FC } from 'react'
+import React, { FC } from 'react';
 
 type SliderItemProps = {
-  imageUrl: string
-}
+  imageUrl: string;
+};
 
 const SliderItem: FC<SliderItemProps> = (props) => {
   return (
@@ -11,11 +11,11 @@ const SliderItem: FC<SliderItemProps> = (props) => {
       <div
         className="banner__img"
         style={{
-          backgroundImage: `url("${props.imageUrl}")`,
+          backgroundImage: `url("${props.imageUrl}")`
         }}
       />
     </div>
-  )
-}
+  );
+};
 
-export default SliderItem
+export default SliderItem;

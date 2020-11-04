@@ -1,13 +1,12 @@
-import React from 'react'
-import { Footer } from '../components/Footer'
-import Head from '../components/Head'
-import { Header } from '../components/Header'
-import { HomePage } from '../components/Home'
-import { Nav } from '../components/Nav'
-import withApollo from '../utils/withApollo'
-import { GET_CATEGORIES } from '../graphql/category/category.query'
+import React from 'react';
 
-const Home = () => {
+import Footer from '../components/Footer';
+import Head from '../components/Head';
+import { Header } from '../components/Header';
+import { HomePage } from '../components/Home';
+import { Nav } from '../components/Nav';
+
+const Home = (): JSX.Element => {
   return (
     <>
       <Head>
@@ -18,11 +17,11 @@ const Home = () => {
       <HomePage />
       <Footer />
     </>
-  )
-}
+  );
+};
 
 Home.getInitialProps = async () => ({
-  namespacesRequired: ['common', 'header', 'footer'],
-})
+  namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge']
+});
 
-export default Home
+export default Home;

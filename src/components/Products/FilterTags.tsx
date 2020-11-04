@@ -1,10 +1,11 @@
-import React from 'react'
-import FilterTag from './FilterTag'
+import React from 'react';
+
+import FilterTag from './FilterTag';
 
 type FilterTagType = {
-  children: React.ReactNode
-  tab?: string
-}
+  children: React.ReactNode;
+  tab?: string;
+};
 
 const FlashSaleContent = (
   <>
@@ -12,7 +13,7 @@ const FlashSaleContent = (
     Flash Sale
     <i className="fas fa-bolt text-secondary ml-1" />
   </>
-)
+);
 
 const filterTags: FilterTagType[] = [
   { children: 'Tất cả' },
@@ -23,10 +24,10 @@ const filterTags: FilterTagType[] = [
   { children: 'Tăng giá', tab: 'increasing_price' },
   { children: 'Cận date', tab: 'close_date' },
   { children: 'Chỉ có tại thuocsi', tab: 'only_thuocsi' },
-  { children: 'Người Việt dùng hàng Việt', tab: 'use_vietnamese' },
-]
+  { children: 'Người Việt dùng hàng Việt', tab: 'use_vietnamese' }
+];
 
-const FilterTags = () => {
+const FilterTags = (): JSX.Element => {
   return (
     <div className="d-none d-sm-block">
       <div className="d-flex justify-content-between flex-wrap align-items-end mb-4">
@@ -39,7 +40,7 @@ const FilterTags = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default FilterTags
+export default FilterTags;

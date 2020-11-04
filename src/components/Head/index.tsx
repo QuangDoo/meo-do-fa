@@ -1,8 +1,6 @@
-// import React from 'react'
-import React, { useEffect } from 'react'
-import { default as HeadNext } from 'next/head'
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const tawkTo = require('tawkto-react')
+import { default as HeadNext } from 'next/head';
+import React from 'react';
+
 export default function Head(props) {
   const tawkToPropertyId = '5f97dbddaca01a16883609eb'
   useEffect(() => {
@@ -43,5 +41,5 @@ export default function Head(props) {
 
       {props.children}
     </HeadNext>
-  )
+  );
 }

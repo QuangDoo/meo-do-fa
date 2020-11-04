@@ -1,54 +1,55 @@
-import React, { useEffect } from 'react'
-import { useForm } from 'react-hook-form'
-import { toast } from 'react-toastify'
-import Button from '../Button'
-import Checkbox from '../Form/Checkbox'
-import AccountLoginInformation from './AccountLoginInformation'
-import Input from '../Form/Input'
-import { viPhoneNumberRegex } from '../../assets/regex/viPhoneNumber'
-import { emailRegex } from '../../assets/regex/email'
+import { useMutation } from '@apollo/react-hooks';
+// import { emailRegex } from '../../assets/regex/email'
+import { useRouter } from 'next/router';
+import React, { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 
-import { useRouter } from 'next/router'
-import { useLazyQuery, useMutation } from '@apollo/react-hooks'
-import { LOGIN_USER } from '../../graphql/user/login.mutation'
-import withApollo from '../../utils/withApollo'
-
-type Props = {}
+import { viPhoneNumberRegex } from '../../assets/regex/viPhoneNumber';
+import { useModalControlDispatch } from '../../contexts/ModalControl';
+import { LOGIN_USER } from '../../graphql/user/login.mutation';
+import withApollo from '../../utils/withApollo';
+import Button from '../Button';
+import Checkbox from '../Checkbox';
+// import AccountLoginInformation from './AccountLoginInformation'
+import Input from '../Input';
 
 type Inputs = {
-  username: string
-  password: string
-}
+  username: string;
+  password: string;
+};
 
-const LoginForm = (props: Props) => {
-  const router = useRouter()
-  const { register, handleSubmit, errors } = useForm<Inputs>()
-  const [login, { data: dataLogin, loading: loadingLogin, error: errorLogin }] = useMutation(
-    LOGIN_USER
-  )
+const LoginForm = (): JSX.Element => {
+  const dispatch = useModalControlDispatch();
 
-  useEffect(() => {
-    if (!errors) return
+  const openRegisterModal = () => dispatch({ type: 'OPEN_REGISTER_MODAL' });
 
-    Object.keys(errors).forEach((errorField) => toast.error(errors[errorField].message))
-  }, [errors])
+  const router = useRouter();
+  const { register, handleSubmit, errors } = useForm<Inputs>();
+  const [login, { data: loginData, error: loginError }] = useMutation(LOGIN_USER);
 
   useEffect(() => {
-    if (dataLogin?.login?.token) {
-      router.push('/quick-order')
-      window.localStorage.setItem('token', dataLogin.login.token)
+    if (!errors) return;
+
+    Object.keys(errors).forEach((errorField) => toast.error(errors[errorField].message));
+  }, [errors]);
+
+  useEffect(() => {
+    if (loginData?.login?.token) {
+      router.push('/quick-order');
+      window.localStorage.setItem('token', loginData.login.token);
     }
-  }, [dataLogin])
+  }, [loginData]);
 
   const onSubmit = async (data: Inputs) => {
     await login({
       variables: {
         phone: data.username,
-        password: data.password,
-      },
-    })
-    console.log('data :>> ', errorLogin)
-  }
+        password: data.password
+      }
+    });
+    console.log('data :>> ', loginError);
+  };
 
   return (
     <div>
@@ -58,8 +59,8 @@ const LoginForm = (props: Props) => {
           ref={register({
             pattern: {
               value: viPhoneNumberRegex,
-              message: 'Xin nhập số điện thoại hợp lệ.',
-            },
+              message: 'Xin nhập số điện thoại hợp lệ.'
+            }
           })}
           containerClass="mb-4"
           iconClass="icomoon icon-user"
@@ -72,8 +73,8 @@ const LoginForm = (props: Props) => {
           ref={register({
             minLength: {
               value: 6,
-              message: 'Xin nhập mật khẩu tối thiểu 6 kí tự.',
-            },
+              message: 'Xin nhập mật khẩu tối thiểu 6 kí tự.'
+            }
           })}
           containerClass="mb-3"
           required={true}
@@ -82,7 +83,13 @@ const LoginForm = (props: Props) => {
           type="password"
         />
 
-        <Checkbox name="remember_password" label="Nhớ mật khẩu" className="align-self-start" />
+        <Checkbox
+          name="remember_password"
+          ref={register}
+          label="Nhớ mật khẩu"
+          containerClass="form-group align-self-start"
+          labelClass="pt-1"
+        />
 
         <div className="mb-4">
           <a data-modal="true" href="/authentications/reset_password">
@@ -96,14 +103,14 @@ const LoginForm = (props: Props) => {
 
         <span className="text-capitalize ">
           Để nhận ưu đãi hấp dẫn,
-          <a className="text-secondary ml-1" data-modal="true" href="/authentications/signup">
+          <button className="text-secondary ml-1" onClick={openRegisterModal} type="button">
             <b>đăng ký thành viên</b>
-          </a>
+          </button>
           .
         </span>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default withApollo({ ssr: true })(LoginForm)
+export default withApollo({ ssr: true })(LoginForm);

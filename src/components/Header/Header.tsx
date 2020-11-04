@@ -1,16 +1,16 @@
-import { Menu } from 'antd'
-import { TFunction } from 'next-i18next'
-import React, { FC } from 'react'
-import { i18n, withTranslation } from '../../../i18n'
-import Login from '../Login'
-import Register from '../Register'
-import LanguagePicker from './LanguagePicker'
+import { TFunction } from 'next-i18next';
+import React from 'react';
+
+import { withTranslation } from '../../../i18n';
+import Login from '../Login';
+import Register from '../Register';
+import LanguagePicker from './LanguagePicker';
 
 type HeaderProps = {
-  readonly t: TFunction
-}
+  readonly t: TFunction;
+};
 
-const Header: FC<HeaderProps> = ({ t }) => {
+const Header = ({ t }: HeaderProps): JSX.Element => {
   return (
     <header className="header bg-white">
       <nav className="promotion-nav">
@@ -22,8 +22,7 @@ const Header: FC<HeaderProps> = ({ t }) => {
                   <a
                     className="promotion-nav__link"
                     href="https://news.thuocsi.vn/"
-                    title={t('header:news')}
-                  >
+                    title={t('header:news')}>
                     <i className="promotion-nav__icon icomoon icon-news" />
                     <span>{t('header:news')}</span>
                   </a>
@@ -32,8 +31,7 @@ const Header: FC<HeaderProps> = ({ t }) => {
                   <a
                     className="promotion-nav__link"
                     href="https://career.thuocsi.vn/"
-                    title={t('common:recruitment')}
-                  >
+                    title={t('common:recruitment')}>
                     <i className="promotion-nav__icon fas fa-briefcase" />
                     <span>{t('common:recruitment')}</span>
                   </a>
@@ -42,8 +40,7 @@ const Header: FC<HeaderProps> = ({ t }) => {
                   <a
                     className="promotion-nav__link"
                     href="https://supplier.thuocsi.vn/"
-                    title={t('common:supply')}
-                  >
+                    title={t('common:supply')}>
                     <i className="promotion-nav__icon fas fa-store-alt" />
                     <span>{t('common:supply')}</span>
                   </a>
@@ -83,7 +80,7 @@ const Header: FC<HeaderProps> = ({ t }) => {
         </div>
       </div>
     </header>
-  )
-}
+  );
+};
 
-export default withTranslation(['header', 'common'])(Header)
+export default withTranslation(['header', 'common'])(Header);
