@@ -6,53 +6,21 @@ import Head from '../components/Head';
 import { Header } from '../components/Header';
 import PageLayout from '../components/layout/PageLayout';
 import { Nav } from '../components/Nav';
+import { mockCartItems } from '../mockData/mockCartItems';
 
 function Cart(): JSX.Element {
-  const cartItem = [
-    {
-      productName: 'phosphalugel boehringer ingelheim (h/26g)',
-      price: 99600,
-      oldPrice: 99600,
-      id: 123,
-      quantity: 3,
-      description: 'Hộp 26 gói x 20gr',
-      slug: 'phosphalugel-boehringer-ingelheim-h-26g',
-      image: 'https://images.thuocsi.vn/FrWZN5xT53QQ8Cs66rKHT228',
-      important: false
-    },
-    {
-      productName: 'phosphalugel boehringer ingelheim (h/26g)',
-      price: 99600,
-      id: 123,
-      quantity: 3,
-      description: 'Hộp 26 gói x 20gr',
-      slug: 'phosphalugel-boehringer-ingelheim-h-26g',
-      oldPrice: 123456,
-      image: 'https://images.thuocsi.vn/FrWZN5xT53QQ8Cs66rKHT228',
-      important: false
-    },
-    {
-      productName: 'phosphalugel boehringer ingelheim (h/26g)',
-      price: 99600,
-      oldPrice: 99600,
-      id: 123,
-      quantity: 3,
-      description: 'Hộp 26 gói x 20gr',
-      slug: 'phosphalugel-boehringer-ingelheim-h-26g',
-      limit: true,
-      image: 'https://images.thuocsi.vn/FrWZN5xT53QQ8Cs66rKHT228',
-      important: false
-    }
-  ];
-  const totalQuantity = cartItem.reduce((current, total) => {
+  const totalQuantity = mockCartItems.reduce((current, total) => {
     return current + total.quantity;
   }, 0);
-  const totalAfterDiscount = cartItem.reduce((current, total) => {
+
+  const totalAfterDiscount = mockCartItems.reduce((current, total) => {
     return current + total.quantity * total.price;
   }, 0);
-  const totalBeforeDiscount = cartItem.reduce((current, total) => {
+
+  const totalBeforeDiscount = mockCartItems.reduce((current, total) => {
     return current + total.quantity * total.oldPrice;
   }, 0);
+
   return (
     <>
       <Head>
@@ -84,7 +52,7 @@ function Cart(): JSX.Element {
                 data-action
                 data-target="cart.items"
                 data-url="/api/cart_data/cart_items?page=1">
-                {cartItem.map((item, index) => (
+                {mockCartItems.map((item, index) => (
                   <CartItem key={index} {...item} />
                 ))}
               </div>

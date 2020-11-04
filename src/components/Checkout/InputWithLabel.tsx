@@ -1,4 +1,3 @@
-import clsx from 'clsx';
 import React, { forwardRef } from 'react';
 
 import FormGroup from './FormGroup';

@@ -4,7 +4,7 @@ import React from 'react';
 import { withTranslation } from '../../../i18n';
 import { useModalControlDispatch, useModalControlState } from '../../contexts/ModalControl';
 import Button from '../form/Button';
-import ModalWithHeader from '../Modal/ModalWithHeader';
+import ModalWithHeader from '../layout/Modal/ModalWithHeader';
 import LoginForm from './LoginForm';
 
 type LoginModalProps = {
