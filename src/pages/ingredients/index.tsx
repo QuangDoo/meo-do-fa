@@ -1,4 +1,5 @@
-import React from 'react';
+import { useQuery } from '@apollo/react-hooks';
+import React, { useEffect, useState } from 'react';
 
 import Footer from '../../components/Footer';
 import Head from '../../components/Head';
@@ -6,33 +7,27 @@ import { Header } from '../../components/Header';
 import Layout from '../../components/Layout/Layout';
 import { Nav } from '../../components/Nav';
 import SearchScreen from '../../components/SearchScreen';
-
+import { GET_INGREDIENTS } from '../../graphql/ingredient/ingredient.query';
+import withApollo from '../../utils/withApollo';
+type TypeIngredients = {
+  id: string;
+  name: string;
+  slug: string;
+};
 function Ingredients(): JSX.Element {
-  const ingredients = [
-    { name: 'Alamingo' },
-    { name: 'Blamingo' },
-    { name: 'Clamingo' },
-    { name: 'Dlamingo' },
-    { name: 'Elamingo' },
-    { name: 'Flamingo' },
-    { name: 'Glamingo' },
-    { name: 'Hlamingo' },
-    { name: 'Llamingo' },
-    { name: 'Mlamingo' },
-    { name: 'Nlamingo' },
-    { name: 'Olamingo' },
-    { name: 'Plamingo' },
-    { name: 'Qlamingo' },
-    { name: 'Rlamingo' },
-    { name: 'Slamingo' },
-    { name: 'Tlamingo' },
-    { name: 'Ulamingo' },
-    { name: 'Vlamingo' },
-    { name: 'Wlamingo' },
-    { name: 'Xlamingo' },
-    { name: 'Ylamingo' },
-    { name: 'Zlamingo' }
-  ];
+  const [ingredients, setIngredients] = useState<TypeIngredients[]>([]);
+  const { data: dataIngredients, loading: loadingIngredients, error: errorIngredients } = useQuery(
+    GET_INGREDIENTS,
+    {
+      variables: { page: 1, pageSize: 100 }
+    }
+  );
+
+  useEffect(() => {
+    if (!dataIngredients) return;
+    setIngredients(dataIngredients.getIngredients);
+  }, [dataIngredients]);
+  console.log('ingredients', ingredients);
   const characters = [
     { character: 'A', dataValue: 'a' },
     { character: 'B', dataValue: 'b' },
@@ -76,4 +71,4 @@ function Ingredients(): JSX.Element {
   );
 }
 
-export default Ingredients;
+export default withApollo({ ssr: true })(Ingredients);

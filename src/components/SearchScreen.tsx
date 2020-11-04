@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import FilterSearch from './FilterSearch';
 import InputSearch from './InputSearch';
 import ListName from './ListName';
 
 type DataList = {
+  id: string;
   name: string;
+  slug: string;
 };
 type Characters = {
   character: string;
@@ -16,13 +18,22 @@ type PropsType = {
   characters: Characters[];
 };
 
-export default function SearchScreen(props: PropsType) {
-  const [cloneData, setCloneData] = useState(props.dataList);
+export default function SearchScreen(props: PropsType): JSX.Element {
+  const [cloneData, setCloneData] = useState([]);
+
+  useEffect(() => {
+    if (!props.dataList) return;
+    setCloneData(props.dataList);
+  }, [props.dataList]);
 
   const filterByCharacter = (character) => {
-    const newsManufactures = props.dataList.filter((item) =>
-      item.name.toLocaleLowerCase().substr(0, 1).includes(character.dataValue)
-    );
+    const newsManufactures = props.dataList.filter((item) => {
+      if (character.character === '#') {
+        return item.name;
+      } else {
+        return item.name.toLocaleLowerCase().substr(0, 1).includes(character.dataValue);
+      }
+    });
     setCloneData(newsManufactures);
   };
   return (
