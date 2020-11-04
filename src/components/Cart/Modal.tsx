@@ -1,4 +1,4 @@
-import { Backdrop, Fade, Modal as MaterialModal, Modal } from '@material-ui/core';
+import { Backdrop, Fade, Modal } from '@material-ui/core';
 import React, { FC } from 'react';
 
 type RemoveModalProps = {
@@ -12,7 +12,6 @@ type RemoveModalProps = {
   onClose: () => void;
 
   // Additional classname for modal content container
-  className?: string;
   productName: string;
   price: string;
   image: string;
@@ -32,12 +31,7 @@ const RemoveModal: FC<RemoveModalProps> = (props) => {
         <div className="modal-dialog modal-dialog-centered ">
           <div className="modal-content">
             <div className="modal-body">
-              {/* <div className="d-none"> */}
-
               <div className="swal2-header">
-                <ul className="swal2-progress-steps" style={{ display: 'none' }} />
-                <div className="swal2-icon swal2-error" style={{ display: 'none' }} />
-                <div className="swal2-icon swal2-question" style={{ display: 'none' }} />
                 <div
                   className="swal2-icon swal2-warning swal2-icon-show"
                   style={{ display: 'flex' }}>
@@ -88,15 +82,10 @@ const RemoveModal: FC<RemoveModalProps> = (props) => {
                 <button
                   type="button"
                   className="swal2-cancel btn btn-outline-primary px-4 m-2"
-                  aria-live="off"
-                  style={{ display: 'inline-block' }}>
+                  onClick={props.onClose}>
                   Không
                 </button>
-                <button
-                  type="button"
-                  className="swal2-confirm btn btn-primary px-4 m-2"
-                  aria-live="off"
-                  style={{ display: 'inline-block' }}>
+                <button type="button" className="swal2-confirm btn btn-primary px-4 m-2">
                   Có
                 </button>
               </div>

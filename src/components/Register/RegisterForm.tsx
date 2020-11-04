@@ -12,9 +12,9 @@ import { useModalControlDispatch } from '../../contexts/ModalControl';
 import { AccountType } from '../../enums/AccountType';
 import { REGISTER_USER } from '../../graphql/user/register.mutation';
 import withApollo from '../../utils/withApollo';
-import Button from '../Form/Button';
-import Checkbox from '../Form/Checkbox';
-import Input from '../Form/Input';
+import Button from '../form/Button';
+import Checkbox from '../form/Checkbox';
+import Input from '../form/Input';
 import UserTypeCard from './UserTypeCard';
 
 // Form input fields

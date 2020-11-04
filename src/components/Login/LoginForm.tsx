@@ -9,10 +9,10 @@ import { viPhoneNumberRegex } from '../../assets/regex/viPhoneNumber';
 import { useModalControlDispatch } from '../../contexts/ModalControl';
 import { LOGIN_USER } from '../../graphql/user/login.mutation';
 import withApollo from '../../utils/withApollo';
-import Button from '../Form/Button';
-import Checkbox from '../Form/Checkbox';
+import Button from '../form/Button';
+import Checkbox from '../form/Checkbox';
 // import AccountLoginInformation from './AccountLoginInformation'
-import Input from '../Form/Input';
+import Input from '../form/Input';
 
 type Inputs = {
   username: string;

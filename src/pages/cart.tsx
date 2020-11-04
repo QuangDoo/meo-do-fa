@@ -4,7 +4,7 @@ import CartItem from '../components/Cart/CartItem';
 import Footer from '../components/Footer';
 import Head from '../components/Head';
 import { Header } from '../components/Header';
-import Layout from '../components/Layout/Layout';
+import PageLayout from '../components/layout/PageLayout';
 import { Nav } from '../components/Nav';
 
 function Cart(): JSX.Element {
@@ -60,7 +60,7 @@ function Cart(): JSX.Element {
       </Head>
       <Header />
       <Nav />
-      <Layout>
+      <PageLayout>
         <div className="cart" data-target="cart.cart">
           <div className="row">
             <div className="col-12 mb-3">
@@ -180,7 +180,7 @@ function Cart(): JSX.Element {
             </div>
           </div>
         </div>
-      </Layout>
+      </PageLayout>
       <Footer />
     </>
   );
