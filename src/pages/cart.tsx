@@ -1,11 +1,11 @@
 import React from 'react';
 
-import CartItem from '../components/Cart/CartItem';
-import Footer from '../components/Footer';
-import Head from '../components/Head';
-import { Header } from '../components/Header';
-import PageLayout from '../components/layout/PageLayout';
-import { Nav } from '../components/Nav';
+import Footer from '../components/Layout/Footer';
+import Head from '../components/Layout/Head';
+import Header from '../components/Layout/Header';
+import Nav from '../components/Layout/Nav';
+import PageLayout from '../components/Layout/PageLayout';
+import CartItem from '../components/Modules/Cart/CartItem';
 import { mockCartItems } from '../mockData/mockCartItems';
 
 function Cart(): JSX.Element {

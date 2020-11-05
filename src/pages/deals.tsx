@@ -1,10 +1,10 @@
 import React from 'react';
 
-import DealsPage from '../components/Deals';
-import Footer from '../components/Footer';
-import Head from '../components/Head';
-import { Header } from '../components/Header';
-import { Nav } from '../components/Nav';
+import Footer from '../components/Layout/Footer';
+import Head from '../components/Layout/Head';
+import Header from '../components/Layout/Header';
+import Nav from '../components/Layout/Nav';
+import DealsPage from '../components/Modules/Deals';
 
 function Deal() {
   return (

@@ -1,10 +1,10 @@
 import React from 'react';
 
-import Footer from '../components/Footer';
-import Head from '../components/Head';
-import { Header } from '../components/Header';
-import PageLayout from '../components/layout/PageLayout';
-import { Nav } from '../components/Nav';
+import Footer from '../components/Layout/Footer';
+import Head from '../components/Layout/Head';
+import Header from '../components/Layout/Header';
+import Nav from '../components/Layout/Nav';
+import PageLayout from '../components/Layout/PageLayout';
 
 function PromotionCode(): JSX.Element {
   return (
