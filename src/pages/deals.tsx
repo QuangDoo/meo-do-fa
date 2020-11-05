@@ -28,4 +28,4 @@ Deal.getInitialProps = async () => ({
   namespacesRequired: ['common']
 });
 
-export default withTranslation(['common'])(Deal);
+export default withTranslation('common')(Deal);
