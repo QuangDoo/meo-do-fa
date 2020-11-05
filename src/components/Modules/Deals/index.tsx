@@ -32,9 +32,15 @@ const DealsPage = () => {
     });
   };
 
-  // useEffect(() => {
-  //   setProducts(mockDealsProducts);
-  // }, [router.query.page]);
+  useEffect(() => {
+    setProducts(mockDealsProducts);
+    getProducts({
+      variables: {
+        page: page,
+        pageSize: pageSize
+      }
+    });
+  }, [router.query.page]);
 
   return (
     <section className="deals deals--mobile py-5">
