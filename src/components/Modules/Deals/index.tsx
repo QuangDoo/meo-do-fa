@@ -1,7 +1,10 @@
+import { useLazyQuery } from '@apollo/react-hooks';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
+import { GET_PRODUCTS } from '../../../graphql/product/product.query';
 import { mockDealsProducts } from '../../../mockData/mockDealsProducts';
+import { Product } from '../../../types/Product';
 import Pagination from '../Pagination';
 import ProductCard from '../ProductCard';
 
@@ -10,7 +13,28 @@ const pageSize = 25;
 const DealsPage = () => {
   const router = useRouter();
 
-  // const page = router.query.page? ||
+  const page = +router.query.page || 1;
+
+  const [products, setProducts] = useState<Product[]>([]);
+
+  // Get products from api
+  const [getProducts, { data }] = useLazyQuery(GET_PRODUCTS);
+
+  console.log('deals rendered');
+
+  const changePage = (page: number) => {
+    router.push({
+      pathname: router.pathname,
+      query: {
+        ...router.query,
+        page: page
+      }
+    });
+  };
+
+  // useEffect(() => {
+  //   setProducts(mockDealsProducts);
+  // }, [router.query.page]);
 
   return (
     <section className="deals deals--mobile py-5">
@@ -27,11 +51,11 @@ const DealsPage = () => {
 
           <main className="col-12">
             <div className="mb-3">
-              <Pagination count={5} page={1} onChange={() => null} />
+              <Pagination count={5} page={page} onChange={changePage} />
             </div>
 
             <div className="products__cards mb-3">
-              {mockDealsProducts.map((product) => (
+              {products.map((product) => (
                 <ProductCard
                   key={product.id}
                   showBadges={false}
@@ -42,7 +66,7 @@ const DealsPage = () => {
             </div>
 
             <div className="mb-3">
-              <Pagination count={5} page={1} onChange={() => null} />
+              <Pagination count={5} page={page} onChange={changePage} />
             </div>
           </main>
         </div>

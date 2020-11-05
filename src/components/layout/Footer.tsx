@@ -7,7 +7,7 @@ import { withTranslation } from '../../../i18n';
 const links: { href: string; i18nKey: string }[] = [
   { href: '', i18nKey: 'footer:about_us' },
   { href: '', i18nKey: 'footer:privacy_policy' },
-  { href: '', i18nKey: 'footer:fag' },
+  { href: '', i18nKey: 'footer:faq' },
   { href: '', i18nKey: 'footer:general_policy' },
   { href: '', i18nKey: 'common:recruitment' },
   { href: '', i18nKey: 'footer:terms_of_service' },
@@ -99,7 +99,7 @@ const Footer = ({ t }: WithTranslation): JSX.Element => {
               <div className="row">
                 <div className="col-12 col-sm-6">
                   {links.slice(0, linksHalfLength).map((link, index) => (
-                    <React.Fragment key={link.href}>
+                    <React.Fragment key={link.i18nKey}>
                       <FooterLink href={link.href} text={t(link.i18nKey)} />
                       {index < linksHalfLength - 1 && <br />}
                     </React.Fragment>
@@ -108,7 +108,7 @@ const Footer = ({ t }: WithTranslation): JSX.Element => {
 
                 <div className="col-12 col-sm-6">
                   {links.slice(linksHalfLength).map((link, index) => (
-                    <React.Fragment key={link.href}>
+                    <React.Fragment key={link.i18nKey}>
                       <FooterLink href={link.href} text={t(link.i18nKey)} />
                       {index < linksHalfLength * 2 - 1 && <br />}
                     </React.Fragment>

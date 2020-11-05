@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { withTranslation } from '../../i18n';
 import Footer from '../components/Layout/Footer';
 import Head from '../components/Layout/Head';
 import Header from '../components/Layout/Header';
@@ -23,4 +24,8 @@ function Deal() {
   );
 }
 
-export default Deal;
+Deal.getInitialProps = async () => ({
+  namespacesRequired: ['common']
+});
+
+export default withTranslation(['common'])(Deal);
