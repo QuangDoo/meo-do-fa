@@ -247,7 +247,7 @@ function SignupBusiness(): JSX.Element {
                         <select
                           className="custom-select d-block"
                           required
-                          name="user[businesses_attributes][0][city_id]"
+                          name="city"
                           ref={register}
                           onBlur={(e) => {
                             e.target.value
@@ -276,7 +276,7 @@ function SignupBusiness(): JSX.Element {
                           className="custom-select d-block"
                           disabled={disabledDistrict}
                           required
-                          name="user[businesses_attributes][0][district_id]"
+                          name="district"
                           ref={register}
                           onBlur={(e) => {
                             e.target.value ? setDisabledWard(false) : setDisabledWard(true);

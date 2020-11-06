@@ -26,6 +26,7 @@ function QuantityInput(props) {
         placeholder="0"
         defaultValue={props.quantity}
         value={quantity}
+        onChange={props.handleChange}
       />
 
       <button className="btn btn-sm qty__button qty__button--plus" onClick={plus}>
