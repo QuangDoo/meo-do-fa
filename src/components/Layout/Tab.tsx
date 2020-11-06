@@ -31,7 +31,7 @@ const Tabs = (props): JSX.Element => {
         buttons.push(child.props.label);
         if (child.props.label === activeTab) content = child.props.children;
       })}
-      <TabButtons activeTab={activeTab} buttons={buttons} changeTab={changeTab} />\
+      <TabButtons activeTab={activeTab} buttons={buttons} changeTab={changeTab} />
       <div className="tab-content">{content}</div>
     </div>
   );
