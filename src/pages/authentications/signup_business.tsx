@@ -1,12 +1,8 @@
 import React, { createRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import CartItem from '../../components/Cart/CartItem';
-import Footer from '../../components/Footer';
-import Head from '../../components/Head';
-import { Header } from '../../components/Header';
-import PageLayout from '../../components/layout/PageLayout';
-import { Nav } from '../../components/Nav';
+import Head from '../../components/Layout/Head';
+import PageLayout from '../../components/Layout/PageLayout';
 
 function SignupBusiness(): JSX.Element {
   const [fileName, setFileName] = useState('');
