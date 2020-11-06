@@ -1,7 +1,12 @@
 import { default as HeadNext } from 'next/head';
-import React from 'react';
-
+import React, { useEffect } from 'react';
+// const tawkTo = require('tawkto-react')
+import tawkTo from 'tawkto-react';
 export default function Head(props) {
+  const tawkToPropertyId = '5f97dbddaca01a16883609eb';
+  useEffect(() => {
+    tawkTo(tawkToPropertyId);
+  }, []);
   return (
     <HeadNext>
       <meta httpEquiv="Content-Type" content="text/html; charset=UTF-8" />
