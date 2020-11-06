@@ -1,16 +1,17 @@
+import clsx from 'clsx';
+import { withTranslation } from 'i18n';
 import { WithTranslation } from 'next-i18next';
 import Link from 'next/link';
 import React from 'react';
+import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
+import { Product } from 'src/types/Product';
 
-import { withTranslation } from '../../../../i18n';
-import useIsLoggedIn from '../../../hooks/useIsLoggedIn';
-import { Product } from '../../../types/Product';
+import QuantityInput from '../QuantityInput';
 import { DiscountRibbon } from './DiscountRibbon';
 import LoginToSeePrice from './LoginToSeePrice';
 import ProductBadge from './ProductBadge';
 import { ProductImage } from './ProductImage';
 import { ProductPrice } from './ProductPrice';
-import QuantityInput from './QuantityInput';
 
 type Props = Product &
   WithTranslation & {
@@ -27,7 +28,7 @@ const ProductCard = ({
   const isLoggedIn = useIsLoggedIn();
   return (
     <div className="product-card-container">
-      <article className={`product-card card ${props.deal ? 'deal-card' : ''}`}>
+      <article className={clsx('product-card card mx-auto', props.deal && 'deal-card')}>
         <div className="product-card__main">
           <div className="product-card__description mb-3">
             {props.new && <div className="product-card__new-arrival">{t('productCard:new')}</div>}

@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import React, { forwardRef } from 'react';
+import Checkbox from 'src/components/Form/Checkbox';
 
-import Checkbox from '../../../Form/Checkbox';
 import CheckoutWarning from './CheckoutWarning';
 
 const Agreement = (props, register): JSX.Element => {

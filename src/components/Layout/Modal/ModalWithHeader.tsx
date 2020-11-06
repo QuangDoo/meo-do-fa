@@ -1,7 +1,6 @@
 import { Backdrop, Fade, Modal as MaterialModal } from '@material-ui/core';
 import React, { FC } from 'react';
-
-import ModalBase, { BaseModalProps } from './ModalBase';
+import ModalBase, { BaseModalProps } from 'src/components/Layout/Modal/ModalBase';
 
 type ModalProps = BaseModalProps & {
   // Modal title

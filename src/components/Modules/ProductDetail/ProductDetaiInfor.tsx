@@ -1,7 +1,8 @@
 import Link from 'next/link';
 import React from 'react';
 
-import QuantityInput from '../ProductCard/QuantityInput';
+import QuantityInput from '../QuantityInput';
+
 type PropsType = {
   name: string;
   price: number;
@@ -77,7 +78,7 @@ const ProductDetailInfor = (props: PropsType): JSX.Element => {
                     </button>
                   </div>
                 </div>
-                <QuantityInput />
+                <QuantityInput quantity={0} size="large" />
               </div>
             )}
           </div>

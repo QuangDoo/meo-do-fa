@@ -2,7 +2,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import React, { useState } from 'react';
 
 import { ProductPrice } from '../ProductCard/ProductPrice';
-import QuantityInput from '../ProductCard/QuantityInput';
+import QuantityInput from '../QuantityInput';
 import ConfirmDeleteModal from './ConfirmDeleteModal';
 
 function CartItem(props): JSX.Element {

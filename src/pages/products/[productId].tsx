@@ -31,11 +31,13 @@ function ProductDetail(): JSX.Element {
       <Head>
         <title>Thuoc N</title>
       </Head>
+
       <Header />
+
       <Nav />
-      <PageLayout>
-        <ProductDetailComponent {...product} />
-      </PageLayout>
+
+      <ProductDetailComponent {...product} />
+
       <Footer />
     </>
   );

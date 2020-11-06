@@ -1,10 +1,9 @@
+import { withTranslation } from 'i18n';
 import { TFunction } from 'next-i18next';
 import React from 'react';
-
-import { withTranslation } from '../../../../i18n';
-import LoginModal from '../../Modules/LoginModal';
-import RegisterModal from '../../Modules/RegisterModal';
-import LanguagePicker from './LanguagePicker';
+import LanguagePicker from 'src/components/Layout/Header/LanguagePicker';
+import LoginModal from 'src/components/Modules/LoginModal';
+import RegisterModal from 'src/components/Modules/RegisterModal';
 
 type HeaderProps = {
   readonly t: TFunction;

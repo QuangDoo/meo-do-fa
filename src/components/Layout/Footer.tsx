@@ -1,8 +1,7 @@
+import { withTranslation } from 'i18n';
 import { WithTranslation } from 'next-i18next';
 import Link from 'next/link';
 import React from 'react';
-
-import { withTranslation } from '../../../i18n';
 
 const links: { href: string; i18nKey: string }[] = [
   { href: '', i18nKey: 'footer:about_us' },

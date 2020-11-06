@@ -56,7 +56,7 @@ const DispatchContext = createContext<Dispatch<Action>>(null);
 DispatchContext.displayName = 'ModalControlDispatchContext';
 
 const ModalControlProvider = ({ children }: Props): JSX.Element => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer<State, Action>(reducer, initialState);
 
   return (
     <StateContext.Provider value={state}>
