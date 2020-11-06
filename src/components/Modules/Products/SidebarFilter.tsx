@@ -81,13 +81,7 @@ const SidebarFilter = (): JSX.Element => {
         {categories.map(({ name, id }) => (
           <div key={id} className="mb-2">
             <Link href={`/products?category=${id}`}>
-              <a
-                className={clsx(
-                  'products__filter-category',
-                  router.query.category === id && 'active'
-                )}>
-                {name}
-              </a>
+              <a className={clsx('products__filter-category')}>{name}</a>
             </Link>
           </div>
         ))}
