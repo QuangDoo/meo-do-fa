@@ -2,12 +2,12 @@ import { useQuery } from '@apollo/react-hooks';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 
-import Footer from '../../components/Footer';
-import Head from '../../components/Head';
-import { Header } from '../../components/Header';
-import Layout from '../../components/Layout/Layout';
-import { Nav } from '../../components/Nav';
-import ProductDetailComponent from '../../components/ProductDetail/ProductDetail';
+import Footer from '../../components/Layout/Footer';
+import Head from '../../components/Layout/Head';
+import Header from '../../components/Layout/Header';
+import Nav from '../../components/Layout/Nav';
+import PageLayout from '../../components/Layout/PageLayout';
+import ProductDetailComponent from '../../components/Modules/ProductDetail/ProductDetail';
 import { GET_PRODUCT } from '../../graphql/product/product.query';
 import withApollo from '../../utils/withApollo';
 
@@ -33,9 +33,9 @@ function ProductDetail(): JSX.Element {
       </Head>
       <Header />
       <Nav />
-      <Layout>
+      <PageLayout>
         <ProductDetailComponent {...product} />
-      </Layout>
+      </PageLayout>
       <Footer />
     </>
   );

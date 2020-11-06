@@ -1,12 +1,12 @@
 import { useQuery } from '@apollo/react-hooks';
 import React, { useEffect, useState } from 'react';
 
-import Footer from '../../components/Footer';
-import Head from '../../components/Head';
-import { Header } from '../../components/Header';
-import Layout from '../../components/Layout/Layout';
-import { Nav } from '../../components/Nav';
-import SearchScreen from '../../components/SearchScreen';
+import Footer from '../../components/Layout/Footer';
+import Head from '../../components/Layout/Head';
+import Header from '../../components/Layout/Header';
+import Nav from '../../components/Layout/Nav';
+import PageLayout from '../../components/Layout/PageLayout';
+import SearchScreen from '../../components/Modules/SearchScreen';
 import { GET_INGREDIENTS } from '../../graphql/ingredient/ingredient.query';
 import withApollo from '../../utils/withApollo';
 type TypeIngredients = {
@@ -63,9 +63,9 @@ function Ingredients(): JSX.Element {
       </Head>
       <Header />
       <Nav />
-      <Layout>
+      <PageLayout>
         <SearchScreen dataList={ingredients} characters={characters} />
-      </Layout>
+      </PageLayout>
       <Footer />
     </>
   );

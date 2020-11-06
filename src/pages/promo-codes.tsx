@@ -1,10 +1,10 @@
 import React from 'react';
 
-import Footer from '../components/Footer';
-import Head from '../components/Head';
-import { Header } from '../components/Header';
-import Layout from '../components/Layout/Layout';
-import { Nav } from '../components/Nav';
+import Footer from '../components/Layout/Footer';
+import Head from '../components/Layout/Head';
+import Header from '../components/Layout/Header';
+import Nav from '../components/Layout/Nav';
+import PageLayout from '../components/Layout/PageLayout';
 
 function PromotionCode(): JSX.Element {
   return (
@@ -14,9 +14,9 @@ function PromotionCode(): JSX.Element {
       </Head>
       <Header />
       <Nav />
-      <Layout>
+      <PageLayout>
         <h1>PromotionCode Component here !</h1>
-      </Layout>
+      </PageLayout>
       <Footer />
     </>
   );
