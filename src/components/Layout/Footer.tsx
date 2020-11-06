@@ -37,9 +37,9 @@ const Footer = ({ t }: WithTranslation): JSX.Element => {
                     <a title="thuocsi.vn">
                       <img
                         alt="thuocsi.vn"
-                        className="img-fluid"
+                        className="img-fluid logo-footer"
                         title="thuocsi.vn"
-                        src="/assets/images/logo-49156a6a8b6688f3eb1098b08d406267e8770cffd64b6f07bb31e2e52536346d(1).svg"
+                        src="/assets/images/logo3.png"
                       />
                     </a>
                   </Link>

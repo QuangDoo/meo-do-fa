@@ -1,11 +1,11 @@
 import React from 'react';
 
-import Footer from '../components/Layout/Footer';
-import Head from '../components/Layout/Head';
-import Header from '../components/Layout/Header';
-import Nav from '../components/Layout/Nav';
-import PageLayout from '../components/Layout/PageLayout';
-import SearchScreen from '../components/Modules/SearchScreen';
+import Footer from '../../components/Layout/Footer';
+import Head from '../../components/Layout/Head';
+import Header from '../../components/Layout/Header';
+import Nav from '../../components/Layout/Nav';
+import PageLayout from '../../components/Layout/PageLayout';
+import SearchScreen from '../../components/Modules/SearchScreen';
 
 function Manufactures(): JSX.Element {
   const manufactures = [
@@ -64,12 +64,12 @@ function Manufactures(): JSX.Element {
   return (
     <>
       <Head>
-        <title>Thuoc N</title>
+        <title>Medofa</title>
       </Head>
       <Header />
       <Nav />
       <PageLayout>
-        <SearchScreen dataList={manufactures} characters={characters} />
+        {/* <SearchScreen dataList={manufactures} characters={characters} /> */}
       </PageLayout>
       <Footer />
     </>

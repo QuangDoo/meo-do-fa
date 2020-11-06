@@ -5,19 +5,20 @@ import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
 import Nav from 'src/components/Layout/Nav';
 import ProductsPage from 'src/components/Modules/Products';
+import { CategoriesProvider } from 'src/contexts/Categories';
 import withApollo from 'src/utils/withApollo';
 
 function Products(): JSX.Element {
   return (
-    <>
+    <CategoriesProvider>
       <Head>
-        <title>Thuoc N</title>
+        <title>Medofa</title>
       </Head>
       <Header />
       <Nav />
       <ProductsPage />
       <Footer />
-    </>
+    </CategoriesProvider>
   );
 }
 

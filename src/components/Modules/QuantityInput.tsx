@@ -36,6 +36,7 @@ function QuantityInput(props: Props) {
         autoComplete="off"
         placeholder="0"
         value={quantity}
+        onChange={props.handleChange}
       />
 
       <button className="btn btn-sm qty__button qty__button--plus" onClick={plus}>

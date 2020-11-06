@@ -1,11 +1,16 @@
 import { default as HeadNext } from 'next/head';
-import React from 'react';
-
+import React, { useEffect } from 'react';
+// const tawkTo = require('tawkto-react')
+import tawkTo from 'tawkto-react';
 export default function Head(props) {
+  const tawkToPropertyId = '5f97dbddaca01a16883609eb';
+  useEffect(() => {
+    tawkTo(tawkToPropertyId);
+  }, []);
   return (
     <HeadNext>
       <meta httpEquiv="Content-Type" content="text/html; charset=UTF-8" />
-      <title>Thuoc N</title>
+      <title>Medofa</title>
       <link href="https://thuocsi.vn/" rel="canonical" />
       <meta
         content="Thuocsi là cổng thông tin hàng đầu giúp nhà thuốc, phòng khám, và bác sĩ tra cứu thuốc tây, hoạt chất, công dụng, giá thuốc, đặt thuốc nhanh và tiết kiệm nhất. Đây là chợ sỉ thuốc tây với đa dạng các loại thuốc từ các công ty dược phẩm tên tuổi và uy tín."

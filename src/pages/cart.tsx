@@ -9,7 +9,43 @@ import CartItem from '../components/Modules/Cart/CartItem';
 import { mockCartItems } from '../mockData/mockCartItems';
 
 function Cart(): JSX.Element {
-  const totalQuantity = mockCartItems.reduce((current, total) => {
+  const cartItem = [
+    {
+      productName: 'phosphalugel boehringer ingelheim (h/26g)',
+      price: 99600,
+      oldPrice: 99600,
+      id: 123,
+      quantity: 4,
+      description: 'Hộp 26 gói x 20gr',
+      slug: 'phosphalugel-boehringer-ingelheim-h-26g',
+      image: 'https://images.thuocsi.vn/FrWZN5xT53QQ8Cs66rKHT228',
+      important: false
+    },
+    {
+      productName: 'phosphalugel boehringer ingelheim (h/26g)',
+      price: 99600,
+      id: 123,
+      quantity: 3,
+      description: 'Hộp 26 gói x 20gr',
+      slug: 'phosphalugel-boehringer-ingelheim-h-26g',
+      oldPrice: 123456,
+      image: 'https://images.thuocsi.vn/FrWZN5xT53QQ8Cs66rKHT228',
+      important: false
+    },
+    {
+      productName: 'phosphalugel boehringer ingelheim (h/26g)',
+      price: 99600,
+      oldPrice: 99600,
+      id: 123,
+      quantity: 3,
+      description: 'Hộp 26 gói x 20gr',
+      slug: 'phosphalugel-boehringer-ingelheim-h-26g',
+      limit: true,
+      image: 'https://images.thuocsi.vn/FrWZN5xT53QQ8Cs66rKHT228',
+      important: false
+    }
+  ];
+  const totalQuantity = cartItem.reduce((current, total) => {
     return current + total.quantity;
   }, 0);
 
@@ -24,7 +60,7 @@ function Cart(): JSX.Element {
   return (
     <>
       <Head>
-        <title>Thuoc N</title>
+        <title>Medofa</title>
       </Head>
       <Header />
       <Nav />
@@ -96,8 +132,7 @@ function Cart(): JSX.Element {
                         <small>Số lượng</small>
                       </div>
                       <div className="cart__quantity text-secondary">
-                        {totalQuantity}
-                        {/* <b data-target="cart.cartQty">57</b> */}
+                        <b data-target="cart.cartQty">{totalQuantity}</b>
                       </div>
                     </div>
                   </div>
