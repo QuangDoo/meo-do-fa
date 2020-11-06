@@ -1,23 +1,34 @@
+import { useQuery } from '@apollo/react-hooks';
 import clsx from 'clsx';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
+import { GET_CATEGORIES } from '../../../graphql/category/category.query';
+import withApollo from '../../../utils/withApollo';
 import Dropdown from '../../Form/Dropdown';
 import Select from '../../Form/Select';
-
-const categories = [
-  { name: 'Cơ Xương Khớp', id: 'co-xuong-khop' },
-  { name: 'Da Liễu', id: 'da-lieu' }
-];
 
 const suppliers = [
   { name: 'Domesco', id: 'domesco' },
   { name: 'Vidipha', id: 'vidipha' }
 ];
-
+type CategoriesType = {
+  id: number;
+  name: string;
+  complete_name: string;
+};
 const SidebarFilter = (): JSX.Element => {
   const router = useRouter();
+  const [categories, setCategoires] = useState<CategoriesType[]>([]);
+  const { data: dataCategories, loading: loaidingCategories, error: errorCategories } = useQuery(
+    GET_CATEGORIES
+  );
+  console.log('errorCategories', errorCategories);
+  useEffect(() => {
+    if (!dataCategories) return;
+    setCategoires(dataCategories.getCategories);
+  }, [dataCategories]);
 
   const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     router.push(
@@ -59,13 +70,13 @@ const SidebarFilter = (): JSX.Element => {
       <hr className="hr my-3" />
 
       <Dropdown label="Nhóm thuốc">
-        <div className="mb-2">
+        {/* <div className="mb-2">
           <Link href="/products">
             <a className={clsx('products__filter-category', !router.query.category && 'active')}>
               Tất cả
             </a>
           </Link>
-        </div>
+        </div> */}
 
         {categories.map(({ name, id }) => (
           <div key={id} className="mb-2">
@@ -117,4 +128,4 @@ const SidebarFilter = (): JSX.Element => {
   );
 };
 
-export default SidebarFilter;
+export default withApollo({ ssr: true })(SidebarFilter);
