@@ -59,7 +59,7 @@ function Ingredients(): JSX.Element {
   return (
     <>
       <Head>
-        <title>Thuoc N</title>
+        <title>Medofa</title>
       </Head>
       <Header />
       <Nav />
