@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React from 'react';
 
 type ListType = {
@@ -6,8 +7,10 @@ type ListType = {
 };
 
 function ListName(props: ListType) {
+  const router = useRouter();
+  console.log('router');
   return (
-    <Link href={`/ingredients/${props.name}`}>
+    <Link href={`${router.pathname}/${props.name}`}>
       <a className="filter-search__list-item mix all filter-z" data-filter="filter-z">
         {props.name}
       </a>
