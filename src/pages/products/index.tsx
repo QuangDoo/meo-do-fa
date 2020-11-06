@@ -1,12 +1,11 @@
 import { withTranslation } from 'i18n';
 import React from 'react';
-
-import Footer from '../../components/Layout/Footer';
-import Head from '../../components/Layout/Head';
-import Header from '../../components/Layout/Header';
-import Nav from '../../components/Layout/Nav';
-import ProductsPage from '../../components/Modules/Products';
-import withApollo from '../../utils/withApollo';
+import Footer from 'src/components/Layout/Footer';
+import Head from 'src/components/Layout/Head';
+import Header from 'src/components/Layout/Header';
+import Nav from 'src/components/Layout/Nav';
+import ProductsPage from 'src/components/Modules/Products';
+import withApollo from 'src/utils/withApollo';
 
 function Products(): JSX.Element {
   return (
@@ -22,6 +21,8 @@ function Products(): JSX.Element {
   );
 }
 
-const WithTranslation = withTranslation('')(Products);
+const PageWithTranslation = withTranslation('')(Products);
 
-export default withApollo({ ssr: true })(WithTranslation);
+const PageWithApollo = withApollo({ ssr: true })(PageWithTranslation);
+
+export default PageWithApollo;

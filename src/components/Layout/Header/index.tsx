@@ -73,8 +73,6 @@ const Header = ({ t }: HeaderProps): JSX.Element => {
             <LoginModal />
 
             <RegisterModal />
-
-            <button className="btn btn-outline-primary btn-sm">{t('header:try')}</button>
           </div>
         </div>
       </div>
