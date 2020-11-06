@@ -1,11 +1,11 @@
 import React from 'react';
 
 import { withTranslation } from '../../../i18n';
-import Footer from '../../components/Footer';
-import Head from '../../components/Head';
-import { Header } from '../../components/Header';
-import { Nav } from '../../components/Nav';
-import ProductsPage from '../../components/Products';
+import Footer from '../../components/Layout/Footer';
+import Head from '../../components/Layout/Head';
+import Header from '../../components/Layout/Header';
+import Nav from '../../components/Layout/Nav';
+import ProductsPage from '../../components/Modules/Products';
 import withApollo from '../../utils/withApollo';
 
 function Products(): JSX.Element {

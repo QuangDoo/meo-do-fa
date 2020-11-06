@@ -6,11 +6,12 @@ const mockProduct: Product = {
   price: '783.200',
   id:
     'combo-eucerin-tri-mun-kem-kiem-soat-dau-giam-mun-pro-acne-a-i-matt-fluid-50ml-tinh-chat-tri-mun-viem-proacne-ai-clearing-treatment-40ml-tang-nuoc-tay-trang-200ml',
-  category: {
-    name: 'dược mỹ phẩm',
-    id: 'duoc-my-pham',
-    slug: 'duoc-my-pham'
-  },
+  categories: [
+    {
+      name: 'dược mỹ phẩm',
+      id: 'duoc-my-pham'
+    }
+  ],
   unit: 'Combo',
   name:
     'combo eucerin trị mụn (kem kiểm soát dầu giảm mụn pro acne a.i matt fluid 50ml+ tinh chất trị mụn viêm proacne ai clearing treatment 40ml) tặng nước tẩy trang 200ml',

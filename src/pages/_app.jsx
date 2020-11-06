@@ -1,4 +1,3 @@
-import 'antd/dist/antd.css';
 import 'react-toastify/dist/ReactToastify.css';
 import '../assets/scss/custom-styles.scss';
 
@@ -7,7 +6,7 @@ import React from 'react';
 import { ThemeProvider } from 'styled-components';
 
 import { appWithTranslation } from '../../i18n';
-import ToastContainer from '../components/ToastContainer';
+import ToastContainer from '../components/Layout/ToastContainer';
 import { ModalControlProvider } from '../contexts/ModalControl';
 import { theme } from '../theme';
 

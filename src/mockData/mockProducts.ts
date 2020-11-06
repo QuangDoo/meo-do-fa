@@ -7,7 +7,12 @@ const mockProduct: Product = {
   price: '430.500',
   id: 'egudin-solifenacin-succinat-5mg-medisun-h-30v',
   unit: 'Hộp 3 vỉ x 10 viên',
-  category: { name: 'thận, tiết niệu', id: 'than-tiet-nieu', slug: 'than-tiet-nieu' },
+  categories: [
+    {
+      name: 'thận, tiết niệu',
+      id: 'than-tiet-nieu'
+    }
+  ],
   badges: ['common', 'invoice_exportable', 'change_style', 'flash_sale']
 };
 

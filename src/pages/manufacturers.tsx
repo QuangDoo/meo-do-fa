@@ -1,11 +1,11 @@
 import React from 'react';
 
-import Footer from '../components/Footer';
-import Head from '../components/Head';
-import { Header } from '../components/Header';
-import Layout from '../components/Layout/Layout';
-import { Nav } from '../components/Nav';
-import SearchScreen from '../components/SearchScreen';
+import Footer from '../components/Layout/Footer';
+import Head from '../components/Layout/Head';
+import Header from '../components/Layout/Header';
+import Nav from '../components/Layout/Nav';
+import PageLayout from '../components/Layout/PageLayout';
+import SearchScreen from '../components/Modules/SearchScreen';
 
 function Manufactures(): JSX.Element {
   const manufactures = [
@@ -68,9 +68,9 @@ function Manufactures(): JSX.Element {
       </Head>
       <Header />
       <Nav />
-      <Layout>
+      <PageLayout>
         <SearchScreen dataList={manufactures} characters={characters} />
-      </Layout>
+      </PageLayout>
       <Footer />
     </>
   );

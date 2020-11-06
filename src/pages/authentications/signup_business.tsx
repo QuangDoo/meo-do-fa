@@ -1,12 +1,8 @@
 import React, { createRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import CartItem from '../../components/Cart/CartItem';
-import Footer from '../../components/Footer';
-import Head from '../../components/Head';
-import { Header } from '../../components/Header';
-import Layout from '../../components/Layout/Layout';
-import { Nav } from '../../components/Nav';
+import Head from '../../components/Layout/Head';
+import PageLayout from '../../components/Layout/PageLayout';
 
 function SignupBusiness(): JSX.Element {
   const [fileName, setFileName] = useState('');
@@ -131,7 +127,7 @@ function SignupBusiness(): JSX.Element {
         </div>
       </header>
       {/* <Nav /> */}
-      <Layout>
+      <PageLayout>
         <form
           encType="multipart/form-data"
           action="/signup_business"
@@ -340,7 +336,7 @@ function SignupBusiness(): JSX.Element {
             <div />
           </div>
         </div>
-      </Layout>
+      </PageLayout>
       {/* <noscript>
           &lt;iframe height="0" src="https://www.googletagmanager.com/ns.html?id=GTM-TBKGGQF"
           style="display:none;visibility:hidden" width="0"&gt;&lt;/iframe&gt;
