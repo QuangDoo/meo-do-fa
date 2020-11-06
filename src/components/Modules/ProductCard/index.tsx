@@ -83,7 +83,7 @@ const ProductCard = ({
                 <div className="mb-2">
                   <ProductPrice price={props.price} oldPrice={props.oldPrice} />
                 </div>
-                <QuantityInput />
+                <QuantityInput quantity={0} />
               </>
             ) : (
               <LoginToSeePrice />
