@@ -7,7 +7,6 @@ import ListName from './ListName';
 type DataList = {
   id: string;
   name: string;
-  slug: string;
 };
 type Characters = {
   character: string;
@@ -36,17 +35,26 @@ export default function SearchScreen(props: PropsType): JSX.Element {
     });
     setCloneData(newsManufactures);
   };
+  const handleSearch = (key) => {
+    console.log('key', key);
+
+    const nameSearch = [...props.dataList];
+    const newSearch = nameSearch.filter((product) => {
+      console.log('product.name', product.name);
+      return product.name.toLowerCase().includes(key);
+    });
+    console.log('newProducts', newSearch);
+    setCloneData(newSearch);
+  };
+
   return (
     <div className="filter-search container mobile-content " data-controller="filter-search">
-      {/* <div className="filter-search__search text-right mb-4"> */}
-      <InputSearch placeholder="Nhập tên hoạt chất" />
-
+      <InputSearch placeholder="Nhập tên hoạt chất" keySearch={handleSearch} />;
       <div className="filter my-4">
         {props?.characters?.map((item, index) => {
           return <FilterSearch key={index} {...item} filter={() => filterByCharacter(item)} />;
         })}
       </div>
-      {/* </div> */}
       <div className="count_result">
         <em>Hiển thị {cloneData?.length} kết quả tìm kiếm cho</em>
         <b>Tất cả</b>
