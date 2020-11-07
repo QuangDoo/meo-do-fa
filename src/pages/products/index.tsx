@@ -21,7 +21,7 @@ function Products(): JSX.Element {
   return (
     <CategoriesProvider>
       <Head>
-        <title>Thuoc N</title>
+        <title>Medofa</title>
       </Head>
       <Header />
       <Nav />

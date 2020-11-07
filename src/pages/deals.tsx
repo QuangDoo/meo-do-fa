@@ -11,7 +11,7 @@ function Deal() {
   return (
     <>
       <Head>
-        <title>Thuoc N</title>
+        <title>Medofa</title>
       </Head>
       <Header />
 

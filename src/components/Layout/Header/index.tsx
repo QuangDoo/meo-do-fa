@@ -62,9 +62,9 @@ const Header = ({ t }: HeaderProps): JSX.Element => {
               <a href="/" title="thuocsi.vn">
                 <img
                   alt="thuocsi.vn"
-                  className="img-fluid lozad"
+                  className="img-fluid logo-header"
                   title="thuocsi.vn"
-                  src="/assets/images/logo-49156a6a8b6688f3eb1098b08d406267e8770cffd64b6f07bb31e2e52536346d.svg"
+                  src="/assets/images/logo2.png"
                 />
               </a>
             </div>
