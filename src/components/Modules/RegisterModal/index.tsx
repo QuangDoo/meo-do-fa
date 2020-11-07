@@ -1,7 +1,7 @@
+import { withTranslation } from 'i18n';
 import { TFunction } from 'next-i18next';
 import React from 'react';
 
-import { withTranslation } from '../../../../i18n';
 import { useModalControlDispatch, useModalControlState } from '../../../contexts/ModalControl';
 import Button from '../../Form/Button';
 import ModalWithHeader from '../../Layout/Modal/ModalWithHeader';

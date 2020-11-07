@@ -1,8 +1,7 @@
 import { Menu, MenuItem } from '@material-ui/core';
+import { i18n, withTranslation } from 'i18n';
 import { TFunction } from 'next-i18next';
 import React, { MouseEvent, useState } from 'react';
-
-import { i18n, withTranslation } from '../../../../i18n';
 
 type Props = {
   readonly t: TFunction;

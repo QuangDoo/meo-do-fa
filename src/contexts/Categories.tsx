@@ -1,19 +1,14 @@
-import { useQuery } from '@apollo/client';
-import React, { Dispatch, useContext } from 'react';
-import { createContext, useReducer } from 'react';
-
-import { GET_CATEGORIES } from '../graphql/category/category.query';
+import React, { createContext, Dispatch, useContext, useReducer } from 'react';
+import { Category } from 'src/types/Category';
 
 type Action = {
-  type: 'CATEGORYTLIST_REQUEST' | 'CATEGORYLIST_SUCCESS' | 'CATEGORYLIST_FAIL';
-  data: any;
-  error: any;
+  type: 'CATEGORYLIST_REQUEST' | 'CATEGORYLIST_SUCCESS' | 'CATEGORYLIST_FAIL';
 };
 
 type State = {
-  categories: string[];
+  categories: Category[];
   loading: boolean;
-  error: null;
+  error: any;
 };
 
 type Props = {
@@ -25,9 +20,9 @@ const initialState: State = {
   error: null
 };
 
-function reducer(state: State, action: Action) {
+function reducer(state: State, action: Action): State {
   switch (action.type) {
-    case 'CATEGORYTLIST_REQUEST':
+    case 'CATEGORYLIST_REQUEST':
       return {
         ...state,
         loading: true
@@ -36,15 +31,15 @@ function reducer(state: State, action: Action) {
     case 'CATEGORYLIST_SUCCESS':
       return {
         ...state,
-        loginIsOpen: false,
-        categories: action.data
+        loading: false
+        // categories: action.data
       };
 
     case 'CATEGORYLIST_FAIL':
       return {
         ...state,
-        loading: false,
-        error: action.error
+        loading: false
+        // error: action.error
       };
 
     default:

@@ -4,15 +4,13 @@ import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-
-import { viPhoneNumberRegex } from '../../../assets/regex/viPhoneNumber';
-import { useModalControlDispatch } from '../../../contexts/ModalControl';
-import { LOGIN_USER } from '../../../graphql/user/login.mutation';
-import withApollo from '../../../utils/withApollo';
-import Button from '../../Form/Button';
-import Checkbox from '../../Form/Checkbox';
-// import AccountLoginInformation from './AccountLoginInformation'
-import Input from '../../Form/Input';
+import { viPhoneNumberRegex } from 'src/assets/regex/viPhoneNumber';
+import Button from 'src/components/Form/Button';
+import Checkbox from 'src/components/Form/Checkbox';
+import Input from 'src/components/Form/Input';
+import { useModalControlDispatch } from 'src/contexts/ModalControl';
+import { LOGIN_USER } from 'src/graphql/user/login.mutation';
+import withApollo from 'src/utils/withApollo';
 
 type Inputs = {
   username: string;

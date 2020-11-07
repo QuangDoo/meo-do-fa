@@ -1,7 +1,6 @@
+import { withTranslation } from 'i18n';
 import { WithTranslation } from 'next-i18next';
 import React from 'react';
-
-import { withTranslation } from '../../../../i18n';
 
 // BadgeType must be the same as badge types in productBadge.json translation file
 export type BadgeType =

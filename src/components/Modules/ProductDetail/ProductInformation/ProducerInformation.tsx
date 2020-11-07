@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Tab from '../../../Layout/Tab';
+import Tab from './Tab';
 
 const ProducerInformation = (): JSX.Element => {
   return (

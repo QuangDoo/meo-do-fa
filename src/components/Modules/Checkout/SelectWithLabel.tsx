@@ -1,8 +1,8 @@
 import clsx from 'clsx';
 import { StringifyOptions } from 'querystring';
 import React, { forwardRef } from 'react';
+import Select from 'src/components/Form/Select';
 
-import Select from '../../Form/Select';
 import FormGroup from './FormGroup';
 import FormGroupLabel from './FormGroupLabel';
 

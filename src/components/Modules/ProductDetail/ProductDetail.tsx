@@ -6,12 +6,12 @@ import RelativeProducts from './RelativeProducts';
 
 const ProductDetailComponent = (props): JSX.Element => {
   return (
-    <>
+    <div className="product container py-5">
       <ProductInformation {...props} />
       <ProducerInformation />
       <hr />
       <RelativeProducts />
-    </>
+    </div>
   );
 };
 export default ProductDetailComponent;

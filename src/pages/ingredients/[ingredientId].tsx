@@ -5,8 +5,8 @@ import Head from '../../components/Layout/Head';
 import Header from '../../components/Layout/Header';
 import Nav from '../../components/Layout/Nav';
 import PageLayout from '../../components/Layout/PageLayout';
-import Tab from '../../components/Layout/Tab';
 import { ProductsContainer } from '../../components/Modules/Home/ProductsContainer';
+import Tab from '../../components/Modules/ProductDetail/ProductInformation/Tab';
 import { ProductsCarousel } from '../../components/Modules/ProductsCarousel';
 import { mockProducts } from '../../mockData/mockProducts';
 

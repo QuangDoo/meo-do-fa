@@ -1,7 +1,7 @@
 import React from 'react';
 import Slider from 'react-slick';
+import { Product } from 'src/types/Product';
 
-import { Product } from '../../types/Product';
 import ProductCard from './ProductCard';
 
 type ProductsCarouselProps = {
@@ -32,7 +32,37 @@ export const ProductsCarousel = ({ products }: ProductsCarouselProps): JSX.Eleme
       slidesToScroll={3}
       prevArrow={<ArrowButton />}
       nextArrow={<ArrowButton type="next" />}
-      className="m-0 p-0 slider_products">
+      className="m-0 p-0 slider_products"
+      responsive={[
+        {
+          breakpoint: 1105,
+          settings: {
+            slidesToShow: 4,
+            slidesToScroll: 2
+          }
+        },
+        {
+          breakpoint: 890,
+          settings: {
+            slidesToShow: 3,
+            slidesToScroll: 1
+          }
+        },
+        {
+          breakpoint: 675,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 1
+          }
+        },
+        {
+          breakpoint: 460,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1
+          }
+        }
+      ]}>
       {products.map((product, index) => (
         <div key={index} className="p-2">
           <ProductCard {...product} />

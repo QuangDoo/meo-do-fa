@@ -31,11 +31,13 @@ function ProductDetail(): JSX.Element {
       <Head>
         <title>Medofa</title>
       </Head>
+
       <Header />
+
       <Nav />
-      <PageLayout>
-        <ProductDetailComponent {...product} />
-      </PageLayout>
+
+      <ProductDetailComponent {...product} />
+
       <Footer />
     </>
   );

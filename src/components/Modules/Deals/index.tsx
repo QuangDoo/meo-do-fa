@@ -1,10 +1,10 @@
 import { useLazyQuery } from '@apollo/react-hooks';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
+import { GET_PRODUCTS } from 'src/graphql/product/product.query';
+import { mockDealsProducts } from 'src/mockData/mockDealsProducts';
+import { Product } from 'src/types/Product';
 
-import { GET_PRODUCTS } from '../../../graphql/product/product.query';
-import { mockDealsProducts } from '../../../mockData/mockDealsProducts';
-import { Product } from '../../../types/Product';
 import Pagination from '../Pagination';
 import ProductCard from '../ProductCard';
 
