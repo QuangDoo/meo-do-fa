@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 type Props = {
   size?: 'normal' | 'large';
   quantity: number;
+  handleChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 function QuantityInput(props: Props) {
