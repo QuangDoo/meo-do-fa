@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import React from 'react';
+import { Category } from 'src/types/Category';
 
 import { mockTotalProducts } from '../../../mockData/mockTotalProducts';
 import withApollo from '../../../utils/withApollo';
@@ -10,7 +11,11 @@ import SidebarFilter from './SidebarFilter';
 
 const pageSize = 20;
 
-const Products = (): JSX.Element => {
+type Props = {
+  categories: Category[];
+};
+
+const Products = (props: Props) => {
   const router = useRouter();
 
   const page = +router.query.page || 1;
