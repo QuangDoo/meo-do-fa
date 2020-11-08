@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import { withTranslation } from 'i18n';
+import { DateTime } from 'luxon';
 import { WithTranslation } from 'next-i18next';
 import Link from 'next/link';
 import React from 'react';
@@ -26,16 +27,29 @@ const ProductCard = ({
   ...props
 }: Props): JSX.Element => {
   const isLoggedIn = useIsLoggedIn();
+
+  const createDate = new Date(props.create_date);
+
+  // Month difference from create date and now
+  const monthDiff = DateTime.fromJSDate(createDate).diffNow('months').months;
+
+  // New => Created in 3 recent months
+  const isNew = monthDiff >= -3;
+
+  const discountPercent = Math.round(100 - (props.list_price * 100) / props.standard_price);
+
+  const isDiscount = discountPercent > 0;
+
   return (
     <div className="product-card-container">
-      <article className={clsx('product-card card mx-auto', props.deal && 'deal-card')}>
+      <article className={clsx('product-card card mx-auto', isDiscount && 'deal-card')}>
         <div className="product-card__main">
           <div className="product-card__description mb-3">
-            {props.new && <div className="product-card__new-arrival">{t('productCard:new')}</div>}
+            {isNew && <div className="product-card__new-arrival">{t('productCard:new')}</div>}
 
-            {props.discountPercent && <DiscountRibbon discountPercent={props.discountPercent} />}
+            {isDiscount && <DiscountRibbon discountPercent={discountPercent} />}
 
-            <ProductImage imageId={props.image} productId={props.id} />
+            <ProductImage imageId={props.image_128} productId={props.id} />
 
             <div>
               <Link href={`/products/${props.id}`}>
@@ -57,19 +71,19 @@ const ProductCard = ({
                 </div>
               )}
 
-              <small className="text-muted">{props.unit}</small>
+              <small className="text-muted">{props.uom_name}</small>
 
               <br />
 
               {showCategories && (
                 <small className="text-muted product-card__category">
                   {t('productCard:category')}:{' '}
-                  {props.categories.map((category, index) => (
+                  {props.categ_id.map((category, index) => (
                     <>
-                      <Link key={category.id} href={`/products?category=${category.id}`}>
-                        <a>{category.name}</a>
+                      <Link key={category[0]} href={`/products?category=${category[0]}`}>
+                        <a>{category[1]}</a>
                       </Link>
-                      {index < props.categories.length - 1 && '; '}
+                      {index < props.categ_id.length - 1 && '; '}
                     </>
                   ))}
                 </small>
@@ -81,7 +95,10 @@ const ProductCard = ({
             {isLoggedIn ? (
               <>
                 <div className="mb-2">
-                  <ProductPrice price={props.price} oldPrice={props.oldPrice} />
+                  <ProductPrice
+                    list_price={props.list_price}
+                    standard_price={isDiscount && props.standard_price}
+                  />
                 </div>
                 <QuantityInput quantity={0} />
               </>

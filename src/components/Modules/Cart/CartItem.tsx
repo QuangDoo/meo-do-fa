@@ -44,14 +44,7 @@ function CartItem(props): JSX.Element {
           <div className="w-100">
             <div className="d-flex justify-content-between align-items-center">
               <div>
-                {' '}
-                <ProductPrice price={props.price.toLocaleString('de-DE')} />{' '}
-                {props.oldPrice > props.price && (
-                  <span className="cart-item__old-price">
-                    {props.oldPrice.toLocaleString('de-DE')}
-                    <span className="unit">đ</span>
-                  </span>
-                )}
+                <ProductPrice list_price={props.list_price} standard_price={props.standard_price} />
               </div>
               <div className="cart-item__qty">
                 <QuantityInput {...props} quantity={props.quantity} />
