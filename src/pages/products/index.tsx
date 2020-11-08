@@ -12,6 +12,7 @@ import FilterTags from 'src/components/Modules/FilterTags';
 import Pagination from 'src/components/Modules/Pagination';
 import ProductCard from 'src/components/Modules/ProductCard';
 import SidebarFilter from 'src/components/Modules/SidebarFilter';
+import { useCategories } from 'src/contexts/Categories';
 import { GET_CATEGORIES } from 'src/graphql/category/category.query';
 import { GET_PRODUCTS } from 'src/graphql/product/product.query';
 import { mockSuppliers } from 'src/mockData/mockSuppliers';
@@ -43,11 +44,7 @@ function Products(): JSX.Element {
   // Current page
   const page = +router.query.page || 1;
 
-  // Get categories
-  const { data: categoriesData, loading: categoriesLoading, error: categoriesError } = useQuery<
-    GetCategoriesData,
-    undefined
-  >(GET_CATEGORIES);
+  const { data: categories } = useCategories();
 
   // Get products
   const { data: productsData, loading: productsLoading, error: productsError, refetch } = useQuery<
@@ -102,10 +99,7 @@ function Products(): JSX.Element {
       <div className="products container-fluid mobile-content my-3 my-sm-5">
         <div className="row flex-nowrap justify-content-between px-lg-5 px-sm-3">
           <div className="products__sidebar pr-4 d-none d-sm-block">
-            <SidebarFilter
-              categories={categoriesData?.getCategories || []}
-              suppliers={mockSuppliers}
-            />
+            <SidebarFilter categories={categories} suppliers={mockSuppliers} />
           </div>
 
           {/* Content */}

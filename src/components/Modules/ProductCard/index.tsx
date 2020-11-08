@@ -4,6 +4,7 @@ import { DateTime } from 'luxon';
 import { WithTranslation } from 'next-i18next';
 import Link from 'next/link';
 import React from 'react';
+import { useCategories } from 'src/contexts/Categories';
 import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
 import { Product } from 'src/types/Product';
 
@@ -27,6 +28,8 @@ const ProductCard = ({
   ...props
 }: Props): JSX.Element => {
   const isLoggedIn = useIsLoggedIn();
+
+  const { nameLookup: categoryNameLookup } = useCategories();
 
   const createDate = new Date(props.create_date);
 
@@ -78,10 +81,10 @@ const ProductCard = ({
               {showCategories && (
                 <small className="text-muted product-card__category">
                   {t('productCard:category')}:{' '}
-                  {props.categ_id.map((category, index) => (
+                  {props.categ_id.map((id, index) => (
                     <>
-                      <Link key={category[0]} href={`/products?category=${category[0]}`}>
-                        <a>{category[1]}</a>
+                      <Link key={id} href={`/products?category=${id}`}>
+                        <a>{categoryNameLookup[id]}</a>
                       </Link>
                       {index < props.categ_id.length - 1 && '; '}
                     </>
