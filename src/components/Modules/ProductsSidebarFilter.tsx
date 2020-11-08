@@ -28,7 +28,7 @@ const sortOptions: SortOption[] = [
   { name: 'Tên: Z-A', value: 'alphabet_za' }
 ];
 
-const SidebarFilter = (props: Props) => {
+const ProductsSidebarFilter = (props: Props) => {
   const { categories, suppliers } = props;
 
   const router = useRouter();
@@ -84,7 +84,13 @@ const SidebarFilter = (props: Props) => {
         {categories.map(({ name, id }) => (
           <div key={id} className="mb-2">
             <Link href={`/products?category=${id}`}>
-              <a className={clsx('products__filter-category')}>{name}</a>
+              <a
+                className={clsx(
+                  'products__filter-category',
+                  router.query.category === id && 'active'
+                )}>
+                {name}
+              </a>
             </Link>
           </div>
         ))}
@@ -126,4 +132,4 @@ const SidebarFilter = (props: Props) => {
   );
 };
 
-export default SidebarFilter;
+export default ProductsSidebarFilter;
