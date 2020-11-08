@@ -3,19 +3,16 @@ import { Product } from '../types/Product';
 const mockProduct: Product = {
   id: 'phan-trang-johnson-s-baby-powder-c-500g',
   name: "Phấn Trắng Johnson's Baby Powder (C/500g)",
-  image: 'ZL8RabUavQqaTzX8TyGwe41V',
-  unit: 'Chai 500gr',
-  price: '72.226',
-  oldPrice: '73.700',
+  image_128: 'ZL8RabUavQqaTzX8TyGwe41V',
+  image_256: 'ZL8RabUavQqaTzX8TyGwe41V',
+  image_512: 'ZL8RabUavQqaTzX8TyGwe41V',
+  uom_name: 'Chai 500gr',
+  list_price: 72226,
+  standard_price: 73700,
   badges: ['promotion', 'invoice_exportable'],
-  categories: [
-    {
-      id: 'duoc-my-pham',
-      name: 'Dược mỹ phẩm'
-    }
-  ],
-  deal: true,
-  discountPercent: 2
+  categ_id: ['duoc-my-pham'],
+  seller_ids: [],
+  create_date: 1602131598549
 };
 
 export const mockDealsProducts: Product[] = [...Array(25)].map(() => ({ ...mockProduct }));
