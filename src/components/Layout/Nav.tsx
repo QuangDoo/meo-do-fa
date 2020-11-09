@@ -1,7 +1,10 @@
 import Link from 'next/link';
 import React from 'react';
+import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
 
 export default function Nav(): JSX.Element {
+  const isLoggedIn = useIsLoggedIn();
+
   const logOut = () => {
     localStorage.removeItem('token');
     window.location.reload();
@@ -58,25 +61,28 @@ export default function Nav(): JSX.Element {
               </li>
             </ul>
             <div className="buymed-search-container" />
-            <div className="header-right header-right--guest">
-              <ul className="nav align-items-center">
-                <li className="nav-item mr-3">
-                  <button className="buymed-nav__link" onClick={logOut}>
-                    <i className="fas fa-sign-in-alt buymed-nav__icon" />
-                  </button>
-                </li>
-                {/* <li className="nav-item mr-3">
-                  <a className="buymed-nav__link">
-                    <i className="fas fa-user-md buymed-nav__icon" />
-                  </a>
-                </li>
-                <li className="nav-item mr-3">
-                  <a className="buymed-nav__link">
-                    <i className="fas fa-eye buymed-nav__icon" />
-                  </a>
-                </li> */}
-              </ul>
-            </div>
+
+            {isLoggedIn && (
+              <div className="header-right">
+                <ul className="nav align-items-center">
+                  <li className="nav-item mr-3">
+                    <button className="buymed-nav__link" onClick={logOut}>
+                      <i className="fas fa-sign-in-alt buymed-nav__icon" />
+                    </button>
+                  </li>
+                  <li className="nav-item mr-3">
+                    <a className="buymed-nav__link">
+                      <i className="fas fa-user-md buymed-nav__icon" />
+                    </a>
+                  </li>
+                  <li className="nav-item mr-3">
+                    <a className="buymed-nav__link">
+                      <i className="fas fa-eye buymed-nav__icon" />
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            )}
           </div>
         </div>
       </div>
