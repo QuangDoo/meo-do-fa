@@ -26,14 +26,14 @@ const ProductDetailInfor = (props: PropsType): JSX.Element => {
           </div>
           <div className="mb-3">
             <small className="text-muted">
-              <span className="mr-3">
+              {/* <span className="mr-3">
                 <i className="far fa-eye mr-1" />
                 <strong>7</strong>lượt xem
-              </span>
-              <span>
+              </span> */}
+              {/* <span>
                 <i className="icomoon icon-shopping mr-1" />
                 <strong>0</strong> lượt mua trong 24 giờ qua
-              </span>
+              </span> */}
             </small>
           </div>
           <hr />
@@ -54,7 +54,7 @@ const ProductDetailInfor = (props: PropsType): JSX.Element => {
                     </span>
                   </div>
                 </div>
-                <div>
+                {/* <div>
                   <div className="price-feedback" data-controller="price-feedback">
                     <small>Bạn thấy giá này:</small>
                     <br />
@@ -77,13 +77,13 @@ const ProductDetailInfor = (props: PropsType): JSX.Element => {
                       Hợp lý
                     </button>
                   </div>
-                </div>
-                <QuantityInput quantity={0} size="large" />
+                </div> */}
+                <QuantityInput />
               </div>
             )}
           </div>
         </div>
-        <div className="col-md-5">
+        {/* <div className="col-md-5">
           <div className="product__suppliers">
             <p>
               Hệ thống sẽ chọn nhà cung cấp tốt nhất cho bạn.
@@ -99,7 +99,7 @@ const ProductDetailInfor = (props: PropsType): JSX.Element => {
               </Link>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

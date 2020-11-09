@@ -65,7 +65,7 @@ export default function Nav(): JSX.Element {
                     <i className="fas fa-sign-in-alt buymed-nav__icon" />
                   </button>
                 </li>
-                <li className="nav-item mr-3">
+                {/* <li className="nav-item mr-3">
                   <a className="buymed-nav__link">
                     <i className="fas fa-user-md buymed-nav__icon" />
                   </a>
@@ -74,7 +74,7 @@ export default function Nav(): JSX.Element {
                   <a className="buymed-nav__link">
                     <i className="fas fa-eye buymed-nav__icon" />
                   </a>
-                </li>
+                </li> */}
               </ul>
             </div>
           </div>

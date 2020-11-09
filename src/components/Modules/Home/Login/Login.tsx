@@ -11,13 +11,13 @@ const Login = (): JSX.Element => {
           <div className="col-12">
             <a
               className="login btn btn-secondary home__cta-btn m-2"
-              href="https://thuocsi.vn/authentications/login">
+              href="https://medofa.com/authentications/login">
               <i className="fas fa-sign-in-alt mr-1" />
               Đăng nhập
             </a>
             <a
               className="register btn btn-primary home__cta-btn m-2"
-              href="https://thuocsi.vn/authentications/signup">
+              href="https://medofa.com/authentications/signup">
               <i className="fas fa-user-md mr-1" />
               Tạo tài khoản
             </a>
@@ -27,7 +27,7 @@ const Login = (): JSX.Element => {
             </button>
             <a
               className="call btn btn-info home__cta-btn m-2 d-inline-block d-sm-none"
-              href="tel:02873008840">
+              href="tel:0866624702">
               <i className="fas fa-phone mr-1" />
               02 873 008 840
             </a>
