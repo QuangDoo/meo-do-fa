@@ -1,70 +1,57 @@
-import React, { createContext, Dispatch, useContext, useReducer } from 'react';
+import { ApolloError } from '@apollo/client';
+import { useQuery } from '@apollo/react-hooks';
+import React, { createContext, useContext, useEffect } from 'react';
+import { GET_CATEGORIES } from 'src/graphql/category/category.query';
 import { Category } from 'src/types/Category';
-
-type Action = {
-  type: 'CATEGORYLIST_REQUEST' | 'CATEGORYLIST_SUCCESS' | 'CATEGORYLIST_FAIL';
-};
-
-type State = {
-  categories: Category[];
-  loading: boolean;
-  error: any;
-};
+import withApollo from 'src/utils/withApollo';
 
 type Props = {
   children: React.ReactNode;
 };
-const initialState: State = {
-  categories: [],
-  loading: false,
-  error: null
+
+type GetCategoriesData = {
+  getCategories: Category[];
 };
 
-function reducer(state: State, action: Action): State {
-  switch (action.type) {
-    case 'CATEGORYLIST_REQUEST':
-      return {
-        ...state,
-        loading: true
-      };
+type ContextValue = {
+  data: Category[];
+  nameLookup: {
+    [id: string]: string;
+  };
+  loading: boolean;
+  error: ApolloError;
+};
 
-    case 'CATEGORYLIST_SUCCESS':
-      return {
-        ...state,
-        loading: false
-        // categories: action.data
-      };
+const CategoriesContext = createContext<ContextValue>(null);
+CategoriesContext.displayName = 'CategoriesContext';
 
-    case 'CATEGORYLIST_FAIL':
-      return {
-        ...state,
-        loading: false
-        // error: action.error
-      };
+const CategoriesProvider = withApollo({ ssr: true })(({ children }: Props) => {
+  const { data, loading, error } = useQuery<GetCategoriesData, undefined>(GET_CATEGORIES);
 
-    default:
-      throw new Error(`Unhandled action type: ${action.type}`);
-  }
-}
+  useEffect(() => {
+    if (!error) return;
 
-const StateContext = createContext<State>(null);
-StateContext.displayName = 'GetCategoriesStateContext';
+    console.log('GET CATEGORIES ERROR:', error);
+  }, [error]);
 
-const DispatchContext = createContext<Dispatch<Action>>(null);
-DispatchContext.displayName = 'GetCategoriesDispatchContext';
-
-const CategoriesProvider = ({ children }: Props): JSX.Element => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const categories = data?.getCategories || [];
 
   return (
-    <StateContext.Provider value={state}>
-      <DispatchContext.Provider value={dispatch}>{children}</DispatchContext.Provider>
-    </StateContext.Provider>
+    <CategoriesContext.Provider
+      value={{
+        data: categories,
+        nameLookup: categories.reduce(
+          (lookup, categ) => ({ ...lookup, [categ.id]: categ.name }),
+          {}
+        ),
+        loading,
+        error
+      }}>
+      {children}
+    </CategoriesContext.Provider>
   );
-};
+});
 
-const useCategoriesState = () => useContext(StateContext);
+const useCategories = () => useContext(CategoriesContext);
 
-const useCategoriesDispatch = () => useContext(DispatchContext);
-
-export { CategoriesProvider, useCategoriesState, useCategoriesDispatch };
+export { CategoriesProvider, useCategories };

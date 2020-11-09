@@ -7,6 +7,7 @@ import { ThemeProvider } from 'styled-components';
 
 import { appWithTranslation } from '../../i18n';
 import ToastContainer from '../components/Layout/ToastContainer';
+import { CategoriesProvider } from '../contexts/Categories';
 import { ModalControlProvider } from '../contexts/ModalControl';
 import { theme } from '../theme';
 
@@ -14,7 +15,9 @@ const MyApp = ({ Component, pageProps }) => {
   return (
     <ThemeProvider theme={theme}>
       <ModalControlProvider>
-        <Component {...pageProps} />
+        <CategoriesProvider>
+          <Component {...pageProps} />
+        </CategoriesProvider>
 
         <ToastContainer />
       </ModalControlProvider>
