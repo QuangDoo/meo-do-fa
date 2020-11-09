@@ -1,7 +1,5 @@
 import { useQuery } from '@apollo/react-hooks';
-import clsx from 'clsx';
 import { withTranslation } from 'i18n';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import Footer from 'src/components/Layout/Footer';
@@ -13,26 +11,11 @@ import Pagination from 'src/components/Modules/Pagination';
 import ProductCard from 'src/components/Modules/ProductCard';
 import ProductsSidebarFilter from 'src/components/Modules/ProductsSidebarFilter';
 import { useCategories } from 'src/contexts/Categories';
-import { GET_CATEGORIES } from 'src/graphql/category/category.query';
 import { GET_PRODUCTS } from 'src/graphql/product/product.query';
 import { mockSuppliers } from 'src/mockData/mockSuppliers';
 import { mockTotalProducts } from 'src/mockData/mockTotalProducts';
-import { Category } from 'src/types/Category';
-import { Product } from 'src/types/Product';
+import { GetProductsData, GetProductsVars } from 'src/types/GetProducts';
 import withApollo from 'src/utils/withApollo';
-
-type GetCategoriesData = {
-  getCategories: Category[];
-};
-
-type GetProductsData = {
-  getProducts: Product[];
-};
-
-type GetProductsVars = {
-  page: number;
-  pageSize: number;
-};
 
 const totalProducts = mockTotalProducts;
 
