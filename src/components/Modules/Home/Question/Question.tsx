@@ -13,8 +13,8 @@ const Question = (): JSX.Element => {
             href="https://thuocsi.zendesk.com/hc/vi/articles/360029452912-C%C3%A1ch-%C4%91%C4%83ng-k%C3%BD-v%C3%A0-%C4%91%C4%83ng-nh%E1%BA%ADp-t%C3%A0i-kho%E1%BA%A3n-t%E1%BA%A1i-thuocsi-vn"
             target="_blank"
             rel="noreferrer"
-            title="Cách đăng ký và đăng nhập tài khoản tại thuocsi.vn">
-            Cách đăng ký và đăng nhập tài khoản tại thuocsi.vn
+            title="Cách đăng ký và đăng nhập tài khoản tại medofa.com">
+            Cách đăng ký và đăng nhập tài khoản tại medofa.com
           </a>
         </div>
         <div className="col-12 col-sm-6">
@@ -43,8 +43,8 @@ const Question = (): JSX.Element => {
             href="https://thuocsi.zendesk.com/hc/vi/articles/360029505332-D%C3%B9ng-th%E1%BB%AD-t%E1%BA%A1i-website-thuocsi-vn-"
             target="_blank"
             rel="noreferrer"
-            title="Dùng thử tại website thuocsi.vn">
-            Dùng thử tại website thuocsi.vn
+            title="Dùng thử tại website medofa.com">
+            Dùng thử tại website medofa.com
           </a>
         </div>
         <div className="col-12 col-sm-6">
@@ -83,8 +83,8 @@ const Question = (): JSX.Element => {
             href="https://thuocsi.zendesk.com/hc/vi/articles/360029453432-Xu%E1%BA%A5t-h%C3%B3a-%C4%91%C6%A1n-%C4%91%E1%BB%8F-t%E1%BA%A1i-thuocsi-vn-"
             target="_blank"
             rel="noreferrer"
-            title="Xuất hóa đơn đỏ tại thuocsi.vn?">
-            Xuất hóa đơn đỏ tại thuocsi.vn?
+            title="Xuất hóa đơn đỏ tại medofa.com?">
+            Xuất hóa đơn đỏ tại medofa.com?
           </a>
         </div>
         <div className="col-12 col-sm-6">
