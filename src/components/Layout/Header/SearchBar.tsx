@@ -1,24 +1,36 @@
+import { useLazyQuery } from '@apollo/react-hooks';
 import debounce from 'lodash.debounce';
 import Link from 'next/link';
 import React, { useMemo, useState } from 'react';
+import { SEARCH_MANUFACTURERS_BY_NAME } from 'src/graphql/search/search.manufacturer.query';
+import { SEARCH_PRODUCTS_BY_NAME } from 'src/graphql/search/search.products.query';
+import { useDebouncedEffect } from 'src/hooks/useDebouncedEffect';
 
 const SearchBar = (): JSX.Element => {
-  const [productResults, setProductResults] = useState([]);
+  const [searchProducts, { data: pData, loading: pLoading }] = useLazyQuery(
+    SEARCH_PRODUCTS_BY_NAME
+  );
 
-  const [manufacturerResults, setManufacturerResults] = useState([]);
+  const [searchManufacturers, { data: mData, loading: mLoading }] = useLazyQuery(
+    SEARCH_MANUFACTURERS_BY_NAME
+  );
 
   const [value, setValue] = useState('');
 
-  const loadResults = () => {
-    // Get search results here
-  };
-
-  const debounceLoadResults = useMemo(() => debounce(loadResults, 200), []);
-
-  const handleChange = () => {
-    setValue(value);
-    debounceLoadResults();
-  };
+  // Search with debounce
+  useDebouncedEffect(
+    () => {
+      searchProducts({
+        variables: {
+          page: 1,
+          pageSize: 15,
+          name: value
+        }
+      });
+    },
+    200,
+    [value]
+  );
 
   return (
     <div className="d-flex justify-content-center flex-grow-1 mr-3">
@@ -33,19 +45,19 @@ const SearchBar = (): JSX.Element => {
               placeholder="Nhập tên thuốc, hoạt chất cần tìm..."
               aria-label="search"
               value={value}
-              onChange={handleChange}
+              onChange={(e) => setValue(e.target.value)}
             />
           </div>
         </form>
 
         <div className="elevated search__results">
-          {productResults.length > 0 ? (
+          {pData?.products.length > 0 ? (
             <>
               <Link href={`/products?sort=best_match&search=${value}`}>
                 <em>{value}</em> trong <b className="text-primary">tất cả sản phẩm</b>
               </Link>
 
-              {productResults.map((product) => (
+              {pData.products.map((product) => (
                 <Link key={product.id} href={`/products/${product.id}`}>
                   {product.name}
                 </Link>
@@ -57,13 +69,13 @@ const SearchBar = (): JSX.Element => {
 
           <hr />
 
-          {manufacturerResults.length > 0 ? (
+          {mData?.manufacturers.length > 0 ? (
             <>
               <Link href={`/manufacturers?sort=best_match&search=${value}`}>
                 <em>{value}</em> trong <b className="text-primary">tất cả nhà sản xuất</b>
               </Link>
 
-              {manufacturerResults.map((manufacturer) => (
+              {mData.manufacturers.map((manufacturer) => (
                 <Link key={manufacturer.id} href={`/manufacturers/${manufacturer.id}`}>
                   {manufacturer.name}
                 </Link>
