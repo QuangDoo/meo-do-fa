@@ -4,12 +4,18 @@ import React from 'react';
 import LanguagePicker from 'src/components/Layout/Header/LanguagePicker';
 import LoginModal from 'src/components/Modules/LoginModal';
 import RegisterModal from 'src/components/Modules/RegisterModal';
+import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
+
+import RightSideUser from './RightSideUser';
+import SearchBar from './SearchBar';
 
 type HeaderProps = {
   readonly t: TFunction;
 };
 
 const Header = ({ t }: HeaderProps): JSX.Element => {
+  const isLoggedIn = useIsLoggedIn();
+
   return (
     <header className="header bg-white">
       <nav className="promotion-nav">
@@ -69,11 +75,19 @@ const Header = ({ t }: HeaderProps): JSX.Element => {
             </div>
           </div>
 
-          <div>
-            <LoginModal />
+          {isLoggedIn ? (
+            <>
+              <SearchBar />
 
-            <RegisterModal />
-          </div>
+              <RightSideUser />
+            </>
+          ) : (
+            <div>
+              <LoginModal />
+
+              <RegisterModal />
+            </div>
+          )}
         </div>
       </div>
     </header>
