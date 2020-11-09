@@ -6,6 +6,7 @@ import LoginModal from 'src/components/Modules/LoginModal';
 import RegisterModal from 'src/components/Modules/RegisterModal';
 import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
 
+import RightSideUser from './RightSideUser';
 import SearchBar from './SearchBar';
 
 type HeaderProps = {
@@ -77,6 +78,8 @@ const Header = ({ t }: HeaderProps): JSX.Element => {
           {isLoggedIn ? (
             <>
               <SearchBar />
+
+              <RightSideUser />
             </>
           ) : (
             <div>
