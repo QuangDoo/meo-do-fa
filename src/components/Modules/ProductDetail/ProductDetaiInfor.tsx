@@ -78,7 +78,7 @@ const ProductDetailInfor = (props: PropsType): JSX.Element => {
                     </button>
                   </div>
                 </div> */}
-                <QuantityInput />
+                {/* <QuantityInput /> */}
               </div>
             )}
           </div>
