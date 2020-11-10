@@ -7,7 +7,7 @@ interface LayoutProps {
 }
 
 const PageLayout: React.FC<LayoutProps> = (props) => {
-  return <StyledLayout>{props.children}</StyledLayout>;
+  return <div className="container mt-5">{props.children}</div>;
 };
 
 export default PageLayout;
