@@ -103,7 +103,9 @@ build-dev-frontend:
 
 deploy-dev-frontend:
   stage: deploy
-  image: alpine/helm
+  image:
+    name: alpine/helm:3.2.4
+    entrypoint: [""]
   only:
     - develop
 
