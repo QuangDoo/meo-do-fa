@@ -30,15 +30,15 @@ function Products(): JSX.Element {
   const { data: categories, nameLookup: categoryNameLookup } = useCategories();
 
   // Get products
-  const { data: productsData, loading: productsLoading, error: productsError, refetch } = useQuery<
-    GetProductsData,
-    GetProductsVars
-  >(GET_PRODUCTS, {
-    variables: {
-      page,
-      pageSize
+  const { data: productsData, loading: productsLoading, error: productsError, refetch } = useQuery(
+    GET_PRODUCTS,
+    {
+      variables: {
+        page,
+        pageSize
+      }
     }
-  });
+  );
 
   // Refetch products when page changes
   useEffect(() => {
