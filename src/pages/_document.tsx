@@ -16,7 +16,7 @@ const globalStyles = `
 `;
 
 class MyDocument extends Document {
-  static async getInitialProps(ctx: any): Promise<any> {
+  static async getInitialProps(ctx) {
     const sheet = new ServerStyleSheet();
     const materialUiSheets = new MaterialUiServerStyleSheets();
     const originalRenderPage = ctx.renderPage;
@@ -34,6 +34,7 @@ class MyDocument extends Document {
           <>
             {initialProps.styles}
             {sheet.getStyleElement()}
+            {materialUiSheets.getStyleElement()}
           </>
         )
       };
