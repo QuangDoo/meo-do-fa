@@ -9,29 +9,23 @@ type Props = {
   quantity: number;
   handleChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   productId?: string;
-  list_price?: number;
+  price?: number;
   name?: string;
   product_variant_ids?: string[];
 };
 
 function QuantityInput(props: Props) {
   const [addToCart, { data, loading, error }] = useMutation(ADD_TO_CART);
-  console.log('data', data);
-  const { size, productId, quantity, list_price, name } = props;
 
-  console.log('id', productId);
-  console.log('quantity', quantity);
-  console.log('price', list_price);
-  console.log('productName', name);
+  const { size, productId, quantity, price, name } = props;
 
   const plus = () => {
-    // console.log('props', props);
     addToCart({
       variables: {
-        productId: 579,
-        quantity: 0,
-        price: 0,
-        productName: 'Paradol extra plus premium luxury vjp pro max'
+        productId,
+        quantity: quantity + 1,
+        price,
+        productName: name
       }
     });
   };
