@@ -17,10 +17,9 @@ export const StyledButton = styled.button<ExampleButtonProps>`
     white-space: nowrap;
     vertical-align: middle;
 
-    border: 1px solid
-      ${outline || variant === 'white' ? theme.colors[variant] : theme.colors.transparent};
+    border: 1px solid ${outline || variant === 'white' ? theme.colors[variant] : 'transparent'};
 
-    background-color: ${outline ? theme.colors.transparent : theme.colors[variant]};
+    background-color: ${outline ? 'transparent' : theme.colors[variant]};
 
     color: ${outline
       ? theme.colors[variant]

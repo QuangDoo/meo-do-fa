@@ -53,7 +53,10 @@ sonar:
     - develop
   script:
     - echo $SONAR_HOST_URL
-    - sonar-scanner -D sonar.projectKey=bb-medofa-frontend -D sonar.sources=. -D sonar.host.url=${SONAR_HOST_URL} -D sonar.login=${SONAR_KEY} -D sonar.exclusions=src/__source_html__/** -D sonar.gitlab.commit_sha=$CI_COMMIT_SHA -D sonar.gitlab.ref_name=$CI_COMMIT_REF_NAME -D sonar.gitlab.project_id=$CI_PROJECT_ID -D sonar.gitlab.unique_issue_per_inline=true
+    - echo $SONAR_KEY
+    - sonar-scanner -D sonar.projectKey=bb-medofa-frontend -D sonar.sources=. -D sonar.host.url=${SONAR_HOST_URL} -D sonar.login=${SONAR_KEY} -D sonar.exclusions=src/__source_html__/** -D sonar.gitlab.commit_sha=$CI_COMMIT_SHA -D sonar.gitlab.ref_name=$CI_COMMIT_REF_NAME -D sonar.gitlab.project_id=$CI_PROJECT_ID -D sonar.gitlab.unique_issue_per_inline=true -X
+
+  allow_failure: true
   
   interruptible: true
   # allow_failure: true
@@ -103,7 +106,9 @@ build-dev-frontend:
 
 deploy-dev-frontend:
   stage: deploy
-  image: alpine/helm
+  image:
+    name: alpine/helm:3.2.4
+    entrypoint: [""]
   only:
     - develop
 

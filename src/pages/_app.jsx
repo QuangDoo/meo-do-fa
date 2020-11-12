@@ -2,7 +2,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import '../assets/scss/custom-styles.scss';
 
 import App from 'next/app';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ThemeProvider } from 'styled-components';
 
 import { appWithTranslation } from '../../i18n';
@@ -12,6 +12,13 @@ import { ModalControlProvider } from '../contexts/ModalControl';
 import { theme } from '../theme';
 
 const MyApp = ({ Component, pageProps }) => {
+  useEffect(() => {
+    const jssStyles = document.querySelector('#jss-server-side');
+    if (jssStyles) {
+      jssStyles.parentElement.removeChild(jssStyles);
+    }
+  }, []);
+
   return (
     <ThemeProvider theme={theme}>
       <ModalControlProvider>

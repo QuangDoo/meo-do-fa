@@ -29,34 +29,6 @@ const ModalWithHeader: FC<ModalProps> = (props) => {
       </div>
     </ModalBase>
   );
-
-  return (
-    <MaterialModal
-      open={props.open}
-      onClose={props.onClose}
-      closeAfterTransition
-      BackdropComponent={Backdrop}
-      BackdropProps={{
-        timeout: 300
-      }}>
-      <Fade in={props.open} timeout={300}>
-        <div className={`modal-dialog modal-dialog-centered ${props.className}`}>
-          <div className="modal-content">
-            <div className="modal-header">
-              <header className="modal-title text-capitalize">{props.title}</header>
-              <button onClick={props.onClose} aria-label="Close" className="close" type="button">
-                <span aria-hidden="true">
-                  <i className="fas fa-times"></i>
-                </span>
-              </button>
-            </div>
-
-            <div className="modal-body">{props.children}</div>
-          </div>
-        </div>
-      </Fade>
-    </MaterialModal>
-  );
 };
 
 export default ModalWithHeader;
