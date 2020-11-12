@@ -39,7 +39,7 @@ function Products(): JSX.Element {
       pageSize
     }
   });
-
+  console.log('productsError', productsError);
   // Refetch products when page changes
   useEffect(() => {
     if (!router.query.page) return;

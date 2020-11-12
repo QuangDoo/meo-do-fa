@@ -1,28 +1,46 @@
+import { useMutation } from '@apollo/react-hooks';
 import clsx from 'clsx';
-import React, { useState } from 'react';
+import React from 'react';
+import { useOrder } from 'src/contexts/Order';
+import { ADD_TO_CART } from 'src/graphql/order/order.mutation';
 
 type Props = {
   size?: 'normal' | 'large';
   quantity: number;
   handleChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  productId?: string;
+  list_price?: number;
+  name?: string;
+  product_variant_ids?: string[];
 };
 
 function QuantityInput(props: Props) {
-  const { size } = props;
+  const [addToCart, { data, loading, error }] = useMutation(ADD_TO_CART);
+  console.log('data', data);
+  const { size, productId, quantity, list_price, name } = props;
 
-  const [quantity, setQuantity] = useState(props.quantity);
+  console.log('id', productId);
+  console.log('quantity', quantity);
+  console.log('price', list_price);
+  console.log('productName', name);
 
   const plus = () => {
-    setQuantity(quantity + 1);
-  };
-
-  const minus = () => {
-    setQuantity(quantity - 1);
+    // console.log('props', props);
+    addToCart({
+      variables: {
+        productId: 579,
+        quantity: 0,
+        price: 0,
+        productName: 'Paradol extra plus premium luxury vjp pro max'
+      }
+    });
   };
 
   return (
     <div className={clsx('qty js-qty', size === 'large' && 'qty--lg')}>
-      <button className="btn btn-sm qty__button qty__button--minus" onClick={minus}>
+      <button
+        className="btn btn-sm qty__button qty__button--minus"
+        onClick={() => console.log('tru')}>
         <i className="fas fa-minus" />
       </button>
 
