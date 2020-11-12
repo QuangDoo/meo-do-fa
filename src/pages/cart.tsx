@@ -9,11 +9,11 @@ import CartItem from '../components/Modules/Cart/CartItem';
 import { mockCartItems } from '../mockData/mockCartItems';
 
 function Cart(): JSX.Element {
-  const cartItem = [
+  const cartItems = [
     {
       productName: 'phosphalugel boehringer ingelheim (h/26g)',
-      price: 99600,
-      oldPrice: 99600,
+      list_price: 99600,
+      standard_price: 99600,
       id: 123,
       quantity: 4,
       description: 'Hộp 26 gói x 20gr',
@@ -23,19 +23,19 @@ function Cart(): JSX.Element {
     },
     {
       productName: 'phosphalugel boehringer ingelheim (h/26g)',
-      price: 99600,
+      list_price: 99600,
       id: 123,
       quantity: 3,
       description: 'Hộp 26 gói x 20gr',
       slug: 'phosphalugel-boehringer-ingelheim-h-26g',
-      oldPrice: 123456,
+      standard_price: 123456,
       image: 'https://images.thuocsi.vn/FrWZN5xT53QQ8Cs66rKHT228',
       important: false
     },
     {
       productName: 'phosphalugel boehringer ingelheim (h/26g)',
-      price: 99600,
-      oldPrice: 99600,
+      list_price: 99600,
+      standard_price: 99600,
       id: 123,
       quantity: 3,
       description: 'Hộp 26 gói x 20gr',
@@ -45,16 +45,16 @@ function Cart(): JSX.Element {
       important: false
     }
   ];
-  const totalQuantity = cartItem.reduce((current, total) => {
+  const totalQuantity = cartItems.reduce((current, total) => {
     return current + total.quantity;
   }, 0);
 
-  const totalAfterDiscount = mockCartItems.reduce((current, total) => {
-    return current + total.quantity * total.price;
+  const totalAfterDiscount = cartItems.reduce((current, total) => {
+    return current + total.quantity * total.list_price;
   }, 0);
 
-  const totalBeforeDiscount = mockCartItems.reduce((current, total) => {
-    return current + total.quantity * total.oldPrice;
+  const totalBeforeDiscount = cartItems.reduce((current, total) => {
+    return current + total.quantity * total.standard_price;
   }, 0);
 
   return (
@@ -64,8 +64,8 @@ function Cart(): JSX.Element {
       </Head>
       <Header />
       <Nav />
-      <PageLayout>
-        <div className="cart" data-target="cart.cart">
+      <div className="container py-5">
+        <div className="cart">
           <div className="row">
             <div className="col-12 mb-3">
               <h1 className="h3">Giỏ hàng</h1>
@@ -88,7 +88,7 @@ function Cart(): JSX.Element {
                 data-action
                 data-target="cart.items"
                 data-url="/api/cart_data/cart_items?page=1">
-                {mockCartItems.map((item, index) => (
+                {cartItems.map((item, index) => (
                   <CartItem key={index} {...item} />
                 ))}
               </div>
@@ -183,7 +183,7 @@ function Cart(): JSX.Element {
             </div>
           </div>
         </div>
-      </PageLayout>
+      </div>
       <Footer />
     </>
   );

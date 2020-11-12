@@ -1,24 +1,22 @@
 import { useMutation } from '@apollo/react-hooks';
+import { Trans, withTranslation } from 'i18n';
 import { WithTranslation } from 'next-i18next';
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import { emailRegex } from 'src/assets/regex/email';
+import { viPhoneNumberRegex } from 'src/assets/regex/viPhoneNumber';
+import Button from 'src/components/Form/Button';
+import Checkbox from 'src/components/Form/Checkbox';
+import Input from 'src/components/Form/Input';
+import { useModalControlDispatch } from 'src/contexts/ModalControl';
+import { CREATE_USER, CreateUserData, CreateUserVars } from 'src/graphql/user/createUser.mutation';
+import withApollo from 'src/utils/withApollo';
 import styled from 'styled-components';
-
-import { Trans, withTranslation } from '../../../../i18n';
-import { emailRegex } from '../../../assets/regex/email';
-import { viPhoneNumberRegex } from '../../../assets/regex/viPhoneNumber';
-import { useModalControlDispatch } from '../../../contexts/ModalControl';
-import { AccountType } from '../../../enums/AccountType';
-import { REGISTER_USER } from '../../../graphql/user/register.mutation';
-import withApollo from '../../../utils/withApollo';
-import Button from '../../Form/Button';
-import Checkbox from '../../Form/Checkbox';
-import Input from '../../Form/Input';
 
 // Form input fields
 type Inputs = {
-  accountType: string;
+  account_type: string;
   name: string;
   email: string;
   password: string;
@@ -31,7 +29,9 @@ const ErrorToast = styled.div`
   white-space: pre-line;
 `;
 
-// Initial value for accountType
+const accountTypes = ['PHARMACY', 'CLINIC', 'DRUGSTORE'];
+
+// Initial value for account_type
 const initialAccountType = '';
 
 const RegisterForm = (props: WithTranslation): JSX.Element => {
@@ -48,11 +48,11 @@ const RegisterForm = (props: WithTranslation): JSX.Element => {
       type: 'CLOSE_REGISTER_MODAL'
     });
 
-  const [registerUser, { data }] = useMutation(REGISTER_USER);
+  const [createUser, { data }] = useMutation<CreateUserData, CreateUserVars>(CREATE_USER);
 
-  // Watch accountType value, with initial state
+  // Watch account_type value, with initial state
   // This component re-renders when userType changes
-  const currentAccountType = watch('accountType', initialAccountType);
+  const currentAccountType = watch('account_type', initialAccountType);
 
   // Shows error toast when error changes
   useEffect(() => {
@@ -67,13 +67,15 @@ const RegisterForm = (props: WithTranslation): JSX.Element => {
 
   // On submit button click
   const onSubmit = (data: Inputs) => {
-    registerUser({
+    createUser({
       variables: {
-        accountType: data.accountType,
-        name: data.name,
-        email: data.email,
-        password: data.password,
-        phone: data.phone.toString()
+        inputs: {
+          account_type: data.account_type,
+          name: data.name,
+          email: data.email,
+          password: data.password,
+          phone: data.phone.toString()
+        }
       }
     });
   };
@@ -95,9 +97,9 @@ const RegisterForm = (props: WithTranslation): JSX.Element => {
 
   return (
     <form className="new_account" onSubmit={handleSubmit(onSubmit)}>
-      <input name="accountType" hidden type="text" ref={register} />
+      <input name="account_type" hidden type="text" ref={register} />
 
-      {/* Hide ChooseAccountType if accountType is in initial state */}
+      {/* Hide ChooseAccountType if account_type is in initial state */}
       <div hidden={currentAccountType !== initialAccountType} className="business-group">
         <div className="container text-center">
           <div className="row">
@@ -108,12 +110,12 @@ const RegisterForm = (props: WithTranslation): JSX.Element => {
 
           {/* Account type buttons */}
           <div className="row no-gutters">
-            {Object.values(AccountType).map((accountType) => (
+            {accountTypes.map((accountType) => (
               <button
                 key={accountType}
                 type="button"
                 className="col-6 business-group__item p-2"
-                onClick={() => setValue('accountType', accountType)}>
+                onClick={() => setValue('account_type', accountType)}>
                 <img
                   alt=""
                   className="img-fluid"
@@ -128,7 +130,7 @@ const RegisterForm = (props: WithTranslation): JSX.Element => {
         </div>
       </div>
 
-      {/* Hide AccountInformation form if accountType is chosen (not in initial state) */}
+      {/* Hide AccountInformation form if account_type is chosen (not in initial state) */}
       <div hidden={currentAccountType === initialAccountType} className="account-information">
         <div className="welcome-account mb-3">
           {t('register:welcome')}
@@ -137,7 +139,7 @@ const RegisterForm = (props: WithTranslation): JSX.Element => {
             {t(`register:${currentAccountType.toLowerCase()}`)}!
           </span>
           <button
-            onClick={() => setValue('accountType', initialAccountType)}
+            onClick={() => setValue('account_type', initialAccountType)}
             type="button"
             className="font-weight-bold text-primary ml-2">
             {t('register:edit')}
