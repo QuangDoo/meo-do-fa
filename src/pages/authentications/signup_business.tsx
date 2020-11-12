@@ -1,12 +1,40 @@
+import { useQuery } from '@apollo/react-hooks';
+import { useMutation } from '@apollo/react-hooks';
 import React, { createRef, useState } from 'react';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
+import { UPDATE_USER } from 'src/graphql/user/info.mutation';
+import { GET_CITY, GET_DISTRICT, GET_INFO, GET_USER, GET_WARD } from 'src/graphql/user/info.query';
+import withApollo from 'src/utils/withApollo';
 
 import Head from '../../components/Layout/Head';
 import PageLayout from '../../components/Layout/PageLayout';
 
-function SignupBusiness(): JSX.Element {
+type Inputs = {
+  name: String;
+  display_name: String;
+  email: String
+  contact_address: String;
+  company_name: String;
+  vat: String;
+  representative: String;
+  business_license: String;
+}
+function SignupBusiness(props): JSX.Element {
+
+  const { data: userData, loading: userLoading, error: userError } = useQuery(GET_USER);
+  const { data: cityData, loading: cityLoading, error: cityError } = useQuery(GET_CITY);
+  const { data: districtData, loading: districtLoading, error: districtError } = useQuery(GET_DISTRICT);
+  const { data: wardData, loading: wardLoading, error: wardError } = useQuery(GET_WARD);
+  const [updateUser, { data }] = useMutation(UPDATE_USER);
+
+  console.log('userData', userData)
+  // useEffect(()=>{
+  //   if (cityData) {console.log(cityData)}
+  // },[])
   const [fileName, setFileName] = useState('');
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     switch (e.target.name) {
       // Updated this
       case 'selectedFile':
@@ -85,12 +113,39 @@ function SignupBusiness(): JSX.Element {
     }
   ];
 
-  const { register, setValue, handleSubmit } = useForm();
+  const { register, setValue, handleSubmit, watch, getValues } = useForm<Inputs>();
+  // watch('user[businesses_attributes][0][name]')
+  // const value = getValues('user[businesses_attributes][0][name]')
+  // console.log("val",value);
+
   const fileInput = createRef();
-  const onSubmit = (data) => {
-    console.log(data);
-    console.log(fileInput.current);
+  const onSubmit = (data: Inputs) => {
+    updateUser({
+      variables: {
+        name: data.name, 
+        display_name: data.display_name, 
+        email: data.email, 
+        contact_address: data.contact_address, 
+        company_name: data.company_name, 
+        vat: data.vat, 
+        representative: data.representative, 
+        business_license: data.business_license
+      }
+    })
   };
+  useEffect(() => {
+    if (!data) return;
+
+    if (data.updateUser.code !== 200) {
+      toast.error(`Error ${data.updateUser.code}: {data.updateUser.status}`);
+
+      return alert("ko thafnh coong");
+    }
+    localStorage.setItem('token', data.updateUser.token);
+
+    alert("thanhcong");
+  }, [data]);
+  // console.log('updateUser', updateUser)
   const [disabledDistrict, setDisabledDistrict] = useState(true);
   const [disabledWard, setDisabledWard] = useState(true);
   return (
@@ -127,7 +182,7 @@ function SignupBusiness(): JSX.Element {
         </div>
       </header>
       {/* <Nav /> */}
-      <PageLayout>
+      <PageLayout >
         <form
           encType="multipart/form-data"
           action="/signup_business"
@@ -136,7 +191,7 @@ function SignupBusiness(): JSX.Element {
           onSubmit={handleSubmit(onSubmit)}>
           <input type="hidden" name="_method" defaultValue="put" />
           <input type="hidden" name="authenticity_token" />
-          <div className="container signup-business py-3 py-sm-5">
+          <div className="container signup-business py-3 py-sm-5" >
             <div className="row justify-content-center">
               <div className="col-12 col-sm-9 mb-3">
                 <div className="row">
@@ -153,7 +208,7 @@ function SignupBusiness(): JSX.Element {
                         <label htmlFor="ban" className="form__label">
                           Bạn là
                         </label>
-                        <div className="form-control d-block w-100">Người tiêu dùng</div>
+                        <div className="form-control d-block w-100" >Người tiêu dùng</div>
                       </div>
                       <div className="col-md-8 form-group">
                         <label className="form__label" htmlFor="user_businesses_attributes_0_name">
@@ -163,7 +218,7 @@ function SignupBusiness(): JSX.Element {
                           className="form-control"
                           aria-describedby="businessNameHelpBlock"
                           type="text"
-                          name="user[businesses_attributes][0][name]"
+                          name="company_name"
                           ref={register}
                         />
                         <small className="form-text text-muted">Vd: Dược Hoàng Vũ</small>
@@ -179,7 +234,7 @@ function SignupBusiness(): JSX.Element {
                         className="form-control"
                         aria-describedby="representativeHelpBlock"
                         type="text"
-                        name="user[businesses_attributes][0][representative]"
+                        name="representative"
                         ref={register}
                       />
                       <small className="form-text text-muted">Vd. Trần Thị B</small>
@@ -197,7 +252,7 @@ function SignupBusiness(): JSX.Element {
                         aria-describedby="taxNumberHelpBlock"
                         size={14}
                         type="text"
-                        name="user[businesses_attributes][0][tax_number]"
+                        name="vat"
                         ref={register}
                       />
                       <small className="form-text text-muted">Vd. 8026906145</small>
@@ -210,7 +265,7 @@ function SignupBusiness(): JSX.Element {
                         <input
                           className="custom-file-input"
                           type="file"
-                          name="user[businesses_attributes][0][license_file]"
+                          name="business_license"
                           onChange={(event) => handleChange(event)}
                           ref={register}
                         />
@@ -230,7 +285,7 @@ function SignupBusiness(): JSX.Element {
                         aria-describedby="addressHelpBlock"
                         required
                         type="text"
-                        name="user[businesses_attributes][0][address]"
+                        name="contact_address"
                         ref={register}
                       />
                       <small className="form-text text-muted">
@@ -259,11 +314,16 @@ function SignupBusiness(): JSX.Element {
                                   district[0].districtName
                                 ));
                           }}>
-                          {city.map((item, index) => (
+                            {city?.map((item, index) => (
                             <option key={index} value={item.id}>
                               {item.cityName}
                             </option>
                           ))}
+                          {/* {cityData?.map((item, index) => (
+                            <option key={index} value={item.id}>
+                              {item.city}
+                            </option>
+                          ))} */}
                         </select>
                       </div>
                       <div className="col-md-4 form-group">
@@ -281,11 +341,16 @@ function SignupBusiness(): JSX.Element {
                           onBlur={(e) => {
                             e.target.value ? setDisabledWard(false) : setDisabledWard(true);
                           }}>
-                          {district.map((item, index) => (
+                            {district?.map((item, index) => (
                             <option key={index} value={item.id}>
                               {item.districtName}
                             </option>
                           ))}
+                          {/* {districtData?.map((item, index) => (
+                            <option key={index} value={item.id}>
+                              {item.district}
+                            </option>
+                          ))} */}
                         </select>
                       </div>
                       <div className="col-md-4 form-group">
@@ -300,11 +365,16 @@ function SignupBusiness(): JSX.Element {
                           required
                           name="user[businesses_attributes][0][ward_id]"
                           ref={register}>
-                          {ward.map((item, index) => (
+                          {ward?.map((item, index) => (
                             <option key={index} value={item.id}>
                               {item.wardName}
                             </option>
                           ))}
+                          {/* {wardData?.map((item, index) => (
+                            <option key={index} value={item.id}>
+                              {item.ward}
+                            </option>
+                          ))} */}
                         </select>
                       </div>
                     </div>
@@ -408,5 +478,4 @@ function SignupBusiness(): JSX.Element {
     </>
   );
 }
-
-export default SignupBusiness;
+export default withApollo({ ssr: true })(SignupBusiness);

@@ -14,7 +14,7 @@ const notiItem: NotiItem[] = [
   { notiInfo: 'Giá sản phẩm Phosphalugel Boehringer Ingelheim (H/26g) đã được cập nhật giá' , time: '1 ngày trước'},
 ];
 const RightSideUser = () => {
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState(false);
 
   function toggleShow() {
     setShow((show) => !show);

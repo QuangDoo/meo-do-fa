@@ -52,12 +52,12 @@ export default function Tab(props) {
     <div className="col-12 col-sm-9 product__details">
       <Tabs>
         <TabContent label="Thông tin chung">{props.thongTinChung}</TabContent>
-        <TabContent label="Chỉ định">Dang cap nhat</TabContent>
-        <TabContent label="Liều lượng - Cách dùng">Dang cap nhat</TabContent>
-        <TabContent label="Chống chỉ định">Dang cap nhat</TabContent>
-        <TabContent label="Tương tác thuốc">Dang cap nhat</TabContent>
-        <TabContent label="Bảo quản">Dang cap nhat</TabContent>
-        <TabContent label="Quá liều">Dang cap nhat</TabContent>
+        <TabContent label="Chỉ định">Đang cập nhật</TabContent>
+        <TabContent label="Liều lượng - Cách dùng">Đang cập nhật</TabContent>
+        <TabContent label="Chống chỉ định">Đang cập nhật</TabContent>
+        <TabContent label="Tương tác thuốc">Đang cập nhật</TabContent>
+        <TabContent label="Bảo quản">Đang cập nhật</TabContent>
+        <TabContent label="Quá liều">Đang cập nhật</TabContent>
       </Tabs>
     </div>
   );
