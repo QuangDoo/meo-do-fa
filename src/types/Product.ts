@@ -16,5 +16,4 @@ export type Product = {
   standard_price: number; // standard price
   badges?: ProductBadgeType[];
   expirationDate?: string;
-  product_variant_ids: string[];
 };
