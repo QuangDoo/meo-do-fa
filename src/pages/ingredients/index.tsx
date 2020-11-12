@@ -1,33 +1,30 @@
 import { useQuery } from '@apollo/react-hooks';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import Footer from 'src/components/Layout/Footer';
+import Head from 'src/components/Layout/Head';
+import Header from 'src/components/Layout/Header';
+import Nav from 'src/components/Layout/Nav';
+import PageLayout from 'src/components/Layout/PageLayout';
+import SearchScreen from 'src/components/Modules/SearchScreen';
+import { GET_INGREDIENTS } from 'src/graphql/ingredient/ingredient.query';
+import withApollo from 'src/utils/withApollo';
 
-import Footer from '../../components/Layout/Footer';
-import Head from '../../components/Layout/Head';
-import Header from '../../components/Layout/Header';
-import Nav from '../../components/Layout/Nav';
-import PageLayout from '../../components/Layout/PageLayout';
-import SearchScreen from '../../components/Modules/SearchScreen';
-import { GET_INGREDIENTS } from '../../graphql/ingredient/ingredient.query';
-import withApollo from '../../utils/withApollo';
 type TypeIngredients = {
   id: string;
   name: string;
   slug: string;
 };
 function Ingredients(): JSX.Element {
-  const [ingredients, setIngredients] = useState<TypeIngredients[]>([]);
-  const { data: dataIngredients, loading: loadingIngredients, error: errorIngredients } = useQuery(
-    GET_INGREDIENTS,
-    {
-      variables: { page: 1, pageSize: 100 }
+  const { data, loading } = useQuery(GET_INGREDIENTS, {
+    variables: {
+      page: 1,
+      pageSize: 100
+    },
+    onError: (error) => {
+      console.log('Get ingredients error:', error);
     }
-  );
+  });
 
-  useEffect(() => {
-    if (!dataIngredients) return;
-    setIngredients(dataIngredients.getIngredients);
-  }, [dataIngredients]);
-  console.log('ingredients', ingredients);
   const characters = [
     { character: 'A', dataValue: 'a' },
     { character: 'B', dataValue: 'b' },
@@ -56,6 +53,7 @@ function Ingredients(): JSX.Element {
     { character: 'Z', dataValue: 'z' },
     { character: '#', dataValue: '#' }
   ];
+
   return (
     <>
       <Head>
@@ -64,7 +62,7 @@ function Ingredients(): JSX.Element {
       <Header />
       <Nav />
       <PageLayout>
-        <SearchScreen dataList={ingredients} characters={characters} />
+        <SearchScreen dataList={data?.getIngredients || []} characters={characters} />
       </PageLayout>
       <Footer />
     </>
