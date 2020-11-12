@@ -2,14 +2,14 @@ import { useMutation } from '@apollo/react-hooks';
 // import { emailRegex } from '../../assets/regex/email'
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import { DeepMap, FieldError, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { viPhoneNumberRegex } from 'src/assets/regex/viPhoneNumber';
 import Button from 'src/components/Form/Button';
 import Checkbox from 'src/components/Form/Checkbox';
 import Input from 'src/components/Form/Input';
 import { useModalControlDispatch } from 'src/contexts/ModalControl';
-import { LOGIN_USER } from 'src/graphql/user/login.mutation';
+import { LOGIN_USER, LoginData, LoginVars } from 'src/graphql/user/login.mutation';
 import withApollo from 'src/utils/withApollo';
 
 type Inputs = {
@@ -23,35 +23,38 @@ const LoginForm = (): JSX.Element => {
   const openRegisterModal = () => dispatch({ type: 'OPEN_REGISTER_MODAL' });
 
   const router = useRouter();
-  const { register, handleSubmit, errors } = useForm<Inputs>();
-  const [login, { data: loginData, error: loginError }] = useMutation(LOGIN_USER);
 
-  useEffect(() => {
-    if (!errors) return;
+  const { register, handleSubmit } = useForm<Inputs>();
 
-    Object.keys(errors).forEach((errorField) => toast.error(errors[errorField].message));
-  }, [errors]);
-
-  useEffect(() => {
-    if (loginData?.login?.token) {
+  const [login] = useMutation<LoginData, LoginVars>(LOGIN_USER, {
+    onCompleted: (data) => {
+      localStorage.setItem('token', data.login.token);
       router.push('/quick-order');
-      window.localStorage.setItem('token', loginData.login.token);
+    },
+    onError: (error) => {
+      console.log('Login error:', error);
+      toast.error('Error: ' + error.message);
     }
-  }, [loginData]);
+  });
 
-  const onSubmit = async (data: Inputs) => {
-    await login({
+  const onError = (errors: DeepMap<Inputs, FieldError>) => {
+    Object.keys(errors).forEach((field) => toast.error(errors[field].message));
+  };
+
+  const onSubmit = (data: Inputs) => {
+    login({
       variables: {
-        phone: data.username,
-        password: data.password
+        inputs: {
+          phone: data.username,
+          password: data.password
+        }
       }
     });
-    console.log('data :>> ', loginError);
   };
 
   return (
     <div>
-      <form className="new_account" id="new_account" onSubmit={handleSubmit(onSubmit)}>
+      <form className="new_account" id="new_account" onSubmit={handleSubmit(onSubmit, onError)}>
         <Input
           name="username"
           ref={register({

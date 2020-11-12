@@ -5,3 +5,8 @@ export type CreateUserInput = {
   password: string;
   email: string;
 };
+
+export type LoginUserInput = {
+  phone: string;
+  password: string;
+};
