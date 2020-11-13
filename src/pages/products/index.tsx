@@ -15,7 +15,6 @@ import { useManufacturers } from 'src/contexts/Manufacturers';
 import { GET_PRODUCTS } from 'src/graphql/product/product.query';
 import { mockSuppliers } from 'src/mockData/mockSuppliers';
 import { mockTotalProducts } from 'src/mockData/mockTotalProducts';
-import { GetProductsData, GetProductsVars } from 'src/types/GetProducts';
 import withApollo from 'src/utils/withApollo';
 
 const totalProducts = mockTotalProducts;
@@ -41,7 +40,7 @@ function Products(): JSX.Element {
       }
     }
   );
-
+  console.log('productsData', productsData);
   // Refetch products when page changes
   useEffect(() => {
     if (!router.query.page) return;
