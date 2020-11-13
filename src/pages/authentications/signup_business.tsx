@@ -1,11 +1,23 @@
+import { useMutation } from '@apollo/react-hooks';
 import React, { createRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { UPDATE_USER, UpdateUserVars } from 'src/graphql/user/updateUser.mutation';
 
 import Head from '../../components/Layout/Head';
 import PageLayout from '../../components/Layout/PageLayout';
 
 function SignupBusiness(): JSX.Element {
   const [fileName, setFileName] = useState('');
+
+  const [updateUser] = useMutation<UpdateUserVars>(UPDATE_USER, {
+    onCompleted: (data) => {
+      console.log('data', data);
+    },
+    onError: (error) => {
+      console.log('error', error);
+    }
+  });
+
   const handleChange = (e) => {
     switch (e.target.name) {
       // Updated this
@@ -20,6 +32,7 @@ function SignupBusiness(): JSX.Element {
         setFileName(e.target.value);
     }
   };
+
   let file = null;
   file = fileName ? <span>File Selected - {fileName}</span> : <span>Chọn file...</span>;
   const city = [
@@ -88,8 +101,16 @@ function SignupBusiness(): JSX.Element {
   const { register, setValue, handleSubmit } = useForm();
   const fileInput = createRef();
   const onSubmit = (data) => {
-    console.log(data);
-    console.log(fileInput.current);
+    console.log('data', data.user.businesses_attributes[0]);
+    console.log('fileName', fileName);
+    // updateUser({
+    //   variables: {
+    //     display_name: data.user.businesses_attributes[0].name,
+    //     representative: data.user.businesses_attributes[0].representative,
+    //     vat: data.user.businesses_attributes[0].tax_number,
+    //     contact_address: data.user.businesses_attributes[0].address
+    //   }
+    // });
   };
   const [disabledDistrict, setDisabledDistrict] = useState(true);
   const [disabledWard, setDisabledWard] = useState(true);
@@ -126,7 +147,6 @@ function SignupBusiness(): JSX.Element {
           </div>
         </div>
       </header>
-      {/* <Nav /> */}
       <PageLayout>
         <form
           encType="multipart/form-data"
