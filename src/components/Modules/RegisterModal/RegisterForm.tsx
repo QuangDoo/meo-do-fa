@@ -40,7 +40,7 @@ const RegisterForm = (props: WithTranslation): JSX.Element => {
 
   const { t } = props;
 
-  const { register, handleSubmit, setValue, watch, errors } = useForm<Inputs>();
+  const { register, handleSubmit, setValue, watch } = useForm<Inputs>();
 
   const modalControlDispatch = useModalControlDispatch();
 
@@ -51,24 +51,23 @@ const RegisterForm = (props: WithTranslation): JSX.Element => {
       type: 'CLOSE_REGISTER_MODAL'
     });
 
-  const [createUser, { data }] = useMutation<CreateUserData, CreateUserVars>(CREATE_USER);
+  const [createUser] = useMutation<CreateUserData, CreateUserVars>(CREATE_USER, {
+    onCompleted: (data) => {
+      localStorage.setItem('token', data.createUser.token);
+      router.push('/authentications/signup_business');
+      closeRegisterModal();
+    },
+    onError: (error) => {
+      console.log('Create user error:', { error });
+      toast.error('Error: ' + error.message);
+    }
+  });
 
   // Watch account_type value, with initial state
-  // This component re-renders when userType changes
+  // This component re-renders when account_type changes
   const currentAccountType = watch('account_type', initialAccountType);
 
-  // Shows error toast when error changes
-  useEffect(() => {
-    const errorNames = Object.keys(errors);
-
-    if (!errorNames.length) return;
-
-    const errorMessage = errorNames.map((name) => errors[name].message).join('\n');
-
-    toast.error(<ErrorToast>{errorMessage}</ErrorToast>);
-  }, [errors]);
-
-  // On submit button click
+  // On form submit
   const onSubmit = (data: Inputs) => {
     createUser({
       variables: {
@@ -83,24 +82,17 @@ const RegisterForm = (props: WithTranslation): JSX.Element => {
     });
   };
 
-  // Set token when data is returned from backend
-  useEffect(() => {
-    if (!data) return;
+  // On form error
+  const onError = (errors) => {
+    const errorMessage = Object.keys(errors)
+      .map((name) => errors[name].message)
+      .join('\n');
 
-    if (data.createUser.code !== 200) {
-      toast.error(`Error ${data.createUser.code}: ${data.createUser.status}`);
-
-      return;
-    }
-
-    localStorage.setItem('token', data.createUser.token);
-
-    closeRegisterModal();
-    router.push('/authentications/signup_business');
-  }, [data]);
+    toast.error(<ErrorToast>{errorMessage}</ErrorToast>);
+  };
 
   return (
-    <form className="new_account" onSubmit={handleSubmit(onSubmit)}>
+    <form className="new_account" onSubmit={handleSubmit(onSubmit, onError)}>
       <input name="account_type" hidden type="text" ref={register} />
 
       {/* Hide ChooseAccountType if account_type is in initial state */}

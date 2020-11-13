@@ -108,7 +108,7 @@ const ProductCard = ({
                   <QuantityInput
                     quantity={0}
                     productId={props.id}
-                    list_price={props.list_price}
+                    price={props.price}
                     name={props.name}
                   />
                 </OrderProvider>
