@@ -36,6 +36,8 @@ const accountTypes = ['PHARMACY', 'CLINIC', 'DRUGSTORE'];
 const initialAccountType = '';
 
 const RegisterForm = (props: WithTranslation): JSX.Element => {
+  const router = useRouter();
+
   const { t } = props;
 
   const { register, handleSubmit, setValue, watch } = useForm<Inputs>();
@@ -52,6 +54,7 @@ const RegisterForm = (props: WithTranslation): JSX.Element => {
   const [createUser] = useMutation<CreateUserData, CreateUserVars>(CREATE_USER, {
     onCompleted: (data) => {
       localStorage.setItem('token', data.createUser.token);
+      router.push('/authentications/signup_business');
       closeRegisterModal();
     },
     onError: (error) => {

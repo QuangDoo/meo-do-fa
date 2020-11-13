@@ -18,7 +18,7 @@ export const ProductPrice = (props: ProductPriceProps) => {
 
       {priceIsDifferent && (
         <span className="product-card__old-price">
-          {props.standard_price.toLocaleString('de-DE')}
+          {/* {props.standard_price.toLocaleString('de-DE')} */}
           <span className="unit">đ</span>
         </span>
       )}

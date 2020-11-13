@@ -6,6 +6,7 @@ import QuantityInput from '../QuantityInput';
 import ConfirmDeleteModal from './ConfirmDeleteModal';
 
 function CartItem(props): JSX.Element {
+  console.log('props', props);
   const [open, setOpen] = useState(false);
   const openModal = () => setOpen(true);
   const closeModal = () => setOpen(false);
@@ -44,7 +45,7 @@ function CartItem(props): JSX.Element {
           <div className="w-100">
             <div className="d-flex justify-content-between align-items-center">
               <div>
-                <ProductPrice list_price={props.list_price} standard_price={props.standard_price} />
+                <ProductPrice list_price={props.price} standard_price={props.standard_price} />
               </div>
               <div className="cart-item__qty">
                 <QuantityInput {...props} quantity={props.quantity} />
