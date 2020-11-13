@@ -1,30 +1,19 @@
-import { Backdrop, Fade, Modal as MaterialModal } from '@material-ui/core';
-import React, { ReactElement } from 'react';
+import { Dialog } from '@material-ui/core';
+import React from 'react';
 
-export type BaseModalProps = {
-  // Modal is open
+export type ModalBaseProps = {
   open: boolean;
-
-  // On modal close
   onClose: () => void;
-
-  children: ReactElement<any, any>;
+  children: React.ReactNode;
 };
 
-const ModalBase = (props: BaseModalProps): JSX.Element => {
+const ModalBase = (props: ModalBaseProps): JSX.Element => {
+  const { open, onClose, children } = props;
+
   return (
-    <MaterialModal
-      open={props.open}
-      onClose={props.onClose}
-      closeAfterTransition
-      BackdropComponent={Backdrop}
-      BackdropProps={{
-        timeout: 300
-      }}>
-      <Fade in={props.open} timeout={300}>
-        {props.children}
-      </Fade>
-    </MaterialModal>
+    <Dialog open={open} onClose={onClose} scroll="body" maxWidth="xs" fullWidth>
+      {children}
+    </Dialog>
   );
 };
 
