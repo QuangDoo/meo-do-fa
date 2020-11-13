@@ -46,12 +46,11 @@ const TabContent = (props): JSX.Element => {
     </div>
   );
 };
-
 export default function Tab(props) {
   return (
     <div className="col-12 col-sm-9 product__details">
       <Tabs>
-        <TabContent label="Thông tin chung">{props.thongTinChung}</TabContent>
+        <TabContent label="Thông tin chung">{props.info}</TabContent>
         <TabContent label="Chỉ định">Đang cập nhật</TabContent>
         <TabContent label="Liều lượng - Cách dùng">Đang cập nhật</TabContent>
         <TabContent label="Chống chỉ định">Đang cập nhật</TabContent>

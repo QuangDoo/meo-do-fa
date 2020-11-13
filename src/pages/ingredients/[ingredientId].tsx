@@ -1,4 +1,9 @@
+import { useQuery } from '@apollo/react-hooks';
 import React from 'react';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import { GET_INGREDIENT } from 'src/graphql/ingredient/ingredient.query';
+import withApollo from 'src/utils/withApollo';
 
 import Footer from '../../components/Layout/Footer';
 import Head from '../../components/Layout/Head';
@@ -10,9 +15,26 @@ import Tab from '../../components/Modules/ProductDetail/ProductInformation/Tab';
 import { ProductsCarousel } from '../../components/Modules/ProductsCarousel';
 import { mockProducts } from '../../mockData/mockProducts';
 
+type TypeIngredient = {
+  id: string;
+  name: string;
+  slug: string;
+};
 const tabContent = { thongTinChung: 'abc' };
 
-const IngredientDetail = (): JSX.Element => {
+function IngredientDetail(props:TypeIngredient): JSX.Element {
+  const [Ingredient, setIngredient] = useState<TypeIngredient[]>([]);
+  const { data: dataIngredient, loading: loadingIngredient, error: errorIngredient } = useQuery(
+    GET_INGREDIENT,
+    {
+      variables: { page: 1, pageSize: 100 }
+    }
+  );
+
+  useEffect(() => {
+    if (!dataIngredient) return;
+    setIngredient(dataIngredient.getIngredient);
+  }, [dataIngredient]);
   return (
     <>
       <Head>
@@ -24,9 +46,9 @@ const IngredientDetail = (): JSX.Element => {
         <main className="ingredient container py-3 py-sm-5">
           <div className="row justify-content-center">
             <div className="col-sm-8">
-              <h1 className="mb-3">Acetazolamid</h1>
-            </div>
-            <Tab {...tabContent} />
+              <h1 className="mb-3">{dataIngredient?.getIngredient.name}Acetazolamid</h1>
+            </div> 
+            <Tab {...(dataIngredient?.getIngredient || [])} />
           </div>
         </main>
 
@@ -41,4 +63,4 @@ const IngredientDetail = (): JSX.Element => {
   );
 };
 
-export default IngredientDetail;
+export default withApollo({ ssr: true })(IngredientDetail);

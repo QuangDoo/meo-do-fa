@@ -21,3 +21,26 @@ export const GET_INGREDIENTS = gql`
     }
   }
 `;
+export const GET_INGREDIENT = gql`
+  query getIngredient($id: Int!) {
+    getIngredient(id: $id) {
+      id
+      contraindication
+      create_date
+      create_uid
+      direction
+      display_name
+      indication
+      info
+      interaction
+      name
+      overdose
+      pharmacodynamics
+      pharmacokinetics
+      preservation
+      variant_ids
+      slug
+      status
+    }
+  }
+`;

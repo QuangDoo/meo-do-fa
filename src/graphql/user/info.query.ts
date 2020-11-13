@@ -1,7 +1,7 @@
 import { gql } from 'apollo-boost';
 
 export const GET_USER = gql`
-  query getUsers {
+  query {
     getUser {
       id
       name
@@ -57,20 +57,6 @@ export const GET_WARD = gql`
       district
       district_code
       ward
-    }
-  }
-`;
-export const GET_INFO = gql`
-  query getUpdateUserInput {
-    UpdateUserInput {
-      name
-      display_name
-      email
-      contact_address
-      company_name
-      vat
-      representative
-      business_license
     }
   }
 `;

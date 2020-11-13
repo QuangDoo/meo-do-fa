@@ -1,11 +1,12 @@
 import { useQuery } from '@apollo/react-hooks';
 import { useMutation } from '@apollo/react-hooks';
+import { useRouter } from 'next/router';
 import React, { createRef, useState } from 'react';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { UPDATE_USER } from 'src/graphql/user/info.mutation';
-import { GET_CITY, GET_DISTRICT, GET_INFO, GET_USER, GET_WARD } from 'src/graphql/user/info.query';
+import { GET_CITY, GET_DISTRICT, GET_USER, GET_WARD } from 'src/graphql/user/info.query';
 import withApollo from 'src/utils/withApollo';
 
 import Head from '../../components/Layout/Head';
@@ -22,14 +23,14 @@ type Inputs = {
   business_license: String;
 }
 function SignupBusiness(props): JSX.Element {
-
+  const router = useRouter();
   const { data: userData, loading: userLoading, error: userError } = useQuery(GET_USER);
   const { data: cityData, loading: cityLoading, error: cityError } = useQuery(GET_CITY);
   const { data: districtData, loading: districtLoading, error: districtError } = useQuery(GET_DISTRICT);
   const { data: wardData, loading: wardLoading, error: wardError } = useQuery(GET_WARD);
   const [updateUser, { data }] = useMutation(UPDATE_USER);
 
-  console.log('userData', userData)
+  console.log('userData',userData);
   // useEffect(()=>{
   //   if (cityData) {console.log(cityData)}
   // },[])
@@ -119,20 +120,26 @@ function SignupBusiness(props): JSX.Element {
   // console.log("val",value);
 
   const fileInput = createRef();
-  const onSubmit = (data: Inputs) => {
-    updateUser({
-      variables: {
-        name: data.name, 
-        display_name: data.display_name, 
-        email: data.email, 
-        contact_address: data.contact_address, 
-        company_name: data.company_name, 
-        vat: data.vat, 
-        representative: data.representative, 
-        business_license: data.business_license
-      }
-    })
+  const onSubmit = (data: Inputs) => {console.log('data',data)
+    // updateUser({
+    //   variables: {
+    //     name: data.name, 
+    //     display_name: data.display_name, 
+    //     email: data.email, 
+    //     contact_address: data.contact_address, 
+    //     company_name: data.company_name, 
+    //     vat: data.vat, 
+    //     representative: data.representative, 
+    //     business_license: data.business_license
+    //   }
+    // })
   };
+  useEffect(() => {
+    if (data?.updateUser?.token) {
+      router.push('/quick-order');
+      window.localStorage.setItem('token', data.updateUser.token);
+    }
+  }, [data]);
   useEffect(() => {
     if (!data) return;
 
@@ -145,9 +152,9 @@ function SignupBusiness(props): JSX.Element {
 
     alert("thanhcong");
   }, [data]);
-  // console.log('updateUser', updateUser)
   const [disabledDistrict, setDisabledDistrict] = useState(true);
   const [disabledWard, setDisabledWard] = useState(true);
+
   return (
     <>
       <Head>
@@ -204,12 +211,15 @@ function SignupBusiness(props): JSX.Element {
                   </div>
                   <div className="col-12">
                     <div className="row">
+                    {/* {accountTypes.map((accountType) => ( */}
+
                       <div className="col-md-4 form-group">
                         <label htmlFor="ban" className="form__label">
                           Bạn là
                         </label>
-                        <div className="form-control d-block w-100" >Người tiêu dùng</div>
+                        <div className="form-control d-block w-100" >{userData.getUser.account_type}</div>
                       </div>
+                      {/* ))} */}
                       <div className="col-md-8 form-group">
                         <label className="form__label" htmlFor="user_businesses_attributes_0_name">
                           Tên nhà thuốc/phòng khám
@@ -218,7 +228,8 @@ function SignupBusiness(props): JSX.Element {
                           className="form-control"
                           aria-describedby="businessNameHelpBlock"
                           type="text"
-                          name="company_name"
+                          name="display_name"
+                          defaultValue={userData.getUser.display_name}
                           ref={register}
                         />
                         <small className="form-text text-muted">Vd: Dược Hoàng Vũ</small>
