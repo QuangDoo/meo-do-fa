@@ -1,6 +1,7 @@
 import { useMutation } from '@apollo/react-hooks';
 import { Trans, withTranslation } from 'i18n';
 import { WithTranslation } from 'next-i18next';
+import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -35,6 +36,8 @@ const accountTypes = ['PHARMACY', 'CLINIC', 'DRUGSTORE'];
 const initialAccountType = '';
 
 const RegisterForm = (props: WithTranslation): JSX.Element => {
+  const router = useRouter();
+
   const { t } = props;
 
   const { register, handleSubmit, setValue, watch, errors } = useForm<Inputs>();
@@ -93,6 +96,7 @@ const RegisterForm = (props: WithTranslation): JSX.Element => {
     localStorage.setItem('token', data.createUser.token);
 
     closeRegisterModal();
+    router.push('/authentications/signup_business');
   }, [data]);
 
   return (
