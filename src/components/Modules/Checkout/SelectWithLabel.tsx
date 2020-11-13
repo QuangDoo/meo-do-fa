@@ -1,5 +1,4 @@
 import clsx from 'clsx';
-import { StringifyOptions } from 'querystring';
 import React, { forwardRef } from 'react';
 import Select from 'src/components/Form/Select';
 
@@ -13,7 +12,7 @@ type Props = {
 
   containerClass?: string;
   labelClass?: string;
-  selectClass?: StringifyOptions;
+  selectClass?: string;
   required?: boolean;
 };
 

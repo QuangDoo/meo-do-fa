@@ -54,8 +54,8 @@ const RegisterForm = (props: WithTranslation): JSX.Element => {
   const [createUser] = useMutation<CreateUserData, CreateUserVars>(CREATE_USER, {
     onCompleted: (data) => {
       localStorage.setItem('token', data.createUser.token);
-      router.push('/authentications/signup_business');
       closeRegisterModal();
+      router.push('/authentications/signup_business');
     },
     onError: (error) => {
       console.log('Create user error:', { error });
