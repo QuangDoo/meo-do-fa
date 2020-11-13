@@ -1,11 +1,21 @@
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
-export default function useLocalStorage(localStorageKey: string) {
-  const [value, setValue] = useState<string>(localStorage.getItem(localStorageKey) || '');
+export default function useLocalStorage(key: string) {
+  const [storedValue, setStoredValue] = useState<string>(null);
 
   useEffect(() => {
-    localStorage.setItem(localStorageKey, value);
-  }, [value]);
+    setStoredValue(localStorage.getItem(key));
+  }, []);
 
-  return [value, setValue] as [string, Dispatch<SetStateAction<string>>];
+  const setValue = (newValue: string) => {
+    localStorage.setItem(key, newValue);
+    setStoredValue(newValue);
+  };
+
+  const remove = () => {
+    setStoredValue(null);
+    localStorage.removeItem(key);
+  };
+
+  return [storedValue, setValue, remove] as const;
 }

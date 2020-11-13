@@ -21,7 +21,7 @@ type Inputs = {
 const LoginForm = (): JSX.Element => {
   const dispatch = useModalControlDispatch();
 
-  const [token, setToken] = useLocalStorage('token');
+  const [, setToken] = useLocalStorage('token');
 
   const openRegisterModal = () => dispatch({ type: 'OPEN_REGISTER_MODAL' });
 
@@ -37,6 +37,8 @@ const LoginForm = (): JSX.Element => {
       closeLoginModal();
       if (router.pathname !== '/products/[productId]') {
         router.push('/quick-order');
+      } else {
+        router.reload();
       }
     },
     onError: (error) => {
