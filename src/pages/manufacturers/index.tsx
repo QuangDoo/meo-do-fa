@@ -1,5 +1,6 @@
-import React from 'react';
-
+import { useQuery } from '@apollo/react-hooks';
+import React, { useEffect, useState } from 'react';
+import { GET_MANUFACTURERS } from 'src/graphql/manufactures/manufacturers.query';
 import Footer from '../../components/Layout/Footer';
 import Head from '../../components/Layout/Head';
 import Header from '../../components/Layout/Header';
@@ -7,8 +8,21 @@ import Nav from '../../components/Layout/Nav';
 import PageLayout from '../../components/Layout/PageLayout';
 import SearchScreen from '../../components/Modules/SearchScreen';
 
-function Manufactures(): JSX.Element {
-  const manufactures = [
+type TypeManufacturers = {
+  id: string;
+  name: string;
+  slug: string;
+  
+};
+function Manufacturers(props:TypeManufacturers): JSX.Element {
+  const [manufacturers, setManufacturers] = useState<TypeManufacturers[]>([]);
+  const { data: dataManufacturers, loading: loadingManufacturers, error: errorManufacturers } = useQuery(GET_MANUFACTURERS);
+  useEffect(() => {
+    if (!dataManufacturers) return;
+    setManufacturers(dataManufacturers.getManufactoriesAll);
+  }, [dataManufacturers]);
+
+  const Manufacturers = [
     { name: 'Alamingo' },
     { name: 'Blamingo' },
     { name: 'Clamingo' },
@@ -69,11 +83,11 @@ function Manufactures(): JSX.Element {
       <Header />
       <Nav />
       <PageLayout>
-        {/* <SearchScreen dataList={manufactures} characters={characters} /> */}
+        <SearchScreen dataList={manufacturers} characters={characters} />
       </PageLayout>
       <Footer />
     </>
   );
 }
 
-export default Manufactures;
+export default Manufacturers;

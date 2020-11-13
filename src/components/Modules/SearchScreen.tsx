@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 
 import FilterSearch from './FilterSearch';
@@ -19,7 +20,7 @@ type PropsType = {
 
 export default function SearchScreen(props: PropsType): JSX.Element {
   const [cloneData, setCloneData] = useState([]);
-
+  const router = useRouter();
   useEffect(() => {
     if (!props.dataList) return;
     setCloneData(props.dataList);
@@ -49,7 +50,10 @@ export default function SearchScreen(props: PropsType): JSX.Element {
 
   return (
     <div className="filter-search container mobile-content " data-controller="filter-search">
-      <InputSearch placeholder="Nhập tên hoạt chất" keySearch={handleSearch} />;
+      <InputSearch
+        placeholder={router.pathname === 'ingredients' ? 'Nhập tên hoạt chất cần tìm' : ' Nhập tên nhà sản xuất cần tìm'}
+        keySearch={handleSearch}
+      />
       <div className="filter my-4">
         {props?.characters?.map((item, index) => {
           return <FilterSearch key={index} {...item} filter={() => filterByCharacter(item)} />;

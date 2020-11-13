@@ -11,6 +11,7 @@ import Pagination from 'src/components/Modules/Pagination';
 import ProductCard from 'src/components/Modules/ProductCard';
 import ProductsSidebarFilter from 'src/components/Modules/ProductsSidebarFilter';
 import { useCategories } from 'src/contexts/Categories';
+import { useManufacturers } from 'src/contexts/Manufacturers';
 import { GET_PRODUCTS } from 'src/graphql/product/product.query';
 import { mockSuppliers } from 'src/mockData/mockSuppliers';
 import { mockTotalProducts } from 'src/mockData/mockTotalProducts';
@@ -28,6 +29,7 @@ function Products(): JSX.Element {
   const page = +router.query.page || 1;
 
   const { data: categories, nameLookup: categoryNameLookup } = useCategories();
+  const { data: manufacturers, } = useManufacturers ();
 
   // Get products
   const { data: productsData, loading: productsLoading, error: productsError, refetch } = useQuery(
@@ -82,7 +84,7 @@ function Products(): JSX.Element {
       <div className="products container-fluid mobile-content my-3 my-sm-5">
         <div className="row flex-nowrap justify-content-between px-lg-5 px-sm-3">
           <div className="products__sidebar pr-4 d-none d-sm-block">
-            <ProductsSidebarFilter categories={categories} suppliers={mockSuppliers} />
+            <ProductsSidebarFilter categories={categories} manufacturers={manufacturers} />
           </div>
 
           {/* Content */}

@@ -9,6 +9,7 @@ import { appWithTranslation } from '../../i18n';
 import ToastContainer from '../components/Layout/ToastContainer';
 import { CategoriesProvider } from '../contexts/Categories';
 import { ModalControlProvider } from '../contexts/ModalControl';
+import { ManufacturersProvider } from '../contexts/Manufacturers';
 import { theme } from '../theme';
 
 const MyApp = ({ Component, pageProps }) => {
@@ -21,6 +22,8 @@ const MyApp = ({ Component, pageProps }) => {
 
   return (
     <ThemeProvider theme={theme}>
+     < ManufacturersProvider>
+     
       <ModalControlProvider>
         <CategoriesProvider>
           <Component {...pageProps} />
@@ -28,6 +31,8 @@ const MyApp = ({ Component, pageProps }) => {
 
         <ToastContainer />
       </ModalControlProvider>
+     
+     </ManufacturersProvider>
     </ThemeProvider>
   );
 };

@@ -3,14 +3,14 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { Category } from 'src/types/Category';
-import { Supplier } from 'src/types/Supplier';
+import { Manufacturers } from 'src/types/Manufacturers';
 
 import Dropdown from '../Form/Dropdown';
 import Select from '../Form/Select';
 
 type Props = {
   categories: Category[];
-  suppliers: Supplier[];
+  manufacturers: Manufacturers[];
 };
 
 type SortOption = {
@@ -29,7 +29,7 @@ const sortOptions: SortOption[] = [
 ];
 
 const ProductsSidebarFilter = (props: Props) => {
-  const { categories, suppliers } = props;
+  const { categories, manufacturers } = props;
 
   const router = useRouter();
 
@@ -108,7 +108,7 @@ const ProductsSidebarFilter = (props: Props) => {
           </Link>
         </div>
 
-        {suppliers.map(({ name, id }) => (
+        {manufacturers.map(({ name, id }) => (
           <div key={id} className="mb-2">
             <Link href={`/products?supplier=${id}`}>
               <a
