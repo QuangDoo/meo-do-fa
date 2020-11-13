@@ -1,4 +1,7 @@
+import { useQuery } from '@apollo/react-hooks';
 import React from 'react';
+import { GET_PRODUCTS_LIST_CART } from 'src/graphql/order/order.query';
+import withApollo from 'src/utils/withApollo';
 
 import Footer from '../components/Layout/Footer';
 import Head from '../components/Layout/Head';
@@ -9,54 +12,8 @@ import CartItem from '../components/Modules/Cart/CartItem';
 import { mockCartItems } from '../mockData/mockCartItems';
 
 function Cart(): JSX.Element {
-  const cartItems = [
-    {
-      productName: 'phosphalugel boehringer ingelheim (h/26g)',
-      list_price: 99600,
-      standard_price: 99600,
-      id: 123,
-      quantity: 4,
-      description: 'Hộp 26 gói x 20gr',
-      slug: 'phosphalugel-boehringer-ingelheim-h-26g',
-      image: 'https://images.thuocsi.vn/FrWZN5xT53QQ8Cs66rKHT228',
-      important: false
-    },
-    {
-      productName: 'phosphalugel boehringer ingelheim (h/26g)',
-      list_price: 99600,
-      id: 123,
-      quantity: 3,
-      description: 'Hộp 26 gói x 20gr',
-      slug: 'phosphalugel-boehringer-ingelheim-h-26g',
-      standard_price: 123456,
-      image: 'https://images.thuocsi.vn/FrWZN5xT53QQ8Cs66rKHT228',
-      important: false
-    },
-    {
-      productName: 'phosphalugel boehringer ingelheim (h/26g)',
-      list_price: 99600,
-      standard_price: 99600,
-      id: 123,
-      quantity: 3,
-      description: 'Hộp 26 gói x 20gr',
-      slug: 'phosphalugel-boehringer-ingelheim-h-26g',
-      limit: true,
-      image: 'https://images.thuocsi.vn/FrWZN5xT53QQ8Cs66rKHT228',
-      important: false
-    }
-  ];
-  const totalQuantity = cartItems.reduce((current, total) => {
-    return current + total.quantity;
-  }, 0);
-
-  const totalAfterDiscount = cartItems.reduce((current, total) => {
-    return current + total.quantity * total.list_price;
-  }, 0);
-
-  const totalBeforeDiscount = cartItems.reduce((current, total) => {
-    return current + total.quantity * total.standard_price;
-  }, 0);
-
+  const { data, error } = useQuery(GET_PRODUCTS_LIST_CART);
+  console.log('data', data?.getCart.carts);
   return (
     <>
       <Head>
@@ -88,7 +45,7 @@ function Cart(): JSX.Element {
                 data-action
                 data-target="cart.items"
                 data-url="/api/cart_data/cart_items?page=1">
-                {cartItems.map((item, index) => (
+                {data?.getCart.carts.map((item, index) => (
                   <CartItem key={index} {...item} />
                 ))}
               </div>
@@ -132,7 +89,7 @@ function Cart(): JSX.Element {
                         <small>Số lượng</small>
                       </div>
                       <div className="cart__quantity text-secondary">
-                        <b data-target="cart.cartQty">{totalQuantity}</b>
+                        <b data-target="cart.cartQty">90</b>
                       </div>
                     </div>
                   </div>
@@ -142,10 +99,10 @@ function Cart(): JSX.Element {
                         <small>Tổng tiền</small>
                       </div>
                       <div className="cart__total" data-target="cart.cartTotal">
-                        {totalAfterDiscount.toLocaleString('de-DE')} <span className="unit">đ</span>
+                        90 <span className="unit">đ</span>
                       </div>
                       <div className="cart__old-total" data-target="cart.cartOldTotal">
-                        {totalBeforeDiscount.toLocaleString('de-DE')}{' '}
+                        90‰
                         <span className="unit">đ</span>
                       </div>
                     </div>
@@ -159,11 +116,7 @@ function Cart(): JSX.Element {
                         href="/cart/promo-codes">
                         NEWBEE100K
                       </a>
-                      <i
-                        className="fas fa-trash cart-item__remove"
-                        data-action="click->cart#removePromoCode"
-                        data-id={150759}
-                      />
+                      <i className="fas fa-trash cart-item__remove" />
                     </div>
                   </div>
                   <div className="col-12">
@@ -189,4 +142,4 @@ function Cart(): JSX.Element {
   );
 }
 
-export default Cart;
+export default withApollo({ ssr: true })(Cart);
