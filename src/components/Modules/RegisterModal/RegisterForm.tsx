@@ -36,7 +36,6 @@ const accountTypes = ['PHARMACY', 'CLINIC', 'DRUGSTORE'];
 const initialAccountType = '';
 
 const RegisterForm = (props: WithTranslation): JSX.Element => {
-  const router = useRouter();
 
   const { t } = props;
   const router = useRouter();
@@ -82,12 +81,6 @@ const RegisterForm = (props: WithTranslation): JSX.Element => {
       }
     });
   };
-  useEffect(() => {
-    if (data?.createUser?.token) {
-      router.push('/authentications/signup_business');
-      window.localStorage.setItem('token', data.createUser.token);
-    }
-  }, [data]);
 
   // On form error
   const onError = (errors) => {

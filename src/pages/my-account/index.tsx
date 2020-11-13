@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import React from 'react';
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
@@ -8,13 +9,24 @@ import Nav from 'src/components/Layout/Nav';
 import PageLayout from 'src/components/Layout/PageLayout';
 import ProfileSidebar from 'src/components/Modules/ProfileSidebar';
 
-
+type Inputs = {
+  name: String;
+  display_name: String;
+  email: String
+  contact_address: String;
+  company_name: String;
+  vat: String;
+  representative: String;
+  business_license: String;
+}
 const MyAccount = (props): JSX.Element => {
   let token = '';
   if (typeof window !== 'undefined') {
     token = localStorage.getItem('token');
     // console.log('Product card data:', props)
   }
+  const {  setValue, } = useForm<Inputs>();
+
   const [fileName, setFileName] = useState('');
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     switch (e.target.name) {
