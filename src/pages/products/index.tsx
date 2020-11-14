@@ -55,7 +55,6 @@ function Products(): JSX.Element {
 
   // Refetch products when page changes
   useEffect(() => {
-    console.log('run refect');
     if (!router.query) return;
     refetch({
       page: router.query.page ? +router.query.page : page,
