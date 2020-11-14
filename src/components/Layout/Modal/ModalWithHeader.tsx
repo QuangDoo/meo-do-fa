@@ -1,8 +1,9 @@
-import { Backdrop, Fade, Modal as MaterialModal } from '@material-ui/core';
+import { DialogContent, DialogTitle, IconButton, makeStyles, Typography } from '@material-ui/core';
+import CloseIcon from '@material-ui/icons/Close';
 import React, { FC } from 'react';
-import ModalBase, { BaseModalProps } from 'src/components/Layout/Modal/ModalBase';
+import ModalBase, { ModalBaseProps } from 'src/components/Layout/Modal/ModalBase';
 
-type ModalProps = BaseModalProps & {
+type Props = ModalBaseProps & {
   // Modal title
   title: string;
 
@@ -10,52 +11,46 @@ type ModalProps = BaseModalProps & {
   className?: string;
 };
 
-const ModalWithHeader: FC<ModalProps> = (props) => {
-  return (
-    <ModalBase open={props.open} onClose={props.onClose}>
-      <div className={`modal-dialog modal-dialog-centered ${props.className}`}>
-        <div className="modal-content">
-          <div className="modal-header">
-            <header className="modal-title text-capitalize">{props.title}</header>
-            <button onClick={props.onClose} aria-label="Close" className="close" type="button">
-              <span aria-hidden="true">
-                <i className="fas fa-times"></i>
-              </span>
-            </button>
-          </div>
+const useStyles = makeStyles((theme) => ({
+  titleRoot: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: theme.spacing(2)
+  },
+  contentRoot: {
+    padding: theme.spacing(2)
+  }
+}));
 
-          <div className="modal-body">{props.children}</div>
-        </div>
-      </div>
+const ModalWithHeader: FC<Props> = (props) => {
+  const { children, open, onClose, title, className } = props;
+
+  const classes = useStyles();
+
+  return (
+    <ModalBase open={open} onClose={onClose}>
+      <DialogTitle
+        disableTypography
+        classes={{
+          root: classes.titleRoot
+        }}>
+        <Typography variant="h6">{title}</Typography>
+        {onClose ? (
+          <IconButton aria-label="close" onClick={onClose} size="small">
+            <CloseIcon />
+          </IconButton>
+        ) : null}
+      </DialogTitle>
+
+      <DialogContent
+        dividers
+        classes={{
+          root: classes.contentRoot
+        }}>
+        <div className={className}>{children}</div>
+      </DialogContent>
     </ModalBase>
-  );
-
-  return (
-    <MaterialModal
-      open={props.open}
-      onClose={props.onClose}
-      closeAfterTransition
-      BackdropComponent={Backdrop}
-      BackdropProps={{
-        timeout: 300
-      }}>
-      <Fade in={props.open} timeout={300}>
-        <div className={`modal-dialog modal-dialog-centered ${props.className}`}>
-          <div className="modal-content">
-            <div className="modal-header">
-              <header className="modal-title text-capitalize">{props.title}</header>
-              <button onClick={props.onClose} aria-label="Close" className="close" type="button">
-                <span aria-hidden="true">
-                  <i className="fas fa-times"></i>
-                </span>
-              </button>
-            </div>
-
-            <div className="modal-body">{props.children}</div>
-          </div>
-        </div>
-      </Fade>
-    </MaterialModal>
   );
 };
 

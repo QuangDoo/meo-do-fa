@@ -1,14 +1,32 @@
+import { Menu } from '@material-ui/core';
 import Link from 'next/link';
-import React from 'react';
+import { useRouter } from 'next/router';
+import React, { useState } from 'react';
 import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
+import useLocalStorage from 'src/hooks/useLocalStorage';
 
 export default function Nav(): JSX.Element {
+  const [, , removeToken] = useLocalStorage('token');
+
   const isLoggedIn = useIsLoggedIn();
 
+  const router = useRouter();
+
   const logOut = () => {
-    localStorage.removeItem('token');
-    window.location.reload();
+    removeToken();
+    router.reload();
   };
+
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const openMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const closeMenu = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <nav className="buymed-nav shrink">
       <div className="container">
@@ -23,6 +41,7 @@ export default function Nav(): JSX.Element {
                   </a>
                 </Link>
               </li>
+
               <li className="buymed-nav__item">
                 <Link href="/ingredients">
                   <a className="buymed-nav__link">
@@ -31,6 +50,7 @@ export default function Nav(): JSX.Element {
                   </a>
                 </Link>
               </li>
+
               <li className="buymed-nav__item">
                 <Link href="/quick-order">
                   <a className="buymed-nav__link">
@@ -39,6 +59,7 @@ export default function Nav(): JSX.Element {
                   </a>
                 </Link>
               </li>
+
               <li className="buymed-nav__item">
                 <Link href="/deals">
                   <a
@@ -50,6 +71,7 @@ export default function Nav(): JSX.Element {
                   </a>
                 </Link>
               </li>
+
               <li className="buymed-nav__item">
                 <Link href="/promo-codes">
                   <a className="buymed-nav__link">
@@ -60,26 +82,89 @@ export default function Nav(): JSX.Element {
                 </Link>
               </li>
             </ul>
-            <div className="buymed-search-container" />
 
             {isLoggedIn && (
               <div className="header-right">
                 <ul className="nav align-items-center">
                   <li className="nav-item mr-3">
-                    <button className="buymed-nav__link" onClick={logOut}>
-                      <i className="fas fa-sign-in-alt buymed-nav__icon" />
+                    <Link href="/cart">
+                      <a className="buymed-nav__link">
+                        <i className="icomoon icon-local-mall buymed-nav__icon" />
+                      </a>
+                    </Link>
+                  </li>
+
+                  <li className="nav-item mr-3">
+                    <button className="buymed-nav__link" onClick={openMenu}>
+                      <i className="fas fa-bars buymed-nav__icon" />
                     </button>
                   </li>
-                  <li className="nav-item mr-3">
-                    <a className="buymed-nav__link">
-                      <i className="fas fa-user-md buymed-nav__icon" />
+
+                  <Menu
+                    anchorEl={anchorEl}
+                    open={!!anchorEl}
+                    keepMounted
+                    onClose={closeMenu}
+                    anchorOrigin={{
+                      vertical: 'bottom',
+                      horizontal: 'right'
+                    }}
+                    transformOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right'
+                    }}>
+                    <div className="dropdown__item py-0">
+                      <div className="d-flex justify-content-between">
+                        <div className="text-left mr-3">
+                          <small className="text-muted">Ví điện tử</small>
+                          <div className="text-primary">
+                            0<span className="unit">đ</span>
+                          </div>
+                        </div>
+
+                        <div className="text-right">
+                          <a href="/users/loyalty_points">
+                            <small className="text-muted">Điểm thưởng</small>
+                            <div className="text-secondary">0</div>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+
+                    <hr className="my-2" />
+
+                    <a className="dropdown__item dropdown__item-link" href="/my-account">
+                      <i className="far fa-user-circle dropdown__item-icon" />
+                      Thông tin tài khoản
                     </a>
-                  </li>
-                  <li className="nav-item mr-3">
-                    <a className="buymed-nav__link">
-                      <i className="fas fa-eye buymed-nav__icon" />
+
+                    <a className="dropdown__item dropdown__item-link" href="/my-orders">
+                      <i className="icomoon icon-assignment dropdown__item-icon" />
+                      Đơn hàng của tôi
                     </a>
-                  </li>
+
+                    <a className="dropdown__item dropdown__item-link" href="/users/referrals">
+                      <i className="icomoon icon-share dropdown__item-icon" />
+                      Giới thiệu bạn bè
+                    </a>
+
+                    <a
+                      className="dropdown__item dropdown__item-link"
+                      href="/users/user-promo-codes">
+                      <i className="fas fa-tags dropdown__item-icon" />
+                      Mã giảm giá của tôi
+                    </a>
+
+                    <a className="dropdown__item dropdown__item-link" href="/users/loyalty_points">
+                      <i className="fas fa-hand-holding-usd dropdown__item-icon" />
+                      Điểm tích lũy
+                    </a>
+
+                    <button className="dropdown__item dropdown__item-link w-100" onClick={logOut}>
+                      <i className="fas fa-sign-out-alt dropdown__item-icon" />
+                      Đăng xuất
+                    </button>
+                  </Menu>
                 </ul>
               </div>
             )}

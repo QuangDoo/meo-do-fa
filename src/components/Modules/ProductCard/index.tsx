@@ -5,6 +5,7 @@ import { WithTranslation } from 'next-i18next';
 import Link from 'next/link';
 import React from 'react';
 import { useCategories } from 'src/contexts/Categories';
+import { OrderProvider } from 'src/contexts/Order';
 import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
 import { Product } from 'src/types/Product';
 
@@ -64,7 +65,7 @@ const ProductCard = ({
               {showBadges && (
                 <div className="product__status mb-2">
                   {isLoggedIn &&
-                    props.badges.map((badgeType) => (
+                    props.badges?.map((badgeType) => (
                       <ProductBadge
                         key={badgeType}
                         type={badgeType}
@@ -103,7 +104,14 @@ const ProductCard = ({
                     standard_price={isDiscount && props.standard_price}
                   />
                 </div>
-                <QuantityInput quantity={0} />
+                <OrderProvider>
+                  <QuantityInput
+                    quantity={0}
+                    productId={props.id}
+                    price={props.price}
+                    name={props.name}
+                  />
+                </OrderProvider>
               </>
             ) : (
               <LoginToSeePrice />

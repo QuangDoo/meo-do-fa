@@ -1,28 +1,41 @@
+import { useMutation } from '@apollo/react-hooks';
 import clsx from 'clsx';
-import React, { useState } from 'react';
+import React from 'react';
+import { useOrder } from 'src/contexts/Order';
+import { ADD_TO_CART } from 'src/graphql/order/order.mutation';
 
 type Props = {
   size?: 'normal' | 'large';
   quantity: number;
   handleChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  productId?: string;
+  price?: number;
+  name?: string;
+  product_variant_ids?: string[];
 };
 
 function QuantityInput(props: Props) {
-  const { size } = props;
+  // const [addToCart, { data, loading, error }] = useMutation(ADD_TO_CART);
+  const { addToCart } = useOrder();
 
-  const [quantity, setQuantity] = useState(props.quantity);
+  const { size, productId, quantity, price, name } = props;
 
   const plus = () => {
-    setQuantity(quantity + 1);
-  };
-
-  const minus = () => {
-    setQuantity(quantity - 1);
+    addToCart({
+      variables: {
+        productId,
+        quantity: quantity + 1,
+        price,
+        productName: name
+      }
+    });
   };
 
   return (
     <div className={clsx('qty js-qty', size === 'large' && 'qty--lg')}>
-      <button className="btn btn-sm qty__button qty__button--minus" onClick={minus}>
+      <button
+        className="btn btn-sm qty__button qty__button--minus"
+        onClick={() => console.log('tru')}>
         <i className="fas fa-minus" />
       </button>
 

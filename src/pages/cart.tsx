@@ -1,61 +1,22 @@
+import { useQuery } from '@apollo/react-hooks';
 import React from 'react';
+import { toast } from 'react-toastify';
+import { GET_CART, GetCartData } from 'src/graphql/order/order.query';
+import withApollo from 'src/utils/withApollo';
 
 import Footer from '../components/Layout/Footer';
 import Head from '../components/Layout/Head';
 import Header from '../components/Layout/Header';
 import Nav from '../components/Layout/Nav';
-import PageLayout from '../components/Layout/PageLayout';
 import CartItem from '../components/Modules/Cart/CartItem';
-import { mockCartItems } from '../mockData/mockCartItems';
 
 function Cart(): JSX.Element {
-  const cartItem = [
-    {
-      productName: 'phosphalugel boehringer ingelheim (h/26g)',
-      price: 99600,
-      oldPrice: 99600,
-      id: 123,
-      quantity: 4,
-      description: 'Hộp 26 gói x 20gr',
-      slug: 'phosphalugel-boehringer-ingelheim-h-26g',
-      image: 'https://images.thuocsi.vn/FrWZN5xT53QQ8Cs66rKHT228',
-      important: false
-    },
-    {
-      productName: 'phosphalugel boehringer ingelheim (h/26g)',
-      price: 99600,
-      id: 123,
-      quantity: 3,
-      description: 'Hộp 26 gói x 20gr',
-      slug: 'phosphalugel-boehringer-ingelheim-h-26g',
-      oldPrice: 123456,
-      image: 'https://images.thuocsi.vn/FrWZN5xT53QQ8Cs66rKHT228',
-      important: false
-    },
-    {
-      productName: 'phosphalugel boehringer ingelheim (h/26g)',
-      price: 99600,
-      oldPrice: 99600,
-      id: 123,
-      quantity: 3,
-      description: 'Hộp 26 gói x 20gr',
-      slug: 'phosphalugel-boehringer-ingelheim-h-26g',
-      limit: true,
-      image: 'https://images.thuocsi.vn/FrWZN5xT53QQ8Cs66rKHT228',
-      important: false
+  const { data, refetch } = useQuery<GetCartData, undefined>(GET_CART, {
+    onError: (error) => {
+      console.log('Get cart error: ', error);
+      toast.error('Get cart error: ' + error);
     }
-  ];
-  const totalQuantity = cartItem.reduce((current, total) => {
-    return current + total.quantity;
-  }, 0);
-
-  const totalAfterDiscount = mockCartItems.reduce((current, total) => {
-    return current + total.quantity * total.price;
-  }, 0);
-
-  const totalBeforeDiscount = mockCartItems.reduce((current, total) => {
-    return current + total.quantity * total.oldPrice;
-  }, 0);
+  });
 
   return (
     <>
@@ -64,16 +25,16 @@ function Cart(): JSX.Element {
       </Head>
       <Header />
       <Nav />
-      <PageLayout>
-        <div className="cart" data-target="cart.cart">
+      <div className="container py-5">
+        <div className="cart">
           <div className="row">
             <div className="col-12 mb-3">
               <h1 className="h3">Giỏ hàng</h1>
-              <small className="text-danger">
+              {/* <small className="text-danger">
                 <i className="fas fa-exclamation-circle mr-1" />
                 Lưu ý: Giỏ hàng có sản phẩm khuyến mãi. Sau khi thanh toán, đơn hàng sẽ không thể
                 chỉnh sửa được.
-              </small>
+              </small> */}
             </div>
           </div>
           <div className="row">
@@ -83,13 +44,20 @@ function Cart(): JSX.Element {
                 Nhấp để đánh dấu sản phẩm quan trọng (giới hạn 20% tổng số sản phẩm, 1 sản phẩm đặt
                 nhiều cái cũng tính là 1)
               </div>
-              <div
-                className="elevated cart__items mb-3"
-                data-action
-                data-target="cart.items"
-                data-url="/api/cart_data/cart_items?page=1">
-                {mockCartItems.map((item, index) => (
-                  <CartItem key={index} {...item} />
+              <div className="elevated cart__items mb-3">
+                {data?.getCart.carts.map((item, index) => (
+                  <CartItem
+                    key={index}
+                    _id={item._id}
+                    image=""
+                    list_price={item.price}
+                    standard_price={item.oldPrice}
+                    productId={item.productId}
+                    productName={item.productName}
+                    quantity={item.quantity}
+                    uom_name="Unit"
+                    refetchCart={() => refetch()}
+                  />
                 ))}
               </div>
               <div className="elevated text-muted p-3 mb-4">
@@ -112,14 +80,11 @@ function Cart(): JSX.Element {
                     rows={4}
                     placeholder="Ghi chú của khách hàng"
                     className="form-control"
-                    data-target="cart.note"
                     defaultValue={''}
                   />
                 </div>
                 <div className="w-100 text-right">
-                  <button className="btn btn-secondary" data-action="cart#updateNote">
-                    Cập nhật ghi chú
-                  </button>
+                  <button className="btn btn-secondary">Cập nhật ghi chú</button>
                 </div>
               </div>
             </div>
@@ -132,7 +97,7 @@ function Cart(): JSX.Element {
                         <small>Số lượng</small>
                       </div>
                       <div className="cart__quantity text-secondary">
-                        <b data-target="cart.cartQty">{totalQuantity}</b>
+                        <b>{data?.getCart.totalQty}</b>
                       </div>
                     </div>
                   </div>
@@ -141,38 +106,31 @@ function Cart(): JSX.Element {
                       <div className="mb-2">
                         <small>Tổng tiền</small>
                       </div>
-                      <div className="cart__total" data-target="cart.cartTotal">
-                        {totalAfterDiscount.toLocaleString('de-DE')} <span className="unit">đ</span>
+                      <div className="cart__total">
+                        {data?.getCart.totalPrice} <span className="unit">đ</span>
                       </div>
-                      <div className="cart__old-total" data-target="cart.cartOldTotal">
-                        {totalBeforeDiscount.toLocaleString('de-DE')}{' '}
+                      {/* <div className="cart__old-total">
+                        90‰
                         <span className="unit">đ</span>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                   <div className="col-12 cart__info-promo">
                     <div className="cart__info-item d-flex justify-content-between align-items-center">
                       <i className="fas fa-tags mr-3" />
+
                       <a
                         className="cart__info-promo-code flex-grow-1 ins-init-condition-tracking"
-                        data-modal="true"
                         href="/cart/promo-codes">
-                        NEWBEE100K
+                        Dùng mã khuyến mãi
                       </a>
-                      <i
-                        className="fas fa-trash cart-item__remove"
-                        data-action="click->cart#removePromoCode"
-                        data-id={150759}
-                      />
+
+                      {/* <i className="fas fa-trash cart-item__remove" /> */}
                     </div>
                   </div>
                   <div className="col-12">
                     <div className="cart__info-item">
-                      <a
-                        className="btn btn-secondary btn-block"
-                        data-action="cart#proceedToCheckout"
-                        data-target="cart.submit"
-                        href="/checkout">
+                      <a className="btn btn-secondary btn-block" href="/checkout">
                         Tiếp tục thanh toán
                       </a>
                     </div>
@@ -183,10 +141,10 @@ function Cart(): JSX.Element {
             </div>
           </div>
         </div>
-      </PageLayout>
+      </div>
       <Footer />
     </>
   );
 }
 
-export default Cart;
+export default withApollo({ ssr: true })(Cart);

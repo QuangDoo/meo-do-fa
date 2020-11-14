@@ -14,7 +14,8 @@ const mockProduct: Product = {
   seller_ids: [],
   uom_name: 'Combo',
   badges: ['invoice_exportable', 'only_thuocsi', 'flash_sale'],
-  create_date: 1602131598549
+  create_date: 1602131598549,
+  price: 10
 };
 
 export const mockFlashSale = [...new Array(10)].map(() => ({ ...mockProduct }));

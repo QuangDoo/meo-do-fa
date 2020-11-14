@@ -12,7 +12,8 @@ const mockProduct: Product = {
   category_ids: ['than-tiet-nieu'],
   seller_ids: [],
   badges: ['common', 'invoice_exportable', 'change_style', 'flash_sale'],
-  create_date: 1602131598549
+  create_date: 1602131598549,
+  price: 10
 };
 
 export const mockProducts: Product[] = [...new Array(20)].map(() => ({

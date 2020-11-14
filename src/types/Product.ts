@@ -12,6 +12,7 @@ export type Product = {
   category_ids: string[]; // categories
   create_date: number; // milliseconds since Unix Epoch
   list_price: number; // current price (can be different from standard price if it's a deal or promotion)
+  price: number;
   seller_ids: string[]; // suppliers
   standard_price: number; // standard price
   badges?: ProductBadgeType[];

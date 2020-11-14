@@ -7,7 +7,7 @@ type ProductPriceProps = {
 };
 
 export const ProductPrice = (props: ProductPriceProps) => {
-  const priceIsDifferent = props.list_price !== props.standard_price;
+  const priceIsDifferent = props.standard_price && props.list_price !== props.standard_price;
 
   return (
     <>
@@ -18,7 +18,7 @@ export const ProductPrice = (props: ProductPriceProps) => {
 
       {priceIsDifferent && (
         <span className="product-card__old-price">
-          {props.standard_price.toLocaleString('de-DE')}
+          {/* {props.standard_price.toLocaleString('de-DE')} */}
           <span className="unit">đ</span>
         </span>
       )}
