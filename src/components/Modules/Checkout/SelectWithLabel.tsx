@@ -9,7 +9,6 @@ type Props = {
   label: string;
   name: string;
   children: React.ReactNode;
-
   containerClass?: string;
   labelClass?: string;
   selectClass?: string;

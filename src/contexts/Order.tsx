@@ -20,7 +20,7 @@ OrderContext.displayName = 'OrderContext';
 const OrderProvider = withApollo({ ssr: true })(({ children }: Props) => {
   const [addToCart, { data, loading, error }] = useMutation(ADD_TO_CART);
 
-  console.log('error', JSON.stringify(error));
+  console.log('data', data);
   return <OrderContext.Provider value={{ addToCart }}>{children}</OrderContext.Provider>;
 });
 

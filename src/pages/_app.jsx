@@ -6,6 +6,7 @@ import App from 'next/app';
 import React, { useEffect } from 'react';
 import ToastContainer from 'src/components/Layout/ToastContainer';
 import { CategoriesProvider } from 'src/contexts/Categories';
+import { CityProvider } from 'src/contexts/City';
 import { ModalControlProvider } from 'src/contexts/ModalControl';
 import { UserProvider } from 'src/contexts/User';
 import { theme } from 'src/theme';
@@ -21,13 +22,14 @@ const MyApp = ({ Component, pageProps }) => {
 
   return (
     <ThemeProvider theme={theme}>
-      <ModalControlProvider>
-        <CategoriesProvider>
-          <Component {...pageProps} />
-        </CategoriesProvider>
-
-        <ToastContainer />
-      </ModalControlProvider>
+      <CityProvider>
+        <ModalControlProvider>
+          <CategoriesProvider>
+            <Component {...pageProps} />
+          </CategoriesProvider>
+          <ToastContainer />
+        </ModalControlProvider>
+      </CityProvider>
     </ThemeProvider>
   );
 };
