@@ -10,7 +10,7 @@ const mockProduct: Product = {
   image_512: 'gV7ACwEuH8vkfEJVV8tMbix3',
   list_price: 783200,
   standard_price: 783200,
-  categ_id: ['duoc-my-pham'],
+  category_ids: ['duoc-my-pham'],
   seller_ids: [],
   uom_name: 'Combo',
   badges: ['invoice_exportable', 'only_thuocsi', 'flash_sale'],
