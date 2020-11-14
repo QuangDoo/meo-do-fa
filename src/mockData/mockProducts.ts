@@ -9,7 +9,7 @@ const mockProduct: Product = {
   list_price: 430500,
   standard_price: 430500,
   uom_name: 'Hộp 3 vỉ x 10 viên',
-  categ_id: ['than-tiet-nieu'],
+  category_ids: ['than-tiet-nieu'],
   seller_ids: [],
   badges: ['common', 'invoice_exportable', 'change_style', 'flash_sale'],
   create_date: 1602131598549
