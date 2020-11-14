@@ -10,7 +10,7 @@ const mockProduct: Product = {
   list_price: 72226,
   standard_price: 73700,
   badges: ['promotion', 'invoice_exportable'],
-  categ_id: ['duoc-my-pham'],
+  category_ids: ['duoc-my-pham'],
   seller_ids: [],
   create_date: 1602131598549
 };
