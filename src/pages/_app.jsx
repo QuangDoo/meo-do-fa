@@ -8,6 +8,7 @@ import { ThemeProvider } from 'styled-components';
 import { appWithTranslation } from '../../i18n';
 import ToastContainer from '../components/Layout/ToastContainer';
 import { CategoriesProvider } from '../contexts/Categories';
+import { CityProvider } from '../contexts/City';
 import { ModalControlProvider } from '../contexts/ModalControl';
 import { theme } from '../theme';
 
@@ -21,13 +22,14 @@ const MyApp = ({ Component, pageProps }) => {
 
   return (
     <ThemeProvider theme={theme}>
-      <ModalControlProvider>
-        <CategoriesProvider>
-          <Component {...pageProps} />
-        </CategoriesProvider>
-
-        <ToastContainer />
-      </ModalControlProvider>
+      <CityProvider>
+        <ModalControlProvider>
+          <CategoriesProvider>
+            <Component {...pageProps} />
+          </CategoriesProvider>
+          <ToastContainer />
+        </ModalControlProvider>
+      </CityProvider>
     </ThemeProvider>
   );
 };

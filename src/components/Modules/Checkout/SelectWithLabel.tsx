@@ -10,10 +10,9 @@ type Props = {
   label: string;
   name: string;
   children: React.ReactNode;
-
   containerClass?: string;
   labelClass?: string;
-  selectClass?: StringifyOptions;
+  selectClass?: string;
   required?: boolean;
 };
 

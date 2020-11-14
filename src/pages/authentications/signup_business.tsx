@@ -1,119 +1,138 @@
-import { useMutation } from '@apollo/react-hooks';
-import React, { createRef, useState } from 'react';
+import { useMutation, useQuery } from '@apollo/react-hooks';
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { UPDATE_USER, UpdateUserVars } from 'src/graphql/user/updateUser.mutation';
+import SelectWithLabel from 'src/components/Modules/Checkout/SelectWithLabel';
+import { useCities } from 'src/contexts/City';
+import { GET_DISTRICT } from 'src/graphql/address/district.query';
+import { GET_WARD } from 'src/graphql/address/ward.query';
+import { UPDATE_USER } from 'src/graphql/user/updateUser.mutation';
+import { Status } from 'src/types/Status';
+import withApollo from 'src/utils/withApollo';
 
 import Head from '../../components/Layout/Head';
 import PageLayout from '../../components/Layout/PageLayout';
 
+type City = {
+  id: string;
+  city_code: string;
+  city: string;
+};
+
+type DataAddress = {
+  city: string;
+  district: string;
+  ward: string;
+};
+type DataUpdateUser = {
+  updateUser: Status;
+};
+
 function SignupBusiness(): JSX.Element {
   const [fileName, setFileName] = useState('');
 
-  const [updateUser] = useMutation<UpdateUserVars>(UPDATE_USER, {
+  const [dataAddress, setDataAddress] = useState<DataAddress>();
+
+  const [fileBase64, setFileBase64] = useState('');
+
+  const router = useRouter();
+
+  const [updateUser] = useMutation(UPDATE_USER, {
     onCompleted: (data) => {
-      console.log('data', data);
+      if (data.updateUser.status === 'OK') {
+        router.push('/');
+      }
     },
     onError: (error) => {
-      console.log('error', error);
+      console.log('error', JSON.stringify(error.message));
     }
   });
 
-  const handleChange = (e) => {
-    switch (e.target.name) {
-      // Updated this
-      case 'selectedFile':
-        if (e.target.files.length > 0) {
-          // Accessed .name from file
-          setFileName(e.target.files[0].name);
-          // console.log(e.target.files[0].name)
-        }
-        break;
-      default:
-        setFileName(e.target.value);
-    }
+  const { data: dataCity } = useCities();
+
+  const { data: dataDistrict, error: errorDistrict, refetch: refetchDistrict } = useQuery(
+    GET_DISTRICT
+  );
+  const { data: dataWard, error: errorWard, refetch: refetchWard } = useQuery(GET_WARD);
+
+  const handleChange = async (e) => {
+    setFileName(e.target.files[0].name);
+    getBase64(e.target.files[0]).then((result: string) => setFileBase64(result));
   };
 
   let file = null;
   file = fileName ? <span>File Selected - {fileName}</span> : <span>Chọn file...</span>;
-  const city = [
-    {
-      cityName: 'Chọn tỉnh/thành phố...',
-      id: ''
-    },
-    {
-      cityName: 'An Giang',
-      id: 9131
-    },
-    {
-      cityName: 'TP Hồ Chí Minh',
-      id: 1475
-    },
-    {
-      cityName: 'Bắc Kạn',
-      id: 9402
-    },
-    {
-      cityName: 'Bạc Liêu',
-      id: 9533
-    }
-  ];
-  const district = [
-    {
-      districtName: 'Chọn quận/huyện...',
-      id: ''
-    },
-    {
-      districtName: 'Quận 1',
-      id: 1476
-    },
-    {
-      districtName: 'Quận 2',
-      id: 1487
-    },
-    {
-      districtName: 'Quận 3',
-      id: 1499
-    },
-    {
-      districtName: 'Quận 4',
-      id: 1514
-    }
-  ];
-  const ward = [
-    {
-      wardName: 'Chọn phường/xã...',
-      id: 123
-    },
-    {
-      wardName: 'Phường 2',
-      id: 11234
-    },
-    {
-      wardName: 'Phường 3',
-      id: 12388
-    },
-    {
-      wardName: 'Phường 4',
-      id: 14523
-    }
-  ];
 
-  const { register, setValue, handleSubmit } = useForm();
-  const fileInput = createRef();
-  const onSubmit = (data) => {
-    console.log('data', data.user.businesses_attributes[0]);
-    console.log('fileName', fileName);
-    // updateUser({
-    //   variables: {
-    //     display_name: data.user.businesses_attributes[0].name,
-    //     representative: data.user.businesses_attributes[0].representative,
-    //     vat: data.user.businesses_attributes[0].tax_number,
-    //     contact_address: data.user.businesses_attributes[0].address
-    //   }
-    // });
+  const getBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
+
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
   };
-  const [disabledDistrict, setDisabledDistrict] = useState(true);
-  const [disabledWard, setDisabledWard] = useState(true);
+  const { register, handleSubmit, watch } = useForm();
+
+  const cityValue = watch('cityId');
+  const districtValue = watch('districtId');
+
+  useEffect(() => {
+    if (!cityValue) return;
+    refetchDistrict({ city_code: cityValue });
+  }, [cityValue, refetchDistrict]);
+
+  useEffect(() => {
+    if (!districtValue) return;
+
+    refetchWard({ city_code: cityValue, district_code: districtValue });
+  }, [districtValue, refetchWard]);
+
+  useEffect(() => {
+    if (dataCity) {
+      dataCity.map((city: { city: string }) => {
+        setDataAddress({ ...dataAddress, city: city.city });
+        // console.log('city state', city.city);
+      });
+    }
+
+    if (dataWard) {
+      dataWard.getWard.filter((ward) => {
+        if (ward.district_code === districtValue && ward.city_code === cityValue) {
+          setDataAddress({ ...dataAddress, ward: ward.ward });
+        }
+      });
+    }
+  }, [dataCity, dataWard]);
+  useEffect(() => {
+    if (dataDistrict) {
+      dataDistrict.getDistrict.filter((district) => {
+        if (district.district_code === districtValue) {
+          setDataAddress({ ...dataAddress, district: district.district });
+        }
+      });
+    }
+  }, [dataDistrict]);
+
+  const onSubmit = (data) => {
+    updateUser({
+      variables: {
+        display_name: data.user.businesses_attributes[0].name,
+        representative: data.user.businesses_attributes[0].representative,
+        vat: data.user.businesses_attributes[0].tax_number,
+        street: data.user.businesses_attributes[0].address,
+        city: dataAddress.city,
+        district: dataAddress.district,
+        ward: dataAddress.ward
+        // business_license: fileBase64.substr(22)
+      }
+    });
+  };
   return (
     <>
       <Head>
@@ -258,75 +277,62 @@ function SignupBusiness(): JSX.Element {
                       </small>
                     </div>
                     <div className="row">
-                      <div className="col-md-4 form-group">
-                        <label
-                          className="form__label required"
-                          htmlFor="user_businesses_attributes_0_city_id">
-                          Tỉnh/Thành phố
-                        </label>
-                        <select
-                          className="custom-select d-block"
-                          required
-                          name="city"
-                          ref={register}
-                          onBlur={(e) => {
-                            e.target.value
-                              ? setDisabledDistrict(false)
-                              : (setDisabledDistrict(true),
-                                setDisabledWard(true),
-                                setValue(
-                                  'user[businesses_attributes][0][district_id]',
-                                  district[0].districtName
-                                ));
-                          }}>
-                          {city.map((item, index) => (
-                            <option key={index} value={item.id}>
-                              {item.cityName}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                      <div className="col-md-4 form-group">
-                        <label
-                          className="form__label required"
-                          htmlFor="user_businesses_attributes_0_district_id">
-                          Quận/Huyện
-                        </label>
-                        <select
-                          className="custom-select d-block"
-                          disabled={disabledDistrict}
-                          required
-                          name="district"
-                          ref={register}
-                          onBlur={(e) => {
-                            e.target.value ? setDisabledWard(false) : setDisabledWard(true);
-                          }}>
-                          {district.map((item, index) => (
-                            <option key={index} value={item.id}>
-                              {item.districtName}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                      <div className="col-md-4 form-group">
-                        <label
-                          className="form__label required"
-                          htmlFor="user_businesses_attributes_0_ward_id">
-                          Phường/Xã
-                        </label>
-                        <select
-                          className="custom-select d-block"
-                          disabled={disabledWard}
-                          required
-                          name="user[businesses_attributes][0][ward_id]"
-                          ref={register}>
-                          {ward.map((item, index) => (
-                            <option key={index} value={item.id}>
-                              {item.wardName}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
+                      {/* Select city */}
+                      <SelectWithLabel
+                        name="cityId"
+                        ref={register({
+                          required: 'Xin chọn tỉnh/thành phố.'
+                        })}
+                        label="Tỉnh/Thành phố"
+                        containerClass="col-md-4"
+                        required>
+                        <option value="">Chọn tỉnh/thành phố...</option>
+
+                        {/* Map cities from api */}
+                        {dataCity.map((city: City) => (
+                          <option key={city.id} value={city.city_code}>
+                            {city.city}
+                          </option>
+                        ))}
+                      </SelectWithLabel>
+
+                      {/* Select district */}
+                      <SelectWithLabel
+                        name="districtId"
+                        ref={register({
+                          required: 'Xin chọn quận/huyện.'
+                        })}
+                        label="Quận/Huyện"
+                        labelClass="required"
+                        containerClass="col-md-4">
+                        <option value="">Chọn quận/huyện...</option>
+
+                        {/* Map districts from chosen city */}
+                        {dataDistrict?.getDistrict.map((district) => (
+                          <option key={district.id} value={district.district_code}>
+                            {district.district}
+                          </option>
+                        ))}
+                      </SelectWithLabel>
+
+                      {/* Select ward */}
+                      <SelectWithLabel
+                        name="wardId"
+                        ref={register({
+                          required: 'Xin chọn phường/xã.'
+                        })}
+                        label="Phường/Xã"
+                        labelClass="required"
+                        containerClass="col-md-4">
+                        <option value="">Chọn phường/xã...</option>
+
+                        {/* Map wards from chosen district */}
+                        {dataWard?.getWard.map((ward) => (
+                          <option key={ward.id} value={ward.id}>
+                            {ward.ward}
+                          </option>
+                        ))}
+                      </SelectWithLabel>
                     </div>
                   </div>
                 </div>
@@ -357,76 +363,8 @@ function SignupBusiness(): JSX.Element {
           </div>
         </div>
       </PageLayout>
-      {/* <noscript>
-          &lt;iframe height="0" src="https://www.googletagmanager.com/ns.html?id=GTM-TBKGGQF"
-          style="display:none;visibility:hidden" width="0"&gt;&lt;/iframe&gt;
-        </noscript> */}
-      {/* <div className="iziToast-wrapper iziToast-wrapper-topRight" /> */}
-      {/* <iframe
-          id="insider-worker"
-          src="https://thuocsivn.api.useinsider.com/worker-new.html"
-          style={{ display: 'none' }}
-        />
-        <iframe
-          data-product="web_widget"
-          title="No content"
-          tabIndex={-1}
-          aria-hidden="true"
-          src="about:blank"
-          style={{
-            width: '0px',
-            height: '0px',
-            border: '0px',
-            position: 'absolute',
-            top: '-9999px',
-          }}
-        />
-        <div>
-          <iframe
-            title="Opens a widget where you can chat to one of our agents"
-            id="launcher"
-            tabIndex={0}
-            style={{
-              width: '108px',
-              height: '50px',
-              padding: '0px',
-              margin: '10px 20px',
-              position: 'fixed',
-              bottom: '0px',
-              overflow: 'visible',
-              opacity: 1,
-              border: '0px',
-              zIndex: 999998,
-              transitionDuration: '250ms',
-              transitionTimingFunction: 'cubic-bezier(0.645, 0.045, 0.355, 1)',
-              transitionProperty: 'opacity, top, bottom',
-              right: '0px',
-            }}
-          />
-          <iframe
-            title="Find more information here"
-            id="webWidget"
-            tabIndex={-1}
-            style={{
-              width: '374px',
-              maxHeight: 'calc(100vh - 32px)',
-              height: '572px',
-              position: 'fixed',
-              opacity: 0,
-              border: '0px',
-              transitionDuration: '250ms',
-              transitionTimingFunction: 'cubic-bezier(0.645, 0.045, 0.355, 1)',
-              transitionProperty: 'opacity, top, bottom',
-              top: '-9999px',
-              visibility: 'hidden',
-              zIndex: 999999,
-            }}
-          />
-        </div>
-        <style id="ins-free-style" innerhtml dangerouslySetInnerHTML={{ __html: '' }} /> */}
-      {/* <Footer /> */}
     </>
   );
 }
 
-export default SignupBusiness;
+export default withApollo({ ssr: true })(SignupBusiness);
