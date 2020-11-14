@@ -1,15 +1,39 @@
+import Link from 'next/link';
 import React from 'react';
 
 import Tab from './Tab';
 
-const ProducerInformation = (): JSX.Element => {
+type Display_name = {
+  display_name: string;
+};
+
+type PropsType = {
+  manufacturers: string[];
+  categories: Display_name[];
+  ingredients: Display_name[];
+  info?: string;
+  indication?: string;
+  contraindication?: string;
+  direction?: string;
+  interaction?: string;
+  preservation?: string;
+  overdose?: string;
+};
+
+const ProducerInformation = (props: PropsType): JSX.Element => {
   return (
     <div className="row">
       <div className="col-12 col-sm-3">
         <div className="mb-3">
           <div className="product__info-label">Nhà sản xuất</div>
           <div className="text-capitalize">
-            <a href="/">Công ty Cổ phần Dược phẩm OPC</a>
+            <a href="/">
+              {props?.manufacturers?.filter((item, index) => {
+                if (index === 1) {
+                  return item;
+                }
+              })}
+            </a>
           </div>
         </div>
         <div className="mb-3">
@@ -18,9 +42,13 @@ const ProducerInformation = (): JSX.Element => {
         </div>
         <div className="mb-3">
           <div className="product__info-label">Nhóm thuốc</div>
-          <a className="text-capitalize" href="/categories/thuc-pham-chuc-nang">
-            thực phẩm chức năng
-          </a>
+          {props?.categories?.map((item, index) => {
+            return (
+              <a className="text-capitalize" href="/categories/thuc-pham-chuc-nang" key={index}>
+                {item.display_name}
+              </a>
+            );
+          })}
         </div>
         <div className="mb-3">
           <div className="product__info-label">Thành phần</div>
@@ -30,29 +58,31 @@ const ProducerInformation = (): JSX.Element => {
                 <th>Tên</th>
                 <th>Hàm lượng</th>
               </tr>
-              <tr>
-                <td>
-                  <a href="/ingredients/thuc-dia">Thục địa</a>
-                </td>
-                <td>262.5mg</td>
-              </tr>
-              <tr>
-                <td>
-                  <a href="/ingredients/hoai-son">Hoài sơn</a>
-                </td>
-                <td>189.82mg</td>
-              </tr>
-              <tr>
-                <td>
-                  <a href="/ingredients/son-thu">sơn thù</a>
-                </td>
-                <td>220mg</td>
-              </tr>
+              {props.ingredients?.map((item, index) => {
+                return (
+                  <tr key={index}>
+                    <td>
+                      <Link href="/ingredients/thuc-dia">
+                        <a>{item.display_name}</a>
+                      </Link>
+                    </td>
+                    <td>262.5mg</td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
       </div>
-      <Tab />
+      <Tab
+        info={props.info}
+        indication={props.indication}
+        contraindication={props.contraindication}
+        direction={props.direction}
+        interaction={props.interaction}
+        preservation={props.preservation}
+        overdose={props.overdose}
+      />
     </div>
   );
 };

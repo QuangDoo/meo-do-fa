@@ -14,12 +14,12 @@ function ProductDetail(): JSX.Element {
   const router = useRouter();
 
   const { productId } = router.query;
-
+  console.log('productId', productId);
   const { data: dataProduct, loading: loadingProduct, error: errorProduct } = useQuery(
     GET_PRODUCT,
     { variables: { id: Number(productId) } }
   );
-
+  console.log('dataProduct', dataProduct);
   return (
     <>
       <Head>

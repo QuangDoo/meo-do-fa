@@ -10,7 +10,8 @@ type PropsType = {
   description: string;
   views: number;
   totalOrders: number;
-  price: number;
+  list_price: number;
+  uom_name: string;
 };
 const ProductInformation = (props: PropsType): JSX.Element => {
   return (

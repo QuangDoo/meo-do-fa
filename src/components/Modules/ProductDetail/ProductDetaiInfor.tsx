@@ -5,7 +5,8 @@ import QuantityInput from '../QuantityInput';
 
 type PropsType = {
   name: string;
-  price: number;
+  list_price: number;
+  uom_name: string;
 };
 const ProductDetailInfor = (props: PropsType): JSX.Element => {
   let token = '';
@@ -22,7 +23,7 @@ const ProductDetailInfor = (props: PropsType): JSX.Element => {
         </div>
         <div className="col-md-7">
           <div className="mb-3">
-            <small className="text-muted">Hộp 5 vỉ x 10 viên </small>
+            <small className="text-muted">{props.uom_name} </small>
           </div>
           <div className="mb-3">
             <small className="text-muted">
@@ -49,7 +50,7 @@ const ProductDetailInfor = (props: PropsType): JSX.Element => {
                 <div>
                   <div className="product__price-group">
                     <span className="product__price">
-                      {props.price}
+                      {props.list_price}
                       <span className="unit">đ</span>
                     </span>
                   </div>
