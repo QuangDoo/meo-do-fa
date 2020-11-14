@@ -5,7 +5,6 @@ import ProductInformation from './ProductInformation/ProductInformation';
 import RelativeProducts from './RelativeProducts';
 
 const ProductDetailComponent = (props): JSX.Element => {
-  console.log('props', props);
   return (
     <div className="product container py-5">
       <ProductInformation {...props} />

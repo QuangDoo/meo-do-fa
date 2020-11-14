@@ -38,7 +38,7 @@ function Products(): JSX.Element {
       }
     }
   );
-  console.log('productsData', productsData);
+
   // Refetch products when page changes
   useEffect(() => {
     if (!router.query.page) return;

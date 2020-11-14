@@ -58,7 +58,6 @@ export const GET_PRODUCTS = gql`
         id
         display_name
       }
-      manufacturer_id
       ingredient_ids
     }
   }
