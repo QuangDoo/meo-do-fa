@@ -1,16 +1,16 @@
 import 'react-toastify/dist/ReactToastify.css';
 import '../assets/scss/custom-styles.scss';
 
+import { appWithTranslation } from 'i18n';
 import App from 'next/app';
 import React, { useEffect } from 'react';
+import ToastContainer from 'src/components/Layout/ToastContainer';
+import { CategoriesProvider } from 'src/contexts/Categories';
+import { CityProvider } from 'src/contexts/City';
+import { ModalControlProvider } from 'src/contexts/ModalControl';
+import { UserProvider } from 'src/contexts/User';
+import { theme } from 'src/theme';
 import { ThemeProvider } from 'styled-components';
-
-import { appWithTranslation } from '../../i18n';
-import ToastContainer from '../components/Layout/ToastContainer';
-import { CategoriesProvider } from '../contexts/Categories';
-import { CityProvider } from '../contexts/City';
-import { ModalControlProvider } from '../contexts/ModalControl';
-import { theme } from '../theme';
 
 const MyApp = ({ Component, pageProps }) => {
   useEffect(() => {

@@ -14,7 +14,6 @@ import { useCategories } from 'src/contexts/Categories';
 import { GET_PRODUCTS } from 'src/graphql/product/product.query';
 import { mockSuppliers } from 'src/mockData/mockSuppliers';
 import { mockTotalProducts } from 'src/mockData/mockTotalProducts';
-import { GetProductsData, GetProductsVars } from 'src/types/GetProducts';
 import withApollo from 'src/utils/withApollo';
 
 const totalProducts = mockTotalProducts;
