@@ -15,3 +15,10 @@ export type GetProductsVars = {
   category_id: string | string[];
   order_type: string | string[];
 };
+export type GetProductsDealVars = {
+  page: number;
+  pageSize: number;
+};
+export type GetProductsDealData = {
+  getProductsDeal: Product[];
+};

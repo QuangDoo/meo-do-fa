@@ -70,19 +70,29 @@ export const GET_PRODUCT = gql`
     }
   }
 `;
-// export const GET_PRODUCTS = gql`
-//   query getAllProduct($input: GetAllProductInput!) {
-//     getProducts(input: $input) {
-//       data {
-//         id
-//         sku
-//         name
-//         price
-//         finalPrice
-//         promotionPercent
-//         namePath
-//         image
-//       }
-//     }
-//   }
-// `
+export const GET_PRODUCTS_DEAL = gql`
+query getProductsDeal($page: Int!, $pageSize: Int!) {
+  getProducts(page: $page, pageSize: $pageSize) {
+    id
+    name
+    list_price
+    standard_price
+    color
+    description
+    description_purchase
+    description_sale
+    active
+    sale_ok
+    purchase_ok
+    volume
+    weight
+    create_date
+    image_128
+    image_512
+    image_256
+    category_ids
+    uom_name
+      }
+    }
+  }
+`;
