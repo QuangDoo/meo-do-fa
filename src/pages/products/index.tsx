@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/react-hooks';
 import { withTranslation } from 'i18n';
 import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
@@ -17,6 +17,8 @@ import { mockTotalProducts } from 'src/mockData/mockTotalProducts';
 import { GetProductsData, GetProductsVars } from 'src/types/GetProducts';
 import withApollo from 'src/utils/withApollo';
 
+import { Product } from '../../types/Product';
+
 const totalProducts = mockTotalProducts;
 
 const pageSize = 20;
@@ -26,7 +28,6 @@ function Products(): JSX.Element {
 
   // Current page
   const page = +router.query.page || 1;
-
   const { data: categories, nameLookup: categoryNameLookup } = useCategories();
 
   // Get products
@@ -36,19 +37,35 @@ function Products(): JSX.Element {
   >(GET_PRODUCTS, {
     variables: {
       page,
-      pageSize
+      pageSize,
+      type: router.query.tab,
+      manufacturer_id: router.query.manufacturer,
+      category_id: router.query.category,
+      order_type: router.query.sort || '01'
     }
   });
+  const [productList, setProductList] = useState<Product[]>();
+  const [total, setTotal] = useState<number>();
+  useEffect(() => {
+    if (productsData) {
+      setProductList(productsData.getProductByConditions.Products);
+      setTotal(productsData.getProductByConditions.total);
+    }
+  }, [productsData]);
 
   // Refetch products when page changes
   useEffect(() => {
-    if (!router.query.page) return;
-
+    console.log('run refect');
+    if (!router.query) return;
     refetch({
-      page: +router.query.page,
-      pageSize
+      page: router.query.page ? +router.query.page : page,
+      pageSize,
+      type: router.query.tab,
+      manufacturer_id: router.query.manufacturer,
+      category_id: router.query.category,
+      order_type: router.query.sort || '01'
     });
-  }, [router.query.page, refetch]);
+  }, [router.query, refetch]);
 
   // Pagination component, reused at top and bottom of products list
   // Updates page query on change
@@ -68,7 +85,9 @@ function Products(): JSX.Element {
       }
     />
   );
-
+  if (productsLoading) {
+    console.log('loadinggg');
+  }
   return (
     <>
       <Head>
@@ -91,14 +110,14 @@ function Products(): JSX.Element {
             <div className="px-2 px-sm-0 mb-2">
               <h1 className="products__header text-capitalize mb-3">Tất cả sản phẩm</h1>
 
-              {totalProducts > 0 ? (
+              {total > 0 ? (
                 <>
                   Hiển thị{' '}
                   <b>
                     {(page - 1) * pageSize + 1}&nbsp;-&nbsp;
-                    {Math.min(page * pageSize, totalProducts)}
+                    {Math.min(page * pageSize, total)}
                   </b>{' '}
-                  trên tổng số <b>{totalProducts}</b> sản Phẩm
+                  trên tổng số <b>{total}</b> sản Phẩm
                 </>
               ) : (
                 'Không có Sản Phẩm'
@@ -114,9 +133,15 @@ function Products(): JSX.Element {
               <CustomPagination />
 
               <div className="products__cards mb-3">
-                {productsData?.getProducts.map((product, index) => (
-                  <ProductCard key={index} {...product} />
-                ))}
+                {productList &&
+                  productList.map((product, index) => (
+                    <ProductCard
+                      key={index}
+                      {...product}
+                      seller_ids={[]}
+                      badges={['common', 'invoice_exportable', 'change_style', 'flash_sale']}
+                    />
+                  ))}
               </div>
 
               <CustomPagination />
