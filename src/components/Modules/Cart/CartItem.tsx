@@ -5,7 +5,17 @@ import { ProductPrice } from '../ProductCard/ProductPrice';
 import QuantityInput from '../QuantityInput';
 import ConfirmDeleteModal from './ConfirmDeleteModal';
 
-function CartItem(props): JSX.Element {
+type Props = {
+  image: string;
+  productName: string;
+  productId: string;
+  uom_name: string;
+  list_price: number;
+  standard_price: number;
+  quantity: number;
+};
+
+function CartItem(props: Props): JSX.Element {
   console.log('props', props);
   const [open, setOpen] = useState(false);
   const openModal = () => setOpen(true);
@@ -15,29 +25,26 @@ function CartItem(props): JSX.Element {
     <div className="cart-item">
       <div className="row align-items-center">
         <div className="col-7 d-flex align-items-center pl-4">
-          <div
-            className="cart-item__important-btn inactive"
-            data-action="click->cart#updateImportantButton"
-            data-item-id={3206540}>
+          <div className="cart-item__important-btn inactive">
             <i className="fas fa-star" />
           </div>
           <div
             className="cart-item__image lozad mr-2 loaded"
             data-background-image={props.image}
             style={{
-              backgroundImage: `url(${props.image})`
+              backgroundImage: `url(data:image/png;base64,${props.image})`
             }}
             data-loaded="true"
           />
           <div>
             <a
               className="cart-item__name"
-              href={'products/' + props.slug}
+              href={'products/' + props.productId}
               title={props.productName}>
               {props.productName}
             </a>
             <div className="cart-item__package">
-              <small>{props.description}</small>
+              <small>{props.uom_name}</small>
             </div>
           </div>
         </div>
@@ -45,7 +52,7 @@ function CartItem(props): JSX.Element {
           <div className="w-100">
             <div className="d-flex justify-content-between align-items-center">
               <div>
-                <ProductPrice list_price={props.price} standard_price={props.standard_price} />
+                <ProductPrice list_price={props.list_price} standard_price={props.standard_price} />
               </div>
               <div className="cart-item__qty">
                 <QuantityInput {...props} quantity={props.quantity} />
@@ -69,7 +76,7 @@ function CartItem(props): JSX.Element {
         onClose={closeModal}
         productName={props.productName}
         image={props.image}
-        price={props.price}
+        price={props.list_price}
       />
     </div>
   );

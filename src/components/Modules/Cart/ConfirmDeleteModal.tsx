@@ -11,7 +11,7 @@ type Props = {
 
   productName: string;
 
-  price: string;
+  price: number;
 
   image: string;
 };
@@ -60,7 +60,7 @@ const ConfirmDeleteModal: FC<Props> = (props) => {
                   <div className="text-left">
                     <div className="cart-item__name mb-2">{props.productName}</div>
                     <div className="cart-item__price">
-                      {props.price}
+                      {props.price.toLocaleString('de-DE')}
                       <span className="unit">đ</span>
                     </div>
                   </div>
