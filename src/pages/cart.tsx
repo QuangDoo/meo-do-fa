@@ -11,14 +11,12 @@ import Nav from '../components/Layout/Nav';
 import CartItem from '../components/Modules/Cart/CartItem';
 
 function Cart(): JSX.Element {
-  const { data } = useQuery<GetCartData, undefined>(GET_CART, {
+  const { data, refetch } = useQuery<GetCartData, undefined>(GET_CART, {
     onError: (error) => {
       console.log('Get cart error: ', error);
       toast.error('Get cart error: ' + error);
     }
   });
-
-  console.log('data:', data);
 
   return (
     <>
@@ -50,6 +48,7 @@ function Cart(): JSX.Element {
                 {data?.getCart.carts.map((item, index) => (
                   <CartItem
                     key={index}
+                    _id={item._id}
                     image=""
                     list_price={item.price}
                     standard_price={item.oldPrice}
@@ -57,6 +56,7 @@ function Cart(): JSX.Element {
                     productName={item.productName}
                     quantity={item.quantity}
                     uom_name="Unit"
+                    refetchCart={() => refetch()}
                   />
                 ))}
               </div>

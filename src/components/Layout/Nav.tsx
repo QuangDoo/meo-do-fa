@@ -87,9 +87,11 @@ export default function Nav(): JSX.Element {
               <div className="header-right">
                 <ul className="nav align-items-center">
                   <li className="nav-item mr-3">
-                    <button className="buymed-nav__link" onClick={logOut}>
-                      <i className="fas fa-sign-in-alt buymed-nav__icon" />
-                    </button>
+                    <Link href="/cart">
+                      <a className="buymed-nav__link">
+                        <i className="icomoon icon-local-mall buymed-nav__icon" />
+                      </a>
+                    </Link>
                   </li>
 
                   <li className="nav-item mr-3">
