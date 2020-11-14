@@ -37,7 +37,7 @@ const ModalWithHeader: FC<Props> = (props) => {
         }}>
         <Typography variant="h6">{title}</Typography>
         {onClose ? (
-          <IconButton aria-label="close" onClick={onClose}>
+          <IconButton aria-label="close" onClick={onClose} size="small">
             <CloseIcon />
           </IconButton>
         ) : null}
