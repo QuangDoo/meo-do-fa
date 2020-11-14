@@ -9,3 +9,8 @@ export const GET_CATEGORIES = gql`
     }
   }
 `;
+// getCategories {
+//   id
+//   name
+//   complete_name
+// }

@@ -82,12 +82,12 @@ const ProductCard = ({
               {showCategories && (
                 <small className="text-muted product-card__category">
                   {t('productCard:category')}:{' '}
-                  {props.categ_id.map((id, index) => (
+                  {props.category_ids.map((id, index) => (
                     <>
                       <Link key={id} href={`/products?category=${id}`}>
                         <a>{categoryNameLookup[id]}</a>
                       </Link>
-                      {index < props.categ_id.length - 1 && '; '}
+                      {index < props.category_ids.length - 1 && '; '}
                     </>
                   ))}
                 </small>

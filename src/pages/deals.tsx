@@ -4,8 +4,8 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import Pagination from 'src/components/Modules/Pagination';
 import ProductCard from 'src/components/Modules/ProductCard';
-import { GET_PRODUCTS } from 'src/graphql/product/product.query';
-import { GetProductsData, GetProductsVars } from 'src/types/GetProducts';
+import { GET_PRODUCTS_DEAL } from 'src/graphql/product/product.query';
+import { GetProductsDealData, GetProductsDealVars } from 'src/types/GetProducts';
 
 import Footer from '../components/Layout/Footer';
 import Head from '../components/Layout/Head';
@@ -20,9 +20,9 @@ function Deal() {
   const page = +router.query.page || 1;
 
   const { data: productsData, refetch: refetchProducts } = useQuery<
-    GetProductsData,
-    GetProductsVars
-  >(GET_PRODUCTS, {
+    GetProductsDealData,
+    GetProductsDealVars
+  >(GET_PRODUCTS_DEAL, {
     variables: {
       page: page,
       pageSize: pageSize
@@ -71,7 +71,7 @@ function Deal() {
               </div>
 
               <div className="products__cards mb-3">
-                {productsData?.getProducts.map((product) => (
+                {productsData?.getProductsDeal.map((product) => (
                   <ProductCard
                     key={product.id}
                     showBadges={false}

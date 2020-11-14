@@ -9,7 +9,7 @@ export type Product = {
   image_256: string;
   image_512: string;
   uom_name: string; // units
-  categ_id: string[]; // categories
+  category_ids: string[]; // categories
   create_date: number; // milliseconds since Unix Epoch
   list_price: number; // current price (can be different from standard price if it's a deal or promotion)
   price: number;
