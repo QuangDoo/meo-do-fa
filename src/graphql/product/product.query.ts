@@ -41,7 +41,7 @@ export const GET_PRODUCTS = gql`
         uom_name
       }
       total
-
+    }
   }
 `;
 // query getAllProduct($page: Int!, $pageSize: Int!) {
