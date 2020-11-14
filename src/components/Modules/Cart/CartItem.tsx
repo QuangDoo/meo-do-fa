@@ -30,11 +30,9 @@ function CartItem(props: Props): JSX.Element {
           </div>
           <div
             className="cart-item__image lozad mr-2 loaded"
-            data-background-image={props.image}
             style={{
               backgroundImage: `url(data:image/png;base64,${props.image})`
             }}
-            data-loaded="true"
           />
           <div>
             <a
@@ -62,13 +60,13 @@ function CartItem(props: Props): JSX.Element {
           <DeleteIcon className="cart-item__remove" onClick={openModal} />
         </div>
 
-        {props.limit && (
+        {/* {props.limit && (
           <div className="col-12">
             <small className="text-danger">
               Số lượng có hạn! Hãy mau thanh toán để được hưởng giá ưu đãi.
             </small>
           </div>
-        )}
+        )} */}
       </div>
 
       <ConfirmDeleteModal

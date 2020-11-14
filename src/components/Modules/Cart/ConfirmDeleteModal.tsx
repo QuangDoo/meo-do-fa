@@ -51,10 +51,8 @@ const ConfirmDeleteModal: FC<Props> = (props) => {
                     <img
                       alt="phosphalugel boehringer ingelheim (h/26g)"
                       className="lozad img-fluid loaded"
-                      data-src={props.image}
                       src={props.image}
                       width={100}
-                      data-loaded="true"
                     />
                   </div>
                   <div className="text-left">
