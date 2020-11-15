@@ -14,13 +14,10 @@ import ProductsSidebarFilter from 'src/components/Modules/ProductsSidebarFilter'
 import { useCategories } from 'src/contexts/Categories';
 import { GET_PRODUCTS } from 'src/graphql/product/product.query';
 import { mockSuppliers } from 'src/mockData/mockSuppliers';
-import { mockTotalProducts } from 'src/mockData/mockTotalProducts';
 import { GetProductsData, GetProductsVars } from 'src/types/GetProducts';
 import withApollo from 'src/utils/withApollo';
 
 import { Product } from '../../types/Product';
-
-const totalProducts = mockTotalProducts;
 
 const pageSize = 20;
 
@@ -71,7 +68,7 @@ function Products(): JSX.Element {
   // Updates page query on change
   const CustomPagination = () => (
     <Pagination
-      count={Math.ceil(totalProducts / pageSize)}
+      count={Math.ceil(total / pageSize)}
       page={page}
       siblingCount={4}
       onChange={(page) =>
@@ -85,12 +82,11 @@ function Products(): JSX.Element {
       }
     />
   );
+
   const getNameById = (array, id) => {
     return _.find(array, { id })?.name;
   };
-  if (productsLoading) {
-    console.log('loadinggg');
-  }
+
   return (
     <>
       <Head>
