@@ -142,13 +142,13 @@ function SignupBusiness(): JSX.Element {
         <div className="container py-2">
           <div className="d-flex align-items-center justify-content-between">
             <div className="mr-3">
-              <div className="buymed-logo">
-                <a href="/" title="thuocsi.vn">
+              <div className="rockland-logo">
+                <a href="/" title="medofa.vn">
                   <img
-                    alt="thuocsi.vn"
+                    alt="medofa.vn"
                     data-src="/assets/images/logo-49156a6a8b6688f3eb1098b08d406267e8770cffd64b6f07bb31e2e52536346d.svg"
                     className="img-fluid lozad"
-                    title="thuocsi.vn"
+                    title="medofa.vn"
                     src="/assets/images/logo-49156a6a8b6688f3eb1098b08d406267e8770cffd64b6f07bb31e2e52536346d.svg"
                     data-loaded="true"
                   />

@@ -13,7 +13,7 @@ const mockProduct: Product = {
   category_ids: ['duoc-my-pham'],
   seller_ids: [],
   uom_name: 'Combo',
-  badges: ['invoice_exportable', 'only_thuocsi', 'flash_sale'],
+  badges: ['invoice_exportable', 'only_medofa', 'flash_sale'],
   create_date: 1602131598549,
   price: 10
 };

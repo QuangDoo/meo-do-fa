@@ -39,11 +39,11 @@ function Cart(): JSX.Element {
           </div>
           <div className="row">
             <div className="col-9">
-              <div className="elevated text-muted p-3 mb-4">
+              {/* <div className="elevated text-muted p-3 mb-4">
                 <i className="fas fa-star text-warning mr-1" />
                 Nhấp để đánh dấu sản phẩm quan trọng (giới hạn 20% tổng số sản phẩm, 1 sản phẩm đặt
                 nhiều cái cũng tính là 1)
-              </div>
+              </div> */}
               <div className="elevated cart__items mb-3">
                 {data?.getCart.carts.map((item, index) => (
                   <CartItem
@@ -63,7 +63,7 @@ function Cart(): JSX.Element {
               <div className="elevated text-muted p-3 mb-4">
                 <i className="fas fa-exclamation-circle mr-1" />
                 Để thêm sản phẩm vào giỏ hàng, vui lòng quay về trang{' '}
-                <a href="/quick-order">Đặt hàng nhanh</a>
+                <a href="/products">Sản phẩm</a>
               </div>
               <div className="elevated p-3">
                 <div className="mb-3">

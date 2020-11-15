@@ -28,56 +28,56 @@ export default function Nav(): JSX.Element {
   };
 
   return (
-    <nav className="buymed-nav shrink">
+    <nav className="rockland-nav shrink">
       <div className="container">
         <div className="row">
           <div className="col-12 d-flex align-items-center justify-content-between">
             <ul className="nav text-capitalize">
-              <li className="buymed-nav__item">
+              <li className="rockland-nav__item">
                 <Link href="/products">
-                  <a className="buymed-nav__link">
-                    <i className="buymed-nav__icon icomoon icon-product" />
-                    <span className="buymed-nav__title">Sản Phẩm</span>
+                  <a className="rockland-nav__link">
+                    <i className="rockland-nav__icon icomoon icon-product" />
+                    <span className="rockland-nav__title">Sản Phẩm</span>
                   </a>
                 </Link>
               </li>
 
-              <li className="buymed-nav__item">
+              <li className="rockland-nav__item">
                 <Link href="/ingredients">
-                  <a className="buymed-nav__link">
-                    <i className="buymed-nav__icon icomoon icon-ingredients" />
-                    <span className="buymed-nav__title">Hoạt chất</span>
+                  <a className="rockland-nav__link">
+                    <i className="rockland-nav__icon icomoon icon-ingredients" />
+                    <span className="rockland-nav__title">Hoạt chất</span>
                   </a>
                 </Link>
               </li>
 
-              <li className="buymed-nav__item">
+              <li className="rockland-nav__item">
                 <Link href="/quick-order">
-                  <a className="buymed-nav__link">
-                    <i className="buymed-nav__icon icomoon icon-quick-order" />
-                    <span className="buymed-nav__title">Đặt hàng nhanh</span>
+                  <a className="rockland-nav__link">
+                    <i className="rockland-nav__icon icomoon icon-quick-order" />
+                    <span className="rockland-nav__title">Đặt hàng nhanh</span>
                   </a>
                 </Link>
               </li>
 
-              <li className="buymed-nav__item">
+              <li className="rockland-nav__item">
                 <Link href="/deals">
                   <a
-                    className="buymed-nav__link"
-                    href="https://thuocsi.vn/deals"
+                    className="rockland-nav__link"
+                    href="https://medofa.vn/deals"
                     title="Khuyến mãi">
-                    <i className="buymed-nav__icon fab fa-hotjar" />
-                    <span className="buymed-nav__title">Khuyến mãi</span>
+                    <i className="rockland-nav__icon fab fa-hotjar" />
+                    <span className="rockland-nav__title">Khuyến mãi</span>
                   </a>
                 </Link>
               </li>
 
-              <li className="buymed-nav__item">
+              <li className="rockland-nav__item">
                 <Link href="/promo-codes">
-                  <a className="buymed-nav__link">
-                    <i className="buymed-nav__icon fas fa-tag" />
-                    <span className="buymed-nav__title">Mã giảm giá</span>
-                    <span className="buymed-nav__tag badge badge-pill">Mới</span>
+                  <a className="rockland-nav__link">
+                    <i className="rockland-nav__icon fas fa-tag" />
+                    <span className="rockland-nav__title">Mã giảm giá</span>
+                    <span className="rockland-nav__tag badge badge-pill">Mới</span>
                   </a>
                 </Link>
               </li>
@@ -88,15 +88,15 @@ export default function Nav(): JSX.Element {
                 <ul className="nav align-items-center">
                   <li className="nav-item mr-3">
                     <Link href="/cart">
-                      <a className="buymed-nav__link">
-                        <i className="icomoon icon-local-mall buymed-nav__icon" />
+                      <a className="rockland-nav__link">
+                        <i className="icomoon icon-local-mall rockland-nav__icon" />
                       </a>
                     </Link>
                   </li>
 
                   <li className="nav-item mr-3">
-                    <button className="buymed-nav__link" onClick={openMenu}>
-                      <i className="fas fa-bars buymed-nav__icon" />
+                    <button className="rockland-nav__link" onClick={openMenu}>
+                      <i className="fas fa-bars rockland-nav__icon" />
                     </button>
                   </li>
 
