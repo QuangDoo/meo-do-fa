@@ -19,6 +19,7 @@ type PropsType = {
 
 export default function SearchScreen(props: PropsType): JSX.Element {
   const [cloneData, setCloneData] = useState([]);
+  const [textSearch, setTextSearch] = useState('');
 
   useEffect(() => {
     if (!props.dataList) return;
@@ -37,7 +38,7 @@ export default function SearchScreen(props: PropsType): JSX.Element {
   };
   const handleSearch = (key) => {
     console.log('key', key);
-
+    setTextSearch(key);
     const nameSearch = [...props.dataList];
     const newSearch = nameSearch.filter((product) => {
       console.log('product.name', product.name);
@@ -56,8 +57,8 @@ export default function SearchScreen(props: PropsType): JSX.Element {
         })}
       </div>
       <div className="count_result">
-        <em>Hiển thị {cloneData?.length} kết quả tìm kiếm cho</em>
-        <b>Tất cả</b>
+        <em>Hiển thị {cloneData?.length} kết quả tìm kiếm cho </em>
+        <b>{textSearch || ' Tất cả'}</b>
       </div>
       <div
         className="filter-search__list py-3"

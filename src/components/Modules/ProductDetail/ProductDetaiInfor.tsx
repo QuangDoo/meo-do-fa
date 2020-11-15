@@ -94,7 +94,7 @@ const ProductDetailInfor = (props: PropsType): JSX.Element => {
             </p>
             <hr />
             <div className="d-flex justify-content-between align-items-center">
-              Đăng ký bán hàng cùng thuocsi.vn
+              Đăng ký bán hàng cùng medofa.vn
               <Link href="/register">
                 <a>Đăng ký</a>
               </Link>

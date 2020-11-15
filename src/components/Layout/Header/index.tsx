@@ -26,7 +26,7 @@ const Header = ({ t }: HeaderProps): JSX.Element => {
                 <li className="promotion-nav__item">
                   <a
                     className="promotion-nav__link"
-                    href="https://news.thuocsi.vn/"
+                    href="https://news.medofa.vn/"
                     title={t('header:news')}>
                     <i className="promotion-nav__icon icomoon icon-news" />
                     <span>{t('header:news')}</span>
@@ -35,7 +35,7 @@ const Header = ({ t }: HeaderProps): JSX.Element => {
                 <li className="promotion-nav__item">
                   <a
                     className="promotion-nav__link"
-                    href="https://career.thuocsi.vn/"
+                    href="https://career.medofa.vn/"
                     title={t('common:recruitment')}>
                     <i className="promotion-nav__icon fas fa-briefcase" />
                     <span>{t('common:recruitment')}</span>
@@ -44,7 +44,7 @@ const Header = ({ t }: HeaderProps): JSX.Element => {
                 <li className="promotion-nav__item">
                   <a
                     className="promotion-nav__link"
-                    href="https://supplier.thuocsi.vn/"
+                    href="https://supplier.medofa.vn/"
                     title={t('common:supply')}>
                     <i className="promotion-nav__icon fas fa-store-alt" />
                     <span>{t('common:supply')}</span>
@@ -63,12 +63,12 @@ const Header = ({ t }: HeaderProps): JSX.Element => {
       <div className="container py-4">
         <div className="d-flex align-items-center justify-content-between">
           <div className="mr-3">
-            <div className="buymed-logo">
-              <a href="/" title="thuocsi.vn">
+            <div className="rockland-logo">
+              <a href="/" title="medofa.vn">
                 <img
-                  alt="thuocsi.vn"
+                  alt="medofa.vn"
                   className="img-fluid logo-header"
-                  title="thuocsi.vn"
+                  title="medofa.vn"
                   src="/assets/images/logo2.png"
                 />
               </a>

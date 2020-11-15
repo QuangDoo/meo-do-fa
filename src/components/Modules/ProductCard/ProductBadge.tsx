@@ -6,7 +6,7 @@ import React from 'react';
 export type BadgeType =
   | 'invoice_exportable'
   | 'out_of_stocks'
-  | 'only_thuocsi'
+  | 'only_medofa'
   | 'promotion'
   | 'flash_sale'
   | 'common'

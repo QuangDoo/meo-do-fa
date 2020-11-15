@@ -1,7 +1,7 @@
 export type ProductBadgeType =
   | 'invoice_exportable' // Hóa đơn nhanh
   | 'out_of_stocks' // Tạm hết hàng
-  | 'only_thuocsi' // Chỉ có ở thuocsi
+  | 'only_medofa' // Chỉ có ở medofa
   | 'promotion' // Khuyến mãi
   | 'flash_sale' // Flash Sale
   | 'common' // Bán chạy

@@ -60,14 +60,14 @@ function Deal() {
               <h1 className="text-white">Khuyến mãi</h1>
 
               <p>
-                Cập nhật hàng ngày tất cả những deal giá ưu đãi trên thuocsi. Hãy bookmark trang này
+                Cập nhật hàng ngày tất cả những deal giá ưu đãi trên medofa. Hãy bookmark trang này
                 (nhấn Ctrl+D) và quay lại thường xuyên để không bỏ lỡ bạn nhé!
               </p>
             </div>
 
             <main className="col-12">
               <div className="mb-3">
-                <Pagination count={5} page={page} onChange={changePage} />
+                {/* <Pagination count={5} page={page} onChange={changePage} /> */}
               </div>
 
               <div className="products__cards mb-3">
