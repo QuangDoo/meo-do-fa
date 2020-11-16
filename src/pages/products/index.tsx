@@ -12,9 +12,10 @@ import Pagination from 'src/components/Modules/Pagination';
 import ProductCard from 'src/components/Modules/ProductCard';
 import ProductsSidebarFilter from 'src/components/Modules/ProductsSidebarFilter';
 import { useCategories } from 'src/contexts/Categories';
+import { GET_MANUFACTORIES } from 'src/graphql/manufactory/manufactory.query';
 import { GET_PRODUCTS } from 'src/graphql/product/product.query';
-import { mockSuppliers } from 'src/mockData/mockSuppliers';
 import { GetProductsData, GetProductsVars } from 'src/types/GetProducts';
+import { Manufacturer } from 'src/types/Manufacturer';
 import withApollo from 'src/utils/withApollo';
 
 import { Product } from '../../types/Product';
@@ -42,14 +43,29 @@ function Products(): JSX.Element {
       order_type: router.query.sort || '01'
     }
   });
+  // Get products
+  const {
+    data: manufactoriesData,
+    loading: manufactoriesLoading,
+    error: manufactoriesError
+  } = useQuery(GET_MANUFACTORIES, {
+    variables: {
+      page: 1,
+      pageSize: 15
+    }
+  });
   const [productList, setProductList] = useState<Product[]>();
+  const [manufactoryList, setManufactoryList] = useState<Manufacturer[]>();
   const [total, setTotal] = useState<number>();
   useEffect(() => {
     if (productsData) {
       setProductList(productsData.getProductByConditions.Products);
       setTotal(productsData.getProductByConditions.total);
     }
-  }, [productsData]);
+    if (manufactoriesData) {
+      setManufactoryList(manufactoriesData.getManufactories);
+    }
+  }, [productsData, manufactoriesData]);
 
   // Refetch products when page changes
   useEffect(() => {
@@ -100,7 +116,9 @@ function Products(): JSX.Element {
       <div className="products container-fluid mobile-content my-3 my-sm-5">
         <div className="row flex-nowrap justify-content-between px-lg-5 px-sm-3">
           <div className="products__sidebar pr-4 d-none d-sm-block">
-            <ProductsSidebarFilter categories={categories} suppliers={mockSuppliers} />
+            {manufactoryList && (
+              <ProductsSidebarFilter categories={categories} manufacturer={manufactoryList} />
+            )}
           </div>
 
           {/* Content */}
@@ -141,12 +159,7 @@ function Products(): JSX.Element {
                 <div className="products__cards mb-3">
                   {productList &&
                     productList.map((product, index) => (
-                      <ProductCard
-                        key={index}
-                        {...product}
-                        seller_ids={[]}
-                        badges={['common', 'invoice_exportable', 'change_style', 'flash_sale']}
-                      />
+                      <ProductCard key={index} {...product} seller_ids={[]} />
                     ))}
                 </div>
 

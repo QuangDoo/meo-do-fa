@@ -1,6 +1,6 @@
 import { Category } from './Category';
+import { Manufacturer } from './Manufacturer';
 import { ProductBadgeType } from './ProductBadgeType';
-import { Supplier } from './Supplier';
 
 export type Product = {
   id: string;
@@ -15,6 +15,6 @@ export type Product = {
   price: number;
   seller_ids: string[]; // suppliers
   standard_price: number; // standard price
-  badges?: ProductBadgeType[];
+  badges: ProductBadgeType[];
   expirationDate?: string;
 };
