@@ -9,13 +9,8 @@ import SearchScreen from 'src/components/Modules/SearchScreen';
 import { GET_INGREDIENTS } from 'src/graphql/ingredient/ingredient.query';
 import withApollo from 'src/utils/withApollo';
 
-type TypeIngredients = {
-  id: string;
-  name: string;
-  slug: string;
-};
 function Ingredients(): JSX.Element {
-  const { data, loading } = useQuery(GET_INGREDIENTS, {
+  const { data } = useQuery(GET_INGREDIENTS, {
     variables: {
       page: 1,
       pageSize: 100
@@ -25,14 +20,6 @@ function Ingredients(): JSX.Element {
     }
   });
 
-  const characters = [
-    ...Array(26).map((val, i) => ({
-      character: String.fromCharCode(i + 65),
-      dataValue: String.fromCharCode(i + 65).toLowerCase()
-    })),
-    { character: '#', dataValue: '#' }
-  ];
-
   return (
     <>
       <Head>
@@ -41,7 +28,7 @@ function Ingredients(): JSX.Element {
       <Header />
       <Nav />
       <PageLayout>
-        <SearchScreen dataList={data?.getIngredients || []} characters={characters} />
+        <SearchScreen data={data?.getIngredients || []} />
       </PageLayout>
       <Footer />
     </>

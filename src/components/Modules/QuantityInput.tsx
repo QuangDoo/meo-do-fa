@@ -15,7 +15,6 @@ type Props = {
 };
 
 function QuantityInput(props: Props) {
-  // const [addToCart, { data, loading, error }] = useMutation(ADD_TO_CART);
   const { addToCart } = useOrder();
 
   const { size, productId, quantity, price, name } = props;

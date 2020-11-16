@@ -140,14 +140,7 @@ function Products(): JSX.Element {
 
                 <div className="products__cards mb-3">
                   {productList &&
-                    productList.map((product, index) => (
-                      <ProductCard
-                        key={index}
-                        {...product}
-                        seller_ids={[]}
-                        badges={['common', 'invoice_exportable', 'change_style', 'flash_sale']}
-                      />
-                    ))}
+                    productList.map((product, index) => <ProductCard key={index} {...product} />)}
                 </div>
 
                 <CustomPagination />
