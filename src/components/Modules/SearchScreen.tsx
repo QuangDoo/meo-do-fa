@@ -78,7 +78,7 @@ export default function SearchScreen(props: Props): JSX.Element {
 
       <div className="filter-search__list py-3">
         {data?.map((item) => (
-          <Link key={item.id} href={`ingredients/${item.name}-${item.id}`}>
+          <Link key={item.id} href={`ingredients/${item.id}/${item.name}`}>
             <a className="filter-search__list-item mix all">{item.name}</a>
           </Link>
         ))}
