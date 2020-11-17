@@ -37,20 +37,18 @@ export default function SearchScreen(props: PropsType): JSX.Element {
     setCloneData(newsManufactures);
   };
   const handleSearch = (key) => {
-    console.log('key', key);
     setTextSearch(key);
     const nameSearch = [...props.dataList];
     const newSearch = nameSearch.filter((product) => {
-      console.log('product.name', product.name);
       return product.name.toLowerCase().includes(key);
     });
-    console.log('newProducts', newSearch);
+
     setCloneData(newSearch);
   };
 
   return (
     <div className="filter-search container mobile-content " data-controller="filter-search">
-      <InputSearch placeholder="Nhập tên hoạt chất" keySearch={handleSearch} />;
+      <InputSearch placeholder="Nhập tên hoạt chất" keySearch={handleSearch} />
       <div className="filter my-4">
         {props?.characters?.map((item, index) => {
           return <FilterSearch key={index} {...item} filter={() => filterByCharacter(item)} />;
