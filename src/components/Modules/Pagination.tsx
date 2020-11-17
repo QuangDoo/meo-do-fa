@@ -72,50 +72,52 @@ const Pagination = (props: PaginationProps): JSX.Element => {
   }
 
   return (
-    <div className="d-flex justify-content-center mb-3">
-      <nav aria-label="pager" className="pagy-nav pagination" role="navigation">
-        {/* Previous page button */}
-        <button hidden={page === 1} className="page" onClick={() => onChange(page - 1)}>
-          <i className="fas fa-arrow-left" />
-        </button>
+    count > 1 && (
+      <div className="d-flex justify-content-center mb-3">
+        <nav aria-label="pager" className="pagy-nav pagination" role="navigation">
+          {/* Previous page button */}
+          <button hidden={page === 1} className="page" onClick={() => onChange(page - 1)}>
+            <i className="fas fa-arrow-left" />
+          </button>
 
-        {/* First page always shown */}
-        <button className={clsx('page', page === 1 && 'current')} onClick={() => onChange(1)}>
-          1
-        </button>
+          {/* First page always shown */}
+          <button className={clsx('page', page === 1 && 'current')} onClick={() => onChange(1)}>
+            1
+          </button>
 
-        {/* Gap */}
-        <span hidden={beforeGapHidden} className="page gap">
-          …
-        </span>
+          {/* Gap */}
+          <span hidden={beforeGapHidden} className="page gap">
+            …
+          </span>
 
-        {/* Sibling pages before current page */}
-        {siblingsBefore}
+          {/* Sibling pages before current page */}
+          {siblingsBefore}
 
-        {/* Current page if not 1 or last */}
-        {page > 1 && page < count && <PageButton active>{page}</PageButton>}
+          {/* Current page if not 1 or last */}
+          {page > 1 && page < count && <PageButton active>{page}</PageButton>}
 
-        {/* Sibling pages after current page */}
-        {siblingsAfter}
+          {/* Sibling pages after current page */}
+          {siblingsAfter}
 
-        {/* Gap */}
-        <span hidden={afterGapHidden} className="page gap">
-          …
-        </span>
+          {/* Gap */}
+          <span hidden={afterGapHidden} className="page gap">
+            …
+          </span>
 
-        {/* Last page always shown */}
-        <button
-          className={clsx('page', page === count && 'current')}
-          onClick={() => onChange(count)}>
-          {count}
-        </button>
+          {/* Last page always shown */}
+          <button
+            className={clsx('page', page === count && 'current')}
+            onClick={() => onChange(count)}>
+            {count}
+          </button>
 
-        {/* Next page button */}
-        <button hidden={page === count} className="page" onClick={() => onChange(page + 1)}>
-          <i className="fas fa-arrow-right" />
-        </button>
-      </nav>
-    </div>
+          {/* Next page button */}
+          <button hidden={page === count} className="page" onClick={() => onChange(page + 1)}>
+            <i className="fas fa-arrow-right" />
+          </button>
+        </nav>
+      </div>
+    )
   );
 };
 
