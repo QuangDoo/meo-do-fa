@@ -1,6 +1,5 @@
 import clsx from 'clsx';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { useDebouncedEffect } from 'src/hooks/useDebouncedEffect';
 
@@ -9,11 +8,12 @@ type Props = {
     id: string;
     name: string;
   }[];
+  getItemHref: (id: string, name: string) => string;
 };
 
-const filterChars = [...'abcdefghijklmnopqrstuvwxyz#'.split('')];
+const filterChars = 'abcdefghijklmnopqrstuvwxyz#'.split('');
 
-export default function SearchScreen(props: Props): JSX.Element {
+export default function SearchScreen(props: Props) {
   const [searchChar, setSearchChar] = useState('#');
 
   const [data, setData] = useState(props.data);
@@ -29,23 +29,28 @@ export default function SearchScreen(props: Props): JSX.Element {
     setSearchChar(searchChar);
     setData(
       props.data.filter(
-        (item) => searchChar === '#' || item.name.toLowerCase().startsWith(searchChar)
+        (item) =>
+          (searchChar === '#' || item.name.toLowerCase().startsWith(searchChar)) &&
+          item.name.toLowerCase().includes(searchValue.toLowerCase())
       )
     );
   };
 
   useDebouncedEffect(
-    () => {
+    () =>
       setData(
-        props.data.filter((item) => item.name.toLowerCase().includes(searchValue.toLowerCase()))
-      );
-    },
+        props.data.filter(
+          (item) =>
+            (searchChar === '#' || item.name.toLowerCase().startsWith(searchChar)) &&
+            item.name.toLowerCase().includes(searchValue.toLowerCase())
+        )
+      ),
     150,
     [searchValue]
   );
 
   return (
-    <div className="filter-search container mobile-content ">
+    <div className="filter-search container mobile-content py-3 py-sm-5">
       <div className="filter-search__search text-right mb-4">
         <input
           className="search "
@@ -78,7 +83,7 @@ export default function SearchScreen(props: Props): JSX.Element {
 
       <div className="filter-search__list py-3">
         {data?.map((item) => (
-          <Link key={item.id} href={`ingredients/${item.id}/${item.name}`}>
+          <Link key={item.id} href={props.getItemHref(item.id, item.name)}>
             <a className="filter-search__list-item mix all">{item.name}</a>
           </Link>
         ))}

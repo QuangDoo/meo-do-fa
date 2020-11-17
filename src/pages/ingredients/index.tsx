@@ -1,4 +1,5 @@
 import { useQuery } from '@apollo/react-hooks';
+import slugify from '@sindresorhus/slugify';
 import React from 'react';
 import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
@@ -25,11 +26,16 @@ function Ingredients(): JSX.Element {
       <Head>
         <title>Medofa</title>
       </Head>
+
       <Header />
+
       <Nav />
-      <PageLayout>
-        <SearchScreen data={data?.getIngredients || []} />
-      </PageLayout>
+
+      <SearchScreen
+        data={data?.getIngredients || []}
+        getItemHref={(id, name) => `/ingredients/${id}/${slugify(name)}`}
+      />
+
       <Footer />
     </>
   );

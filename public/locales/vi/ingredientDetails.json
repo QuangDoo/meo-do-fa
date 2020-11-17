@@ -1,0 +1,12 @@
+{
+  "info_label": "Thông tin chung",
+  "indication_label": "Chỉ định",
+  "direction_label": "Liều lượng - Cách dùng",
+  "contraindication_label": "Chống chỉ định",
+  "interaction_label": "Tương tác thuốc",
+  "preservation_label": "Bảo quản",
+  "overdose_label": "Quá liều",
+  "pharmacodynamics_label": "Dược lực học",
+  "pharmacokinetics_label": "Dược động học",
+  "products_containing_ingredient": "Danh sách các thuốc có {{ingredientName}}"
+}
