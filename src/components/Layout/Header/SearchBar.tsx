@@ -10,11 +10,7 @@ import { useDebouncedEffect } from 'src/hooks/useDebouncedEffect';
 const SearchBar = (): JSX.Element => {
   const router = useRouter();
 
-  const [searchProducts, { data: pData, called: pCalled }] = useLazyQuery(SEARCH_PRODUCTS_BY_NAME, {
-    onCompleted: (data) => {
-      console.log('Search product data:', data);
-    }
-  });
+  const [searchProducts, { data: pData, called: pCalled }] = useLazyQuery(SEARCH_PRODUCTS_BY_NAME);
 
   const [searchManufacturers, { data: mData, called: mCalled }] = useLazyQuery(
     SEARCH_MANUFACTURERS_BY_NAME

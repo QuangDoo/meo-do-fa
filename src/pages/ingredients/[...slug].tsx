@@ -58,9 +58,6 @@ const IngredientDetail = ({ t }: WithTranslation): JSX.Element => {
         pageSize: 20,
         ingredientId: ingredientId
       },
-      onCompleted: (data) => {
-        console.log('Products by ingredient:', data);
-      },
       onError: (error) => {
         console.log('Get products by ingredient error:', { error });
         toast.error('Get products by ingredient error:' + error);
