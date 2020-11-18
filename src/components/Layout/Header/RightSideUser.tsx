@@ -1,13 +1,15 @@
 import React from 'react';
+import { useUser } from 'src/contexts/User';
 
 const RightSideUser = () => {
+  const { user } = useUser();
   return (
     <div className="header-right">
       <ul className="nav align-items-center">
         {/* Notifications here */}
 
         <div className="header__user ml-3">
-          <div className="header__user-name text-center">Trường</div>
+          <div className="header__user-name text-center">{user?.name}</div>
           {/* <div className="header__user-avatar">
             <img
               alt="medofa.vn"

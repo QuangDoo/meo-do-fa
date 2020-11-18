@@ -22,14 +22,16 @@ const MyApp = ({ Component, pageProps }) => {
 
   return (
     <ThemeProvider theme={theme}>
-      <CityProvider>
-        <ModalControlProvider>
-          <CategoriesProvider>
-            <Component {...pageProps} />
-          </CategoriesProvider>
-          <ToastContainer />
-        </ModalControlProvider>
-      </CityProvider>
+      <UserProvider>
+        <CityProvider>
+          <ModalControlProvider>
+            <CategoriesProvider>
+              <Component {...pageProps} />
+            </CategoriesProvider>
+            <ToastContainer />
+          </ModalControlProvider>
+        </CityProvider>
+      </UserProvider>
     </ThemeProvider>
   );
 };

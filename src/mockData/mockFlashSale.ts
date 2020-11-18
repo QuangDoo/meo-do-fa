@@ -8,14 +8,21 @@ const mockProduct: Product = {
   image_128: 'gV7ACwEuH8vkfEJVV8tMbix3',
   image_256: 'gV7ACwEuH8vkfEJVV8tMbix3',
   image_512: 'gV7ACwEuH8vkfEJVV8tMbix3',
-  list_price: 783200,
+  price: 783200,
   standard_price: 783200,
-  category_ids: ['duoc-my-pham'],
-  seller_ids: [],
+  categories: [
+    {
+      id: 'duoc-my-pham',
+      name: 'Dược Mỹ Phẩm'
+    }
+  ],
   uom_name: 'Combo',
-  badges: ['invoice_exportable', 'only_medofa', 'flash_sale'],
-  create_date: 1602131598549,
-  price: 10
+  is_quick_invoice: true,
+  is_exclusive: true,
+  manufacturer: {
+    id: '4',
+    short_name: 'Hasan'
+  }
 };
 
 export const mockFlashSale = [...new Array(10)].map(() => ({ ...mockProduct }));

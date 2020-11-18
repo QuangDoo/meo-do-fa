@@ -58,6 +58,8 @@ export default function Tab(props) {
         <TabContent label="Tương tác thuốc">{props.interaction}</TabContent>
         <TabContent label="Bảo quản">{props.preservation}</TabContent>
         <TabContent label="Quá liều">{props.overdose}</TabContent>
+        <TabContent label="Dược lực học">{props.pharmacodynamics}</TabContent>
+        <TabContent label="Dược động học">{props.pharmacokinetics}</TabContent>
       </Tabs>
     </div>
   );

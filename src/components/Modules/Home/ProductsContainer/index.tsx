@@ -5,7 +5,7 @@ import Button from '../../../Form/Button';
 type ProductsContainerProps = {
   deals?: boolean;
   className?: string;
-  seeMoreUrl: string;
+  seeMoreUrl?: string;
   title: string;
 };
 
@@ -21,13 +21,15 @@ export const ProductsContainer: FC<ProductsContainerProps> = (props) => {
 
         <div className="mb-4">{props.children}</div>
 
-        <div className="text-center">
-          <Button
-            variant={props.deals ? 'outline-light' : 'outline-primary'}
-            className={props.deals ? 'btn-transparent' : 'btn-white'}>
-            Xem tất cả
-          </Button>
-        </div>
+        {props.seeMoreUrl && (
+          <div className="text-center">
+            <Button
+              variant={props.deals ? 'outline-light' : 'outline-primary'}
+              className={props.deals ? 'btn-transparent' : 'btn-white'}>
+              Xem tất cả
+            </Button>
+          </div>
+        )}
       </div>
     </section>
   );

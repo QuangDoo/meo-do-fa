@@ -72,12 +72,7 @@ function Deal() {
 
               <div className="products__cards mb-3">
                 {productsData?.getProductsDeal.map((product) => (
-                  <ProductCard
-                    key={product.id}
-                    showBadges={false}
-                    showCategories={false}
-                    {...product}
-                  />
+                  <ProductCard key={product.id} {...product} />
                 ))}
               </div>
 
