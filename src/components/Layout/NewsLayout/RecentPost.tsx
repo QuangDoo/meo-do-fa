@@ -17,7 +17,9 @@ function renderPost(links: any): JSX.IntrinsicElements {
   return links.map((item, index) => (
     <StyledRecentPostItem key={index}>
       <Link href={item.href}>
-        <StyledRecentPostLink href={item.href} color={color}>{item.title}</StyledRecentPostLink>
+        <StyledRecentPostLink href={item.href} color={color}>
+          {item.title}
+        </StyledRecentPostLink>
       </Link>
     </StyledRecentPostItem>
   ));
