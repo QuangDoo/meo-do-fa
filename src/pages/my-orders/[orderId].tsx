@@ -5,6 +5,7 @@ import {
   CardProps,
   Divider,
   Grid,
+  Link as MaterialLink,
   makeStyles,
   Step,
   StepConnector,
@@ -12,8 +13,12 @@ import {
   StepIconProps,
   StepLabel,
   Stepper,
-  Typography,
-  withStyles
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  Typography
 } from '@material-ui/core';
 import { AssignmentTurnedIn, Done, LocalShipping, Receipt, Sms, Update } from '@material-ui/icons';
 import clsx from 'clsx';
@@ -26,6 +31,7 @@ import Header from 'src/components/Layout/Header';
 import Nav from 'src/components/Layout/Nav';
 import ExportInvoice from 'src/components/Modules/ExportInvoice';
 import ProfileSidebar from 'src/components/Modules/ProfileSidebar';
+import { mockMyOrderProducts } from 'src/mockData/mockMyOrderProducts';
 import { theme } from 'src/theme';
 import withApollo from 'src/utils/withApollo';
 
@@ -38,6 +44,9 @@ const stepIconGradient = `linear-gradient(102.04deg, ${theme.colors.blue} 0%, ${
 const stepConnectorLineGradient = `linear-gradient(95deg,${theme.colors.blue1} 0%, ${theme.colors.blue} 100%)`;
 
 const useStyles = makeStyles((materialTheme) => ({
+  primaryText: {
+    color: theme.colors.primary
+  },
   cardRoot: {
     padding: materialTheme.spacing(2)
   },
@@ -88,6 +97,20 @@ const useStyles = makeStyles((materialTheme) => ({
     '&:not(:last-child)': {
       marginBottom: materialTheme.spacing(2)
     }
+  },
+  headCell: {
+    padding: 0,
+    paddingBottom: materialTheme.spacing(1),
+    textAlign: 'right'
+  },
+  bodyCell: {
+    padding: 0,
+    paddingTop: materialTheme.spacing(2),
+    paddingBottom: materialTheme.spacing(2),
+    textAlign: 'right'
+  },
+  textAlignLeft: {
+    textAlign: 'left'
   }
 }));
 
@@ -169,11 +192,57 @@ const TextWithLabel = (props) => {
       display="flex"
       flexDirection={inline ? 'row' : 'column'}
       className={classes.textWithLabelContainer}>
-      <Typography variant="button" color="primary">
+      <Typography
+        variant="button"
+        classes={{
+          root: classes.primaryText
+        }}>
         {label}
       </Typography>
       <Typography>{text}</Typography>
     </Box>
+  );
+};
+
+type CustomHeadCellProps = {
+  label: string;
+  textAlign?: 'left' | 'right';
+};
+
+const CustomHeadCell = ({ label, textAlign }: CustomHeadCellProps) => {
+  const classes = useStyles();
+
+  return (
+    <TableCell
+      classes={{
+        head: clsx(classes.headCell, textAlign === 'left' && classes.textAlignLeft)
+      }}>
+      <Typography
+        variant="button"
+        classes={{
+          root: classes.primaryText
+        }}>
+        {label}
+      </Typography>
+    </TableCell>
+  );
+};
+
+type CustomBodyCellProps = {
+  children: React.ReactNode;
+  textAlign?: 'left' | 'right';
+};
+
+const CustomBodyCell = ({ children, textAlign }: CustomBodyCellProps) => {
+  const classes = useStyles();
+
+  return (
+    <TableCell
+      classes={{
+        root: clsx(classes.bodyCell, textAlign === 'left' && classes.textAlignLeft)
+      }}>
+      {children}
+    </TableCell>
   );
 };
 
@@ -202,9 +271,7 @@ const OrderDetails = () => {
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <CustomCard>
-                  <Typography variant="h5" color="textPrimary">
-                    Chi tiết đơn hàng #218781
-                  </Typography>
+                  <Typography variant="h5">Chi tiết đơn hàng #{orderId}</Typography>
 
                   <Box my={2}>
                     <Divider />
@@ -269,49 +336,78 @@ const OrderDetails = () => {
               </Grid>
 
               <Grid item xs={12}>
-                <CustomCard>
-                  <TextWithLabel label="Tên người nhận" text="Phạm thị phương" />
-
-                  <TextWithLabel
-                    label="Địa chỉ giao hàng"
-                    text="12b/1e ấp đồng an 2, Phường Bình Hòa, Thành phố Thuận An, Bình Dương"
-                  />
-
-                  <TextWithLabel label="Số điện thoại" text="0964547987" />
-
-                  <TextWithLabel label="Email" text="phamthiphuong0505@gmail.com" />
-                </CustomCard>
-              </Grid>
-
-              <Grid container item xs={12} spacing={2}>
-                <Grid item sm={6} xs={12}>
-                  <CustomCard>
-                    <TextWithLabel label="Đơn vị vận chuyển" text="Giaohangtietkiem.vn" />
-
-                    <TextWithLabel label="Ngày giao" text="06/11/2020" />
-
-                    <TextWithLabel label="Mã vận đơn" text="S616097.MN2.DA.2.974708080" />
-                  </CustomCard>
-                </Grid>
-
-                <Grid item sm={6} xs={12}>
-                  <Box mb={2}>
+                <Grid container spacing={2}>
+                  <Grid item sm={6} xs={12}>
                     <CustomCard>
+                      <TextWithLabel label="Tên người nhận" text="Phạm thị phương" />
+
+                      <TextWithLabel
+                        label="Địa chỉ giao hàng"
+                        text="12b/1e ấp đồng an 2, Phường Bình Hòa, Thành phố Thuận An, Bình Dương"
+                      />
+
+                      <TextWithLabel label="Số điện thoại" text="0964547987" />
+
+                      <TextWithLabel label="Email" text="phamthiphuong0505@gmail.com" />
+                    </CustomCard>
+                  </Grid>
+
+                  <Grid item sm={6} xs={12}>
+                    <CustomCard>
+                      <TextWithLabel label="Đơn vị vận chuyển" text="Giaohangtietkiem.vn" />
+
+                      <TextWithLabel label="Ngày giao" text="06/11/2020" />
+
+                      <TextWithLabel label="Mã vận đơn" text="S616097.MN2.DA.2.974708080" />
+
                       <TextWithLabel
                         label="Hình thức thanh toán"
                         text="Thanh toán tiền mặt khi nhận hàng"
                       />
                     </CustomCard>
-                  </Box>
-
-                  <CustomCard>
-                    <TextWithLabel label="Ghi chú" text="Không có ghi chú" />
-                  </CustomCard>
+                  </Grid>
                 </Grid>
               </Grid>
 
               <Grid item xs={12}>
-                <CustomCard></CustomCard>
+                <CustomCard>
+                  <TextWithLabel label="Ghi chú" text="Không có ghi chú" />
+                </CustomCard>
+              </Grid>
+
+              <Grid item xs={12}>
+                <CustomCard>
+                  <Table>
+                    <TableHead>
+                      <TableRow>
+                        <CustomHeadCell label="Sản phẩm" textAlign="left" />
+                        <CustomHeadCell label="Đơn giá" />
+                        <CustomHeadCell label="Số lượng" />
+                        <CustomHeadCell label="Tổng cộng" />
+                      </TableRow>
+                    </TableHead>
+
+                    <TableBody>
+                      {mockMyOrderProducts.map((product) => (
+                        <TableRow key={product.id}>
+                          <CustomBodyCell textAlign="left">
+                            <Link href={`/products/${product.id}`}>
+                              <a>{product.name}</a>
+                            </Link>
+                          </CustomBodyCell>
+
+                          <CustomBodyCell>{product.price.toLocaleString('de-DE')} đ</CustomBodyCell>
+
+                          <CustomBodyCell>{product.quantity}</CustomBodyCell>
+
+                          <CustomBodyCell>
+                            {(product.quantity * product.price).toLocaleString('de-DE')} đ
+                          </CustomBodyCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </CustomCard>
               </Grid>
             </Grid>
           </div>
