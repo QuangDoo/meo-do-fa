@@ -1,6 +1,6 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
-const imgUrl = "https://via.placeholder.com/768/300"
+const imgUrl = 'https://via.placeholder.com/768/300';
 
 export const StyledNewWrapper = styled.div`
   display: flex;
@@ -11,13 +11,13 @@ export const StyledNewWrapper = styled.div`
   &: hover {
     box-shadow: 1px 2px 3px #999;
   }
-`
+`;
 
-export const StyledNewBoxImg = styled.div``
+export const StyledNewBoxImg = styled.div``;
 
 export const StyledNewBoxText = styled.div`
   padding: 0.75rem 1rem;
-`
+`;
 
 export const StyledNewTitle = styled.h5`
   text-align: center;
@@ -30,8 +30,7 @@ export const StyledNewTitle = styled.h5`
   -webkit-line-clamp: 3;
   overflow: hidden;
   text-overflow: ellipsis;
-
-`
+`;
 
 export const StyledNewDivider = styled.div`
   margin: 0.5rem auto;
@@ -39,7 +38,7 @@ export const StyledNewDivider = styled.div`
   width: 100%;
   max-width: 30px;
   background: #ccc;
-`
+`;
 
 export const StyledNewDescription = styled.p`
   text-align: center;
@@ -54,7 +53,7 @@ export const StyledNewDescription = styled.p`
   &:hover {
     opacity: 1;
   }
-`
+`;
 
 export const StyledBadgeBox = styled.div`
   display: table;
@@ -62,7 +61,7 @@ export const StyledBadgeBox = styled.div`
   top: 7%;
   left: 2px;
   pointer-events: none;
-`
+`;
 
 export const StyledBadge = styled.div`
   display: table-cell;
@@ -77,7 +76,7 @@ export const StyledBadge = styled.div`
   ${StyledNewWrapper}:hover & {
     background: green;
   }
-`
+`;
 
 export const StyledBadgeDateDay = styled.div`
   font-size: 0.7rem;
@@ -87,10 +86,9 @@ export const StyledBadgeDateDay = styled.div`
   ${StyledNewWrapper}:hover & {
     color: white;
   }
+`;
 
-`
-
-export const StyledBadgeDateMonth = styled(StyledBadgeDateDay)``
+export const StyledBadgeDateMonth = styled(StyledBadgeDateDay)``;
 
 export interface Props {
   onPress: any;
@@ -99,9 +97,9 @@ export interface Props {
   height: string;
 }
 
-export const StyledMyImage = styled.img.attrs((props:any):void => {
-  src: props.src || imgUrl ;
-  alt: props.alt|| imgUrl ;
+export const StyledMyImage = styled.img.attrs((props: any): void => {
+  props.src || imgUrl;
+  props.alt || imgUrl;
 })`
   width: 100%;
 `;

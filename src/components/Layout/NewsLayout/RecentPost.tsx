@@ -1,53 +1,51 @@
-import React from 'react'
-import Link from 'next/link'
+import Link from 'next/link';
+import React from 'react';
+
 import {
-  StyledRecentPostBox,
+  StyledRecentImg,
   StyledRecentPost,
+  StyledRecentPostBox,
   StyledRecentPostDivider,
   StyledRecentPostItem,
-  StyledRecentPostTitle,
   StyledRecentPostLink,
-  StyledRecentImg
-} from './RecentPost.styled'
+  StyledRecentPostTitle
+} from './RecentPost.styled';
 
-const color="green"
+const color = 'green';
 
-function renderPost(links:any):JSX.IntrinsicElements {
-  return links.map((item, index )=> (
-    <StyledRecentPostItem key={index}> 
+function renderPost(links: any): JSX.IntrinsicElements {
+  return links.map((item, index) => (
+    <StyledRecentPostItem key={index}>
       <Link href={item.href}>
-        <StyledRecentPostLink color={color}>{item.title}</StyledRecentPostLink>
+        <StyledRecentPostLink href={item.href} color={color}>{item.title}</StyledRecentPostLink>
       </Link>
-    </StyledRecentPostItem>))
+    </StyledRecentPostItem>
+  ));
 }
 
 interface IProps {
-  title: string
-  links?: any
-  imgUrl?: string
+  title: string;
+  links?: any;
+  imgUrl?: string;
 }
 
-export default function RecentPost ({title, links, imgUrl, ...props}: IProps): JSX.Element {
-  if(links){
+export default function RecentPost({ title, links, imgUrl, ...props }: IProps): JSX.Element {
+  if (links) {
     return (
       <StyledRecentPostBox>
         <StyledRecentPostTitle>{title}</StyledRecentPostTitle>
-        <StyledRecentPostDivider/>
-        <StyledRecentPost>
-          {
-            renderPost(links)
-          }
-        </StyledRecentPost>
+        <StyledRecentPostDivider />
+        <StyledRecentPost>{renderPost(links)}</StyledRecentPost>
       </StyledRecentPostBox>
-    )
+    );
   }
-  if(imgUrl) {
+  if (imgUrl) {
     return (
       <StyledRecentPostBox>
         <StyledRecentPostTitle>{title}</StyledRecentPostTitle>
-        <StyledRecentPostDivider/>
+        <StyledRecentPostDivider />
         <StyledRecentImg src={imgUrl} alt={title}></StyledRecentImg>
       </StyledRecentPostBox>
-    )
+    );
   }
 }

@@ -1,11 +1,11 @@
-import React from 'react'
+import React from 'react';
 
-import { NewsLayout } from '../../components/Layout/NewsLayout'
 import Footer from '../../components/Layout/Footer';
 import Head from '../../components/Layout/Head';
 import Header from '../../components/Layout/Header';
 import Nav from '../../components/Layout/Nav';
-import NewsPost from '../../components/Layout/NewsLayout/NewsPost'
+import { NewsLayout } from '../../components/Layout/NewsLayout';
+import NewsPost from '../../components/Layout/NewsLayout/NewsPost';
 
 const News = (): JSX.Element => {
   return (

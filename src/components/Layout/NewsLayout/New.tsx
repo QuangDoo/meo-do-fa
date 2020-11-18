@@ -1,26 +1,27 @@
-import React from 'react'
-import Link from 'next/link'
+import Link from 'next/link';
+import React from 'react';
+
 import {
-  StyledNewWrapper,
-  StyledNewBoxImg,
-  StyledNewBoxText,
-  StyledNewDescription,
-  StyledNewTitle,
+  StyledBadge,
   StyledBadgeBox,
   StyledBadgeDateDay,
   StyledBadgeDateMonth,
+  StyledMyImage,
+  StyledNewBoxImg,
+  StyledNewBoxText,
+  StyledNewDescription,
   StyledNewDivider,
-  StyledBadge,
-  StyledMyImage
-} from './New.styled'
+  StyledNewTitle,
+  StyledNewWrapper
+} from './New.styled';
 
-interface IProps{
-  imgUrl: string,
-  title: string,
-  description: string,
+interface IProps {
+  imgUrl: string;
+  title: string;
+  description: string;
 }
 
-export default function New (props): JSX.Element {
+export default function New(props): JSX.Element {
   return (
     <div className="col-lg-6 col-sm-12 position-relative mb-2">
       <Link href={`/news/${props.children.title}`}>
@@ -43,5 +44,5 @@ export default function New (props): JSX.Element {
         </StyledNewWrapper>
       </Link>
     </div>
-  )
+  );
 }
