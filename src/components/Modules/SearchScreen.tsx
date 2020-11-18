@@ -1,72 +1,92 @@
+import clsx from 'clsx';
+import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
+import { useDebouncedEffect } from 'src/hooks/useDebouncedEffect';
 
-import FilterSearch from './FilterSearch';
-import InputSearch from './InputSearch';
-import ListName from './ListName';
-
-type DataList = {
-  id: string;
-  name: string;
-};
-type Characters = {
-  character: string;
-  dataValue: string;
-};
-type PropsType = {
-  dataList: DataList[];
-  characters: Characters[];
+type Props = {
+  data: {
+    id: string;
+    name: string;
+  }[];
+  getItemHref: (id: string, name: string) => string;
 };
 
-export default function SearchScreen(props: PropsType): JSX.Element {
-  const [cloneData, setCloneData] = useState([]);
-  const [textSearch, setTextSearch] = useState('');
+const filterChars = 'abcdefghijklmnopqrstuvwxyz#'.split('');
+
+export default function SearchScreen(props: Props) {
+  const [searchChar, setSearchChar] = useState('#');
+
+  const [data, setData] = useState(props.data);
+
+  const [searchValue, setSearchValue] = useState('');
 
   useEffect(() => {
-    if (!props.dataList) return;
-    setCloneData(props.dataList);
-  }, [props.dataList]);
+    if (!props.data) return;
+    setData(props.data);
+  }, [props.data]);
 
-  const filterByCharacter = (character) => {
-    const newsManufactures = props.dataList.filter((item) => {
-      if (character.character === '#') {
-        return item.name;
-      } else {
-        return item.name.toLocaleLowerCase().substr(0, 1).includes(character.dataValue);
-      }
-    });
-    setCloneData(newsManufactures);
+  const filterByChar = (searchChar: string) => {
+    setSearchChar(searchChar);
+    setData(
+      props.data.filter(
+        (item) =>
+          (searchChar === '#' || item.name.toLowerCase().startsWith(searchChar)) &&
+          item.name.toLowerCase().includes(searchValue.toLowerCase())
+      )
+    );
   };
-  const handleSearch = (key) => {
-    console.log('key', key);
-    setTextSearch(key);
-    const nameSearch = [...props.dataList];
-    const newSearch = nameSearch.filter((product) => {
-      console.log('product.name', product.name);
-      return product.name.toLowerCase().includes(key);
-    });
-    console.log('newProducts', newSearch);
-    setCloneData(newSearch);
-  };
+
+  useDebouncedEffect(
+    () =>
+      setData(
+        props.data.filter(
+          (item) =>
+            (searchChar === '#' || item.name.toLowerCase().startsWith(searchChar)) &&
+            item.name.toLowerCase().includes(searchValue.toLowerCase())
+        )
+      ),
+    150,
+    [searchValue]
+  );
 
   return (
-    <div className="filter-search container mobile-content " data-controller="filter-search">
-      <InputSearch placeholder="Nhập tên hoạt chất" keySearch={handleSearch} />;
+    <div className="filter-search container mobile-content py-3 py-sm-5">
+      <div className="filter-search__search text-right mb-4">
+        <input
+          className="search "
+          placeholder="Nhập tên hoạt chất"
+          value={searchValue}
+          onChange={(e) => setSearchValue(e.target.value)}
+        />
+
+        <button className="btn-search">
+          <i className="fa fa-search" />
+        </button>
+      </div>
+
       <div className="filter my-4">
-        {props?.characters?.map((item, index) => {
-          return <FilterSearch key={index} {...item} filter={() => filterByCharacter(item)} />;
-        })}
+        {filterChars.map((char) => (
+          <div
+            key={char}
+            className={clsx('alphabet mix', searchChar === char && 'active')}
+            onClick={() => filterByChar(char)}
+            aria-hidden="true">
+            {char.toUpperCase()}
+          </div>
+        ))}
       </div>
+
       <div className="count_result">
-        <em>Hiển thị {cloneData?.length} kết quả tìm kiếm cho </em>
-        <b>{textSearch || ' Tất cả'}</b>
+        <em>Hiển thị {data.length} kết quả tìm kiếm cho </em>
+        <b>{searchValue || ' Tất cả'}</b>
       </div>
-      <div
-        className="filter-search__list py-3"
-        data-target="filter-search.results"
-        id="MixItUpC3DA20">
-        {cloneData?.map((item, index) => {
-          return <ListName key={index} {...item} />;
-        })}
+
+      <div className="filter-search__list py-3">
+        {data?.map((item) => (
+          <Link key={item.id} href={props.getItemHref(item.id, item.name)}>
+            <a className="filter-search__list-item mix all">{item.name}</a>
+          </Link>
+        ))}
       </div>
     </div>
   );
