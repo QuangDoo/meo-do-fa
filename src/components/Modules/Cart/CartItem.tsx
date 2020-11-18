@@ -1,5 +1,6 @@
 import { useMutation } from '@apollo/react-hooks';
 import clsx from 'clsx';
+import Link from 'next/link';
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import { DELETE_CART, DeleteCartData, DeleteCartVars } from 'src/graphql/cart/deleteCart.mutation';
@@ -10,13 +11,21 @@ import ConfirmDeleteModal from './ConfirmDeleteModal';
 
 type Props = {
   image: string;
+
   productName: string;
+
   productId: string;
+
   uom_name: string;
-  list_price: number;
+
+  price: number;
+
   standard_price: number;
+
   quantity: number;
+
   _id: string;
+
   refetchCart: () => void;
 };
 
@@ -88,7 +97,7 @@ function CartItem(props: Props): JSX.Element {
       }
     });
   };
-
+  console.log('props', props);
   return (
     <div className="cart-item">
       <div className="row align-items-center">
@@ -105,12 +114,12 @@ function CartItem(props: Props): JSX.Element {
             }}
           />
           <div>
-            <a
-              className="cart-item__name"
-              href={'products/' + props.productId}
-              title={props.productName}>
-              {props.productName}
-            </a>
+            <Link href={'products/' + props.productId}>
+              <a className="cart-item__name" title={props.productName}>
+                {props.productName}
+              </a>
+            </Link>
+
             <div className="cart-item__package">
               <small>{props.uom_name}</small>
             </div>
@@ -120,7 +129,7 @@ function CartItem(props: Props): JSX.Element {
           <div className="w-100">
             <div className="d-flex justify-content-between align-items-center">
               <div>
-                <ProductPrice list_price={props.list_price} standard_price={props.standard_price} />
+                <ProductPrice price={props.price} standard_price={props.standard_price} />
               </div>
               <div className="cart-item__qty">
                 {/* <QuantityInput {...props} quantity={props.quantity} /> */}
@@ -176,7 +185,7 @@ function CartItem(props: Props): JSX.Element {
         onClose={() => setOpen(false)}
         productName={props.productName}
         image={props.image}
-        price={props.list_price}
+        price={props.price}
         refetchCart={props.refetchCart}
         _id={props._id}
       />

@@ -22,7 +22,7 @@ export const GET_PRODUCTS = gql`
       Products {
         id
         name
-        list_price
+        price
         standard_price
         image_128
         image_512
