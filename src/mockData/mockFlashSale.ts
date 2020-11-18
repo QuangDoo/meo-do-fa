@@ -8,7 +8,7 @@ const mockProduct: Product = {
   image_128: 'gV7ACwEuH8vkfEJVV8tMbix3',
   image_256: 'gV7ACwEuH8vkfEJVV8tMbix3',
   image_512: 'gV7ACwEuH8vkfEJVV8tMbix3',
-  list_price: 783200,
+  price: 783200,
   standard_price: 783200,
   categories: [
     {

@@ -50,7 +50,7 @@ function Cart(): JSX.Element {
                     key={index}
                     _id={item._id}
                     image=""
-                    list_price={item.price}
+                    price={item.price}
                     standard_price={item.oldPrice}
                     productId={item.productId}
                     productName={item.productName}

@@ -6,7 +6,7 @@ const mockProduct: Product = {
   image_128: 'Lg9NokKW5SY2TGdtiEKFCNeR',
   image_256: 'Lg9NokKW5SY2TGdtiEKFCNeR',
   image_512: 'Lg9NokKW5SY2TGdtiEKFCNeR',
-  list_price: 430500,
+  price: 430500,
   standard_price: 430500,
   uom_name: 'Hộp 3 vỉ x 10 viên',
   categories: [

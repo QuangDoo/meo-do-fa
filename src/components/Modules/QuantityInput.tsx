@@ -1,8 +1,6 @@
-import { useMutation } from '@apollo/react-hooks';
 import clsx from 'clsx';
 import React from 'react';
 import { useOrder } from 'src/contexts/Order';
-import { ADD_TO_CART } from 'src/graphql/order/order.mutation';
 
 type Props = {
   size?: 'normal' | 'large';
@@ -23,7 +21,7 @@ function QuantityInput(props: Props) {
     addToCart({
       variables: {
         productId,
-        quantity: quantity + 1,
+        quantity: quantity,
         price,
         productName: name
       }

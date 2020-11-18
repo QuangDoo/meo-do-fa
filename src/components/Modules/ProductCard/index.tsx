@@ -21,7 +21,7 @@ type Props = Product & WithTranslation;
 const ProductCard = ({ t, ...props }: Props): JSX.Element => {
   const isLoggedIn = useIsLoggedIn();
 
-  const discountPercent = Math.round(100 - (props.list_price * 100) / props.standard_price);
+  const discountPercent = Math.round(100 - (props.price * 100) / props.standard_price);
 
   const isDiscount = discountPercent > 0;
 
@@ -80,7 +80,7 @@ const ProductCard = ({ t, ...props }: Props): JSX.Element => {
               <>
                 <div className="mb-2">
                   <ProductPrice
-                    list_price={props.list_price}
+                    price={props.price}
                     standard_price={isDiscount && props.standard_price}
                   />
                 </div>
@@ -88,7 +88,7 @@ const ProductCard = ({ t, ...props }: Props): JSX.Element => {
                   <QuantityInput
                     quantity={0}
                     productId={props.id}
-                    price={props.list_price}
+                    price={props.price}
                     name={props.name}
                   />
                 </OrderProvider>
