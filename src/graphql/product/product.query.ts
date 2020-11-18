@@ -104,29 +104,3 @@ export const GET_PRODUCT = gql`
     }
   }
 `;
-export const GET_PRODUCTS_DEAL = gql`
-  query getProductsDeal($page: Int!, $pageSize: Int!) {
-    getProducts(page: $page, pageSize: $pageSize) {
-      id
-      name
-      list_price
-      standard_price
-      image_128
-      image_512
-      image_256
-      uom_name
-      is_new
-      is_quick_invoice
-      is_vn
-      is_exclusive
-      categories {
-        id
-        name
-      }
-      manufacturer {
-        id
-        name
-      }
-    }
-  }
-`;
