@@ -27,3 +27,26 @@ export const ADD_TO_CART = gql`
     }
   }
 `;
+export const CREATE_COUNSEL = gql`
+  mutation createCounsel($cardIds: [String]!) {
+    createCounsel(inputs: { cartIds: $cardIds }) {
+      code
+      status
+      message
+      data {
+        counsel {
+          orderNo
+          counsels {
+            cartId
+            quantity
+          }
+        }
+        totalQty
+        totalPrice
+        totalDcAmt
+        totalShippingFee
+        totalNetPrice
+      }
+    }
+  }
+`;

@@ -25,13 +25,13 @@ const SearchBar = (): JSX.Element => {
   // Search with debounce
   useDebouncedEffect(
     () => {
-      searchProducts({
-        variables: {
-          page: 1,
-          pageSize: 15,
-          name: value
-        }
-      });
+      // searchProducts({
+      //   variables: {
+      //     page: 1,
+      //     pageSize: 15,
+      //     name: value
+      //   }
+      // });
     },
     200,
     [value]

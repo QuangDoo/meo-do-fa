@@ -1,5 +1,6 @@
-import { useQuery } from '@apollo/react-hooks';
+import { useMutation, useQuery } from '@apollo/react-hooks';
 import React from 'react';
+import { CREATE_COUNSEL } from 'src/graphql/order/order.mutation';
 import { GET_PRODUCTS_LIST_CART } from 'src/graphql/order/order.query';
 import withApollo from 'src/utils/withApollo';
 
@@ -14,6 +15,21 @@ import { mockCartItems } from '../mockData/mockCartItems';
 function Cart(): JSX.Element {
   const { data, error } = useQuery(GET_PRODUCTS_LIST_CART);
   console.log('data', data?.getCart.carts);
+  const [
+    createCounsel,
+    { data: dataCreateCounsel, loading: loadingCreateCounsel, error: errorCreateCounsel }
+  ] = useMutation(CREATE_COUNSEL);
+  const handleCheckoutClick = () => {
+    const listCartIds = [];
+    data?.getCart.carts.map((i) => listCartIds.push(i._id));
+    if (listCartIds) {
+      createCounsel({
+        variables: {
+          cardIds: listCartIds
+        }
+      });
+    }
+  };
   return (
     <>
       <Head>
@@ -126,7 +142,7 @@ function Cart(): JSX.Element {
                         data-action="cart#proceedToCheckout"
                         data-target="cart.submit"
                         href="/checkout">
-                        Tiếp tục thanh toán
+                        <button onClick={handleCheckoutClick}> Tiếp tục thanh toán</button>
                       </a>
                     </div>
                   </div>
