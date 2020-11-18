@@ -1,13 +1,14 @@
 import { gql } from 'apollo-boost';
-import { GetUserResponse } from 'src/types/responses';
+import { User } from 'src/types/User';
 
 export type GetUserData = {
-  getUser: GetUserResponse;
+  getUser: User;
 };
 
 export const GET_USER = gql`
   query {
     getUser {
+      _id
       id
       name
       display_name
@@ -18,7 +19,10 @@ export const GET_USER = gql`
       roles
       create_date
       update_date
-      contact_address
+      city
+      district
+      ward
+      street
       company_name
       vat
       representative
