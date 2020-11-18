@@ -5,7 +5,6 @@ import {
   CardProps,
   Divider,
   Grid,
-  Link as MaterialLink,
   makeStyles,
   Step,
   StepConnector,
@@ -45,7 +44,7 @@ const stepConnectorLineGradient = `linear-gradient(95deg,${theme.colors.blue1} 0
 
 const useStyles = makeStyles((materialTheme) => ({
   primaryText: {
-    color: theme.colors.primary
+    color: theme.colors.blue1
   },
   cardRoot: {
     padding: materialTheme.spacing(2)
