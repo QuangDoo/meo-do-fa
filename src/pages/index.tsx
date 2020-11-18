@@ -17,7 +17,7 @@ const Home = (): JSX.Element => {
 
       <Nav />
 
-      <HomePage />
+      <HomePage /> 
 
       <Footer />
     </>
