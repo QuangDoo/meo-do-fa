@@ -1,5 +1,7 @@
 import { QueryLazyOptions, useLazyQuery } from '@apollo/react-hooks';
+import { ApolloQueryResult } from 'apollo-boost';
 import { createContext, useContext, useEffect } from 'react';
+import { toast } from 'react-toastify';
 import { GET_CART, GetCartData } from 'src/graphql/order/order.query';
 import withApollo from 'src/utils/withApollo';
 
@@ -20,14 +22,19 @@ type Value = {
   carts: Cart[];
   totalQty: number;
   totalPrice: number;
-  getCart: (options?: QueryLazyOptions<undefined>) => void;
+  refetchCart: () => void;
 };
 
 const CartContext = createContext<Value>(null);
 CartContext.displayName = 'CartContext';
 
 const CartProvider = withApollo({ ssr: true })(({ children }: Props) => {
-  const [getCart, { data }] = useLazyQuery<GetCartData, undefined>(GET_CART);
+  const [getCart, { data }] = useLazyQuery<GetCartData, undefined>(GET_CART, {
+    onError: (error) => {
+      console.log('Get cart error: ', error);
+      toast.error('Get cart error: ' + error);
+    }
+  });
 
   useEffect(() => {
     if (!localStorage.getItem('token')) return;
@@ -41,7 +48,7 @@ const CartProvider = withApollo({ ssr: true })(({ children }: Props) => {
         carts: data?.getCart.carts || [],
         totalQty: data?.getCart.totalQty || 0,
         totalPrice: data?.getCart.totalPrice || 0,
-        getCart
+        refetchCart: getCart
       }}>
       {children}
     </CartContext.Provider>

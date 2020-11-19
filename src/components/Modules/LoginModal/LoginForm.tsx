@@ -1,4 +1,7 @@
 import { useMutation } from '@apollo/react-hooks';
+import { Translate } from '@material-ui/icons';
+import { Trans, withTranslation } from 'i18n';
+import { WithTranslation } from 'next-i18next';
 // import { emailRegex } from '../../assets/regex/email'
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
@@ -19,7 +22,7 @@ type Inputs = {
   password: string;
 };
 
-const LoginForm = (): JSX.Element => {
+const LoginForm = ({ t }: WithTranslation): JSX.Element => {
   const dispatch = useModalControlDispatch();
 
   const [, setToken] = useLocalStorage('token');
@@ -46,8 +49,9 @@ const LoginForm = (): JSX.Element => {
       }
     },
     onError: (error) => {
-      console.log('Login error:', error);
-      toast.error('Error: ' + error.message);
+      console.log('Login error:', { error });
+
+      toast.error(t(`errors:code_${error.graphQLErrors[0].extensions.code}`));
     }
   });
 
@@ -68,19 +72,19 @@ const LoginForm = (): JSX.Element => {
 
   return (
     <div>
-      <form className="new_account" id="new_account" onSubmit={handleSubmit(onSubmit, onError)}>
+      <form className="new_account" onSubmit={handleSubmit(onSubmit, onError)}>
         <Input
           name="username"
           ref={register({
             pattern: {
               value: viPhoneNumberRegex,
-              message: 'Xin nhập số điện thoại hợp lệ.'
+              message: t('login:invalid_phone')
             }
           })}
           containerClass="mb-4"
           iconClass="icomoon icon-user"
           required
-          placeholder="Nhập số điện thoại."
+          placeholder={t('login:placeholder_phone')}
         />
 
         <Input
@@ -88,44 +92,50 @@ const LoginForm = (): JSX.Element => {
           ref={register({
             minLength: {
               value: 6,
-              message: 'Xin nhập mật khẩu tối thiểu 6 kí tự.'
+              message: t('login:invalid_password')
             }
           })}
           containerClass="mb-3"
           required={true}
           iconClass="icomoon icon-lock"
-          placeholder="Nhập mật khẩu"
+          placeholder={t('login:placeholder_password')}
           type="password"
         />
 
         <Checkbox
           name="remember_password"
           ref={register}
-          label="Nhớ mật khẩu"
+          label={t('login:remember_password')}
           containerClass="form-group align-self-start"
           labelClass="pt-1"
         />
 
         <div className="mb-4">
           <a data-modal="true" href="/authentications/reset_password">
-            Quên mật khẩu
+            {t('login:forgot_password')}
           </a>
         </div>
 
         <Button type="submit" variant="gradient" block className="mb-5">
-          Đăng nhập
+          {t('login:login')}
         </Button>
 
         <span className="text-capitalize ">
-          Để nhận ưu đãi hấp dẫn,
-          <button className="text-secondary ml-1" onClick={openRegisterModal} type="button">
-            <b>đăng ký thành viên</b>
-          </button>
-          .
+          <Trans
+            i18nKey="login:login_for_deals"
+            components={{
+              button: (
+                <button className="text-primary ml-1" onClick={openRegisterModal} type="button" />
+              ),
+              b: <b />
+            }}
+          />
         </span>
       </form>
     </div>
   );
 };
 
-export default withApollo({ ssr: true })(LoginForm);
+const Translated = withTranslation(['login', 'errors'])(LoginForm);
+
+export default withApollo({ ssr: true })(Translated);

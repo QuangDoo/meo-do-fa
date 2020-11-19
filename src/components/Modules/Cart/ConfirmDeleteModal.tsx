@@ -35,6 +35,8 @@ const ConfirmDeleteModal: FC<Props> = (props) => {
       toast.success('Đã xóa khỏi giỏ hàng');
 
       props.refetchCart();
+
+      props.onClose();
     }
   });
 

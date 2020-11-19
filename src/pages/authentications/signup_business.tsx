@@ -92,7 +92,6 @@ function SignupBusiness(): JSX.Element {
     if (dataCity) {
       dataCity.map((city) => {
         setDataAddress({ ...dataAddress, city: city.name });
-        // console.log('city state', city.city);
       });
     }
 

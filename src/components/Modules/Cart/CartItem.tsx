@@ -97,7 +97,7 @@ function CartItem(props: Props): JSX.Element {
       }
     });
   };
-  console.log('props', props);
+
   return (
     <div className="cart-item">
       <div className="row align-items-center">

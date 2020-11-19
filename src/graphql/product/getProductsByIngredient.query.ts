@@ -6,6 +6,7 @@ export const GET_PRODUCTS_BY_INGREDIENT = gql`
     getProductByIngredient(page: $page, pageSize: $pageSize, ingredient: $ingredientId) {
       id
       name
+      price
       list_price
       standard_price
       image_128

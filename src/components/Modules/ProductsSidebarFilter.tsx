@@ -98,7 +98,7 @@ const ProductsSidebarFilter = (props: Props) => {
 
       <hr className="hr my-3" />
 
-      {/* Filter supplier */}
+      {/* Filter manufacturers */}
       <Dropdown label="Nhà sản xuất">
         <div className="mb-2">
           <Link href="/products">

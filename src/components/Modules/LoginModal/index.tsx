@@ -37,7 +37,7 @@ const Login = ({ t }: LoginModalProps): JSX.Element => {
 
       <ModalWithHeader
         open={loginIsOpen}
-        title="Đăng Nhập Thành Viên"
+        title={t('login:modal_title')}
         onClose={closeModal}
         className="authentication login">
         <LoginForm />
@@ -45,4 +45,4 @@ const Login = ({ t }: LoginModalProps): JSX.Element => {
     </>
   );
 };
-export default withTranslation('header')(Login);
+export default withTranslation(['header', 'login'])(Login);
