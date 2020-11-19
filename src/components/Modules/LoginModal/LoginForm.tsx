@@ -40,10 +40,11 @@ const LoginForm = ({ t }: WithTranslation): JSX.Element => {
       setToken(data.login.token);
       closeLoginModal();
       getUser();
-      if (router.pathname !== '/products/[productId]') {
-        router.push('/products');
-      } else {
+
+      if (router.pathname === '/products' || router.pathname === '/products/[productId]') {
         router.reload();
+      } else {
+        router.push('/products');
       }
     },
     onError: (error) => {

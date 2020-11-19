@@ -11,8 +11,8 @@ export type GetDealsOfTheDayVars = {
 };
 
 export const GET_DEALS_OF_THE_DAY = gql`
-  query {
-    getProductDealOfTheDay {
+  query($page: Int!, $pageSize: Int!) {
+    getProductDealOfTheDay(page: $page, pageSize: $pageSize) {
       id
       name
       price

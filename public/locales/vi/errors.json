@@ -23,5 +23,6 @@
   "code_120": "Không tìm thấy giá sản phẩm.",
   "code_121": "Giá sản phẩm đã thay đổi. Vui lòng xóa sản phẩm khỏi giỏ hàng.",
   "code_122": "Không tìm thấy tài khoản trên hệ thống.",
-  "add_to_cart_success": "Thêm vào giỏ hàng thành công."
+  "add_to_cart_success": "Thêm vào giỏ hàng thành công.",
+  "add_to_cart_quantity_0": "Xin hãy nhập số lượng."
 }

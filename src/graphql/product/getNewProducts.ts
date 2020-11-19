@@ -18,7 +18,7 @@ export const GET_NEW_PRODUCTS = gql`
       page: $page
       pageSize: $pageSize
       type: "new"
-      condition: { order_type: "01", category_id: $category_id, manufacturer_id: $manufacturer_id }
+      condition: { order_type: "01" }
     ) {
       Products {
         id

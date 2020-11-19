@@ -28,7 +28,7 @@ export const ProductsCarousel = ({ products }: ProductsCarouselProps): JSX.Eleme
   return (
     <Slider
       speed={500}
-      slidesToShow={5}
+      slidesToShow={Math.min(5, products.length)}
       slidesToScroll={3}
       prevArrow={<ArrowButton />}
       nextArrow={<ArrowButton type="next" />}
@@ -37,21 +37,21 @@ export const ProductsCarousel = ({ products }: ProductsCarouselProps): JSX.Eleme
         {
           breakpoint: 1105,
           settings: {
-            slidesToShow: 4,
+            slidesToShow: Math.min(4, products.length),
             slidesToScroll: 2
           }
         },
         {
           breakpoint: 890,
           settings: {
-            slidesToShow: 3,
+            slidesToShow: Math.min(3, products.length),
             slidesToScroll: 1
           }
         },
         {
           breakpoint: 675,
           settings: {
-            slidesToShow: 2,
+            slidesToShow: Math.min(2, products.length),
             slidesToScroll: 1
           }
         },

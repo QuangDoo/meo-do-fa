@@ -18,7 +18,7 @@ export const DealsOfTheDay = (): JSX.Element => {
     getFlashSaleProducts({
       variables: {
         page: 1,
-        pageSize: 25
+        pageSize: 10
       }
     });
   }, []);
@@ -26,7 +26,7 @@ export const DealsOfTheDay = (): JSX.Element => {
   const dealsOfTheDayProducts = data?.getProductDealOfTheDay || [];
 
   return (
-    <ProductsContainer title="Flash Sale" seeMoreUrl="#" deals>
+    <ProductsContainer title="Deal trong ngày" seeMoreUrl="#" deals>
       <ProductsCarousel products={dealsOfTheDayProducts} />
     </ProductsContainer>
   );

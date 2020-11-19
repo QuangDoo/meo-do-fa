@@ -22,5 +22,7 @@
   "code_119": "???",
   "code_120": "Sales price not found.",
   "code_121": "Product price changed. Please remove this product from your cart.",
-  "code_122": "User not found."
+  "code_122": "User not found.",
+  "add_to_cart_success": "Add to cart success.",
+  "add_to_cart_quantity_0": "Please provide quantity."
 }

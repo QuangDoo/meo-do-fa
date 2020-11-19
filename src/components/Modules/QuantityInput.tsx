@@ -1,11 +1,13 @@
 import { useMutation } from '@apollo/react-hooks';
 import clsx from 'clsx';
+import { withTranslation } from 'i18n';
+import { WithTranslation } from 'next-i18next';
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import { useCart } from 'src/contexts/Cart';
 import { ADD_TO_CART } from 'src/graphql/order/order.mutation';
 
-type Props = {
+type Props = WithTranslation & {
   size?: 'normal' | 'large';
   quantity?: number;
   handleChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -16,25 +18,28 @@ type Props = {
 };
 
 function QuantityInput(props: Props) {
-  const { size, productId, price, name } = props;
+  const { size, productId, price, name, t } = props;
 
   const { refetchCart } = useCart();
 
   const [quantity, setQuantity] = useState<string>('0');
 
   const [addToCart] = useMutation(ADD_TO_CART, {
-    onCompleted: (data) => {
-      if (data.createCart.code !== 200) return;
-
-      toast.success('Add to cart success');
+    onCompleted: () => {
+      toast.success(t(`errors:add_to_cart_success`));
       refetchCart();
     },
     onError: (error) => {
-      toast.error('Add to cart error: ' + error.message);
+      toast.error(t(`errors:code_${error.graphQLErrors[0].extensions.code}`));
     }
   });
 
   const handleClick = () => {
+    if (+quantity === 0) {
+      toast.error(t('errors:add_to_cart_quantity_0'));
+      return;
+    }
+
     addToCart({
       variables: {
         productId,
@@ -91,4 +96,4 @@ function QuantityInput(props: Props) {
   );
 }
 
-export default QuantityInput;
+export default withTranslation(['errors'])(QuantityInput);
