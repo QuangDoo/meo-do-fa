@@ -20,6 +20,6 @@
   "input_referPhone_error_invalid": "Please provide a valid referer phone number.",
   "checkbox_acceptTerms_label": "I have read and agree with the <Link>Terms of Use</Link>",
   "checkbox_acceptTerms_error_required": "Please agree with the Terms of Use.",
-  "go_to_login": "If you already have an account, please <button>Login</button>",
+  "go_to_login": "If you already have an account, please <button><b>Login</b></button>",
   "submit_button_text": "Create account"
 }

@@ -1,11 +1,16 @@
 import { useQuery } from '@apollo/react-hooks';
-import clsx from 'clsx';
 import { withTranslation } from 'i18n';
 import { WithTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { toast } from 'react-toastify';
+import Footer from 'src/components/Layout/Footer';
+import Head from 'src/components/Layout/Head';
+import Header from 'src/components/Layout/Header';
+import Nav from 'src/components/Layout/Nav';
+import { ProductsContainer } from 'src/components/Modules/Home/ProductsContainer';
 import Tab from 'src/components/Modules/ProductDetail/ProductInformation/Tab';
+import { ProductsCarousel } from 'src/components/Modules/ProductsCarousel';
 import {
   GET_INGREDIENT_DETAILS,
   GetIngredientDetailsData,
@@ -16,27 +21,9 @@ import {
   GetProductsByIngredientData,
   GetProductsByIngredientVars
 } from 'src/graphql/product/getProductsByIngredient.query';
+import withApollo from 'src/utils/withApollo';
 
-import Footer from '../../components/Layout/Footer';
-import Head from '../../components/Layout/Head';
-import Header from '../../components/Layout/Header';
-import Nav from '../../components/Layout/Nav';
-import { ProductsContainer } from '../../components/Modules/Home/ProductsContainer';
-import { ProductsCarousel } from '../../components/Modules/ProductsCarousel';
-
-const tabs = [
-  'info',
-  'indication',
-  'direction',
-  'contraindication',
-  'interaction',
-  'preservation',
-  'overdose',
-  'pharmacodynamics',
-  'pharmacokinetics'
-];
-
-const IngredientDetail = ({ t }: WithTranslation): JSX.Element => {
+const IngredientDetails = ({ t }: WithTranslation): JSX.Element => {
   const router = useRouter();
 
   const ingredientId = router.query.slug[0];
@@ -96,4 +83,6 @@ const IngredientDetail = ({ t }: WithTranslation): JSX.Element => {
   );
 };
 
-export default withTranslation('ingredientDetails')(IngredientDetail);
+const TranslatedPage = withTranslation(['ingredientDetails'])(IngredientDetails);
+
+export default withApollo({ ssr: true })(TranslatedPage);

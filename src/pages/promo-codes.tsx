@@ -1,10 +1,10 @@
 import React from 'react';
-
-import Footer from '../components/Layout/Footer';
-import Head from '../components/Layout/Head';
-import Header from '../components/Layout/Header';
-import Nav from '../components/Layout/Nav';
-import PageLayout from '../components/Layout/PageLayout';
+import Footer from 'src/components/Layout/Footer';
+import Head from 'src/components/Layout/Head';
+import Header from 'src/components/Layout/Header';
+import Nav from 'src/components/Layout/Nav';
+import PageLayout from 'src/components/Layout/PageLayout';
+import withApollo from 'src/utils/withApollo';
 
 function PromotionCode(): JSX.Element {
   return (
@@ -22,4 +22,4 @@ function PromotionCode(): JSX.Element {
   );
 }
 
-export default PromotionCode;
+export default withApollo({ ssr: true })(PromotionCode);

@@ -1,10 +1,10 @@
 import React from 'react';
-
-import Footer from '../components/Layout/Footer';
-import Head from '../components/Layout/Head';
-import Header from '../components/Layout/Header';
-import Nav from '../components/Layout/Nav';
-import CheckoutPage from '../components/Modules/Checkout';
+import Footer from 'src/components/Layout/Footer';
+import Head from 'src/components/Layout/Head';
+import Header from 'src/components/Layout/Header';
+import Nav from 'src/components/Layout/Nav';
+import CheckoutPage from 'src/components/Modules/Checkout';
+import withApollo from 'src/utils/withApollo';
 
 const Checkout = (): JSX.Element => {
   return (
@@ -28,4 +28,4 @@ Checkout.getInitialProps = async () => ({
   namespacesRequired: ['']
 });
 
-export default Checkout;
+export default withApollo({ ssr: true })(Checkout);
