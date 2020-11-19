@@ -12,6 +12,7 @@ type Props = {
   labelClass?: string;
   placeholder?: string;
   required?: boolean;
+  defaultValue?: string;
 };
 
 const InputWithLabel = (props: Props, ref): JSX.Element => {
@@ -27,6 +28,7 @@ const InputWithLabel = (props: Props, ref): JSX.Element => {
         type={props.type}
         className="form-control"
         placeholder={props.placeholder}
+        defaultValue={props.defaultValue}
       />
     </FormGroup>
   );

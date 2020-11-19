@@ -16,12 +16,13 @@ const PaymentOption = (props, ref): JSX.Element => {
         options={[
           {
             label: 'Thanh toán tiền mặt khi nhận hàng',
-            value: 'cod'
+            value: props.paymentMethods[1].id
           },
           {
             label: <TransferPaymentLabel />,
-            value: 'bank_transfer',
-            children: <TransferPaymentInfo />
+            value: props.paymentMethods[0].id,
+            children: <TransferPaymentInfo {...props.paymentMethods[0]} />
+            // children: <TransferPaymentInfo />
           }
         ]}
       />

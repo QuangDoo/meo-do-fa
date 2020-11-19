@@ -1,10 +1,13 @@
+import { useMutation } from '@apollo/react-hooks';
 import React, { useEffect } from 'react';
+import { toast } from 'react-toastify';
 import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
 import Nav from 'src/components/Layout/Nav';
 import CartItem from 'src/components/Modules/Cart/CartItem';
 import { useCart } from 'src/contexts/Cart';
+import { CREATE_COUNSEL } from 'src/graphql/order/order.mutation';
 import withApollo from 'src/utils/withApollo';
 
 function Cart(): JSX.Element {
@@ -13,6 +16,23 @@ function Cart(): JSX.Element {
   useEffect(() => {
     refetchCart();
   }, [refetchCart]);
+
+  const [createCounsel] = useMutation(CREATE_COUNSEL, {
+    onError: (error) => {
+      console.log('Create counsel error:', { error });
+      toast.error('Create counsel error: ' + error);
+    }
+  });
+
+  const handleCheckoutClick = () => {
+    if (carts.length === 0) return;
+
+    createCounsel({
+      variables: {
+        cardIds: carts.map((i) => i._id)
+      }
+    });
+  };
 
   return (
     <>
@@ -126,8 +146,12 @@ function Cart(): JSX.Element {
                   </div>
                   <div className="col-12">
                     <div className="cart__info-item">
-                      <a className="btn btn-secondary btn-block" href="/checkout">
-                        Tiếp tục thanh toán
+                      <a
+                        className="btn btn-secondary btn-block"
+                        data-action="cart#proceedToCheckout"
+                        data-target="cart.submit"
+                        href="/checkout">
+                        <button onClick={handleCheckoutClick}> Tiếp tục thanh toán</button>
                       </a>
                     </div>
                   </div>
