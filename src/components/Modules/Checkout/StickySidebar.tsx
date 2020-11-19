@@ -10,7 +10,7 @@ const StickySidebar = (props, ref): JSX.Element => {
       <div className="d-flex justify-content-between mb-3">
         <h4 className="d-flex flex-wrap align-items-center">
           Đơn Hàng
-          <small className="ml-1">(21 sản phẩm)</small>
+          <small className="ml-1">{props.counsel?.counsel.counsels.length} sản phẩm</small>
         </h4>
 
         <div>
@@ -25,27 +25,31 @@ const StickySidebar = (props, ref): JSX.Element => {
       <div className="elevated checkout__info row no-gutters mb-3">
         <SidebarItem label="Tạm tính">
           <div className="d-flex">
-            3.136.400<span className="unit">đ</span>
+            {props.counsel?.totalPrice}
+            <span className="unit">đ</span>
           </div>
         </SidebarItem>
 
         <SidebarItem label="Phí vận chuyển">
           <span data-target="checkout.shippingFee">
-            0<span className="unit">đ</span>
+            {props.counsel?.totalShippingFee}
+            <span className="unit">đ</span>
           </span>
         </SidebarItem>
 
-        <SidebarItem label="Giảm 0.5% cho đơn hàng chuyển khoản trước.">
+        {/* <SidebarItem label="Giảm 0.5% cho đơn hàng chuyển khoản trước.">
           <span>
-            -15.682<span className="unit">đ</span>
+            {props.counsel?.totalDcAmt}
+            <span className="unit">đ</span>
           </span>
-        </SidebarItem>
+        </SidebarItem> */}
 
         <SidebarItem containerClass="checkout__info-promo"></SidebarItem>
 
         <SidebarItem label="Thành tiền" containerClass="checkout__info-total">
           <span className="checkout__total">
-            3.120.718<span className="unit">đ</span>
+            {props.counsel?.totalDcAmt}
+            <span className="unit">đ</span>
           </span>
         </SidebarItem>
       </div>
