@@ -7,7 +7,9 @@ import CheckoutWarning from './CheckoutWarning';
 const Agreement = (props, register): JSX.Element => {
   return (
     <Checkbox
-      ref={register}
+      ref={register({
+        required: 'checkbox_acceptTerms_error_required'
+      })}
       name="agreement"
       label={
         <>

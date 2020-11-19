@@ -27,3 +27,25 @@ export const GET_WARD = gql`
     }
   }
 `;
+export const GET_WARD_DETAIL = gql`
+  query getWard($ward_id: Int) {
+    getWard(ward_id: $ward_id) {
+      ward {
+        id
+        name
+      }
+      district {
+        id
+        name
+      }
+      city {
+        id
+        name
+      }
+      country {
+        id
+        name
+      }
+    }
+  }
+`;

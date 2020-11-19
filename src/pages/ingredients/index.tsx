@@ -5,17 +5,15 @@ import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
 import Nav from 'src/components/Layout/Nav';
-import PageLayout from 'src/components/Layout/PageLayout';
 import SearchScreen from 'src/components/Modules/SearchScreen';
-import { GET_INGREDIENTS } from 'src/graphql/ingredient/ingredient.query';
+import {
+  GET_ALL_INGREDIENTS,
+  GetAllIngredientsData
+} from 'src/graphql/ingredient/ingredient.query';
 import withApollo from 'src/utils/withApollo';
 
 function Ingredients(): JSX.Element {
-  const { data } = useQuery(GET_INGREDIENTS, {
-    variables: {
-      page: 1,
-      pageSize: 100
-    },
+  const { data } = useQuery<GetAllIngredientsData, undefined>(GET_ALL_INGREDIENTS, {
     onError: (error) => {
       console.log('Get ingredients error:', error);
     }
@@ -32,7 +30,7 @@ function Ingredients(): JSX.Element {
       <Nav />
 
       <SearchScreen
-        data={data?.getIngredients || []}
+        data={data?.getIngredientsAll || []}
         getItemHref={(id, name) => `/ingredients/${id}/${slugify(name)}`}
       />
 

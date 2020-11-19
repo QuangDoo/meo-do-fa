@@ -60,7 +60,7 @@ export const CREATE_ORDER = gql`
     $ward: String!
     $street: String!
     $isNew: Boolean!
-    $user: Boolean!
+    $use: Boolean!
     $fullName: String!
     $phone: String!
     $email: String!
@@ -75,7 +75,7 @@ export const CREATE_ORDER = gql`
           billing_address: {
             partnerId: $partnerId
             isNew: $isNew
-            user: $user
+            use: $use
             zipCode: $zipCode
             city: $city
             district: $district
@@ -87,6 +87,7 @@ export const CREATE_ORDER = gql`
           shipping_address: {
             partnerId: $partnerId
             isNew: $isNew
+            use: $use
             city: $city
             district: $district
             ward: $ward

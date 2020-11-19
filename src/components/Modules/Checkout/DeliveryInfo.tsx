@@ -3,7 +3,6 @@ import React from 'react';
 import { emailRegex } from 'src/assets/regex/email';
 import { viPhoneNumberRegex } from 'src/assets/regex/viPhoneNumber';
 import Checkbox from 'src/components/Form/Checkbox';
-import { useCities } from 'src/contexts/City';
 import { GET_USER } from 'src/graphql/user/getUser.mutation';
 
 import InputCard from './InputCard';
