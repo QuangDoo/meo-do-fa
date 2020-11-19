@@ -51,13 +51,15 @@ export default function Tab(props) {
   return (
     <div className="col-12 col-sm-9 product__details">
       <Tabs>
-        <TabContent label="Thông tin chung">{props.thongTinChung}</TabContent>
-        <TabContent label="Chỉ định">Dang cap nhat</TabContent>
-        <TabContent label="Liều lượng - Cách dùng">Dang cap nhat</TabContent>
-        <TabContent label="Chống chỉ định">Dang cap nhat</TabContent>
-        <TabContent label="Tương tác thuốc">Dang cap nhat</TabContent>
-        <TabContent label="Bảo quản">Dang cap nhat</TabContent>
-        <TabContent label="Quá liều">Dang cap nhat</TabContent>
+        <TabContent label="Thông tin chung">{props.info}</TabContent>
+        <TabContent label="Chỉ định">{props.indication}</TabContent>
+        <TabContent label="Liều lượng - Cách dùng">{props.contraindication}</TabContent>
+        <TabContent label="Chống chỉ định">{props.direction}</TabContent>
+        <TabContent label="Tương tác thuốc">{props.interaction}</TabContent>
+        <TabContent label="Bảo quản">{props.preservation}</TabContent>
+        <TabContent label="Quá liều">{props.overdose}</TabContent>
+        <TabContent label="Dược lực học">{props.pharmacodynamics}</TabContent>
+        <TabContent label="Dược động học">{props.pharmacokinetics}</TabContent>
       </Tabs>
     </div>
   );

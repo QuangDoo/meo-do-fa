@@ -12,7 +12,7 @@ import Head from '../components/Layout/Head';
 import Header from '../components/Layout/Header';
 import Nav from '../components/Layout/Nav';
 
-const pageSize = 25;
+const pageSize = 20;
 
 function Deal() {
   const router = useRouter();
@@ -25,7 +25,8 @@ function Deal() {
   >(GET_PRODUCTS, {
     variables: {
       page: page,
-      pageSize: pageSize
+      pageSize: pageSize,
+      order_type: '01'
     }
   });
 
@@ -40,7 +41,8 @@ function Deal() {
 
     refetchProducts({
       page: page,
-      pageSize: pageSize
+      pageSize: pageSize,
+      order_type: '01'
     });
   };
 
@@ -60,29 +62,24 @@ function Deal() {
               <h1 className="text-white">Khuyến mãi</h1>
 
               <p>
-                Cập nhật hàng ngày tất cả những deal giá ưu đãi trên thuocsi. Hãy bookmark trang này
+                Cập nhật hàng ngày tất cả những deal giá ưu đãi trên medofa. Hãy bookmark trang này
                 (nhấn Ctrl+D) và quay lại thường xuyên để không bỏ lỡ bạn nhé!
               </p>
             </div>
 
             <main className="col-12">
-              <div className="mb-3">
-                <Pagination count={5} page={page} onChange={changePage} />
-              </div>
-
               <div className="products__cards mb-3">
-                {productsData?.getProducts.map((product) => (
-                  <ProductCard
-                    key={product.id}
-                    showBadges={false}
-                    showCategories={false}
-                    {...product}
-                  />
+                {productsData?.getProductByConditions.Products.map((product) => (
+                  <ProductCard key={product.id} {...product} />
                 ))}
               </div>
 
               <div className="mb-3">
-                <Pagination count={5} page={page} onChange={changePage} />
+                <Pagination
+                  count={Math.ceil(productsData?.getProductByConditions.total / pageSize)}
+                  page={page}
+                  onChange={changePage}
+                />
               </div>
             </main>
           </div>

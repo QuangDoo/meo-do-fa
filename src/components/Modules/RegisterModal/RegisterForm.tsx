@@ -11,6 +11,7 @@ import Button from 'src/components/Form/Button';
 import Checkbox from 'src/components/Form/Checkbox';
 import Input from 'src/components/Form/Input';
 import { useModalControlDispatch } from 'src/contexts/ModalControl';
+import { useUser } from 'src/contexts/User';
 import { CREATE_USER, CreateUserData, CreateUserVars } from 'src/graphql/user/createUser.mutation';
 import withApollo from 'src/utils/withApollo';
 import styled from 'styled-components';
@@ -51,11 +52,14 @@ const RegisterForm = (props: WithTranslation): JSX.Element => {
       type: 'CLOSE_REGISTER_MODAL'
     });
 
+  const { getUser } = useUser();
+
   const [createUser] = useMutation<CreateUserData, CreateUserVars>(CREATE_USER, {
     onCompleted: (data) => {
       localStorage.setItem('token', data.createUser.token);
-      router.push('/authentications/signup_business');
       closeRegisterModal();
+      getUser();
+      router.push('/authentications/signup_business');
     },
     onError: (error) => {
       console.log('Create user error:', { error });

@@ -1,14 +1,20 @@
-import { Menu, MenuItem } from '@material-ui/core';
+import { Menu } from '@material-ui/core';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
+import useLocalStorage from 'src/hooks/useLocalStorage';
 
 export default function Nav(): JSX.Element {
+  const [, , removeToken] = useLocalStorage('token');
+
   const isLoggedIn = useIsLoggedIn();
 
+  const router = useRouter();
+
   const logOut = () => {
-    localStorage.removeItem('token');
-    window.location.reload();
+    removeToken();
+    router.reload();
   };
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -22,70 +28,75 @@ export default function Nav(): JSX.Element {
   };
 
   return (
-    <nav className="buymed-nav shrink">
+    <nav className="rockland-nav shrink">
       <div className="container">
         <div className="row">
           <div className="col-12 d-flex align-items-center justify-content-between">
             <ul className="nav text-capitalize">
-              <li className="buymed-nav__item">
+              <li className="rockland-nav__item">
                 <Link href="/products">
-                  <a className="buymed-nav__link">
-                    <i className="buymed-nav__icon icomoon icon-product" />
-                    <span className="buymed-nav__title">Sản Phẩm</span>
+                  <a className="rockland-nav__link">
+                    <i className="rockland-nav__icon icomoon icon-product" />
+                    <span className="rockland-nav__title">Sản Phẩm</span>
                   </a>
                 </Link>
               </li>
-              <li className="buymed-nav__item">
+
+              <li className="rockland-nav__item">
                 <Link href="/ingredients">
-                  <a className="buymed-nav__link">
-                    <i className="buymed-nav__icon icomoon icon-ingredients" />
-                    <span className="buymed-nav__title">Hoạt chất</span>
+                  <a className="rockland-nav__link">
+                    <i className="rockland-nav__icon icomoon icon-ingredients" />
+                    <span className="rockland-nav__title">Hoạt chất</span>
                   </a>
                 </Link>
               </li>
-              <li className="buymed-nav__item">
+
+              <li className="rockland-nav__item">
                 <Link href="/quick-order">
-                  <a className="buymed-nav__link">
-                    <i className="buymed-nav__icon icomoon icon-quick-order" />
-                    <span className="buymed-nav__title">Đặt hàng nhanh</span>
+                  <a className="rockland-nav__link">
+                    <i className="rockland-nav__icon icomoon icon-quick-order" />
+                    <span className="rockland-nav__title">Đặt hàng nhanh</span>
                   </a>
                 </Link>
               </li>
-              <li className="buymed-nav__item">
+
+              <li className="rockland-nav__item">
                 <Link href="/deals">
                   <a
-                    className="buymed-nav__link"
-                    href="https://thuocsi.vn/deals"
+                    className="rockland-nav__link"
+                    href="https://medofa.vn/deals"
                     title="Khuyến mãi">
-                    <i className="buymed-nav__icon fab fa-hotjar" />
-                    <span className="buymed-nav__title">Khuyến mãi</span>
+                    <i className="rockland-nav__icon fab fa-hotjar" />
+                    <span className="rockland-nav__title">Khuyến mãi</span>
                   </a>
                 </Link>
               </li>
-              <li className="buymed-nav__item">
+
+              <li className="rockland-nav__item">
                 <Link href="/promo-codes">
-                  <a className="buymed-nav__link">
-                    <i className="buymed-nav__icon fas fa-tag" />
-                    <span className="buymed-nav__title">Mã giảm giá</span>
-                    <span className="buymed-nav__tag badge badge-pill">Mới</span>
+                  <a className="rockland-nav__link">
+                    <i className="rockland-nav__icon fas fa-tag" />
+                    <span className="rockland-nav__title">Mã giảm giá</span>
+                    <span className="rockland-nav__tag badge badge-pill">Mới</span>
                   </a>
                 </Link>
               </li>
             </ul>
-            <div className="buymed-search-container" />
 
             {isLoggedIn && (
               <div className="header-right">
                 <ul className="nav align-items-center">
                   <li className="nav-item mr-3">
-                    <button className="buymed-nav__link" onClick={logOut}>
-                      <i className="fas fa-sign-in-alt buymed-nav__icon" />
-                    </button>
+                    <Link href="/cart">
+                      <a className="rockland-nav__link">
+                        <i className="icomoon icon-local-mall rockland-nav__icon" />
+                      </a>
+                    </Link>
                   </li>
 
                   <li className="nav-item mr-3">
-                    <button className="buymed-nav__link" onClick={openMenu}>
-                      <i className="fas fa-bars buymed-nav__icon" />
+                    <button className="rockland-nav__link" onClick={openMenu}>
+                      <i className="fas fa-bars rockland-nav__icon" />
                     </button>
                   </li>
 
@@ -106,16 +117,15 @@ export default function Nav(): JSX.Element {
                       <div className="d-flex justify-content-between">
                         <div className="text-left mr-3">
                           <small className="text-muted">Ví điện tử</small>
-                          <div className="text-primary" data-target="user-data.wallet">
+                          <div className="text-primary">
                             0<span className="unit">đ</span>
                           </div>
                         </div>
+
                         <div className="text-right">
                           <a href="/users/loyalty_points">
                             <small className="text-muted">Điểm thưởng</small>
-                            <div className="text-secondary" data-target="user-data.loyaltyPoint">
-                              0
-                            </div>
+                            <div className="text-secondary">0</div>
                           </a>
                         </div>
                       </div>

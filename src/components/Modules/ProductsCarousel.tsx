@@ -5,7 +5,7 @@ import { Product } from 'src/types/Product';
 import ProductCard from './ProductCard';
 
 type ProductsCarouselProps = {
-  products: Product[];
+  products?: Product[];
 };
 
 type ArrowButtonProps = {
@@ -63,7 +63,7 @@ export const ProductsCarousel = ({ products }: ProductsCarouselProps): JSX.Eleme
           }
         }
       ]}>
-      {products.map((product, index) => (
+      {products?.map((product, index) => (
         <div key={index} className="p-2">
           <ProductCard {...product} />
         </div>

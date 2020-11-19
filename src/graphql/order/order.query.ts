@@ -1,24 +1,33 @@
 import { gql } from 'apollo-boost';
 
-export const GET_PRODUCTS_LIST_CART = gql`
+export type GetCartData = {
+  getCart: {
+    carts: {
+      _id: string;
+      quantity: number;
+      productId: string;
+      productName: string;
+      price: number;
+      oldPrice: number;
+    }[];
+    totalPrice: number;
+    totalQty: number;
+  };
+};
+
+export const GET_CART = gql`
   query {
     getCart {
       carts {
         _id
-        userId
-        productId
         quantity
+        productId
+        productName
         price
         oldPrice
-        productName
-        promotionIds
-        dcAmt
-        shippingFee
-        create_date
-        update_date
       }
-
       totalPrice
+      totalQty
     }
   }
 `;

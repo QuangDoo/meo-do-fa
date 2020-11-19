@@ -10,11 +10,9 @@ import { useDebouncedEffect } from 'src/hooks/useDebouncedEffect';
 const SearchBar = (): JSX.Element => {
   const router = useRouter();
 
-  const [searchProducts, { data: pData, loading: pLoading }] = useLazyQuery(
-    SEARCH_PRODUCTS_BY_NAME
-  );
+  const [searchProducts, { data: pData, called: pCalled }] = useLazyQuery(SEARCH_PRODUCTS_BY_NAME);
 
-  const [searchManufacturers, { data: mData, loading: mLoading }] = useLazyQuery(
+  const [searchManufacturers, { data: mData, called: mCalled }] = useLazyQuery(
     SEARCH_MANUFACTURERS_BY_NAME
   );
 
@@ -69,12 +67,8 @@ const SearchBar = (): JSX.Element => {
           </div>
         </form>
 
-        <div
-          className={clsx(
-            'elevated search__results',
-            isFocused && value && (pData || mData) && 'show'
-          )}>
-          {pData?.products.length > 0 ? (
+        <div className={clsx('elevated search__results', isFocused && value !== '' && 'show')}>
+          {pData?.products?.length > 0 ? (
             <>
               <Link href={`/products?sort=best_match&search=${value}`}>
                 <a className="search__result">

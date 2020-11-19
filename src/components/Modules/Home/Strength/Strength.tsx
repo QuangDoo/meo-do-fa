@@ -2,7 +2,7 @@ import React from 'react';
 
 const Strength = (): JSX.Element => {
   return (
-    <section className="buymed-whyus">
+    <section className="rockland-whyus">
       <div className="container">
         <div className="row">
           <div className="col-xl-3 col-md-6 col-12 reason-item">

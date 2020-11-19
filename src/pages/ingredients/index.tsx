@@ -1,4 +1,5 @@
 import { useQuery } from '@apollo/react-hooks';
+import slugify from '@sindresorhus/slugify';
 import React from 'react';
 import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
@@ -9,13 +10,8 @@ import SearchScreen from 'src/components/Modules/SearchScreen';
 import { GET_INGREDIENTS } from 'src/graphql/ingredient/ingredient.query';
 import withApollo from 'src/utils/withApollo';
 
-type TypeIngredients = {
-  id: string;
-  name: string;
-  slug: string;
-};
 function Ingredients(): JSX.Element {
-  const { data, loading } = useQuery(GET_INGREDIENTS, {
+  const { data } = useQuery(GET_INGREDIENTS, {
     variables: {
       page: 1,
       pageSize: 100
@@ -25,24 +21,21 @@ function Ingredients(): JSX.Element {
     }
   });
 
-  const characters = [
-    ...Array(26).map((val, i) => ({
-      character: String.fromCharCode(i + 65),
-      dataValue: String.fromCharCode(i + 65).toLowerCase()
-    })),
-    { character: '#', dataValue: '#' }
-  ];
-
   return (
     <>
       <Head>
         <title>Medofa</title>
       </Head>
+
       <Header />
+
       <Nav />
-      <PageLayout>
-        <SearchScreen dataList={data?.getIngredients || []} characters={characters} />
-      </PageLayout>
+
+      <SearchScreen
+        data={data?.getIngredients || []}
+        getItemHref={(id, name) => `/ingredients/${id}/${slugify(name)}`}
+      />
+
       <Footer />
     </>
   );

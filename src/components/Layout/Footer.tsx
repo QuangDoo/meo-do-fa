@@ -32,7 +32,7 @@ const Footer = ({ t }: WithTranslation): JSX.Element => {
           <div className="col-md-4">
             <div className="footer__info mb-5">
               <div className="footer__info-logo mb-3">
-                <div className="buymed-logo d-inline-block">
+                <div className="rockland-logo d-inline-block">
                   <Link href="/">
                     <a title="medofa.com">
                       <img
