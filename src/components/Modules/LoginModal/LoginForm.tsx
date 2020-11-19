@@ -9,7 +9,9 @@ import Button from 'src/components/Form/Button';
 import Checkbox from 'src/components/Form/Checkbox';
 import Input from 'src/components/Form/Input';
 import { useModalControlDispatch } from 'src/contexts/ModalControl';
+import { useUser } from 'src/contexts/User';
 import { LOGIN_USER, LoginData, LoginVars } from 'src/graphql/user/login.mutation';
+import useLocalStorage from 'src/hooks/useLocalStorage';
 import withApollo from 'src/utils/withApollo';
 
 type Inputs = {
@@ -20,16 +22,28 @@ type Inputs = {
 const LoginForm = (): JSX.Element => {
   const dispatch = useModalControlDispatch();
 
+  const [, setToken] = useLocalStorage('token');
+
   const openRegisterModal = () => dispatch({ type: 'OPEN_REGISTER_MODAL' });
 
+  const closeLoginModal = () => dispatch({ type: 'CLOSE_LOGIN_MODAL' });
+
   const router = useRouter();
+
+  const { getUser } = useUser();
 
   const { register, handleSubmit } = useForm<Inputs>();
 
   const [login] = useMutation<LoginData, LoginVars>(LOGIN_USER, {
     onCompleted: (data) => {
-      localStorage.setItem('token', data.login.token);
-      router.push('/quick-order');
+      setToken(data.login.token);
+      closeLoginModal();
+      getUser();
+      if (router.pathname !== '/products/[productId]') {
+        router.push('/quick-order');
+      } else {
+        router.reload();
+      }
     },
     onError: (error) => {
       console.log('Login error:', error);

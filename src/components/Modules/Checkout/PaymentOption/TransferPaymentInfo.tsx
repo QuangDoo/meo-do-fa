@@ -11,7 +11,7 @@ type Line = {
 const lines: Line[] = [
   {
     label: 'Chủ tài khoản',
-    content: 'Công Ty TNHH BuyMed'
+    content: 'Công Ty TNHH Rockland'
   },
   {
     label: 'Số tài khoản',

@@ -13,7 +13,7 @@ export const ProductImage = (props: ProductImageProps): JSX.Element => {
         <div
           className="product-card__image mb-3 lozad"
           style={{
-            backgroundImage: `url(https://images.thuocsi.vn/${props.imageId})`,
+            backgroundImage: `url(data:image/png;base64,${props.imageId})`,
             cursor: 'pointer'
           }}
         />

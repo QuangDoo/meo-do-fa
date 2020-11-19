@@ -23,7 +23,7 @@ function ProductDetail(): JSX.Element {
   return (
     <>
       <Head>
-        <title>thuocsi</title>
+        <title>medofa</title>
       </Head>
 
       <Header />

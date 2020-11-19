@@ -271,7 +271,7 @@ a {
   background-color: transparent;
 }
 a:hover {
-  color: #00683f;
+  color: $blue1;
   text-decoration: underline;
 }
 a:not([href]):not([class]) {
@@ -1553,7 +1553,7 @@ fieldset:disabled a.btn {
   text-decoration: none;
 }
 .btn-link:hover {
-  color: #00683f;
+  color: $blue1;
   text-decoration: underline;
 }
 .btn-link:focus,
@@ -2170,7 +2170,7 @@ fieldset:disabled a.btn {
   text-decoration: none;
 }
 .btn-link:hover {
-  color: #00683f;
+  color: $blue1;
   text-decoration: underline;
 }
 .btn-link:focus,
@@ -5809,7 +5809,7 @@ textarea.form-control.is-invalid {
 }
 .page-link:hover {
   z-index: 2;
-  color: #00683f;
+  color: $blue1;
   text-decoration: none;
   background-color: #e9ecef;
   border-color: #dee2e6;
@@ -9591,7 +9591,7 @@ button.bg-dark:focus {
 }
 a.text-primary:hover,
 a.text-primary:focus {
-  color: #00683f !important;
+  color: $blue1 !important;
 }
 .text-secondary {
   color: $secondary !important;
@@ -15304,7 +15304,7 @@ abbr[title] {
   display: block;
   height: auto;
 }
-.buymed-nav {
+.rockland-nav {
   --current-color: $secondary;
   position: relative;
   width: 100%;
@@ -15312,51 +15312,51 @@ abbr[title] {
   color: white;
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
 }
-.buymed-nav__link {
+.rockland-nav__link {
   color: white !important;
   display: flex;
   align-items: center;
 }
-.buymed-nav__title {
+.rockland-nav__title {
   font-weight: 500;
 }
-.buymed-nav__item {
+.rockland-nav__item {
   position: relative;
   padding: 0.75em;
   border-bottom: 3px solid transparent;
 }
-.buymed-nav__item.active {
+.rockland-nav__item.active {
   border-bottom-color: var(--current-color);
 }
-.buymed-nav__item:hover {
+.rockland-nav__item:hover {
   border-bottom-color: #fbcb5b;
 }
 @media (max-width: 991.98px) {
-  .buymed-nav__item {
+  .rockland-nav__item {
     padding-left: 0.5em;
     padding-right: 0.5em;
   }
 }
-.buymed-nav__icon {
+.rockland-nav__icon {
   font-size: larger;
   margin-right: 0.5em;
   cursor: pointer;
 }
-.buymed-nav__tag {
+.rockland-nav__tag {
   position: absolute;
   right: -1.25em;
   top: -0.25em;
 }
-.buymed-nav .buymed-logo {
+.rockland-nav .rockland-logo {
   display: none;
 }
-.buymed-nav .buymed-search-container {
+.rockland-nav .rockland-search-container {
   display: none;
 }
-.buymed-nav .header-right--guest {
+.rockland-nav .header-right--guest {
   display: none;
 }
-.buymed-nav.shrink {
+.rockland-nav.shrink {
   animation: fadeInDownPerso;
   animation-duration: 0.4s;
   animation-fill-mode: both;
@@ -15365,21 +15365,21 @@ abbr[title] {
   top: 0;
   z-index: 500;
 }
-.buymed-nav.shrink .buymed-logo {
+.rockland-nav.shrink .rockland-logo {
   display: block;
 }
-.buymed-nav.shrink .buymed-search-container {
+.rockland-nav.shrink .rockland-search-container {
   display: block;
 }
-.buymed-nav.shrink .header-right--guest {
+.rockland-nav.shrink .header-right--guest {
   display: block;
 }
-.buymed-nav.shrink .search-input {
+.rockland-nav.shrink .search-input {
   border-radius: 50px !important;
 }
 
 @media only screen and (max-width: 1200px) {
-  .buymed-nav.shrink .buymed-nav__title {
+  .rockland-nav.shrink .rockland-nav__title {
     display: none;
   }
 }
@@ -16344,7 +16344,7 @@ abbr[title] {
   transform: scale(1.1, 1.1);
   transition: transform 0.5s;
 }
-.buymed-logo {
+.rockland-logo {
   height: 40px;
 }
 .notification {
@@ -17393,67 +17393,67 @@ abbr[title] {
 .topbar--mobile .topbar__content {
   width: calc(100vw - 0.5em);
 }
-.buymed-whyus {
+.rockland-whyus {
   padding: 2em 0;
   background: linear-gradient(102.04deg, $primary 0%, $blue1 100%);
 }
-.buymed-whyus .reason-item {
+.rockland-whyus .reason-item {
   width: calc(100% / 4);
   text-align: center;
   font-size: 5em;
   color: white;
   border-right: 1px solid #c3c2c2;
 }
-.buymed-whyus .reason-item:last-child {
+.rockland-whyus .reason-item:last-child {
   border-right-width: 0;
 }
-.buymed-whyus .reason-item .description {
+.rockland-whyus .reason-item .description {
   font-size: 1rem;
   padding: 0 20px;
   display: flex;
   align-items: center;
 }
-.buymed-whyus .reason-item .description .title {
+.rockland-whyus .reason-item .description .title {
   text-transform: uppercase;
   font-weight: 700;
   font-size: 1.1em;
 }
-.buymed-whyus .reason-item .description .sub-title {
+.rockland-whyus .reason-item .description .sub-title {
   text-transform: lowercase;
   font-size: 0.9em;
   color: white;
   padding: 0px 30px;
 }
-.buymed-whyus .reason-item .description .sub-title::first-letter {
+.rockland-whyus .reason-item .description .sub-title::first-letter {
   text-transform: uppercase;
 }
 @media screen and (max-width: 1199px) {
-  .buymed-whyus .reason-item:nth-child(2) {
+  .rockland-whyus .reason-item:nth-child(2) {
     border-right-width: 0;
   }
-  .buymed-whyus .reason-item .sub-title {
+  .rockland-whyus .reason-item .sub-title {
     padding: 0px 0px;
   }
 }
 @media screen and (max-width: 767px) {
-  .buymed-whyus .reason-item {
+  .rockland-whyus .reason-item {
     text-align: center;
     border-right-width: 0;
   }
-  .buymed-whyus .reason-item .description {
+  .rockland-whyus .reason-item .description {
     text-align: left;
     padding: 0 10px 0 0;
   }
-  .buymed-whyus .reason-item .description .title {
+  .rockland-whyus .reason-item .description .title {
     font-weight: bold;
     font-size: 1.1em;
   }
-  .buymed-whyus .reason-item .description .sub-title {
+  .rockland-whyus .reason-item .description .sub-title {
     font-size: 1em;
     padding: 0px 0px;
     color: rgba(255, 255, 255, 0.96);
   }
-  .buymed-whyus .reason-item i {
+  .rockland-whyus .reason-item i {
     font-size: 70px;
   }
 }
@@ -17699,7 +17699,7 @@ abbr[title] {
   }
 }
 .deal-badge,
-.buymed-nav__tag {
+.rockland-nav__tag {
   background: linear-gradient(to right, #ff4fae, $secondary);
   color: white;
   border: 1px solid white;

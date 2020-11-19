@@ -19,13 +19,13 @@ type SortOption = {
 };
 
 const sortOptions: SortOption[] = [
-  { name: 'Sản phẩm mới', value: 'new_arrival' },
-  { name: 'Bán chạy nhất', value: 'best_sellers' },
-  { name: 'Phù hợp nhất', value: 'best_match' },
-  { name: 'Giá: Cao đến Thấp', value: 'highest_price' },
-  { name: 'Giá: Thấp đến Cao', value: 'lowest_price' },
-  { name: 'Tên: A-Z', value: 'alphabet_az' },
-  { name: 'Tên: Z-A', value: 'alphabet_za' }
+  { name: 'Sản phẩm mới', value: '00' },
+  { name: 'Bán chạy nhất', value: '01' },
+  { name: 'Phù hợp nhất', value: '02' },
+  { name: 'Giá: Cao đến Thấp', value: '04' },
+  { name: 'Giá: Thấp đến Cao', value: '05' },
+  { name: 'Tên: A-Z', value: '07' },
+  { name: 'Tên: Z-A', value: '06' }
 ];
 
 const ProductsSidebarFilter = (props: Props) => {
@@ -102,7 +102,8 @@ const ProductsSidebarFilter = (props: Props) => {
       <Dropdown label="Nhà sản xuất">
         <div className="mb-2">
           <Link href="/products">
-            <a className={clsx('products__filter-category', !router.query.supplier && 'active')}>
+            <a
+              className={clsx('products__filter-category', !router.query.manufacturer && 'active')}>
               Tất cả
             </a>
           </Link>
@@ -110,11 +111,11 @@ const ProductsSidebarFilter = (props: Props) => {
 
         {manufacturers.map(({ name, id }) => (
           <div key={id} className="mb-2">
-            <Link href={`/products?supplier=${id}`}>
+            <Link href={`/products?manufacturer=${id}`}>
               <a
                 className={clsx(
                   'products__filter-category',
-                  router.query.supplier === id && 'active'
+                  router.query.manufacturer === id && 'active'
                 )}>
                 {name}
               </a>

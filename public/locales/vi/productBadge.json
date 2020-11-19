@@ -1,11 +1,5 @@
 {
-  "invoice_exportable": "Hóa đơn nhanh",
-  "out_of_stocks": "Tạm hết hàng",
-  "only_thuocsi": "Chỉ có tại thuocsi",
-  "promotion": "Khuyến mãi",
-  "flash_sale": "Flash Sale",
-  "common": "Bán chạy",
-  "change_style": "Đổi mẫu",
-  "use_vietnamese": "Người Việt dùng hàng Việt",
-  "close_date": "Cận date"
+  "is_quick_invoice": "Hóa đơn nhanh",
+  "is_exclusive": "Chỉ có tại medofa",
+  "is_vn": "Người Việt dùng hàng Việt"
 }

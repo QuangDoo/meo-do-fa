@@ -1,8 +1,54 @@
 import { gql } from 'apollo-boost';
 
 export const GET_PRODUCTS = gql`
-  query getAllProduct($page: Int!, $pageSize: Int!) {
-    getProducts(page: $page, pageSize: $pageSize) {
+  query getProducts(
+    $page: Int!
+    $pageSize: Int!
+    $order_type: String!
+    $type: String
+    $category_id: String
+    $manufacturer_id: String
+  ) {
+    getProductByConditions(
+      page: $page
+      pageSize: $pageSize
+      type: $type
+      condition: {
+        order_type: $order_type
+        category_id: $category_id
+        manufacturer_id: $manufacturer_id
+      }
+    ) {
+      Products {
+        id
+        name
+        price
+        standard_price
+        image_128
+        image_512
+        image_256
+        uom_name
+        is_new
+        is_quick_invoice
+        is_vn
+        is_exclusive
+        categories {
+          id
+          name
+        }
+        manufacturer {
+          id
+          name
+        }
+      }
+      total
+    }
+  }
+`;
+
+export const GET_PRODUCT = gql`
+  query getProduct($id: Int!) {
+    getProduct(id: $id) {
       id
       name
       display_name
@@ -43,66 +89,18 @@ export const GET_PRODUCTS = gql`
       purchase_ok
       create_date
       image_128
-      image_512
-      image_256
-      image_1920
-      image_1024
       category_ids
       uom_name
       categories {
         id
         display_name
       }
-
       ingredients {
         id
         display_name
       }
-
+      manufacturer_id
       ingredient_ids
     }
   }
 `;
-export const GET_PRODUCT = gql`
-  query getProduct($id: Int!) {
-    getProduct(id: $id) {
-      id
-      name
-      list_price
-      sequence
-      color
-      description
-      description_purchase
-      description_sale
-      categ_id
-      type
-      active
-      rental
-      sale_ok
-      purchase_ok
-      volume
-      weight
-      create_date
-      image_128
-      image_512
-      image_256
-      product_variant_ids
-    }
-  }
-`;
-// export const GET_PRODUCTS = gql`
-//   query getAllProduct($input: GetAllProductInput!) {
-//     getProducts(input: $input) {
-//       data {
-//         id
-//         sku
-//         name
-//         price
-//         finalPrice
-//         promotionPercent
-//         namePath
-//         image
-//       }
-//     }
-//   }
-// `
