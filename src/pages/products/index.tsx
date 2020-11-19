@@ -44,11 +44,7 @@ function Products(): JSX.Element {
     }
   });
   // Get products
-  const {
-    data: manufactoriesData,
-    loading: manufactoriesLoading,
-    error: manufactoriesError
-  } = useQuery(GET_MANUFACTORIES, {
+  const { data: manufactoriesData } = useQuery(GET_MANUFACTORIES, {
     variables: {
       page: 1,
       pageSize: 15
@@ -80,25 +76,6 @@ function Products(): JSX.Element {
     });
   }, [router.query, refetch]);
 
-  // Pagination component, reused at top and bottom of products list
-  // Updates page query on change
-  const CustomPagination = () => (
-    <Pagination
-      count={Math.ceil(total / pageSize)}
-      page={page}
-      siblingCount={4}
-      onChange={(page) =>
-        router.push({
-          pathname: router.pathname,
-          query: {
-            ...router.query,
-            page: page
-          }
-        })
-      }
-    />
-  );
-
   const getNameById = (array, id) => {
     return _.find(array, { id })?.name;
   };
@@ -117,7 +94,7 @@ function Products(): JSX.Element {
         <div className="row flex-nowrap justify-content-between px-lg-5 px-sm-3">
           <div className="products__sidebar pr-4 d-none d-sm-block">
             {manufactoryList && (
-              <ProductsSidebarFilter categories={categories} manufacturer={manufactoryList} />
+              <ProductsSidebarFilter categories={categories} manufacturers={manufactoryList} />
             )}
           </div>
 
@@ -154,16 +131,25 @@ function Products(): JSX.Element {
             {/* Products list */}
             {productList && (
               <main className="products__products">
-                {/* <CustomPagination /> */}
-
                 <div className="products__cards mb-3">
                   {productList &&
-                    productList.map((product, index) => (
-                      <ProductCard key={index} {...product} seller_ids={[]} />
-                    ))}
+                    productList.map((product, index) => <ProductCard key={index} {...product} />)}
                 </div>
 
-                <CustomPagination />
+                <Pagination
+                  count={Math.ceil(total / pageSize)}
+                  page={page}
+                  siblingCount={4}
+                  onChange={(page) =>
+                    router.push({
+                      pathname: router.pathname,
+                      query: {
+                        ...router.query,
+                        page: page
+                      }
+                    })
+                  }
+                />
               </main>
             )}
           </div>

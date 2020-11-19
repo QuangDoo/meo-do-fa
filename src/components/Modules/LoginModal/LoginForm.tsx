@@ -9,6 +9,7 @@ import Button from 'src/components/Form/Button';
 import Checkbox from 'src/components/Form/Checkbox';
 import Input from 'src/components/Form/Input';
 import { useModalControlDispatch } from 'src/contexts/ModalControl';
+import { useUser } from 'src/contexts/User';
 import { LOGIN_USER, LoginData, LoginVars } from 'src/graphql/user/login.mutation';
 import useLocalStorage from 'src/hooks/useLocalStorage';
 import withApollo from 'src/utils/withApollo';
@@ -29,12 +30,15 @@ const LoginForm = (): JSX.Element => {
 
   const router = useRouter();
 
+  const { getUser } = useUser();
+
   const { register, handleSubmit } = useForm<Inputs>();
 
   const [login] = useMutation<LoginData, LoginVars>(LOGIN_USER, {
     onCompleted: (data) => {
       setToken(data.login.token);
       closeLoginModal();
+      getUser();
       if (router.pathname !== '/products/[productId]') {
         router.push('/quick-order');
       } else {

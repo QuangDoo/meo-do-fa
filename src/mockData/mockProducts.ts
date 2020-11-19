@@ -6,14 +6,19 @@ const mockProduct: Product = {
   image_128: 'Lg9NokKW5SY2TGdtiEKFCNeR',
   image_256: 'Lg9NokKW5SY2TGdtiEKFCNeR',
   image_512: 'Lg9NokKW5SY2TGdtiEKFCNeR',
-  list_price: 430500,
+  price: 430500,
   standard_price: 430500,
   uom_name: 'Hộp 3 vỉ x 10 viên',
-  category_ids: ['than-tiet-nieu'],
-  seller_ids: [],
-  badges: ['common', 'invoice_exportable', 'change_style', 'flash_sale'],
-  create_date: 1602131598549,
-  price: 10
+  categories: [
+    {
+      id: 'than-tiet-nieu',
+      name: 'Thận tiết niệu'
+    }
+  ],
+  manufacturer: {
+    id: '1',
+    short_name: 'Hasan'
+  }
 };
 
 export const mockProducts: Product[] = [...new Array(20)].map(() => ({

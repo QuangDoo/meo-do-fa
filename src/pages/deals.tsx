@@ -4,15 +4,15 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import Pagination from 'src/components/Modules/Pagination';
 import ProductCard from 'src/components/Modules/ProductCard';
-import { GET_PRODUCTS_DEAL } from 'src/graphql/product/product.query';
-import { GetProductsDealData, GetProductsDealVars } from 'src/types/GetProducts';
+import { GET_PRODUCTS } from 'src/graphql/product/product.query';
+import { GetProductsData, GetProductsVars } from 'src/types/GetProducts';
 
 import Footer from '../components/Layout/Footer';
 import Head from '../components/Layout/Head';
 import Header from '../components/Layout/Header';
 import Nav from '../components/Layout/Nav';
 
-const pageSize = 25;
+const pageSize = 20;
 
 function Deal() {
   const router = useRouter();
@@ -20,12 +20,13 @@ function Deal() {
   const page = +router.query.page || 1;
 
   const { data: productsData, refetch: refetchProducts } = useQuery<
-    GetProductsDealData,
-    GetProductsDealVars
-  >(GET_PRODUCTS_DEAL, {
+    GetProductsData,
+    GetProductsVars
+  >(GET_PRODUCTS, {
     variables: {
       page: page,
-      pageSize: pageSize
+      pageSize: pageSize,
+      order_type: '01'
     }
   });
 
@@ -40,7 +41,8 @@ function Deal() {
 
     refetchProducts({
       page: page,
-      pageSize: pageSize
+      pageSize: pageSize,
+      order_type: '01'
     });
   };
 
@@ -66,23 +68,18 @@ function Deal() {
             </div>
 
             <main className="col-12">
-              <div className="mb-3">
-                {/* <Pagination count={5} page={page} onChange={changePage} /> */}
-              </div>
-
               <div className="products__cards mb-3">
-                {productsData?.getProductsDeal.map((product) => (
-                  <ProductCard
-                    key={product.id}
-                    showBadges={false}
-                    showCategories={false}
-                    {...product}
-                  />
+                {productsData?.getProductByConditions.Products.map((product) => (
+                  <ProductCard key={product.id} {...product} />
                 ))}
               </div>
 
               <div className="mb-3">
-                <Pagination count={5} page={page} onChange={changePage} />
+                <Pagination
+                  count={Math.ceil(productsData?.getProductByConditions.total / pageSize)}
+                  page={page}
+                  onChange={changePage}
+                />
               </div>
             </main>
           </div>
