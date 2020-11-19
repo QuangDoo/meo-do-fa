@@ -4,11 +4,12 @@ import React from 'react';
 import Tab from './Tab';
 
 type Display_name = {
-  display_name: string;
+  name: string;
+  id: number;
 };
 
 type PropsType = {
-  manufacturers: string[];
+  manufacturers: Display_name;
   categories: Display_name[];
   ingredients: Display_name[];
   info?: string;
@@ -27,26 +28,26 @@ const ProducerInformation = (props: PropsType): JSX.Element => {
         <div className="mb-3">
           <div className="product__info-label">Nhà sản xuất</div>
           <div className="text-capitalize">
-            <a href="/">
-              {props?.manufacturers?.filter((item, index) => {
-                if (index === 1) {
-                  return item;
-                }
-              })}
-            </a>
+            <Link href={`/manufacturers/${props.manufacturers?.id}`}>
+              <a>{props.manufacturers?.name}</a>
+            </Link>
           </div>
         </div>
-        <div className="mb-3">
+        {/* <div className="mb-3">
           <div className="product__info-label">Nước sản xuất</div>
           <div className="text-capitalize" />
-        </div>
+        </div> */}
         <div className="mb-3">
           <div className="product__info-label">Nhóm thuốc</div>
           {props?.categories?.map((item, index) => {
             return (
-              <a className="text-capitalize" href="/categories/thuc-pham-chuc-nang" key={index}>
-                {item.display_name}
-              </a>
+              <>
+                <Link href={`/categories/${item.id}`}>
+                  <a className="text-capitalize" key={index}>
+                    {item.name}
+                  </a>
+                </Link>
+              </>
             );
           })}
         </div>
@@ -63,7 +64,7 @@ const ProducerInformation = (props: PropsType): JSX.Element => {
                   <tr key={index}>
                     <td>
                       <Link href="/ingredients/thuc-dia">
-                        <a>{item.display_name}</a>
+                        <a>{item.name}</a>
                       </Link>
                     </td>
                     <td>262.5mg</td>
