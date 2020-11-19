@@ -109,7 +109,7 @@ const ProductsSidebarFilter = (props: Props) => {
           </Link>
         </div>
 
-        {manufacturers.map(({ name, id }) => (
+        {manufacturers.map(({ short_name, id }) => (
           <div key={id} className="mb-2">
             <Link href={`/products?manufacturer=${id}`}>
               <a
@@ -117,7 +117,7 @@ const ProductsSidebarFilter = (props: Props) => {
                   'products__filter-category',
                   router.query.manufacturer === id && 'active'
                 )}>
-                {name}
+                {short_name}
               </a>
             </Link>
           </div>
