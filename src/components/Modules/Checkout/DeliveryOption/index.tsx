@@ -16,11 +16,11 @@ const DeliveryOption = (props, ref): JSX.Element => {
         options={[
           {
             label: 'Giao hàng tiêu chuẩn',
-            value: 'standard'
+            value: props.deliveryMethods[0].id
           },
           {
             label: <FastDeliveryLabel />,
-            value: 'fast',
+            value: 0,
             children: <FastDeliveryRules />,
             disabled: true // Disable fast delivery or not
           }

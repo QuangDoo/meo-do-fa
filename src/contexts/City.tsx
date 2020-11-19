@@ -24,7 +24,7 @@ CityContext.displayName = 'CityContext';
 
 const CityProvider = withApollo({ ssr: true })(({ children }: Props) => {
   const { data, loading, error } = useQuery(GET_CITY);
-
+  console.log('data', data);
   useEffect(() => {
     if (!error) return;
 
