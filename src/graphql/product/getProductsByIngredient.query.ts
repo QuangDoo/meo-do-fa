@@ -1,6 +1,16 @@
 import { gql } from 'apollo-boost';
 import { Product } from 'src/types/Product';
 
+export type GetProductsByIngredientData = {
+  getProductsByIngredient: Product[];
+};
+
+export type GetProductsByIngredientVars = {
+  page: number;
+  pageSize: number;
+  ingredientId: string;
+};
+
 export const GET_PRODUCTS_BY_INGREDIENT = gql`
   query($page: Int!, $pageSize: Int!, $ingredientId: String!) {
     getProductByIngredient(page: $page, pageSize: $pageSize, ingredient: $ingredientId) {
@@ -22,13 +32,3 @@ export const GET_PRODUCTS_BY_INGREDIENT = gql`
     }
   }
 `;
-
-export type GetProductsByIngredientData = {
-  getProductsByIngredient: Product[];
-};
-
-export type GetProductsByIngredientVars = {
-  page: number;
-  pageSize: number;
-  ingredientId: string;
-};

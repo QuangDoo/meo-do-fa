@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
+import RadioInput from 'src/components/Form/Radio';
 
-import RadioInput from '../../../Form/Radio';
 import InputCard from '../InputCard';
 import FastDeliveryLabel from './FastDeliveryLabel';
 import FastDeliveryRules from './FastDeliveryRules';

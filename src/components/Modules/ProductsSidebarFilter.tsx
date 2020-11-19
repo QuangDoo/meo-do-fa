@@ -2,11 +2,10 @@ import clsx from 'clsx';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
+import Dropdown from 'src/components/Form/Dropdown';
+import Select from 'src/components/Form/Select';
 import { Category } from 'src/types/Category';
 import { Manufacturer } from 'src/types/Manufacturer';
-
-import Dropdown from '../Form/Dropdown';
-import Select from '../Form/Select';
 
 type Props = {
   categories: Category[];

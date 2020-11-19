@@ -1,10 +1,8 @@
 import { useMutation } from '@apollo/react-hooks';
-import { Translate } from '@material-ui/icons';
 import { Trans, withTranslation } from 'i18n';
 import { WithTranslation } from 'next-i18next';
-// import { emailRegex } from '../../assets/regex/email'
 import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { DeepMap, FieldError, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { viPhoneNumberRegex } from 'src/assets/regex/viPhoneNumber';

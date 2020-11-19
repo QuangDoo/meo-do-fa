@@ -416,4 +416,4 @@ const OrderDetails = () => {
   );
 };
 
-export default withApollo('')(OrderDetails);
+export default withApollo({ ssr: true })(OrderDetails);

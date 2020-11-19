@@ -8,10 +8,10 @@ export type Product = {
   image_256: string;
   image_512: string;
   uom_name: string;
-  is_new?: boolean;
-  is_quick_invoice?: boolean;
-  is_vn?: boolean;
-  is_exclusive?: boolean;
+  is_new: boolean;
+  is_quick_invoice: boolean;
+  is_vn: boolean;
+  is_exclusive: boolean;
   categories: {
     id: string;
     name: string;
