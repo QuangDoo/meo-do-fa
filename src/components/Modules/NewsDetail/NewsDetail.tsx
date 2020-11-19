@@ -55,7 +55,7 @@ function NewsDetail(props: Props) {
               </span>
             ))}
           </div>
-          <h1 className="news-header__title text-center">{data.title}</h1>
+          <h1 className="news-header__title">{data.title}</h1>
           <div className="post-item__content-divider"></div>
           <div className="news-header__poston">
             {`post on `}

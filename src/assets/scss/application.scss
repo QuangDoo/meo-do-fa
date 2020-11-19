@@ -18862,3 +18862,22 @@ abbr[title] {
   margin-right: -88px;
   margin-left: -15px;
 }
+
+.about-us .row{
+  margin: 55px 0px;
+  display: flex;
+  align-items: center;
+}
+.about-us__img{
+  max-width: 100%;
+  height: auto;
+}
+.about-us__title{
+  color: $green;
+  font-weight: bold;
+  margin: 10px 0 20px;
+}
+.about-us p{
+  font-size: 1rem;
+  color: $gray-900;
+}
