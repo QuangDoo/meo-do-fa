@@ -1,12 +1,13 @@
+import { useQuery } from '@apollo/react-hooks';
 import React from 'react';
 import { emailRegex } from 'src/assets/regex/email';
 import { viPhoneNumberRegex } from 'src/assets/regex/viPhoneNumber';
 import Checkbox from 'src/components/Form/Checkbox';
+import { GET_USER } from 'src/graphql/user/getUser.mutation';
 
 import InputCard from './InputCard';
 import InputWithLabel from './InputWithLabel';
 import SelectWithLabel from './SelectWithLabel';
-
 const mockCities = [
   {
     id: 1,
@@ -65,11 +66,14 @@ const mockWards = [
 ];
 
 const DeliveryInfo = (props, register): JSX.Element => {
+  const { data, error } = useQuery(GET_USER);
+  console.log('data', data?.getUser);
   return (
     <InputCard title="Thông tin giao hàng" hasRequired>
       {/* Name input */}
       <InputWithLabel
         name="name"
+        defaultValue={data?.getUser.display_name}
         ref={register({
           required: 'Xin nhập họ tên.'
         })}
@@ -83,6 +87,7 @@ const DeliveryInfo = (props, register): JSX.Element => {
         {/* Phone input */}
         <InputWithLabel
           name="phone"
+          defaultValue={data?.getUser.phone}
           ref={register({
             required: 'Xin nhập số điện thoại.',
             pattern: {
@@ -100,6 +105,7 @@ const DeliveryInfo = (props, register): JSX.Element => {
         {/* Email input */}
         <InputWithLabel
           name="email"
+          defaultValue={data?.getUser.email}
           ref={register({
             pattern: {
               value: emailRegex,
@@ -117,7 +123,7 @@ const DeliveryInfo = (props, register): JSX.Element => {
       <InputWithLabel
         name="address"
         ref={register({
-          required: 'Xin nhập địa chỉ giao hàng.'
+          required: 'Xin nhập địa chỉ giao hàng. '
         })}
         label={
           <>

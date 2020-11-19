@@ -21,3 +21,20 @@ export type GetUserResponse = {
   representative: string;
   business_license: string;
 };
+export type GetPaymentAndDeliveryResponse = {
+  paymentMethods: {
+    id: number;
+    name: string;
+    display_name: string;
+    account_name: string;
+    account_no: string;
+    bank_name: string;
+    note: string;
+  };
+  deliveryMethods: {
+    id: number;
+    name: string;
+    display_name: string;
+    tax: string;
+  };
+};

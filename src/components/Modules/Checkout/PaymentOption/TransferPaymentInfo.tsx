@@ -8,26 +8,25 @@ type Line = {
   content: string;
 };
 
-const lines: Line[] = [
-  {
-    label: 'Chủ tài khoản',
-    content: 'Công Ty TNHH BuyMed'
-  },
-  {
-    label: 'Số tài khoản',
-    content: '1913 45430 30020'
-  },
-  {
-    label: 'Ngân hàng',
-    content: 'Ngân hàng Techcombank - Chi nhánh Bắc Hải'
-  },
-  {
-    label: 'Nội dung',
-    content: 'Mã đơn hàng - Tên nhà thuốc'
-  }
-];
-
-const TransferPaymentInfo = (): JSX.Element => {
+const TransferPaymentInfo = (props: any): JSX.Element => {
+  const lines: Line[] = [
+    {
+      label: 'Chủ tài khoản',
+      content: props.account_name
+    },
+    {
+      label: 'Số tài khoản',
+      content: props.account_no
+    },
+    {
+      label: 'Ngân hàng',
+      content: props.bank_name
+    },
+    {
+      label: 'Nội dung',
+      content: props.note
+    }
+  ];
   return (
     <>
       <br />

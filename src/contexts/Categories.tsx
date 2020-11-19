@@ -26,10 +26,7 @@ const CategoriesContext = createContext<ContextValue>(null);
 CategoriesContext.displayName = 'CategoriesContext';
 
 const CategoriesProvider = withApollo({ ssr: true })(({ children }: Props) => {
-  // const { data, loading, error } = useQuery<GetCategoriesData, undefined>(GET_CATEGORIES);
-  const data = '';
-  const loading = '';
-  const error = '';
+  const { data, loading, error } = useQuery<GetCategoriesData, undefined>(GET_CATEGORIES);
   useEffect(() => {
     if (!error) return;
 

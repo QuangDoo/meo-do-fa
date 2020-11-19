@@ -18,7 +18,6 @@ export const GET_USER = gql`
       roles
       create_date
       update_date
-      contact_address
       company_name
       vat
       representative
