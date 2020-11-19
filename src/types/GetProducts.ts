@@ -10,15 +10,8 @@ export type GetProductsData = {
 export type GetProductsVars = {
   page: number;
   pageSize: number;
-  type: string | string[];
-  manufacturer_id: string | string[];
-  category_id: string | string[];
   order_type: string | string[];
-};
-export type GetProductsDealVars = {
-  page: number;
-  pageSize: number;
-};
-export type GetProductsDealData = {
-  getProductsDeal: Product[];
+  type?: string | string[];
+  manufacturer_id?: string | string[];
+  category_id?: string | string[];
 };
