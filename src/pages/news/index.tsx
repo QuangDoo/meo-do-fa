@@ -4,8 +4,10 @@ import Footer from '../../components/Layout/Footer';
 import Head from '../../components/Layout/Head';
 import Header from '../../components/Layout/Header';
 import Nav from '../../components/Layout/Nav';
-import { NewsLayout } from '../../components/Layout/NewsLayout';
-import NewsPost from '../../components/Layout/NewsLayout/NewsPost';
+import PageLayout from '../../components/Layout/PageLayout';
+import PostItem from '../../components/Modules/News/PostItem'
+import NewsSidebar from '../../components/Modules/News/NewsSidebar'
+
 
 const News = (): JSX.Element => {
   return (
@@ -18,10 +20,27 @@ const News = (): JSX.Element => {
 
       <Nav />
 
-      <NewsLayout>
-        <NewsPost></NewsPost>
-      </NewsLayout>
-
+      <PageLayout>
+        <div className="row">
+          <div className="col-sm-12 col-lg-9">
+            <div style={{padding: "0 1rem"}}>
+              <div className="row">
+                <PostItem></PostItem>
+                <PostItem></PostItem>
+                <PostItem></PostItem>
+                <PostItem></PostItem>
+                <PostItem></PostItem>
+                <PostItem></PostItem>
+                <PostItem></PostItem>
+              </div>
+          </div>
+            </div>
+          <div className="col-sm-12 col-lg-3 col-left__divider">
+            <NewsSidebar/>
+          </div>
+        </div>
+      </PageLayout>
+      
       <Footer />
     </>
   );
