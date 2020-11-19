@@ -2,6 +2,7 @@ import { Menu } from '@material-ui/core';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
+import { useCart } from 'src/contexts/Cart';
 import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
 import useLocalStorage from 'src/hooks/useLocalStorage';
 
@@ -11,6 +12,8 @@ export default function Nav(): JSX.Element {
   const isLoggedIn = useIsLoggedIn();
 
   const router = useRouter();
+
+  const { totalQty } = useCart();
 
   const logOut = () => {
     removeToken();
@@ -86,15 +89,17 @@ export default function Nav(): JSX.Element {
             {isLoggedIn && (
               <div className="header-right">
                 <ul className="nav align-items-center">
-                  <li className="nav-item mr-3">
+                  <li className="nav-item mr-4">
                     <Link href="/cart">
-                      <a className="rockland-nav__link">
+                      <a className="rockland-nav__link notification">
                         <i className="icomoon icon-local-mall rockland-nav__icon" />
+
+                        {!!totalQty && <span className="notification__counter">{totalQty}</span>}
                       </a>
                     </Link>
                   </li>
 
-                  <li className="nav-item mr-3">
+                  <li className="nav-item">
                     <button className="rockland-nav__link" onClick={openMenu}>
                       <i className="fas fa-bars rockland-nav__icon" />
                     </button>

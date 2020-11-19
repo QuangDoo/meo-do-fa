@@ -10,23 +10,13 @@ type Tag = {
 
 const tags: Tag[] = [
   { name: 'Tất cả' },
-  // {
-  //   name: (
-  //     <>
-  //       <i className="fas fa-bolt text-secondary mr-1" />
-  //       Flash Sale
-  //       <i className="fas fa-bolt text-secondary ml-1" />
-  //     </>
-  //   ),
-  //   tab: 'flash_sale'
-  // },
-  { name: 'SP Mới', tab: 'new_arrival' },
-  { name: 'Giảm giá', tab: 'decreasing_price' },
-  { name: 'Hóa đơn nhanh', tab: 'invoice_exportable' },
-  { name: 'Tăng giá', tab: 'increasing_price' },
-  { name: 'Cận date', tab: 'close_date' },
-  { name: 'Chỉ có tại medofa', tab: 'only_medofa' }
-  // { name: 'Người Việt dùng hàng Việt', tab: 'use_vietnamese' }
+  { name: 'SP Mới', tab: 'new' },
+  { name: 'Giảm giá', tab: 'decreasing-price' },
+  { name: 'Hóa đơn nhanh', tab: 'invoice-exportable' },
+  { name: 'Tăng giá', tab: 'increasing-price' },
+  { name: 'Cận date', tab: 'close-date' },
+  { name: 'Chỉ có tại medofa', tab: 'only-medofa' },
+  { name: 'Người Việt dùng hàng Việt', tab: 'use-vietnamese' }
 ];
 
 const FilterTags = () => {

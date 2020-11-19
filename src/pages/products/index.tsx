@@ -2,7 +2,7 @@ import { useQuery } from '@apollo/react-hooks';
 import { withTranslation } from 'i18n';
 import _ from 'lodash';
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
@@ -11,79 +11,93 @@ import FilterTags from 'src/components/Modules/FilterTags';
 import Pagination from 'src/components/Modules/Pagination';
 import ProductCard from 'src/components/Modules/ProductCard';
 import ProductsSidebarFilter from 'src/components/Modules/ProductsSidebarFilter';
-import { useCategories } from 'src/contexts/Categories';
-import { GET_MANUFACTORIES } from 'src/graphql/manufactory/manufactory.query';
+import { GET_ALL_CATEGORIES, GetAllCategoriesData } from 'src/graphql/category/category.query';
+import {
+  GET_MANUFACTURERS,
+  GetManufacturersData,
+  GetManufacturersVars
+} from 'src/graphql/manufacturers/manufacturers.query';
 import { GET_PRODUCTS } from 'src/graphql/product/product.query';
 import { GetProductsData, GetProductsVars } from 'src/types/GetProducts';
-import { Manufacturer } from 'src/types/Manufacturer';
 import withApollo from 'src/utils/withApollo';
-
-import { Product } from '../../types/Product';
 
 const pageSize = 20;
 
 function Products(): JSX.Element {
   const router = useRouter();
 
-  // Current page
   const page = +router.query.page || 1;
-  const { data: categories, nameLookup: categoryNameLookup } = useCategories();
+
+  // Get categories
+  const { data: categoriesData } = useQuery<GetAllCategoriesData, undefined>(GET_ALL_CATEGORIES, {
+    onError: (error) => {
+      console.log('Get all categories error:', error);
+    }
+  });
+
+  // Get manufacturers
+  const { data: manufacturersData } = useQuery<GetManufacturersData, GetManufacturersVars>(
+    GET_MANUFACTURERS,
+    {
+      variables: {
+        page: 1,
+        pageSize: 10
+      },
+      onError: (error) => {
+        console.log('Get manufacturers error:', error);
+      }
+    }
+  );
 
   // Get products
-  const { data: productsData, loading: productsLoading, error: productsError, refetch } = useQuery<
-    GetProductsData,
-    GetProductsVars
-  >(GET_PRODUCTS, {
+  const { data: productsData, refetch } = useQuery<GetProductsData, GetProductsVars>(GET_PRODUCTS, {
     variables: {
       page,
       pageSize,
-      type: router.query.tab,
-      manufacturer_id: router.query.manufacturer,
-      category_id: router.query.category,
-      order_type: router.query.sort || '01'
+      type: router.query.tab as string,
+      manufacturer_id: router.query.manufacturer as string,
+      category_id: router.query.category as string,
+      order_type: (router.query.sort as string) || '01'
+    },
+    onError: (error) => {
+      console.log('Get products error:', error);
     }
   });
-  // Get products
-  const { data: manufactoriesData } = useQuery(GET_MANUFACTORIES, {
-    variables: {
-      page: 1,
-      pageSize: 15
-    }
-  });
-  const [productList, setProductList] = useState<Product[]>();
-  const [manufactoryList, setManufactoryList] = useState<Manufacturer[]>();
-  const [total, setTotal] = useState<number>();
-  useEffect(() => {
-    if (productsData) {
-      setProductList(productsData.getProductByConditions.Products);
-      setTotal(productsData.getProductByConditions.total);
-    }
-    if (manufactoriesData) {
-      setManufactoryList(manufactoriesData.getManufactories);
-    }
-  }, [productsData, manufactoriesData]);
+
+  const total = productsData?.getProductByConditions.total || 0;
+
+  const products = productsData?.getProductByConditions.Products || [];
+
+  const categories = categoriesData?.getCategoriesAll || [];
+
+  const manufacturers = manufacturersData?.getManufactories || [];
 
   // Refetch products when page changes
   useEffect(() => {
     if (!router.query) return;
+
     refetch({
       page: router.query.page ? +router.query.page : page,
       pageSize,
-      type: router.query.tab,
-      manufacturer_id: router.query.manufacturer,
-      category_id: router.query.category,
-      order_type: router.query.sort || '01'
+      type: router.query.tab as string,
+      manufacturer_id: router.query.manufacturer as string,
+      category_id: router.query.category as string,
+      order_type: (router.query.sort as string) || '01'
     });
-  }, [router.query, refetch]);
+  }, [router.query]);
 
   const getNameById = (array, id) => {
     return _.find(array, { id })?.name;
   };
 
+  const title = router.query.category
+    ? getNameById(categories, router.query.category)
+    : 'Tất cả sản phẩm';
+
   return (
     <>
       <Head>
-        <title>Medofa</title>
+        <title>{title} - Medofa</title>
       </Head>
 
       <Header />
@@ -93,20 +107,12 @@ function Products(): JSX.Element {
       <div className="products container-fluid mobile-content my-3 my-sm-5">
         <div className="row flex-nowrap justify-content-between px-lg-5 px-sm-3">
           <div className="products__sidebar pr-4 d-none d-sm-block">
-            {manufactoryList && (
-              <ProductsSidebarFilter categories={categories} manufacturers={manufactoryList} />
-            )}
+            <ProductsSidebarFilter categories={categories} manufacturers={manufacturers} />
           </div>
 
-          {/* Content */}
           <div className="flex-grow-1">
-            {/* Header with pagination info */}
             <div className="px-2 px-sm-0 mb-2">
-              <h1 className="products__header text-capitalize mb-3">
-                {router.query.category
-                  ? getNameById(categories, router.query.category)
-                  : 'Tất cả sản phẩm'}
-              </h1>
+              <h1 className="products__header text-capitalize mb-3">{title}</h1>
 
               {total > 0 ? (
                 <>
@@ -122,36 +128,32 @@ function Products(): JSX.Element {
               )}
             </div>
 
-            {productList && (
-              <div className="d-none d-sm-block mb-4">
-                <FilterTags />
+            <div className="d-none d-sm-block mb-4">
+              <FilterTags />
+            </div>
+
+            <main className="products__products">
+              <div className="products__cards mb-3">
+                {products.map((product, index) => (
+                  <ProductCard key={index} {...product} />
+                ))}
               </div>
-            )}
 
-            {/* Products list */}
-            {productList && (
-              <main className="products__products">
-                <div className="products__cards mb-3">
-                  {productList &&
-                    productList.map((product, index) => <ProductCard key={index} {...product} />)}
-                </div>
-
-                <Pagination
-                  count={Math.ceil(total / pageSize)}
-                  page={page}
-                  siblingCount={4}
-                  onChange={(page) =>
-                    router.push({
-                      pathname: router.pathname,
-                      query: {
-                        ...router.query,
-                        page: page
-                      }
-                    })
-                  }
-                />
-              </main>
-            )}
+              <Pagination
+                count={Math.ceil(total / pageSize)}
+                page={page}
+                siblingCount={4}
+                onChange={(page) =>
+                  router.push({
+                    pathname: router.pathname,
+                    query: {
+                      ...router.query,
+                      page: page
+                    }
+                  })
+                }
+              />
+            </main>
           </div>
         </div>
       </div>
