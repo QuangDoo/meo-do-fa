@@ -9,7 +9,7 @@ const ProductDetailComponent = (props): JSX.Element => {
     <div className="product container py-5">
       <ProductInformation {...props} />
       <ProducerInformation
-        manufacturers={props.manufacturer_id}
+        manufacturers={props.manufacturer}
         categories={props.categories}
         ingredients={props.ingredients}
         info={props.info}
@@ -21,7 +21,7 @@ const ProductDetailComponent = (props): JSX.Element => {
         overdose={props.overdose}
       />
       <hr />
-      <RelativeProducts />
+      {/* <RelativeProducts /> */}
     </div>
   );
 };

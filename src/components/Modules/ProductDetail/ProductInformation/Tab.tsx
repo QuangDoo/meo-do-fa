@@ -51,15 +51,33 @@ export default function Tab(props) {
   return (
     <div className="col-12 col-sm-9 product__details">
       <Tabs>
-        <TabContent label="Thông tin chung">{props.info}</TabContent>
-        <TabContent label="Chỉ định">{props.indication}</TabContent>
-        <TabContent label="Liều lượng - Cách dùng">{props.contraindication}</TabContent>
-        <TabContent label="Chống chỉ định">{props.direction}</TabContent>
-        <TabContent label="Tương tác thuốc">{props.interaction}</TabContent>
-        <TabContent label="Bảo quản">{props.preservation}</TabContent>
-        <TabContent label="Quá liều">{props.overdose}</TabContent>
-        <TabContent label="Dược lực học">{props.pharmacodynamics}</TabContent>
-        <TabContent label="Dược động học">{props.pharmacokinetics}</TabContent>
+        <TabContent label="Thông tin chung">
+          {props.info !== 'false' ? props.info : 'Đang cập nhật'}
+        </TabContent>
+        <TabContent label="Chỉ định">
+          {props.indication !== 'false' ? props.indication : 'Đang cập nhật'}
+        </TabContent>
+        <TabContent label="Liều lượng - Cách dùng">
+          {props.contraindication !== 'false' ? props.contraindication : 'Đang cập nhật'}
+        </TabContent>
+        <TabContent label="Chống chỉ định">
+          {props.direction !== 'false' ? props.direction : 'Đang cập nhật'}
+        </TabContent>
+        <TabContent label="Tương tác thuốc">
+          {props.interaction !== 'false' ? props.interaction : 'Đang cập nhật'}
+        </TabContent>
+        <TabContent label="Bảo quản">
+          {props.preservation !== 'false' ? props.preservation : 'Đang cập nhật'}
+        </TabContent>
+        <TabContent label="Quá liều">
+          {props.overdose !== 'false' ? props.overdose : 'Đang cập nhật'}
+        </TabContent>
+        <TabContent label="Dược lực học">
+          {props.pharmacodynamics !== 'false' ? props.pharmacodynamics : 'Đang cập nhật'}
+        </TabContent>
+        <TabContent label="Dược động học">
+          {props.pharmacokinetics !== 'false' ? props.pharmacokinetics : 'Đang cập nhật'}
+        </TabContent>
       </Tabs>
     </div>
   );
