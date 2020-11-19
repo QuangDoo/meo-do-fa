@@ -1,76 +1,37 @@
+import { useQuery } from '@apollo/react-hooks';
 import React from 'react';
-
-import Footer from '../../components/Layout/Footer';
-import Head from '../../components/Layout/Head';
-import Header from '../../components/Layout/Header';
-import Nav from '../../components/Layout/Nav';
-import PageLayout from '../../components/Layout/PageLayout';
-import SearchScreen from '../../components/Modules/SearchScreen';
+import Footer from 'src/components/Layout/Footer';
+import Head from 'src/components/Layout/Head';
+import Header from 'src/components/Layout/Header';
+import Nav from 'src/components/Layout/Nav';
+import SearchScreen from 'src/components/Modules/SearchScreen';
+import {
+  GET_ALL_MANUFACTURERS,
+  GetAllManufacturersData
+} from 'src/graphql/manufacturers/manufacturers.query';
 
 function Manufactures(): JSX.Element {
-  const manufactures = [
-    { name: 'Alamingo' },
-    { name: 'Blamingo' },
-    { name: 'Clamingo' },
-    { name: 'Dlamingo' },
-    { name: 'Elamingo' },
-    { name: 'Flamingo' },
-    { name: 'Glamingo' },
-    { name: 'Hlamingo' },
-    { name: 'Llamingo' },
-    { name: 'Mlamingo' },
-    { name: 'Nlamingo' },
-    { name: 'Olamingo' },
-    { name: 'Plamingo' },
-    { name: 'Qlamingo' },
-    { name: 'Rlamingo' },
-    { name: 'Slamingo' },
-    { name: 'Tlamingo' },
-    { name: 'Ulamingo' },
-    { name: 'Vlamingo' },
-    { name: 'Wlamingo' },
-    { name: 'Xlamingo' },
-    { name: 'Ylamingo' },
-    { name: 'Zlamingo' }
-  ];
-  const characters = [
-    { character: 'A', dataValue: 'a' },
-    { character: 'B', dataValue: 'b' },
-    { character: 'C', dataValue: 'c' },
-    { character: 'D', dataValue: 'd' },
-    { character: 'E', dataValue: 'e' },
-    { character: 'F', dataValue: 'f' },
-    { character: 'G', dataValue: 'g' },
-    { character: 'H', dataValue: 'h' },
-    { character: 'I', dataValue: 'i' },
-    { character: 'J', dataValue: 'j' },
-    { character: 'K', dataValue: 'k' },
-    { character: 'L', dataValue: 'l' },
-    { character: 'M', dataValue: 'm' },
-    { character: 'N', dataValue: 'n' },
-    { character: 'O', dataValue: 'o' },
-    { character: 'P', dataValue: 'p' },
-    { character: 'R', dataValue: 'r' },
-    { character: 'S', dataValue: 's' },
-    { character: 'T', dataValue: 't' },
-    { character: 'U', dataValue: 'u' },
-    { character: 'V', dataValue: 'v' },
-    { character: 'W', dataValue: 'w' },
-    { character: 'X', dataValue: 'x' },
-    { character: 'Y', dataValue: 'y' },
-    { character: 'Z', dataValue: 'z' },
-    { character: '#', dataValue: '#' }
-  ];
+  const { data } = useQuery<GetAllManufacturersData, undefined>(GET_ALL_MANUFACTURERS, {
+    onError: (error) => {
+      console.log('Get manufacturers error:', error);
+    }
+  });
+
   return (
     <>
       <Head>
-        <title>Medofa</title>
+        <title>Tất cả nhà sản xuất - Medofa</title>
       </Head>
+
       <Header />
+
       <Nav />
-      <PageLayout>
-        {/* <SearchScreen dataList={manufactures} characters={characters} /> */}
-      </PageLayout>
+
+      <SearchScreen
+        data={data?.getManufactoriesAll.map((i) => ({ id: i.id, name: i.short_name })) || []}
+        getItemHref={(id) => `/products?manufacturer=${id}`}
+      />
+
       <Footer />
     </>
   );
