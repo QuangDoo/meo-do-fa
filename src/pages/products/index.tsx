@@ -41,7 +41,7 @@ function Products(): JSX.Element {
     {
       variables: {
         page: 1,
-        pageSize: 10
+        pageSize: 20
       },
       onError: (error) => {
         console.log('Get manufacturers error:', error);

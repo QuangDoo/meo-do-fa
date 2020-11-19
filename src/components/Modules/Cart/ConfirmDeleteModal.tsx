@@ -1,9 +1,8 @@
 import { useMutation } from '@apollo/react-hooks';
 import React, { FC } from 'react';
 import { toast } from 'react-toastify';
+import ModalBase from 'src/components/Layout/Modal/ModalBase';
 import { DELETE_CART, DeleteCartData, DeleteCartVars } from 'src/graphql/cart/deleteCart.mutation';
-
-import ModalBase from '../../Layout/Modal/ModalBase';
 
 type Props = {
   // Modal is open
@@ -35,6 +34,8 @@ const ConfirmDeleteModal: FC<Props> = (props) => {
       toast.success('Đã xóa khỏi giỏ hàng');
 
       props.refetchCart();
+
+      props.onClose();
     }
   });
 

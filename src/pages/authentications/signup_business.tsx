@@ -2,6 +2,8 @@ import { useMutation, useQuery } from '@apollo/react-hooks';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import Head from 'src/components/Layout/Head';
+import PageLayout from 'src/components/Layout/PageLayout';
 import SelectWithLabel from 'src/components/Modules/Checkout/SelectWithLabel';
 import { useCities } from 'src/contexts/Cities';
 import { City } from 'src/graphql/address/city.query';
@@ -10,9 +12,6 @@ import { GET_WARD } from 'src/graphql/address/ward.query';
 import { UPDATE_USER } from 'src/graphql/user/updateUser.mutation';
 import { Status } from 'src/types/Status';
 import withApollo from 'src/utils/withApollo';
-
-import Head from '../../components/Layout/Head';
-import PageLayout from '../../components/Layout/PageLayout';
 
 type DataAddress = {
   city: string;
@@ -92,7 +91,6 @@ function SignupBusiness(): JSX.Element {
     if (dataCity) {
       dataCity.map((city) => {
         setDataAddress({ ...dataAddress, city: city.name });
-        // console.log('city state', city.city);
       });
     }
 

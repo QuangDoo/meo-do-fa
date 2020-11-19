@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
-
-import Button from '../../../Form/Button';
+import Button from 'src/components/Form/Button';
 
 type ProductsContainerProps = {
   deals?: boolean;

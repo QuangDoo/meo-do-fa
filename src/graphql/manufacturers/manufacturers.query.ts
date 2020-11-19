@@ -20,7 +20,7 @@ export const GET_MANUFACTURERS = gql`
   query getManufactories($page: Int!, $pageSize: Int!) {
     getManufactories(page: $page, pageSize: $pageSize) {
       id
-      name
+      short_name
     }
   }
 `;

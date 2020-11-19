@@ -2,11 +2,10 @@ import clsx from 'clsx';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
+import Dropdown from 'src/components/Form/Dropdown';
+import Select from 'src/components/Form/Select';
 import { Category } from 'src/types/Category';
 import { Manufacturer } from 'src/types/Manufacturer';
-
-import Dropdown from '../Form/Dropdown';
-import Select from '../Form/Select';
 
 type Props = {
   categories: Category[];
@@ -98,7 +97,7 @@ const ProductsSidebarFilter = (props: Props) => {
 
       <hr className="hr my-3" />
 
-      {/* Filter supplier */}
+      {/* Filter manufacturers */}
       <Dropdown label="Nhà sản xuất">
         <div className="mb-2">
           <Link href="/products">

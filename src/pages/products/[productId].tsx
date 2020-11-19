@@ -1,24 +1,20 @@
 import { useQuery } from '@apollo/react-hooks';
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
-
-import Footer from '../../components/Layout/Footer';
-import Head from '../../components/Layout/Head';
-import Header from '../../components/Layout/Header';
-import Nav from '../../components/Layout/Nav';
-import ProductDetailComponent from '../../components/Modules/ProductDetail/ProductDetail';
-import { GET_PRODUCT } from '../../graphql/product/product.query';
-import withApollo from '../../utils/withApollo';
+import React from 'react';
+import Footer from 'src/components/Layout/Footer';
+import Head from 'src/components/Layout/Head';
+import Header from 'src/components/Layout/Header';
+import Nav from 'src/components/Layout/Nav';
+import ProductDetailComponent from 'src/components/Modules/ProductDetail/ProductDetail';
+import { GET_PRODUCT } from 'src/graphql/product/product.query';
+import withApollo from 'src/utils/withApollo';
 
 function ProductDetail(): JSX.Element {
   const router = useRouter();
 
   const { productId } = router.query;
 
-  const { data: dataProduct, loading: loadingProduct, error: errorProduct } = useQuery(
-    GET_PRODUCT,
-    { variables: { id: Number(productId) } }
-  );
+  const { data: dataProduct } = useQuery(GET_PRODUCT, { variables: { id: Number(productId) } });
 
   return (
     <>

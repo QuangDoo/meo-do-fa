@@ -9,8 +9,9 @@ import {
   GET_ALL_MANUFACTURERS,
   GetAllManufacturersData
 } from 'src/graphql/manufacturers/manufacturers.query';
+import withApollo from 'src/utils/withApollo';
 
-function Manufactures(): JSX.Element {
+function Manufacturers(): JSX.Element {
   const { data } = useQuery<GetAllManufacturersData, undefined>(GET_ALL_MANUFACTURERS, {
     onError: (error) => {
       console.log('Get manufacturers error:', error);
@@ -37,4 +38,4 @@ function Manufactures(): JSX.Element {
   );
 }
 
-export default Manufactures;
+export default withApollo({ ssr: true })(Manufacturers);
