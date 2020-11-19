@@ -1,6 +1,6 @@
+import SearchIcon from '@material-ui/icons/Search';
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import SearchIcon from '@material-ui/icons/Search';
 
 type PropsType = {
   placeholder: string;
@@ -24,9 +24,14 @@ function InputSearch(props: PropsType): JSX.Element {
 
   return (
     <div className="news-search mb-4">
-      <input name="search" className="news-search__input " placeholder={props.placeholder} ref={register()} />
+      <input
+        name="search"
+        className="news-search__input "
+        placeholder={props.placeholder}
+        ref={register()}
+      />
       <button className="news-search__button">
-        <SearchIcon/>
+        <SearchIcon />
       </button>
     </div>
   );

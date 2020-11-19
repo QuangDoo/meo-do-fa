@@ -1,5 +1,5 @@
-import React from 'react'
-import Link from 'next/link'
+import Link from 'next/link';
+import React from 'react';
 
 const data = {
   categories: [
@@ -7,7 +7,8 @@ const data = {
     { href: '/news', title: 'TIN TỨC THUOCSI.VN' }
   ],
   imgUrl: 'https://i1.sndcdn.com/avatars-xpq4R8nRHWRL7NiZ-pyJFyg-t500x500.jpg',
-  title:  'Doanh nhân Nguyễn Hoàng: Không tham vọng đưa BuyMed trở thành kỳ lân, mà có giấc mơ lớn hơn',
+  title:
+    'Doanh nhân Nguyễn Hoàng: Không tham vọng đưa BuyMed trở thành kỳ lân, mà có giấc mơ lớn hơn',
   description: `<div><div class="details-block"><h4 style="font-size: 13px; line-height: 40px; 
   font-weight: 400; margin: 0; border-bottom: 1px solid #a2a2a2; margin-bottom: 10px;">
   CHI TIẾT SẢN PHẨM</h4> <div id="editor-content"><p>Dùng trị da nhờn: Dùng 2 muỗng canh cám 
@@ -31,13 +32,13 @@ const data = {
 };
 
 type Props = {
-  categories?: any
-  title?: string
-  description?: string
-  createAt?: string
-  author?: string
-}
-function NewsDetail (props: Props) {
+  categories?: any;
+  title?: string;
+  description?: string;
+  createAt?: string;
+  author?: string;
+};
+function NewsDetail(props: Props) {
   function createMarkup() {
     return { __html: data.description };
   }
@@ -46,39 +47,40 @@ function NewsDetail (props: Props) {
       <div className="news-detail">
         <div className="news-header">
           <div className="news-header__category">
-            {
-              data.categories.map((category,index)=>(<span key={index}><Link href={category.href}>
-              <a className="news-header__link">{category.title}</a>
-            </Link></span>))
-            }
+            {data.categories.map((category, index) => (
+              <span key={index}>
+                <Link href={category.href}>
+                  <a className="news-header__link">{category.title}</a>
+                </Link>
+              </span>
+            ))}
           </div>
           <h1 className="news-header__title text-center">{data.title}</h1>
           <div className="post-item__content-divider"></div>
           <div className="news-header__poston">
             {`post on `}
-            <Link href="#">
-              <a href="#" className="news-header__link">SEPTEMBER 14,2020</a>
+            <Link href="/news">
+              <a href="/news" className="news-header__link">
+                SEPTEMBER 14,2020
+              </a>
             </Link>
             {`,by `}
-            <Link href="#">
-              <a href="#" className="news-header__link">Admin</a>
+            <Link href="/news">
+              <a href="/news" className="news-header__link">
+                Admin
+              </a>
             </Link>
           </div>
         </div>
         <div className="post-item__img">
-          <img 
-            className="post-item__img-item" 
-            alt={data.title}
-            src={data.imgUrl}
-          ></img>
+          <img className="post-item__img-item" alt={data.title} src={data.imgUrl}></img>
         </div>
         <div className="news-detail__content">
           <div dangerouslySetInnerHTML={createMarkup()} />
         </div>
       </div>
     </>
-  )
+  );
 }
 
-
-export default NewsDetail
+export default NewsDetail;

@@ -1,16 +1,16 @@
-import React from 'react'
 import Link from 'next/link';
+import React from 'react';
 
 type Props = {
-  id?: string
-  title?: string
-  imgUrl?: string
-  description?: string
-  createAt?: string
+  id?: string;
+  title?: string;
+  imgUrl?: string;
+  description?: string;
+  createAt?: string;
 };
 
-export default function PostItem (props: Props): JSX.Element {
-  const data= {
+export default function PostItem(props: Props): JSX.Element {
+  const data = {
     id: 8,
     title:
       'Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form,',
@@ -22,19 +22,15 @@ export default function PostItem (props: Props): JSX.Element {
     It was popularised in the 1960s with the release of Letraset sheets containing 
     Lorem Ipsum passages, and more recently with desktop publishing software like Aldus 
     PageMaker including versions of Lorem Ipsum.`,
-    imgUrl: "https://i1.sndcdn.com/avatars-xpq4R8nRHWRL7NiZ-pyJFyg-t500x500.jpg"
-  }
+    imgUrl: 'https://i1.sndcdn.com/avatars-xpq4R8nRHWRL7NiZ-pyJFyg-t500x500.jpg'
+  };
 
   return (
     <div className="col-lg-6 col-sm-12 position-relative mb-2">
       <Link href={`/news/${data.title}`}>
         <div className="post-item">
           <div className="post-item__img">
-            <img 
-              className="post-item__img-item" 
-              alt={data.title}
-              src={data.imgUrl}
-            ></img>
+            <img className="post-item__img-item" alt={data.title} src={data.imgUrl}></img>
           </div>
           <div className="post-item__content">
             <div className="post-item__content-title">{data.title}</div>
@@ -51,5 +47,5 @@ export default function PostItem (props: Props): JSX.Element {
         </div>
       </Link>
     </div>
-  )
+  );
 }
