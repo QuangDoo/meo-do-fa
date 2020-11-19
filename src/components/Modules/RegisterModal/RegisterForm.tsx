@@ -2,7 +2,7 @@ import { useMutation } from '@apollo/react-hooks';
 import { Trans, withTranslation } from 'i18n';
 import { WithTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { emailRegex } from 'src/assets/regex/email';

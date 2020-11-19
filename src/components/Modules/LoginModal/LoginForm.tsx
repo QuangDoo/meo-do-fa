@@ -40,7 +40,7 @@ const LoginForm = (): JSX.Element => {
       closeLoginModal();
       getUser();
       if (router.pathname !== '/products/[productId]') {
-        router.push('/quick-order');
+        router.push('/products');
       } else {
         router.reload();
       }

@@ -23,6 +23,8 @@ const SearchBar = (): JSX.Element => {
   // Search with debounce
   useDebouncedEffect(
     () => {
+      if (value === '') return;
+
       searchProducts({
         variables: {
           page: 1,

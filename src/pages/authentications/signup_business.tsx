@@ -3,7 +3,8 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import SelectWithLabel from 'src/components/Modules/Checkout/SelectWithLabel';
-import { useCities } from 'src/contexts/City';
+import { useCities } from 'src/contexts/Cities';
+import { City } from 'src/graphql/address/city.query';
 import { GET_DISTRICT } from 'src/graphql/address/district.query';
 import { GET_WARD } from 'src/graphql/address/ward.query';
 import { UPDATE_USER } from 'src/graphql/user/updateUser.mutation';
@@ -12,12 +13,6 @@ import withApollo from 'src/utils/withApollo';
 
 import Head from '../../components/Layout/Head';
 import PageLayout from '../../components/Layout/PageLayout';
-
-type City = {
-  id: string;
-  city_code: string;
-  city: string;
-};
 
 type DataAddress = {
   city: string;
@@ -95,8 +90,8 @@ function SignupBusiness(): JSX.Element {
 
   useEffect(() => {
     if (dataCity) {
-      dataCity.map((city: { city: string }) => {
-        setDataAddress({ ...dataAddress, city: city.city });
+      dataCity.map((city) => {
+        setDataAddress({ ...dataAddress, city: city.name });
         // console.log('city state', city.city);
       });
     }
@@ -290,8 +285,8 @@ function SignupBusiness(): JSX.Element {
 
                         {/* Map cities from api */}
                         {dataCity.map((city: City) => (
-                          <option key={city.id} value={city.city_code}>
-                            {city.city}
+                          <option key={city.id} value={city.code}>
+                            {city.name}
                           </option>
                         ))}
                       </SelectWithLabel>
