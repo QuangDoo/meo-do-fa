@@ -8,7 +8,11 @@ const ProuductDetailImage = (props): JSX.Element => {
           <div className="d-flex flex-column">
             <img
               className="img-fluid product__thumbnail lozad selected"
-              src={`data:image/jpeg;base64,${props.imageUrl}`}
+              src={
+                props.imageUrl
+                  ? `data:image/jpeg;base64,${props.imageUrl}`
+                  : 'assets/images/no-image'
+              }
               alt=""
             />
           </div>
@@ -16,7 +20,11 @@ const ProuductDetailImage = (props): JSX.Element => {
         <div className="flex-grow-1">
           <div
             className="lozad product__image"
-            style={{ backgroundImage: `url(data:image/jpeg;base64,${props.imageUrl})` }}
+            style={{
+              backgroundImage: props.imageUrl
+                ? `url(data:image/jpeg;base64,${props.imageUrl})`
+                : `url('assets/images/no-image')`
+            }}
           />
         </div>
       </div>
