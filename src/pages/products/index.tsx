@@ -11,14 +11,12 @@ import FilterTags from 'src/components/Modules/FilterTags';
 import Pagination from 'src/components/Modules/Pagination';
 import ProductCard from 'src/components/Modules/ProductCard';
 import ProductsSidebarFilter from 'src/components/Modules/ProductsSidebarFilter';
-import { useCategories } from 'src/contexts/Categories';
-import { useManufacturers } from 'src/contexts/Manufacturers';
+import { GET_CATEGORIES, GetCategoriesData } from 'src/graphql/category/category.query';
 import { GET_PRODUCTS } from 'src/graphql/product/product.query';
 import { mockSuppliers } from 'src/mockData/mockSuppliers';
 import { GetProductsData, GetProductsVars } from 'src/types/GetProducts';
+import { Product } from 'src/types/Product';
 import withApollo from 'src/utils/withApollo';
-
-import { Product } from '../../types/Product';
 
 const pageSize = 20;
 
@@ -27,8 +25,9 @@ function Products(): JSX.Element {
 
   // Current page
   const page = +router.query.page || 1;
-  const { data: categories, nameLookup: categoryNameLookup } = useCategories();
-  const { data: manufacturers, } = useManufacturers ();
+
+  // Get categories
+  const { data: categoriesData } = useQuery<GetCategoriesData, undefined>(GET_CATEGORIES);
 
   // Get products
   const { data: productsData, loading: productsLoading, error: productsError, refetch } = useQuery<
@@ -44,8 +43,11 @@ function Products(): JSX.Element {
       order_type: router.query.sort || '01'
     }
   });
+
   const [productList, setProductList] = useState<Product[]>();
+
   const [total, setTotal] = useState<number>();
+
   useEffect(() => {
     if (productsData) {
       setProductList(productsData.getProductByConditions.Products);
@@ -66,28 +68,11 @@ function Products(): JSX.Element {
     });
   }, [router.query, refetch]);
 
-  // Pagination component, reused at top and bottom of products list
-  // Updates page query on change
-  const CustomPagination = () => (
-    <Pagination
-      count={Math.ceil(total / pageSize)}
-      page={page}
-      siblingCount={4}
-      onChange={(page) =>
-        router.push({
-          pathname: router.pathname,
-          query: {
-            ...router.query,
-            page: page
-          }
-        })
-      }
-    />
-  );
-
   const getNameById = (array, id) => {
     return _.find(array, { id })?.name;
   };
+
+  
 
   return (
     <>
@@ -102,7 +87,10 @@ function Products(): JSX.Element {
       <div className="products container-fluid mobile-content my-3 my-sm-5">
         <div className="row flex-nowrap justify-content-between px-lg-5 px-sm-3">
           <div className="products__sidebar pr-4 d-none d-sm-block">
-            <ProductsSidebarFilter categories={categories} manufacturers={manufacturers} />
+            <ProductsSidebarFilter
+              categories={categoriesData?.getCategories || []}
+              suppliers={mockSuppliers}
+            />
           </div>
 
           {/* Content */}
@@ -111,7 +99,7 @@ function Products(): JSX.Element {
             <div className="px-2 px-sm-0 mb-2">
               <h1 className="products__header text-capitalize mb-3">
                 {router.query.category
-                  ? getNameById(categories, router.query.category)
+                  ? getNameById(categoriesData?.getCategories || [], router.query.category)
                   : 'Tất cả sản phẩm'}
               </h1>
 
@@ -138,14 +126,25 @@ function Products(): JSX.Element {
             {/* Products list */}
             {productList && (
               <main className="products__products">
-                {/* <CustomPagination /> */}
-
                 <div className="products__cards mb-3">
                   {productList &&
                     productList.map((product, index) => <ProductCard key={index} {...product} />)}
                 </div>
 
-                <CustomPagination />
+                <Pagination
+                  count={Math.ceil(total / pageSize)}
+                  page={page}
+                  siblingCount={4}
+                  onChange={(page) =>
+                    router.push({
+                      pathname: router.pathname,
+                      query: {
+                        ...router.query,
+                        page: page
+                      }
+                    })
+                  }
+                />
               </main>
             )}
           </div>

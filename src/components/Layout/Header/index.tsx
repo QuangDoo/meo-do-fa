@@ -5,7 +5,6 @@ import LanguagePicker from 'src/components/Layout/Header/LanguagePicker';
 import LoginModal from 'src/components/Modules/LoginModal';
 import RegisterModal from 'src/components/Modules/RegisterModal';
 import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
-
 import RightSideUser from './RightSideUser';
 import SearchBar from './SearchBar';
 
@@ -59,12 +58,6 @@ const Header = ({ t }: HeaderProps): JSX.Element => {
           </div>
         </div>
       </nav>
-      <img
-        alt="medofa.vn"
-        className="img-fluid logo-header"
-        title="medofa.vn"
-        src="/assets/images/logo2.png"
-      />
       <div className="container py-4">
         <div className="d-flex align-items-center justify-content-between">
           <div className="mr-3">

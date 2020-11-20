@@ -22,7 +22,7 @@ export const GET_PRODUCTS = gql`
       Products {
         id
         name
-        price
+        list_price
         standard_price
         image_128
         image_512
@@ -56,8 +56,7 @@ export const GET_PRODUCT = gql`
       list_price
       lst_price
       standard_price
-      code
-      partner_ref
+
       active
       color
       product_tmpl_id
@@ -93,14 +92,34 @@ export const GET_PRODUCT = gql`
       uom_name
       categories {
         id
-        display_name
+        name
+        complete_name
+        parent_id
+        parent_path
+        create_date
       }
       ingredients {
         id
         display_name
+        indication
+        info
+        name
+        slug
       }
-      manufacturer_id
+      manufacturer {
+        id
+        name
+        display_name
+        location
+        short_name
+        slug
+        top_rated
+        product_ids
+        create_date
+      }
       ingredient_ids
+      manufacturer_id
+      badges
     }
   }
 `;

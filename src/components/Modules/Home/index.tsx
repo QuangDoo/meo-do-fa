@@ -1,7 +1,7 @@
 import React from 'react';
-
 import { BestSelling } from './BestSelling';
 import { Customer } from './Customer';
+import { DealOfTheDay } from './DealOfTheDay';
 import { FlashSale } from './FlashSale';
 import { Login } from './Login';
 import { NewProducts } from './NewProducts';
@@ -17,9 +17,11 @@ const Home: React.FC = () => {
     <div>
       <Slider />
 
+      <DealOfTheDay/>
+
       <BestSelling />
 
-      <FlashSale />
+      {/* <FlashSale /> */}
 
       <NewProducts />
 

@@ -1,11 +1,13 @@
 import 'react-toastify/dist/ReactToastify.css';
-import '../assets/scss/custom-styles.scss';
+import 'src/assets/scss/custom-styles.scss';
 
 import { appWithTranslation } from 'i18n';
 import App from 'next/app';
 import React, { useEffect } from 'react';
 import ToastContainer from 'src/components/Layout/ToastContainer';
-import { CategoriesProvider } from 'src/contexts/Categories';
+import { CartProvider } from 'src/contexts/Cart';
+import { ManufacturersProvider } from 'src/contexts/Manufacturers';
+
 import { CityProvider } from 'src/contexts/City';
 import { ModalControlProvider } from 'src/contexts/ModalControl';
 import { UserProvider } from 'src/contexts/User';
@@ -23,14 +25,18 @@ const MyApp = ({ Component, pageProps }) => {
   return (
     <ThemeProvider theme={theme}>
       <UserProvider>
-        <CityProvider>
-          <ModalControlProvider>
-            <CategoriesProvider>
-              <Component {...pageProps} />
-            </CategoriesProvider>
-            <ToastContainer />
-          </ModalControlProvider>
-        </CityProvider>
+        <ManufacturersProvider>
+          <CartProvider>
+            <CityProvider>
+              <ModalControlProvider>
+                <Component {...pageProps} />
+
+                <ToastContainer />
+              </ModalControlProvider>
+            </CityProvider>
+          </CartProvider>
+        </ManufacturersProvider>
+        
       </UserProvider>
     </ThemeProvider>
   );

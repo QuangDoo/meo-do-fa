@@ -1,10 +1,8 @@
 import clsx from 'clsx';
 import { withTranslation } from 'i18n';
-import { DateTime } from 'luxon';
 import { WithTranslation } from 'next-i18next';
 import Link from 'next/link';
 import React from 'react';
-import { useCategories } from 'src/contexts/Categories';
 import { OrderProvider } from 'src/contexts/Order';
 import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
 import { Product } from 'src/types/Product';

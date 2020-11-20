@@ -81,7 +81,7 @@ const ProductsSidebarFilter = (props: Props) => {
           </Link>
         </div>
 
-        {categories.map(({ name, id }) => (
+        {manufacturers.map(({ name, id }) => (
           <div key={id} className="mb-2">
             <Link href={`/products?category=${id}`}>
               <a
@@ -98,7 +98,7 @@ const ProductsSidebarFilter = (props: Props) => {
 
       <hr className="hr my-3" />
 
-      {/* Filter supplier */}
+      {/* Filter manufactures */}
       <Dropdown label="Nhà sản xuất">
         <div className="mb-2">
           <Link href="/products">
@@ -109,13 +109,26 @@ const ProductsSidebarFilter = (props: Props) => {
           </Link>
         </div>
 
-        {manufacturers.map(({ name, id }) => (
+        {/* {manufacturers.map(({ name, id }) => (
           <div key={id} className="mb-2">
             <Link href={`/products?manufacturer=${id}`}>
               <a
                 className={clsx(
                   'products__filter-category',
                   router.query.manufacturer === id && 'active'
+                )}>
+                {name}
+              </a>
+            </Link>
+          </div>
+        ))} */}
+        {categories.map(({ name, id }) => (
+          <div key={id} className="mb-2">
+            <Link href={`/products?category=${id}`}>
+              <a
+                className={clsx(
+                  'products__filter-category',
+                  router.query.category === id && 'active'
                 )}>
                 {name}
               </a>
