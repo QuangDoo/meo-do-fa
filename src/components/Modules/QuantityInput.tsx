@@ -2,6 +2,7 @@ import { useMutation } from '@apollo/react-hooks';
 import clsx from 'clsx';
 import { withTranslation } from 'i18n';
 import { WithTranslation } from 'next-i18next';
+import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import { useCart } from 'src/contexts/Cart';
@@ -20,6 +21,8 @@ type Props = WithTranslation & {
 function QuantityInput(props: Props) {
   const { size, productId, price, name, t } = props;
 
+  const router = useRouter();
+  console.log('router.pathname', router.pathname);
   const { refetchCart } = useCart();
 
   const [quantity, setQuantity] = useState<string>('0');
@@ -88,10 +91,15 @@ function QuantityInput(props: Props) {
       <button className="btn btn-sm qty__button qty__button--plus" onClick={handlePlus}>
         <i className="fas fa-plus" />
       </button>
-
-      <button className="ml-2 btn btn-sm qty__button qty__button--plus" onClick={handleClick}>
-        <i className="fas fa-check" />
-      </button>
+      {router.pathname === '/products/[productId]' ? (
+        <button className="ml-2 btn btn-sm qty__button qty__button--plus" onClick={handleClick}>
+          <i className="fas fa-check" />
+        </button>
+      ) : (
+        <button className="ml-2 btn btn-sm qty__button qty__button--plus" onClick={handleClick}>
+          <i className="fas fa-check" />
+        </button>
+      )}
     </div>
   );
 }

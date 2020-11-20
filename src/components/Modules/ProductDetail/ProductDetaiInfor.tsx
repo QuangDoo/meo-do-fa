@@ -7,6 +7,7 @@ type PropsType = {
   name: string;
   list_price: number;
   uom_name: string;
+  id: string;
 };
 const ProductDetailInfor = (props: PropsType): JSX.Element => {
   let token = '';
@@ -79,7 +80,7 @@ const ProductDetailInfor = (props: PropsType): JSX.Element => {
                     </button>
                   </div>
                 </div> */}
-                {/* <QuantityInput /> */}
+                <QuantityInput productId={props.id} price={props.list_price} name={props.name} />
               </div>
             )}
           </div>

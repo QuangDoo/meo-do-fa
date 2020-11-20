@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { useCities } from 'src/contexts/City';
+import { useCities } from 'src/contexts/Cities';
 import { GET_DISTRICT, GET_WARD, GET_WARD_DETAIL } from 'src/graphql/address/city.query';
 import { CREATE_ORDER } from 'src/graphql/order/order.mutation';
 import { GET_COUNSEL } from 'src/graphql/order/order.query';
@@ -34,11 +34,10 @@ const CheckoutPage = (): JSX.Element => {
   const { data: dataGetCounsel, loading: loadingGetCounsel, error: errorGetCounsel } = useQuery(
     GET_COUNSEL
   );
-  console.log('errorGetCounsel', errorGetCounsel);
+
   const router = useRouter();
   const [createOrder] = useMutation(CREATE_ORDER, {
     onCompleted: (data) => {
-      console.log('data', data);
       swal({
         title: `Sản phẩm ${data.createOrder.orderNo} đã được đặt thành công!`,
         icon: 'success'
@@ -46,7 +45,8 @@ const CheckoutPage = (): JSX.Element => {
         router.push('/');
       });
     },
-    onError: () => {
+    onError: (err) => {
+      console.log('err', err);
       toast.error('Thanh toán thất bại');
     }
   });
@@ -89,7 +89,7 @@ const CheckoutPage = (): JSX.Element => {
         },
         email: data.email,
         paymentMethodId: Number(data.paymentOption),
-        deliveryMethodId: Number(data.deliveryOption),
+        deliveryMethodId: 1,
         note: data.customerNotes
       }
     });
@@ -118,14 +118,14 @@ const CheckoutPage = (): JSX.Element => {
               />
             </div>
 
-            <div className="mb-4">
+            {/* <div className="mb-4">
               <DeliveryOption
                 ref={register}
                 deliveryMethods={
                   dataGetPaymentDelivery?.getPaymentAndDeliveryMethod.deliveryMethods
                 }
               />
-            </div>
+            </div> */}
 
             <div className="mb-4">
               <PaymentOption

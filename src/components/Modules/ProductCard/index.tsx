@@ -16,7 +16,6 @@ import { ProductPrice } from './ProductPrice';
 type Props = Product & WithTranslation;
 
 const ProductCard = ({ t, ...props }: Props): JSX.Element => {
-  console.log('props.list_cart', props.list_price);
   const isLoggedIn = useIsLoggedIn();
 
   const discountPercent = Math.round(100 - (props.price * 100) / props.standard_price);
@@ -81,7 +80,7 @@ const ProductCard = ({ t, ...props }: Props): JSX.Element => {
                   <ProductPrice price={props.list_price} standard_price={props.standard_price} />
                 </div>
 
-                <QuantityInput productId={props.id} price={props.price} name={props.name} />
+                <QuantityInput productId={props.id} price={props.list_price} name={props.name} />
               </>
             ) : (
               <LoginToSeePrice />
