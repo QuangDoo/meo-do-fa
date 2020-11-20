@@ -10,7 +10,7 @@ import Select from '../Form/Select';
 
 type Props = {
   categories: Category[];
-  manufacturers: Manufacturer[];
+  manufacturer: Manufacturer[];
 };
 
 type SortOption = {
@@ -29,7 +29,7 @@ const sortOptions: SortOption[] = [
 ];
 
 const ProductsSidebarFilter = (props: Props) => {
-  const { categories, manufacturers } = props;
+  const { categories, manufacturer } = props;
 
   const router = useRouter();
 
@@ -109,7 +109,7 @@ const ProductsSidebarFilter = (props: Props) => {
           </Link>
         </div>
 
-        {manufacturers.map(({ short_name, id }) => (
+        {manufacturer.map(({ short_name, id }) => (
           <div key={id} className="mb-2">
             <Link href={`/products?manufacturer=${id}`}>
               <a
@@ -122,7 +122,6 @@ const ProductsSidebarFilter = (props: Props) => {
             </Link>
           </div>
         ))}
-
 
         <div>
           <Link href="/manufacturers">

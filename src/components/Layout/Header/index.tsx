@@ -5,6 +5,7 @@ import LanguagePicker from 'src/components/Layout/Header/LanguagePicker';
 import LoginModal from 'src/components/Modules/LoginModal';
 import RegisterModal from 'src/components/Modules/RegisterModal';
 import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
+
 import RightSideUser from './RightSideUser';
 import SearchBar from './SearchBar';
 

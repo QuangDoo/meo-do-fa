@@ -7,11 +7,26 @@ type NotiItem = {
 };
 
 const notiItem: NotiItem[] = [
-  { notiInfo: 'Giá sản phẩm Phosphalugel Boehringer Ingelheim (H/26g) đã được cập nhật giá' , time: '1 ngày trước'},
-  { notiInfo: 'Giá sản phẩm Phosphalugel Boehringer Ingelheim (H/26g) đã được cập nhật giá' , time: '1 ngày trước'},
-  { notiInfo: 'Giá sản phẩm Phosphalugel Boehringer Ingelheim (H/26g) đã được cập nhật giá' , time: '1 ngày trước'},
-  { notiInfo: 'Giá sản phẩm Phosphalugel Boehringer Ingelheim (H/26g) đã được cập nhật giá' , time: '1 ngày trước'},
-  { notiInfo: 'Giá sản phẩm Phosphalugel Boehringer Ingelheim (H/26g) đã được cập nhật giá' , time: '1 ngày trước'},
+  {
+    notiInfo: 'Giá sản phẩm Phosphalugel Boehringer Ingelheim (H/26g) đã được cập nhật giá',
+    time: '1 ngày trước'
+  },
+  {
+    notiInfo: 'Giá sản phẩm Phosphalugel Boehringer Ingelheim (H/26g) đã được cập nhật giá',
+    time: '1 ngày trước'
+  },
+  {
+    notiInfo: 'Giá sản phẩm Phosphalugel Boehringer Ingelheim (H/26g) đã được cập nhật giá',
+    time: '1 ngày trước'
+  },
+  {
+    notiInfo: 'Giá sản phẩm Phosphalugel Boehringer Ingelheim (H/26g) đã được cập nhật giá',
+    time: '1 ngày trước'
+  },
+  {
+    notiInfo: 'Giá sản phẩm Phosphalugel Boehringer Ingelheim (H/26g) đã được cập nhật giá',
+    time: '1 ngày trước'
+  }
 ];
 const RightSideUser = () => {
   const { user } = useUser();

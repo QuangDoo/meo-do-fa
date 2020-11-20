@@ -107,7 +107,7 @@ function Products(): JSX.Element {
       <div className="products container-fluid mobile-content my-3 my-sm-5">
         <div className="row flex-nowrap justify-content-between px-lg-5 px-sm-3">
           <div className="products__sidebar pr-4 d-none d-sm-block">
-            <ProductsSidebarFilter categories={categories} manufacturers={manufacturers} />
+            <ProductsSidebarFilter categories={categories} manufacturer={manufacturers} />
           </div>
 
           <div className="flex-grow-1">
@@ -157,6 +157,7 @@ function Products(): JSX.Element {
           </div>
         </div>
       </div>
+
       <Footer />
     </>
   );

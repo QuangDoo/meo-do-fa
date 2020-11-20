@@ -8,7 +8,7 @@ import {
 
 import { ProductsCarousel } from '../ProductsCarousel';
 import { ProductsContainer } from './ProductsContainer';
-
+//
 export const DealsOfTheDay = (): JSX.Element => {
   const [getFlashSaleProducts, { data }] = useLazyQuery<GetDealsOfTheDayData, GetDealsOfTheDayVars>(
     GET_DEALS_OF_THE_DAY
@@ -27,10 +27,10 @@ export const DealsOfTheDay = (): JSX.Element => {
   return (
     <div>
       {dealsOfTheDayProducts.length !== 0 ? (
-        <ProductsContainer title="Deal trong ngày" deals>
+        <ProductsContainer title="Deal trong ngày" seeMoreUrl="#" deals>
           <ProductsCarousel products={dealsOfTheDayProducts} />
         </ProductsContainer>
-        ) : null}
+      ) : null}
     </div>
   );
 };
