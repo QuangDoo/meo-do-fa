@@ -33,8 +33,7 @@ const CartProvider = withApollo({ ssr: true })(({ children }: Props) => {
     onError: (error) => {
       console.log('Get cart error: ', error);
       toast.error('Get cart error: ' + error);
-    },
-    fetchPolicy: 'network-only'
+    }
   });
 
   useEffect(() => {
