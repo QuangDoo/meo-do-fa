@@ -6,7 +6,7 @@ import Header from '../../components/Layout/Header';
 import Nav from '../../components/Layout/Nav';
 import PageLayout from '../../components/Layout/PageLayout';
 import NewsSidebar from '../../components/Modules/News/NewsSidebar';
-import PostItem from '../../components/Modules/News/PostItem';
+import CardView from '../../components/Layout/Card/CardView';
 
 const News = (): JSX.Element => {
   return (
@@ -22,15 +22,15 @@ const News = (): JSX.Element => {
       <PageLayout>
         <div className="row">
           <div className="col-sm-12 col-lg-9">
-            <div style={{ padding: '0 1rem' }}>
+            <div className="wrapper">
               <div className="row">
-                <PostItem></PostItem>
-                <PostItem></PostItem>
-                <PostItem></PostItem>
-                <PostItem></PostItem>
-                <PostItem></PostItem>
-                <PostItem></PostItem>
-                <PostItem></PostItem>
+                <CardView></CardView>
+                <CardView></CardView>
+                <CardView></CardView>
+                <CardView></CardView>
+                <CardView></CardView>
+                <CardView></CardView>
+                <CardView></CardView>
               </div>
             </div>
           </div>
