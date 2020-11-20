@@ -18871,3 +18871,22 @@ abbr[title] {
   color: rgb(255, 255, 255);
   background-color: rgb(255, 57, 69);
 }
+
+.about-us .row{
+  margin: 55px 0px;
+  display: flex;
+  align-items: center;
+}
+.about-us__img{
+  max-width: 100%;
+  height: auto;
+}
+.about-us__title{
+  color: $primary;
+  font-weight: bold;
+  margin: 10px 0 20px;
+}
+.about-us p{
+  font-size: 1rem;
+  color: $gray-900;
+}

@@ -3,6 +3,7 @@ import React from 'react';
 import ProductDetailInfor from '../ProductDetaiInfor';
 import ProuductDetailImage from './PoruductDetailImage';
 type PropsType = {
+  id: string;
   image_128: string;
   image_256: string;
   image_512: string;

@@ -94,12 +94,11 @@ const CheckoutPage = (): JSX.Element => {
       }
     });
   };
-  if (loadingGetPaymentDelivery) {
+  console.log('loadingGetCounsel', loadingGetCounsel);
+  if (loadingGetPaymentDelivery || loadingGetCounsel) {
     return <h1>LOADING...</h1>;
   }
-  if (loadingGetCounsel) {
-    return <h1>LOADING...</h1>;
-  }
+
   return (
     <form className="checkout__form" onSubmit={handleSubmit(onSubmit)}>
       <div className="checkout container py-5">

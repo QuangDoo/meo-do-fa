@@ -22,7 +22,7 @@ function QuantityInput(props: Props) {
   const { size, productId, price, name, t } = props;
 
   const router = useRouter();
-  console.log('router.pathname', router.pathname);
+
   const { refetchCart } = useCart();
 
   const [quantity, setQuantity] = useState<string>('0');
