@@ -4,19 +4,18 @@ import Footer from '../../components/Layout/Footer';
 import Head from '../../components/Layout/Head';
 import Header from '../../components/Layout/Header';
 import Nav from '../../components/Layout/Nav';
-import Sidebar from '../../components/Modules/FAQ/Sidebar'
-import InputSearch from '../../components/Modules/News/InputSearch'
-import Contact from '../../components/Modules/FAQ/Contact'
-import QuestionDetail from '../../components/Modules/FAQ/QuestionDetail'
+import Contact from '../../components/Modules/FAQ/Contact';
+import QuestionDetail from '../../components/Modules/FAQ/QuestionDetail';
+import Sidebar from '../../components/Modules/FAQ/Sidebar';
+import InputSearch from '../../components/Modules/News/InputSearch';
 
 const HelpDetail = (): JSX.Element => {
-
   const question = {
     id: 1,
-    question: "Hủy đơn hàng và khóa tài khoản Hủy đơn hàng và khóa tài khoản",
-    author: "Tam N Nguyen",
-    postDate: "Jan 21",
-    status: "Đã cập nhật",
+    question: 'Hủy đơn hàng và khóa tài khoản Hủy đơn hàng và khóa tài khoản',
+    author: 'Tam N Nguyen',
+    postDate: 'Jan 21',
+    status: 'Đã cập nhật',
     answer: `
     <p>Hiện nay, thời gian giao hàng dự kiến của thuocsi.vn sẽ tuỳ thuộc vào từng khu vực như sau:</p>
     <p><b>TP Hồ Chí Minh:</b> Trong vòng 36h</p>
@@ -26,7 +25,7 @@ const HelpDetail = (): JSX.Element => {
     <i>*Đây là thời gian giao hàng dự kiến ở các tỉnh thành ngoài TP.HCM. Sau khi xác nhận và nhận được thanh toán, thuocsi sẽ giao hàng cho đơn vị vận chuyển trong 48h.</i>
     <img src="https://i1.sndcdn.com/avatars-xpq4R8nRHWRL7NiZ-pyJFyg-t500x500.jpg" alt="medofa"/>
     `
-  }
+  };
 
   return (
     <>
@@ -40,7 +39,7 @@ const HelpDetail = (): JSX.Element => {
 
       <div className="container help">
         <div className="p-3">
-          <InputSearch placeholder="Search..." keySearch={(x) => console.log(x)}/>
+          <InputSearch placeholder="Search..." keySearch={(x) => console.log(x)} />
         </div>
         <div className="row">
           <div className="col-sm-12 col-md-9 col-lg-9 col-left__divider order-md-2">
@@ -59,14 +58,13 @@ const HelpDetail = (): JSX.Element => {
           <div className="col-sm-12 col-md-3 col-lg-3 order-md-1">
             <div className="wrapper">
               <div className="row">
-                <Sidebar/>
+                <Sidebar />
               </div>
             </div>
           </div>
         </div>
-        
       </div>
-      <Contact/>
+      <Contact />
 
       <Footer />
     </>

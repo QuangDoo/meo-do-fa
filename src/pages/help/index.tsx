@@ -4,10 +4,10 @@ import Footer from '../../components/Layout/Footer';
 import Head from '../../components/Layout/Head';
 import Header from '../../components/Layout/Header';
 import Nav from '../../components/Layout/Nav';
-import Sidebar from '../../components/Modules/FAQ/Sidebar'
-import Questions from '../../components/Modules/FAQ/Questions'
-import InputSearch from '../../components/Modules/News/InputSearch'
-import Contact from '../../components/Modules/FAQ/Contact'
+import Contact from '../../components/Modules/FAQ/Contact';
+import Questions from '../../components/Modules/FAQ/Questions';
+import Sidebar from '../../components/Modules/FAQ/Sidebar';
+import InputSearch from '../../components/Modules/News/InputSearch';
 const Help = (): JSX.Element => {
   return (
     <>
@@ -21,34 +21,29 @@ const Help = (): JSX.Element => {
 
       <div className="container help">
         <div className="p-3">
-          <InputSearch 
-            placeholder="Search..." 
-            keySearch={(x) => console.log(x)}
-          />
+          <InputSearch placeholder="Search..." keySearch={(x) => console.log(x)} />
         </div>
 
         <div className="row">
-          
           <div className="col-sm-12 col-lg-9 col-left__divider order-lg-2">
             <div className="wapper">
-              <h3 className="news__title">{"Câu hỏi thường gặp : "}</h3>
+              <h3 className="news__title">{'Câu hỏi thường gặp : '}</h3>
               <div className="news__divider"></div>
-              <Questions/>
+              <Questions />
             </div>
           </div>
 
           <div className="col-sm-12 col-lg-3 order-lg-1">
             <div className="wrapper">
               <div className="row">
-                <Sidebar/>
+                <Sidebar />
               </div>
             </div>
           </div>
-
         </div>
       </div>
 
-      <Contact/>
+      <Contact />
 
       <Footer />
     </>

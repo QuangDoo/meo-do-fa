@@ -1,12 +1,12 @@
 import React from 'react';
 
+import CardView from '../../components/Layout/Card/CardView';
 import Footer from '../../components/Layout/Footer';
 import Head from '../../components/Layout/Head';
 import Header from '../../components/Layout/Header';
 import Nav from '../../components/Layout/Nav';
 import PageLayout from '../../components/Layout/PageLayout';
 import NewsSidebar from '../../components/Modules/News/NewsSidebar';
-import CardView from '../../components/Layout/Card/CardView';
 
 const News = (): JSX.Element => {
   return (
