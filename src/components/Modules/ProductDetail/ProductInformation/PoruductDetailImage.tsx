@@ -5,25 +5,26 @@ const ProuductDetailImage = (props): JSX.Element => {
     <div className="col-md-4">
       <div className="d-flex justify-content-between mb-2">
         <div className="product__thumbnails scrollbar-on-hover pr-1 mr-3">
-          <div className="d-flex flex-column">
+          {/* <div className="d-flex flex-column">
             <img
               className="img-fluid product__thumbnail lozad selected"
               src={
                 props.imageUrl
                   ? `data:image/jpeg;base64,${props.imageUrl}`
-                  : 'assets/images/no-image'
+                  : 'https://static.tinnhanhchungkhoan.vn/2020/mobile/styles/img/no-img.png'
               }
               alt=""
             />
-          </div>
+          </div> */}
         </div>
         <div className="flex-grow-1">
           <div
             className="lozad product__image"
             style={{
-              backgroundImage: props.imageUrl
-                ? `url(data:image/jpeg;base64,${props.imageUrl})`
-                : `url('assets/images/no-image')`
+              backgroundImage:
+                props.imageUrl !== 'false'
+                  ? `url(data:image/jpeg;base64,${props.imageUrl})`
+                  : `url('/assets/images/no-image.jpg')`
             }}
           />
         </div>

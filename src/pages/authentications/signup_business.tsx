@@ -6,9 +6,7 @@ import Head from 'src/components/Layout/Head';
 import PageLayout from 'src/components/Layout/PageLayout';
 import SelectWithLabel from 'src/components/Modules/Checkout/SelectWithLabel';
 import { useCities } from 'src/contexts/Cities';
-import { City } from 'src/graphql/address/city.query';
-import { GET_DISTRICT } from 'src/graphql/address/district.query';
-import { GET_WARD } from 'src/graphql/address/ward.query';
+import { City, GET_DISTRICT, GET_WARD, GET_WARD_DETAIL } from 'src/graphql/address/city.query';
 import { UPDATE_USER } from 'src/graphql/user/updateUser.mutation';
 import { Status } from 'src/types/Status';
 import withApollo from 'src/utils/withApollo';
@@ -44,10 +42,10 @@ function SignupBusiness(): JSX.Element {
 
   const { data: dataCity } = useCities();
 
-  const { data: dataDistrict, error: errorDistrict, refetch: refetchDistrict } = useQuery(
-    GET_DISTRICT
-  );
-  const { data: dataWard, error: errorWard, refetch: refetchWard } = useQuery(GET_WARD);
+  // const { data: dataDistrict, error: errorDistrict, refetch: refetchDistrict } = useQuery(
+  //   GET_DISTRICT
+  // );
+  // const { data: dataWard, error: errorWard, refetch: refetchWard } = useQuery(GET_WARD);
 
   const handleChange = async (e) => {
     setFileName(e.target.files[0].name);
@@ -73,44 +71,21 @@ function SignupBusiness(): JSX.Element {
   };
   const { register, handleSubmit, watch } = useForm();
 
-  const cityValue = watch('cityId');
-  const districtValue = watch('districtId');
+  const city_id = Number(watch('cityId'));
+  const district_id = Number(watch('districtId'));
+  const ward_id = Number(watch('wardId'));
 
-  useEffect(() => {
-    if (!cityValue) return;
-    refetchDistrict({ city_code: cityValue });
-  }, [cityValue, refetchDistrict]);
+  const { data: dataDistrict, error: errorDistrict } = useQuery(GET_DISTRICT, {
+    variables: { city_id }
+  });
 
-  useEffect(() => {
-    if (!districtValue) return;
+  const { data: dataWards } = useQuery(GET_WARD, {
+    variables: { district_id }
+  });
 
-    refetchWard({ city_code: cityValue, district_code: districtValue });
-  }, [districtValue, refetchWard]);
-
-  useEffect(() => {
-    if (dataCity) {
-      dataCity.map((city) => {
-        setDataAddress({ ...dataAddress, city: city.name });
-      });
-    }
-
-    if (dataWard) {
-      dataWard.getWard.filter((ward) => {
-        if (ward.district_code === districtValue && ward.city_code === cityValue) {
-          setDataAddress({ ...dataAddress, ward: ward.ward });
-        }
-      });
-    }
-  }, [dataCity, dataWard]);
-  useEffect(() => {
-    if (dataDistrict) {
-      dataDistrict.getDistrict.filter((district) => {
-        if (district.district_code === districtValue) {
-          setDataAddress({ ...dataAddress, district: district.district });
-        }
-      });
-    }
-  }, [dataDistrict]);
+  const { data: dataward } = useQuery(GET_WARD_DETAIL, {
+    variables: { ward_id }
+  });
 
   const onSubmit = (data) => {
     updateUser({
@@ -119,10 +94,10 @@ function SignupBusiness(): JSX.Element {
         representative: data.user.businesses_attributes[0].representative,
         vat: data.user.businesses_attributes[0].tax_number,
         street: data.user.businesses_attributes[0].address,
-        city: dataAddress.city,
-        district: dataAddress.district,
-        ward: dataAddress.ward
-        // business_license: fileBase64.substr(22)
+        city: dataward.getWard.city.name,
+        district: dataward.getWard.district.name,
+        ward: dataward.getWard.ward.name,
+        business_license: fileBase64.substr(22)
       }
     });
   };
@@ -283,7 +258,7 @@ function SignupBusiness(): JSX.Element {
 
                         {/* Map cities from api */}
                         {dataCity.map((city: City) => (
-                          <option key={city.id} value={city.code}>
+                          <option key={city.id} value={city.id}>
                             {city.name}
                           </option>
                         ))}
@@ -301,9 +276,9 @@ function SignupBusiness(): JSX.Element {
                         <option value="">Chọn quận/huyện...</option>
 
                         {/* Map districts from chosen city */}
-                        {dataDistrict?.getDistrict.map((district) => (
-                          <option key={district.id} value={district.district_code}>
-                            {district.district}
+                        {dataDistrict?.getDistricts.map((district) => (
+                          <option key={district.id} value={district.id}>
+                            {district.name}
                           </option>
                         ))}
                       </SelectWithLabel>
@@ -320,9 +295,9 @@ function SignupBusiness(): JSX.Element {
                         <option value="">Chọn phường/xã...</option>
 
                         {/* Map wards from chosen district */}
-                        {dataWard?.getWard.map((ward) => (
+                        {dataWards?.getWards.map((ward) => (
                           <option key={ward.id} value={ward.id}>
-                            {ward.ward}
+                            {ward.name}
                           </option>
                         ))}
                       </SelectWithLabel>
