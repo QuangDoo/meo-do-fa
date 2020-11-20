@@ -72,6 +72,8 @@ function Products(): JSX.Element {
 
   const manufacturers = manufacturersData?.getManufactories || [];
 
+  console.log('Products data:', productsData);
+
   // Refetch products when page changes
   useEffect(() => {
     if (!router.query) return;
