@@ -131,7 +131,7 @@ function Cart(): JSX.Element {
                       </div> */}
                     </div>
                   </div>
-                  <div className="col-12 cart__info-promo">
+                  {/* <div className="col-12 cart__info-promo">
                     <div className="cart__info-item d-flex justify-content-between align-items-center">
                       <i className="fas fa-tags mr-3" />
 
@@ -142,8 +142,8 @@ function Cart(): JSX.Element {
                       </a>
 
                       {/* <i className="fas fa-trash cart-item__remove" /> */}
-                    </div>
-                  </div>
+                  {/* </div> */}
+                  {/* </div> */}
                   <div className="col-12">
                     <div className="cart__info-item">
                       <a
