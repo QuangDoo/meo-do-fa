@@ -50,7 +50,7 @@ const ProductDetailInfor = (props: PropsType): JSX.Element => {
                 <div>
                   <div className="product__price-group">
                     <span className="product__price">
-                      {props.list_price}
+                      {props.list_price?.toLocaleString('de-DE')}
                       <span className="unit">đ</span>
                     </span>
                   </div>
