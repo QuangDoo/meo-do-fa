@@ -55,14 +55,8 @@ export const GET_PRODUCT = gql`
       display_name
       price
       list_price
-      lst_price
       standard_price
-
       active
-      color
-      product_tmpl_id
-      volume
-      weight
       pricelist_item_count
       description
       description_purchase
@@ -101,11 +95,9 @@ export const GET_PRODUCT = gql`
       }
       ingredients {
         id
-        display_name
-        indication
-        info
         name
-        slug
+        display_name
+        amount
       }
       manufacturer {
         id
@@ -115,11 +107,10 @@ export const GET_PRODUCT = gql`
         short_name
         slug
         top_rated
-        product_ids
+
         create_date
       }
-      ingredient_ids
-      manufacturer_id
+
       badges
     }
   }

@@ -1,7 +1,7 @@
 import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { withApollo } from 'next-apollo';
-
+// https://graphql.medofa.bedigital.vn/graphql/
 const httpLink = createHttpLink({
   uri: 'https://192.168.1.12:3901/graphql/'
 });

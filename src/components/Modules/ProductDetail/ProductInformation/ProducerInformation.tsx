@@ -6,6 +6,7 @@ import Tab from './Tab';
 type Display_name = {
   name: string;
   id: number;
+  amount: string;
 };
 
 type PropsType = {
@@ -67,7 +68,7 @@ const ProducerInformation = (props: PropsType): JSX.Element => {
                         <a>{item.name}</a>
                       </Link>
                     </td>
-                    <td>262.5mg</td>
+                    <td>{item.amount}</td>
                   </tr>
                 );
               })}

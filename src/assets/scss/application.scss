@@ -18862,6 +18862,15 @@ abbr[title] {
   margin-right: -88px;
   margin-left: -15px;
 }
+.group-button {
+  margin-top: 16px;
+  flex: 1 1 0%;
+  display: flex;
+}
+.btn.btn-add-to-cart {
+  color: rgb(255, 255, 255);
+  background-color: rgb(255, 57, 69);
+}
 
 .about-us .row{
   margin: 55px 0px;
