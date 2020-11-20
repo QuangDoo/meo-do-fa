@@ -1,10 +1,10 @@
 import React from 'react';
-
-import Footer from '../components/Layout/Footer';
-import Head from '../components/Layout/Head';
-import Header from '../components/Layout/Header';
-import Nav from '../components/Layout/Nav';
-import HomePage from '../components/Modules/Home';
+import Footer from 'src/components/Layout/Footer';
+import Head from 'src/components/Layout/Head';
+import Header from 'src/components/Layout/Header';
+import Nav from 'src/components/Layout/Nav';
+import HomePage from 'src/components/Modules/Home';
+import withApollo from 'src/utils/withApollo';
 
 const Home = (): JSX.Element => {
   return (
@@ -28,4 +28,4 @@ Home.getInitialProps = async () => ({
   namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge']
 });
 
-export default Home;
+export default withApollo({ ssr: true })(Home);

@@ -50,17 +50,6 @@ export default function Tab(props) {
   return (
     <div className="col-12 col-sm-9 product__details">
       <Tabs>
-<<<<<<< HEAD
-        <TabContent label="Thông tin chung">{props.info}</TabContent>
-        <TabContent label="Chỉ định">{props.indication}</TabContent>
-        <TabContent label="Liều lượng - Cách dùng">{props.contraindication}</TabContent>
-        <TabContent label="Chống chỉ định">{props.direction}</TabContent>
-        <TabContent label="Tương tác thuốc">{props.interaction}</TabContent>
-        <TabContent label="Bảo quản">{props.preservation}</TabContent>
-        <TabContent label="Quá liều">{props.overdose}</TabContent>
-        <TabContent label="Dược lực học">{props.pharmacodynamics}</TabContent>
-        <TabContent label="Dược động học">{props.pharmacokinetics}</TabContent>
-=======
         <TabContent label="Thông tin chung">
           {props.info !== 'false' ? props.info : 'Đang cập nhật'}
         </TabContent>
@@ -88,7 +77,6 @@ export default function Tab(props) {
         <TabContent label="Dược động học">
           {props.pharmacokinetics !== 'false' ? props.pharmacokinetics : 'Đang cập nhật'}
         </TabContent>
->>>>>>> 005d30fbb3eff6bd7548e60586fab1e977a27499
       </Tabs>
     </div>
   );

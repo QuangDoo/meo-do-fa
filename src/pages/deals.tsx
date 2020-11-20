@@ -2,15 +2,15 @@ import { useQuery } from '@apollo/react-hooks';
 import { withTranslation } from 'i18n';
 import { useRouter } from 'next/router';
 import React from 'react';
+import Footer from 'src/components/Layout/Footer';
+import Head from 'src/components/Layout/Head';
+import Header from 'src/components/Layout/Header';
+import Nav from 'src/components/Layout/Nav';
 import Pagination from 'src/components/Modules/Pagination';
 import ProductCard from 'src/components/Modules/ProductCard';
 import { GET_PRODUCTS } from 'src/graphql/product/product.query';
 import { GetProductsData, GetProductsVars } from 'src/types/GetProducts';
-
-import Footer from '../components/Layout/Footer';
-import Head from '../components/Layout/Head';
-import Header from '../components/Layout/Header';
-import Nav from '../components/Layout/Nav';
+import withApollo from 'src/utils/withApollo';
 
 const pageSize = 20;
 
@@ -95,4 +95,6 @@ Deal.getInitialProps = async () => ({
   namespacesRequired: ['common']
 });
 
-export default withTranslation('common')(Deal);
+const TranslatedPage = withTranslation(['common'])(Deal);
+
+export default withApollo({ ssr: true })(TranslatedPage);

@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
+import RadioInput from 'src/components/Form/Radio';
 
-import RadioInput from '../../../Form/Radio';
 import InputCard from '../InputCard';
 import FastDeliveryLabel from './FastDeliveryLabel';
 import FastDeliveryRules from './FastDeliveryRules';
@@ -16,11 +16,11 @@ const DeliveryOption = (props, ref): JSX.Element => {
         options={[
           {
             label: 'Giao hàng tiêu chuẩn',
-            value: 'standard'
+            value: props.deliveryMethods[0].id
           },
           {
             label: <FastDeliveryLabel />,
-            value: 'fast',
+            value: 0,
             children: <FastDeliveryRules />,
             disabled: true // Disable fast delivery or not
           }

@@ -1,13 +1,27 @@
+import { useQuery } from '@apollo/react-hooks';
 import React from 'react';
+import {
+  GET_RELATED_PRODUCTS,
+  GetRelatedProductsData,
+  GetRelatedProductsVars
+} from 'src/graphql/product/getRelatedProducts';
 
-import { mockProducts } from '../../../mockData/mockProducts';
 import { ProductsContainer } from '../Home/ProductsContainer';
 import { ProductsCarousel } from '../ProductsCarousel';
 
 const RelativeProducts = (): JSX.Element => {
+  const { data } = useQuery<GetRelatedProductsData, GetRelatedProductsVars>(GET_RELATED_PRODUCTS, {
+    variables: {
+      page: 1,
+      pageSize: 10
+    }
+  });
+
+  const relatedProducts = data?.getProductByConditions.Products || [];
+
   return (
     <ProductsContainer title="Có thể bạn muốn mua " seeMoreUrl="#">
-      <ProductsCarousel products={mockProducts} />
+      <ProductsCarousel products={relatedProducts} />
     </ProductsContainer>
   );
 };

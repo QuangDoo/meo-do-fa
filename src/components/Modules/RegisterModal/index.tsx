@@ -1,10 +1,10 @@
 import { withTranslation } from 'i18n';
 import { TFunction } from 'next-i18next';
 import React from 'react';
+import Button from 'src/components/Form/Button';
+import ModalWithHeader from 'src/components/Layout/Modal/ModalWithHeader';
+import { useModalControlDispatch, useModalControlState } from 'src/contexts/ModalControl';
 
-import { useModalControlDispatch, useModalControlState } from '../../../contexts/ModalControl';
-import Button from '../../Form/Button';
-import ModalWithHeader from '../../Layout/Modal/ModalWithHeader';
 import RegisterForm from './RegisterForm';
 
 type RegisterModalProps = {

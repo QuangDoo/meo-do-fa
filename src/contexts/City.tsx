@@ -1,44 +1,37 @@
-import { ApolloError } from '@apollo/client';
 import { useQuery } from '@apollo/react-hooks';
-import React, { createContext, useContext, useEffect } from 'react';
-import { GET_CITY } from 'src/graphql/address/city.query';
+import React, { createContext, useContext } from 'react';
+import { toast } from 'react-toastify';
+import { City, GET_CITIES, GetCitiesData } from 'src/graphql/address/city.query';
 import withApollo from 'src/utils/withApollo';
 
 type Props = {
   children: React.ReactNode;
 };
 
-type GetCities = {
-  getCities: string[];
-};
-
 type ContextValue = {
-  data: [];
-
+  data: City[];
   loading: boolean;
-  error: ApolloError;
 };
 
 const CityContext = createContext<ContextValue>(null);
 CityContext.displayName = 'CityContext';
 
 const CityProvider = withApollo({ ssr: true })(({ children }: Props) => {
-  const { data, loading, error } = useQuery(GET_CITY);
+  const { data, loading } = useQuery<GetCitiesData, undefined>(GET_CITIES, {
+    onError: (error) => {
+      console.log('Get cities error:', error);
 
-  useEffect(() => {
-    if (!error) return;
+      toast.error('Get cities error: ' + error);
+    }
+  });
 
-    console.log('GET CATEGORIES ERROR:', error);
-  }, [error]);
-
-  const city = data?.getCities || [];
+  const cities = data?.getCities || [];
 
   return (
     <CityContext.Provider
       value={{
-        data: city,
-        loading,
-        error
+        data: cities,
+        loading
       }}>
       {children}
     </CityContext.Provider>

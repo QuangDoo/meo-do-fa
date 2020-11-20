@@ -2,7 +2,7 @@ import { useMutation } from '@apollo/react-hooks';
 import { Trans, withTranslation } from 'i18n';
 import { WithTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { emailRegex } from 'src/assets/regex/email';
@@ -63,7 +63,7 @@ const RegisterForm = (props: WithTranslation): JSX.Element => {
     },
     onError: (error) => {
       console.log('Create user error:', { error });
-      toast.error('Error: ' + error.message);
+      toast.error(t(`errors:code_${error.graphQLErrors[0].extensions.code}`));
     }
   });
 
@@ -238,7 +238,8 @@ const RegisterForm = (props: WithTranslation): JSX.Element => {
           <Trans
             i18nKey="register:go_to_login"
             components={{
-              button: <button type="button" className="text-secondary" onClick={openLoginModal} />
+              button: <button type="button" className="text-primary" onClick={openLoginModal} />,
+              b: <b />
             }}
           />
         </div>
@@ -251,6 +252,6 @@ const RegisterForm = (props: WithTranslation): JSX.Element => {
   );
 };
 
-const Translated = withTranslation('register')(RegisterForm);
+const Translated = withTranslation(['register', 'errors'])(RegisterForm);
 
 export default withApollo({ ssr: true })(Translated);

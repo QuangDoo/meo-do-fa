@@ -2,7 +2,7 @@ import { ApolloError } from '@apollo/client';
 import { useQuery } from '@apollo/react-hooks';
 import React, { createContext, useContext, useEffect } from 'react';
 import { GET_MANUFACTURERS } from 'src/graphql/manufactures/manufacturers.query';
-import { Manufacturers } from 'src/types/Manufacturers';
+import { Manufacturer } from 'src/types/Manufacturer';
 import withApollo from 'src/utils/withApollo';
 
 type Props = {
@@ -10,11 +10,11 @@ type Props = {
 };
 
 type GetManufacturersData = {
-    getManufactoriesAll: Manufacturers[];
+    getManufactoriesAll: Manufacturer[];
 };
 
 type ContextValue = {
-  data: Manufacturers[];
+  data: Manufacturer[];
  
   loading: boolean;
   error: ApolloError;

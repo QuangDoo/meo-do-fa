@@ -3,14 +3,14 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { Category } from 'src/types/Category';
-import { Manufacturers } from 'src/types/Manufacturers';
+import { Manufacturer } from 'src/types/Manufacturer';
 
 import Dropdown from '../Form/Dropdown';
 import Select from '../Form/Select';
 
 type Props = {
   categories: Category[];
-  manufacturers: Manufacturers[];
+  manufacturers: Manufacturer[];
 };
 
 type SortOption = {
@@ -81,7 +81,7 @@ const ProductsSidebarFilter = (props: Props) => {
           </Link>
         </div>
 
-        {manufacturers.map(({ name, id }) => (
+        {categories.map(({ name, id }) => (
           <div key={id} className="mb-2">
             <Link href={`/products?category=${id}`}>
               <a
@@ -109,7 +109,7 @@ const ProductsSidebarFilter = (props: Props) => {
           </Link>
         </div>
 
-        {/* {manufacturers.map(({ name, id }) => (
+        {manufacturers.map(({ short_name, id }) => (
           <div key={id} className="mb-2">
             <Link href={`/products?manufacturer=${id}`}>
               <a
@@ -117,24 +117,12 @@ const ProductsSidebarFilter = (props: Props) => {
                   'products__filter-category',
                   router.query.manufacturer === id && 'active'
                 )}>
-                {name}
-              </a>
-            </Link>
-          </div>
-        ))} */}
-        {categories.map(({ name, id }) => (
-          <div key={id} className="mb-2">
-            <Link href={`/products?category=${id}`}>
-              <a
-                className={clsx(
-                  'products__filter-category',
-                  router.query.category === id && 'active'
-                )}>
-                {name}
+                {short_name}
               </a>
             </Link>
           </div>
         ))}
+
 
         <div>
           <Link href="/manufacturers">

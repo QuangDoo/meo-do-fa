@@ -6,9 +6,7 @@ import App from 'next/app';
 import React, { useEffect } from 'react';
 import ToastContainer from 'src/components/Layout/ToastContainer';
 import { CartProvider } from 'src/contexts/Cart';
-import { ManufacturersProvider } from 'src/contexts/Manufacturers';
-
-import { CityProvider } from 'src/contexts/City';
+import { CitiesProvider } from 'src/contexts/Cities';
 import { ModalControlProvider } from 'src/contexts/ModalControl';
 import { UserProvider } from 'src/contexts/User';
 import { theme } from 'src/theme';
@@ -25,18 +23,15 @@ const MyApp = ({ Component, pageProps }) => {
   return (
     <ThemeProvider theme={theme}>
       <UserProvider>
-        <ManufacturersProvider>
-          <CartProvider>
-            <CityProvider>
-              <ModalControlProvider>
-                <Component {...pageProps} />
+        <CartProvider>
+          <CitiesProvider>
+            <ModalControlProvider>
+              <Component {...pageProps} />
 
-                <ToastContainer />
-              </ModalControlProvider>
-            </CityProvider>
-          </CartProvider>
-        </ManufacturersProvider>
-        
+              <ToastContainer />
+            </ModalControlProvider>
+          </CitiesProvider>
+        </CartProvider>
       </UserProvider>
     </ThemeProvider>
   );

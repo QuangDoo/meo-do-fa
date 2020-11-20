@@ -3,7 +3,6 @@ import { withTranslation } from 'i18n';
 import { WithTranslation } from 'next-i18next';
 import Link from 'next/link';
 import React from 'react';
-import { OrderProvider } from 'src/contexts/Order';
 import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
 import { Product } from 'src/types/Product';
 
@@ -21,7 +20,8 @@ const ProductCard = ({ t, ...props }: Props): JSX.Element => {
 
   const discountPercent = Math.round(100 - (props.price * 100) / props.standard_price);
 
-  const isDiscount = discountPercent > 0;
+  // const isDiscount = discountPercent > 0;
+  const isDiscount = false;
 
   return (
     <div className="product-card-container">
@@ -77,19 +77,10 @@ const ProductCard = ({ t, ...props }: Props): JSX.Element => {
             {isLoggedIn ? (
               <>
                 <div className="mb-2">
-                  <ProductPrice
-                    price={props.price}
-                    standard_price={isDiscount && props.standard_price}
-                  />
+                  <ProductPrice price={props.price} standard_price={props.standard_price} />
                 </div>
-                <OrderProvider>
-                  <QuantityInput
-                    quantity={0}
-                    productId={props.id}
-                    price={props.price}
-                    name={props.name}
-                  />
-                </OrderProvider>
+
+                <QuantityInput productId={props.id} price={props.price} name={props.name} />
               </>
             ) : (
               <LoginToSeePrice />

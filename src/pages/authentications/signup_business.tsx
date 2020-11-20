@@ -2,22 +2,16 @@ import { useMutation, useQuery } from '@apollo/react-hooks';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import Head from 'src/components/Layout/Head';
+import PageLayout from 'src/components/Layout/PageLayout';
 import SelectWithLabel from 'src/components/Modules/Checkout/SelectWithLabel';
-import { useCities } from 'src/contexts/City';
+import { useCities } from 'src/contexts/Cities';
+import { City } from 'src/graphql/address/city.query';
 import { GET_DISTRICT } from 'src/graphql/address/district.query';
 import { GET_WARD } from 'src/graphql/address/ward.query';
 import { UPDATE_USER } from 'src/graphql/user/updateUser.mutation';
 import { Status } from 'src/types/Status';
 import withApollo from 'src/utils/withApollo';
-
-import Head from '../../components/Layout/Head';
-import PageLayout from '../../components/Layout/PageLayout';
-
-type City = {
-  id: string;
-  city_code: string;
-  city: string;
-};
 
 type DataAddress = {
   city: string;
@@ -95,9 +89,8 @@ function SignupBusiness(): JSX.Element {
 
   useEffect(() => {
     if (dataCity) {
-      dataCity.map((city: { city: string }) => {
-        setDataAddress({ ...dataAddress, city: city.city });
-        // console.log('city state', city.city);
+      dataCity.map((city) => {
+        setDataAddress({ ...dataAddress, city: city.name });
       });
     }
 
@@ -175,7 +168,7 @@ function SignupBusiness(): JSX.Element {
           onSubmit={handleSubmit(onSubmit)}>
           <input type="hidden" name="_method" defaultValue="put" />
           <input type="hidden" name="authenticity_token" />
-          <div className="container signup-business py-3 py-sm-5" >
+          <div className="container signup-business py-3 py-sm-5">
             <div className="row justify-content-center">
               <div className="col-12 col-sm-9 mb-3">
                 <div className="row">
@@ -188,15 +181,12 @@ function SignupBusiness(): JSX.Element {
                   </div>
                   <div className="col-12">
                     <div className="row">
-                    {/* {accountTypes.map((accountType) => ( */}
-
                       <div className="col-md-4 form-group">
                         <label htmlFor="ban" className="form__label">
                           Bạn là
                         </label>
-                        <div className="form-control d-block w-100" >{userData.getUser.account_type}</div>
+                        <div className="form-control d-block w-100">Người tiêu dùng</div>
                       </div>
-                      {/* ))} */}
                       <div className="col-md-8 form-group">
                         <label className="form__label" htmlFor="user_businesses_attributes_0_name">
                           Tên nhà thuốc/phòng khám
@@ -205,8 +195,7 @@ function SignupBusiness(): JSX.Element {
                           className="form-control"
                           aria-describedby="businessNameHelpBlock"
                           type="text"
-                          name="display_name"
-                          defaultValue={userData.getUser.display_name}
+                          name="user[businesses_attributes][0][name]"
                           ref={register}
                         />
                         <small className="form-text text-muted">Vd: Dược Hoàng Vũ</small>
@@ -222,7 +211,7 @@ function SignupBusiness(): JSX.Element {
                         className="form-control"
                         aria-describedby="representativeHelpBlock"
                         type="text"
-                        name="representative"
+                        name="user[businesses_attributes][0][representative]"
                         ref={register}
                       />
                       <small className="form-text text-muted">Vd. Trần Thị B</small>
@@ -240,7 +229,7 @@ function SignupBusiness(): JSX.Element {
                         aria-describedby="taxNumberHelpBlock"
                         size={14}
                         type="text"
-                        name="vat"
+                        name="user[businesses_attributes][0][tax_number]"
                         ref={register}
                       />
                       <small className="form-text text-muted">Vd. 8026906145</small>
@@ -253,7 +242,7 @@ function SignupBusiness(): JSX.Element {
                         <input
                           className="custom-file-input"
                           type="file"
-                          name="business_license"
+                          name="user[businesses_attributes][0][license_file]"
                           onChange={(event) => handleChange(event)}
                           ref={register}
                         />
@@ -273,7 +262,7 @@ function SignupBusiness(): JSX.Element {
                         aria-describedby="addressHelpBlock"
                         required
                         type="text"
-                        name="contact_address"
+                        name="user[businesses_attributes][0][address]"
                         ref={register}
                       />
                       <small className="form-text text-muted">
@@ -281,7 +270,7 @@ function SignupBusiness(): JSX.Element {
                       </small>
                     </div>
                     <div className="row">
-                      {/* Select city */}
+                      {/ Select city /}
                       <SelectWithLabel
                         name="cityId"
                         ref={register({
@@ -292,15 +281,15 @@ function SignupBusiness(): JSX.Element {
                         required>
                         <option value="">Chọn tỉnh/thành phố...</option>
 
-                        {/* Map cities from api */}
+                        {/ Map cities from api /}
                         {dataCity.map((city: City) => (
-                          <option key={city.id} value={city.city_code}>
-                            {city.city}
+                          <option key={city.id} value={city.code}>
+                            {city.name}
                           </option>
                         ))}
                       </SelectWithLabel>
 
-                      {/* Select district */}
+                      {/ Select district /}
                       <SelectWithLabel
                         name="districtId"
                         ref={register({
@@ -311,7 +300,7 @@ function SignupBusiness(): JSX.Element {
                         containerClass="col-md-4">
                         <option value="">Chọn quận/huyện...</option>
 
-                        {/* Map districts from chosen city */}
+                        {/ Map districts from chosen city /}
                         {dataDistrict?.getDistrict.map((district) => (
                           <option key={district.id} value={district.district_code}>
                             {district.district}
@@ -319,7 +308,7 @@ function SignupBusiness(): JSX.Element {
                         ))}
                       </SelectWithLabel>
 
-                      {/* Select ward */}
+                      {/ Select ward /}
                       <SelectWithLabel
                         name="wardId"
                         ref={register({
@@ -330,7 +319,7 @@ function SignupBusiness(): JSX.Element {
                         containerClass="col-md-4">
                         <option value="">Chọn phường/xã...</option>
 
-                        {/* Map wards from chosen district */}
+                        {/ Map wards from chosen district /}
                         {dataWard?.getWard.map((ward) => (
                           <option key={ward.id} value={ward.id}>
                             {ward.ward}
