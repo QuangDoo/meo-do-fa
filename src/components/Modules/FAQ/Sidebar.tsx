@@ -7,27 +7,27 @@ function Sidebar(props): JSX.Element {
       <div className="news__divider"></div>
       <div className="list-unstyled">
         <li className="pb-2">
-          <a href="/faq" className="faq-link">
+          <a href="/help" className="faq-link">
             Câu hỏi về tài khoản
           </a>
         </li>
         <li className="pb-2">
-          <a href="/faq" className="faq-link">
+          <a href="/help" className="faq-link">
             Câu hỏi về đơn hàng và đặt hàng
           </a>
         </li>
         <li className="pb-2">
-          <a href="/faq" className="faq-link">
+          <a href="/help" className="faq-link">
             Câu hỏi về thanh toán
           </a>
         </li>
         <li className="pb-2">
-          <a href="/faq" className="faq-link">
+          <a href="/help" className="faq-link">
             Câu hỏi về vận chuyển
           </a>
         </li>
         <li className="pb-2">
-          <a href="/faq" className="faq-link">
+          <a href="/help" className="faq-link">
             Câu hỏi về đổi trả và hoàn tiền
           </a>
         </li>

@@ -26,7 +26,7 @@ const Header = ({ t }: HeaderProps): JSX.Element => {
                 <li className="promotion-nav__item">
                   <a
                     className="promotion-nav__link"
-                    href="https://news.medofa.vn/"
+                    href="/news"
                     title={t('header:news')}>
                     <i className="promotion-nav__icon icomoon icon-news" />
                     <span>{t('header:news')}</span>
