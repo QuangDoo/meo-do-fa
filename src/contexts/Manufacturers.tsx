@@ -10,12 +10,12 @@ type Props = {
 };
 
 type GetManufacturersData = {
-    getManufactoriesAll: Manufacturer[];
+  getManufactoriesAll: Manufacturer[];
 };
 
 type ContextValue = {
   data: Manufacturer[];
- 
+
   loading: boolean;
   error: ApolloError;
 };
@@ -28,7 +28,6 @@ const ManufacturersProvider = withApollo({ ssr: true })(({ children }: Props) =>
 
   useEffect(() => {
     if (!error) return;
-
   }, [error]);
 
   const manufacturers = data?.getManufactoriesAll || [];
@@ -37,7 +36,7 @@ const ManufacturersProvider = withApollo({ ssr: true })(({ children }: Props) =>
     <ManufacturersContext.Provider
       value={{
         data: manufacturers,
-       
+
         loading,
         error
       }}>

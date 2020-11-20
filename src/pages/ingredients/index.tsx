@@ -7,7 +7,8 @@ import Header from 'src/components/Layout/Header';
 import Nav from 'src/components/Layout/Nav';
 import SearchScreen from 'src/components/Modules/SearchScreen';
 import {
-  GET_ALL_INGREDIENTS, GetAllIngredientsData, 
+  GET_ALL_INGREDIENTS,
+  GetAllIngredientsData
 } from 'src/graphql/ingredient/ingredient.query';
 import withApollo from 'src/utils/withApollo';
 

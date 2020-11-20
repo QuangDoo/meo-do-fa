@@ -37,7 +37,6 @@ const accountTypes = ['PHARMACY', 'CLINIC', 'DRUGSTORE'];
 const initialAccountType = '';
 
 const RegisterForm = (props: WithTranslation): JSX.Element => {
-
   const { t } = props;
   const router = useRouter();
 
