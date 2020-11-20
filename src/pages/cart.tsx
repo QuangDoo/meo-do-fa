@@ -1,38 +1,37 @@
-import { useMutation, useQuery } from '@apollo/react-hooks';
-import React from 'react';
+import { useMutation } from '@apollo/react-hooks';
+import React, { useEffect } from 'react';
 import { toast } from 'react-toastify';
+import Footer from 'src/components/Layout/Footer';
+import Head from 'src/components/Layout/Head';
+import Header from 'src/components/Layout/Header';
+import Nav from 'src/components/Layout/Nav';
+import CartItem from 'src/components/Modules/Cart/CartItem';
+import { useCart } from 'src/contexts/Cart';
 import { CREATE_COUNSEL } from 'src/graphql/order/order.mutation';
-import { GET_CART, GetCartData } from 'src/graphql/order/order.query';
 import withApollo from 'src/utils/withApollo';
 
-import Footer from '../components/Layout/Footer';
-import Head from '../components/Layout/Head';
-import Header from '../components/Layout/Header';
-import Nav from '../components/Layout/Nav';
-import CartItem from '../components/Modules/Cart/CartItem';
-
 function Cart(): JSX.Element {
-  const [
-    createCounsel,
-    { data: dataCreateCounsel, loading: loadingCreateCounsel, error: errorCreateCounsel }
-  ] = useMutation(CREATE_COUNSEL);
-  const { data: dataListCart, refetch } = useQuery<GetCartData, undefined>(GET_CART, {
+  const { carts, totalQty, totalPrice, refetchCart } = useCart();
+
+  useEffect(() => {
+    refetchCart();
+  }, [refetchCart]);
+
+  const [createCounsel] = useMutation(CREATE_COUNSEL, {
     onError: (error) => {
-      console.log('Get cart error: ', error);
-      toast.error('Get cart error: ' + error);
+      console.log('Create counsel error:', { error });
+      toast.error('Create counsel error: ' + error);
     }
   });
-  console.log('data', dataListCart);
+
   const handleCheckoutClick = () => {
-    const listCartIds = [];
-    dataListCart?.getCart.carts.map((i) => listCartIds.push(i._id));
-    if (listCartIds) {
-      createCounsel({
-        variables: {
-          cardIds: listCartIds
-        }
-      });
-    }
+    if (carts.length === 0) return;
+
+    createCounsel({
+      variables: {
+        cardIds: carts.map((i) => i._id)
+      }
+    });
   };
 
   return (
@@ -62,7 +61,7 @@ function Cart(): JSX.Element {
                 nhiều cái cũng tính là 1)
               </div> */}
               <div className="elevated cart__items mb-3">
-                {dataListCart?.getCart?.carts.map((item, index) => (
+                {carts.map((item, index) => (
                   <CartItem
                     key={index}
                     _id={item._id}
@@ -73,7 +72,7 @@ function Cart(): JSX.Element {
                     productName={item.productName}
                     quantity={item.quantity}
                     uom_name="Unit"
-                    refetchCart={() => refetch()}
+                    refetchCart={refetchCart}
                   />
                 ))}
               </div>
@@ -114,7 +113,7 @@ function Cart(): JSX.Element {
                         <small>Số lượng</small>
                       </div>
                       <div className="cart__quantity text-secondary">
-                        <b>{dataListCart?.getCart.totalQty}</b>
+                        <b>{totalQty}</b>
                       </div>
                     </div>
                   </div>
@@ -124,7 +123,7 @@ function Cart(): JSX.Element {
                         <small>Tổng tiền</small>
                       </div>
                       <div className="cart__total">
-                        {dataListCart?.getCart.totalPrice} <span className="unit">đ</span>
+                        {totalPrice} <span className="unit">đ</span>
                       </div>
                       {/* <div className="cart__old-total">
                         90‰
@@ -157,7 +156,7 @@ function Cart(): JSX.Element {
                     </div>
                   </div>
                 </div>
-                <a href="/quick-order">&lt;&lt; Tiếp tục đặt hàng</a>
+                <a href="/products">&lt;&lt; Tiếp tục đặt hàng</a>
               </div>
             </div>
           </div>

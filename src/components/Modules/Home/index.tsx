@@ -1,15 +1,14 @@
 import React from 'react';
+import withApollo from 'src/utils/withApollo';
 
 import { BestSelling } from './BestSelling';
-import { Customer } from './Customer';
-import { FlashSale } from './FlashSale';
+import { DealsOfTheDay } from './DealsOfTheDay';
 import { Login } from './Login';
 import { NewProducts } from './NewProducts';
 import { Partner } from './Partner';
 import { Promotion } from './Promotion';
 import { Question } from './Question';
 import { Slider } from './Slider';
-import { Social } from './Social';
 import { Strength } from './Strength';
 
 const Home: React.FC = () => {
@@ -17,9 +16,9 @@ const Home: React.FC = () => {
     <div>
       <Slider />
 
-      <BestSelling />
+      <DealsOfTheDay />
 
-      <FlashSale />
+      <BestSelling />
 
       <NewProducts />
 
@@ -33,11 +32,11 @@ const Home: React.FC = () => {
 
       <Partner />
 
-      <Customer />
+      {/* <Customer /> */}
 
-      <Social />
+      {/* <Social /> */}
     </div>
   );
 };
 
-export default Home;
+export default withApollo({ ssr: true })(Home);

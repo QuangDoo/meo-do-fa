@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import React from 'react';
 
 type ProductPriceProps = {
-  price?: number;
+  price: number;
   standard_price?: number;
 };
 
@@ -12,16 +12,16 @@ export const ProductPrice = (props: ProductPriceProps) => {
   return (
     <>
       <span className={clsx('product-card__price', priceIsDifferent && 'mr-1')}>
-        {props.price?.toLocaleString('de-DE')}
+        {props.price.toLocaleString('de-DE')}
         <span className="unit">đ</span>
       </span>
 
-      {priceIsDifferent && (
+      {/* {priceIsDifferent && (
         <span className="product-card__old-price">
-          {/* {props.standard_price.toLocaleString('de-DE')} */}
+          {props.standard_price.toLocaleString('de-DE')}
           <span className="unit">đ</span>
         </span>
-      )}
+      )} */}
     </>
   );
 };

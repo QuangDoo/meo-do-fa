@@ -4,9 +4,9 @@ import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
 import Nav from 'src/components/Layout/Nav';
-import PageLayout from 'src/components/Layout/PageLayout';
 import ProfileSidebar from 'src/components/Modules/ProfileSidebar';
 import { mockMyOrders } from 'src/mockData/mockMyOrders';
+import withApollo from 'src/utils/withApollo';
 
 const OrderItem = (props) => {
   return (
@@ -53,11 +53,6 @@ const OrderItem = (props) => {
 };
 
 const MyOrders = (props): JSX.Element => {
-  let token = '';
-  if (typeof window !== 'undefined') {
-    token = localStorage.getItem('token');
-    // console.log('Product card data:', props)
-  }
   return (
     <>
       <Head>
@@ -131,4 +126,4 @@ const MyOrders = (props): JSX.Element => {
     </>
   );
 };
-export default MyOrders;
+export default withApollo({ ssr: true })(MyOrders);

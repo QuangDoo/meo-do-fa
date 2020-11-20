@@ -1,0 +1,13 @@
+{
+  "modal_title": "Login",
+  "placeholder_phone": "Phone number",
+  "invalid_phone": "Please provide a valid phone number.",
+
+  "placeholder_password": "Password",
+  "invalid_password": "Please provide a password with minimum 6 characters.",
+
+  "remember_password": "Remember password",
+  "forgot_password": "Forgot password",
+  "login": "Login",
+  "login_for_deals": "<button><b>Register</b></button> to get hot deals."
+}

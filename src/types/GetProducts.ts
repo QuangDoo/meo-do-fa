@@ -10,8 +10,10 @@ export type GetProductsData = {
 export type GetProductsVars = {
   page: number;
   pageSize: number;
-  order_type: string | string[];
-  type?: string | string[];
-  manufacturer_id?: string | string[];
-  category_id?: string | string[];
+  order_type: string;
+  type?: string;
+  manufacturer_id?: string;
+  category_id?: string;
 };
+
+export type ProductFilterType = 'invoice-exportable' | 'new' | 'use-vietnamese' | 'only-medofa';
