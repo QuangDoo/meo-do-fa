@@ -1,12 +1,22 @@
+import { useLazyQuery } from '@apollo/react-hooks';
+import clsx from 'clsx';
 import Link from 'next/link';
-import React from 'react';
+import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
 import Nav from 'src/components/Layout/Nav';
 import ProfileSidebar from 'src/components/Modules/ProfileSidebar';
+import {
+  GET_ORDER_LIST,
+  GetOrderListData,
+  GetOrderListVars
+} from 'src/graphql/my-orders/getOrderList';
 import { mockMyOrders } from 'src/mockData/mockMyOrders';
 import withApollo from 'src/utils/withApollo';
+
+type FilterKey = 'all' | 'waiting_for_confirmation' | 'completed' | 'canceled';
 
 const OrderItem = (props) => {
   return (
@@ -18,32 +28,38 @@ const OrderItem = (props) => {
           </Link>
 
           <span
-            className={
+            className={clsx(
+              'badge py-1 text-capitalize',
               props.status === 'Đã xác nhận'
-                ? 'badge py-1 text-capitalize my-orders__status--confirmed'
-                : 'badge py-1 text-capitalize my-orders__status--shipped'
-            }>
+                ? 'my-orders__status--confirmed'
+                : 'my-orders__status--shipped'
+            )}>
             <a href="/my-orders?status=confirmed">{props.status}</a>
           </span>
         </h2>
+
         <div className="my-orders__detail">
-          <div>
+          {/* <div>
             <span className="title">Sản phẩm:</span>
-            <span className="content">{props.quantity}</span>
-          </div>
+            <span className="content">{props.totalProducts}</span>
+          </div> */}
+
           <div>
             <span className="title">Ngày mua:</span>
-            <span className="content">{props.dayByDay}</span>
+            <span className="content">{props.orderDate}</span>
           </div>
+
           <div>
             <span className="title">Dự kiến giao ngày:</span>
-            <span className="content">{props.duKienGiaoHang}</span>
+            <span className="content">{props.expectedDeliveryDate}</span>
           </div>
         </div>
       </div>
-      <p className="my-orders__price">{props.price.toLocaleString()} đ</p>
+
+      {/* <p className="my-orders__price">{props.totalPrice.toLocaleString()} đ</p> */}
+
       <div className="my-orders__invoice">
-        <button className="btn btn-secondary btn-sm  mr-2" type="button">
+        <button className="btn btn-secondary btn-sm mr-2" type="button">
           Xuất hóa đơn
         </button>
         <button className="btn btn-outline-info btn-sm">Gửi phản hồi</button>
@@ -53,6 +69,35 @@ const OrderItem = (props) => {
 };
 
 const MyOrders = (props): JSX.Element => {
+  const [getOrderList, { data }] = useLazyQuery<GetOrderListData, GetOrderListVars>(
+    GET_ORDER_LIST,
+    {
+      variables: {
+        page: 1,
+        pageSize: 20
+      },
+      onError: (error) => {
+        console.log('Get order list error:', { error });
+        toast.error('Get order list error: ' + error);
+      }
+    }
+  );
+
+  const orderList = data?.getOrderList || [];
+
+  const [filter, setFilter] = useState<FilterKey>('all');
+
+  const filterHeaders: Record<FilterKey, string> = {
+    all: 'Tất cả',
+    waiting_for_confirmation: 'Chờ xác nhận',
+    completed: 'Hoàn tất',
+    canceled: 'Đã hủy'
+  };
+
+  const handleFilterClick = (key: FilterKey) => {
+    setFilter(key);
+  };
+
   return (
     <>
       <Head>
@@ -68,43 +113,25 @@ const MyOrders = (props): JSX.Element => {
           <ProfileSidebar />
 
           <div className="col-xl-9 col-sm-12 my-orders">
-            <div data-controller="my-orders">
+            <div>
               <h1 className="h2 text-center text-primary mb-3">Đơn hàng của tôi</h1>
-              <p className="my-orders__condition" />
-              <p className="text-muted m-0">Xem thông tin xuất hoá đơn đỏ tại đây</p>
+
+              <p className="text-muted m-0">
+                Xem thông tin xuất hoá đơn đỏ <Link href="/invoice-export-rules">tại đây</Link>.
+              </p>
+
               <div className="my-orders__filter mt-3">
-                <div
-                  className="my-orders__header active"
-                  data-action="click->my-orders#show"
-                  data-filter="all"
-                  data-target="my-orders.status">
-                  <Link href="/my-orders">
-                    <a>Tất cả</a>
-                  </Link>
-                </div>
-                <div
-                  className="my-orders__header"
-                  data-action="click->my-orders#show"
-                  data-filter="to_confirm"
-                  data-target="my-orders.status">
-                  <a href="/my-orders?status=to_confirm">Chờ xác nhận</a>
-                </div>
-                <div
-                  className="my-orders__header"
-                  data-action="click->my-orders#show"
-                  data-filter="completed"
-                  data-target="my-orders.status">
-                  <a href="/my-orders?status=completed">Hoàn tất</a>
-                </div>
-                <div
-                  className="my-orders__header"
-                  data-action="click->my-orders#show"
-                  data-filter="canceled"
-                  data-target="my-orders.status">
-                  <a href="/my-orders?status=canceled">Hủy</a>
-                </div>
+                {Object.keys(filterHeaders).map((key: FilterKey) => (
+                  <button
+                    key={key}
+                    className={clsx('my-orders__header', filter === key && 'active')}
+                    onClick={() => handleFilterClick(key)}>
+                    {filterHeaders[key]}
+                  </button>
+                ))}
               </div>
             </div>
+
             {mockMyOrders.map((item, index) => {
               return <OrderItem key={index} {...item} />;
             })}
