@@ -1,7 +1,7 @@
 import { useLazyQuery } from '@apollo/react-hooks';
 import clsx from 'clsx';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
@@ -10,15 +10,15 @@ import Nav from 'src/components/Layout/Nav';
 import ProfileSidebar from 'src/components/Modules/ProfileSidebar';
 import {
   GET_ORDER_LIST,
+  GetOrderList,
   GetOrderListData,
   GetOrderListVars
 } from 'src/graphql/my-orders/getOrderList';
-import { mockMyOrders } from 'src/mockData/mockMyOrders';
 import withApollo from 'src/utils/withApollo';
 
 type FilterKey = 'all' | 'waiting_for_confirmation' | 'completed' | 'canceled';
 
-const OrderItem = (props) => {
+const OrderItem = (props: GetOrderList) => {
   return (
     <div className="my-orders__item my-orders__item:hover pl-4 mt-1">
       <div className="my-orders__info">
@@ -68,7 +68,7 @@ const OrderItem = (props) => {
   );
 };
 
-const MyOrders = (props): JSX.Element => {
+const MyOrders = (): JSX.Element => {
   const [getOrderList, { data }] = useLazyQuery<GetOrderListData, GetOrderListVars>(
     GET_ORDER_LIST,
     {
@@ -82,6 +82,10 @@ const MyOrders = (props): JSX.Element => {
       }
     }
   );
+
+  useEffect(() => {
+    getOrderList();
+  }, []);
 
   const orderList = data?.getOrderList || [];
 
@@ -132,9 +136,9 @@ const MyOrders = (props): JSX.Element => {
               </div>
             </div>
 
-            {mockMyOrders.map((item, index) => {
-              return <OrderItem key={index} {...item} />;
-            })}
+            {orderList.map((order) => (
+              <OrderItem key={order.id} {...order} />
+            ))}
 
             <div className="col-12 m-3 text-center">
               <p>
