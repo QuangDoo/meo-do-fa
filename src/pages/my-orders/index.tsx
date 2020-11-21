@@ -149,9 +149,9 @@ const MyOrders = (): JSX.Element => {
 
           <div className="col-12 m-3 text-center">
             <p>
-              <Link href="/quick-order">
+              <Link href="/products">
                 <a className="btn btn-primary" role="button">
-                  Về trang đặt hàng nhanh
+                  Về trang sản phẩm
                 </a>
               </Link>
             </p>
