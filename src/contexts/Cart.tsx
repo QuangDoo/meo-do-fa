@@ -1,5 +1,4 @@
-import { QueryLazyOptions, useLazyQuery } from '@apollo/react-hooks';
-import { ApolloQueryResult } from 'apollo-boost';
+import { useLazyQuery } from '@apollo/react-hooks';
 import { createContext, useContext, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { GET_CART, GetCartData } from 'src/graphql/order/order.query';
@@ -44,6 +43,7 @@ const CartProvider = withApollo({ ssr: true })(({ children }: Props) => {
     if (!token) return;
 
     getCart();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token]);
 
   return (

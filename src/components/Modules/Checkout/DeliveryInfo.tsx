@@ -1,5 +1,7 @@
 import { useQuery } from '@apollo/react-hooks';
+import { withTranslation } from 'i18n';
 import React from 'react';
+import { toast } from 'react-toastify';
 import { emailRegex } from 'src/assets/regex/email';
 import { viPhoneNumberRegex } from 'src/assets/regex/viPhoneNumber';
 import Checkbox from 'src/components/Form/Checkbox';
@@ -15,7 +17,12 @@ type DataCityType = {
 };
 
 const DeliveryInfo = (props, register): JSX.Element => {
-  const { data, error } = useQuery(GET_USER);
+  const { data } = useQuery(GET_USER, {
+    onError: (error) => {
+      console.log('Get delivery info error:', { error });
+      toast.error(props.t(`errors:code_${error.graphQLErrors[0].extensions.code}`));
+    }
+  });
 
   return (
     <InputCard title="Thông tin giao hàng" hasRequired>
@@ -157,4 +164,4 @@ const DeliveryInfo = (props, register): JSX.Element => {
   );
 };
 
-export default React.forwardRef(DeliveryInfo);
+export default withTranslation(['errors'], { withRef: true })(DeliveryInfo);

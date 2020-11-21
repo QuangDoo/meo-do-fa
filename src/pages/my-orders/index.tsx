@@ -29,7 +29,7 @@ const OrderItem = (props: GetOrderList) => {
             <a className="mr-2">#{props.id}</a>
           </Link>
 
-          <span
+          {/* <span
             className={clsx(
               'badge py-1 text-capitalize',
               props.status === 'Đã xác nhận'
@@ -37,7 +37,7 @@ const OrderItem = (props: GetOrderList) => {
                 : 'my-orders__status--shipped'
             )}>
             <a href="/my-orders?status=confirmed">{props.status}</a>
-          </span>
+          </span> */}
         </h2>
 
         <div className="my-orders__detail">
@@ -48,12 +48,12 @@ const OrderItem = (props: GetOrderList) => {
 
           <div>
             <span className="title">Ngày mua:</span>
-            <span className="content">{props.orderDate}</span>
+            <span className="content">{props.date_order}</span>
           </div>
 
           <div>
             <span className="title">Dự kiến giao ngày:</span>
-            <span className="content">{props.expectedDeliveryDate}</span>
+            <span className="content">{props.expected_date}</span>
           </div>
         </div>
       </div>

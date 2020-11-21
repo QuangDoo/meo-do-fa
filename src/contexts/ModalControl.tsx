@@ -28,7 +28,7 @@ const ModalControlProvider = ({ children }: Props): JSX.Element => {
   const [state, setState] = useState<State>(initialState);
 
   const dispatch = useCallback((action: Action) => {
-    setState((prevState) => {
+    setState(() => {
       switch (action.type) {
         case 'OPEN_LOGIN_MODAL':
           return {

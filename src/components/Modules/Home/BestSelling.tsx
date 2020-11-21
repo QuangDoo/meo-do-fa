@@ -22,6 +22,7 @@ export const BestSelling = (): JSX.Element => {
         pageSize: 25
       }
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const bestSellingProducts = data?.getProductByConditions.Products || [];

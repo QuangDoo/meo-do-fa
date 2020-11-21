@@ -16,7 +16,7 @@ export default function useLocalStorage(key: string) {
 
     // Remove event on unmount
     return () => window.removeEventListener('storage', onStorageChange);
-  }, []);
+  }, [key]);
 
   const setValue = (newValue: string) => {
     localStorage.setItem(key, newValue);
