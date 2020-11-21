@@ -18,6 +18,8 @@ import withApollo from 'src/utils/withApollo';
 
 type FilterKey = 'all' | 'waiting_for_confirmation' | 'completed' | 'canceled';
 
+const pageSize = 20;
+
 const OrderItem = (props: GetOrderList) => {
   return (
     <div className="my-orders__item my-orders__item:hover pl-4 mt-1">
@@ -72,10 +74,6 @@ const MyOrders = (): JSX.Element => {
   const [getOrderList, { data }] = useLazyQuery<GetOrderListData, GetOrderListVars>(
     GET_ORDER_LIST,
     {
-      variables: {
-        page: 1,
-        pageSize: 20
-      },
       onError: (error) => {
         console.log('Get order list error:', { error });
         toast.error('Get order list error: ' + error);
@@ -84,7 +82,12 @@ const MyOrders = (): JSX.Element => {
   );
 
   useEffect(() => {
-    getOrderList();
+    getOrderList({
+      variables: {
+        page: 1,
+        pageSize: pageSize
+      }
+    });
   }, []);
 
   const orderList = data?.getOrderList || [];
@@ -100,6 +103,12 @@ const MyOrders = (): JSX.Element => {
 
   const handleFilterClick = (key: FilterKey) => {
     setFilter(key);
+    getOrderList({
+      variables: {
+        page: 1,
+        pageSize: pageSize
+      }
+    });
   };
 
   return (

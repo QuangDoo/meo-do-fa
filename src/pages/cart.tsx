@@ -15,7 +15,7 @@ function Cart(): JSX.Element {
 
   useEffect(() => {
     refetchCart();
-  }, [refetchCart]);
+  }, []);
 
   const [createCounsel] = useMutation(CREATE_COUNSEL, {
     onError: (error) => {

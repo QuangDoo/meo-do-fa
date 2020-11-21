@@ -12,7 +12,6 @@ import Input from 'src/components/Form/Input';
 import { useModalControlDispatch } from 'src/contexts/ModalControl';
 import { useUser } from 'src/contexts/User';
 import { LOGIN_USER, LoginData, LoginVars } from 'src/graphql/user/login.mutation';
-import useLocalStorage from 'src/hooks/useLocalStorage';
 import withApollo from 'src/utils/withApollo';
 
 type Inputs = {
@@ -22,8 +21,6 @@ type Inputs = {
 
 const LoginForm = ({ t }: WithTranslation): JSX.Element => {
   const dispatch = useModalControlDispatch();
-
-  const [, setToken] = useLocalStorage('token');
 
   const openRegisterModal = () => dispatch({ type: 'OPEN_REGISTER_MODAL' });
 
@@ -37,7 +34,7 @@ const LoginForm = ({ t }: WithTranslation): JSX.Element => {
 
   const [login] = useMutation<LoginData, LoginVars>(LOGIN_USER, {
     onCompleted: (data) => {
-      setToken(data.login.token);
+      localStorage.setItem('key', data.login.token);
       closeLoginModal();
       getUser();
 
