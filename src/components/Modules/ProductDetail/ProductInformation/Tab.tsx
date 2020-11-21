@@ -46,7 +46,6 @@ const TabContent = (props): JSX.Element => {
     </div>
   );
 };
-
 export default function Tab(props) {
   return (
     <div className="col-12 col-sm-9 product__details">

@@ -24,7 +24,6 @@ function Ingredients(): JSX.Element {
       <Head>
         <title>Medofa</title>
       </Head>
-
       <Header />
 
       <Nav />

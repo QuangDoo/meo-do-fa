@@ -32,7 +32,7 @@ const Header = ({ t }: HeaderProps): JSX.Element => {
                     <span>{t('header:news')}</span>
                   </a>
                 </li>
-                <li className="promotion-nav__item">
+                {/* <li className="promotion-nav__item">
                   <a
                     className="promotion-nav__link"
                     href="https://career.medofa.vn/"
@@ -40,8 +40,8 @@ const Header = ({ t }: HeaderProps): JSX.Element => {
                     <i className="promotion-nav__icon fas fa-briefcase" />
                     <span>{t('common:recruitment')}</span>
                   </a>
-                </li>
-                <li className="promotion-nav__item">
+                </li> */}
+                {/* <li className="promotion-nav__item">
                   <a
                     className="promotion-nav__link"
                     href="https://supplier.medofa.vn/"
@@ -49,7 +49,7 @@ const Header = ({ t }: HeaderProps): JSX.Element => {
                     <i className="promotion-nav__icon fas fa-store-alt" />
                     <span>{t('common:supply')}</span>
                   </a>
-                </li>
+                </li> */}
 
                 <li className="promotion-nav__item">
                   <LanguagePicker />
@@ -59,7 +59,6 @@ const Header = ({ t }: HeaderProps): JSX.Element => {
           </div>
         </div>
       </nav>
-
       <div className="container py-4">
         <div className="d-flex align-items-center justify-content-between">
           <div className="mr-3">
