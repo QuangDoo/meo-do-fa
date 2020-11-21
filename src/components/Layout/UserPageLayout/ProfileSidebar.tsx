@@ -36,7 +36,8 @@ const ProfileSidebar = () => {
     <div className="col-xl-3 d-xl-block d-none">
       <aside className="my-account__sidebar mb-3">
         <div className="mb-3">
-          Tài khoản của<h5>{user?.name}</h5>
+          Tài khoản của
+          <h5>{user?.name}</h5>
         </div>
 
         <SidebarLink text="Thông tin tài khoản" href="/my-account" iconClass="fas fa-user-circle" />
