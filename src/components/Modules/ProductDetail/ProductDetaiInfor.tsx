@@ -7,6 +7,7 @@ type PropsType = {
   name: string;
   list_price: number;
   uom_name: string;
+  id: string;
 };
 const ProductDetailInfor = (props: PropsType): JSX.Element => {
   let token = '';
@@ -50,7 +51,7 @@ const ProductDetailInfor = (props: PropsType): JSX.Element => {
                 <div>
                   <div className="product__price-group">
                     <span className="product__price">
-                      {props.list_price}
+                      {props.list_price?.toLocaleString('de-DE')}
                       <span className="unit">đ</span>
                     </span>
                   </div>
@@ -79,7 +80,7 @@ const ProductDetailInfor = (props: PropsType): JSX.Element => {
                     </button>
                   </div>
                 </div> */}
-                {/* <QuantityInput /> */}
+                <QuantityInput productId={props.id} price={props.list_price} name={props.name} />
               </div>
             )}
           </div>

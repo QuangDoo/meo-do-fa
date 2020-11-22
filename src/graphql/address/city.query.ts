@@ -22,7 +22,7 @@ export const GET_CITIES = gql`
   }
 `;
 export const GET_DISTRICT = gql`
-  query getDistricts($city_id: Int) {
+  query getDistricts($city_id: Int!) {
     getDistricts(city_id: $city_id) {
       id
       name
@@ -40,7 +40,7 @@ export const GET_WARD = gql`
   }
 `;
 export const GET_WARD_DETAIL = gql`
-  query getWard($ward_id: Int) {
+  query getWard($ward_id: Int!) {
     getWard(ward_id: $ward_id) {
       ward {
         id
