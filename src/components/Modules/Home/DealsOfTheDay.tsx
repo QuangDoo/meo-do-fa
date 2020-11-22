@@ -8,12 +8,11 @@ import {
 
 import { ProductsCarousel } from '../ProductsCarousel';
 import { ProductsContainer } from './ProductsContainer';
-
+//
 export const DealsOfTheDay = (): JSX.Element => {
   const [getFlashSaleProducts, { data }] = useLazyQuery<GetDealsOfTheDayData, GetDealsOfTheDayVars>(
     GET_DEALS_OF_THE_DAY
   );
-
   useEffect(() => {
     getFlashSaleProducts({
       variables: {
@@ -26,8 +25,12 @@ export const DealsOfTheDay = (): JSX.Element => {
   const dealsOfTheDayProducts = data?.getProductDealOfTheDay || [];
 
   return (
-    <ProductsContainer title="Deal trong ngày" seeMoreUrl="#" deals>
-      <ProductsCarousel products={dealsOfTheDayProducts} />
-    </ProductsContainer>
+    <div>
+      {dealsOfTheDayProducts.length !== 0 ? (
+        <ProductsContainer title="Deal trong ngày" seeMoreUrl="#" deals>
+          <ProductsCarousel products={dealsOfTheDayProducts} />
+        </ProductsContainer>
+      ) : null}
+    </div>
   );
 };

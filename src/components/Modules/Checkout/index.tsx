@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import { useCart } from 'src/contexts/Cart';
 import { useCities } from 'src/contexts/Cities';
 import { GET_DISTRICT, GET_WARD, GET_WARD_DETAIL } from 'src/graphql/address/city.query';
 import { CREATE_ORDER } from 'src/graphql/order/order.mutation';
@@ -26,22 +27,24 @@ const CheckoutPage = (): JSX.Element => {
     }
   });
   const { data: dataCity } = useCities();
-  const {
-    data: dataGetPaymentDelivery,
-    loading: loadingGetPaymentDelivery,
-    error: errorGetPaymentDelivery
-  } = useQuery(GET_PAYMENT_DELIVERY);
-  const { data: dataGetCounsel, loading: loadingGetCounsel, error: errorGetCounsel } = useQuery(
-    GET_COUNSEL
+
+  const { data: dataGetPaymentDelivery, loading: loadingGetPaymentDelivery } = useQuery(
+    GET_PAYMENT_DELIVERY
   );
 
+  const { data: dataGetCounsel, loading: loadingGetCounsel } = useQuery(GET_COUNSEL);
+
   const router = useRouter();
+
+  const { refetchCart } = useCart();
+
   const [createOrder] = useMutation(CREATE_ORDER, {
     onCompleted: (data) => {
       swal({
         title: `Sản phẩm ${data.createOrder.orderNo} đã được đặt thành công!`,
         icon: 'success'
       }).then(function () {
+        refetchCart();
         router.push('/');
       });
     },

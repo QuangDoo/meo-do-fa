@@ -1,6 +1,33 @@
 import React from 'react';
 import { useUser } from 'src/contexts/User';
 
+type NotiItem = {
+  time: string;
+  notiInfo: string;
+};
+
+const notiItem: NotiItem[] = [
+  {
+    notiInfo: 'Giá sản phẩm Phosphalugel Boehringer Ingelheim (H/26g) đã được cập nhật giá',
+    time: '1 ngày trước'
+  },
+  {
+    notiInfo: 'Giá sản phẩm Phosphalugel Boehringer Ingelheim (H/26g) đã được cập nhật giá',
+    time: '1 ngày trước'
+  },
+  {
+    notiInfo: 'Giá sản phẩm Phosphalugel Boehringer Ingelheim (H/26g) đã được cập nhật giá',
+    time: '1 ngày trước'
+  },
+  {
+    notiInfo: 'Giá sản phẩm Phosphalugel Boehringer Ingelheim (H/26g) đã được cập nhật giá',
+    time: '1 ngày trước'
+  },
+  {
+    notiInfo: 'Giá sản phẩm Phosphalugel Boehringer Ingelheim (H/26g) đã được cập nhật giá',
+    time: '1 ngày trước'
+  }
+];
 const RightSideUser = () => {
   const { user } = useUser();
   return (
