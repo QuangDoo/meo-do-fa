@@ -9,7 +9,7 @@ type Props = {
   createAt?: string;
 };
 
-export default function PostItem(props: Props): JSX.Element {
+export default function CardView(props: Props): JSX.Element {
   const data = {
     id: 8,
     title:
@@ -27,7 +27,7 @@ export default function PostItem(props: Props): JSX.Element {
 
   return (
     <div className="col-lg-6 col-sm-12 position-relative mb-2">
-      <Link href={`/news/${data.title}`}>
+      <Link href={`/news/${data.id}`}>
         <div className="post-item">
           <div className="post-item__img">
             <img className="post-item__img-item" alt={data.title} src={data.imgUrl}></img>
