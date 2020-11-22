@@ -14,8 +14,8 @@ const links = [
   { href: '', title: 'Contrary to to populartext Contrary to populartext Contrary to populartext' }
 ];
 
-function NewsSidebar(props): JSX.Element {
-  function renderPost(links: any): JSX.IntrinsicElements {
+function NewsSidebar(): JSX.Element {
+  function renderPost(links): JSX.IntrinsicElements {
     return links.map((item, index) => (
       <ResentPostItem key={index} href={item.href} title={item.title} />
     ));
@@ -23,7 +23,7 @@ function NewsSidebar(props): JSX.Element {
 
   return (
     <>
-      <InputSearch placeholder="Search ..." keySearch={(x: any) => console.log(x)}></InputSearch>
+      <InputSearch placeholder="Search ..." keySearch={(x) => console.log(x)}></InputSearch>
 
       <div className="recent-post mb-4">
         <div className="news__title">{`BÀI VIẾT MỚI NHẤT`}</div>

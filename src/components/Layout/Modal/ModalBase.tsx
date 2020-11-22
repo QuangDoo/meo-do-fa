@@ -7,7 +7,7 @@ export type ModalBaseProps = {
   children: React.ReactNode;
 };
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     background: '#f4f7fc',
     borderRadius: '1.25em'

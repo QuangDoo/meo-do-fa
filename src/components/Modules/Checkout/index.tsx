@@ -14,7 +14,6 @@ import swal from 'sweetalert';
 import Agreement from './Agreement';
 import CustomerNotes from './CustomerNotes';
 import DeliveryInfo from './DeliveryInfo';
-import DeliveryOption from './DeliveryOption';
 import PaymentOption from './PaymentOption';
 import StickySidebar from './StickySidebar';
 

@@ -1,8 +1,8 @@
-import { QueryLazyOptions, useLazyQuery } from '@apollo/react-hooks';
-import { ApolloQueryResult } from 'apollo-boost';
+import { useLazyQuery } from '@apollo/react-hooks';
 import { createContext, useContext, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { GET_CART, GetCartData } from 'src/graphql/order/order.query';
+import useLocalStorage from 'src/hooks/useLocalStorage';
 import withApollo from 'src/utils/withApollo';
 
 type Props = {
@@ -36,11 +36,15 @@ const CartProvider = withApollo({ ssr: true })(({ children }: Props) => {
     }
   });
 
+  const [token] = useLocalStorage('token');
+
+  // Get cart if token is available
   useEffect(() => {
-    if (!localStorage.getItem('token')) return;
+    if (!token) return;
 
     getCart();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [token]);
 
   return (
     <CartContext.Provider

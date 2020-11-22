@@ -20,6 +20,7 @@ export const DealsOfTheDay = (): JSX.Element => {
         pageSize: 10
       }
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const dealsOfTheDayProducts = data?.getProductDealOfTheDay || [];

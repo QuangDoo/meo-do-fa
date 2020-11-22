@@ -1,6 +1,7 @@
 import { QueryLazyOptions, useLazyQuery } from '@apollo/react-hooks';
 import React, { createContext, useContext, useEffect } from 'react';
 import { GET_USER, GetUserData } from 'src/graphql/user/getUser.mutation';
+import useLocalStorage from 'src/hooks/useLocalStorage';
 import { User } from 'src/types/User';
 import withApollo from 'src/utils/withApollo';
 
@@ -22,11 +23,14 @@ const UserProvider = withApollo({ ssr: true })(({ children }: Props) => {
     }
   });
 
+  const [token] = useLocalStorage('token');
+
   useEffect(() => {
-    if (!localStorage.getItem('token')) return;
+    if (!token) return;
 
     getUser();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [token]);
 
   return (
     <UserContext.Provider value={{ user: data?.getUser, getUser }}>{children}</UserContext.Provider>

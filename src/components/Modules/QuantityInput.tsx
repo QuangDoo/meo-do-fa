@@ -62,7 +62,7 @@ function QuantityInput(props: Props) {
   };
 
   const handleKeyDown = (e) => {
-    if (e.keyCode === 13) {
+    if ([13, 27].includes(e.keyCode)) {
       e.target.blur();
     }
   };

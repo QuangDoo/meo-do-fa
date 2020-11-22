@@ -15,7 +15,7 @@ function Cart(): JSX.Element {
 
   useEffect(() => {
     refetchCart();
-  }, [refetchCart]);
+  }, []);
 
   const [createCounsel] = useMutation(CREATE_COUNSEL, {
     onError: (error) => {
@@ -146,11 +146,7 @@ function Cart(): JSX.Element {
                   {/* </div> */}
                   <div className="col-12">
                     <div className="cart__info-item">
-                      <a
-                        className="btn btn-secondary btn-block"
-                        data-action="cart#proceedToCheckout"
-                        data-target="cart.submit"
-                        href="/checkout">
+                      <a className="btn btn-secondary btn-block" href="/checkout">
                         <button onClick={handleCheckoutClick}> Tiếp tục thanh toán</button>
                       </a>
                     </div>

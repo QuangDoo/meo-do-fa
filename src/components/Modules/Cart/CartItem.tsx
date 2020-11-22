@@ -1,15 +1,16 @@
 import { useMutation } from '@apollo/react-hooks';
-import clsx from 'clsx';
+import { withTranslation } from 'i18n';
+import { WithTranslation } from 'next-i18next';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
-import { DELETE_CART, DeleteCartData, DeleteCartVars } from 'src/graphql/cart/deleteCart.mutation';
+import { useCart } from 'src/contexts/Cart';
 import { UPDATE_CART, UpdateCartData, UpdateCartVars } from 'src/graphql/cart/updateCart.mutation';
 
 import { ProductPrice } from '../ProductCard/ProductPrice';
 import ConfirmDeleteModal from './ConfirmDeleteModal';
 
-type Props = {
+type Props = WithTranslation & {
   image: string;
 
   productName: string;
@@ -30,9 +31,15 @@ type Props = {
 };
 
 function CartItem(props: Props): JSX.Element {
+  const { t } = props;
+
   const [open, setOpen] = useState(false);
 
-  const [isImportant, setIsImportant] = useState(false);
+  // const [isImportant, setIsImportant] = useState(false);
+
+  const [quantity, setQuantity] = useState<string>(props.quantity.toString());
+
+  const { refetchCart } = useCart();
 
   const [updateCart] = useMutation<UpdateCartData, UpdateCartVars>(UPDATE_CART, {
     onError: (error) => {
@@ -44,7 +51,7 @@ function CartItem(props: Props): JSX.Element {
 
       toast.success('Update cart success');
 
-      props.refetchCart();
+      refetchCart();
     }
   });
 
@@ -65,13 +72,7 @@ function CartItem(props: Props): JSX.Element {
     const newQty = props.quantity - 1;
 
     if (newQty === 0) {
-      toast.error(
-        <div>
-          Product quantity cannot be smaller than 1.
-          <br />
-          Please press the trash can button if you want to remove this product.
-        </div>
-      );
+      toast.error(<div>{t('cart:quantity_smaller_than_1')}</div>);
       return;
     }
 
@@ -85,14 +86,28 @@ function CartItem(props: Props): JSX.Element {
     });
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newQty = +e.target.value;
+  // Blur on Esc or Enter
+  const handleKeyDown = (e) => {
+    if ([13, 27].includes(e.keyCode)) {
+      e.target.blur();
+    }
+  };
+
+  const handleBlur = () => {
+    const newQuantity = +quantity;
+
+    if (isNaN(newQuantity) || newQuantity === props.quantity) {
+      setQuantity(props.quantity + '');
+      return;
+    }
+
+    setQuantity(newQuantity + '');
 
     updateCart({
       variables: {
         inputs: {
           _id: props._id,
-          quantity: newQty
+          quantity: newQuantity
         }
       }
     });
@@ -102,17 +117,18 @@ function CartItem(props: Props): JSX.Element {
     <div className="cart-item">
       <div className="row align-items-center">
         <div className="col-7 d-flex align-items-center pl-4">
-          <button
+          {/* <button
             className={clsx('cart-item__important-btn', isImportant ? 'active' : 'inactive')}
             onClick={() => setIsImportant((isImportant) => !isImportant)}>
             <i className="fas fa-star" />
-          </button>
+          </button> */}
           <div
             className="cart-item__image lozad mr-2 loaded"
             style={{
               backgroundImage: `url(data:image/png;base64,${props.image})`
             }}
           />
+
           <div>
             <Link href={'products/' + props.productId}>
               <a className="cart-item__name" title={props.productName}>
@@ -125,15 +141,15 @@ function CartItem(props: Props): JSX.Element {
             </div>
           </div>
         </div>
+
         <div className="col-5 d-flex justify-content-between align-items-center">
           <div className="w-100">
             <div className="d-flex justify-content-between align-items-center">
               <div>
                 <ProductPrice price={props.price} standard_price={props.standard_price} />
               </div>
-              <div className="cart-item__qty">
-                {/* <QuantityInput {...props} quantity={props.quantity} /> */}
 
+              <div className="cart-item__qty">
                 <div className="qty js-qty">
                   <button
                     className="btn btn-sm qty__button qty__button--minus"
@@ -143,15 +159,13 @@ function CartItem(props: Props): JSX.Element {
 
                   <input
                     type="tel"
-                    name="item_quantity"
                     className="form-control px-1 no-spinner text-center qty__input"
-                    inputMode="numeric"
                     min={0}
                     max={100000}
-                    step={1}
-                    autoComplete="off"
-                    value={props.quantity}
-                    onChange={handleInputChange}
+                    value={quantity}
+                    onChange={(e) => setQuantity(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                    onBlur={handleBlur}
                   />
 
                   <button
@@ -186,11 +200,10 @@ function CartItem(props: Props): JSX.Element {
         productName={props.productName}
         image={props.image}
         price={props.price}
-        refetchCart={props.refetchCart}
         _id={props._id}
       />
     </div>
   );
 }
 
-export default CartItem;
+export default withTranslation(['cart'])(CartItem);
