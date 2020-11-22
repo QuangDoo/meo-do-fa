@@ -195,3 +195,33 @@
   color: $gray-600;
   text-transform: uppercase;
 }
+.jobs-item{
+  margin-bottom: 30px;
+  -webkit-box-shadow: 0 5px 15px 0 rgba(0,0,0,.13);
+  box-shadow: 0 5px 15px 0 rgba(0,0,0,.13);
+  border: 1px solid $gray-300;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  transition: all .3s ease;
+}
+.jobs-item:hover{
+  -webkit-box-shadow: 0 5px 15px 0 rgba(0,0,0,.33);
+  box-shadow: 0 5px 15px 0 rgba(0,0,0,.33);
+}
+.jobs-item:hover .jobs-item__readmore{
+  color: $gray-600
+}
+.jobs-item__readmore{
+  font-size: 0.7rem;
+  color: $gray-400;
+  transition: 0.3s ease;
+}
+
+.jobs a:hover,
+.jobs a:active {
+  color: $primary;
+}
