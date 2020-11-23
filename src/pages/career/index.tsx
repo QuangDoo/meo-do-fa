@@ -4,9 +4,10 @@ import Footer from '../../components/Layout/Footer';
 import Head from '../../components/Layout/Head';
 import Header from '../../components/Layout/Header';
 import Nav from '../../components/Layout/Nav';
-import Jobs from '../../components/Modules/Jobs'
+import Career from '../../components/Modules/Career'
 
-const News = (): JSX.Element => {
+const CareerPage = (): JSX.Element => {
+  
   return (
     <>
       <Head>
@@ -17,15 +18,15 @@ const News = (): JSX.Element => {
 
       <Nav />
 
-      <Jobs/>
-
+      <Career />
+     
       <Footer />
     </>
   );
 };
 
-News.getInitialProps = async () => ({
+CareerPage.getInitialProps = async () => ({
   namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge']
 });
 
-export default News;
+export default CareerPage;

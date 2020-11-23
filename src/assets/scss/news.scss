@@ -1,10 +1,13 @@
-
 @media screen and (min-width: 876px){
   .col-left__divider{
     border-left: 1px solid $gray-300;
   }
 }
-
+// @media screen and( max-width: 576px){
+//   .message-founder{
+//     padding: 3rem 1rem !important;
+//   }
+// }
 .post-item{
   display: flex;
   flex-direction: column;
@@ -196,7 +199,6 @@
   text-transform: uppercase;
 }
 .jobs-item{
-  margin-bottom: 30px;
   -webkit-box-shadow: 0 5px 15px 0 rgba(0,0,0,.13);
   box-shadow: 0 5px 15px 0 rgba(0,0,0,.13);
   border: 1px solid $gray-300;
@@ -220,8 +222,56 @@
   color: $gray-400;
   transition: 0.3s ease;
 }
-
 .jobs a:hover,
 .jobs a:active {
   color: $primary;
+}
+.banner{
+  width: 100%;
+  position: relative;
+}
+.banner-conent, .banner-overlay{
+  position: absolute;
+}
+.banner-img img {
+  width: 100%;
+}
+.banner-overlay{
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,.33);
+}
+.banner-conent{
+  top:50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
+.banner-title{
+  font-size: 3rem;
+}
+.wrapper{
+  padding: 0 1rem 1rem;
+}
+.box-image{
+  padding: 2rem 0;
+}
+.message-founder__content{
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem 1rem;
+}
+.job-item{
+  display: grid;
+}
+.jobs{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-auto-rows: 1fr;
+  grid-gap: 1rem;
+}
+.message-founder__img{
+  width: 25%;
 }

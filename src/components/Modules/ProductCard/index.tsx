@@ -92,4 +92,4 @@ const ProductCard = ({ t, ...props }: Props): JSX.Element => {
   );
 };
 
-export default withTranslation(['productCard'])(ProductCard);
+ export default withTranslation(['productCard'])(ProductCard);
