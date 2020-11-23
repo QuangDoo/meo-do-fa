@@ -60,6 +60,10 @@ const CheckoutPage = (): JSX.Element => {
     toast.error('Thanh toán thất bại.');
   }, [error]);
 
+  useEffect(() => {
+    if (!dataGetCounsel) return;
+  }, [dataGetCounsel]);
+
   const city_id = Number(watch('cityId'));
   const district_id = Number(watch('districtId'));
   const ward_id = Number(watch('wardId'));
@@ -103,10 +107,6 @@ const CheckoutPage = (): JSX.Element => {
       }
     });
   };
-
-  if (loadingGetPaymentDelivery || loadingGetCounsel) {
-    return <h1>LOADING...</h1>;
-  }
 
   return (
     <form className="checkout__form" onSubmit={handleSubmit(onSubmit)}>
