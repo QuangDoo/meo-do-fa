@@ -305,3 +305,13 @@
 .text-small {
   font-size: 0.7rem;
 }
+.job-detail-form{
+  border: 1px solid $gray-300;
+  padding: 2rem 1rem;
+  text-align: center;
+  -webkit-box-shadow: 0 5px 15px 0 rgba(0,0,0,.13);
+  box-shadow: 0 5px 15px 0 rgba(0,0,0,.13);
+}
+.form-inner{
+  padding: 2rem;
+}

@@ -1,4 +1,5 @@
 import React from 'react'
+import ApplyJobForm from './ApplyJobForm'
 
 type Props = {
   name?: string
@@ -53,6 +54,11 @@ export default function JobDetail(props: Props):JSX.Element {
                 ))
               }
             </ul>
+        </div>
+      </div>
+      <div className="row job-detail">
+        <div className="job-detail__wrapper">
+          <ApplyJobForm/>
         </div>
       </div>
     </div>
