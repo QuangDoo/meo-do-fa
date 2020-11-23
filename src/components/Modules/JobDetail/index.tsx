@@ -1,17 +1,18 @@
-import React from 'react'
-import ApplyJobForm from './ApplyJobForm'
+import React from 'react';
+
+import ApplyJobForm from './ApplyJobForm';
 
 type Props = {
-  name?: string
-  requirements?: string[]
-  jobDescription?: string[]
-  description?: string
-  location?: string
-  department?: string
-  level?: string
-}
+  name?: string;
+  requirements?: string[];
+  jobDescription?: string[];
+  description?: string;
+  location?: string;
+  department?: string;
+  level?: string;
+};
 
-export default function JobDetail(props: Props):JSX.Element {
+export default function JobDetail(props: Props): JSX.Element {
   return (
     <div className="container">
       <div className="row border-bottom job-detail text-center">
@@ -31,36 +32,34 @@ export default function JobDetail(props: Props):JSX.Element {
               <span className="text-small">Việt Nam - TP. Hồ Chí Minh</span>
             </div>
           </div>
-          <div className="job-department-desc text-small">
-            {props.description}
-          </div>
+          <div className="job-department-desc text-small">{props.description}</div>
         </div>
       </div>
       <div className="row job-detail">
         <div className="job-detail__wrapper">
           <strong className="text-primary">Job description:</strong>
-            <ul className="ml-4">
-              {
-                props?.jobDescription.map((description, index)=> (
-                  <li className="text-small" key={index}>{description}</li>
-                ))
-              }
-            </ul>
+          <ul className="ml-4">
+            {props?.jobDescription.map((description, index) => (
+              <li className="text-small" key={index}>
+                {description}
+              </li>
+            ))}
+          </ul>
           <strong className="text-primary">Requirements:</strong>
-            <ul className="ml-4">
-              {
-                props?.requirements.map((requirement, index)=> (
-                  <li className="text-small" key={index}>{requirement}</li>
-                ))
-              }
-            </ul>
+          <ul className="ml-4">
+            {props?.requirements.map((requirement, index) => (
+              <li className="text-small" key={index}>
+                {requirement}
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
       <div className="row job-detail">
         <div className="job-detail__wrapper">
-          <ApplyJobForm/>
+          <ApplyJobForm />
         </div>
       </div>
     </div>
-  )
+  );
 }
