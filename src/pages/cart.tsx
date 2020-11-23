@@ -34,6 +34,9 @@ function Cart(): JSX.Element {
       variables: {
         cardIds: carts.map((i) => i._id)
       }
+    }).catch((error) => {
+      console.log('Create counsel error:', { error });
+      toast.error('Create counsel error: ' + error);
     });
   };
 
@@ -68,7 +71,7 @@ function Cart(): JSX.Element {
                   <CartItem
                     key={index}
                     _id={item._id}
-                    image=""
+                    image={item.product.image_512}
                     price={item.price}
                     standard_price={item.oldPrice}
                     productId={item.productId}
