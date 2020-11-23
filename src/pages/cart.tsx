@@ -129,7 +129,7 @@ function Cart(): JSX.Element {
                         <small>Tổng tiền</small>
                       </div>
                       <div className="cart__total">
-                        {totalPrice} <span className="unit">đ</span>
+                        {totalPrice.toLocaleString('de-DE')} <span className="unit">đ</span>
                       </div>
                       {/* <div className="cart__old-total">
                         90‰
