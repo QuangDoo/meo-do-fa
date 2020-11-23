@@ -62,7 +62,7 @@ const RegisterForm = (props: WithTranslation): JSX.Element => {
     localStorage.setItem('token', data.createUser.token);
     closeRegisterModal();
     getUser();
-    router.push('/authentications/signup_business');
+    router.reload();
   }, [data]);
 
   // onError
@@ -70,7 +70,9 @@ const RegisterForm = (props: WithTranslation): JSX.Element => {
     if (!error) return;
 
     console.log('Create user error:', { error });
-    toast.error(t(`errors:code_${error.graphQLErrors[0].extensions.code}`));
+
+    error.graphQLErrors.length > 0 &&
+      toast.error(t(`errors:code_${error.graphQLErrors[0].extensions.code}`));
   }, [error]);
 
   // Watch account_type value, with initial state

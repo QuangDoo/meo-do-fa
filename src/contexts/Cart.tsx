@@ -34,8 +34,7 @@ const CartProvider = withApollo({ ssr: true })(({ children }: Props) => {
   useEffect(() => {
     if (!error) return;
 
-    console.log('Get cart error: ', error);
-    toast.error('Get cart error: ' + error);
+    toast.error(error);
   }, [error]);
 
   const [token] = useLocalStorage('token');

@@ -38,7 +38,7 @@ const LoginForm = ({ t }: WithTranslation): JSX.Element => {
   useEffect(() => {
     if (!data) return;
 
-    localStorage.setItem('key', data.login.token);
+    localStorage.setItem('token', data.login.token);
     closeLoginModal();
     getUser();
 
