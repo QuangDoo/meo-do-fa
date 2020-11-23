@@ -60,7 +60,7 @@ const ProductsSidebarFilter = (props: Props) => {
       <form className="form-inline justify-content-between">
         <div className="products__filter-header mb-2">Sắp xếp</div>
 
-        <Select onBlur={handleSortChange}>
+        <Select onChange={handleSortChange}>
           {sortOptions.map(({ value, name }) => (
             <option key={value} value={value}>
               {name}

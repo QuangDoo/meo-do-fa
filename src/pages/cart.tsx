@@ -87,28 +87,6 @@ function Cart(): JSX.Element {
                 Để thêm sản phẩm vào giỏ hàng, vui lòng quay về trang{' '}
                 <a href="/products">Sản phẩm</a>
               </div>
-              <div className="elevated p-3">
-                <div className="mb-3">
-                  <h2 className="h6">Ghi chú khác</h2>
-                  <div className="text-muted">
-                    <label htmlFor="note">
-                      Trường hợp không tìm được thuốc mong muốn, Quý khách vui lòng điền yêu cầu bên
-                      dưới. Chúng tôi sẽ liên hệ mua thuốc và báo giá sớm nhất có thể.
-                    </label>
-                  </div>
-                  <textarea
-                    name="note"
-                    id="note"
-                    rows={4}
-                    placeholder="Ghi chú của khách hàng"
-                    className="form-control"
-                    defaultValue={''}
-                  />
-                </div>
-                <div className="w-100 text-right">
-                  <button className="btn btn-secondary">Cập nhật ghi chú</button>
-                </div>
-              </div>
             </div>
             <div className="col-3">
               <div className="cart__info">
