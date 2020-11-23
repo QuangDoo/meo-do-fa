@@ -39,7 +39,9 @@ const ProductCard = ({ t, ...props }: Props): JSX.Element => {
             <div>
               <Link href={`/products/${props.id}`}>
                 <a className="text-decoration-none">
-                  <h6 className="product-card__name">{props.name}</h6>
+                  <h6 title={props.name} className="product-card__name">
+                    {props.name}
+                  </h6>
                 </a>
               </Link>
 

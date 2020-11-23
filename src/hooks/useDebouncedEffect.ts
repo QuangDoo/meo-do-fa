@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { DependencyList, useCallback, useEffect } from 'react';
 
 export const useDebouncedEffect = (effect, delay: number, deps: DependencyList) => {

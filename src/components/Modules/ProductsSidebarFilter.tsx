@@ -2,14 +2,15 @@ import clsx from 'clsx';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
-import Dropdown from 'src/components/Form/Dropdown';
-import Select from 'src/components/Form/Select';
 import { Category } from 'src/types/Category';
 import { Manufacturer } from 'src/types/Manufacturer';
 
+import Dropdown from '../Form/Dropdown';
+import Select from '../Form/Select';
+
 type Props = {
   categories: Category[];
-  manufacturers: Manufacturer[];
+  manufacturer: Manufacturer[];
 };
 
 type SortOption = {
@@ -20,15 +21,15 @@ type SortOption = {
 const sortOptions: SortOption[] = [
   { name: 'Sản phẩm mới', value: '00' },
   { name: 'Bán chạy nhất', value: '01' },
-  { name: 'Phù hợp nhất', value: '02' },
+  // { name: 'Phù hợp nhất', value: '02' },
   { name: 'Giá: Cao đến Thấp', value: '04' },
   { name: 'Giá: Thấp đến Cao', value: '05' },
-  { name: 'Tên: A-Z', value: '07' },
-  { name: 'Tên: Z-A', value: '06' }
+  { name: 'Tên: Z-A', value: '06' },
+  { name: 'Tên: A-Z', value: '07' }
 ];
 
 const ProductsSidebarFilter = (props: Props) => {
-  const { categories, manufacturers } = props;
+  const { categories, manufacturer } = props;
 
   const router = useRouter();
 
@@ -97,7 +98,7 @@ const ProductsSidebarFilter = (props: Props) => {
 
       <hr className="hr my-3" />
 
-      {/* Filter manufacturers */}
+      {/* Filter manufactures */}
       <Dropdown label="Nhà sản xuất">
         <div className="mb-2">
           <Link href="/products">
@@ -108,7 +109,7 @@ const ProductsSidebarFilter = (props: Props) => {
           </Link>
         </div>
 
-        {manufacturers.map(({ short_name, id }) => (
+        {manufacturer.map(({ short_name, id }) => (
           <div key={id} className="mb-2">
             <Link href={`/products?manufacturer=${id}`}>
               <a

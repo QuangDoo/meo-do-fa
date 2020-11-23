@@ -10,11 +10,8 @@ type Tag = {
 
 const tags: Tag[] = [
   { name: 'Tất cả' },
-  { name: 'SP Mới', tab: 'new' },
-  { name: 'Giảm giá', tab: 'decreasing-price' },
+  { name: 'Mới', tab: 'new' },
   { name: 'Hóa đơn nhanh', tab: 'invoice-exportable' },
-  { name: 'Tăng giá', tab: 'increasing-price' },
-  { name: 'Cận date', tab: 'close-date' },
   { name: 'Chỉ có tại medofa', tab: 'only-medofa' },
   { name: 'Người Việt dùng hàng Việt', tab: 'use-vietnamese' }
 ];

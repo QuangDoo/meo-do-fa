@@ -2,7 +2,7 @@ import React from 'react';
 
 import ProducerInformation from './ProductInformation/ProducerInformation';
 import ProductInformation from './ProductInformation/ProductInformation';
-import RelativeProducts from './RelativeProducts';
+// import RelativeProducts from './RelativeProducts';
 
 const ProductDetailComponent = (props): JSX.Element => {
   return (

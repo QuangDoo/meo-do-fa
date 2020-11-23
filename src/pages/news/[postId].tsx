@@ -24,7 +24,7 @@ const News = (): JSX.Element => {
       <PageLayout>
         <div className="row">
           <div className="col-sm-12 col-lg-9">
-            <div style={{ padding: '0 1rem' }}>
+            <div className="wrapper">
               <div className="row">
                 <NewsDetail></NewsDetail>
               </div>

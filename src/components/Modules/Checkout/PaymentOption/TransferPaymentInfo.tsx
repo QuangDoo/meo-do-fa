@@ -8,7 +8,7 @@ type Line = {
   content: string;
 };
 
-const TransferPaymentInfo = (props: any): JSX.Element => {
+const TransferPaymentInfo = (props): JSX.Element => {
   const lines: Line[] = [
     {
       label: 'Chủ tài khoản',
