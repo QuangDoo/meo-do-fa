@@ -11,21 +11,15 @@ import { useDebouncedEffect } from 'src/hooks/useDebouncedEffect';
 const SearchBar = (): JSX.Element => {
   const router = useRouter();
 
-  const [searchProducts, { data: pData, loading: pLoading }] = useLazyQuery(
-    SEARCH_PRODUCTS_BY_NAME,
-    {
-      onCompleted: () => setShowResults((showResults) => showResults + 1)
-    }
-  );
+  const [searchProducts, { data: pData }] = useLazyQuery(SEARCH_PRODUCTS_BY_NAME, {
+    onCompleted: () => setShowResults((showResults) => showResults + 1)
+  });
 
   const products = pData?.searchProduct || [];
 
-  const [searchManufacturers, { data: mData, loading: mLoading }] = useLazyQuery(
-    SEARCH_MANUFACTURERS_BY_NAME,
-    {
-      onCompleted: () => setShowResults((showResults) => showResults + 1)
-    }
-  );
+  const [searchManufacturers, { data: mData }] = useLazyQuery(SEARCH_MANUFACTURERS_BY_NAME, {
+    onCompleted: () => setShowResults((showResults) => showResults + 1)
+  });
 
   const manufacturers = mData?.searchManufactory || [];
 

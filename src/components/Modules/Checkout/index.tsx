@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { useCart } from 'src/contexts/Cart';
@@ -14,7 +14,6 @@ import swal from 'sweetalert';
 import Agreement from './Agreement';
 import CustomerNotes from './CustomerNotes';
 import DeliveryInfo from './DeliveryInfo';
-import DeliveryOption from './DeliveryOption';
 import PaymentOption from './PaymentOption';
 import StickySidebar from './StickySidebar';
 
@@ -26,6 +25,7 @@ const CheckoutPage = (): JSX.Element => {
       saveInfo: true
     }
   });
+
   const { data: dataCity } = useCities();
 
   const { data: dataGetPaymentDelivery, loading: loadingGetPaymentDelivery } = useQuery(
@@ -38,21 +38,27 @@ const CheckoutPage = (): JSX.Element => {
 
   const { refetchCart } = useCart();
 
-  const [createOrder] = useMutation(CREATE_ORDER, {
-    onCompleted: (data) => {
-      swal({
-        title: `Sản phẩm ${data.createOrder.orderNo} đã được đặt thành công!`,
-        icon: 'success'
-      }).then(function () {
-        refetchCart();
-        router.push('/');
-      });
-    },
-    onError: (err) => {
-      console.log('err', err);
-      toast.error('Thanh toán thất bại');
-    }
-  });
+  const [createOrder, { data, error }] = useMutation(CREATE_ORDER);
+
+  useEffect(() => {
+    if (!data) return;
+
+    swal({
+      title: `Sản phẩm ${data.createOrder.orderNo} đã được đặt thành công!`,
+      icon: 'success'
+    }).then(() => {
+      refetchCart();
+      router.push('/');
+    });
+  }, [data]);
+
+  useEffect(() => {
+    if (!error) return;
+
+    console.log('Checkout error:', { error });
+
+    toast.error('Thanh toán thất bại.');
+  }, [error]);
 
   const city_id = Number(watch('cityId'));
   const district_id = Number(watch('districtId'));
@@ -61,9 +67,11 @@ const CheckoutPage = (): JSX.Element => {
   const { data: dataDistrict } = useQuery(GET_DISTRICT, {
     variables: { city_id }
   });
+
   const { data: dataWards } = useQuery(GET_WARD, {
     variables: { district_id }
   });
+
   const { data: dataward } = useQuery(GET_WARD_DETAIL, {
     variables: { ward_id }
   });
@@ -97,13 +105,19 @@ const CheckoutPage = (): JSX.Element => {
       }
     });
   };
-  console.log('loadingGetCounsel', loadingGetCounsel);
+
+  const onError = (errors) => {
+    const fields = Object.keys(errors);
+
+    toast.error(errors[fields[0]].message);
+  };
+
   if (loadingGetPaymentDelivery || loadingGetCounsel) {
     return <h1>LOADING...</h1>;
   }
 
   return (
-    <form className="checkout__form" onSubmit={handleSubmit(onSubmit)}>
+    <form className="checkout__form" onSubmit={handleSubmit(onSubmit, onError)}>
       <div className="checkout container py-5">
         <div className="row">
           <div className="col-12 mb-3">

@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import { withTranslation } from 'i18n';
 import { WithTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useCart } from 'src/contexts/Cart';
 import { ADD_TO_CART } from 'src/graphql/order/order.mutation';
@@ -27,15 +27,7 @@ function QuantityInput(props: Props) {
 
   const [quantity, setQuantity] = useState<string>('0');
 
-  const [addToCart] = useMutation(ADD_TO_CART, {
-    onCompleted: () => {
-      toast.success(t(`errors:add_to_cart_success`));
-      refetchCart();
-    },
-    onError: (error) => {
-      toast.error(t(`errors:code_${error.graphQLErrors[0].extensions.code}`));
-    }
-  });
+  const [addToCart] = useMutation(ADD_TO_CART);
 
   const handleClick = () => {
     if (+quantity === 0) {
@@ -50,7 +42,15 @@ function QuantityInput(props: Props) {
         price,
         productName: name
       }
-    });
+    })
+      .then(() => {
+        toast.success(t(`errors:add_to_cart_success`));
+        refetchCart();
+      })
+      .catch((error) => {
+        console.log('Add to cart error:', { error });
+        toast.error(t(`errors:code_${error.graphQLErrors[0].extensions.code}`));
+      });
   };
 
   const handleMinus = () => {
@@ -62,7 +62,7 @@ function QuantityInput(props: Props) {
   };
 
   const handleKeyDown = (e) => {
-    if (e.keyCode === 13) {
+    if ([13, 27].includes(e.keyCode)) {
       e.target.blur();
     }
   };

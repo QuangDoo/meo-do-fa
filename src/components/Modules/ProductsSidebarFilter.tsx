@@ -21,11 +21,11 @@ type SortOption = {
 const sortOptions: SortOption[] = [
   { name: 'Sản phẩm mới', value: '00' },
   { name: 'Bán chạy nhất', value: '01' },
-  { name: 'Phù hợp nhất', value: '02' },
+  // { name: 'Phù hợp nhất', value: '02' },
   { name: 'Giá: Cao đến Thấp', value: '04' },
   { name: 'Giá: Thấp đến Cao', value: '05' },
-  { name: 'Tên: A-Z', value: '07' },
-  { name: 'Tên: Z-A', value: '06' }
+  { name: 'Tên: Z-A', value: '06' },
+  { name: 'Tên: A-Z', value: '07' }
 ];
 
 const ProductsSidebarFilter = (props: Props) => {
@@ -60,7 +60,7 @@ const ProductsSidebarFilter = (props: Props) => {
       <form className="form-inline justify-content-between">
         <div className="products__filter-header mb-2">Sắp xếp</div>
 
-        <Select onBlur={handleSortChange}>
+        <Select onChange={handleSortChange}>
           {sortOptions.map(({ value, name }) => (
             <option key={value} value={value}>
               {name}

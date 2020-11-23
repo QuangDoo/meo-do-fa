@@ -1,0 +1,4 @@
+{
+  "quantity_smaller_than_1": "Product quantity cannot be smaller than 1.",
+  "delete_success": "Removed product from cart."
+}

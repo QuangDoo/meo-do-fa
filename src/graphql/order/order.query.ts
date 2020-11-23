@@ -9,6 +9,9 @@ export type GetCartData = {
       productName: string;
       price: number;
       oldPrice: number;
+      product: {
+        image_512: string;
+      };
     }[];
     totalPrice: number;
     totalQty: number;
@@ -25,6 +28,9 @@ export const GET_CART = gql`
         productName
         price
         oldPrice
+        product {
+          image_512
+        }
       }
       totalPrice
       totalQty

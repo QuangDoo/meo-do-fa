@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { StyledLayout } from './styled';
-
 interface LayoutProps {
   children: React.ReactNode;
 }

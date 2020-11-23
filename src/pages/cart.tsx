@@ -15,14 +15,17 @@ function Cart(): JSX.Element {
 
   useEffect(() => {
     refetchCart();
-  }, [refetchCart]);
+  }, []);
 
-  const [createCounsel] = useMutation(CREATE_COUNSEL, {
-    onError: (error) => {
-      console.log('Create counsel error:', { error });
-      toast.error('Create counsel error: ' + error);
-    }
-  });
+  const [createCounsel, { error }] = useMutation(CREATE_COUNSEL);
+
+  // onError
+  useEffect(() => {
+    if (!error) return;
+
+    console.log('Create counsel error:', { error });
+    toast.error('Create counsel error: ' + error);
+  }, [error]);
 
   const handleCheckoutClick = () => {
     if (carts.length === 0) return;
@@ -31,6 +34,9 @@ function Cart(): JSX.Element {
       variables: {
         cardIds: carts.map((i) => i._id)
       }
+    }).catch((error) => {
+      console.log('Create counsel error:', { error });
+      toast.error('Create counsel error: ' + error);
     });
   };
 
@@ -65,7 +71,7 @@ function Cart(): JSX.Element {
                   <CartItem
                     key={index}
                     _id={item._id}
-                    image=""
+                    image={item.product.image_512}
                     price={item.price}
                     standard_price={item.oldPrice}
                     productId={item.productId}
@@ -80,28 +86,6 @@ function Cart(): JSX.Element {
                 <i className="fas fa-exclamation-circle mr-1" />
                 Để thêm sản phẩm vào giỏ hàng, vui lòng quay về trang{' '}
                 <a href="/products">Sản phẩm</a>
-              </div>
-              <div className="elevated p-3">
-                <div className="mb-3">
-                  <h2 className="h6">Ghi chú khác</h2>
-                  <div className="text-muted">
-                    <label htmlFor="note">
-                      Trường hợp không tìm được thuốc mong muốn, Quý khách vui lòng điền yêu cầu bên
-                      dưới. Chúng tôi sẽ liên hệ mua thuốc và báo giá sớm nhất có thể.
-                    </label>
-                  </div>
-                  <textarea
-                    name="note"
-                    id="note"
-                    rows={4}
-                    placeholder="Ghi chú của khách hàng"
-                    className="form-control"
-                    defaultValue={''}
-                  />
-                </div>
-                <div className="w-100 text-right">
-                  <button className="btn btn-secondary">Cập nhật ghi chú</button>
-                </div>
               </div>
             </div>
             <div className="col-3">
@@ -123,7 +107,7 @@ function Cart(): JSX.Element {
                         <small>Tổng tiền</small>
                       </div>
                       <div className="cart__total">
-                        {totalPrice} <span className="unit">đ</span>
+                        {totalPrice.toLocaleString('de-DE')} <span className="unit">đ</span>
                       </div>
                       {/* <div className="cart__old-total">
                         90‰
@@ -144,17 +128,16 @@ function Cart(): JSX.Element {
                       {/* <i className="fas fa-trash cart-item__remove" /> */}
                   {/* </div> */}
                   {/* </div> */}
-                  <div className="col-12">
-                    <div className="cart__info-item">
-                      <a
-                        className="btn btn-secondary btn-block"
-                        data-action="cart#proceedToCheckout"
-                        data-target="cart.submit"
-                        href="/checkout">
-                        <button onClick={handleCheckoutClick}> Tiếp tục thanh toán</button>
-                      </a>
+
+                  {totalPrice > 500000 && (
+                    <div className="col-12">
+                      <div className="cart__info-item">
+                        <a className="btn btn-secondary btn-block" href="/checkout">
+                          <button onClick={handleCheckoutClick}> Tiếp tục thanh toán</button>
+                        </a>
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
                 <a href="/products">&lt;&lt; Tiếp tục đặt hàng</a>
               </div>

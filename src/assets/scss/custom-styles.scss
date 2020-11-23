@@ -12,6 +12,16 @@ button {
   border: none;
 }
 //Chat
-.theme-background-color{
+.theme-background-color {
   background-color: $primary;
+}
+
+.slick-slide {
+  > div {
+    height: 100%;
+
+    > div {
+      height: 100%;
+    }
+  }
 }
