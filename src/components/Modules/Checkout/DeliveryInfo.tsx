@@ -1,9 +1,9 @@
-import { useQuery } from '@apollo/react-hooks';
-import React from 'react';
+import { withTranslation } from 'i18n';
+import React, { forwardRef } from 'react';
 import { emailRegex } from 'src/assets/regex/email';
 import { viPhoneNumberRegex } from 'src/assets/regex/viPhoneNumber';
 import Checkbox from 'src/components/Form/Checkbox';
-import { GET_USER } from 'src/graphql/user/getUser.mutation';
+import { useUser } from 'src/contexts/User';
 
 import InputCard from './InputCard';
 import InputWithLabel from './InputWithLabel';
@@ -15,14 +15,14 @@ type DataCityType = {
 };
 
 const DeliveryInfo = (props, register): JSX.Element => {
-  const { data, error } = useQuery(GET_USER);
+  const { user } = useUser();
 
   return (
     <InputCard title="Thông tin giao hàng" hasRequired>
       {/* Name input */}
       <InputWithLabel
         name="name"
-        defaultValue={data?.getUser.display_name}
+        defaultValue={user?.display_name}
         ref={register({
           required: 'Xin nhập họ tên.'
         })}
@@ -36,7 +36,7 @@ const DeliveryInfo = (props, register): JSX.Element => {
         {/* Phone input */}
         <InputWithLabel
           name="phone"
-          defaultValue={data?.getUser.phone}
+          defaultValue={user?.phone}
           ref={register({
             required: 'Xin nhập số điện thoại.',
             pattern: {
@@ -54,7 +54,7 @@ const DeliveryInfo = (props, register): JSX.Element => {
         {/* Email input */}
         <InputWithLabel
           name="email"
-          defaultValue={data?.getUser.email}
+          defaultValue={user?.email}
           ref={register({
             pattern: {
               value: emailRegex,
@@ -157,4 +157,4 @@ const DeliveryInfo = (props, register): JSX.Element => {
   );
 };
 
-export default React.forwardRef(DeliveryInfo);
+export default forwardRef(DeliveryInfo);

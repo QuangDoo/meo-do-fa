@@ -6,24 +6,25 @@ type PropsType = {
   placeholder: string;
   keySearch: (x) => void;
 };
-type Value = {
-  toLowerCase: () => void;
-};
+
 type InputsSearch = {
   key: string;
 };
+
 function InputSearch(props: PropsType): JSX.Element {
-  const { register, getValues, watch } = useForm<InputsSearch>();
-  const value: Value = getValues('search');
+  const { register, watch } = useForm<InputsSearch>();
+
+  const value = watch('search', '');
+
   const res = value?.toLowerCase();
+
   useEffect(() => {
     props.keySearch(res);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
 
-  watch('search');
-
   return (
-    <div className="news-search mb-4">
+    <div className="news-search ml-2 mb-2">
       <input
         name="search"
         className="news-search__input "
@@ -36,4 +37,5 @@ function InputSearch(props: PropsType): JSX.Element {
     </div>
   );
 }
+
 export default InputSearch;

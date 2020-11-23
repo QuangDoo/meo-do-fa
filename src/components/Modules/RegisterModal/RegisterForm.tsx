@@ -2,7 +2,7 @@ import { useMutation } from '@apollo/react-hooks';
 import { Trans, withTranslation } from 'i18n';
 import { WithTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { emailRegex } from 'src/assets/regex/email';
@@ -37,9 +37,8 @@ const accountTypes = ['PHARMACY', 'CLINIC', 'DRUGSTORE'];
 const initialAccountType = '';
 
 const RegisterForm = (props: WithTranslation): JSX.Element => {
-  const router = useRouter();
-
   const { t } = props;
+  const router = useRouter();
 
   const { register, handleSubmit, setValue, watch } = useForm<Inputs>();
 
@@ -54,25 +53,34 @@ const RegisterForm = (props: WithTranslation): JSX.Element => {
 
   const { getUser } = useUser();
 
-  const [createUser] = useMutation<CreateUserData, CreateUserVars>(CREATE_USER, {
-    onCompleted: (data) => {
-      localStorage.setItem('token', data.createUser.token);
-      closeRegisterModal();
-      getUser();
-      router.push('/authentications/signup_business');
-    },
-    onError: (error) => {
-      console.log('Create user error:', { error });
+  const [createUser, { data, error }] = useMutation<CreateUserData, CreateUserVars>(CREATE_USER);
+
+  // onCompleted
+  useEffect(() => {
+    if (!data) return;
+
+    localStorage.setItem('token', data.createUser.token);
+    closeRegisterModal();
+    getUser();
+    router.reload();
+  }, [data]);
+
+  // onError
+  useEffect(() => {
+    if (!error) return;
+
+    console.log('Create user error:', { error });
+
+    error.graphQLErrors.length > 0 &&
       toast.error(t(`errors:code_${error.graphQLErrors[0].extensions.code}`));
-    }
-  });
+  }, [error]);
 
   // Watch account_type value, with initial state
   // This component re-renders when account_type changes
   const currentAccountType = watch('account_type', initialAccountType);
 
   // On form submit
-  const onSubmit = (data: Inputs) => {
+  const onFormSubmit = (data: Inputs) => {
     createUser({
       variables: {
         inputs: {
@@ -87,7 +95,7 @@ const RegisterForm = (props: WithTranslation): JSX.Element => {
   };
 
   // On form error
-  const onError = (errors) => {
+  const onFormError = (errors) => {
     const errorMessage = Object.keys(errors)
       .map((name) => errors[name].message)
       .join('\n');
@@ -96,7 +104,7 @@ const RegisterForm = (props: WithTranslation): JSX.Element => {
   };
 
   return (
-    <form className="new_account" onSubmit={handleSubmit(onSubmit, onError)}>
+    <form className="new_account" onSubmit={handleSubmit(onFormSubmit, onFormError)}>
       <input name="account_type" hidden type="text" ref={register} />
 
       {/* Hide ChooseAccountType if account_type is in initial state */}

@@ -4,11 +4,8 @@ import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { useCart } from 'src/contexts/Cart';
 import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
-import useLocalStorage from 'src/hooks/useLocalStorage';
 
 export default function Nav(): JSX.Element {
-  const [, , removeToken] = useLocalStorage('token');
-
   const isLoggedIn = useIsLoggedIn();
 
   const router = useRouter();
@@ -16,7 +13,7 @@ export default function Nav(): JSX.Element {
   const { totalQty } = useCart();
 
   const logOut = () => {
-    removeToken();
+    localStorage.removeItem('token');
     router.reload();
   };
 

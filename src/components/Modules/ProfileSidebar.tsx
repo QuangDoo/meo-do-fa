@@ -11,9 +11,9 @@ type SidebarLinkProps = {
 };
 
 const SidebarLink = (props: SidebarLinkProps) => {
-  const router = useRouter();
-
   const { href, iconClass, text } = props;
+
+  const router = useRouter();
 
   return (
     <Link href={href}>
@@ -33,46 +33,41 @@ const ProfileSidebar = () => {
   const { user } = useUser();
 
   return (
-    <div className="col-xl-3 d-xl-block d-none">
-      <aside className="my-account__sidebar mb-3">
-        <div className="mb-3">
-          Tài khoản của<h5>{user?.name}</h5>
-        </div>
+    <aside className="my-account__sidebar mb-3">
+      <div className="mb-3">
+        Tài khoản của
+        <h5>{user?.name}</h5>
+      </div>
 
-        <SidebarLink text="Thông tin tài khoản" href="/my-account" iconClass="fas fa-user-circle" />
+      <SidebarLink text="Thông tin tài khoản" href="/my-account" iconClass="fas fa-user-circle" />
 
-        <SidebarLink
-          text="Đơn hàng của tôi"
-          href="/my-orders"
-          iconClass="icomoon icon-assignment"
-        />
+      <SidebarLink text="Đơn hàng của tôi" href="/my-orders" iconClass="icomoon icon-assignment" />
 
-        <SidebarLink
-          text="Giới thiệu bạn bè"
-          href="/users/referrals"
-          iconClass="icomoon icon-share"
-        />
+      <SidebarLink
+        text="Giới thiệu bạn bè"
+        href="/users/referrals"
+        iconClass="icomoon icon-share"
+      />
 
-        <SidebarLink
-          text="Mã giảm giá của tôi"
-          href="/users/user-promo-codes"
-          iconClass="fas fa-tags"
-        />
+      <SidebarLink
+        text="Mã giảm giá của tôi"
+        href="/users/user-promo-codes"
+        iconClass="fas fa-tags"
+      />
 
-        <SidebarLink
-          text="Điểm tích lũy"
-          href="/users/loyalty_points"
-          iconClass="fas fa-hand-holding-usd"
-        />
+      <SidebarLink
+        text="Điểm tích lũy"
+        href="/users/loyalty_points"
+        iconClass="fas fa-hand-holding-usd"
+      />
 
-        <div className="my-account__sidebar-item">
-          Ví -{' '}
-          <span>
-            0<span className="unit">đ</span>
-          </span>
-        </div>
-      </aside>
-    </div>
+      <div className="my-account__sidebar-item">
+        Ví -{' '}
+        <span>
+          0<span className="unit">đ</span>
+        </span>
+      </div>
+    </aside>
   );
 };
 

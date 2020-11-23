@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 
 type Option = {
-  value: any;
+  value: string | number;
   label: React.ReactNode;
   disabled?: boolean;
   children?: React.ReactNode;

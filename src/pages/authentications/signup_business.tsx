@@ -29,16 +29,23 @@ function SignupBusiness(): JSX.Element {
 
   const router = useRouter();
 
-  const [updateUser] = useMutation(UPDATE_USER, {
-    onCompleted: (data) => {
-      if (data.updateUser.status === 'OK') {
-        router.push('/');
-      }
-    },
-    onError: (error) => {
-      console.log('error', JSON.stringify(error.message));
+  const [updateUser, { error, data }] = useMutation(UPDATE_USER);
+
+  // onCompleted
+  useEffect(() => {
+    if (!data) return;
+
+    if (data.updateUser.status === 'OK') {
+      router.push('/');
     }
-  });
+  }, [data]);
+
+  // onError
+  useEffect(() => {
+    if (!error) return;
+
+    console.log('error', JSON.stringify(error.message));
+  }, [error]);
 
   const { data: dataCity } = useCities();
 
@@ -245,7 +252,7 @@ function SignupBusiness(): JSX.Element {
                       </small>
                     </div>
                     <div className="row">
-                      {/* Select city */}
+                      {/ Select city /}
                       <SelectWithLabel
                         name="cityId"
                         ref={register({
@@ -256,7 +263,7 @@ function SignupBusiness(): JSX.Element {
                         required>
                         <option value="">Chọn tỉnh/thành phố...</option>
 
-                        {/* Map cities from api */}
+                        {/ Map cities from api /}
                         {dataCity.map((city: City) => (
                           <option key={city.id} value={city.id}>
                             {city.name}
@@ -264,7 +271,7 @@ function SignupBusiness(): JSX.Element {
                         ))}
                       </SelectWithLabel>
 
-                      {/* Select district */}
+                      {/ Select district /}
                       <SelectWithLabel
                         name="districtId"
                         ref={register({
@@ -283,7 +290,7 @@ function SignupBusiness(): JSX.Element {
                         ))}
                       </SelectWithLabel>
 
-                      {/* Select ward */}
+                      {/ Select ward /}
                       <SelectWithLabel
                         name="wardId"
                         ref={register({

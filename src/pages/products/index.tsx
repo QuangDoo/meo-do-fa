@@ -29,28 +29,41 @@ function Products(): JSX.Element {
   const page = +router.query.page || 1;
 
   // Get categories
-  const { data: categoriesData } = useQuery<GetAllCategoriesData, undefined>(GET_ALL_CATEGORIES, {
-    onError: (error) => {
-      console.log('Get all categories error:', error);
+  const { data: categoriesData, error: categoriesError } = useQuery<
+    GetAllCategoriesData,
+    undefined
+  >(GET_ALL_CATEGORIES);
+
+  // onError (categories)
+  useEffect(() => {
+    if (!categoriesError) return;
+
+    console.log('Get all categories error:', categoriesError);
+  }, [categoriesError]);
+
+  // Get manufacturers
+  const { data: manufacturersData, error: manufacturersError } = useQuery<
+    GetManufacturersData,
+    GetManufacturersVars
+  >(GET_MANUFACTURERS, {
+    variables: {
+      page: 1,
+      pageSize: 20
     }
   });
 
-  // Get manufacturers
-  const { data: manufacturersData } = useQuery<GetManufacturersData, GetManufacturersVars>(
-    GET_MANUFACTURERS,
-    {
-      variables: {
-        page: 1,
-        pageSize: 20
-      },
-      onError: (error) => {
-        console.log('Get manufacturers error:', error);
-      }
-    }
-  );
+  // onError (manufacturers)
+  useEffect(() => {
+    if (!manufacturersError) return;
+
+    console.log('Get manufacturers error:', manufacturersError);
+  }, [manufacturersError]);
 
   // Get products
-  const { data: productsData, refetch } = useQuery<GetProductsData, GetProductsVars>(GET_PRODUCTS, {
+  const { data: productsData, error: productsError, refetch } = useQuery<
+    GetProductsData,
+    GetProductsVars
+  >(GET_PRODUCTS, {
     variables: {
       page,
       pageSize,
@@ -58,11 +71,15 @@ function Products(): JSX.Element {
       manufacturer_id: router.query.manufacturer as string,
       category_id: router.query.category as string,
       order_type: (router.query.sort as string) || '01'
-    },
-    onError: (error) => {
-      console.log('Get products error:', error);
     }
   });
+
+  // onError (products)
+  useEffect(() => {
+    if (!productsError) return;
+
+    console.log('Get products error:', productsError);
+  }, [productsError]);
 
   const total = productsData?.getProductByConditions.total || 0;
 
@@ -107,7 +124,7 @@ function Products(): JSX.Element {
       <div className="products container-fluid mobile-content my-3 my-sm-5">
         <div className="row flex-nowrap justify-content-between px-lg-5 px-sm-3">
           <div className="products__sidebar pr-4 d-none d-sm-block">
-            <ProductsSidebarFilter categories={categories} manufacturers={manufacturers} />
+            <ProductsSidebarFilter categories={categories} manufacturer={manufacturers} />
           </div>
 
           <div className="flex-grow-1">

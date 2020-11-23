@@ -1,8 +1,9 @@
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import { useCart } from 'src/contexts/Cart';
 import { useCities } from 'src/contexts/Cities';
 import { GET_DISTRICT, GET_WARD, GET_WARD_DETAIL } from 'src/graphql/address/city.query';
 import { CREATE_ORDER } from 'src/graphql/order/order.mutation';
@@ -13,7 +14,6 @@ import swal from 'sweetalert';
 import Agreement from './Agreement';
 import CustomerNotes from './CustomerNotes';
 import DeliveryInfo from './DeliveryInfo';
-import DeliveryOption from './DeliveryOption';
 import PaymentOption from './PaymentOption';
 import StickySidebar from './StickySidebar';
 
@@ -25,31 +25,40 @@ const CheckoutPage = (): JSX.Element => {
       saveInfo: true
     }
   });
+
   const { data: dataCity } = useCities();
-  const {
-    data: dataGetPaymentDelivery,
-    loading: loadingGetPaymentDelivery,
-    error: errorGetPaymentDelivery
-  } = useQuery(GET_PAYMENT_DELIVERY);
-  const { data: dataGetCounsel, loading: loadingGetCounsel, error: errorGetCounsel } = useQuery(
-    GET_COUNSEL
+
+  const { data: dataGetPaymentDelivery, loading: loadingGetPaymentDelivery } = useQuery(
+    GET_PAYMENT_DELIVERY
   );
 
+  const { data: dataGetCounsel, loading: loadingGetCounsel } = useQuery(GET_COUNSEL);
+
   const router = useRouter();
-  const [createOrder] = useMutation(CREATE_ORDER, {
-    onCompleted: (data) => {
-      swal({
-        title: `Sản phẩm ${data.createOrder.orderNo} đã được đặt thành công!`,
-        icon: 'success'
-      }).then(function () {
-        router.push('/');
-      });
-    },
-    onError: (err) => {
-      console.log('err', err);
-      toast.error('Thanh toán thất bại');
-    }
-  });
+
+  const { refetchCart } = useCart();
+
+  const [createOrder, { data, error }] = useMutation(CREATE_ORDER);
+
+  useEffect(() => {
+    if (!data) return;
+
+    swal({
+      title: `Sản phẩm ${data.createOrder.orderNo} đã được đặt thành công!`,
+      icon: 'success'
+    }).then(() => {
+      refetchCart();
+      router.push('/');
+    });
+  }, [data]);
+
+  useEffect(() => {
+    if (!error) return;
+
+    console.log('Checkout error:', { error });
+
+    toast.error('Thanh toán thất bại.');
+  }, [error]);
 
   const city_id = Number(watch('cityId'));
   const district_id = Number(watch('districtId'));
@@ -94,7 +103,7 @@ const CheckoutPage = (): JSX.Element => {
       }
     });
   };
-  console.log('loadingGetCounsel', loadingGetCounsel);
+
   if (loadingGetPaymentDelivery || loadingGetCounsel) {
     return <h1>LOADING...</h1>;
   }

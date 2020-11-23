@@ -12,8 +12,8 @@ const links: { href: string; i18nKey: string }[] = [
   { href: '', i18nKey: 'footer:terms_of_service' },
   { href: '', i18nKey: 'footer:dispute_resolution' },
   { href: '', i18nKey: 'footer:terms_and_conditions' },
-  { href: '', i18nKey: 'footer:operating_regulations' },
-  { href: '', i18nKey: 'common:supply' }
+  { href: '', i18nKey: 'footer:operating_regulations' }
+  // { href: '', i18nKey: 'common:supply' }
 ];
 
 const linksHalfLength = links.length / 2;

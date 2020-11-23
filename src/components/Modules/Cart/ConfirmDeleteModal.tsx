@@ -1,10 +1,13 @@
 import { useMutation } from '@apollo/react-hooks';
-import React, { FC } from 'react';
+import { withTranslation } from 'i18n';
+import { WithTranslation } from 'next-i18next';
+import React, { FC, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import ModalBase from 'src/components/Layout/Modal/ModalBase';
+import { useCart } from 'src/contexts/Cart';
 import { DELETE_CART, DeleteCartData, DeleteCartVars } from 'src/graphql/cart/deleteCart.mutation';
 
-type Props = {
+type Props = WithTranslation & {
   // Modal is open
   open: boolean;
 
@@ -18,37 +21,44 @@ type Props = {
   price: number;
 
   image: string;
-
-  refetchCart: () => void;
 };
 
 const ConfirmDeleteModal: FC<Props> = (props) => {
-  const [deleteCart] = useMutation<DeleteCartData, DeleteCartVars>(DELETE_CART, {
-    onError: (error) => {
-      console.log('Delete cart error:', { error });
-      toast.error('Delete cart error:' + error);
-    },
-    onCompleted: (data) => {
-      if (data.deleteCart.code !== 200) return;
+  const { t, open, onClose, _id, productName, price, image } = props;
 
-      toast.success('Đã xóa khỏi giỏ hàng');
+  const { refetchCart } = useCart();
 
-      props.refetchCart();
+  const [deleteCart, { data, error }] = useMutation<DeleteCartData, DeleteCartVars>(DELETE_CART);
 
-      props.onClose();
-    }
-  });
+  // onCompleted
+  useEffect(() => {
+    if (!data) return;
 
-  const handleDelete = () => {
+    toast.success(t('cart:delete_success'));
+
+    refetchCart();
+
+    onClose();
+  }, [data]);
+
+  // onError
+  useEffect(() => {
+    if (!error) return;
+
+    console.log('Delete cart error:', { error });
+    toast.error(t(`errors:code_${error.graphQLErrors[0].extensions.code}`));
+  }, [error]);
+
+  const onConfirmDelete = () => {
     deleteCart({
       variables: {
-        _id: props._id
+        _id: _id
       }
     });
   };
 
   return (
-    <ModalBase open={props.open} onClose={props.onClose}>
+    <ModalBase open={open} onClose={onClose}>
       <div className="modal-content">
         <div className="modal-body">
           <div className="swal2-header">
@@ -66,7 +76,7 @@ const ConfirmDeleteModal: FC<Props> = (props) => {
               className="swal2-close"
               aria-label="Close this dialog"
               style={{ display: 'flex' }}
-              onClick={props.onClose}>
+              onClick={onClose}>
               ×
             </button>
           </div>
@@ -75,12 +85,12 @@ const ConfirmDeleteModal: FC<Props> = (props) => {
               <div className="swal2-content">Bạn có chắc muốn xoá sản phẩm này khỏi giỏ hàng?</div>
               <div className="elevated p-3 d-flex">
                 <div className="mr-3">
-                  <img alt="" className="lozad img-fluid loaded" src={props.image} width={100} />
+                  <img alt="" className="lozad img-fluid loaded" src={image} width={100} />
                 </div>
                 <div className="text-left">
-                  <div className="cart-item__name mb-2">{props.productName}</div>
+                  <div className="cart-item__name mb-2">{productName}</div>
                   <div className="cart-item__price">
-                    {props.price.toLocaleString('de-DE')}
+                    {price.toLocaleString('de-DE')}
                     <span className="unit">đ</span>
                   </div>
                 </div>
@@ -91,13 +101,13 @@ const ConfirmDeleteModal: FC<Props> = (props) => {
             <button
               type="button"
               className="swal2-cancel btn btn-outline-primary px-4 m-2"
-              onClick={props.onClose}>
+              onClick={onClose}>
               Không
             </button>
             <button
               type="button"
               className="swal2-confirm btn btn-primary px-4 m-2"
-              onClick={handleDelete}>
+              onClick={onConfirmDelete}>
               Có
             </button>
           </div>
@@ -107,4 +117,4 @@ const ConfirmDeleteModal: FC<Props> = (props) => {
   );
 };
 
-export default ConfirmDeleteModal;
+export default withTranslation(['cart', 'errors'])(ConfirmDeleteModal);
