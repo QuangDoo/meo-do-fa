@@ -1,6 +1,9 @@
 import React from 'react';
+import { useModalControlDispatch } from 'src/contexts/ModalControl';
 
 const Login = (): JSX.Element => {
+  const dispatch = useModalControlDispatch();
+
   return (
     <section className="home__cta">
       <div className="container-fluid py-5 home__cta-overlay">
@@ -8,23 +11,22 @@ const Login = (): JSX.Element => {
           <div className="col-12">
             <h4 style={{ color: 'white' }}>Đăng nhập để tìm hiểu sản phẩm</h4>
           </div>
+
           <div className="col-12">
-            <a
+            <button
               className="login btn btn-secondary home__cta-btn m-2"
-              href="https://medofa.com/authentications/login">
+              onClick={() => dispatch({ type: 'OPEN_LOGIN_MODAL' })}>
               <i className="fas fa-sign-in-alt mr-1" />
               Đăng nhập
-            </a>
-            <a
+            </button>
+
+            <button
               className="register btn btn-primary home__cta-btn m-2"
-              href="https://medofa.com/authentications/signup">
+              onClick={() => dispatch({ type: 'OPEN_REGISTER_MODAL' })}>
               <i className="fas fa-user-md mr-1" />
               Tạo tài khoản
-            </a>
-            <button className="btn btn-info home__cta-btn m-2">
-              <i className="fas fa-eye mr-1" />
-              Dùng Thử
             </button>
+
             <a
               className="call btn btn-info home__cta-btn m-2 d-inline-block d-sm-none"
               href="tel:0866624702">

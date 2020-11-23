@@ -27,6 +27,7 @@
     "react-slick": "^0.27.11",
     "react-toastify": "^6.0.9",
     "sass": "^1.26.11",
+    "slick-carousel": "^1.8.1",
     "styled-components": "^5.1.1",
     "sweetalert": "^2.1.2",
     "tawkto-react": "^1.0.11",
