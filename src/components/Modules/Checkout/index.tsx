@@ -55,6 +55,8 @@ const CheckoutPage = (): JSX.Element => {
   useEffect(() => {
     if (!error) return;
 
+    console.log('Checkout error:', { error });
+
     toast.error('Thanh toán thất bại.');
   }, [error]);
 
