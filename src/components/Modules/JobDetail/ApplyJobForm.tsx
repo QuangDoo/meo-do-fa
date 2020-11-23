@@ -37,6 +37,16 @@ export default function ApplyJobForm() {
             placeholder={`Cover Letter *: `}
             containerClass="mb-4"
             type={'text'}></Input>
+
+          <div className={`input-group form__input-group mb-4`}>
+            <i className={`fas fa-file form__input-icon`}></i>
+            <input
+              name={'input file'}
+              className="no-spinner"
+              placeholder={`choose file`}
+              type={`file`}
+            />
+          </div>
           <Checkbox
             name="acceptTerms"
             containerClass="form-group"
