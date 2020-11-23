@@ -27,22 +27,7 @@ function QuantityInput(props: Props) {
 
   const [quantity, setQuantity] = useState<string>('0');
 
-  const [addToCart, { data, error }] = useMutation(ADD_TO_CART);
-
-  // onCompleted
-  useEffect(() => {
-    if (!data) return;
-
-    toast.success(t(`errors:add_to_cart_success`));
-    refetchCart();
-  }, [data]);
-
-  // onError
-  useEffect(() => {
-    if (!error) return;
-
-    toast.error(t(`errors:code_${error.graphQLErrors[0].extensions.code}`));
-  }, [error]);
+  const [addToCart] = useMutation(ADD_TO_CART);
 
   const handleClick = () => {
     if (+quantity === 0) {
@@ -57,7 +42,15 @@ function QuantityInput(props: Props) {
         price,
         productName: name
       }
-    });
+    })
+      .then(() => {
+        toast.success(t(`errors:add_to_cart_success`));
+        refetchCart();
+      })
+      .catch((error) => {
+        console.log('Add to cart error:', { error });
+        toast.error(t(`errors:code_${error.graphQLErrors[0].extensions.code}`));
+      });
   };
 
   const handleMinus = () => {

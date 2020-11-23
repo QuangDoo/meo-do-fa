@@ -129,7 +129,10 @@ function CartItem(props: Props): JSX.Element {
           <div
             className="cart-item__image lozad mr-2 loaded"
             style={{
-              backgroundImage: `url(data:image/png;base64,${props.image})`
+              backgroundImage:
+                props.image && props.image.length > 0
+                  ? `url(data:image/png;base64,${props.image})`
+                  : `url('/assets/images/no-image.jpg')`
             }}
           />
 

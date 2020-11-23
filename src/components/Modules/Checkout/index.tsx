@@ -25,6 +25,7 @@ const CheckoutPage = (): JSX.Element => {
       saveInfo: true
     }
   });
+
   const { data: dataCity } = useCities();
 
   const { data: dataGetPaymentDelivery, loading: loadingGetPaymentDelivery } = useQuery(
@@ -100,7 +101,7 @@ const CheckoutPage = (): JSX.Element => {
       }
     });
   };
-  console.log('loadingGetCounsel', loadingGetCounsel);
+
   if (loadingGetPaymentDelivery || loadingGetCounsel) {
     return <h1>LOADING...</h1>;
   }
