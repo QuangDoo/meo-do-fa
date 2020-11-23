@@ -5,6 +5,7 @@ import Head from '../../../components/Layout/Head';
 import Header from '../../../components/Layout/Header';
 import Nav from '../../../components/Layout/Nav';
 import Career from '../../../components/Modules/Career'
+import JobDetail from '../../../components/Modules/JobDetail'
 
 const job = {
   name: "Tax Accountant",
@@ -49,7 +50,15 @@ const CareerPage = (): JSX.Element => {
 
       <Nav />
 
-      <Career />
+      <JobDetail
+        name={job.name}
+        requirements={job.requirements}
+        level={job.level}
+        jobDescription={job.jobDescription}
+        description={job.description}
+        department={job.department}
+        location={job.location}
+      />
      
       <Footer />
     </>

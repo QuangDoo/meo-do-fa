@@ -32,7 +32,7 @@ function Jobs (props: Props): JSX.Element {
               //   </div>
               // </a>
 
-              <a key={index} href={`/jobs/${job?.id}`} className="job-item">
+              <a key={index} href={`/career/jobs/${job?.id}`} className="job-item">
                 <div className="jobs-item p-3 bg-white">
                   <div className="jobs-item__title mb-2">{job?.jobName}</div>
                   <div className="jobs-item__readmore text-small">

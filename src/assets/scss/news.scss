@@ -3,11 +3,16 @@
     border-left: 1px solid $gray-300;
   }
 }
-// @media screen and( max-width: 576px){
-//   .message-founder{
-//     padding: 3rem 1rem !important;
-//   }
-// }
+@media screen and( max-width: 576px){
+  .job-department-desc{
+    max-width: 100% !important;
+    text-align: left;
+  }
+  .job-department-info{
+   flex-direction: column;
+   text-align: left;
+  }
+}
 .post-item{
   display: flex;
   flex-direction: column;
@@ -274,4 +279,29 @@
 }
 .message-founder__img{
   width: 25%;
+}
+.job-detail{
+  padding: 1rem 0;
+}
+.job-label{
+  margin-right: 0.5rem;
+}
+.job-department-desc{
+  max-width: 600px;
+  margin: 0 auto;
+}
+.job-detail__wrapper{
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+.job-department-info{
+  display: flex;
+  margin-bottom: 1.5rem;
+  -webkit-box-pack: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.text-small {
+  font-size: 0.7rem;
 }
