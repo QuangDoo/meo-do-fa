@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/react-hooks';
-import React from 'react';
+import React, { useEffect } from 'react';
 import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
@@ -12,11 +12,14 @@ import {
 import withApollo from 'src/utils/withApollo';
 
 function Manufacturers(): JSX.Element {
-  const { data } = useQuery<GetAllManufacturersData, undefined>(GET_ALL_MANUFACTURERS, {
-    onError: (error) => {
-      console.log('Get manufacturers error:', error);
-    }
-  });
+  const { data, error } = useQuery<GetAllManufacturersData, undefined>(GET_ALL_MANUFACTURERS);
+
+  // onError
+  useEffect(() => {
+    if (!error) return;
+
+    console.log('Get manufacturers error:', error);
+  }, [error]);
 
   return (
     <>

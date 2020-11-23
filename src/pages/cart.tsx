@@ -17,12 +17,15 @@ function Cart(): JSX.Element {
     refetchCart();
   }, []);
 
-  const [createCounsel] = useMutation(CREATE_COUNSEL, {
-    onError: (error) => {
-      console.log('Create counsel error:', { error });
-      toast.error('Create counsel error: ' + error);
-    }
-  });
+  const [createCounsel, { error }] = useMutation(CREATE_COUNSEL);
+
+  // onError
+  useEffect(() => {
+    if (!error) return;
+
+    console.log('Create counsel error:', { error });
+    toast.error('Create counsel error: ' + error);
+  }, [error]);
 
   const handleCheckoutClick = () => {
     if (carts.length === 0) return;

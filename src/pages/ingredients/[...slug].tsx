@@ -2,7 +2,7 @@ import { useQuery } from '@apollo/react-hooks';
 import { withTranslation } from 'i18n';
 import { WithTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { toast } from 'react-toastify';
 import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
@@ -37,20 +37,24 @@ const IngredientDetails = ({ t }: WithTranslation): JSX.Element => {
     }
   );
 
-  const { data: productsData } = useQuery<GetProductsByIngredientData, GetProductsByIngredientVars>(
-    GET_PRODUCTS_BY_INGREDIENT,
-    {
-      variables: {
-        page: 1,
-        pageSize: 20,
-        ingredientId: ingredientId
-      },
-      onError: (error) => {
-        console.log('Get products by ingredient error:', { error });
-        toast.error('Get products by ingredient error:' + error);
-      }
+  const { data: productsData, error: productsError } = useQuery<
+    GetProductsByIngredientData,
+    GetProductsByIngredientVars
+  >(GET_PRODUCTS_BY_INGREDIENT, {
+    variables: {
+      page: 1,
+      pageSize: 20,
+      ingredientId: ingredientId
     }
-  );
+  });
+
+  // onError
+  useEffect(() => {
+    if (!productsError) return;
+
+    console.log('Get products by ingredient error:', { productsError });
+    toast.error('Get products by ingredient error:' + productsError);
+  }, [productsError]);
 
   return (
     <>
