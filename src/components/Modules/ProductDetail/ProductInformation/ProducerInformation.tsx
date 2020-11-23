@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import React from 'react';
 
-import Tab from './Tab';
+import Tab from '../../../Tab/Tab';
 
 type Display_name = {
   name: string;
@@ -64,7 +64,7 @@ const ProducerInformation = (props: PropsType): JSX.Element => {
                 return (
                   <tr key={index}>
                     <td>
-                      <Link href="/ingredients/thuc-dia">
+                      <Link href={`/ingredients/${item.id}`}>
                         <a>{item.name}</a>
                       </Link>
                     </td>
@@ -84,6 +84,15 @@ const ProducerInformation = (props: PropsType): JSX.Element => {
         interaction={props.interaction}
         preservation={props.preservation}
         overdose={props.overdose}
+        labelInfo="Thông tin chung"
+        labelIndication="Chỉ định"
+        labelContraindion="Chống chỉ định"
+        labelDirection="Hướng dẫn sử dụng"
+        labelInteraction="Tương tác thuốc"
+        labelPreservation="Bảo quản"
+        labelOverdose="Quá liều"
+        labelPharmacodynamics="Dược lực học"
+        labelPharmacokinetics="Dược động học"
       />
     </div>
   );
