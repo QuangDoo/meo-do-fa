@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import { withTranslation } from 'i18n';
 import { WithTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useCart } from 'src/contexts/Cart';
 import { ADD_TO_CART } from 'src/graphql/order/order.mutation';
@@ -27,15 +27,22 @@ function QuantityInput(props: Props) {
 
   const [quantity, setQuantity] = useState<string>('0');
 
-  const [addToCart] = useMutation(ADD_TO_CART, {
-    onCompleted: () => {
-      toast.success(t(`errors:add_to_cart_success`));
-      refetchCart();
-    },
-    onError: (error) => {
-      toast.error(t(`errors:code_${error.graphQLErrors[0].extensions.code}`));
-    }
-  });
+  const [addToCart, { data, error }] = useMutation(ADD_TO_CART);
+
+  // onCompleted
+  useEffect(() => {
+    if (!data) return;
+
+    toast.success(t(`errors:add_to_cart_success`));
+    refetchCart();
+  }, [data]);
+
+  // onError
+  useEffect(() => {
+    if (!error) return;
+
+    toast.error(t(`errors:code_${error.graphQLErrors[0].extensions.code}`));
+  }, [error]);
 
   const handleClick = () => {
     if (+quantity === 0) {

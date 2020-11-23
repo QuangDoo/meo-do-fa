@@ -71,15 +71,16 @@ const OrderItem = (props: GetOrderList) => {
 };
 
 const MyOrders = (): JSX.Element => {
-  const [getOrderList, { data }] = useLazyQuery<GetOrderListData, GetOrderListVars>(
-    GET_ORDER_LIST,
-    {
-      onError: (error) => {
-        console.log('Get order list error:', { error });
-        toast.error('Get order list error: ' + error);
-      }
-    }
+  const [getOrderList, { data, error }] = useLazyQuery<GetOrderListData, GetOrderListVars>(
+    GET_ORDER_LIST
   );
+
+  useEffect(() => {
+    if (!error) return;
+
+    console.log('Get order list error:', { error });
+    toast.error('Get order list error: ' + error);
+  }, [error]);
 
   useEffect(() => {
     getOrderList({

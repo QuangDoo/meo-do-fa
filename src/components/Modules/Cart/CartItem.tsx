@@ -2,7 +2,7 @@ import { useMutation } from '@apollo/react-hooks';
 import { withTranslation } from 'i18n';
 import { WithTranslation } from 'next-i18next';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useCart } from 'src/contexts/Cart';
 import { UPDATE_CART, UpdateCartData, UpdateCartVars } from 'src/graphql/cart/updateCart.mutation';
@@ -41,19 +41,23 @@ function CartItem(props: Props): JSX.Element {
 
   const { refetchCart } = useCart();
 
-  const [updateCart] = useMutation<UpdateCartData, UpdateCartVars>(UPDATE_CART, {
-    onError: (error) => {
-      console.log('Update cart error:', { error });
-      toast.error('Update cart error:' + error);
-    },
-    onCompleted: (data) => {
-      if (data.updateCart.code !== 200) return;
+  const [updateCart, { data, error }] = useMutation<UpdateCartData, UpdateCartVars>(UPDATE_CART);
 
-      toast.success('Update cart success');
+  // onCompleted
+  useEffect(() => {
+    if (!data) return;
 
-      refetchCart();
-    }
-  });
+    toast.success('Update cart success');
+    refetchCart();
+  }, [data]);
+
+  // onError
+  useEffect(() => {
+    if (!error) return;
+
+    console.log('Update cart error:', { error });
+    toast.error('Update cart error:' + error);
+  }, [error]);
 
   const handlePlusClick = () => {
     const newQty = props.quantity + 1;

@@ -29,12 +29,14 @@ const CartContext = createContext<Value>(null);
 CartContext.displayName = 'CartContext';
 
 const CartProvider = withApollo({ ssr: true })(({ children }: Props) => {
-  const [getCart, { data }] = useLazyQuery<GetCartData, undefined>(GET_CART, {
-    onError: (error) => {
-      console.log('Get cart error: ', error);
-      toast.error('Get cart error: ' + error);
-    }
-  });
+  const [getCart, { data, error }] = useLazyQuery<GetCartData, undefined>(GET_CART);
+
+  useEffect(() => {
+    if (!error) return;
+
+    console.log('Get cart error: ', error);
+    toast.error('Get cart error: ' + error);
+  }, [error]);
 
   const [token] = useLocalStorage('token');
 
