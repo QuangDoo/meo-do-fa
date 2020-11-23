@@ -8,7 +8,8 @@ import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
 import Nav from 'src/components/Layout/Nav';
 import UserPageLayout from 'src/components/Layout/UserPageLayout';
-import ProfileSidebar from 'src/components/Layout/UserPageLayout/ProfileSidebar';
+import ProfileLayout from 'src/components/Modules/ProfileLayout';
+import ProfileSidebar from 'src/components/Modules/ProfileSidebar';
 import {
   GET_ORDER_LIST,
   GetOrderList,
@@ -122,42 +123,40 @@ const MyOrders = (): JSX.Element => {
 
       <Nav />
 
-      <UserPageLayout>
-        <div className="col-xl-9 col-sm-12 my-orders">
-          <div>
-            <h1 className="h2 text-center text-primary mb-3">Đơn hàng của tôi</h1>
+      <ProfileLayout>
+        <div>
+          <h1 className="h2 text-center text-primary mb-3">Đơn hàng của tôi</h1>
 
-            <p className="text-muted m-0">
-              Xem thông tin xuất hoá đơn đỏ <Link href="/invoice-export-rules">tại đây</Link>.
-            </p>
+          <p className="text-muted m-0">
+            Xem thông tin xuất hoá đơn đỏ <Link href="/invoice-export-rules">tại đây</Link>.
+          </p>
 
-            <div className="my-orders__filter mt-3">
-              {Object.keys(filterHeaders).map((key: FilterKey) => (
-                <button
-                  key={key}
-                  className={clsx('my-orders__header', filter === key && 'active')}
-                  onClick={() => handleFilterClick(key)}>
-                  {filterHeaders[key]}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {orderList.map((order) => (
-            <OrderItem key={order.id} {...order} />
-          ))}
-
-          <div className="col-12 m-3 text-center">
-            <p>
-              <Link href="/products">
-                <a className="btn btn-primary" role="button">
-                  Về trang sản phẩm
-                </a>
-              </Link>
-            </p>
+          <div className="my-orders__filter mt-3">
+            {Object.keys(filterHeaders).map((key: FilterKey) => (
+              <button
+                key={key}
+                className={clsx('my-orders__header', filter === key && 'active')}
+                onClick={() => handleFilterClick(key)}>
+                {filterHeaders[key]}
+              </button>
+            ))}
           </div>
         </div>
-      </UserPageLayout>
+
+        {orderList.map((order) => (
+          <OrderItem key={order.id} {...order} />
+        ))}
+
+        <div className="col-12 m-3 text-center">
+          <p>
+            <Link href="/products">
+              <a className="btn btn-primary" role="button">
+                Về trang sản phẩm
+              </a>
+            </Link>
+          </p>
+        </div>
+      </ProfileLayout>
 
       <Footer />
     </>

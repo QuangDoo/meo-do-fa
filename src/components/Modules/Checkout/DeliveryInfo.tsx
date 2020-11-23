@@ -1,11 +1,9 @@
-import { useQuery } from '@apollo/react-hooks';
 import { withTranslation } from 'i18n';
 import React from 'react';
-import { toast } from 'react-toastify';
 import { emailRegex } from 'src/assets/regex/email';
 import { viPhoneNumberRegex } from 'src/assets/regex/viPhoneNumber';
 import Checkbox from 'src/components/Form/Checkbox';
-import { GET_USER } from 'src/graphql/user/getUser.mutation';
+import { useUser } from 'src/contexts/User';
 
 import InputCard from './InputCard';
 import InputWithLabel from './InputWithLabel';
@@ -17,19 +15,14 @@ type DataCityType = {
 };
 
 const DeliveryInfo = (props, register): JSX.Element => {
-  const { data } = useQuery(GET_USER, {
-    onError: (error) => {
-      console.log('Get delivery info error:', { error });
-      toast.error(props.t(`errors:code_${error.graphQLErrors[0].extensions.code}`));
-    }
-  });
+  const { user } = useUser();
 
   return (
     <InputCard title="Thông tin giao hàng" hasRequired>
       {/* Name input */}
       <InputWithLabel
         name="name"
-        defaultValue={data?.getUser.display_name}
+        defaultValue={user?.display_name}
         ref={register({
           required: 'Xin nhập họ tên.'
         })}
@@ -43,7 +36,7 @@ const DeliveryInfo = (props, register): JSX.Element => {
         {/* Phone input */}
         <InputWithLabel
           name="phone"
-          defaultValue={data?.getUser.phone}
+          defaultValue={user?.phone}
           ref={register({
             required: 'Xin nhập số điện thoại.',
             pattern: {
@@ -61,7 +54,7 @@ const DeliveryInfo = (props, register): JSX.Element => {
         {/* Email input */}
         <InputWithLabel
           name="email"
-          defaultValue={data?.getUser.email}
+          defaultValue={user?.email}
           ref={register({
             pattern: {
               value: emailRegex,
