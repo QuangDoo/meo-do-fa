@@ -32,9 +32,9 @@ import { Question } from './Question';
 import { Strength } from './Strength';
 
 const bannerImages = [
-  'https://images.medofa.vn/oXdHydi6aC3P9nHYududVJw9',
-  'https://images.medofa.vn/htbavM8nVz1Z697x6DAXmrYa',
-  'https://images.medofa.vn/AfxNH2kUp1EXcDuMrVFgzsuA'
+  '/assets/images/drugstore1.jpg',
+  'assets/images/drugstore2.jpg',
+  'assets/images/drugstore3.jpg'
 ];
 
 const paginationVars = {
