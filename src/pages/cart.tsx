@@ -150,13 +150,16 @@ function Cart(): JSX.Element {
                       {/* <i className="fas fa-trash cart-item__remove" /> */}
                   {/* </div> */}
                   {/* </div> */}
-                  <div className="col-12">
-                    <div className="cart__info-item">
-                      <a className="btn btn-secondary btn-block" href="/checkout">
-                        <button onClick={handleCheckoutClick}> Tiếp tục thanh toán</button>
-                      </a>
+
+                  {totalPrice > 500000 && (
+                    <div className="col-12">
+                      <div className="cart__info-item">
+                        <a className="btn btn-secondary btn-block" href="/checkout">
+                          <button onClick={handleCheckoutClick}> Tiếp tục thanh toán</button>
+                        </a>
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
                 <a href="/products">&lt;&lt; Tiếp tục đặt hàng</a>
               </div>
