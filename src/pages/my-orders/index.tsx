@@ -7,9 +7,7 @@ import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
 import Nav from 'src/components/Layout/Nav';
-import UserPageLayout from 'src/components/Layout/UserPageLayout';
 import ProfileLayout from 'src/components/Modules/ProfileLayout';
-import ProfileSidebar from 'src/components/Modules/ProfileSidebar';
 import {
   GET_ORDER_LIST,
   GetOrderList,
