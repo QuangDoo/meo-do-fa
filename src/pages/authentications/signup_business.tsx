@@ -29,16 +29,23 @@ function SignupBusiness(): JSX.Element {
 
   const router = useRouter();
 
-  const [updateUser] = useMutation(UPDATE_USER, {
-    onCompleted: (data) => {
-      if (data.updateUser.status === 'OK') {
-        router.push('/');
-      }
-    },
-    onError: (error) => {
-      console.log('error', JSON.stringify(error.message));
+  const [updateUser, { error, data }] = useMutation(UPDATE_USER);
+
+  // onCompleted
+  useEffect(() => {
+    if (!data) return;
+
+    if (data.updateUser.status === 'OK') {
+      router.push('/');
     }
-  });
+  }, [data]);
+
+  // onError
+  useEffect(() => {
+    if (!error) return;
+
+    console.log('error', JSON.stringify(error.message));
+  }, [error]);
 
   const { data: dataCity } = useCities();
 

@@ -2,7 +2,7 @@ import { useMutation } from '@apollo/react-hooks';
 import { Trans, withTranslation } from 'i18n';
 import { WithTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { DeepMap, FieldError, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { viPhoneNumberRegex } from 'src/assets/regex/viPhoneNumber';
@@ -32,26 +32,33 @@ const LoginForm = ({ t }: WithTranslation): JSX.Element => {
 
   const { register, handleSubmit } = useForm<Inputs>();
 
-  const [login] = useMutation<LoginData, LoginVars>(LOGIN_USER, {
-    onCompleted: (data) => {
-      localStorage.setItem('key', data.login.token);
-      closeLoginModal();
-      getUser();
+  const [login, { data, error }] = useMutation<LoginData, LoginVars>(LOGIN_USER);
 
-      if (router.pathname === '/products' || router.pathname === '/products/[productId]') {
-        router.reload();
-      } else {
-        router.push('/products');
-      }
-    },
-    onError: (error) => {
-      console.log('Login error:', { error });
+  // onCompleted
+  useEffect(() => {
+    if (!data) return;
 
-      toast.error(t(`errors:code_${error.graphQLErrors[0].extensions.code}`));
+    localStorage.setItem('token', data.login.token);
+    closeLoginModal();
+    getUser();
+
+    if (router.pathname === '/products' || router.pathname === '/products/[productId]') {
+      router.reload();
+    } else {
+      router.push('/products');
     }
-  });
+  }, [data]);
 
-  const onError = (errors: DeepMap<Inputs, FieldError>) => {
+  // onError (GraphQL)
+  useEffect(() => {
+    if (!error) return;
+
+    console.log('Login error:', { error });
+
+    toast.error(t(`errors:code_${error.graphQLErrors[0].extensions.code}`));
+  }, [error]);
+
+  const onFormError = (errors: DeepMap<Inputs, FieldError>) => {
     Object.keys(errors).forEach((field) => toast.error(errors[field].message));
   };
 
@@ -68,7 +75,7 @@ const LoginForm = ({ t }: WithTranslation): JSX.Element => {
 
   return (
     <div>
-      <form className="new_account" onSubmit={handleSubmit(onSubmit, onError)}>
+      <form className="new_account" onSubmit={handleSubmit(onSubmit, onFormError)}>
         <Input
           name="username"
           ref={register({

@@ -1,7 +1,7 @@
 import { useMutation } from '@apollo/react-hooks';
 import { withTranslation } from 'i18n';
 import { WithTranslation } from 'next-i18next';
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import ModalBase from 'src/components/Layout/Modal/ModalBase';
 import { useCart } from 'src/contexts/Cart';
@@ -28,21 +28,28 @@ const ConfirmDeleteModal: FC<Props> = (props) => {
 
   const { refetchCart } = useCart();
 
-  const [deleteCart] = useMutation<DeleteCartData, DeleteCartVars>(DELETE_CART, {
-    onError: (error) => {
-      console.log('Delete cart error:', { error });
-      toast.error(t(`errors:code_${error.graphQLErrors[0].extensions.code}`));
-    },
-    onCompleted: () => {
-      toast.success(t('cart:delete_success'));
+  const [deleteCart, { data, error }] = useMutation<DeleteCartData, DeleteCartVars>(DELETE_CART);
 
-      refetchCart();
+  // onCompleted
+  useEffect(() => {
+    if (!data) return;
 
-      onClose();
-    }
-  });
+    toast.success(t('cart:delete_success'));
 
-  const handleDelete = () => {
+    refetchCart();
+
+    onClose();
+  }, [data]);
+
+  // onError
+  useEffect(() => {
+    if (!error) return;
+
+    console.log('Delete cart error:', { error });
+    toast.error(t(`errors:code_${error.graphQLErrors[0].extensions.code}`));
+  }, [error]);
+
+  const onConfirmDelete = () => {
     deleteCart({
       variables: {
         _id: _id
@@ -100,7 +107,7 @@ const ConfirmDeleteModal: FC<Props> = (props) => {
             <button
               type="button"
               className="swal2-confirm btn btn-primary px-4 m-2"
-              onClick={handleDelete}>
+              onClick={onConfirmDelete}>
               Có
             </button>
           </div>

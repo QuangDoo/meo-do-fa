@@ -1,5 +1,5 @@
 import { withTranslation } from 'i18n';
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { emailRegex } from 'src/assets/regex/email';
 import { viPhoneNumberRegex } from 'src/assets/regex/viPhoneNumber';
 import Checkbox from 'src/components/Form/Checkbox';
@@ -157,4 +157,4 @@ const DeliveryInfo = (props, register): JSX.Element => {
   );
 };
 
-export default withTranslation(['errors'], { withRef: true })(DeliveryInfo);
+export default forwardRef(DeliveryInfo);

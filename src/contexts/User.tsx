@@ -17,13 +17,17 @@ type ContextValue = {
 const UserContext = createContext<ContextValue>(null);
 
 const UserProvider = withApollo({ ssr: true })(({ children }: Props) => {
-  const [getUser, { data }] = useLazyQuery<GetUserData, undefined>(GET_USER, {
-    onError: (error) => {
-      console.log('Get user error:', { error });
-    }
-  });
+  const [getUser, { data, error }] = useLazyQuery<GetUserData, undefined>(GET_USER);
 
   const [token] = useLocalStorage('token');
+
+  useEffect(() => {
+    if (!error) return;
+
+    if (error.graphQLErrors[0].extensions.code === 500) {
+      localStorage.removeItem('token');
+    }
+  }, [error]);
 
   useEffect(() => {
     if (!token) return;

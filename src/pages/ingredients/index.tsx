@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/react-hooks';
 import slugify from '@sindresorhus/slugify';
-import React from 'react';
+import React, { useEffect } from 'react';
 import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
@@ -13,11 +13,14 @@ import {
 import withApollo from 'src/utils/withApollo';
 
 function Ingredients(): JSX.Element {
-  const { data } = useQuery<GetAllIngredientsData, undefined>(GET_ALL_INGREDIENTS, {
-    onError: (error) => {
-      console.log('Get ingredients error:', error);
-    }
-  });
+  const { data, error } = useQuery<GetAllIngredientsData, undefined>(GET_ALL_INGREDIENTS);
+
+  // onError
+  useEffect(() => {
+    if (!error) return;
+
+    console.log('Get ingredients error:', error);
+  }, [error]);
 
   return (
     <>

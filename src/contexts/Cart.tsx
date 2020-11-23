@@ -16,6 +16,9 @@ type Cart = {
   productName: string;
   price: number;
   oldPrice: number;
+  product: {
+    image_512: string;
+  };
 };
 
 type Value = {
@@ -29,12 +32,15 @@ const CartContext = createContext<Value>(null);
 CartContext.displayName = 'CartContext';
 
 const CartProvider = withApollo({ ssr: true })(({ children }: Props) => {
-  const [getCart, { data }] = useLazyQuery<GetCartData, undefined>(GET_CART, {
-    onError: (error) => {
-      console.log('Get cart error: ', error);
-      toast.error('Get cart error: ' + error);
-    }
+  const [getCart, { data, error }] = useLazyQuery<GetCartData, undefined>(GET_CART, {
+    fetchPolicy: 'network-only'
   });
+
+  useEffect(() => {
+    if (!error) return;
+
+    toast.error(error);
+  }, [error]);
 
   const [token] = useLocalStorage('token');
 
