@@ -24,18 +24,6 @@ function Jobs(props: Props): JSX.Element {
           </div>
           <div className="jobs">
             {jobs?.map((job, index) => (
-              // <a key={index} href={`/jobs/${job?.id}`} className="col-12 col-sm-6 col-md-6 col-lg-6">
-              //   <div className="mb-2">
-              //     <div className="jobs-item p-3 bg-white">
-              //       <div className="jobs-item__title mb-2">{job?.jobName}</div>
-              //       <div className="jobs-item__readmore text-small">
-              //         {`More Details `}
-              //         <span><i className="fas fa-long-arrow-alt-right"></i></span>
-              //       </div>
-              //     </div>
-              //   </div>
-              // </a>
-
               <a key={index} href={`/career/jobs/${job?.id}`} className="job-item">
                 <div className="jobs-item p-3 bg-white">
                   <div className="jobs-item__title mb-2">{job?.jobName}</div>

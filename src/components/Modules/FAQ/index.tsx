@@ -1,6 +1,6 @@
 import React, { ReactChild } from 'react'
 import Contact from './Contact'
-import Sidebar from './Sidebar'
+import FAQSidebar from '../../Layout/SideBar/FAQSidebar'
 import InputSearch from '../News/InputSearch'
 
 type Props = {
@@ -10,7 +10,6 @@ type Props = {
   categories?: any
 }
 export default function FAQ(props: Props): JSX.Element {
-
   const categories = [
     { href: "/account", title:"Câu hỏi về tài khoản"},
     { href: "/checkout", title:"Câu hỏi về thanh toán"},
@@ -19,7 +18,6 @@ export default function FAQ(props: Props): JSX.Element {
     { href: "/account", title:"Câu hỏi về đơn hàng và đặt hàng"},
     { href: "/account", title:"Câu hỏi về tài khoản"}
   ]
-
 
   return (
     <>
@@ -44,7 +42,7 @@ export default function FAQ(props: Props): JSX.Element {
 
           <div className="col-sm-12 col-lg-3 order-lg-1">
             <div className="wrapper mb-5">
-              <Sidebar categories={categories} />
+              <FAQSidebar categories={categories} />
             </div>
           </div>
         </div>

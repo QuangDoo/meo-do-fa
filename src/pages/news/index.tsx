@@ -78,7 +78,19 @@ const newsdata = [
     PageMaker including versions of Lorem Ipsum.`,
     imgUrl: 'https://i1.sndcdn.com/avatars-xpq4R8nRHWRL7NiZ-pyJFyg-t500x500.jpg'
   },
+  
 ]
+
+const imgUrl = 'https://mir-s3-cdn-cf.behance.net/project_modules/disp/c596bb11090425.560f16f7207b1.jpg';
+const links = [
+  { href: '', title: 'Contrary  Lorem Ipsum is not simply random text' },
+  { href: '', title: 'Contrary to text Contrary to populartext Contrary to populartext' },
+  { href: '', title: 'Contrary to popular belief, Lorem random text Contrary to populartext' },
+  { href: '', title: 'Contrary Ipsum is not simply random text Contrary to populartext' },
+  { href: '', title: 'Contrary is not simply random text Contrary to populartext' },
+  { href: '', title: 'Contrary to to populartext Contrary to populartext Contrary to populartext' }
+];
+
 
 const NewsPage = (): JSX.Element => {
   return (
@@ -91,7 +103,10 @@ const NewsPage = (): JSX.Element => {
 
       <Nav />
 
-      <News>
+      <News 
+        bannerImgUrl={imgUrl}
+        links={links}
+      >
         <NewsList news={newsdata}/>
       </News>
       

@@ -1,9 +1,11 @@
 import React, { ReactChild } from 'react'
 import PageLayout from 'src/components/Layout/PageLayout'
-import NewsSidebar from './NewsSidebar'
+import NewsSidebar from '../../Layout/SideBar/NewsSidebar'
 
 type Props = {
   children?: ReactChild
+  bannerImgUrl?: string
+  links?: any
 }
 
 export default function News(props: Props) {
@@ -18,7 +20,10 @@ export default function News(props: Props) {
           </div>
         </div>
         <div className="col-sm-12 col-lg-3 col-left__divider">
-          <NewsSidebar />
+          <NewsSidebar 
+            bannerImgUrl={props.bannerImgUrl} 
+            links={props.links} 
+          />
         </div>
       </div>
     </PageLayout>

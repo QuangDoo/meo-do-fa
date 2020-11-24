@@ -247,6 +247,7 @@
   width: 100%;
   max-height: 500px;
   position: relative;
+  overflow: hidden;
 }
 .banner-conent, .banner-overlay{
   position: absolute;
@@ -349,11 +350,14 @@
   text-transform: capitalize;
   font-weight: 800;
 }
-
 .banner-img{
   padding: 1rem;
   background-image: url('https://miro.medium.com/max/940/1*ZGieIL8v20V54fbqZvabbQ.jpeg');
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
+  overflow: hidden;
+}
+.banner-text{
+  font-weight: bold;
 }
