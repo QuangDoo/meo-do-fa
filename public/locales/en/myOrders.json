@@ -1,0 +1,14 @@
+{
+    "date_order": "Date order:",
+    "expected_date": "Expected date:",
+    "billing_export": "Billing export",
+    "report": "Send report",
+    "my_orders": "My order",
+    "vat_invoice": "see information about VAT invoice",
+    "here": "here",
+    "back_to_products_page": "Back to Products page",
+    "all_order": "All",
+    "wait_for_confirm": "Wait for confirm",
+    "complete": "Complete",
+    "canceled": "Canceled"
+}

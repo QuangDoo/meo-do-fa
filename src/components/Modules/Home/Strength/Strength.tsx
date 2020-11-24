@@ -1,6 +1,9 @@
+import { useTranslation } from 'i18n';
 import React from 'react';
 
 const Strength = (): JSX.Element => {
+  const { t } = useTranslation(['strength']);
+
   return (
     <section className="rockland-whyus">
       <div className="container">
@@ -12,8 +15,8 @@ const Strength = (): JSX.Element => {
               </div>
               <div className="col-xl-12 col-md-8 col-8 description">
                 <div className="content">
-                  <div className="title">sản phẩm chất lượng</div>
-                  <div className="sub-title">từ nhà máy, nhà phân phối uy tín</div>
+                  <div className="title">{t('strength:title1')}</div>
+                  <div className="sub-title">{t('strength:content1')}</div>
                 </div>
               </div>
             </div>
@@ -25,8 +28,8 @@ const Strength = (): JSX.Element => {
               </div>
               <div className="col-xl-12 col-md-8 col-8 description">
                 <div className="content">
-                  <div className="title">tin tức chuyên môn</div>
-                  <div className="sub-title">cập nhật tin tức mới, và chính xác</div>
+                  <div className="title">{t('strength:title2')}</div>
+                  <div className="sub-title">{t('strength:content2')}</div>
                 </div>
               </div>
             </div>
@@ -38,8 +41,8 @@ const Strength = (): JSX.Element => {
               </div>
               <div className="col-xl-12 col-md-8 col-8 description">
                 <div className="content">
-                  <div className="title">giao hàng nhanh</div>
-                  <div className="sub-title">đảm bảo trong 36 giờ, an toàn và tin cậy</div>
+                  <div className="title">{t('strength:title3')}</div>
+                  <div className="sub-title">{t('strength:content3')}</div>
                 </div>
               </div>
             </div>
@@ -51,8 +54,8 @@ const Strength = (): JSX.Element => {
               </div>
               <div className="col-xl-12 col-md-8 col-8 description">
                 <div className="content">
-                  <div className="title">đội ngũ chuyên nghiệp</div>
-                  <div className="sub-title">tư vấn miễn phí, tận tình và chu đáo</div>
+                  <div className="title">{t('strength:title4')}</div>
+                  <div className="sub-title">{t('strength:content4')}</div>
                 </div>
               </div>
             </div>

@@ -1,4 +1,15 @@
 {
   "quantity_smaller_than_1": "Số lượng sản phẩm không thể nhỏ hơn 1.",
-  "delete_success": "Đã xóa sản phẩm khỏi giỏ hàng."
+  "delete_success": "Đã xóa sản phẩm khỏi giỏ hàng.",
+  "cart": "Giỏ hàng",
+  "back_to_products": "Để thêm sản phẩm vào giỏ hàng, vui lòng quay về trang",
+  "products": "Sản phẩm",
+  "other_note": "Ghi chú khác",
+  "note": "Trường hợp không tìm được thuốc mong muốn, quý khách vui lòng điền yêu cầu bên dưới. Chúng tối sẽ liên hệ mua thuốc và thông báo sớm nhất có thể. ",
+  "update_note": "Cập nhật ghi chú",
+  "customer_note": "Ghi chú của khách hàng",
+  "quantity": "Số lượng",
+  "total": "Tổng tiền",
+  "continue_payment": "Tiếp tục thanh toán",
+  "continue_order": "Tiếp tục đặt hàng"
 }

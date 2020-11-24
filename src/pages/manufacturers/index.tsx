@@ -1,4 +1,6 @@
 import { useQuery } from '@apollo/react-hooks';
+import { useTranslation } from 'i18n';
+import { withTranslation } from 'next-i18next';
 import React, { useEffect } from 'react';
 import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
@@ -13,7 +15,7 @@ import withApollo from 'src/utils/withApollo';
 
 function Manufacturers(): JSX.Element {
   const { data, error } = useQuery<GetAllManufacturersData, undefined>(GET_ALL_MANUFACTURERS);
-
+  const { t } = useTranslation(['manufacturers']);
   // onError
   useEffect(() => {
     if (!error) return;
@@ -24,7 +26,7 @@ function Manufacturers(): JSX.Element {
   return (
     <>
       <Head>
-        <title>Tất cả nhà sản xuất - Medofa</title>
+        <title>{t('manufacturers:title')} - Medofa</title>
       </Head>
 
       <Header />

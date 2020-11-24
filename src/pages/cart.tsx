@@ -1,4 +1,5 @@
 import { useMutation } from '@apollo/react-hooks';
+import { useTranslation } from 'i18n';
 import React, { useEffect } from 'react';
 import { toast } from 'react-toastify';
 import Footer from 'src/components/Layout/Footer';
@@ -12,6 +13,7 @@ import withApollo from 'src/utils/withApollo';
 
 function Cart(): JSX.Element {
   const { carts, totalQty, totalPrice, refetchCart } = useCart();
+  const { t } = useTranslation(['cart']);
 
   useEffect(() => {
     refetchCart();
@@ -51,7 +53,7 @@ function Cart(): JSX.Element {
         <div className="cart">
           <div className="row">
             <div className="col-12 mb-3">
-              <h1 className="h3">Giỏ hàng</h1>
+              <h1 className="h3">{t('cart:cart')}</h1>
               {/* <small className="text-danger">
                 <i className="fas fa-exclamation-circle mr-1" />
                 Lưu ý: Giỏ hàng có sản phẩm khuyến mãi. Sau khi thanh toán, đơn hàng sẽ không thể
@@ -84,29 +86,25 @@ function Cart(): JSX.Element {
               </div>
               <div className="elevated text-muted p-3 mb-4">
                 <i className="fas fa-exclamation-circle mr-1" />
-                Để thêm sản phẩm vào giỏ hàng, vui lòng quay về trang{' '}
-                <a href="/products">Sản phẩm</a>
+                {t('cart:back_to_products')} <a href="/products">{t('cart:products')}</a>
               </div>
               <div className="elevated p-3">
                 <div className="mb-3">
-                  <h2 className="h6">Ghi chú khác</h2>
+                  <h2 className="h6">{t('cart:other_note')}</h2>
                   <div className="text-muted">
-                    <label htmlFor="note">
-                      Trường hợp không tìm được thuốc mong muốn, Quý khách vui lòng điền yêu cầu bên
-                      dưới. Chúng tôi sẽ liên hệ mua thuốc và báo giá sớm nhất có thể.
-                    </label>
+                    <label htmlFor="note">{t('cart:note')}</label>
                   </div>
                   <textarea
                     name="note"
                     id="note"
                     rows={4}
-                    placeholder="Ghi chú của khách hàng"
+                    placeholder={t('cart:customer_note')}
                     className="form-control"
                     defaultValue={''}
                   />
                 </div>
                 <div className="w-100 text-right">
-                  <button className="btn btn-secondary">Cập nhật ghi chú</button>
+                  <button className="btn btn-secondary">{t('cart:update_note')}</button>
                 </div>
               </div>
             </div>
@@ -116,7 +114,7 @@ function Cart(): JSX.Element {
                   <div className="col-md-12 col-lg-4 cart__info-quantity">
                     <div className="cart__info-item text-center">
                       <div className="mb-2">
-                        <small>Số lượng</small>
+                        <small>{t('cart:quantity')}</small>
                       </div>
                       <div className="cart__quantity text-secondary">
                         <b>{totalQty}</b>
@@ -126,7 +124,7 @@ function Cart(): JSX.Element {
                   <div className="col-md-12 col-lg-8 cart__info-total">
                     <div className="cart__info-item text-center text-lg-right">
                       <div className="mb-2">
-                        <small>Tổng tiền</small>
+                        <small>{t('cart:total')}</small>
                       </div>
                       <div className="cart__total">
                         {totalPrice.toLocaleString('de-DE')} <span className="unit">đ</span>
@@ -153,12 +151,12 @@ function Cart(): JSX.Element {
                   <div className="col-12">
                     <div className="cart__info-item">
                       <a className="btn btn-secondary btn-block" href="/checkout">
-                        <button onClick={handleCheckoutClick}> Tiếp tục thanh toán</button>
+                        <button onClick={handleCheckoutClick}> {t('cart:continue_payment')}</button>
                       </a>
                     </div>
                   </div>
                 </div>
-                <a href="/products">&lt;&lt; Tiếp tục đặt hàng</a>
+                <a href="/products">&lt;&lt; {t('cart:continue_order')}</a>
               </div>
             </div>
           </div>
