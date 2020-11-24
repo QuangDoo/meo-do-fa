@@ -6,6 +6,7 @@ import TransferPaymentInfo from './TransferPaymentInfo';
 import TransferPaymentLabel from './TransferPaymentLabel';
 
 const PaymentOption = (props, ref): JSX.Element => {
+  if (props) return;
   return (
     <InputCard title="Hình thức thanh toán">
       <Radio
@@ -16,7 +17,7 @@ const PaymentOption = (props, ref): JSX.Element => {
         options={[
           {
             label: 'Thanh toán tiền mặt khi nhận hàng',
-            value: props.paymentMethods[1].id
+            value: props?.paymentMethods[1].id
           },
           {
             label: <TransferPaymentLabel />,

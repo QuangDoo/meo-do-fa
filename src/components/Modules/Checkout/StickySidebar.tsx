@@ -25,7 +25,7 @@ const StickySidebar = (props, ref): JSX.Element => {
       <div className="elevated checkout__info row no-gutters mb-3">
         <SidebarItem label="Tạm tính">
           <div className="d-flex">
-            {props.counsel?.totalPrice}
+            {props.counsel?.totalPrice.toLocaleString('de-DE')}
             <span className="unit">đ</span>
           </div>
         </SidebarItem>
@@ -48,7 +48,7 @@ const StickySidebar = (props, ref): JSX.Element => {
 
         <SidebarItem label="Thành tiền" containerClass="checkout__info-total">
           <span className="checkout__total">
-            {props.counsel?.totalPrice}
+            {props.counsel?.totalPrice.toLocaleString('de-DE')}
             <span className="unit">đ</span>
           </span>
         </SidebarItem>

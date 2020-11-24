@@ -9,8 +9,8 @@ import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
 import Nav from 'src/components/Layout/Nav';
 import { ProductsContainer } from 'src/components/Modules/Home/ProductsContainer';
-import Tab from 'src/components/Modules/ProductDetail/ProductInformation/Tab';
 import { ProductsCarousel } from 'src/components/Modules/ProductsCarousel';
+import Tab from 'src/components/Tab/Tab';
 import {
   GET_INGREDIENT_DETAILS,
   GetIngredientDetailsData,
@@ -72,7 +72,18 @@ const IngredientDetails = ({ t }: WithTranslation): JSX.Element => {
             <h1 className="mb-3">{detailsData?.getIngredient.name}</h1>
           </div>
 
-          <Tab {...detailsData?.getIngredient} />
+          <Tab
+            {...detailsData?.getIngredient}
+            labelInfo="Thông tin chung"
+            labelIndication="Chỉ định"
+            labelContraindion="Chống chỉ định"
+            labelDirection="Hướng dẫn sử dụng"
+            labelInteraction="Tương tác thuốc"
+            labelPreservation="Bảo quản"
+            labelOverdose="Quá liều"
+            labelPharmacodynamics="Dược lực học"
+            labelPharmacokinetics="Dược động học"
+          />
         </div>
       </main>
 
