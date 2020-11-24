@@ -4,8 +4,9 @@ import { toast } from 'react-toastify';
 import Button from 'src/components/Form/Button';
 import Checkbox from 'src/components/Form/Checkbox';
 import Input from 'src/components/Form/Input';
-import Textarea from '../../Form/Textarea'
-import InputFile from '../../Form/InputFile'
+
+import InputFile from '../../Form/InputFile';
+import Textarea from '../../Form/Textarea';
 
 type Inputs = {
   username: string;
@@ -13,15 +14,14 @@ type Inputs = {
 };
 
 const CareerForm = (): JSX.Element => {
-
   const { register, handleSubmit } = useForm<Inputs>();
- 
+
   const onFormError = (errors: DeepMap<Inputs, FieldError>) => {
     Object.keys(errors).forEach((field) => toast.error(errors[field].message));
   };
 
   const onSubmit = (data: Inputs) => {
-    console.log(data)
+    console.log(data);
   };
 
   return (
@@ -32,14 +32,14 @@ const CareerForm = (): JSX.Element => {
           containerClass="mb-4"
           iconClass="icomoon icon-user"
           required
-          placeholder={('Full Name')}
+          placeholder={'Full Name'}
         />
         <Input
           name="email"
           containerClass="mb-3"
           required
           iconClass="far fa-envelope"
-          placeholder={('Email')}
+          placeholder={'Email'}
           type="email"
         />
         <Input
@@ -47,27 +47,25 @@ const CareerForm = (): JSX.Element => {
           containerClass="mb-3"
           required
           iconClass="fas fa-phone"
-          placeholder={('Phone Number')}
+          placeholder={'Phone Number'}
           type="number"
         />
-        <InputFile 
-          name="Upload Cv"
-          containerClass="mb-3"
-          iconClass="fas fa-file"
-        />
-        <Textarea 
+        <InputFile name="Upload Cv" containerClass="mb-3" iconClass="fas fa-file" />
+        <Textarea
           name="cover"
           containerClass="mb-3"
           iconClass="far fa-file-alt"
-          placeholder={('Cover letter')}
+          placeholder={'Cover letter'}
         />
         <Checkbox
           name="apply"
-          label={('By using this form you agree with the storage and handling of your data by this website. *')}
+          label={
+            'By using this form you agree with the storage and handling of your data by this website. *'
+          }
           containerClass="form-group align-self-start"
           labelClass="pt-1"
         />
-        
+
         <Button type="submit" variant="gradient" block className="mb-5">
           apply
         </Button>
@@ -76,5 +74,4 @@ const CareerForm = (): JSX.Element => {
   );
 };
 
-
-export default CareerForm
+export default CareerForm;

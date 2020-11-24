@@ -4,8 +4,8 @@ import Footer from '../../components/Layout/Footer';
 import Head from '../../components/Layout/Head';
 import Header from '../../components/Layout/Header';
 import Nav from '../../components/Layout/Nav';
+import FAQ from '../../components/Modules/FAQ/index';
 import Questions from '../../components/Modules/FAQ/Questions';
-import FAQ from '../../components/Modules/FAQ/index'
 
 const Help = (): JSX.Element => {
   const questions = [
@@ -35,7 +35,7 @@ const Help = (): JSX.Element => {
           <Questions questions={questions} />
         </>
       </FAQ>
-          
+
       <Footer />
     </>
   );

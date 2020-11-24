@@ -31,11 +31,10 @@ const CareerModal = (): JSX.Element => {
 
       <ModalWithHeader
         open={loginIsOpen}
-        title={('Apply for this position')}
+        title={'Apply for this position'}
         onClose={closeModal}
-        className="authentication login"
-      >
-          <CareerForm />
+        className="authentication login">
+        <CareerForm />
       </ModalWithHeader>
     </>
   );

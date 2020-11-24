@@ -4,8 +4,8 @@ import Footer from '../../components/Layout/Footer';
 import Head from '../../components/Layout/Head';
 import Header from '../../components/Layout/Header';
 import Nav from '../../components/Layout/Nav';
-import News from '../../components/Modules/News'
-import NewsList from '../../components/Modules/News/NewsList'
+import News from '../../components/Modules/News';
+import NewsList from '../../components/Modules/News/NewsList';
 
 const newsdata = [
   {
@@ -77,11 +77,11 @@ const newsdata = [
     Lorem Ipsum passages, and more recently with desktop publishing software like Aldus 
     PageMaker including versions of Lorem Ipsum.`,
     imgUrl: 'https://i1.sndcdn.com/avatars-xpq4R8nRHWRL7NiZ-pyJFyg-t500x500.jpg'
-  },
-  
-]
+  }
+];
 
-const imgUrl = 'https://mir-s3-cdn-cf.behance.net/project_modules/disp/c596bb11090425.560f16f7207b1.jpg';
+const imgUrl =
+  'https://mir-s3-cdn-cf.behance.net/project_modules/disp/c596bb11090425.560f16f7207b1.jpg';
 const links = [
   { href: '', title: 'Contrary  Lorem Ipsum is not simply random text' },
   { href: '', title: 'Contrary to text Contrary to populartext Contrary to populartext' },
@@ -90,7 +90,6 @@ const links = [
   { href: '', title: 'Contrary is not simply random text Contrary to populartext' },
   { href: '', title: 'Contrary to to populartext Contrary to populartext Contrary to populartext' }
 ];
-
 
 const NewsPage = (): JSX.Element => {
   return (
@@ -103,13 +102,10 @@ const NewsPage = (): JSX.Element => {
 
       <Nav />
 
-      <News 
-        bannerImgUrl={imgUrl}
-        links={links}
-      >
-        <NewsList news={newsdata}/>
+      <News bannerImgUrl={imgUrl} links={links}>
+        <NewsList news={newsdata} />
       </News>
-      
+
       <Footer />
     </>
   );

@@ -11,7 +11,6 @@ const Textarea = (props: Props, ref): JSX.Element => {
   const { containerClass = '' } = props;
 
   return (
-      
     <div className={`input-group form__input-group ${containerClass} flex-column`}>
       <i className={`${props.iconClass} form__input-icon`}></i>
       <textarea

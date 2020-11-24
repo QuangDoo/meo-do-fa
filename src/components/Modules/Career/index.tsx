@@ -49,7 +49,7 @@ type Job = {
 
 function Career(props): JSX.Element {
   const [tempJobs, setTempJobs] = useState<Job[]>(jobs);
-  console.log(tempJobs)
+  console.log(tempJobs);
   const onFilter = (key) => {
     const temp = jobs.filter((job) => job.jobName.toLowerCase().indexOf(key?.toLowerCase()) !== -1);
     setTempJobs(temp);

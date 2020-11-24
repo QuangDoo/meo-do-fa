@@ -1,23 +1,24 @@
-import React, { ReactChild } from 'react'
-import Contact from './Contact'
-import FAQSidebar from '../../Layout/SideBar/FAQSidebar'
-import InputSearch from '../News/InputSearch'
+import React, { ReactChild } from 'react';
+
+import FAQSidebar from '../../Layout/SideBar/FAQSidebar';
+import InputSearch from '../News/InputSearch';
+import Contact from './Contact';
 
 type Props = {
-  children?: ReactChild
-  questions?: {}
-  title?: string
-  categories?: any
-}
+  children?: ReactChild;
+  questions?: any;
+  title?: string;
+  categories?: any;
+};
 export default function FAQ(props: Props): JSX.Element {
   const categories = [
-    { href: "/account", title:"Câu hỏi về tài khoản"},
-    { href: "/checkout", title:"Câu hỏi về thanh toán"},
-    { href: "/account", title:"Câu hỏi về vận chuyển"},
-    { href: "/account", title:"Câu hỏi về đổi trả và hoàn tiền"},
-    { href: "/account", title:"Câu hỏi về đơn hàng và đặt hàng"},
-    { href: "/account", title:"Câu hỏi về tài khoản"}
-  ]
+    { href: '/account', title: 'Câu hỏi về tài khoản' },
+    { href: '/checkout', title: 'Câu hỏi về thanh toán' },
+    { href: '/account', title: 'Câu hỏi về vận chuyển' },
+    { href: '/account', title: 'Câu hỏi về đổi trả và hoàn tiền' },
+    { href: '/account', title: 'Câu hỏi về đơn hàng và đặt hàng' },
+    { href: '/account', title: 'Câu hỏi về tài khoản' }
+  ];
 
   return (
     <>
@@ -50,5 +51,5 @@ export default function FAQ(props: Props): JSX.Element {
 
       <Contact />
     </>
-  )
+  );
 }

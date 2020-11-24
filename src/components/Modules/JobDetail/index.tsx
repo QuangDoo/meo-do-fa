@@ -1,6 +1,6 @@
 import React from 'react';
 
-import CareerModal from '../CareerModal'
+import CareerModal from '../CareerModal';
 
 type Props = {
   name?: string;
@@ -34,24 +34,24 @@ export default function JobDetail(props: Props): JSX.Element {
           </div>
           <div className="job-department-desc text-small">{props.description}</div>
         </div>
-      
+
         <div className="row job-detail">
-            <strong className="text-primary">Job description:</strong>
-            <ul className="ml-5">
-              {props?.jobDescription.map((description, index) => (
-                <li className="text-small" key={index}>
-                  {description}
-                </li>
-              ))}
-            </ul>
-            <strong className="text-primary">Requirements:</strong>
-            <ul className="ml-5">
-              {props?.requirements.map((requirement, index) => (
-                <li className="text-small" key={index}>
-                  {requirement}
-                </li>
-              ))}
-            </ul>
+          <strong className="text-primary">Job description:</strong>
+          <ul className="ml-5">
+            {props?.jobDescription.map((description, index) => (
+              <li className="text-small" key={index}>
+                {description}
+              </li>
+            ))}
+          </ul>
+          <strong className="text-primary">Requirements:</strong>
+          <ul className="ml-5">
+            {props?.requirements.map((requirement, index) => (
+              <li className="text-small" key={index}>
+                {requirement}
+              </li>
+            ))}
+          </ul>
         </div>
         <div className="row job-detail">
           <CareerModal />

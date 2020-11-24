@@ -5,9 +5,9 @@ import NewsBanner from '../../Modules/News/NewsBanner';
 import ResentPostItem from '../../Modules/News/ResentPostItem';
 
 type Props = {
-  bannerImgUrl?: string 
-  links?: any
-}
+  bannerImgUrl?: string;
+  links?: any;
+};
 
 function FAQSidebar(props: Props): JSX.Element {
   function renderPost(links): JSX.IntrinsicElements {

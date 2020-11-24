@@ -8,7 +8,7 @@ import Nav from '../../components/Layout/Nav';
 import NewsDetail from '../../components/Modules/NewsDetail/NewsDetail';
 
 const data = {
-  author: "Admin",
+  author: 'Admin',
   categories: [
     { href: '/news', title: 'ĐỒNG HÀNH CÙNG THUOCSI' },
     { href: '/news', title: 'TIN TỨC THUOCSI.VN' }
@@ -66,7 +66,8 @@ const data = {
     </div>`
 };
 
-const imgUrl = 'https://mir-s3-cdn-cf.behance.net/project_modules/disp/c596bb11090425.560f16f7207b1.jpg';
+const imgUrl =
+  'https://mir-s3-cdn-cf.behance.net/project_modules/disp/c596bb11090425.560f16f7207b1.jpg';
 const links = [
   { href: '', title: 'Contrary  Lorem Ipsum is not simply random text' },
   { href: '', title: 'Contrary to text Contrary to populartext Contrary to populartext' },
@@ -87,19 +88,15 @@ const NewsPage = (): JSX.Element => {
 
       <Nav />
 
-      <News
-        bannerImgUrl={imgUrl}
-        links={links}
-      >
+      <News bannerImgUrl={imgUrl} links={links}>
         <NewsDetail
           imgUrl={data.imgUrl}
           categories={data.categories}
           description={data.description}
           author={data.author}
-          title={data.title}
-        ></NewsDetail>
+          title={data.title}></NewsDetail>
       </News>
-      
+
       <Footer />
     </>
   );

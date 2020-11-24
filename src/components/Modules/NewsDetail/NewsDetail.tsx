@@ -1,15 +1,13 @@
 import Link from 'next/link';
 import React from 'react';
 
-
-
 type Props = {
   categories?: any;
   title?: string;
   description?: string;
   createAt?: string;
   author?: string;
-  imgUrl?: string
+  imgUrl?: string;
 };
 function NewsDetail(props: Props) {
   function createMarkup() {

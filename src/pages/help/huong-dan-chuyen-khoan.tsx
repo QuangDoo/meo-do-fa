@@ -4,8 +4,8 @@ import Footer from '../../components/Layout/Footer';
 import Head from '../../components/Layout/Head';
 import Header from '../../components/Layout/Header';
 import Nav from '../../components/Layout/Nav';
+import FAQ from '../../components/Modules/FAQ';
 import QuestionDetail from '../../components/Modules/FAQ/QuestionDetail';
-import FAQ from '../../components/Modules/FAQ'
 
 const HelpDetail = (): JSX.Element => {
   const question = {
@@ -50,7 +50,7 @@ const HelpDetail = (): JSX.Element => {
           status={question.status}
         />
       </FAQ>
-         
+
       <Footer />
     </>
   );
