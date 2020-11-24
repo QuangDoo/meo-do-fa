@@ -14,7 +14,6 @@
 }
 @media screen and( max-width: 576px){
   .job-department-desc{
-    max-width: 100% !important;
     text-align: left;
   }
   .job-department-info{
@@ -297,13 +296,12 @@
 }
 .job-detail{
   padding: 1rem 0;
+  padding: 1rem 0;
+  display: flex;
+  flex-direction: column;
 }
 .job-label{
   margin-right: 0.5rem;
-}
-.job-department-desc{
-  max-width: 600px;
-  margin: 0 auto;
 }
 .job-detail__wrapper{
   max-width: 800px;
@@ -360,4 +358,13 @@
 }
 .banner-text{
   font-weight: bold;
+}
+.form__input-group textarea{
+  padding-left: 2.75em;
+  border-top-left-radius: 0.25rem !important;
+  border-bottom-left-radius: 0.25rem !important;
+  width: 100%;
+}
+.authentication .text-small{
+  font-size: 0.8rem!important;
 }
