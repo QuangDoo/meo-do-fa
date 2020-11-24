@@ -18,6 +18,31 @@ export type GetCartData = {
   };
 };
 
+export type GetOrderDetail = {
+  getOrderDetail: {
+    id: number;
+    name: string;
+    date_order: Date;
+    note: string;
+    delivery_count: number;
+    effective_date: Date;
+    expected_date: Date;
+    order_line: string[];
+    payment_method: string[];
+    partner_shipping_id: string[];
+    order_lines: {
+      id: number;
+      name: string;
+      price_tax: number;
+      price_subtotal: number;
+      product: {
+        name: string;
+        list_price: number;
+      };
+    };
+  }[];
+};
+
 export const GET_CART = gql`
   query {
     getCart {
@@ -57,6 +82,33 @@ export const GET_COUNSEL = gql`
       totalDcAmt
       totalShippingFee
       totalNetPrice
+    }
+  }
+`;
+
+export const GET_ORDER = gql`
+  query getOrderDetail($id: Int!) {
+    getOrderDetail(id: $id) {
+      id
+      name
+      date_order
+      note
+      delivery_count
+      effective_date
+      expected_date
+      order_line
+      payment_method
+      partner_shipping_id
+      order_lines {
+        id
+        name
+        price_tax
+        price_subtotal
+        product {
+          name
+          list_price
+        }
+      }
     }
   }
 `;

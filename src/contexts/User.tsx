@@ -24,7 +24,7 @@ const UserProvider = withApollo({ ssr: true })(({ children }: Props) => {
   useEffect(() => {
     if (!error) return;
 
-    if (error.graphQLErrors[0].extensions.code === 500) {
+    if (error.graphQLErrors[0]?.extensions.code === 500) {
       localStorage.removeItem('token');
     }
   }, [error]);
