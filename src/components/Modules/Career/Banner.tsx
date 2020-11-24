@@ -16,11 +16,10 @@ function Banner(props: Props) {
           <div className="banner-overlay"></div>
         </div>
         <div className="banner-conent container text-white text-center">
-          <h3 className="banner-title mb-1">Join us noW</h3>
-          <div className="banner-text mb-3">
+          <h3 className="banner-title mb-3 about-us__title">Join us now</h3>
+          <div className="banner-text">
             We build health ecosystems which no one else has dared to build.
           </div>
-          <button className="btn btn-primary">{`Let's Go!`}</button>
         </div>
       </section>
       <div className="container">

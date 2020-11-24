@@ -1,15 +1,14 @@
 import { useRouter } from 'next/router';
 import React from 'react';
+import News from 'src/components/Modules/News';
 
 import Footer from '../../components/Layout/Footer';
 import Head from '../../components/Layout/Head';
 import Header from '../../components/Layout/Header';
 import Nav from '../../components/Layout/Nav';
-import PageLayout from '../../components/Layout/PageLayout';
-import NewsSidebar from '../../components/Modules/News/NewsSidebar';
 import NewsDetail from '../../components/Modules/NewsDetail/NewsDetail';
 
-const News = (): JSX.Element => {
+const NewsPage = (): JSX.Element => {
   const router = useRouter();
   return (
     <>
@@ -21,28 +20,17 @@ const News = (): JSX.Element => {
 
       <Nav />
 
-      <PageLayout>
-        <div className="row">
-          <div className="col-sm-12 col-lg-9">
-            <div className="wrapper">
-              <div className="row">
-                <NewsDetail></NewsDetail>
-              </div>
-            </div>
-          </div>
-          <div className="col-sm-12 col-lg-3 col-left__divider">
-            <NewsSidebar />
-          </div>
-        </div>
-      </PageLayout>
-
+      <News>
+        <NewsDetail></NewsDetail>
+      </News>
+      
       <Footer />
     </>
   );
 };
 
-News.getInitialProps = async () => ({
+NewsPage.getInitialProps = async () => ({
   namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge']
 });
 
-export default News;
+export default NewsPage;

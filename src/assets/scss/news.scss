@@ -3,9 +3,7 @@
   .col-left__divider{
     border-left: 1px solid $gray-300;
   }
-  
 }
-
 @media screen and(max-width: 567px){
   .help-center{
     flex-direction: column !important;
@@ -81,7 +79,7 @@
   text-overflow: ellipsis;
 }
 .post-item__content-divider{
-  margin: 0.5rem auto;
+  margin: 1rem auto;
   height: 2px;
   width: 100%;
   max-width: 30px;
@@ -118,7 +116,6 @@
 }
 .news-search{
   display: flex;
-  margin-bottom: 1rem;
   height: 38px;
 }
 .news-search__input{
@@ -172,7 +169,7 @@
   color: $gray-800;
 }
 .news__divider{
-  margin: 0.75rem 0;
+  margin: 1rem 0;
   text-align: left;
   height: 3px;
   width: 100%;
@@ -248,20 +245,22 @@
 }
 .banner{
   width: 100%;
+  max-height: 500px;
   position: relative;
 }
 .banner-conent, .banner-overlay{
   position: absolute;
 }
 .banner-img img {
-  width: 100%;
+  max-width: 100%;
+  opacity: 0;
 }
 .banner-overlay{
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0,0,0,.33);
+  background: rgba(0,0,0,.53);
 }
 .banner-conent{
   top:50%;
@@ -329,4 +328,32 @@
 }
 .form-inner{
   padding: 2rem;
+}
+.help-contact{
+  display: inline-flex;
+  margin: 0 0.5rem;
+  align-items: center;
+}
+.help-contact i{
+  flex-shrink: 0;
+}
+.help-center{
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+}
+.help .news-search{
+  display: inline-flex;
+}
+.banner-title{
+  text-transform: capitalize;
+  font-weight: 800;
+}
+
+.banner-img{
+  padding: 1rem;
+  background-image: url('https://miro.medium.com/max/940/1*ZGieIL8v20V54fbqZvabbQ.jpeg');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }

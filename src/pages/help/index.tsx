@@ -1,14 +1,24 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import Footer from '../../components/Layout/Footer';
 import Head from '../../components/Layout/Head';
 import Header from '../../components/Layout/Header';
 import Nav from '../../components/Layout/Nav';
-import Contact from '../../components/Modules/FAQ/Contact';
 import Questions from '../../components/Modules/FAQ/Questions';
-import Sidebar from '../../components/Modules/FAQ/Sidebar';
-import InputSearch from '../../components/Modules/News/InputSearch';
+import FAQ from '../../components/Modules/FAQ/index'
+
 const Help = (): JSX.Element => {
+  const questions = [
+    { id: 1, href: '/1', title: 'Hủy đơn hàng và khóa tài khoản' },
+    { id: 2, href: '/1', title: 'Tại sao tôi đăng nhập bị lỗi?' },
+    { id: 3, href: '/1', title: 'Tại sao tôi không đăng nhập được tài khoản?' },
+    { id: 4, href: '/1', title: 'Quên mật khẩu đăng nhập' },
+    { id: 5, href: '/1', title: 'Medofa bán những sản phẩm gì' },
+    { id: 6, href: '/huong-dan-chuyen-khoan', title: 'Hướng dẫn chuyển khoản' },
+    { id: 5, href: '/1', title: 'Medofa bán những sản phẩm gì' },
+    { id: 5, href: '/1', title: 'Medofa bán những sản phẩm gì' }
+  ];
+
   return (
     <>
       <Head>
@@ -19,32 +29,13 @@ const Help = (): JSX.Element => {
 
       <Nav />
 
-      <div className="container help">
-        <div className="p-3">
-          <InputSearch placeholder="Search..." keySearch={(x) => console.log(x)} />
-        </div>
-
-        <div className="row">
-          <div className="col-sm-12 col-lg-9 col-left__divider order-lg-2">
-            <div className="wapper">
-              <h3 className="news__title">{'Câu hỏi thường gặp : '}</h3>
-              <div className="news__divider"></div>
-              <Questions />
-            </div>
-          </div>
-
-          <div className="col-sm-12 col-lg-3 order-lg-1">
-            <div className="wrapper">
-              <div className="row">
-                <Sidebar />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <Contact />
-
+      <FAQ title={`Câu hỏi thường gặp.`}>
+        <>
+          <div className="news__divider"></div>
+          <Questions questions={questions} />
+        </>
+      </FAQ>
+          
       <Footer />
     </>
   );

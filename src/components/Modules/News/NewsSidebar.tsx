@@ -4,7 +4,7 @@ import InputSearch from './InputSearch';
 import NewsBanner from './NewsBanner';
 import ResentPostItem from './ResentPostItem';
 
-const imgUrl = 'https://news.thuocsi.vn/wp-content/uploads/2020/05/160x600.png';
+const imgUrl = 'https://mir-s3-cdn-cf.behance.net/project_modules/disp/c596bb11090425.560f16f7207b1.jpg';
 const links = [
   { href: '', title: 'Contrary  Lorem Ipsum is not simply random text' },
   { href: '', title: 'Contrary to text Contrary to populartext Contrary to populartext' },
@@ -23,7 +23,9 @@ function NewsSidebar(): JSX.Element {
 
   return (
     <>
-      <InputSearch placeholder="Search ..." keySearch={(x) => console.log(x)}></InputSearch>
+      <div className="mb-3">
+        <InputSearch placeholder="Search ..." keySearch={(x) => console.log(x)}></InputSearch>
+      </div>
 
       <div className="recent-post mb-4">
         <div className="news__title">{`BÀI VIẾT MỚI NHẤT`}</div>

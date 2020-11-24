@@ -1,38 +1,29 @@
 import React from 'react';
 
-function Sidebar(props): JSX.Element {
+type category = {
+  href: string
+  title: string
+}
+type Props = {
+  categories: category[]
+}
+function Sidebar(props: Props): JSX.Element {
   return (
-    <div className="wapper mb-5">
-      <div className="news__title">{`Danh mục`}</div>
+    <>
+      <h3 className="news__title">{`Danh mục`}</h3>
       <div className="news__divider"></div>
-      <div className="list-unstyled">
-        <li className="pb-2">
-          <a href="/help" className="faq-link">
-            Câu hỏi về tài khoản
-          </a>
-        </li>
-        <li className="pb-2">
-          <a href="/help" className="faq-link">
-            Câu hỏi về đơn hàng và đặt hàng
-          </a>
-        </li>
-        <li className="pb-2">
-          <a href="/help" className="faq-link">
-            Câu hỏi về thanh toán
-          </a>
-        </li>
-        <li className="pb-2">
-          <a href="/help" className="faq-link">
-            Câu hỏi về vận chuyển
-          </a>
-        </li>
-        <li className="pb-2">
-          <a href="/help" className="faq-link">
-            Câu hỏi về đổi trả và hoàn tiền
-          </a>
-        </li>
-      </div>
-    </div>
+      <ul className="list-unstyled">
+        {
+          props?.categories?.map((category, index) => (
+            <li key={index} className="pb-2">
+              <a href={`/help/${category}`} className="faq-link">
+                {category.title}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </>
   );
 }
 

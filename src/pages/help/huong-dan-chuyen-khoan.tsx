@@ -15,13 +15,19 @@ const HelpDetail = (): JSX.Element => {
     postDate: 'Jan 21',
     status: 'Đã cập nhật',
     answer: `
-    <p>Hiện nay, thời gian giao hàng dự kiến của thuocsi.vn sẽ tuỳ thuộc vào từng khu vực như sau:</p>
-    <p><b>TP Hồ Chí Minh:</b> Trong vòng 36h</p>
-    <p><b>Miền Tây:</b> 1 - 2 ngày làm việc*</p>
-    <p><b>Miền Trung:</b> 3 - 4 ngày làm việc*</p>
-    <p><b>Miền Bắc:</b> 5 - 6 ngày làm việc*</p>
-    <i>*Đây là thời gian giao hàng dự kiến ở các tỉnh thành ngoài TP.HCM. Sau khi xác nhận và nhận được thanh toán, thuocsi sẽ giao hàng cho đơn vị vận chuyển trong 48h.</i>
-    <img src="https://i1.sndcdn.com/avatars-xpq4R8nRHWRL7NiZ-pyJFyg-t500x500.jpg" alt="medofa"/>
+    <p>Thanh toán bằng hình thức chuyển khoản thực hiện theo các bước sau:</p>
+    <p>Sau khi bấm thanh toán đơn hàng và nhận được cuộc gọi xác nhận lại đơn hàng</p>
+    <p><b>Bước 1: </b>Khách hàng thực hiện chuyển khoản đúng số tiền cần thanh toán cho tài khoản:</p>
+    <ul style="padding-left: 1.5rem">
+      <li>
+        <p>Chủ tài khoản: Công Ty TNHH BuyMed.</p>
+        <p>Số tài khoản: 19134543030020</p>
+        <p>Ngân Hàng:  Techcombank chi nhánh Bắc Hải </p>
+        <p>Nội dung chuyển khoản: Tên Nhà Thuốc - Mã đơn hàng</p>
+      </li>
+    </ul>
+    <p><b>Bước 2: </b>Chụp hình lại biên lai chuyển khoản và gửi vào khung chatbox trên website</p>
+    <p>Nhân viên xác nhận lại số tiền và lên đơn hàng cho khách</p>
     `
   };
 
@@ -35,9 +41,7 @@ const HelpDetail = (): JSX.Element => {
 
       <Nav />
 
-      <FAQ
-        title={question.question}
-      >
+      <FAQ title={question.question}>
         <QuestionDetail
           question={question.question}
           answer={question.answer}

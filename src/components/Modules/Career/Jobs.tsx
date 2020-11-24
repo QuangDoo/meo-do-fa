@@ -13,12 +13,16 @@ function Jobs(props: Props): JSX.Element {
   return (
     <>
       <div className="container mt-3">
-        <div className="wapper">
+        <div className="wrapper">
           <h4 className="about-us__title text-center">Find Your Passion</h4>
-
-          <InputSearch placeholder={`Seach Jobs...`} keySearch={(key) => props.keySearch(key)} />
-
-          <div className="row jobs">
+          <div className="row">
+            <div className="col-12">
+              <div className="mb-3 mt-3">
+                <InputSearch placeholder="Search..." keySearch={(x) => console.log(x)} />
+              </div>
+            </div>
+          </div>
+          <div className="jobs">
             {jobs?.map((job, index) => (
               // <a key={index} href={`/jobs/${job?.id}`} className="col-12 col-sm-6 col-md-6 col-lg-6">
               //   <div className="mb-2">
