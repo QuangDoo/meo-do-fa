@@ -22,11 +22,11 @@ export type GetOrderDetail = {
   getOrderDetail: {
     id: number;
     name: string;
-    date_order: Date;
+    date_order: string;
     note: string;
     delivery_count: number;
-    effective_date: Date;
-    expected_date: Date;
+    effective_date: string;
+    expected_date: string;
     order_line: string[];
     payment_method: string[];
     partner_shipping_id: string[];
@@ -41,6 +41,10 @@ export type GetOrderDetail = {
       };
     };
   }[];
+};
+
+export type GetOrderDetailVar = {
+  id: number;
 };
 
 export const GET_CART = gql`
