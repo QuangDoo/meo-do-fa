@@ -2,7 +2,7 @@ import { gql } from '@apollo/client';
 
 export type GetAllCategoriesData = {
   getCategoriesAll: {
-    id: string;
+    id: number;
     name: string;
   }[];
 };
