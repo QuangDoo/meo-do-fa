@@ -8,7 +8,8 @@ const httpLink = new HttpLink({
 
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
-  const token = localStorage.getItem('token');
+  const token = global?.localStorage?.getItem('token');
+  console.log(token);
   // return the headers to the context so httpLink can read them
   return {
     headers: {
@@ -31,7 +32,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 
 const apolloClient = new ApolloClient({
   ssrMode: true,
-  link: httpLink,
+  link: from([errorLink, authLink, httpLink]),
   cache: new InMemoryCache()
 });
 
