@@ -109,8 +109,6 @@ function Products(): JSX.Element {
     ? getNameById(categories, Number(router.query.category))
     : t('products:title');
 
-  console.log(getNameById(categories, '13'));
-
   return (
     <>
       <Head>
