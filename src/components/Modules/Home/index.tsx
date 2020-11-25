@@ -1,6 +1,5 @@
-import { useLazyQuery, useQuery } from '@apollo/client';
 import { useTranslation } from 'i18n';
-import React, { useEffect } from 'react';
+import React from 'react';
 import SlickSlider from 'react-slick';
 
 import ProductCard from '../ProductCard';
@@ -17,18 +16,13 @@ const bannerImages = [
   'assets/images/drugstore3.jpg'
 ];
 
-const Home: React.FC = ({
-  dealsOfTheDayProductsData,
-  bestSellingData,
-  promotionProductsData,
-  newProductsData
-}: any) => {
+const Home = ({ dealsOfTheDayData, bestSellingData, promotionProductsData, newProductsData }) => {
   const { t } = useTranslation(['carousels']);
 
   const carousels = [
     {
       title: t('carousels:deal_of_the_day'),
-      products: dealsOfTheDayProductsData?.getProductDealOfTheDay || []
+      products: dealsOfTheDayData?.getProductDealOfTheDay || []
     },
     {
       title: t('carousels:bestseller'),

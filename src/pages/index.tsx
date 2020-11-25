@@ -35,7 +35,7 @@ const paginationVars = {
 };
 
 const Home = (): JSX.Element => {
-  const { data: dealsOfTheDayProductsData } = useQuery<GetDealsOfTheDayData, GetDealsOfTheDayVars>(
+  const { data: dealsOfTheDayData } = useQuery<GetDealsOfTheDayData, GetDealsOfTheDayVars>(
     GET_DEALS_OF_THE_DAY,
     paginationVars
   );
@@ -66,7 +66,7 @@ const Home = (): JSX.Element => {
       <Nav />
 
       <HomePage
-        dealsOfTheDayProductsData={dealsOfTheDayProductsData}
+        dealsOfTheDayData={dealsOfTheDayData}
         bestSellingData={bestSellingData}
         newProductsData={newProductsData}
         promotionProductsData={promotionProductsData}
