@@ -35,6 +35,8 @@ export type GetOrderDetail = {
       name: string;
       price_tax: number;
       price_subtotal: number;
+      price_unit: number;
+      price_total: number;
       product: {
         name: string;
         list_price: number;
@@ -108,10 +110,14 @@ export const GET_ORDER = gql`
         name
         price_tax
         price_subtotal
+        price_unit
+        price_tax
+        price_total
         product {
           name
           list_price
         }
+        state
       }
     }
   }

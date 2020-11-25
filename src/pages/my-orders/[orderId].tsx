@@ -263,7 +263,7 @@ const OrderDetails = () => {
   );
 
   const { user } = useUser();
-  console.log('orderDetail', orderDetail);
+  console.log('orderError', orderError);
   return (
     <>
       <Head>
@@ -339,10 +339,10 @@ const OrderDetails = () => {
                         .toJSDate()}
                     />
 
-                    <Box ml={2}>
+                    {/* <Box ml={2}>
                       Xem thông tin xuất hóa đơn đỏ{' '}
                       <Link href="/invoice-export-rules">tại đây</Link>.
-                    </Box>
+                    </Box> */}
                   </Box>
                 </CustomCard>
               </Grid>
@@ -385,7 +385,7 @@ const OrderDetails = () => {
 
               <Grid item xs={12}>
                 <CustomCard>
-                  <TextWithLabel label="Ghi chú" text="Không có ghi chú" />
+                  <TextWithLabel label="Ghi chú" text={orderDetail?.getOrderDetail.note} />
                 </CustomCard>
               </Grid>
 
@@ -402,7 +402,7 @@ const OrderDetails = () => {
                     </TableHead>
 
                     <TableBody>
-                      {mockMyOrderProducts.map((product) => (
+                      {orderDetail?.getOrderDetail.order_lines.map((product) => (
                         <TableRow key={product.id}>
                           <CustomBodyCell textAlign="left">
                             <Link href={`/products/${product.id}`}>
@@ -410,12 +410,14 @@ const OrderDetails = () => {
                             </Link>
                           </CustomBodyCell>
 
-                          <CustomBodyCell>{product.price.toLocaleString('de-DE')} đ</CustomBodyCell>
+                          <CustomBodyCell>
+                            {product.price_unit?.toLocaleString('de-DE')} đ
+                          </CustomBodyCell>
 
                           <CustomBodyCell>{product.quantity}</CustomBodyCell>
 
                           <CustomBodyCell>
-                            {(product.quantity * product.price).toLocaleString('de-DE')} đ
+                            {product.price_total?.toLocaleString('de-DE')} đ
                           </CustomBodyCell>
                         </TableRow>
                       ))}
