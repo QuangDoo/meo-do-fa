@@ -3,12 +3,12 @@ import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { useCart } from 'src/contexts/Cart';
-import { useCities } from 'src/contexts/Cities';
+import { useCityContext } from 'src/contexts/City';
 import { GET_DISTRICT, GET_WARD, GET_WARD_DETAIL } from 'src/graphql/address/city.query';
 import { CREATE_ORDER } from 'src/graphql/order/order.mutation';
 import { GET_COUNSEL } from 'src/graphql/order/order.query';
 import { GET_PAYMENT_DELIVERY } from 'src/graphql/paymentAndDelivery/paymentAndDelivery,query';
+import useCart from 'src/hooks/useCart';
 import swal from 'sweetalert';
 
 import Agreement from './Agreement';
@@ -26,7 +26,7 @@ const CheckoutPage = (): JSX.Element => {
     }
   });
 
-  const { data: dataCity } = useCities();
+  const { cities: dataCity } = useCityContext();
 
   const { data: dataGetPaymentDelivery, loading: loadingGetPaymentDelivery } = useQuery(
     GET_PAYMENT_DELIVERY
