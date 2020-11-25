@@ -82,7 +82,7 @@ const ProductCard = ({ t, ...props }: Props): JSX.Element => {
                   <ProductPrice price={props.list_price} standard_price={props.standard_price} />
                 </div>
 
-                <QuantityInput productId={props.id} price={props.list_price} name={props.name} />
+                <QuantityInput productId={props.id} price={props.price} name={props.name} />
               </>
             ) : (
               <LoginToSeePrice />
