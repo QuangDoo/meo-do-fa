@@ -74,6 +74,8 @@ function Products(): JSX.Element {
     }
   );
 
+  console.log(productsData);
+
   // onError (products)
   useEffect(() => {
     if (!productsError) return;
