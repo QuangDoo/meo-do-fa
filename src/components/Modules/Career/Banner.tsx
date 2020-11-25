@@ -10,8 +10,8 @@ function Banner(props: Props) {
     <>
       <section className="banner">
         <div className="banner-bg">
-          <div className="banner-img">
-            <img src={props.bannerImgUrl} alt="" />
+          <div className="banner-img" style={{backgroundImage:`url(${props.bannerImgUrl})`}}>
+            {/* <img src={props.bannerImgUrl} alt="Join us now" /> */}
           </div>
           <div className="banner-overlay"></div>
         </div>
