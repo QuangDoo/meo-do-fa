@@ -48,12 +48,13 @@ type Job = {
 };
 
 function Career(props): JSX.Element {
-  const [tempJobs, setTempJobs] = useState<Job[]>();
+  const [tempJobs, setTempJobs] = useState<Job[]>(jobs);
+  console.log(tempJobs);
   const onFilter = (key) => {
     const temp = jobs.filter((job) => job.jobName.toLowerCase().indexOf(key?.toLowerCase()) !== -1);
     setTempJobs(temp);
   };
-  const imgUrl = `https://career.thuocsi.vn/wp-content/uploads/2020/05/coverbanner.png`;
+  const imgUrl = `/assets/images/drugstore2.jpg`;
   const rightImgUrl = `https://career.thuocsi.vn/wp-content/uploads/2020/04/thuocsi_example1-1-1024x683.jpg`;
 
   return (

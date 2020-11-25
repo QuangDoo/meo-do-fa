@@ -1,3 +1,4 @@
+import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -17,8 +18,10 @@ type Inputs = {
   vat: string;
   representative: string;
   business_license: string;
+  district_name: string;
 };
 const MyAccount = (props): JSX.Element => {
+  const { t } = useTranslation(['account']);
   let token = '';
   if (typeof window !== 'undefined') {
     token = localStorage.getItem('token');
@@ -86,16 +89,16 @@ const MyAccount = (props): JSX.Element => {
       <Nav />
 
       <ProfileLayout>
-        <h1 className="h2 text-center mb-4 text-primary">Cập nhật hồ sơ</h1>
+        <h1 className="h2 text-center mb-4 text-primary">{t('account:update_profile')}</h1>
         <form encType="multipart/form-data" action="/my-account">
           <input type="hidden" name="_method" defaultValue="put" />
           <input type="hidden" name="authenticity_token" />
           <div className="row elevated mb-3">
             <div className="col pt-3">
-              <h2 className="h4 text-center mb-3">Thông tin tài khoản</h2>
+              <h2 className="h4 text-center mb-3">{t('account:account_infomation')}</h2>
               <div className="form-group">
                 <label className="form__label required" htmlFor="user_name">
-                  Họ Tên khách hàng
+                  {t('account:fullname')}
                 </label>
                 <input
                   className="form-control"
@@ -109,7 +112,7 @@ const MyAccount = (props): JSX.Element => {
               </div>
               <div className="form-group">
                 <label className="form__label required" htmlFor="user_name">
-                  Sô điện thoại
+                  {t('account:mobile_number')}
                 </label>
                 <input
                   className="form-control"
@@ -123,7 +126,7 @@ const MyAccount = (props): JSX.Element => {
               </div>
               <div className="form-group">
                 <label className="form__label " htmlFor="user_name">
-                  Email
+                  {t('account:email')}
                 </label>
                 <input
                   className="form-control"
@@ -136,7 +139,7 @@ const MyAccount = (props): JSX.Element => {
               </div>
               <div className="form-group">
                 <label className="form__label" htmlFor="user_password">
-                  Mật khẩu mới
+                  {t('account:new_password')}
                 </label>
                 <div className="form__password" data-controller="password">
                   <input
@@ -162,29 +165,29 @@ const MyAccount = (props): JSX.Element => {
                     </span>
                   </label>
                 </div>
-                <small className="text-muted">Mật khẩu dài tối thiểu 6 ký tự</small>
+                <small className="text-muted">{t('account:password_at_least')}</small>
               </div>
             </div>
           </div>
           <div className="row elevated mb-3">
             <div className="col pt-3">
-              <h2 className="h4 text-center mb-3">Thông tin doanh nghiệp</h2>
+              <h2 className="h4 text-center mb-3">{t('account:business_information')}</h2>
               <div className="row">
                 <div className="col-md-4 form-group">
                   <label htmlFor="ban" className="form__label">
-                    Bạn là
+                    {t('account:you_are')}
                   </label>
-                  <div className="form-control d-block w-100">Người tiêu dùng</div>
+                  <div className="form-control d-block w-100">{t('account:comsumer')}</div>
                 </div>
                 <div className="col-md-8 form-group">
                   <label className="form__label" htmlFor="user_businesses_attributes_0_name">
-                    Tên nhà thuốc/phòng khám
+                    {t('account:pharmacy_clinic_name')}
                   </label>
                   <input
                     className="form-control"
                     placeholder="Dược Hoàng Vũ"
                     type="text"
-                    value="nhà thuốc số 1"
+                    value={t('account:pharmacy_name_example') as string}
                     name="user[businesses_attributes][0][name]"
                     id="user_businesses_attributes_0_name"
                   />
@@ -194,7 +197,7 @@ const MyAccount = (props): JSX.Element => {
                 <label
                   className="form__label"
                   htmlFor="user_businesses_attributes_0_representative">
-                  Tên người đại diện pháp luật
+                  {t('account:legal_representative_name')}
                 </label>
                 <input
                   className="form-control"
@@ -205,7 +208,7 @@ const MyAccount = (props): JSX.Element => {
               </div>
               <div className="form-group">
                 <label className="form__label" htmlFor="user_businesses_attributes_0_">
-                  Giấy phép kinh doanh phòng khám/nhà thuốc
+                  {t('account:business_license')}
                 </label>
                 <div className="custom-file">
                   <input
@@ -220,10 +223,10 @@ const MyAccount = (props): JSX.Element => {
                 </div>
               </div>
               <div className="mt-4">
-                <h2 className="h4 text-center mb-3">Thông tin xuất hóa đơn</h2>
+                <h2 className="h4 text-center mb-3">{t('account:invoice_information')}</h2>
                 <div className="form-group">
                   <label className="form__label" htmlFor="user_businesses_attributes_0_tax_number">
-                    Mã số thuế
+                    {t('account:tax_code')}
                   </label>
                   <input
                     className="form-control no-spinner"
@@ -241,7 +244,7 @@ const MyAccount = (props): JSX.Element => {
                     <label
                       className="form__label required"
                       htmlFor="user_businesses_attributes_0_city_id">
-                      Tỉnh/Thành phố
+                      {t('account:province_city')}
                     </label>
                     <select
                       className="custom-select d-block"
@@ -258,7 +261,7 @@ const MyAccount = (props): JSX.Element => {
                     <label
                       className="form__label required"
                       htmlFor="user_businesses_attributes_0_district_id">
-                      Quận/Huyện
+                      {t('account:district')}
                     </label>
                     <select
                       className="custom-select d-block"
@@ -275,7 +278,7 @@ const MyAccount = (props): JSX.Element => {
                     <label
                       className="form__label required"
                       htmlFor="user_businesses_attributes_0_ward_id">
-                      Phường/Xã
+                      {t('account:ward')}
                     </label>
                     <select
                       className="custom-select d-block"
@@ -294,12 +297,12 @@ const MyAccount = (props): JSX.Element => {
           </div>
           <div className="row elevated mb-3">
             <div className="col pt-3">
-              <h2 className="h4 text-center mb-3">Thông tin giao hàng</h2>
+              <h2 className="h4 text-center mb-3">{t('account:delivery_information')}</h2>
               <div className="form-group">
                 <label
                   className="form__label required"
                   htmlFor="user_businesses_attributes_0_address">
-                  Địa chỉ giao hàng
+                  {t('account:delivery_addess')}
                 </label>
                 <input
                   className="form-control"
@@ -308,16 +311,14 @@ const MyAccount = (props): JSX.Element => {
                   type="text"
                   name="contact_address"
                 />
-                <small className="form-text text-muted">
-                  Nhập địa chỉ, đường phố. Rồi chọn tỉnh/thành phố, quận/huyện, phường/xã
-                </small>
+                <small className="form-text text-muted">{t('account:address_guide')}</small>
               </div>
               <div className="row">
                 <div className="col-md-4 form-group">
                   <label
                     className="form__label required"
                     htmlFor="user_businesses_attributes_0_city_id">
-                    Tỉnh/Thành phố
+                    {t('account:province_city')}
                   </label>
                   <select
                     className="custom-select d-block"
@@ -328,10 +329,7 @@ const MyAccount = (props): JSX.Element => {
                         ? setDisabledDistrict(false)
                         : (setDisabledDistrict(true),
                           setDisabledWard(true),
-                          setValue(
-                            'user[businesses_attributes][0][district_id]',
-                            district[0].districtName
-                          ));
+                          setValue('district_name', district[0].districtName));
                     }}>
                     {city?.map((item, index) => (
                       <option key={index} value={item.id}>
@@ -344,7 +342,7 @@ const MyAccount = (props): JSX.Element => {
                   <label
                     className="form__label required"
                     htmlFor="user_businesses_attributes_0_district_id">
-                    Quận/Huyện
+                    {t('account:district')}
                   </label>
                   <select
                     className="custom-select d-block"
@@ -365,7 +363,7 @@ const MyAccount = (props): JSX.Element => {
                   <label
                     className="form__label required"
                     htmlFor="user_businesses_attributes_0_ward_id">
-                    Phường/Xã
+                    {t('account:ward')}
                   </label>
                   <select
                     className="custom-select d-block"
@@ -387,7 +385,7 @@ const MyAccount = (props): JSX.Element => {
             <p>
               <Link href="/quick-order">
                 <a className="btn btn-secondary btn-lg pr-4 pl-4" role="button">
-                  Cập nhật
+                  {t('account:update')}
                 </a>
               </Link>
             </p>

@@ -1,3 +1,4 @@
+import { useTranslation } from 'i18n';
 import React, { FC } from 'react';
 import Button from 'src/components/Form/Button';
 
@@ -10,7 +11,7 @@ type ProductsContainerProps = {
 
 export const ProductsContainer: FC<ProductsContainerProps> = (props) => {
   const dealsClass = props.deals ? 'deals' : '';
-
+  const { t } = useTranslation(['common']);
   return (
     <section className={`py-5 container-fluid ${dealsClass} ${props.className}`}>
       <div className="home__container">
@@ -25,7 +26,7 @@ export const ProductsContainer: FC<ProductsContainerProps> = (props) => {
             <Button
               variant={props.deals ? 'outline-light' : 'outline-primary'}
               className={props.deals ? 'btn-transparent' : 'btn-white'}>
-              Xem tất cả
+              {t('common:see_all')}
             </Button>
           </div>
         )}

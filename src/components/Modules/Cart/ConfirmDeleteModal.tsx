@@ -1,11 +1,11 @@
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation } from '@apollo/client';
 import { withTranslation } from 'i18n';
 import { WithTranslation } from 'next-i18next';
 import React, { FC, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import ModalBase from 'src/components/Layout/Modal/ModalBase';
-import { useCart } from 'src/contexts/Cart';
 import { DELETE_CART, DeleteCartData, DeleteCartVars } from 'src/graphql/cart/deleteCart.mutation';
+import useCart from 'src/hooks/useCart';
 
 type Props = WithTranslation & {
   // Modal is open

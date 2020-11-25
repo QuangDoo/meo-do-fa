@@ -1,6 +1,7 @@
-import { useLazyQuery } from '@apollo/react-hooks';
+import { useLazyQuery } from '@apollo/client';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import clsx from 'clsx';
+import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
@@ -9,6 +10,7 @@ import { SEARCH_PRODUCTS_BY_NAME } from 'src/graphql/search/search.products.quer
 import { useDebouncedEffect } from 'src/hooks/useDebouncedEffect';
 
 const SearchBar = (): JSX.Element => {
+  const { t } = useTranslation(['searchBar']);
   const router = useRouter();
 
   const [searchProducts, { data: pData }] = useLazyQuery(SEARCH_PRODUCTS_BY_NAME, {
@@ -85,7 +87,7 @@ const SearchBar = (): JSX.Element => {
               <input
                 type="search"
                 className="form-control form-control-sm search-input"
-                placeholder="Nhập tên thuốc, hoạt chất cần tìm..."
+                placeholder={t('searchBar:input')}
                 aria-label="search"
                 value={value}
                 onChange={handleChange}
@@ -100,7 +102,8 @@ const SearchBar = (): JSX.Element => {
               <>
                 <Link href={`/products?sort=best_match&search=${value}`}>
                   <a className="search__result">
-                    <em>{value}</em> trong <b className="text-primary">tất cả sản phẩm</b>
+                    <em>{value}</em> {t('searchBar:in')}{' '}
+                    <b className="text-primary">{t('searchBar:all_products')}</b>
                   </a>
                 </Link>
 
@@ -111,7 +114,9 @@ const SearchBar = (): JSX.Element => {
                 ))}
               </>
             ) : (
-              <div className="search__result--empty">Không có sản phẩm với từ khóa {value}</div>
+              <div className="search__result--empty">
+                {t('searchBar:no_product')} {value}
+              </div>
             )}
 
             <hr />
@@ -120,7 +125,8 @@ const SearchBar = (): JSX.Element => {
               <>
                 <Link href={`/manufacturers?sort=best_match&search=${value}`}>
                   <a className="search__result pt-0">
-                    <em>{value}</em> trong <b className="text-primary">tất cả nhà sản xuất</b>
+                    <em>{value}</em> {t('searchBar:in')}{' '}
+                    <b className="text-primary">{t('searchBar:all_manufacturers')}</b>
                   </a>
                 </Link>
 
@@ -131,7 +137,9 @@ const SearchBar = (): JSX.Element => {
                 ))}
               </>
             ) : (
-              <div className="search__result--empty">Không có nhà sản xuất với từ khóa {value}</div>
+              <div className="search__result--empty">
+                {t('searchBar:no_manufacturer')} {value}
+              </div>
             )}
           </div>
         </div>

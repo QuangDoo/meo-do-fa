@@ -1,5 +1,5 @@
-import { useQuery } from '@apollo/react-hooks';
-import { withTranslation } from 'i18n';
+import { useQuery } from '@apollo/client';
+import { useTranslation, withTranslation } from 'i18n';
 import { useRouter } from 'next/router';
 import React from 'react';
 import Footer from 'src/components/Layout/Footer';
@@ -16,7 +16,7 @@ const pageSize = 20;
 
 function Deal() {
   const router = useRouter();
-
+  const { t } = useTranslation(['deals']);
   const page = +router.query.page || 1;
 
   const { data: productsData, refetch: refetchProducts } = useQuery<
@@ -59,12 +59,9 @@ function Deal() {
         <div className="container px-0">
           <div className="row no-gutters">
             <div className="col-12 mb-3 px-3 text-white">
-              <h1 className="text-white">Khuyến mãi</h1>
+              <h1 className="text-white">{t('deals:promotion')}</h1>
 
-              <p>
-                Cập nhật hàng ngày tất cả những deal giá ưu đãi trên medofa. Hãy bookmark trang này
-                (nhấn Ctrl+D) và quay lại thường xuyên để không bỏ lỡ bạn nhé!
-              </p>
+              <p>{t('deals:deal_info')}</p>
             </div>
 
             <main className="col-12">

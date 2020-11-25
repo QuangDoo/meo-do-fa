@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ApplyJobForm from './ApplyJobForm';
+import CareerModal from '../CareerModal';
 
 type Props = {
   name?: string;
@@ -15,8 +15,8 @@ type Props = {
 export default function JobDetail(props: Props): JSX.Element {
   return (
     <div className="container">
-      <div className="row border-bottom job-detail text-center">
-        <div className="job-detail__wrapper">
+      <div className="job-detail__wrapper">
+        <div className="row border-bottom job-detail text-center">
           <h1 className="mb-3 text-primary">{props.name}</h1>
           <div className="job-department-info">
             <div className="mr-3">
@@ -34,11 +34,10 @@ export default function JobDetail(props: Props): JSX.Element {
           </div>
           <div className="job-department-desc text-small">{props.description}</div>
         </div>
-      </div>
-      <div className="row job-detail">
-        <div className="job-detail__wrapper">
+
+        <div className="row job-detail">
           <strong className="text-primary">Job description:</strong>
-          <ul className="ml-4">
+          <ul className="ml-5">
             {props?.jobDescription.map((description, index) => (
               <li className="text-small" key={index}>
                 {description}
@@ -46,7 +45,7 @@ export default function JobDetail(props: Props): JSX.Element {
             ))}
           </ul>
           <strong className="text-primary">Requirements:</strong>
-          <ul className="ml-4">
+          <ul className="ml-5">
             {props?.requirements.map((requirement, index) => (
               <li className="text-small" key={index}>
                 {requirement}
@@ -54,10 +53,8 @@ export default function JobDetail(props: Props): JSX.Element {
             ))}
           </ul>
         </div>
-      </div>
-      <div className="row job-detail">
-        <div className="job-detail__wrapper">
-          <ApplyJobForm />
+        <div className="row job-detail">
+          <CareerModal />
         </div>
       </div>
     </div>

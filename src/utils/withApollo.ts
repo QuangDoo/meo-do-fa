@@ -1,10 +1,9 @@
-import { ApolloClient, createHttpLink, from, InMemoryCache } from '@apollo/client';
+import { ApolloClient, from, HttpLink, InMemoryCache } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { onError } from '@apollo/client/link/error';
 import { withApollo } from 'next-apollo';
-// https://graphql.medofa.bedigital.vn/graphql/
-const httpLink = createHttpLink({
-  uri: 'https://graphql.medofa.bedigital.vn/graphql'
+const httpLink = new HttpLink({
+  uri: 'https://graphql.medofa.bedigital.vn'
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -19,19 +18,20 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
-// const errorLink = onError(({ graphQLErrors, networkError }) => {
-//   if (graphQLErrors)
-//     graphQLErrors.forEach(({ message, locations, path }) => {
-//       console.log(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`);
-//     });
+const errorLink = onError(({ graphQLErrors, networkError }) => {
+  if (graphQLErrors)
+    graphQLErrors.forEach(({ message, locations, path }) => {
+      console.log(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`);
+    });
 
-//   if (networkError) {
-//     console.log(`[Network error]: ${networkError}`);
-//   }
-// });
+  if (networkError) {
+    console.log(`[Network error]: ${networkError}`);
+  }
+});
 
 const apolloClient = new ApolloClient({
-  link: authLink.concat(httpLink),
+  ssrMode: true,
+  link: httpLink,
   cache: new InMemoryCache()
 });
 

@@ -1,4 +1,4 @@
-import { gql } from 'apollo-boost';
+import { gql } from '@apollo/client';
 import { UpdateUserInput } from 'src/types/inputs';
 
 export type UpdateUserVars = {

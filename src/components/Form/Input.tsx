@@ -5,7 +5,7 @@ type Props = {
   iconClass: string;
   placeholder?: string;
   required?: boolean;
-  type?: 'text' | 'number' | 'password';
+  type?: 'text' | 'number' | 'password' | 'email';
   containerClass?: string;
 };
 

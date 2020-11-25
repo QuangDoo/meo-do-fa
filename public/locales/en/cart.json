@@ -1,4 +1,15 @@
 {
   "quantity_smaller_than_1": "Product quantity cannot be smaller than 1.",
-  "delete_success": "Removed product from cart."
+  "delete_success": "Removed product from cart.",
+  "cart": "Cart",
+  "back_to_products": "To add products to your cart, please return to the page",
+  "products": "Products",
+  "other_note": "Other note",
+  "note": "In case you cannot find the drug you want, please fill out the request below. We will contact you to buy drugs and inform you as soon as possible.",
+  "update_note": "Update note",
+  "customer_note": "Notes of customer",
+  "quantity": "Quantity",
+  "total": "Total",
+  "continue_payment": "Continue to payment",
+  "continue_order": "Continue to order"
 }

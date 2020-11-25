@@ -1,12 +1,12 @@
-import { useLazyQuery } from '@apollo/react-hooks';
-import { createContext, useContext, useEffect } from 'react';
-import { toast } from 'react-toastify';
-import { GET_CART, GetCartData } from 'src/graphql/order/order.query';
-import useLocalStorage from 'src/hooks/useLocalStorage';
-import withApollo from 'src/utils/withApollo';
+import React, { createContext, useContext, useState } from 'react';
 
 type Props = {
   children: React.ReactNode;
+};
+
+type ContextValue = {
+  cart?: Value;
+  setCart?(value: any): void;
 };
 
 type Cart = {
@@ -28,43 +28,18 @@ type Value = {
   refetchCart: () => void;
 };
 
-const CartContext = createContext<Value>(null);
-CartContext.displayName = 'CartContext';
+const CartContext = createContext<ContextValue>({});
 
-const CartProvider = withApollo({ ssr: true })(({ children }: Props) => {
-  const [getCart, { data, error }] = useLazyQuery<GetCartData, undefined>(GET_CART, {
-    fetchPolicy: 'network-only'
-  });
-
-  useEffect(() => {
-    if (!error) return;
-
-    toast.error(error);
-  }, [error]);
-
-  const [token] = useLocalStorage('token');
-
-  // Get cart if token is available
-  useEffect(() => {
-    if (!token) return;
-
-    getCart();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [token]);
+const CartProvider = ({ children }: Props) => {
+  const [state, setState] = useState();
 
   return (
-    <CartContext.Provider
-      value={{
-        carts: data?.getCart.carts || [],
-        totalQty: data?.getCart.totalQty || 0,
-        totalPrice: data?.getCart.totalPrice || 0,
-        refetchCart: getCart
-      }}>
+    <CartContext.Provider value={{ cart: state, setCart: setState }}>
       {children}
     </CartContext.Provider>
   );
-});
+};
 
-const useCart = () => useContext(CartContext);
+const useCartContext = () => useContext(CartContext);
 
-export { CartProvider, useCart };
+export { CartProvider, useCartContext };

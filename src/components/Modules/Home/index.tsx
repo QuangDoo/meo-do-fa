@@ -1,4 +1,5 @@
-import { useLazyQuery } from '@apollo/react-hooks';
+import { useLazyQuery } from '@apollo/client';
+import { useTranslation } from 'i18n';
 import React, { useEffect } from 'react';
 import SlickSlider from 'react-slick';
 import {
@@ -21,7 +22,6 @@ import {
   GetPromotionProductsData,
   GetPromotionProductsVars
 } from 'src/graphql/product/getPromotionProducts';
-import withApollo from 'src/utils/withApollo';
 
 import ProductCard from '../ProductCard';
 import { ProductsCarousel } from '../ProductsCarousel';
@@ -72,17 +72,19 @@ const Home: React.FC = () => {
     getPromotionProducts(paginationVars);
   }, []);
 
+  const { t } = useTranslation(['carousels']);
+
   const carousels = [
     {
-      title: 'Deal trong ngày',
+      title: t('carousels:deal_of_the_day'),
       products: dealsOfTheDayProductsData?.getProductDealOfTheDay || []
     },
     {
-      title: 'Sản phẩm bán chạy',
+      title: t('carousels:bestseller'),
       products: bestSellingData?.getProductByConditions.Products || []
     },
     {
-      title: 'Sản phẩm mới',
+      title: t('carousels:new_products'),
       products: newProductsData?.getProductByConditions.Products || []
     }
   ];
@@ -120,7 +122,11 @@ const Home: React.FC = () => {
 
       {/* Promotion products */}
       <div hidden={promotionProducts.length === 0}>
-        <ProductsContainer title="Khuyến mãi" seeMoreUrl="/deals" deals className="px-0 px-sm-3">
+        <ProductsContainer
+          title={t('carousels:promotion')}
+          seeMoreUrl="/deals"
+          deals
+          className="px-0 px-sm-3">
           <div className="products__cards">
             {promotionProducts.map((product, index) => (
               <ProductCard key={index} {...product} />
@@ -144,4 +150,4 @@ const Home: React.FC = () => {
   );
 };
 
-export default withApollo({ ssr: true })(Home);
+export default Home;

@@ -1,5 +1,7 @@
-import { useLazyQuery } from '@apollo/react-hooks';
+import { useLazyQuery } from '@apollo/client';
 import clsx from 'clsx';
+import { useTranslation, withTranslation } from 'i18n';
+import { WithTranslation } from 'next-i18next';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
@@ -20,7 +22,8 @@ type FilterKey = 'all' | 'waiting_for_confirmation' | 'completed' | 'canceled';
 
 const pageSize = 20;
 
-const OrderItem = (props: GetOrderList) => {
+const OrderItem = (props: GetOrderList): JSX.Element => {
+  const { t } = useTranslation();
   return (
     <div className="my-orders__item my-orders__item:hover pl-4 mt-1">
       <div className="my-orders__info">
@@ -47,12 +50,12 @@ const OrderItem = (props: GetOrderList) => {
           </div> */}
 
           <div>
-            <span className="title">Ngày mua:</span>
+            <span className="title">{t('myOrders:date_order')}</span>
             <span className="content">{props.date_order}</span>
           </div>
 
           <div>
-            <span className="title">Dự kiến giao ngày:</span>
+            <span className="title">{t('myOrders:expected_date')}</span>
             <span className="content">{props.expected_date}</span>
           </div>
         </div>
@@ -62,15 +65,15 @@ const OrderItem = (props: GetOrderList) => {
 
       <div className="my-orders__invoice">
         <button className="btn btn-secondary btn-sm mr-2" type="button">
-          Xuất hóa đơn
+          {t('myOrders:billing_export')}
         </button>
-        <button className="btn btn-outline-info btn-sm">Gửi phản hồi</button>
+        <button className="btn btn-outline-info btn-sm">{t('myOrders:report')}</button>
       </div>
     </div>
   );
 };
 
-const MyOrders = (): JSX.Element => {
+const MyOrders = ({ t }: WithTranslation): JSX.Element => {
   const [getOrderList, { data, error }] = useLazyQuery<GetOrderListData, GetOrderListVars>(
     GET_ORDER_LIST
   );
@@ -96,10 +99,10 @@ const MyOrders = (): JSX.Element => {
   const [filter, setFilter] = useState<FilterKey>('all');
 
   const filterHeaders: Record<FilterKey, string> = {
-    all: 'Tất cả',
-    waiting_for_confirmation: 'Chờ xác nhận',
-    completed: 'Hoàn tất',
-    canceled: 'Đã hủy'
+    all: t('myOrders:all_order'),
+    waiting_for_confirmation: t('myOrders:wait_for_confirm'),
+    completed: t('myOrders:complete'),
+    canceled: t('myOrders:canceled')
   };
 
   const handleFilterClick = (key: FilterKey) => {
@@ -124,10 +127,11 @@ const MyOrders = (): JSX.Element => {
 
       <ProfileLayout>
         <div>
-          <h1 className="h2 text-center text-primary mb-3">Đơn hàng của tôi</h1>
+          <h1 className="h2 text-center text-primary mb-3">{t('myOrders:my_orders')}</h1>
 
           <p className="text-muted m-0">
-            Xem thông tin xuất hoá đơn đỏ <Link href="/invoice-export-rules">tại đây</Link>.
+            {t('myOrders:vat_invoice')}{' '}
+            <Link href="/invoice-export-rules">{t('myOrders:here')}</Link>.
           </p>
 
           <div className="my-orders__filter mt-3">
@@ -150,7 +154,7 @@ const MyOrders = (): JSX.Element => {
           <p>
             <Link href="/products">
               <a className="btn btn-primary" role="button">
-                Về trang sản phẩm
+                {t('myOrders:back_to_products_page')}
               </a>
             </Link>
           </p>
@@ -161,4 +165,7 @@ const MyOrders = (): JSX.Element => {
     </>
   );
 };
-export default withApollo({ ssr: true })(MyOrders);
+
+const Translated = withTranslation(['myOrders'])(MyOrders);
+
+export default withApollo({ ssr: true })(Translated);

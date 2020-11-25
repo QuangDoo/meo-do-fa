@@ -8,7 +8,7 @@ function Contact(): JSX.Element {
     <div className="container mt-3">
       <div className="row">
         <div className="wrapper border-top pt-3 w-100">
-          <div className="news__title text-center">{`Bạn có câu hỏi nào khác không?`}</div>
+          <div className="news__title text-center pt-3 pb-3">{`Bạn có câu hỏi nào khác không?`}</div>
           <div className="post-item__content-divider"></div>
 
           <div className="help-center">
