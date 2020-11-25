@@ -1,6 +1,6 @@
 import { useLazyQuery } from '@apollo/client';
 import { useEffect } from 'react';
-import { useCityContext } from 'src/contexts/Cities';
+import { useCityContext } from 'src/contexts/City';
 import { GET_CITIES } from 'src/graphql/address/city.query';
 
 export default function useCity() {

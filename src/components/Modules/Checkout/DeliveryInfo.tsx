@@ -3,7 +3,7 @@ import React, { forwardRef } from 'react';
 import { emailRegex } from 'src/assets/regex/email';
 import { viPhoneNumberRegex } from 'src/assets/regex/viPhoneNumber';
 import Checkbox from 'src/components/Form/Checkbox';
-import { useUser } from 'src/contexts/User';
+import { useUserContext } from 'src/contexts/User';
 
 import InputCard from './InputCard';
 import InputWithLabel from './InputWithLabel';
@@ -15,7 +15,7 @@ type DataCityType = {
 };
 
 const DeliveryInfo = (props, register): JSX.Element => {
-  const { user } = useUser();
+  const { user } = useUserContext();
 
   return (
     <InputCard title="Thông tin giao hàng" hasRequired>

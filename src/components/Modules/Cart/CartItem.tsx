@@ -4,8 +4,8 @@ import { WithTranslation } from 'next-i18next';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { useCart } from 'src/contexts/Cart';
 import { UPDATE_CART, UpdateCartData, UpdateCartVars } from 'src/graphql/cart/updateCart.mutation';
+import useCart from 'src/hooks/useCart';
 
 import { ProductPrice } from '../ProductCard/ProductPrice';
 import ConfirmDeleteModal from './ConfirmDeleteModal';

@@ -1,6 +1,5 @@
 import { useMutation } from '@apollo/client';
-import { Trans, withTranslation } from 'i18n';
-import { WithTranslation } from 'next-i18next';
+import { Trans, useTranslation } from 'i18n';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import { DeepMap, FieldError, useForm } from 'react-hook-form';
@@ -12,15 +11,15 @@ import Input from 'src/components/Form/Input';
 import { useModalControlDispatch } from 'src/contexts/ModalControl';
 import { LOGIN_USER, LoginData, LoginVars } from 'src/graphql/user/login.mutation';
 import useUser from 'src/hooks/useUser';
-import withApollo from 'src/utils/withApollo';
 
 type Inputs = {
   username: string;
   password: string;
 };
 
-const LoginForm = ({ t }: WithTranslation): JSX.Element => {
+const LoginForm = (): JSX.Element => {
   const dispatch = useModalControlDispatch();
+  const { t } = useTranslation();
 
   const openRegisterModal = () => dispatch({ type: 'OPEN_REGISTER_MODAL' });
 
@@ -139,6 +138,4 @@ const LoginForm = ({ t }: WithTranslation): JSX.Element => {
   );
 };
 
-const Translated = withTranslation(['login', 'errors'])(LoginForm);
-
-export default withApollo({ ssr: true })(Translated);
+export default LoginForm;

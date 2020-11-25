@@ -13,7 +13,6 @@ import Input from 'src/components/Form/Input';
 import { useModalControlDispatch } from 'src/contexts/ModalControl';
 import { CREATE_USER, CreateUserData, CreateUserVars } from 'src/graphql/user/createUser.mutation';
 import useUser from 'src/hooks/useUser';
-import withApollo from 'src/utils/withApollo';
 import styled from 'styled-components';
 
 // Form input fields
@@ -262,4 +261,4 @@ const RegisterForm = (props: WithTranslation): JSX.Element => {
 
 const Translated = withTranslation(['register', 'errors'])(RegisterForm);
 
-export default withApollo({ ssr: true })(Translated);
+export default Translated;

@@ -3,7 +3,7 @@ import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
-import { useUser } from 'src/contexts/User';
+import { useUserContext } from 'src/contexts/User';
 
 type SidebarLinkProps = {
   href: string;
@@ -32,7 +32,7 @@ const SidebarLink = (props: SidebarLinkProps) => {
 
 const ProfileSidebar = () => {
   const { t } = useTranslation('navbar');
-  const { user } = useUser();
+  const { user } = useUserContext();
 
   return (
     <aside className="my-account__sidebar mb-3">
