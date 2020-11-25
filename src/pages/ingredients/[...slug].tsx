@@ -1,4 +1,4 @@
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/client';
 import { withTranslation } from 'i18n';
 import { WithTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
@@ -89,9 +89,11 @@ const IngredientDetails = ({ t }: WithTranslation): JSX.Element => {
 
       <hr />
 
-      <ProductsContainer title={'Danh sách các thuốc có ' + detailsData?.getIngredient.name}>
-        <ProductsCarousel products={productsData?.getProductsByIngredient || []} />
-      </ProductsContainer>
+      {productsData?.getProductsByIngredient && (
+        <ProductsContainer title={'Danh sách các thuốc có ' + detailsData?.getIngredient.name}>
+          <ProductsCarousel products={productsData?.getProductsByIngredient} />
+        </ProductsContainer>
+      )}
 
       <Footer />
     </>

@@ -1,4 +1,4 @@
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation } from '@apollo/client';
 import { useTranslation } from 'i18n';
 import React, { useEffect } from 'react';
 import { toast } from 'react-toastify';
@@ -7,12 +7,13 @@ import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
 import Nav from 'src/components/Layout/Nav';
 import CartItem from 'src/components/Modules/Cart/CartItem';
-import { useCart } from 'src/contexts/Cart';
+import { useCartContext } from 'src/contexts/Cart';
 import { CREATE_COUNSEL } from 'src/graphql/order/order.mutation';
 import withApollo from 'src/utils/withApollo';
 
 function Cart(): JSX.Element {
-  const { carts, totalQty, totalPrice, refetchCart } = useCart();
+  const { cart } = useCartContext();
+  const { carts, totalQty, totalPrice, refetchCart } = cart;
   const { t } = useTranslation(['cart']);
 
   useEffect(() => {

@@ -24,7 +24,7 @@ function InputSearch(props: PropsType): JSX.Element {
   }, [value]);
 
   return (
-    <div className="news-search ml-2 mb-2">
+    <div className="news-search">
       <input
         name="search"
         className="news-search__input "

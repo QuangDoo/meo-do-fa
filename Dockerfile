@@ -14,7 +14,7 @@ RUN yarn --silent
 COPY ./ ./
 
 # Building app
-RUN yarn build
+# RUN yarn build
 EXPOSE 3000
 
 CMD "yarn" "start-prod"

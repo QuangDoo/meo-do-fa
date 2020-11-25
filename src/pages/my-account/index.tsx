@@ -18,6 +18,7 @@ type Inputs = {
   vat: string;
   representative: string;
   business_license: string;
+  district_name: string;
 };
 const MyAccount = (props): JSX.Element => {
   const { t } = useTranslation(['account']);
@@ -328,10 +329,7 @@ const MyAccount = (props): JSX.Element => {
                         ? setDisabledDistrict(false)
                         : (setDisabledDistrict(true),
                           setDisabledWard(true),
-                          setValue(
-                            'user[businesses_attributes][0][district_id]',
-                            district[0].districtName
-                          ));
+                          setValue('district_name', district[0].districtName));
                     }}>
                     {city?.map((item, index) => (
                       <option key={index} value={item.id}>

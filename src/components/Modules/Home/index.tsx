@@ -1,4 +1,4 @@
-import { useLazyQuery } from '@apollo/react-hooks';
+import { useLazyQuery } from '@apollo/client';
 import { useTranslation } from 'i18n';
 import React, { useEffect } from 'react';
 import SlickSlider from 'react-slick';
@@ -22,7 +22,6 @@ import {
   GetPromotionProductsData,
   GetPromotionProductsVars
 } from 'src/graphql/product/getPromotionProducts';
-import withApollo from 'src/utils/withApollo';
 
 import ProductCard from '../ProductCard';
 import { ProductsCarousel } from '../ProductsCarousel';
@@ -151,4 +150,4 @@ const Home: React.FC = () => {
   );
 };
 
-export default withApollo({ ssr: true })(Home);
+export default Home;

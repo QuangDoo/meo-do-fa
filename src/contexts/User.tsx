@@ -1,9 +1,5 @@
-import { QueryLazyOptions, useLazyQuery } from '@apollo/react-hooks';
-import React, { createContext, useContext, useEffect } from 'react';
-import { GET_USER, GetUserData } from 'src/graphql/user/getUser.mutation';
-import useLocalStorage from 'src/hooks/useLocalStorage';
+import React, { createContext, useContext, useState } from 'react';
 import { User } from 'src/types/User';
-import withApollo from 'src/utils/withApollo';
 
 type Props = {
   children: React.ReactNode;
@@ -11,36 +7,21 @@ type Props = {
 
 type ContextValue = {
   user?: User;
-  getUser: (options?: QueryLazyOptions<undefined>) => void;
+  setUser?(value: any): void;
 };
 
-const UserContext = createContext<ContextValue>(null);
+const UserContext = createContext<ContextValue>({});
 
-const UserProvider = withApollo({ ssr: true })(({ children }: Props) => {
-  const [getUser, { data, error }] = useLazyQuery<GetUserData, undefined>(GET_USER);
-
-  const [token] = useLocalStorage('token');
-
-  useEffect(() => {
-    if (!error) return;
-
-    if (error.graphQLErrors[0]?.extensions.code === 500) {
-      localStorage.removeItem('token');
-    }
-  }, [error]);
-
-  useEffect(() => {
-    if (!token) return;
-
-    getUser();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [token]);
+const UserProvider = ({ children }: Props) => {
+  const [state, setState] = useState();
 
   return (
-    <UserContext.Provider value={{ user: data?.getUser, getUser }}>{children}</UserContext.Provider>
+    <UserContext.Provider value={{ user: state, setUser: setState }}>
+      {children}
+    </UserContext.Provider>
   );
-});
+};
 
-const useUser = () => useContext(UserContext);
+const useUserContext = () => useContext(UserContext);
 
-export { UserProvider, useUser };
+export { UserProvider, useUserContext };

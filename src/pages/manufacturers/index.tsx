@@ -1,6 +1,5 @@
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/client';
 import { useTranslation } from 'i18n';
-import { withTranslation } from 'next-i18next';
 import React, { useEffect } from 'react';
 import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';

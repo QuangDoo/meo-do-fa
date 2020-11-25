@@ -3,7 +3,7 @@ import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
-import { useCart } from 'src/contexts/Cart';
+import { useCartContext } from 'src/contexts/Cart';
 import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
 
 export default function Nav(): JSX.Element {
@@ -11,7 +11,9 @@ export default function Nav(): JSX.Element {
 
   const router = useRouter();
 
-  const { totalQty } = useCart();
+  const { cart } = useCartContext();
+
+  const totalQty = cart?.totalQty || 0;
 
   const { t } = useTranslation(['navbar']);
 
