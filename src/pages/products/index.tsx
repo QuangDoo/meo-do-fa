@@ -1,4 +1,4 @@
-import { useQuery } from @apollo/client';
+import { useQuery } from '@apollo/client';
 import { useTranslation, withTranslation } from 'i18n';
 import _ from 'lodash';
 import { useRouter } from 'next/router';
