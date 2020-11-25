@@ -2,5 +2,6 @@
   "news": "News",
   "login": "Login",
   "register": "Register",
-  "language": "Language"
+  "language": "Language",
+  "login_title": "Login to find out the product"
 }

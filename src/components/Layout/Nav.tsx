@@ -1,4 +1,5 @@
 import { Menu } from '@material-ui/core';
+import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
@@ -11,6 +12,8 @@ export default function Nav(): JSX.Element {
   const router = useRouter();
 
   const { totalQty } = useCart();
+
+  const { t } = useTranslation(['navbar']);
 
   const logOut = () => {
     localStorage.removeItem('token');
@@ -37,7 +40,7 @@ export default function Nav(): JSX.Element {
                 <Link href="/products">
                   <a className="rockland-nav__link">
                     <i className="rockland-nav__icon icomoon icon-product" />
-                    <span className="rockland-nav__title">Sản Phẩm</span>
+                    <span className="rockland-nav__title">{t('navbar:product')}</span>
                   </a>
                 </Link>
               </li>
@@ -46,7 +49,7 @@ export default function Nav(): JSX.Element {
                 <Link href="/ingredients">
                   <a className="rockland-nav__link">
                     <i className="rockland-nav__icon icomoon icon-ingredients" />
-                    <span className="rockland-nav__title">Hoạt chất</span>
+                    <span className="rockland-nav__title">{t('navbar:ingredient')}</span>
                   </a>
                 </Link>
               </li>
@@ -55,7 +58,7 @@ export default function Nav(): JSX.Element {
                 <Link href="/quick-order">
                   <a className="rockland-nav__link">
                     <i className="rockland-nav__icon icomoon icon-quick-order" />
-                    <span className="rockland-nav__title">Đặt hàng nhanh</span>
+                    <span className="rockland-nav__title">{t('navbar:fast_order')}</span>
                   </a>
                 </Link>
               </li>
@@ -67,7 +70,7 @@ export default function Nav(): JSX.Element {
                     href="https://medofa.vn/deals"
                     title="Khuyến mãi">
                     <i className="rockland-nav__icon fab fa-hotjar" />
-                    <span className="rockland-nav__title">Khuyến mãi</span>
+                    <span className="rockland-nav__title">{t('navbar:promotion')}</span>
                   </a>
                 </Link>
               </li>
@@ -76,8 +79,8 @@ export default function Nav(): JSX.Element {
                 <Link href="/promo-codes">
                   <a className="rockland-nav__link">
                     <i className="rockland-nav__icon fas fa-tag" />
-                    <span className="rockland-nav__title">Mã giảm giá</span>
-                    <span className="rockland-nav__tag badge badge-pill">Mới</span>
+                    <span className="rockland-nav__title">{t('navbar:promo_code')}</span>
+                    <span className="rockland-nav__tag badge badge-pill">{t('navbar:new')}</span>
                   </a>
                 </Link>
               </li>
@@ -118,7 +121,7 @@ export default function Nav(): JSX.Element {
                     <div className="dropdown__item py-0">
                       <div className="d-flex justify-content-between">
                         <div className="text-left mr-3">
-                          <small className="text-muted">Ví điện tử</small>
+                          <small className="text-muted">{t('navbar:e_wallet')}</small>
                           <div className="text-primary">
                             0<span className="unit">đ</span>
                           </div>
@@ -126,7 +129,7 @@ export default function Nav(): JSX.Element {
 
                         <div className="text-right">
                           <a href="/users/loyalty_points">
-                            <small className="text-muted">Điểm thưởng</small>
+                            <small className="text-muted">{t('navbar:reward_points')}</small>
                             <div className="text-secondary">0</div>
                           </a>
                         </div>
@@ -137,34 +140,34 @@ export default function Nav(): JSX.Element {
 
                     <a className="dropdown__item dropdown__item-link" href="/my-account">
                       <i className="far fa-user-circle dropdown__item-icon" />
-                      Thông tin tài khoản
+                      {t('navbar:account_info')}
                     </a>
 
                     <a className="dropdown__item dropdown__item-link" href="/my-orders">
                       <i className="icomoon icon-assignment dropdown__item-icon" />
-                      Đơn hàng của tôi
+                      {t('navbar:my_order')}
                     </a>
 
                     <a className="dropdown__item dropdown__item-link" href="/users/referrals">
                       <i className="icomoon icon-share dropdown__item-icon" />
-                      Giới thiệu bạn bè
+                      {t('navbar:introduce_friends')}
                     </a>
 
                     <a
                       className="dropdown__item dropdown__item-link"
                       href="/users/user-promo-codes">
                       <i className="fas fa-tags dropdown__item-icon" />
-                      Mã giảm giá của tôi
+                      {t('navbar:my_promo_code')}
                     </a>
 
                     <a className="dropdown__item dropdown__item-link" href="/users/loyalty_points">
                       <i className="fas fa-hand-holding-usd dropdown__item-icon" />
-                      Điểm tích lũy
+                      {t('navbar:cumulative_points')}
                     </a>
 
                     <button className="dropdown__item dropdown__item-link w-100" onClick={logOut}>
                       <i className="fas fa-sign-out-alt dropdown__item-icon" />
-                      Đăng xuất
+                      {t('navbar:logout')}
                     </button>
                   </Menu>
                 </ul>

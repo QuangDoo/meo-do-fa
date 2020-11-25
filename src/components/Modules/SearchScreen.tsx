@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { useDebouncedEffect } from 'src/hooks/useDebouncedEffect';
@@ -19,6 +20,8 @@ export default function SearchScreen(props: Props) {
   const [data, setData] = useState(props.data);
 
   const [searchValue, setSearchValue] = useState('');
+
+  const { t } = useTranslation(['searchBar']);
 
   useEffect(() => {
     if (!props.data) return;
@@ -54,7 +57,7 @@ export default function SearchScreen(props: Props) {
       <div className="filter-search__search text-right mb-4">
         <input
           className="search "
-          placeholder="Nhập tên hoạt chất"
+          placeholder={t('searchBar:enter_name')}
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
         />
@@ -77,8 +80,10 @@ export default function SearchScreen(props: Props) {
       </div>
 
       <div className="count_result">
-        <em>Hiển thị {data.length} kết quả tìm kiếm cho </em>
-        <b>{searchValue || ' Tất cả'}</b>
+        <em>
+          {t('searchBar:show')} {data.length} {t('searchBar:result')}{' '}
+        </em>
+        <b>{searchValue || t('searchBar:all')}</b>
       </div>
 
       <div className="filter-search__list py-3">
