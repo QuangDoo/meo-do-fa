@@ -89,9 +89,14 @@ const IngredientDetails = ({ t }: WithTranslation): JSX.Element => {
 
       <hr />
 
-      <ProductsContainer title={'Danh sách các thuốc có ' + detailsData?.getIngredient.name}>
-        <ProductsCarousel products={productsData?.getProductsByIngredient || []} />
-      </ProductsContainer>
+      {
+        productsData?.getProductsByIngredient && (
+          <ProductsContainer title={'Danh sách các thuốc có ' + detailsData?.getIngredient.name}>
+            <ProductsCarousel products={productsData?.getProductsByIngredient} />
+          </ProductsContainer>
+        )
+      }
+      
 
       <Footer />
     </>
