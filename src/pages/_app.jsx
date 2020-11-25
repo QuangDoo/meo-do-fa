@@ -4,6 +4,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import 'src/assets/scss/custom-styles.scss';
 
 import App from 'next/app';
+import Head from 'next/head';
 import ToastContainer from 'src/components/Layout/ToastContainer';
 import { CartProvider } from 'src/contexts/Cart';
 import { CityProvider } from 'src/contexts/City';
@@ -17,6 +18,9 @@ import { appWithTranslation } from '../../i18n';
 const MyApp = ({ Component, pageProps }) => {
   return (
     <ThemeProvider theme={theme}>
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </Head>
       <UserProvider>
         <CartProvider>
           <CityProvider>

@@ -168,4 +168,8 @@ function Products(): JSX.Element {
   );
 }
 
+Products.getInitialProps = async () => ({
+  namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge']
+});
+
 export default withApollo({ ssr: true })(Products);

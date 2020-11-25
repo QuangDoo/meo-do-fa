@@ -1,27 +1,7 @@
-import { useLazyQuery } from '@apollo/client';
+import { useLazyQuery, useQuery } from '@apollo/client';
 import { useTranslation } from 'i18n';
 import React, { useEffect } from 'react';
 import SlickSlider from 'react-slick';
-import {
-  GET_BEST_SELLING_PRODUCTS,
-  GetBestSellingProductsData,
-  GetBestSellingProductsVars
-} from 'src/graphql/product/getBestSellingProducts';
-import {
-  GET_DEALS_OF_THE_DAY,
-  GetDealsOfTheDayData,
-  GetDealsOfTheDayVars
-} from 'src/graphql/product/getDealsOfTheDay';
-import {
-  GET_NEW_PRODUCTS,
-  GetNewProductsData,
-  GetNewProductsVars
-} from 'src/graphql/product/getNewProducts';
-import {
-  GET_PROMOTION_PRODUCTS,
-  GetPromotionProductsData,
-  GetPromotionProductsVars
-} from 'src/graphql/product/getPromotionProducts';
 
 import ProductCard from '../ProductCard';
 import { ProductsCarousel } from '../ProductsCarousel';
@@ -37,41 +17,12 @@ const bannerImages = [
   'assets/images/drugstore3.jpg'
 ];
 
-const paginationVars = {
-  variables: {
-    page: 1,
-    pageSize: 10
-  }
-};
-
-const Home: React.FC = () => {
-  const [getDealsOfTheDayProducts, { data: dealsOfTheDayProductsData }] = useLazyQuery<
-    GetDealsOfTheDayData,
-    GetDealsOfTheDayVars
-  >(GET_DEALS_OF_THE_DAY);
-
-  const [getBestSellingProducts, { data: bestSellingData }] = useLazyQuery<
-    GetBestSellingProductsData,
-    GetBestSellingProductsVars
-  >(GET_BEST_SELLING_PRODUCTS);
-
-  const [getNewProducts, { data: newProductsData }] = useLazyQuery<
-    GetNewProductsData,
-    GetNewProductsVars
-  >(GET_NEW_PRODUCTS);
-
-  const [getPromotionProducts, { data: promotionProductsData }] = useLazyQuery<
-    GetPromotionProductsData,
-    GetPromotionProductsVars
-  >(GET_PROMOTION_PRODUCTS);
-
-  useEffect(() => {
-    getDealsOfTheDayProducts(paginationVars);
-    getBestSellingProducts(paginationVars);
-    getNewProducts(paginationVars);
-    getPromotionProducts(paginationVars);
-  }, []);
-
+const Home: React.FC = ({
+  dealsOfTheDayProductsData,
+  bestSellingData,
+  promotionProductsData,
+  newProductsData
+}: any) => {
   const { t } = useTranslation(['carousels']);
 
   const carousels = [
