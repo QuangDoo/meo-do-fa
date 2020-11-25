@@ -5,5 +5,7 @@
     "choose_delivery_method": "Please choose a delivery method.",
     "standard_delivery": "Standard delivery",
     "fast_delivery": "Fast delivery",
-    "additional": "Additional"
+    "additional": "Additional",
+    "description1": "Medofa may cancel your order if the difference is more than 5% of the product value",
+    "description2": "Số lượng sản phẩm khi giao có thể không đảm bảo đúng nhu cầu ban đầu tùy thuộc vào nhà cung cấp."
 }

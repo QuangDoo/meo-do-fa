@@ -5,5 +5,7 @@
     "choose_delivery_method": "Xin chọn hình thức giao hàng.",
     "standard_delivery": "Giao hàng tiêu chuẩn",
     "fast_delivery": "Giao hàng nhanh",
-    "additional": "Tính thêm"
+    "additional": "Tính thêm",
+    "description1": "Medofa có thể hủy đơn hàng của bạn nếu chênh lệch hơn 5% giá trị sản phẩm.",
+    "description2": "The number of products delivered may not meet the original needs, depending on the supplier."
 }
