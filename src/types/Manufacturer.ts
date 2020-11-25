@@ -1,4 +1,4 @@
 export type Manufacturer = {
-  id: number;
+  id: string;
   short_name: string;
 };

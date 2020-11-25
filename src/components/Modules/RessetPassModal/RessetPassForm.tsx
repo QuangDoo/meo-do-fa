@@ -1,4 +1,4 @@
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation } from '@apollo/client';
 import { Trans, withTranslation } from 'i18n';
 import { WithTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
@@ -10,7 +10,6 @@ import Button from 'src/components/Form/Button';
 import Input from 'src/components/Form/Input';
 import { useModalControlDispatch } from 'src/contexts/ModalControl';
 import { LOGIN_USER, LoginData, LoginVars } from 'src/graphql/user/login.mutation';
-import withApollo from 'src/utils/withApollo';
 
 type Inputs = {
   username: string;
@@ -78,4 +77,4 @@ const RessetPassForm = ({ t }: WithTranslation): JSX.Element => {
 
 const Translated = withTranslation(['password', 'errors', 'login'])(RessetPassForm);
 
-export default withApollo({ ssr: true })(Translated);
+export default Translated;
