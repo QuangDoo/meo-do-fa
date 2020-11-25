@@ -1,5 +1,5 @@
 import { ApolloError } from '@apollo/client';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/client';
 import React, { createContext, useContext, useEffect } from 'react';
 import { GET_MANUFACTURERS } from 'src/graphql/manufactures/manufacturers.query';
 import { Manufacturer } from 'src/types/Manufacturer';

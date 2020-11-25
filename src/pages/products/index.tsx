@@ -1,5 +1,5 @@
-import { useQuery } from '@apollo/react-hooks';
-import { withTranslation } from 'i18n';
+import { useQuery } from '@apollo/client';
+import { useTranslation, withTranslation } from 'i18n';
 import _ from 'lodash';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
@@ -27,7 +27,7 @@ function Products(): JSX.Element {
   const router = useRouter();
 
   const page = +router.query.page || 1;
-
+  const { t } = useTranslation(['products']);
   // Get categories
   const { data: categoriesData, error: categoriesError } = useQuery<
     GetAllCategoriesData,
@@ -60,19 +60,19 @@ function Products(): JSX.Element {
   }, [manufacturersError]);
 
   // Get products
-  const { data: productsData, error: productsError, refetch } = useQuery<
-    GetProductsData,
-    GetProductsVars
-  >(GET_PRODUCTS, {
-    variables: {
-      page,
-      pageSize,
-      type: router.query.tab as string,
-      manufacturer_id: router.query.manufacturer as string,
-      category_id: router.query.category as string,
-      order_type: (router.query.sort as string) || '01'
+  const { data: productsData, error: productsError } = useQuery<GetProductsData, GetProductsVars>(
+    GET_PRODUCTS,
+    {
+      variables: {
+        page,
+        pageSize,
+        type: router.query.tab as string,
+        manufacturer_id: router.query.manufacturer as string,
+        category_id: router.query.category as string,
+        order_type: (router.query.sort as string) || '01'
+      }
     }
-  });
+  );
 
   // onError (products)
   useEffect(() => {
@@ -89,27 +89,13 @@ function Products(): JSX.Element {
 
   const manufacturers = manufacturersData?.getManufactories || [];
 
-  // Refetch products when page changes
-  useEffect(() => {
-    if (!router.query) return;
-
-    refetch({
-      page: router.query.page ? +router.query.page : page,
-      pageSize,
-      type: router.query.tab as string,
-      manufacturer_id: router.query.manufacturer as string,
-      category_id: router.query.category as string,
-      order_type: (router.query.sort as string) || '01'
-    });
-  }, [router.query]);
-
   const getNameById = (array, id) => {
     return _.find(array, { id })?.name;
   };
 
   const title = router.query.category
     ? getNameById(categories, router.query.category)
-    : 'Tất cả sản phẩm';
+    : t('products:title');
 
   return (
     <>
@@ -133,15 +119,16 @@ function Products(): JSX.Element {
 
               {total > 0 ? (
                 <>
-                  Hiển thị{' '}
+                  {t('products:show')}{' '}
                   <b>
                     {(page - 1) * pageSize + 1}&nbsp;-&nbsp;
                     {Math.min(page * pageSize, total)}
                   </b>{' '}
-                  trên tổng số <b>{total}</b> sản phẩm
+                  {t('products:on_of')}
+                  <b>{total}</b> {t('products:products')}
                 </>
               ) : (
-                'Không có Sản Phẩm'
+                t('products:no_products')
               )}
             </div>
 
@@ -180,8 +167,4 @@ function Products(): JSX.Element {
   );
 }
 
-const PageWithTranslation = withTranslation('')(Products);
-
-const PageWithApollo = withApollo({ ssr: true })(PageWithTranslation);
-
-export default PageWithApollo;
+export default withApollo({ ssr: true })(Products);

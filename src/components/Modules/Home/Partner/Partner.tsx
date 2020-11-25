@@ -1,3 +1,4 @@
+import { useTranslation } from 'i18n';
 import React from 'react';
 import Slider from 'react-slick';
 
@@ -16,12 +17,13 @@ const examplePartners = [
 ];
 
 const Parner = (): JSX.Element => {
+  const { t } = useTranslation(['partner']);
   return (
     <section className="bg-white py-5 home__partner">
       <div className="container">
         <div className="row">
           <div className="col-12 text-center mb-3">
-            <h2 className="text-primary">Đối tác của medofa.vn</h2>
+            <h2 className="text-primary">{t('partner:partner')}</h2>
           </div>
           <div className="col-12">
             <Slider slidesToShow={6} slidesToScroll={3} arrows={false}>

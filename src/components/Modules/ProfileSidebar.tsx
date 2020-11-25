@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -30,6 +31,7 @@ const SidebarLink = (props: SidebarLinkProps) => {
 };
 
 const ProfileSidebar = () => {
+  const { t } = useTranslation('navbar');
   const { user } = useUser();
 
   return (
@@ -39,24 +41,32 @@ const ProfileSidebar = () => {
         <h5>{user?.name}</h5>
       </div>
 
-      <SidebarLink text="Thông tin tài khoản" href="/my-account" iconClass="fas fa-user-circle" />
-
-      <SidebarLink text="Đơn hàng của tôi" href="/my-orders" iconClass="icomoon icon-assignment" />
+      <SidebarLink
+        text={t('navbar:account_info')}
+        href="/my-account"
+        iconClass="fas fa-user-circle"
+      />
 
       <SidebarLink
-        text="Giới thiệu bạn bè"
+        text={t('navbar:my_order')}
+        href="/my-orders"
+        iconClass="icomoon icon-assignment"
+      />
+
+      <SidebarLink
+        text={t('navbar:introduce_friends')}
         href="/users/referrals"
         iconClass="icomoon icon-share"
       />
 
       <SidebarLink
-        text="Mã giảm giá của tôi"
+        text={t('navbar:my_promo_code')}
         href="/users/user-promo-codes"
         iconClass="fas fa-tags"
       />
 
       <SidebarLink
-        text="Điểm tích lũy"
+        text={t('navbar:cumulative_points')}
         href="/users/loyalty_points"
         iconClass="fas fa-hand-holding-usd"
       />

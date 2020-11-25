@@ -4,10 +4,8 @@ import Footer from '../../components/Layout/Footer';
 import Head from '../../components/Layout/Head';
 import Header from '../../components/Layout/Header';
 import Nav from '../../components/Layout/Nav';
-import Contact from '../../components/Modules/FAQ/Contact';
+import FAQ from '../../components/Modules/FAQ';
 import QuestionDetail from '../../components/Modules/FAQ/QuestionDetail';
-import Sidebar from '../../components/Modules/FAQ/Sidebar';
-import InputSearch from '../../components/Modules/News/InputSearch';
 
 const HelpDetail = (): JSX.Element => {
   const question = {
@@ -37,34 +35,15 @@ const HelpDetail = (): JSX.Element => {
 
       <Nav />
 
-      <div className="container help">
-        <div className="p-3">
-          <InputSearch placeholder="Search..." keySearch={(x) => console.log(x)} />
-        </div>
-        <div className="row">
-          <div className="col-sm-12 col-md-9 col-lg-9 col-left__divider order-md-2">
-            <div className="wapper">
-              <div className="news__title">{question.question}</div>
-              <QuestionDetail
-                question={question.question}
-                answer={question.answer}
-                author={question.author}
-                postDate={question.postDate}
-                status={question.status}
-              />
-            </div>
-          </div>
-
-          <div className="col-sm-12 col-md-3 col-lg-3 order-md-1">
-            <div className="wrapper">
-              <div className="row">
-                <Sidebar />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <Contact />
+      <FAQ title={question.question}>
+        <QuestionDetail
+          question={question.question}
+          answer={question.answer}
+          author={question.author}
+          postDate={question.postDate}
+          status={question.status}
+        />
+      </FAQ>
 
       <Footer />
     </>

@@ -1,3 +1,4 @@
+import { useTranslation } from 'i18n';
 import React from 'react';
 
 const FastDeliveryLabel = (): JSX.Element => (

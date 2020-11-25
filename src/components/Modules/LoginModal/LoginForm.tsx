@@ -1,4 +1,4 @@
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation } from '@apollo/client';
 import { Trans, withTranslation } from 'i18n';
 import { WithTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
@@ -10,8 +10,8 @@ import Button from 'src/components/Form/Button';
 import Checkbox from 'src/components/Form/Checkbox';
 import Input from 'src/components/Form/Input';
 import { useModalControlDispatch } from 'src/contexts/ModalControl';
-import { useUser } from 'src/contexts/User';
 import { LOGIN_USER, LoginData, LoginVars } from 'src/graphql/user/login.mutation';
+import useUser from 'src/hooks/useUser';
 import withApollo from 'src/utils/withApollo';
 
 type Inputs = {
