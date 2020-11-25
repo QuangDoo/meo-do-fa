@@ -90,13 +90,12 @@ function Products(): JSX.Element {
   const categories = categoriesData?.getCategoriesAll || [];
 
   const manufacturers = manufacturersData?.getManufactories || [];
-
   const getNameById = (array, id) => {
     return _.find(array, { id })?.name;
   };
 
-  const title = router.query.category
-    ? getNameById(categories, router.query.category)
+  const title = Number(router.query.category)
+    ? getNameById(categories, Number(router.query.category))
     : t('products:title');
 
   return (
