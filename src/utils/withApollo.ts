@@ -3,7 +3,7 @@ import { setContext } from '@apollo/client/link/context';
 import { onError } from '@apollo/client/link/error';
 import { withApollo } from 'next-apollo';
 const httpLink = new HttpLink({
-  uri: 'https://graphql.medofa.bedigital.vn/graphql'
+  uri: 'https://graphql.medofa.bedigital.vn'
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -32,7 +32,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 
 const apolloClient = new ApolloClient({
   ssrMode: true,
-  link: from([errorLink, authLink, httpLink]),
+  link: from([errorLink, httpLink]),
   cache: new InMemoryCache()
 });
 
