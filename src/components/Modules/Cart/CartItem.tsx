@@ -1,10 +1,10 @@
-import { useMutation } from '@apollo/client';
 import { withTranslation } from 'i18n';
 import { WithTranslation } from 'next-i18next';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { UPDATE_CART, UpdateCartData, UpdateCartVars } from 'src/graphql/cart/updateCart.mutation';
+import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import useCart from 'src/hooks/useCart';
 
 import { ProductPrice } from '../ProductCard/ProductPrice';
@@ -27,7 +27,7 @@ type Props = WithTranslation & {
 
   _id: string;
 
-  refetchCart: () => void;
+  refetchCart?: () => void;
 };
 
 function CartItem(props: Props): JSX.Element {
@@ -41,7 +41,7 @@ function CartItem(props: Props): JSX.Element {
 
   const { refetchCart } = useCart();
 
-  const [updateCart, { data, error }] = useMutation<UpdateCartData, UpdateCartVars>(UPDATE_CART);
+  const [updateCart, { data, error }] = useMutationAuth(UPDATE_CART);
 
   // onCompleted
   useEffect(() => {
@@ -153,7 +153,7 @@ function CartItem(props: Props): JSX.Element {
           <div className="w-100">
             <div className="d-flex justify-content-between align-items-center">
               <div>
-                <ProductPrice price={props.price} standard_price={props.standard_price} />
+                <ProductPrice price={props.list_price} standard_price={props.standard_price} />
               </div>
 
               <div className="cart-item__qty">

@@ -1,4 +1,3 @@
-import { useQuery } from '@apollo/client';
 import {
   Box,
   Button,
@@ -31,9 +30,9 @@ import Header from 'src/components/Layout/Header';
 import Nav from 'src/components/Layout/Nav';
 import ExportInvoice from 'src/components/Modules/ExportInvoice';
 import ProfileSidebar from 'src/components/Modules/ProfileSidebar';
-import { useUser } from 'src/contexts/User';
 import { GET_ORDER, GetOrderDetail, GetOrderDetailVar } from 'src/graphql/order/order.query';
-import { mockMyOrderProducts } from 'src/mockData/mockMyOrderProducts';
+import { useQueryAuth } from 'src/hooks/useApolloHookAuth';
+import useUser from 'src/hooks/useUser';
 import { theme } from 'src/theme';
 import withApollo from 'src/utils/withApollo';
 
@@ -255,15 +254,12 @@ const OrderDetails = () => {
 
   const [activeStep, setActiveStep] = useState(2);
 
-  const { data: orderDetail, error: orderError } = useQuery<GetOrderDetail, GetOrderDetailVar>(
-    GET_ORDER,
-    {
-      variables: { id: Number(orderId) }
-    }
-  );
+  const { data: orderDetail, error: orderError } = useQueryAuth(GET_ORDER, {
+    variables: { id: Number(orderId) }
+  });
 
   const { user } = useUser();
-  console.log('orderError', orderError);
+  console.log('orderDetail', orderDetail);
   return (
     <>
       <Head>

@@ -9,16 +9,20 @@ import Nav from 'src/components/Layout/Nav';
 import CartItem from 'src/components/Modules/Cart/CartItem';
 import { useCartContext } from 'src/contexts/Cart';
 import { CREATE_COUNSEL } from 'src/graphql/order/order.mutation';
+import { GET_CART } from 'src/graphql/order/order.query';
+import { useQueryAuth } from 'src/hooks/useApolloHookAuth';
 import withApollo from 'src/utils/withApollo';
 
 function Cart(): JSX.Element {
   const { cart } = useCartContext();
-  const { carts, totalQty, totalPrice, refetchCart } = cart;
+  const { data: dataCart } = useQueryAuth(GET_CART);
+  console.log('dataCart', dataCart);
+  // const { carts, totalQty, totalPrice, refetchCart } = cart;
   const { t } = useTranslation(['cart']);
 
-  useEffect(() => {
-    refetchCart();
-  }, []);
+  // useEffect(() => {
+  //   refetchCart();
+  // }, []);
 
   const [createCounsel, { error }] = useMutation(CREATE_COUNSEL);
 
@@ -30,18 +34,18 @@ function Cart(): JSX.Element {
     toast.error('Create counsel error: ' + error);
   }, [error]);
 
-  const handleCheckoutClick = () => {
-    if (carts.length === 0) return;
+  // const handleCheckoutClick = () => {
+  //   if (carts.length === 0) return;
 
-    createCounsel({
-      variables: {
-        cardIds: carts.map((i) => i._id)
-      }
-    }).catch((error) => {
-      console.log('Create counsel error:', { error });
-      toast.error('Create counsel error: ' + error);
-    });
-  };
+  //   createCounsel({
+  //     variables: {
+  //       cardIds: carts.map((i) => i._id)
+  //     }
+  //   }).catch((error) => {
+  //     console.log('Create counsel error:', { error });
+  //     toast.error('Create counsel error: ' + error);
+  //   });
+  // };
 
   return (
     <>
@@ -54,7 +58,7 @@ function Cart(): JSX.Element {
         <div className="cart">
           <div className="row">
             <div className="col-12 mb-3">
-              <h1 className="h3">{t('cart:cart')}</h1>
+              {/* <h1 className="h3">{t('cart:cart')}</h1> */}
               {/* <small className="text-danger">
                 <i className="fas fa-exclamation-circle mr-1" />
                 Lưu ý: Giỏ hàng có sản phẩm khuyến mãi. Sau khi thanh toán, đơn hàng sẽ không thể
@@ -70,7 +74,7 @@ function Cart(): JSX.Element {
                 nhiều cái cũng tính là 1)
               </div> */}
               <div className="elevated cart__items mb-3">
-                {carts.map((item, index) => (
+                {dataCart?.getCart.carts.map((item, index) => (
                   <CartItem
                     key={index}
                     _id={item._id}
@@ -81,7 +85,7 @@ function Cart(): JSX.Element {
                     productName={item.productName}
                     quantity={item.quantity}
                     uom_name="Unit"
-                    refetchCart={refetchCart}
+                    // refetchCart={refetchCart}
                   />
                 ))}
               </div>
@@ -98,9 +102,7 @@ function Cart(): JSX.Element {
                       <div className="mb-2">
                         <small>{t('cart:quantity')}</small>
                       </div>
-                      <div className="cart__quantity text-secondary">
-                        <b>{totalQty}</b>
-                      </div>
+                      <div className="cart__quantity text-secondary">{/* <b>{totalQty}</b> */}</div>
                     </div>
                   </div>
                   <div className="col-md-12 col-lg-8 cart__info-total">
@@ -109,7 +111,7 @@ function Cart(): JSX.Element {
                         <small>{t('cart:total')}</small>
                       </div>
                       <div className="cart__total">
-                        {totalPrice.toLocaleString('de-DE')} <span className="unit">đ</span>
+                        {/* {totalPrice.toLocaleString('de-DE')} <span className="unit">đ</span> */}
                       </div>
                       {/* <div className="cart__old-total">
                         90‰
@@ -131,7 +133,7 @@ function Cart(): JSX.Element {
                   {/* </div> */}
                   {/* </div> */}
 
-                  {totalPrice > 500000 && (
+                  {/* {totalPrice > 500000 && (
                     <div className="col-12">
                       <div className="cart__info-item">
                         <a className="btn btn-secondary btn-block" href="/checkout">
@@ -139,7 +141,7 @@ function Cart(): JSX.Element {
                         </a>
                       </div>
                     </div>
-                  )}
+                  )} */}
                 </div>
                 <a href="/products">&lt;&lt; {t('cart:continue_order')}</a>
               </div>

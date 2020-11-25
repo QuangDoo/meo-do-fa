@@ -8,6 +8,7 @@ export type GetCartData = {
       productId: string;
       productName: string;
       price: number;
+      list_price: number;
       oldPrice: number;
       product: {
         image_512: string;
@@ -58,6 +59,7 @@ export const GET_CART = gql`
         productId
         productName
         price
+        list_price
         oldPrice
         product {
           image_512
