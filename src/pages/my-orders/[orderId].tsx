@@ -1,3 +1,4 @@
+import { useQuery } from '@apollo/react-hooks';
 import {
   Box,
   Button,
@@ -30,6 +31,7 @@ import Header from 'src/components/Layout/Header';
 import Nav from 'src/components/Layout/Nav';
 import ExportInvoice from 'src/components/Modules/ExportInvoice';
 import ProfileSidebar from 'src/components/Modules/ProfileSidebar';
+import { GET_ORDER, GetOrderDetail } from 'src/graphql/order/order.query';
 import { mockMyOrderProducts } from 'src/mockData/mockMyOrderProducts';
 import { theme } from 'src/theme';
 import withApollo from 'src/utils/withApollo';
@@ -251,6 +253,8 @@ const OrderDetails = () => {
   const { orderId } = router.query;
 
   const [activeStep, setActiveStep] = useState(2);
+
+  const { data: orderDetail } = useQuery<GetOrderDetail, undefined>(GET_ORDER);
 
   return (
     <>

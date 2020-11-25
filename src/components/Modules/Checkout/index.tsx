@@ -55,8 +55,14 @@ const CheckoutPage = (): JSX.Element => {
   useEffect(() => {
     if (!error) return;
 
+    console.log('Checkout error:', { error });
+
     toast.error('Thanh toán thất bại.');
   }, [error]);
+
+  useEffect(() => {
+    if (!dataGetCounsel) return;
+  }, [dataGetCounsel]);
 
   const city_id = Number(watch('cityId'));
   const district_id = Number(watch('districtId'));
@@ -65,9 +71,11 @@ const CheckoutPage = (): JSX.Element => {
   const { data: dataDistrict } = useQuery(GET_DISTRICT, {
     variables: { city_id }
   });
+
   const { data: dataWards } = useQuery(GET_WARD, {
     variables: { district_id }
   });
+
   const { data: dataward } = useQuery(GET_WARD_DETAIL, {
     variables: { ward_id }
   });
@@ -102,12 +110,14 @@ const CheckoutPage = (): JSX.Element => {
     });
   };
 
-  if (loadingGetPaymentDelivery || loadingGetCounsel) {
-    return <h1>LOADING...</h1>;
-  }
+  const onError = (errors) => {
+    const fields = Object.keys(errors);
+
+    toast.error(errors[fields[0]].message);
+  };
 
   return (
-    <form className="checkout__form" onSubmit={handleSubmit(onSubmit)}>
+    <form className="checkout__form" onSubmit={handleSubmit(onSubmit, onError)}>
       <div className="checkout container py-5">
         <div className="row">
           <div className="col-12 mb-3">

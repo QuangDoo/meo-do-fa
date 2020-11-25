@@ -88,25 +88,6 @@ function Cart(): JSX.Element {
                 <i className="fas fa-exclamation-circle mr-1" />
                 {t('cart:back_to_products')} <a href="/products">{t('cart:products')}</a>
               </div>
-              <div className="elevated p-3">
-                <div className="mb-3">
-                  <h2 className="h6">{t('cart:other_note')}</h2>
-                  <div className="text-muted">
-                    <label htmlFor="note">{t('cart:note')}</label>
-                  </div>
-                  <textarea
-                    name="note"
-                    id="note"
-                    rows={4}
-                    placeholder={t('cart:customer_note')}
-                    className="form-control"
-                    defaultValue={''}
-                  />
-                </div>
-                <div className="w-100 text-right">
-                  <button className="btn btn-secondary">{t('cart:update_note')}</button>
-                </div>
-              </div>
             </div>
             <div className="col-3">
               <div className="cart__info">
@@ -148,13 +129,16 @@ function Cart(): JSX.Element {
                       {/* <i className="fas fa-trash cart-item__remove" /> */}
                   {/* </div> */}
                   {/* </div> */}
-                  <div className="col-12">
-                    <div className="cart__info-item">
-                      <a className="btn btn-secondary btn-block" href="/checkout">
-                        <button onClick={handleCheckoutClick}> {t('cart:continue_payment')}</button>
-                      </a>
+
+                  {totalPrice > 500000 && (
+                    <div className="col-12">
+                      <div className="cart__info-item">
+                        <a className="btn btn-secondary btn-block" href="/checkout">
+                          <button onClick={handleCheckoutClick}> Tiếp tục thanh toán</button>
+                        </a>
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
                 <a href="/products">&lt;&lt; {t('cart:continue_order')}</a>
               </div>
