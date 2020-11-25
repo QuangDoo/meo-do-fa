@@ -1,4 +1,4 @@
-import { useLazyQuery } from '@apollo/react-hooks';
+import { useLazyQuery } from '@apollo/client';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import clsx from 'clsx';
 import { useTranslation } from 'i18n';

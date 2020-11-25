@@ -1,4 +1,4 @@
-import { gql } from 'apollo-boost';
+import { gql } from '@apollo/client';
 import { Product } from 'src/types/Product';
 
 export const GET_PRODUCTS_DEAL_OF_THE_DAY = gql`

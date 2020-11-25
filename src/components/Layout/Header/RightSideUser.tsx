@@ -1,5 +1,5 @@
 import React from 'react';
-import { useUser } from 'src/contexts/User';
+import useUser from 'src/hooks/useUser';
 
 type NotiItem = {
   time: string;

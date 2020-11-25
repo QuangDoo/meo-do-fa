@@ -1,4 +1,4 @@
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery } from @apollo/client';
 import { useTranslation, withTranslation } from 'i18n';
 import _ from 'lodash';
 import { useRouter } from 'next/router';
@@ -60,19 +60,19 @@ function Products(): JSX.Element {
   }, [manufacturersError]);
 
   // Get products
-  const { data: productsData, error: productsError, refetch } = useQuery<
-    GetProductsData,
-    GetProductsVars
-  >(GET_PRODUCTS, {
-    variables: {
-      page,
-      pageSize,
-      type: router.query.tab as string,
-      manufacturer_id: router.query.manufacturer as string,
-      category_id: router.query.category as string,
-      order_type: (router.query.sort as string) || '01'
+  const { data: productsData, error: productsError } = useQuery<GetProductsData, GetProductsVars>(
+    GET_PRODUCTS,
+    {
+      variables: {
+        page,
+        pageSize,
+        type: router.query.tab as string,
+        manufacturer_id: router.query.manufacturer as string,
+        category_id: router.query.category as string,
+        order_type: (router.query.sort as string) || '01'
+      }
     }
-  });
+  );
 
   // onError (products)
   useEffect(() => {
@@ -88,20 +88,6 @@ function Products(): JSX.Element {
   const categories = categoriesData?.getCategoriesAll || [];
 
   const manufacturers = manufacturersData?.getManufactories || [];
-
-  // Refetch products when page changes
-  useEffect(() => {
-    if (!router.query) return;
-
-    refetch({
-      page: router.query.page ? +router.query.page : page,
-      pageSize,
-      type: router.query.tab as string,
-      manufacturer_id: router.query.manufacturer as string,
-      category_id: router.query.category as string,
-      order_type: (router.query.sort as string) || '01'
-    });
-  }, [router.query]);
 
   const getNameById = (array, id) => {
     return _.find(array, { id })?.name;
@@ -181,8 +167,4 @@ function Products(): JSX.Element {
   );
 }
 
-const PageWithTranslation = withTranslation('')(Products);
-
-const PageWithApollo = withApollo({ ssr: true })(PageWithTranslation);
-
-export default PageWithApollo;
+export default withApollo({ ssr: true })(Products);

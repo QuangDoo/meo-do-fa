@@ -1,4 +1,4 @@
-import { useLazyQuery } from '@apollo/react-hooks';
+import { useLazyQuery } from '@apollo/client';
 import clsx from 'clsx';
 import { useTranslation, withTranslation } from 'i18n';
 import { WithTranslation } from 'next-i18next';

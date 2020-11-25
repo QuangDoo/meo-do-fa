@@ -1,4 +1,4 @@
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/client';
 import { useTranslation, withTranslation } from 'i18n';
 import { useRouter } from 'next/router';
 import React from 'react';

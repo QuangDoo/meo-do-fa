@@ -1,12 +1,12 @@
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation } from '@apollo/client';
 import clsx from 'clsx';
 import { withTranslation } from 'i18n';
 import { WithTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { toast } from 'react-toastify';
-import { useCart } from 'src/contexts/Cart';
 import { ADD_TO_CART } from 'src/graphql/order/order.mutation';
+import useCart from 'src/hooks/useCart';
 
 type Props = WithTranslation & {
   size?: 'normal' | 'large';

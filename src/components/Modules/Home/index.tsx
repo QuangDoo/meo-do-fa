@@ -1,4 +1,4 @@
-import { useLazyQuery } from '@apollo/react-hooks';
+import { useLazyQuery } from '@apollo/client';
 import { useTranslation } from 'i18n';
 import React, { useEffect } from 'react';
 import SlickSlider from 'react-slick';
