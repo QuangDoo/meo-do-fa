@@ -2,8 +2,17 @@ import { ApolloClient, from, HttpLink, InMemoryCache } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { onError } from '@apollo/client/link/error';
 import { withApollo } from 'next-apollo';
+
+const getURI = () => {
+  if (typeof window === 'undefined') {
+    return 'http://gateway.medofa.svc.cluster.local';
+  }
+
+  return 'https://web.medofa.bedigital.vn';
+};
+
 const httpLink = new HttpLink({
-  uri: `https://web.medofa.bedigital.vn/graphql`
+  uri: `${getURI()}/graphql`
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -22,11 +31,19 @@ const authLink = setContext((_, { headers }) => {
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors)
     graphQLErrors.forEach(({ message, locations, path }) => {
-      console.log(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`);
+      console.log(
+        `=========⚠️ [GraphQL error] ========\n
+- Message: \n
+  ${JSON.stringify(message)} \n
+- Location: ${locations} \n
+- Path: ${path} \n
+=========================\n
+      `.trim()
+      );
     });
 
   if (networkError) {
-    console.log(`[Network error]: ${networkError}`);
+    console.log(`⚠️ [Network error]: ${networkError}`);
   }
 });
 
