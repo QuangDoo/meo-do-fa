@@ -1,12 +1,12 @@
-import { useLazyQuery } from '@apollo/client';
 import { useEffect } from 'react';
 import { useUserContext } from 'src/contexts/User';
 import { GET_USER, GetUserData } from 'src/graphql/user/getUser.mutation';
 
+import { useLazyQueryAuth } from './useApolloHookAuth';
 import useLocalStorage from './useLocalStorage';
 
 export default function useUser() {
-  const [getUser, { data, error }] = useLazyQuery<GetUserData, undefined>(GET_USER);
+  const [getUser, { data, error }] = useLazyQueryAuth(GET_USER);
 
   const [token] = useLocalStorage('token');
   const { setUser } = useUserContext();

@@ -8,6 +8,7 @@ export type GetCartData = {
       productId: string;
       productName: string;
       price: number;
+      list_price: number;
       oldPrice: number;
       product: {
         image_512: string;
@@ -22,11 +23,11 @@ export type GetOrderDetail = {
   getOrderDetail: {
     id: number;
     name: string;
-    date_order: Date;
+    date_order: string;
     note: string;
     delivery_count: number;
-    effective_date: Date;
-    expected_date: Date;
+    effective_date: string;
+    expected_date: string;
     order_line: string[];
     payment_method: string[];
     partner_shipping_id: string[];
@@ -35,12 +36,18 @@ export type GetOrderDetail = {
       name: string;
       price_tax: number;
       price_subtotal: number;
+      price_unit: number;
+      price_total: number;
       product: {
         name: string;
         list_price: number;
       };
     };
   }[];
+};
+
+export type GetOrderDetailVar = {
+  id: number;
 };
 
 export const GET_CART = gql`
@@ -52,6 +59,7 @@ export const GET_CART = gql`
         productId
         productName
         price
+        list_price
         oldPrice
         product {
           image_512
@@ -104,10 +112,14 @@ export const GET_ORDER = gql`
         name
         price_tax
         price_subtotal
+        price_unit
+        price_tax
+        price_total
         product {
           name
           list_price
         }
+        state
       }
     }
   }

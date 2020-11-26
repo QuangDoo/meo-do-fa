@@ -103,7 +103,7 @@ const CheckoutPage = (): JSX.Element => {
           district: dataward.getWard.district.name
         },
         email: data.email,
-        paymentMethodId: Number(data.paymentOption),
+        paymentMethodId: 0,
         deliveryMethodId: 1,
         note: data.customerNotes
       }

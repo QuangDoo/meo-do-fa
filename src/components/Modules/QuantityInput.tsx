@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import { ADD_TO_CART } from 'src/graphql/order/order.mutation';
+import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import useCart from 'src/hooks/useCart';
 
 type Props = WithTranslation & {
@@ -27,7 +28,7 @@ function QuantityInput(props: Props) {
 
   const [quantity, setQuantity] = useState<string>('0');
 
-  const [addToCart] = useMutation(ADD_TO_CART);
+  const [addToCart] = useMutationAuth(ADD_TO_CART);
 
   const handleClick = () => {
     if (+quantity === 0) {

@@ -1,5 +1,6 @@
 import React from 'react';
 import { useUserContext } from 'src/contexts/User';
+import useUser from 'src/hooks/useUser';
 
 type NotiItem = {
   time: string;
@@ -29,14 +30,15 @@ const notiItem: NotiItem[] = [
   }
 ];
 const RightSideUser = () => {
-  const { user } = useUserContext();
+  const { user } = useUser();
+
   return (
     <div className="header-right d-none d-md-block">
       <ul className="nav align-items-center">
         {/* Notifications here */}
 
         <div className="header__user ml-3">
-          <div className="header__user-name text-center">{user?.name}</div>
+          <div className="header__user-name text-center">{user?.getUser?.name}</div>
           {/* <div className="header__user-avatar">
             <img
               alt="medofa.vn"

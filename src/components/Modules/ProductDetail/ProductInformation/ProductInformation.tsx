@@ -43,7 +43,7 @@ const ProductInformation = (props: PropsType): JSX.Element => {
       <div className="col-sm-9">
         <div className="row">
           <div className="col-md-5">
-            <ProuductDetailImage imageUrl={props.image_128} />
+            <ProuductDetailImage imageUrl={props.image_512} />
           </div>
           <div className="col-md-7">
             <ProductDetailInfor {...props} />
