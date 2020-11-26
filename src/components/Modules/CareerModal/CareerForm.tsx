@@ -51,12 +51,7 @@ const CareerForm = (): JSX.Element => {
           type="number"
         />
         <InputFile name="Upload Cv" containerClass="mb-3" iconClass="fas fa-file" />
-        <Textarea
-          name="cover"
-          containerClass="mb-3"
-          iconClass="far fa-file-alt"
-          placeholder={'Cover letter'}
-        />
+        <Textarea containerClass="mb-3" placeholder={'Cover letter'} />
         <Checkbox
           name="apply"
           label={

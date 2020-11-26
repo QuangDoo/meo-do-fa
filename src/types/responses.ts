@@ -4,7 +4,6 @@ export type LoginUserResponse = {
   code: number;
   message: string;
 };
-
 export type GetUserResponse = {
   id: string;
   display_name: string;
@@ -37,4 +36,9 @@ export type GetPaymentAndDeliveryResponse = {
     display_name: string;
     tax: string;
   };
+};
+export type CancelOrderResponse = {
+  code: number;
+  status: string;
+  message: string;
 };

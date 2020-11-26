@@ -1,4 +1,4 @@
-import { useMutation } from '@apollo/client';
+// import { useMutation } from '@apollo/client';
 import { useTranslation } from 'i18n';
 import React, { useEffect } from 'react';
 import { toast } from 'react-toastify';
@@ -6,8 +6,9 @@ import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
 import Nav from 'src/components/Layout/Nav';
-import CartItem from 'src/components/Modules/Cart/CartItem';
-import { useCartContext } from 'src/contexts/Cart';
+// import CartItem from 'src/components/Modules/Cart/CartItem';
+import CartItem2 from 'src/components/Modules/Cart/CartItem2';
+// import { useCartContext } from 'src/contexts/Cart';
 import { CREATE_COUNSEL } from 'src/graphql/order/order.mutation';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import useCart from 'src/hooks/useCart';
@@ -18,7 +19,7 @@ function Cart(): JSX.Element {
   // console.log('cart', cart);
   const { refetchCart, cart, getCart } = useCart();
   // console.log('useCart', useCart());
-
+  console.log(cart);
   // const { carts, totalQty, totalPrice, refetchCart } = cart;
 
   const { t } = useTranslation(['cart']);
@@ -70,7 +71,7 @@ function Cart(): JSX.Element {
             </div>
           </div>
           <div className="row">
-            <div className="col-9">
+            <div className="col-12 col-md-9 col-lg-9">
               {/* <div className="elevated text-muted p-3 mb-4">
                 <i className="fas fa-star text-warning mr-1" />
                 Nhấp để đánh dấu sản phẩm quan trọng (giới hạn 20% tổng số sản phẩm, 1 sản phẩm đặt
@@ -78,7 +79,7 @@ function Cart(): JSX.Element {
               </div> */}
               <div className="elevated cart__items mb-3">
                 {cart?.getCart.carts.map((item, index) => (
-                  <CartItem
+                  <CartItem2
                     key={index}
                     _id={item._id}
                     image={item.product.image_512}
@@ -97,60 +98,62 @@ function Cart(): JSX.Element {
                 {t('cart:back_to_products')} <a href="/products">{t('cart:products')}</a>
               </div>
             </div>
-            <div className="col-3">
-              <div className="cart__info">
-                <div className="elevated row no-gutters mb-3">
-                  <div className="col-md-12 col-lg-4 cart__info-quantity">
-                    <div className="cart__info-item text-center">
-                      <div className="mb-2">
-                        <small>{t('cart:quantity')}</small>
-                      </div>
-                      <div className="cart__quantity text-secondary">
-                        <b>{cart?.getCart.totalQty}</b>
+            <div className="col-12 col-md-3 col-lg-3">
+              {cart && (
+                <div className="cart__info">
+                  <div className="elevated row no-gutters mb-3">
+                    <div className="col-md-12 col-lg-4 cart__info-quantity">
+                      <div className="cart__info-item text-center">
+                        <div className="mb-2 text-small">
+                          <small>{t('cart:quantity')}</small>
+                        </div>
+                        <div className="cart__quantity text-secondary text-small">
+                          <b>{cart?.getCart.totalQty}</b>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="col-md-12 col-lg-8 cart__info-total">
-                    <div className="cart__info-item text-center text-lg-right">
-                      <div className="mb-2">
-                        <small>{t('cart:total')}</small>
+                    <div className="col-md-12 col-lg-8 cart__info-total">
+                      <div className="cart__info-item text-center text-lg-right">
+                        <div className="mb-2 text-small">
+                          <small>{t('cart:total')}</small>
+                        </div>
+                        <div className="cart__total text-small">
+                          {cart?.getCart.totalPrice.toLocaleString('de-DE')}{' '}
+                          <span className="unit text-small">đ</span>
+                        </div>
+                        {/* <div className="cart__old-total">
+                          90‰
+                          <span className="unit">đ</span>
+                        </div> */}
                       </div>
-                      <div className="cart__total">
-                        {cart?.getCart.totalPrice.toLocaleString('de-DE')}{' '}
-                        <span className="unit">đ</span>
-                      </div>
-                      {/* <div className="cart__old-total">
-                        90‰
-                        <span className="unit">đ</span>
-                      </div> */}
                     </div>
-                  </div>
-                  {/* <div className="col-12 cart__info-promo">
-                    <div className="cart__info-item d-flex justify-content-between align-items-center">
-                      <i className="fas fa-tags mr-3" />
+                    {/* <div className="col-12 cart__info-promo">
+                      <div className="cart__info-item d-flex justify-content-between align-items-center">
+                        <i className="fas fa-tags mr-3" />
 
-                      <a
-                        className="cart__info-promo-code flex-grow-1 ins-init-condition-tracking"
-                        href="/cart/promo-codes">
-                        Dùng mã khuyến mãi
-                      </a>
-
-                      {/* <i className="fas fa-trash cart-item__remove" /> */}
-                  {/* </div> */}
-                  {/* </div> */}
-
-                  {cart?.getCart.totalPrice > 0 && (
-                    <div className="col-12">
-                      <div className="cart__info-item">
-                        <a className="btn btn-secondary btn-block" href="/checkout">
-                          <button onClick={handleCheckoutClick}> Tiếp tục thanh toán</button>
+                        <a
+                          className="cart__info-promo-code flex-grow-1 ins-init-condition-tracking"
+                          href="/cart/promo-codes">
+                          Dùng mã khuyến mãi
                         </a>
+
+                        {/* <i className="fas fa-trash cart-item__remove" /> */}
+                    {/* </div> */}
+                    {/* </div> */}
+
+                    {cart?.getCart.totalPrice > 0 && (
+                      <div className="col-12">
+                        <div className="cart__info-item">
+                          <a className="btn btn-secondary btn-block text-small" href="/checkout">
+                            <button onClick={handleCheckoutClick}> Tiếp tục thanh toán</button>
+                          </a>
+                        </div>
                       </div>
-                    </div>
-                  )}
+                    )}
+                  </div>
+                  <a href="/products">&lt;&lt; {t('cart:continue_order')}</a>
                 </div>
-                <a href="/products">&lt;&lt; {t('cart:continue_order')}</a>
-              </div>
+              )}
             </div>
           </div>
         </div>
