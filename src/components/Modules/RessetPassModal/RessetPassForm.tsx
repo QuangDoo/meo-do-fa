@@ -1,5 +1,4 @@
-import { useMutation } from '@apollo/react-hooks';
-import { Trans, withTranslation } from 'i18n';
+import { withTranslation } from 'i18n';
 import { WithTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
@@ -9,7 +8,8 @@ import { viPhoneNumberRegex } from 'src/assets/regex/viPhoneNumber';
 import Button from 'src/components/Form/Button';
 import Input from 'src/components/Form/Input';
 import { useModalControlDispatch } from 'src/contexts/ModalControl';
-import { LOGIN_USER, LoginData, LoginVars } from 'src/graphql/user/login.mutation';
+import { LOGIN_USER } from 'src/graphql/user/login.mutation';
+import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import withApollo from 'src/utils/withApollo';
 
 type Inputs = {
@@ -24,7 +24,7 @@ const RessetPassForm = ({ t }: WithTranslation): JSX.Element => {
 
   const { register, handleSubmit } = useForm<Inputs>();
 
-  const [login, { data, error }] = useMutation<LoginData, LoginVars>(LOGIN_USER);
+  const [login, { data, error }] = useMutationAuth(LOGIN_USER);
 
   // onCompleted
 
