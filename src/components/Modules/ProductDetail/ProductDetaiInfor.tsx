@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import React from 'react';
+import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
 
+import ProductBadge from '../ProductCard/ProductBadge';
 import QuantityInput from '../QuantityInput';
 
 type PropsType = {
@@ -8,100 +10,93 @@ type PropsType = {
   list_price: number;
   uom_name: string;
   id: string;
+  is_quick_invoice: string;
+  is_exclusive: string;
+  is_vn: string;
+  manufacturers: Display_name;
+  categories: Display_name[];
+  ingredients: Display_name[];
+  info?: string;
+  indication?: string;
+  contraindication?: string;
+  direction?: string;
+  interaction?: string;
+  preservation?: string;
+  overdose?: string;
+};
+type Display_name = {
+  name: string;
+  id: number;
+  amount: string;
 };
 const ProductDetailInfor = (props: PropsType): JSX.Element => {
   let token = '';
   if (typeof window !== 'undefined') {
     token = localStorage.getItem('token');
   }
-
   return (
-    <div className="col-md-8">
-      <div className="row">
-        <div className="col-12">
-          <h1 className="h3 text-capitalize">{props.name}</h1>
-          <div className="product__status mb-1" />
-        </div>
-        <div className="col-md-7">
-          <div className="mb-3">
-            <small className="text-muted">{props.uom_name} </small>
-          </div>
-          <div className="mb-3">
-            <small className="text-muted">
-              {/* <span className="mr-3">
-                <i className="far fa-eye mr-1" />
-                <strong>7</strong>lượt xem
-              </span> */}
-              {/* <span>
-                <i className="icomoon icon-shopping mr-1" />
-                <strong>0</strong> lượt mua trong 24 giờ qua
-              </span> */}
-            </small>
-          </div>
-          <hr />
-          <div className="mb-3">
-            {!token ? (
-              <Link href="/login">
-                <a className="btn btn-sm btn-secondary" data-modal="true">
-                  Đăng nhập để xem giá
-                </a>
-              </Link>
-            ) : (
-              <div className="d-flex align-items-center flex-wrap justify-content-between mb-4">
-                <div>
-                  <div className="product__price-group">
-                    <span className="product__price">
-                      {props.list_price?.toLocaleString('de-DE')}
-                      <span className="unit">đ</span>
-                    </span>
-                  </div>
-                </div>
-                {/* <div>
-                  <div className="price-feedback" data-controller="price-feedback">
-                    <small>Bạn thấy giá này:</small>
-                    <br />
-                    <button
-                      className="btn btn-sm btn-outline-primary mr-1 js-price-feedback"
-                      data-action="price-feedback#feedbackPrice"
-                      data-feedback-type="high"
-                      data-product-id={12799}
-                      data-target="price-feedback.feedbackBtn">
-                      <i className="fas fa-thumbs-down mr-1" />
-                      Cao
-                    </button>
-                    <button
-                      className="btn btn-sm btn-outline-primary js-price-feedback"
-                      data-action="price-feedback#feedbackPrice"
-                      data-feedback-type="normal"
-                      data-product-id={12799}
-                      data-target="price-feedback.feedbackBtn">
-                      <i className="fas fa-thumbs-up mr-1" />
-                      Hợp lý
-                    </button>
-                  </div>
-                </div> */}
-                <QuantityInput productId={props.id} price={props.list_price} name={props.name} />
+    <div className="row">
+      <div className="col-12">
+        <h1 className="h3 text-capitalize">{props.name}</h1>
+        <div className="product__status mb-1" />
+        {!token ? (
+          <Link href="/login">
+            <a className="btn btn-sm btn-secondary" data-modal="true">
+              Đăng nhập để xem giá
+            </a>
+          </Link>
+        ) : (
+          <div className="d-flex align-items-center flex-wrap justify-content-between mb-4">
+            <div>
+              <div className="product__price-group">
+                <span className="product__price">
+                  {props.list_price?.toLocaleString('de-DE')}
+                  <span className="unit">đ </span>
+                  <small className="text-muted">(Đã bao gồm VAT)</small>
+                </span>
               </div>
-            )}
-          </div>
-        </div>
-        {/* <div className="col-md-5">
-          <div className="product__suppliers">
-            <p>
-              Hệ thống sẽ chọn nhà cung cấp tốt nhất cho bạn.
-              <a data-modal="true" href="/terms-and-condition">
-                Điều Khoản Sử Dụng
-              </a>
-            </p>
-            <hr />
-            <div className="d-flex justify-content-between align-items-center">
-              Đăng ký bán hàng cùng medofa.vn
-              <Link href="/register">
-                <a>Đăng ký</a>
-              </Link>
             </div>
           </div>
-        </div> */}
+        )}
+        <div className="product__status mb-3">
+          {props.is_quick_invoice && <ProductBadge type="is_quick_invoice" />}
+
+          {props.is_exclusive && <ProductBadge type="is_exclusive" />}
+
+          {props.is_vn && <ProductBadge type="is_vn" />}
+        </div>
+        <div className="mb-3">
+          <div className="product__info-label">Nhà sản xuất</div>
+          <div className="text-capitalize">
+            <Link href={`/manufacturers/${props.manufacturers?.id}`}>
+              <a>{props.manufacturers?.name}</a>
+            </Link>
+          </div>
+        </div>
+        <div className="mb-3">
+          <div className="product__info-label">Nhóm thuốc</div>
+          {props?.categories?.map((item, index) => {
+            return (
+              <>
+                <Link href={`/categories/${item.id}`}>
+                  <a className="text-capitalize" key={index}>
+                    {item.name}
+                  </a>
+                </Link>
+              </>
+            );
+          })}
+        </div>
+        <div className="product__status mb-4" />
+
+        <div className="row">
+          <div className="col-md-5">
+            <QuantityInput productId={props.id} price={props.list_price} name={props.name} />
+          </div>
+          <div className="col-md-7">
+            <button className="btn btn-sm btn-primary">Thêm vào giỏ hàng</button>
+          </div>
+        </div>
       </div>
     </div>
   );

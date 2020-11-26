@@ -383,7 +383,7 @@ const MyAccount = (props): JSX.Element => {
 
           <div className="col-12 d-flex justify-content-center">
             <p>
-              <Link href="/quick-order">
+              <Link href="/">
                 <a className="btn btn-secondary btn-lg pr-4 pl-4" role="button">
                   {t('account:update')}
                 </a>
