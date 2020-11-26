@@ -19,7 +19,8 @@ app
       createProxyMiddleware({
         target: 'http://gateway.medofa.svc.cluster.local',
         changeOrigin: true,
-        ws: true
+        ws: true,
+        auth: 'medofa:medofa-bb-999'
       })
     );
 
