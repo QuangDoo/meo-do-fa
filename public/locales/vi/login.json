@@ -7,7 +7,7 @@
   "invalid_password": "Xin nhập mật khẩu tối thiểu 6 kí tự.",
 
   "remember_password": "Nhớ mật khẩu",
-  "forgot_password": "Quên mật khẩu",
+  "forgot_password": "<button>Quên mật khẩu</button>",
   "login": "Đăng nhập",
   "login_for_deals": "<button><b>Đăng ký</b></button> để nhận nhiều ưu đãi hấp dẫn."
 }

@@ -25,33 +25,7 @@ type PropsType = {
 const ProducerInformation = (props: PropsType): JSX.Element => {
   return (
     <div className="row">
-      <div className="col-12 col-sm-3">
-        <div className="mb-3">
-          <div className="product__info-label">Nhà sản xuất</div>
-          <div className="text-capitalize">
-            <Link href={`/manufacturers/${props.manufacturers?.id}`}>
-              <a>{props.manufacturers?.name}</a>
-            </Link>
-          </div>
-        </div>
-        {/* <div className="mb-3">
-          <div className="product__info-label">Nước sản xuất</div>
-          <div className="text-capitalize" />
-        </div> */}
-        <div className="mb-3">
-          <div className="product__info-label">Nhóm thuốc</div>
-          {props?.categories?.map((item, index) => {
-            return (
-              <>
-                <Link href={`/categories/${item.id}`}>
-                  <a className="text-capitalize" key={index}>
-                    {item.name}
-                  </a>
-                </Link>
-              </>
-            );
-          })}
-        </div>
+      <div className="col-sm-10 ml-3 mt-3 ">
         <div className="mb-3">
           <div className="product__info-label">Thành phần</div>
           <table className="table table-bordered table-sm">
@@ -75,25 +49,25 @@ const ProducerInformation = (props: PropsType): JSX.Element => {
             </tbody>
           </table>
         </div>
+        <Tab
+          info={props.info}
+          indication={props.indication}
+          contraindication={props.contraindication}
+          direction={props.direction}
+          interaction={props.interaction}
+          preservation={props.preservation}
+          overdose={props.overdose}
+          labelInfo="Thông tin chung"
+          labelIndication="Chỉ định"
+          labelContraindion="Chống chỉ định"
+          labelDirection="Hướng dẫn sử dụng"
+          labelInteraction="Tương tác thuốc"
+          labelPreservation="Bảo quản"
+          labelOverdose="Quá liều"
+          labelPharmacodynamics="Dược lực học"
+          labelPharmacokinetics="Dược động học"
+        />
       </div>
-      <Tab
-        info={props.info}
-        indication={props.indication}
-        contraindication={props.contraindication}
-        direction={props.direction}
-        interaction={props.interaction}
-        preservation={props.preservation}
-        overdose={props.overdose}
-        labelInfo="Thông tin chung"
-        labelIndication="Chỉ định"
-        labelContraindion="Chống chỉ định"
-        labelDirection="Hướng dẫn sử dụng"
-        labelInteraction="Tương tác thuốc"
-        labelPreservation="Bảo quản"
-        labelOverdose="Quá liều"
-        labelPharmacodynamics="Dược lực học"
-        labelPharmacokinetics="Dược động học"
-      />
     </div>
   );
 };

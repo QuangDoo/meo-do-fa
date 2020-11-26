@@ -72,34 +72,36 @@ function QuantityInput(props: Props) {
   };
 
   return (
-    <div className={clsx('qty js-qty', size === 'large' && 'qty--lg')}>
-      <button className="btn btn-sm qty__button qty__button--minus" onClick={handleMinus}>
-        <i className="fas fa-minus" />
-      </button>
-
-      <input
-        type="tel"
-        className="form-control px-1 no-spinner text-center qty__input"
-        min={0}
-        max={100000}
-        value={quantity}
-        onChange={(e) => setQuantity(e.target.value)}
-        onKeyDown={handleKeyDown}
-        onBlur={handleBlur}
-      />
-
-      <button className="btn btn-sm qty__button qty__button--plus" onClick={handlePlus}>
-        <i className="fas fa-plus" />
-      </button>
-      {router.pathname === '/products/[productId]' ? (
-        <button className="ml-2 btn btn-sm qty__button qty__button--plus" onClick={handleClick}>
-          <i className="fas fa-check" />
+    <div className="product_qty">
+      <div className={clsx('qty js-qty', size === 'large' && 'qty--lg')}>
+        <button className="btn btn-sm qty__button qty__button--minus" onClick={handleMinus}>
+          <i className="fas fa-minus" />
         </button>
-      ) : (
-        <button className="ml-2 btn btn-sm qty__button qty__button--plus" onClick={handleClick}>
-          <i className="fas fa-check" />
+
+        <input
+          type="tel"
+          className="form-control px-1 no-spinner text-center qty__input"
+          min={0}
+          max={100000}
+          value={quantity}
+          onChange={(e) => setQuantity(e.target.value)}
+          onKeyDown={handleKeyDown}
+          onBlur={handleBlur}
+        />
+
+        <button className="btn btn-sm qty__button qty__button--plus" onClick={handlePlus}>
+          <i className="fas fa-plus" />
         </button>
-      )}
+        {router.pathname === '/products/[productId]' ? (
+          <button className="ml-2 btn btn-sm qty__button qty__button--plus" onClick={handleClick}>
+            <i className="fas fa-check" />
+          </button>
+        ) : (
+          <button className="ml-2 btn btn-sm qty__button qty__button--plus" onClick={handleClick}>
+            <i className="fas fa-check" />
+          </button>
+        )}
+      </div>
     </div>
   );
 }

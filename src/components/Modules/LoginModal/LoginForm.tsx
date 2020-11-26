@@ -9,10 +9,13 @@ import { viPhoneNumberRegex } from 'src/assets/regex/viPhoneNumber';
 import Button from 'src/components/Form/Button';
 import Checkbox from 'src/components/Form/Checkbox';
 import Input from 'src/components/Form/Input';
-import { useModalControlDispatch } from 'src/contexts/ModalControl';
+import ModalWithHeader from 'src/components/Layout/Modal/ModalWithHeader';
+import { useModalControlDispatch, useModalControlState } from 'src/contexts/ModalControl';
 import { useUser } from 'src/contexts/User';
 import { LOGIN_USER, LoginData, LoginVars } from 'src/graphql/user/login.mutation';
 import withApollo from 'src/utils/withApollo';
+
+import RessetPassForm from '../RessetPassModal/RessetPassForm';
 
 type Inputs = {
   username: string;
@@ -23,7 +26,25 @@ const LoginForm = ({ t }: WithTranslation): JSX.Element => {
   const dispatch = useModalControlDispatch();
 
   const openRegisterModal = () => dispatch({ type: 'OPEN_REGISTER_MODAL' });
+  const openRessetPassModal = () => dispatch({ type: 'OPEN_RESSETPASS_MODAL' });
+  const { ressetPassIsOpen } = useModalControlState();
+  const { registerIsOpen } = useModalControlState();
 
+  const [open, setOpen] = React.useState(false);
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const [openRessetPass, setOpenRessetPass] = React.useState(false);
+
+  const handleOpenRessetPass = () => {
+    setOpenRessetPass(true);
+    setOpen(false);
+  };
+  const handleCloseRessetPass = () => {
+    setOpenRessetPass(false);
+  };
+  // const openLoginModal = () => modalControlDispatch({ type: 'OPEN_RESSETPASSS_MODAL' });
   const closeLoginModal = () => dispatch({ type: 'CLOSE_LOGIN_MODAL' });
 
   const router = useRouter();
@@ -85,7 +106,7 @@ const LoginForm = ({ t }: WithTranslation): JSX.Element => {
             }
           })}
           containerClass="mb-4"
-          iconClass="icomoon icon-user"
+          iconClass="icomoon icon-phone"
           required
           placeholder={t('login:placeholder_phone')}
         />
@@ -112,12 +133,29 @@ const LoginForm = ({ t }: WithTranslation): JSX.Element => {
           containerClass="form-group align-self-start"
           labelClass="pt-1"
         />
-
-        <div className="mb-4">
-          <a data-modal="true" href="/authentications/reset_password">
-            {t('login:forgot_password')}
-          </a>
-        </div>
+        <span className="mb-4 ">
+          <Trans
+            i18nKey="login:forgot_password"
+            components={{
+              button: (
+                <button
+                  className="text-primary ml-1"
+                  onClick={handleOpenRessetPass}
+                  type="button"
+                />
+              ),
+              b: <b />
+            }}
+          />
+        </span>
+        <ModalWithHeader
+          open={openRessetPass}
+          onClose={handleCloseRessetPass}
+          title={t('password:resset_password')}
+          // onClose={() => dispatch({ type: 'CLOSE_RESSETPASS_MODAL' })}
+          className="authentication signup">
+          <RessetPassForm />
+        </ModalWithHeader>
 
         <Button type="submit" variant="gradient" block className="mb-5">
           {t('login:login')}
