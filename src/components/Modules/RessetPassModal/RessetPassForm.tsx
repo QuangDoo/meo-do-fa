@@ -7,11 +7,8 @@ import { DeepMap, FieldError, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { viPhoneNumberRegex } from 'src/assets/regex/viPhoneNumber';
 import Button from 'src/components/Form/Button';
-import Checkbox from 'src/components/Form/Checkbox';
 import Input from 'src/components/Form/Input';
-import ModalWithHeader from 'src/components/Layout/Modal/ModalWithHeader';
 import { useModalControlDispatch } from 'src/contexts/ModalControl';
-import { useUser } from 'src/contexts/User';
 import { LOGIN_USER, LoginData, LoginVars } from 'src/graphql/user/login.mutation';
 import withApollo from 'src/utils/withApollo';
 
@@ -22,7 +19,6 @@ type Inputs = {
 
 const RessetPassForm = ({ t }: WithTranslation): JSX.Element => {
   const dispatch = useModalControlDispatch();
-  const modalControlDispatch = useModalControlDispatch();
 
   const router = useRouter();
 

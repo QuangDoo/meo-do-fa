@@ -2,7 +2,6 @@ import Link from 'next/link';
 import React from 'react';
 
 import Tab from '../../../Tab/Tab';
-import NewsSidebar from '../../News/NewsSidebar';
 import ProductDetailInfor from '../ProductDetaiInfor';
 import ProducerInformation from './ProducerInformation';
 import ProductSidebar from './ProductSideBar';

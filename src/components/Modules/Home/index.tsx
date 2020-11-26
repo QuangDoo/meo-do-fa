@@ -1,27 +1,6 @@
-import { useLazyQuery } from '@apollo/react-hooks';
-import React, { useEffect } from 'react';
+import { useTranslation } from 'i18n';
+import React from 'react';
 import SlickSlider from 'react-slick';
-import {
-  GET_BEST_SELLING_PRODUCTS,
-  GetBestSellingProductsData,
-  GetBestSellingProductsVars
-} from 'src/graphql/product/getBestSellingProducts';
-import {
-  GET_DEALS_OF_THE_DAY,
-  GetDealsOfTheDayData,
-  GetDealsOfTheDayVars
-} from 'src/graphql/product/getDealsOfTheDay';
-import {
-  GET_NEW_PRODUCTS,
-  GetNewProductsData,
-  GetNewProductsVars
-} from 'src/graphql/product/getNewProducts';
-import {
-  GET_PROMOTION_PRODUCTS,
-  GetPromotionProductsData,
-  GetPromotionProductsVars
-} from 'src/graphql/product/getPromotionProducts';
-import withApollo from 'src/utils/withApollo';
 
 import ProductCard from '../ProductCard';
 import { ProductsCarousel } from '../ProductsCarousel';
@@ -37,52 +16,20 @@ const bannerImages = [
   'assets/images/drugstore3.jpg'
 ];
 
-const paginationVars = {
-  variables: {
-    page: 1,
-    pageSize: 10
-  }
-};
-
-const Home: React.FC = () => {
-  const [getDealsOfTheDayProducts, { data: dealsOfTheDayProductsData }] = useLazyQuery<
-    GetDealsOfTheDayData,
-    GetDealsOfTheDayVars
-  >(GET_DEALS_OF_THE_DAY);
-
-  const [getBestSellingProducts, { data: bestSellingData }] = useLazyQuery<
-    GetBestSellingProductsData,
-    GetBestSellingProductsVars
-  >(GET_BEST_SELLING_PRODUCTS);
-
-  const [getNewProducts, { data: newProductsData }] = useLazyQuery<
-    GetNewProductsData,
-    GetNewProductsVars
-  >(GET_NEW_PRODUCTS);
-
-  const [getPromotionProducts, { data: promotionProductsData }] = useLazyQuery<
-    GetPromotionProductsData,
-    GetPromotionProductsVars
-  >(GET_PROMOTION_PRODUCTS);
-
-  useEffect(() => {
-    getDealsOfTheDayProducts(paginationVars);
-    getBestSellingProducts(paginationVars);
-    getNewProducts(paginationVars);
-    getPromotionProducts(paginationVars);
-  }, []);
+const Home = ({ dealsOfTheDayData, bestSellingData, promotionProductsData, newProductsData }) => {
+  const { t } = useTranslation(['carousels']);
 
   const carousels = [
     {
-      title: 'Deal trong ngày',
-      products: dealsOfTheDayProductsData?.getProductDealOfTheDay || []
+      title: t('carousels:deal_of_the_day'),
+      products: dealsOfTheDayData?.getProductDealOfTheDay || []
     },
     {
-      title: 'Sản phẩm bán chạy',
+      title: t('carousels:bestseller'),
       products: bestSellingData?.getProductByConditions.Products || []
     },
     {
-      title: 'Sản phẩm mới',
+      title: t('carousels:new_products'),
       products: newProductsData?.getProductByConditions.Products || []
     }
   ];
@@ -120,7 +67,11 @@ const Home: React.FC = () => {
 
       {/* Promotion products */}
       <div hidden={promotionProducts.length === 0}>
-        <ProductsContainer title="Khuyến mãi" seeMoreUrl="/deals" deals className="px-0 px-sm-3">
+        <ProductsContainer
+          title={t('carousels:promotion')}
+          seeMoreUrl="/deals"
+          deals
+          className="px-0 px-sm-3">
           <div className="products__cards">
             {promotionProducts.map((product, index) => (
               <ProductCard key={index} {...product} />
@@ -144,4 +95,4 @@ const Home: React.FC = () => {
   );
 };
 
-export default withApollo({ ssr: true })(Home);
+export default Home;

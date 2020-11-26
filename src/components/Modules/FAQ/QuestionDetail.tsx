@@ -16,7 +16,7 @@ function QuestionDetail(props: Props): JSX.Element {
     return { __html: props.answer };
   }
   return (
-    <div className="mb-3">
+    <div className="mb-3 mt-3">
       <div className="news-header__poston text-small text-left">
         {`post on `}
         <b>{props.postDate}</b>

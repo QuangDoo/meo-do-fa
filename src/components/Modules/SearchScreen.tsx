@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { useDebouncedEffect } from 'src/hooks/useDebouncedEffect';
@@ -14,15 +15,27 @@ type Props = {
 const filterChars = 'abcdefghijklmnopqrstuvwxyz#'.split('');
 
 export default function SearchScreen(props: Props) {
+  const customSort = (arr) => {
+    return arr.sort((a, b) => {
+      const name1 = a.name.toLowerCase();
+      const name2 = b.name.toLowerCase();
+      if (name1 < name2) return -1;
+      if (name1 > name2) return 1;
+      return 0;
+    });
+  };
+
   const [searchChar, setSearchChar] = useState('#');
 
   const [data, setData] = useState(props.data);
 
   const [searchValue, setSearchValue] = useState('');
 
+  const { t } = useTranslation(['searchBar']);
+
   useEffect(() => {
     if (!props.data) return;
-    setData(props.data);
+    setData(customSort(props.data));
   }, [props.data]);
 
   const filterByChar = (searchChar: string) => {
@@ -54,7 +67,7 @@ export default function SearchScreen(props: Props) {
       <div className="filter-search__search text-right mb-4">
         <input
           className="search "
-          placeholder="Nhập tên hoạt chất"
+          placeholder={t('searchBar:enter_name')}
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
         />
@@ -77,8 +90,10 @@ export default function SearchScreen(props: Props) {
       </div>
 
       <div className="count_result">
-        <em>Hiển thị {data.length} kết quả tìm kiếm cho </em>
-        <b>{searchValue || ' Tất cả'}</b>
+        <em>
+          {t('searchBar:show')} {data.length} {t('searchBar:result')}{' '}
+        </em>
+        <b>{searchValue || t('searchBar:all')}</b>
       </div>
 
       <div className="filter-search__list py-3">

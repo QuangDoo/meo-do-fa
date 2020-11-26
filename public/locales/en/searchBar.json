@@ -1,0 +1,12 @@
+{
+    "input": "enter the drug, ingredient's name...",
+    "in": "in",
+    "all_products": "All products",
+    "no_product": "No products with keywords",
+    "all_manufacturers": "All manufacturers",
+    "no_manufacturer": "No manufacturers with keywords",
+    "show": "Show",
+    "result": "search result for",
+    "enter_name": "Enter ingredient's name",
+    "all": "All"
+}

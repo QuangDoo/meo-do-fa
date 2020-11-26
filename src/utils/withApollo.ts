@@ -1,15 +1,15 @@
-import { ApolloClient, createHttpLink, from, InMemoryCache } from '@apollo/client';
+import { ApolloClient, from, HttpLink, InMemoryCache } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { onError } from '@apollo/client/link/error';
 import { withApollo } from 'next-apollo';
-// https://graphql.medofa.bedigital.vn/graphql/
-const httpLink = createHttpLink({
-  uri: 'https://graphql.medofa.bedigital.vn/graphql'
+const httpLink = new HttpLink({
+  uri: process.env.GRAPHQL_GATEWAY || `/graphql`
 });
 
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
-  const token = localStorage.getItem('token');
+  const token = global?.localStorage?.getItem('token');
+  console.log(token);
   // return the headers to the context so httpLink can read them
   return {
     headers: {
@@ -19,19 +19,20 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
-// const errorLink = onError(({ graphQLErrors, networkError }) => {
-//   if (graphQLErrors)
-//     graphQLErrors.forEach(({ message, locations, path }) => {
-//       console.log(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`);
-//     });
+const errorLink = onError(({ graphQLErrors, networkError }) => {
+  if (graphQLErrors)
+    graphQLErrors.forEach(({ message, locations, path }) => {
+      console.log(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`);
+    });
 
-//   if (networkError) {
-//     console.log(`[Network error]: ${networkError}`);
-//   }
-// });
+  if (networkError) {
+    console.log(`[Network error]: ${networkError}`);
+  }
+});
 
 const apolloClient = new ApolloClient({
-  link: authLink.concat(httpLink),
+  ssrMode: true,
+  link: from([errorLink, authLink, httpLink]),
   cache: new InMemoryCache()
 });
 

@@ -1,4 +1,4 @@
-import { gql } from 'apollo-boost';
+import { gql } from '@apollo/client';
 
 export const GET_WARD = gql`
   query getWard($city_code: String!, $district_code: String) {

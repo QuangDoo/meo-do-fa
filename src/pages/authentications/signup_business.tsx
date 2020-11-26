@@ -1,11 +1,11 @@
-import { useMutation, useQuery } from '@apollo/react-hooks';
+import { useMutation, useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Head from 'src/components/Layout/Head';
 import PageLayout from 'src/components/Layout/PageLayout';
 import SelectWithLabel from 'src/components/Modules/Checkout/SelectWithLabel';
-import { useCities } from 'src/contexts/Cities';
+import { useCityContext } from 'src/contexts/City';
 import { City, GET_DISTRICT, GET_WARD, GET_WARD_DETAIL } from 'src/graphql/address/city.query';
 import { UPDATE_USER } from 'src/graphql/user/updateUser.mutation';
 import { Status } from 'src/types/Status';
@@ -47,7 +47,7 @@ function SignupBusiness(): JSX.Element {
     console.log('error', JSON.stringify(error.message));
   }, [error]);
 
-  const { data: dataCity } = useCities();
+  const { cities: dataCity } = useCityContext();
 
   // const { data: dataDistrict, error: errorDistrict, refetch: refetchDistrict } = useQuery(
   //   GET_DISTRICT

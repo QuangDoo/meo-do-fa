@@ -1,5 +1,5 @@
 import React from 'react';
-import { useUser } from 'src/contexts/User';
+import { useUserContext } from 'src/contexts/User';
 
 type NotiItem = {
   time: string;
@@ -29,9 +29,9 @@ const notiItem: NotiItem[] = [
   }
 ];
 const RightSideUser = () => {
-  const { user } = useUser();
+  const { user } = useUserContext();
   return (
-    <div className="header-right">
+    <div className="header-right d-none d-md-block">
       <ul className="nav align-items-center">
         {/* Notifications here */}
 

@@ -1,4 +1,4 @@
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/client';
 import slugify from '@sindresorhus/slugify';
 import React, { useEffect } from 'react';
 import Footer from 'src/components/Layout/Footer';

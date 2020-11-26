@@ -1,4 +1,4 @@
-import { gql } from 'apollo-boost';
+import { gql } from '@apollo/client';
 import { User } from 'src/types/User';
 
 export type GetUserData = {

@@ -3,36 +3,32 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import 'src/assets/scss/custom-styles.scss';
 
-import { appWithTranslation } from 'i18n';
 import App from 'next/app';
-import React, { useEffect } from 'react';
+import Head from 'next/head';
 import ToastContainer from 'src/components/Layout/ToastContainer';
 import { CartProvider } from 'src/contexts/Cart';
-import { CitiesProvider } from 'src/contexts/Cities';
+import { CityProvider } from 'src/contexts/City';
 import { ModalControlProvider } from 'src/contexts/ModalControl';
 import { UserProvider } from 'src/contexts/User';
 import { theme } from 'src/theme';
 import { ThemeProvider } from 'styled-components';
 
-const MyApp = ({ Component, pageProps }) => {
-  useEffect(() => {
-    const jssStyles = document.querySelector('#jss-server-side');
-    if (jssStyles) {
-      jssStyles.parentElement.removeChild(jssStyles);
-    }
-  }, []);
+import { appWithTranslation } from '../../i18n';
 
+const MyApp = ({ Component, pageProps }) => {
   return (
     <ThemeProvider theme={theme}>
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </Head>
       <UserProvider>
         <CartProvider>
-          <CitiesProvider>
+          <CityProvider>
             <ModalControlProvider>
               <Component {...pageProps} />
-
               <ToastContainer />
             </ModalControlProvider>
-          </CitiesProvider>
+          </CityProvider>
         </CartProvider>
       </UserProvider>
     </ThemeProvider>
