@@ -5,6 +5,7 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { UPDATE_CART, UpdateCartData, UpdateCartVars } from 'src/graphql/cart/updateCart.mutation';
+import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import useCart from 'src/hooks/useCart';
 
 import { ProductPrice } from '../ProductCard/ProductPrice';
@@ -41,7 +42,7 @@ function CartItem(props: Props): JSX.Element {
 
   const { refetchCart } = useCart();
 
-  const [updateCart, { data, error }] = useMutation<UpdateCartData, UpdateCartVars>(UPDATE_CART);
+  const [updateCart, { data, error }] = useMutationAuth(UPDATE_CART);
 
   // onCompleted
   useEffect(() => {
@@ -61,7 +62,7 @@ function CartItem(props: Props): JSX.Element {
 
   const handlePlusClick = () => {
     const newQty = props.quantity + 1;
-
+    setQuantity(newQty + '');
     updateCart({
       variables: {
         inputs: {
@@ -71,10 +72,10 @@ function CartItem(props: Props): JSX.Element {
       }
     });
   };
-
+  console.log('quantity', quantity);
   const handleMinusClick = () => {
     const newQty = props.quantity - 1;
-
+    setQuantity(newQty + '');
     if (newQty === 0) {
       toast.error(<div>{t('cart:quantity_smaller_than_1')}</div>);
       return;
@@ -131,7 +132,7 @@ function CartItem(props: Props): JSX.Element {
             style={{
               backgroundImage:
                 props.image && props.image.length > 0
-                  ? `url(data:image/png;base64,${props.image})`
+                  ? `url(${props.image})`
                   : `url('/assets/images/no-image.jpg')`
             }}
           />

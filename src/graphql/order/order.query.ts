@@ -59,7 +59,6 @@ export const GET_CART = gql`
         productId
         productName
         price
-        list_price
         oldPrice
         product {
           image_512

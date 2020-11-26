@@ -259,7 +259,7 @@ const OrderDetails = () => {
   });
 
   const { user } = useUser();
-  console.log('orderDetail', orderDetail);
+  console.log('orderError', orderError);
   return (
     <>
       <Head>

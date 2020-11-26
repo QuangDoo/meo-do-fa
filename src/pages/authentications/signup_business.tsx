@@ -8,6 +8,7 @@ import SelectWithLabel from 'src/components/Modules/Checkout/SelectWithLabel';
 import { useCityContext } from 'src/contexts/City';
 import { City, GET_DISTRICT, GET_WARD, GET_WARD_DETAIL } from 'src/graphql/address/city.query';
 import { UPDATE_USER } from 'src/graphql/user/updateUser.mutation';
+import useCity from 'src/hooks/useCity';
 import { Status } from 'src/types/Status';
 import withApollo from 'src/utils/withApollo';
 
@@ -47,7 +48,8 @@ function SignupBusiness(): JSX.Element {
     console.log('error', JSON.stringify(error.message));
   }, [error]);
 
-  const { cities: dataCity } = useCityContext();
+  // const { cities: dataCity } = useCityContext();
+  const { data: datacity } = useCity();
 
   // const { data: dataDistrict, error: errorDistrict, refetch: refetchDistrict } = useQuery(
   //   GET_DISTRICT
@@ -252,7 +254,7 @@ function SignupBusiness(): JSX.Element {
                       </small>
                     </div>
                     <div className="row">
-                      {/ Select city /}
+                      {/* Select city */}
                       <SelectWithLabel
                         name="cityId"
                         ref={register({
@@ -263,15 +265,15 @@ function SignupBusiness(): JSX.Element {
                         required>
                         <option value="">Chọn tỉnh/thành phố...</option>
 
-                        {/ Map cities from api /}
-                        {dataCity.map((city: City) => (
+                        {/* Map cities from api */}
+                        {datacity?.getCities.map((city: City) => (
                           <option key={city.id} value={city.id}>
                             {city.name}
                           </option>
                         ))}
                       </SelectWithLabel>
 
-                      {/ Select district /}
+                      {/* Select district */}
                       <SelectWithLabel
                         name="districtId"
                         ref={register({
@@ -290,7 +292,7 @@ function SignupBusiness(): JSX.Element {
                         ))}
                       </SelectWithLabel>
 
-                      {/ Select ward /}
+                      {/* Select ward */}
                       <SelectWithLabel
                         name="wardId"
                         ref={register({

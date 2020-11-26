@@ -99,7 +99,7 @@ const DeliveryInfo = (props, register): JSX.Element => {
           <option value="">Chọn tỉnh/thành phố...</option>
 
           {/* Map cities from api */}
-          {props.dataCity.map((city: DataCityType) => (
+          {props.dataCity?.map((city: DataCityType) => (
             <option key={city.id} value={city.id}>
               {city.name}
             </option>

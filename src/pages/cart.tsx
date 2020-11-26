@@ -9,18 +9,25 @@ import Nav from 'src/components/Layout/Nav';
 import CartItem from 'src/components/Modules/Cart/CartItem';
 import { useCartContext } from 'src/contexts/Cart';
 import { CREATE_COUNSEL } from 'src/graphql/order/order.mutation';
+import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
+import useCart from 'src/hooks/useCart';
 import withApollo from 'src/utils/withApollo';
 
 function Cart(): JSX.Element {
-  const { cart } = useCartContext();
-  const { carts, totalQty, totalPrice, refetchCart } = cart;
+  // const { cart } = useCartContext();
+  // console.log('cart', cart);
+  const { refetchCart, cart, getCart } = useCart();
+  // console.log('useCart', useCart());
+
+  // const { carts, totalQty, totalPrice, refetchCart } = cart;
+
   const { t } = useTranslation(['cart']);
 
-  useEffect(() => {
-    refetchCart();
-  }, []);
+  // useEffect(() => {
+  //   refetchCart;
+  // }, [refetchCart]);
 
-  const [createCounsel, { error }] = useMutation(CREATE_COUNSEL);
+  const [createCounsel, { error }] = useMutationAuth(CREATE_COUNSEL);
 
   // onError
   useEffect(() => {
@@ -31,11 +38,11 @@ function Cart(): JSX.Element {
   }, [error]);
 
   const handleCheckoutClick = () => {
-    if (carts.length === 0) return;
+    if (cart.getCart.carts.length === 0) return;
 
     createCounsel({
       variables: {
-        cardIds: carts.map((i) => i._id)
+        cardIds: cart.getCart.carts.map((i) => i._id)
       }
     }).catch((error) => {
       console.log('Create counsel error:', { error });
@@ -70,7 +77,7 @@ function Cart(): JSX.Element {
                 nhiều cái cũng tính là 1)
               </div> */}
               <div className="elevated cart__items mb-3">
-                {carts.map((item, index) => (
+                {cart?.getCart.carts.map((item, index) => (
                   <CartItem
                     key={index}
                     _id={item._id}
@@ -99,7 +106,7 @@ function Cart(): JSX.Element {
                         <small>{t('cart:quantity')}</small>
                       </div>
                       <div className="cart__quantity text-secondary">
-                        <b>{totalQty}</b>
+                        <b>{cart?.getCart.totalQty}</b>
                       </div>
                     </div>
                   </div>
@@ -109,7 +116,8 @@ function Cart(): JSX.Element {
                         <small>{t('cart:total')}</small>
                       </div>
                       <div className="cart__total">
-                        {totalPrice.toLocaleString('de-DE')} <span className="unit">đ</span>
+                        {cart?.getCart.totalPrice.toLocaleString('de-DE')}{' '}
+                        <span className="unit">đ</span>
                       </div>
                       {/* <div className="cart__old-total">
                         90‰
@@ -131,7 +139,7 @@ function Cart(): JSX.Element {
                   {/* </div> */}
                   {/* </div> */}
 
-                  {totalPrice > 500000 && (
+                  {cart?.getCart.totalPrice > 0 && (
                     <div className="col-12">
                       <div className="cart__info-item">
                         <a className="btn btn-secondary btn-block" href="/checkout">
