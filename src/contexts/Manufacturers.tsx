@@ -1,16 +1,15 @@
 import { ApolloError } from '@apollo/client';
 import { useQuery } from '@apollo/client';
 import React, { createContext, useContext, useEffect } from 'react';
-import { GET_MANUFACTURERS } from 'src/graphql/manufactures/manufacturers.query';
+import {
+  GET_ALL_MANUFACTURERS,
+  GetAllManufacturersData
+} from 'src/graphql/manufacturers/manufacturers.query';
 import { Manufacturer } from 'src/types/Manufacturer';
 import withApollo from 'src/utils/withApollo';
 
 type Props = {
   children: React.ReactNode;
-};
-
-type GetManufacturersData = {
-  getManufactoriesAll: Manufacturer[];
 };
 
 type ContextValue = {
@@ -24,7 +23,9 @@ const ManufacturersContext = createContext<ContextValue>(null);
 ManufacturersContext.displayName = 'ManufacturersContext';
 
 const ManufacturersProvider = withApollo({ ssr: true })(({ children }: Props) => {
-  const { data, loading, error } = useQuery<GetManufacturersData, undefined>(GET_MANUFACTURERS);
+  const { data, loading, error } = useQuery<GetAllManufacturersData, undefined>(
+    GET_ALL_MANUFACTURERS
+  );
 
   useEffect(() => {
     if (!error) return;
