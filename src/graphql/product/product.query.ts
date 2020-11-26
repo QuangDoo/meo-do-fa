@@ -83,6 +83,8 @@ export const GET_PRODUCT = gql`
       purchase_ok
       create_date
       image_128
+      image_512
+      image_256
       category_ids
       uom_name
       categories {

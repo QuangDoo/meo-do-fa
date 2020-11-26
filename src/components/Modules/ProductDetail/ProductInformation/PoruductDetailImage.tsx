@@ -23,7 +23,7 @@ const ProuductDetailImage = (props): JSX.Element => {
             style={{
               backgroundImage:
                 props.imageUrl !== 'false'
-                  ? `url(data:image/jpeg;base64,${props.imageUrl})`
+                  ? `url(${props.imageUrl})`
                   : `url('/assets/images/no-image.jpg')`
             }}
           />

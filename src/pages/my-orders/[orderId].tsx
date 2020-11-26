@@ -1,4 +1,3 @@
-import { useQuery } from '@apollo/client';
 import {
   Box,
   Button,
@@ -31,8 +30,9 @@ import Header from 'src/components/Layout/Header';
 import Nav from 'src/components/Layout/Nav';
 import ExportInvoice from 'src/components/Modules/ExportInvoice';
 import ProfileSidebar from 'src/components/Modules/ProfileSidebar';
-import { GET_ORDER, GetOrderDetail } from 'src/graphql/order/order.query';
-import { mockMyOrderProducts } from 'src/mockData/mockMyOrderProducts';
+import { GET_ORDER, GetOrderDetail, GetOrderDetailVar } from 'src/graphql/order/order.query';
+import { useQueryAuth } from 'src/hooks/useApolloHookAuth';
+import useUser from 'src/hooks/useUser';
 import { theme } from 'src/theme';
 import withApollo from 'src/utils/withApollo';
 
@@ -254,8 +254,12 @@ const OrderDetails = () => {
 
   const [activeStep, setActiveStep] = useState(2);
 
-  const { data: orderDetail } = useQuery<GetOrderDetail, undefined>(GET_ORDER);
+  const { data: orderDetail, error: orderError } = useQueryAuth(GET_ORDER, {
+    variables: { id: Number(orderId) }
+  });
 
+  const { user } = useUser();
+  console.log('orderDetail', orderDetail);
   return (
     <>
       <Head>
@@ -299,7 +303,8 @@ const OrderDetails = () => {
 
                   <Box display="flex" justifyContent="space-between" alignItems="center">
                     <Typography>
-                      Dự kiến giao vào <strong>Thứ hai (09/11/2020)</strong>
+                      Dự kiến giao vào{' '}
+                      <strong>{orderDetail?.getOrderDetail?.expected_date?.substr(0, 10)}</strong>
                     </Typography>
 
                     <Link
@@ -307,8 +312,8 @@ const OrderDetails = () => {
                         pathname: '/feedback',
                         query: {
                           orderId: orderId,
-                          name: 'Phạm thị phương',
-                          phone: '0964547987'
+                          name: user?.name,
+                          phone: user?.phone
                         }
                       }}>
                       <Button size="small" startIcon={<Sms />} variant="outlined" color="primary">
@@ -330,10 +335,10 @@ const OrderDetails = () => {
                         .toJSDate()}
                     />
 
-                    <Box ml={2}>
+                    {/* <Box ml={2}>
                       Xem thông tin xuất hóa đơn đỏ{' '}
                       <Link href="/invoice-export-rules">tại đây</Link>.
-                    </Box>
+                    </Box> */}
                   </Box>
                 </CustomCard>
               </Grid>
@@ -342,20 +347,22 @@ const OrderDetails = () => {
                 <Grid container spacing={2}>
                   <Grid item sm={6} xs={12}>
                     <CustomCard>
-                      <TextWithLabel label="Tên người nhận" text="Phạm thị phương" />
+                      <TextWithLabel label="Tên người nhận" text={user?.name} />
+                      {/* nào có data địa chỉ thì bỏ vô đây nha <3 */}
 
-                      <TextWithLabel
+                      {/* <TextWithLabel
                         label="Địa chỉ giao hàng"
                         text="12b/1e ấp đồng an 2, Phường Bình Hòa, Thành phố Thuận An, Bình Dương"
-                      />
+                      /> */}
 
-                      <TextWithLabel label="Số điện thoại" text="0964547987" />
+                      <TextWithLabel label="Số điện thoại" text={user?.phone} />
 
-                      <TextWithLabel label="Email" text="phamthiphuong0505@gmail.com" />
+                      <TextWithLabel label="Email" text={user?.email} />
                     </CustomCard>
                   </Grid>
+                  {/* có data đơn vị vận chuyển thì fill vô nha <3 */}
 
-                  <Grid item sm={6} xs={12}>
+                  {/* <Grid item sm={6} xs={12}>
                     <CustomCard>
                       <TextWithLabel label="Đơn vị vận chuyển" text="Giaohangtietkiem.vn" />
 
@@ -368,13 +375,13 @@ const OrderDetails = () => {
                         text="Thanh toán tiền mặt khi nhận hàng"
                       />
                     </CustomCard>
-                  </Grid>
+                  </Grid> */}
                 </Grid>
               </Grid>
 
               <Grid item xs={12}>
                 <CustomCard>
-                  <TextWithLabel label="Ghi chú" text="Không có ghi chú" />
+                  <TextWithLabel label="Ghi chú" text={orderDetail?.getOrderDetail.note} />
                 </CustomCard>
               </Grid>
 
@@ -391,7 +398,7 @@ const OrderDetails = () => {
                     </TableHead>
 
                     <TableBody>
-                      {mockMyOrderProducts.map((product) => (
+                      {orderDetail?.getOrderDetail.order_lines.map((product) => (
                         <TableRow key={product.id}>
                           <CustomBodyCell textAlign="left">
                             <Link href={`/products/${product.id}`}>
@@ -399,12 +406,14 @@ const OrderDetails = () => {
                             </Link>
                           </CustomBodyCell>
 
-                          <CustomBodyCell>{product.price.toLocaleString('de-DE')} đ</CustomBodyCell>
+                          <CustomBodyCell>
+                            {product.price_unit?.toLocaleString('de-DE')} đ
+                          </CustomBodyCell>
 
                           <CustomBodyCell>{product.quantity}</CustomBodyCell>
 
                           <CustomBodyCell>
-                            {(product.quantity * product.price).toLocaleString('de-DE')} đ
+                            {product.price_total?.toLocaleString('de-DE')} đ
                           </CustomBodyCell>
                         </TableRow>
                       ))}
