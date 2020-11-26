@@ -18,7 +18,7 @@ app
       '/graphql',
       createProxyMiddleware({
         target: 'http://gateway.medofa.svc.cluster.local',
-        changeOrigin: true,
+        changeOrigin: false,
         ws: true,
         auth: 'medofa:medofa-bb-999'
       })
