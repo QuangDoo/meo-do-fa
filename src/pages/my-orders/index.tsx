@@ -16,6 +16,7 @@ import {
   GetOrderListData,
   GetOrderListVars
 } from 'src/graphql/my-orders/getOrderList';
+import { useLazyQueryAuth } from 'src/hooks/useApolloHookAuth';
 import withApollo from 'src/utils/withApollo';
 
 type FilterKey = 'all' | 'waiting_for_confirmation' | 'completed' | 'canceled';
@@ -74,9 +75,7 @@ const OrderItem = (props: GetOrderList): JSX.Element => {
 };
 
 const MyOrders = ({ t }: WithTranslation): JSX.Element => {
-  const [getOrderList, { data, error }] = useLazyQuery<GetOrderListData, GetOrderListVars>(
-    GET_ORDER_LIST
-  );
+  const [getOrderList, { data, error }] = useLazyQueryAuth(GET_ORDER_LIST);
 
   useEffect(() => {
     if (!error) return;

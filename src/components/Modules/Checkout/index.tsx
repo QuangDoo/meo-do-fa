@@ -8,7 +8,9 @@ import { GET_DISTRICT, GET_WARD, GET_WARD_DETAIL } from 'src/graphql/address/cit
 import { CREATE_ORDER } from 'src/graphql/order/order.mutation';
 import { GET_COUNSEL } from 'src/graphql/order/order.query';
 import { GET_PAYMENT_DELIVERY } from 'src/graphql/paymentAndDelivery/paymentAndDelivery,query';
+import { useLazyQueryAuth, useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
 import useCart from 'src/hooks/useCart';
+import useCity from 'src/hooks/useCity';
 import swal from 'sweetalert';
 
 import Agreement from './Agreement';
@@ -26,25 +28,25 @@ const CheckoutPage = (): JSX.Element => {
     }
   });
 
-  const { cities: dataCity } = useCityContext();
+  const { data: datacity } = useCity();
 
-  const { data: dataGetPaymentDelivery, loading: loadingGetPaymentDelivery } = useQuery(
+  const { data: dataGetPaymentDelivery, loading: loadingGetPaymentDelivery } = useLazyQueryAuth(
     GET_PAYMENT_DELIVERY
   );
 
-  const { data: dataGetCounsel, loading: loadingGetCounsel } = useQuery(GET_COUNSEL);
+  const { data: dataGetCounsel, loading: loadingGetCounsel } = useQueryAuth(GET_COUNSEL);
 
   const router = useRouter();
 
   const { refetchCart } = useCart();
 
-  const [createOrder, { data, error }] = useMutation(CREATE_ORDER);
+  const [createOrder, { data, error }] = useMutationAuth(CREATE_ORDER);
 
   useEffect(() => {
     if (!data) return;
 
     swal({
-      title: `Sản phẩm ${data.createOrder.orderNo} đã được đặt thành công!`,
+      title: `Đơn hàng ${data.createOrder.orderNo} đã được đặt thành công!`,
       icon: 'success'
     }).then(() => {
       refetchCart();
@@ -68,15 +70,15 @@ const CheckoutPage = (): JSX.Element => {
   const district_id = Number(watch('districtId'));
   const ward_id = Number(watch('wardId'));
 
-  const { data: dataDistrict } = useQuery(GET_DISTRICT, {
+  const { data: dataDistrict } = useQueryAuth(GET_DISTRICT, {
     variables: { city_id }
   });
 
-  const { data: dataWards } = useQuery(GET_WARD, {
+  const { data: dataWards } = useQueryAuth(GET_WARD, {
     variables: { district_id }
   });
 
-  const { data: dataward } = useQuery(GET_WARD_DETAIL, {
+  const { data: dataward } = useQueryAuth(GET_WARD_DETAIL, {
     variables: { ward_id }
   });
 
@@ -128,7 +130,7 @@ const CheckoutPage = (): JSX.Element => {
             <div className="mb-4">
               <DeliveryInfo
                 ref={register}
-                dataCity={dataCity}
+                dataCity={datacity?.getCities}
                 dataDistrict={dataDistrict?.getDistricts}
                 dataWard={dataWards?.getWards}
               />

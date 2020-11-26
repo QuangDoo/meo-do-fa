@@ -1,14 +1,13 @@
-import { useLazyQuery } from '@apollo/client';
 import { useEffect } from 'react';
 import { toast } from 'react-toastify';
-import { GET_CART, GetCartData } from 'src/graphql/order/order.query';
+import { GET_CART } from 'src/graphql/order/order.query';
 import useLocalStorage from 'src/hooks/useLocalStorage';
-import cart from 'src/pages/cart';
 
 import { useCartContext } from '../contexts/Cart';
+import { useLazyQueryAuth } from './useApolloHookAuth';
 
 export default function useCart() {
-  const [getCart, { data, error, refetch }] = useLazyQuery<GetCartData, undefined>(GET_CART, {
+  const [getCart, { data, error, refetch }] = useLazyQueryAuth(GET_CART, {
     fetchPolicy: 'network-only'
   });
 
@@ -27,7 +26,6 @@ export default function useCart() {
     if (!token) return;
 
     getCart();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token]);
 
   useEffect(() => {
