@@ -1,12 +1,19 @@
 import React, { createContext, Dispatch, useCallback, useContext, useState } from 'react';
 
 type Action = {
-  type: 'OPEN_LOGIN_MODAL' | 'CLOSE_LOGIN_MODAL' | 'OPEN_REGISTER_MODAL' | 'CLOSE_REGISTER_MODAL';
+  type:
+    | 'OPEN_LOGIN_MODAL'
+    | 'CLOSE_LOGIN_MODAL'
+    | 'OPEN_REGISTER_MODAL'
+    | 'CLOSE_REGISTER_MODAL'
+    | 'OPEN_RESSETPASS_MODAL'
+    | 'CLOSE_RESSETPASS_MODAL';
 };
 
 type State = {
   loginIsOpen: boolean;
   registerIsOpen: boolean;
+  ressetPassIsOpen: boolean;
 };
 
 type Props = {
@@ -15,7 +22,8 @@ type Props = {
 
 const initialState: State = {
   loginIsOpen: false,
-  registerIsOpen: false
+  registerIsOpen: false,
+  ressetPassIsOpen: false
 };
 
 const StateContext = createContext<State>(null);
@@ -33,25 +41,42 @@ const ModalControlProvider = ({ children }: Props): JSX.Element => {
         case 'OPEN_LOGIN_MODAL':
           return {
             loginIsOpen: true,
-            registerIsOpen: false
+            registerIsOpen: false,
+            ressetPassIsOpen: false
           };
 
         case 'CLOSE_LOGIN_MODAL':
           return {
             loginIsOpen: false,
-            registerIsOpen: false
+            registerIsOpen: false,
+            ressetPassIsOpen: false
           };
 
         case 'OPEN_REGISTER_MODAL':
           return {
             loginIsOpen: false,
-            registerIsOpen: true
+            registerIsOpen: true,
+            ressetPassIsOpen: false
           };
 
         case 'CLOSE_REGISTER_MODAL':
           return {
             loginIsOpen: false,
-            registerIsOpen: false
+            registerIsOpen: false,
+            ressetPassIsOpen: false
+          };
+        case 'OPEN_RESSETPASS_MODAL':
+          return {
+            loginIsOpen: false,
+            registerIsOpen: false,
+            ressetPassIsOpen: true
+          };
+
+        case 'CLOSE_RESSETPASS_MODAL':
+          return {
+            loginIsOpen: false,
+            registerIsOpen: false,
+            ressetPassIsOpen: false
           };
         default:
           throw new Error(`Unhandled action type: ${action.type}`);

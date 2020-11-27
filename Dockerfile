@@ -12,9 +12,9 @@ COPY yarn.lock ./
 RUN yarn --silent
 
 COPY ./ ./
+RUN yarn build
 
 # Building app
-# RUN yarn build
 EXPOSE 3000
 
-CMD "yarn" "start-prod"
+CMD "yarn" "start"

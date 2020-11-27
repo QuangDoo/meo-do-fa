@@ -1,4 +1,5 @@
 import { gql } from '@apollo/client';
+import { Manufacturer } from 'src/types/Manufacturer';
 
 export const GET_ALL_MANUFACTURERS = gql`
   query {
@@ -10,10 +11,7 @@ export const GET_ALL_MANUFACTURERS = gql`
 `;
 
 export type GetAllManufacturersData = {
-  getManufactoriesAll: {
-    id: string;
-    short_name: string;
-  }[];
+  getManufactoriesAll: Manufacturer[];
 };
 
 export const GET_MANUFACTURERS = gql`
@@ -26,10 +24,7 @@ export const GET_MANUFACTURERS = gql`
 `;
 
 export type GetManufacturersData = {
-  getManufactories: {
-    id: string;
-    short_name: string;
-  }[];
+  getManufactories: Manufacturer[];
 };
 
 export type GetManufacturersVars = {

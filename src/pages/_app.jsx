@@ -4,6 +4,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import 'src/assets/scss/custom-styles.scss';
 
 import App from 'next/app';
+import Head from 'next/head';
 import ToastContainer from 'src/components/Layout/ToastContainer';
 import { CartProvider } from 'src/contexts/Cart';
 import { CityProvider } from 'src/contexts/City';
@@ -33,7 +34,5 @@ const MyApp = ({ Component, pageProps }) => {
     </ThemeProvider>
   );
 };
-
-MyApp.getInitialProps = async (appContext) => ({ ...(await App.getInitialProps(appContext)) });
 
 export default appWithTranslation(MyApp);

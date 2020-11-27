@@ -15,6 +15,16 @@ type Props = {
 const filterChars = 'abcdefghijklmnopqrstuvwxyz#'.split('');
 
 export default function SearchScreen(props: Props) {
+  const customSort = (arr) => {
+    return arr.sort((a, b) => {
+      const name1 = a.name.toLowerCase();
+      const name2 = b.name.toLowerCase();
+      if (name1 < name2) return -1;
+      if (name1 > name2) return 1;
+      return 0;
+    });
+  };
+
   const [searchChar, setSearchChar] = useState('#');
 
   const [data, setData] = useState(props.data);
@@ -25,7 +35,7 @@ export default function SearchScreen(props: Props) {
 
   useEffect(() => {
     if (!props.data) return;
-    setData(props.data);
+    setData(customSort(props.data));
   }, [props.data]);
 
   const filterByChar = (searchChar: string) => {
@@ -88,7 +98,7 @@ export default function SearchScreen(props: Props) {
 
       <div className="filter-search__list py-3">
         {data?.map((item) => (
-          <Link key={item.id} href={props.getItemHref(item.id, item.name)}>
+          <Link key={item.id} href={props.getItemHref(item.id.toString(), item.name)}>
             <a className="filter-search__list-item mix all">{item.name}</a>
           </Link>
         ))}

@@ -23,6 +23,8 @@ import withApollo from 'src/utils/withApollo';
 
 const pageSize = 20;
 
+const defaultSortType = '07';
+
 function Products(): JSX.Element {
   const router = useRouter();
 
@@ -69,7 +71,7 @@ function Products(): JSX.Element {
         type: router.query.tab as string,
         manufacturer_id: router.query.manufacturer as string,
         category_id: router.query.category as string,
-        order_type: (router.query.sort as string) || '01'
+        order_type: (router.query.sort as string) || defaultSortType
       }
     }
   );
@@ -90,13 +92,12 @@ function Products(): JSX.Element {
   const categories = categoriesData?.getCategoriesAll || [];
 
   const manufacturers = manufacturersData?.getManufactories || [];
-
   const getNameById = (array, id) => {
     return _.find(array, { id })?.name;
   };
 
-  const title = router.query.category
-    ? getNameById(categories, router.query.category)
+  const title = Number(router.query.category)
+    ? getNameById(categories, Number(router.query.category))
     : t('products:title');
 
   return (
@@ -168,5 +169,9 @@ function Products(): JSX.Element {
     </>
   );
 }
+
+Products.getInitialProps = async () => ({
+  namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge']
+});
 
 export default withApollo({ ssr: true })(Products);
