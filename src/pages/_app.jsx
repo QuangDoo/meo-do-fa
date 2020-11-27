@@ -7,6 +7,7 @@ import App from 'next/app';
 import ToastContainer from 'src/components/Layout/ToastContainer';
 import { CartProvider } from 'src/contexts/Cart';
 import { CityProvider } from 'src/contexts/City';
+import { CountCartProvider } from 'src/contexts/CountCart';
 import { ModalControlProvider } from 'src/contexts/ModalControl';
 import { UserProvider } from 'src/contexts/User';
 import { theme } from 'src/theme';
@@ -17,16 +18,18 @@ import { appWithTranslation } from '../../i18n';
 const MyApp = ({ Component, pageProps }) => {
   return (
     <ThemeProvider theme={theme}>
-      <UserProvider>
-        <CartProvider>
-          <CityProvider>
-            <ModalControlProvider>
-              <Component {...pageProps} />
-              <ToastContainer />
-            </ModalControlProvider>
-          </CityProvider>
-        </CartProvider>
-      </UserProvider>
+      <CountCartProvider>
+        <UserProvider>
+          <CartProvider>
+            <CityProvider>
+              <ModalControlProvider>
+                <Component {...pageProps} />
+                <ToastContainer />
+              </ModalControlProvider>
+            </CityProvider>
+          </CartProvider>
+        </UserProvider>
+      </CountCartProvider>
     </ThemeProvider>
   );
 };
