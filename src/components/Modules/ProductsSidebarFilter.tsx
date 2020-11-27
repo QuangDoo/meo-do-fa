@@ -13,21 +13,6 @@ type Props = {
   manufacturer: Manufacturer[];
 };
 
-type SortOption = {
-  name: string;
-  value: string;
-};
-
-const sortOptions: SortOption[] = [
-  { name: 'Sản phẩm mới', value: '00' },
-  { name: 'Bán chạy nhất', value: '01' },
-  // { name: 'Phù hợp nhất', value: '02' },
-  { name: 'Giá: Cao đến Thấp', value: '04' },
-  { name: 'Giá: Thấp đến Cao', value: '05' },
-  { name: 'Tên: Z-A', value: '06' },
-  { name: 'Tên: A-Z', value: '07' }
-];
-
 const ProductsSidebarFilter = (props: Props) => {
   const { categories, manufacturer } = props;
 
@@ -57,17 +42,21 @@ const ProductsSidebarFilter = (props: Props) => {
       <hr className="hr my-3" />
 
       {/* Sort */}
-      <form className="form-inline justify-content-between">
+      <div>
         <div className="products__filter-header mb-2">Sắp xếp</div>
 
         <Select onChange={handleSortChange}>
-          {sortOptions.map(({ value, name }) => (
-            <option key={value} value={value}>
-              {name}
-            </option>
-          ))}
+          {/* <option value="01">Sản phẩm mới</option>
+          <option value="02">Bán chạy nhất</option>
+          <option value="03">Phù hợp nhất</option> */}
+          <option value="04">Giá: Cao - Thấp</option>
+          <option value="05">Giá: Thấp - Cao</option>
+          <option value="06">Tên: Z - A</option>
+          <option value="07" selected>
+            Tên: A - Z
+          </option>
         </Select>
-      </form>
+      </div>
 
       <hr className="hr my-3" />
 
@@ -87,7 +76,7 @@ const ProductsSidebarFilter = (props: Props) => {
               <a
                 className={clsx(
                   'products__filter-category',
-                  router.query.category === id && 'active'
+                  router.query.category === id.toString() && 'active'
                 )}>
                 {name}
               </a>
@@ -115,7 +104,7 @@ const ProductsSidebarFilter = (props: Props) => {
               <a
                 className={clsx(
                   'products__filter-category',
-                  router.query.manufacturer === id && 'active'
+                  router.query.manufacturer === id.toString() && 'active'
                 )}>
                 {short_name}
               </a>

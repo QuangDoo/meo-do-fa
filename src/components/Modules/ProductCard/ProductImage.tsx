@@ -13,7 +13,10 @@ export const ProductImage = (props: ProductImageProps): JSX.Element => {
         <div
           className="product-card__image mb-3 lozad"
           style={{
-            backgroundImage: `url(${props.imageId})`,
+            backgroundImage:
+              props.imageId !== 'false'
+                ? `url(${props.imageId})`
+                : `url('/assets/images/no-image.jpg')`,
             cursor: 'pointer'
           }}
         />

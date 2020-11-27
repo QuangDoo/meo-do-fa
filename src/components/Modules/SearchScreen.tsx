@@ -98,7 +98,7 @@ export default function SearchScreen(props: Props) {
 
       <div className="filter-search__list py-3">
         {data?.map((item) => (
-          <Link key={item.id} href={props.getItemHref(item.id, item.name)}>
+          <Link key={item.id} href={props.getItemHref(item.id.toString(), item.name)}>
             <a className="filter-search__list-item mix all">{item.name}</a>
           </Link>
         ))}

@@ -2,6 +2,7 @@ import Link from 'next/link';
 import React from 'react';
 import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
 
+import LoginModal from '../LoginModal';
 import ProductBadge from '../ProductCard/ProductBadge';
 import QuantityInput from '../QuantityInput';
 
@@ -30,21 +31,14 @@ type Display_name = {
   amount: string;
 };
 const ProductDetailInfor = (props: PropsType): JSX.Element => {
-  let token = '';
-  if (typeof window !== 'undefined') {
-    token = localStorage.getItem('token');
-  }
+  const isLoggedIn = useIsLoggedIn();
   return (
     <div className="row">
       <div className="col-12">
         <h1 className="h3 text-capitalize">{props.name}</h1>
         <div className="product__status mb-1" />
-        {!token ? (
-          <Link href="/login">
-            <a className="btn btn-sm btn-secondary" data-modal="true">
-              Đăng nhập để xem giá
-            </a>
-          </Link>
+        {!isLoggedIn ? (
+          <LoginModal />
         ) : (
           <div className="d-flex align-items-center flex-wrap justify-content-between mb-4">
             <div>

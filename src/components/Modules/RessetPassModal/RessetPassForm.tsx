@@ -78,4 +78,4 @@ const RessetPassForm = ({ t }: WithTranslation): JSX.Element => {
 
 const Translated = withTranslation(['password', 'errors', 'login'])(RessetPassForm);
 
-export default withApollo({ ssr: true })(Translated);
+export default Translated;
