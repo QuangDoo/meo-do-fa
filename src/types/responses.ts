@@ -38,3 +38,9 @@ export type GetPaymentAndDeliveryResponse = {
     tax: string;
   };
 };
+
+export type ForgotPasswordResponse = {
+  code: number;
+  status: string;
+  message: string;
+};

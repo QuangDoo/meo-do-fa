@@ -11,7 +11,7 @@ const Agreement = (props, register): JSX.Element => {
   return (
     <Checkbox
       ref={register({
-        required: 'checkbox_acceptTerms_error_required'
+        required: 'Xin vui lòng xác thực điều khoản'
       })}
       name="agreement"
       label={

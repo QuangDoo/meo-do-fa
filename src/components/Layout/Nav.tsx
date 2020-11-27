@@ -4,6 +4,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { useCartContext } from 'src/contexts/Cart';
+import { useCountCartContext } from 'src/contexts/CountCart';
+import useCountCart from 'src/hooks/useCountCart';
 import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
 
 export default function Nav(): JSX.Element {
@@ -13,8 +15,12 @@ export default function Nav(): JSX.Element {
 
   const { cart } = useCartContext();
 
-  const totalQty = cart?.totalQty || 0;
+  // const { countCart } = useCountCartContext();
+  // console.log('countCart', countCart);
+  const { data: dataCount } = useCountCart();
+  const totalQty = dataCount?.countCarts?.data;
 
+  console.log('totalQty', totalQty);
   const { t } = useTranslation(['navbar']);
 
   const logOut = () => {
@@ -96,7 +102,7 @@ export default function Nav(): JSX.Element {
                       <a className="rockland-nav__link notification">
                         <i className="icomoon icon-local-mall rockland-nav__icon" />
 
-                        {!!totalQty && <span className="notification__counter">{totalQty}</span>}
+                        <span className="notification__counter">{totalQty}</span>
                       </a>
                     </Link>
                   </li>
