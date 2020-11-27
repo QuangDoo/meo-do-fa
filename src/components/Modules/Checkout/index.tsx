@@ -41,6 +41,7 @@ const CheckoutPage = (): JSX.Element => {
   const { refetchCart } = useCart();
 
   const [createOrder, { data, error }] = useMutationAuth(CREATE_ORDER);
+  console.log(data);
 
   useEffect(() => {
     if (!data) return;

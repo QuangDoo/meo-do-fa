@@ -6,6 +6,7 @@ import Header from '../../components/Layout/Header';
 import Nav from '../../components/Layout/Nav';
 import FAQ from '../../components/Modules/FAQ/index';
 import Questions from '../../components/Modules/FAQ/Questions';
+import withApollo from '../../utils/withApollo';
 
 const Help = (): JSX.Element => {
   const questions = [
@@ -45,4 +46,4 @@ Help.getInitialProps = async () => ({
   namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge']
 });
 
-export default Help;
+export default withApollo({ ssr: false })(Help);

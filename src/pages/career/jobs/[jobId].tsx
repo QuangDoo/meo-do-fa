@@ -1,10 +1,12 @@
 import React from 'react';
+import ApplyJobForm from 'src/components/Modules/Form/ApplyJobForm';
+import withApollo from 'src/utils/withApollo';
 
+import ButtonDialog from '../../../components/Form/ButtonDialog';
 import Footer from '../../../components/Layout/Footer';
 import Head from '../../../components/Layout/Head';
 import Header from '../../../components/Layout/Header';
 import Nav from '../../../components/Layout/Nav';
-import Career from '../../../components/Modules/Career';
 import JobDetail from '../../../components/Modules/JobDetail';
 
 const job = {
@@ -58,6 +60,12 @@ const CareerPage = (): JSX.Element => {
         location={job.location}
       />
 
+      <div className="d-block text-center w-100 mb-3">
+        <ButtonDialog buttonTitle="Apply" formTitle="Apply this job">
+          <ApplyJobForm></ApplyJobForm>
+        </ButtonDialog>
+      </div>
+
       <Footer />
     </>
   );
@@ -67,4 +75,4 @@ CareerPage.getInitialProps = async () => ({
   namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge']
 });
 
-export default CareerPage;
+export default withApollo({ ssr: false })(CareerPage);

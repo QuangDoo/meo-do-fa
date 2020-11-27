@@ -1,7 +1,5 @@
 import React from 'react';
 
-import CareerModal from '../CareerModal';
-
 type Props = {
   name?: string;
   requirements?: string[];
@@ -52,9 +50,6 @@ export default function JobDetail(props: Props): JSX.Element {
               </li>
             ))}
           </ul>
-        </div>
-        <div className="row job-detail">
-          <CareerModal />
         </div>
       </div>
     </div>

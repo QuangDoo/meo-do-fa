@@ -1,17 +1,16 @@
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import React from 'react';
+import React, { ReactChild } from 'react';
 import Button from 'src/components/Form/Button';
 
-import CancelForm from './CancelForm';
-
 type Props = {
-  orderID: string;
+  buttonTitle: string;
+  children: ReactChild;
+  formTitle: string;
 };
 
-export default function ScrollDialog(props: Props) {
+export default function ButtonDia(props: Props) {
   const [open, setOpen] = React.useState(false);
 
   const handleClose = () => {
@@ -31,7 +30,7 @@ export default function ScrollDialog(props: Props) {
   return (
     <div>
       <Button variant={`outline-primary`} onClick={() => setOpen(true)}>
-        Hủy
+        {props.buttonTitle}
       </Button>
       <Dialog
         open={open}
@@ -39,12 +38,8 @@ export default function ScrollDialog(props: Props) {
         scroll={'paper'}
         aria-labelledby="scroll-dialog-title"
         aria-describedby="scroll-dialog-description">
-        <DialogTitle id="scroll-dialog-title">{` Hủy đơn hàng số ${props.orderID}`}</DialogTitle>
-        <DialogContent dividers={true}>
-          <DialogContentText>
-            <CancelForm />
-          </DialogContentText>
-        </DialogContent>
+        <DialogTitle id="scroll-dialog-title">{props.formTitle}</DialogTitle>
+        <DialogContent>{props.children}</DialogContent>
         {/* <DialogActions>
           <Button onClick={handleClose} color="primary">
             Cancel
