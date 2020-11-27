@@ -25,3 +25,8 @@ export type UpdateUserInput = {
   business_license: string;
   updateUser: Status;
 };
+export type ChangePasswordInput = {
+  phone: string;
+  oldPassword: string;
+  newPassword: string;
+};
