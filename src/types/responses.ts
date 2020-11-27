@@ -42,3 +42,9 @@ export type CancelOrderResponse = {
   status: string;
   message: string;
 };
+
+export type ForgotPasswordResponse = {
+  code: number;
+  status: string;
+  message: string;
+};
