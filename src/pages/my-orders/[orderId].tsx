@@ -36,6 +36,9 @@ import useUser from 'src/hooks/useUser';
 import { theme } from 'src/theme';
 import withApollo from 'src/utils/withApollo';
 
+import ButtonDialog from '../../components/Form/ButtonDialog';
+import CancelForm from '../../components/Modules/Form/CancelForm';
+
 const stepIconSize = 75;
 
 const stepConnectorLineHeight = 3;
@@ -255,7 +258,7 @@ const OrderDetails = () => {
   const [activeStep, setActiveStep] = useState(2);
 
   const { data: orderDetail, error: orderError } = useQueryAuth(GET_ORDER, {
-    variables: { id: Number(orderId) }
+    variables: { id: orderId }
   });
 
   const { user } = useUser();
@@ -320,6 +323,9 @@ const OrderDetails = () => {
                         Gửi phản hồi
                       </Button>
                     </Link>
+                    <ButtonDialog buttonTitle="Hủy" formTitle="Hủy Đơn Hàng">
+                      <CancelForm orderId={String(orderId)} />
+                    </ButtonDialog>
                   </Box>
                 </CustomCard>
               </Grid>

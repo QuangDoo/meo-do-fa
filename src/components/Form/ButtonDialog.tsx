@@ -2,7 +2,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import React, { ReactChild } from 'react';
-import Button from 'src/components/Form/Button';
+// import Button from 'src/components/Form/Button';
 
 type Props = {
   buttonTitle: string;
@@ -29,9 +29,9 @@ export default function ButtonDia(props: Props) {
 
   return (
     <div>
-      <Button variant={`outline-primary`} onClick={() => setOpen(true)}>
+      <button className="btn btn-danger btn-sm mr-2" onClick={() => setOpen(true)}>
         {props.buttonTitle}
-      </Button>
+      </button>
       <Dialog
         open={open}
         onClose={handleClose}

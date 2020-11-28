@@ -1,30 +1,18 @@
 import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
 
 import Checkbox from '../../Form/Checkbox';
 import Textarea from '../../Form/Textarea';
 
-const initialData = {
-  fullname: '',
-  email: '',
-  phone: '',
-  coverletter: ''
-};
-
 export default function ApplyJobForm(props) {
-  const [data, setData] = useState<any>(initialData);
+  const { register, handleSubmit, watch, errors } = useForm();
 
-  const onHandleChangeData = (name, value) => {
-    setData({ ...data, [name]: value });
-  };
-
-  const onSubmit = (e) => {
-    const result = data;
-    e.preventDefault();
-    console.log(result);
+  const onSubmit = (data) => {
+    console.log(data);
   };
 
   return (
-    <form className="form w-100" onSubmit={onSubmit}>
+    <form className="form w-100" onSubmit={handleSubmit(onSubmit)}>
       <div className="form-group">
         <label htmlFor="fullname">
           <b>
@@ -32,7 +20,8 @@ export default function ApplyJobForm(props) {
           </b>
         </label>
         <input
-          onChange={(e) => onHandleChangeData('fullname', e.currentTarget.value)}
+          ref={register}
+          name="fullname"
           type="text"
           className="form-control"
           id="fullname"
@@ -46,11 +35,12 @@ export default function ApplyJobForm(props) {
           </b>
         </label>
         <input
+          ref={register}
           type="email"
           className="form-control"
           id="email"
           placeholder="tranquochung6810@gmail.com"
-          onChange={(e) => onHandleChangeData('email', e.currentTarget.value)}
+          name="email"
         />
       </div>
       <div className="form-group">
@@ -60,18 +50,19 @@ export default function ApplyJobForm(props) {
           </b>
         </label>
         <input
+          ref={register}
           type="text"
           className="form-control"
           id="phone"
           placeholder="0912334674"
-          onChange={(e) => onHandleChangeData('phone', e.currentTarget.value)}
+          name="phone"
         />
       </div>
       <Textarea
-        onChange={(e) => onHandleChangeData('coverletter', e.currentTarget.value)}
+        ref={register}
         placeholder={`Cover Leter`}
         label={`Cover Letter`}
-        htmlFor={'text'}
+        htmlFor={'coverLetter'}
       />
       <div className="form-group mb-3">
         <label htmlFor="inputFile">
@@ -79,15 +70,13 @@ export default function ApplyJobForm(props) {
             Upload CV <span style={{ color: 'red' }}>*</span>
           </b>
         </label>
-        <div className="custom-file">
-          <input type="file" className="custom-file-input" id="inputFile" />
-          <label className="custom-file-label" htmlFor="inputFile">
-            Choose file
-          </label>
+        <div>
+          <input ref={register} name="cv" type="file" id="inputFile" />
         </div>
       </div>
 
       <Checkbox
+        ref={register}
         containerClass="my-1 mr-sm-2"
         name="check"
         label="By using this form you agree with the storage and handling of your data by this website. *"

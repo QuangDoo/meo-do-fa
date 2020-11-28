@@ -33,7 +33,7 @@ const RightSideUser = () => {
   const { user } = useUser();
 
   return (
-    <div className="header-right d-none d-md-block">
+    <div className="header-right d-none d-lg-block w-25">
       <ul className="nav align-items-center">
         {/* Notifications here */}
 

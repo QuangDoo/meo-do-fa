@@ -19,6 +19,9 @@ import {
 import { useLazyQueryAuth } from 'src/hooks/useApolloHookAuth';
 import withApollo from 'src/utils/withApollo';
 
+import ButtonDialog from '../../components/Form/ButtonDialog';
+import CancelForm from '../../components/Modules/Form/CancelForm';
+
 type FilterKey = 'all' | 'waiting_for_confirmation' | 'completed' | 'canceled';
 
 const pageSize = 20;
@@ -29,7 +32,7 @@ const OrderItem = (props: GetOrderList): JSX.Element => {
     <div className="my-orders__item my-orders__item:hover pl-4 mt-1">
       <div className="my-orders__info">
         <h2 className="h4 d-flex align-items-center">
-          <Link href={`/my-orders/${props.id}`}>
+          <Link href={`/my-orders/${props.orderNo}`}>
             <a className="mr-2">#{props.id}</a>
           </Link>
 
@@ -69,6 +72,9 @@ const OrderItem = (props: GetOrderList): JSX.Element => {
           {t('myOrders:billing_export')}
         </button>
         <button className="btn btn-outline-info btn-sm">{t('myOrders:report')}</button>
+        <ButtonDialog buttonTitle="Hủy" formTitle="Hủy Đơn Hàng">
+          <CancelForm orderId={String(props.orderNo)} />
+        </ButtonDialog>
       </div>
     </div>
   );
