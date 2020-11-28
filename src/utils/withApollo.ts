@@ -5,20 +5,21 @@ import { withApollo } from 'next-apollo';
 
 const getURI = () => {
   if (typeof window === 'undefined') {
-    return 'http://gateway.medofa.svc.cluster.local';
+    console.log('SERVER...');
+    return 'http://gateway.medofa.svc.cluster.local/graphql';
   }
 
-  return 'https://graphql.medofa.bedigital.vn/graphql/';
+  return 'https://graphql.medofa.bedigital.vn';
 };
 
 const httpLink = new HttpLink({
-  uri: `${getURI()}/graphql`
+  uri: getURI()
 });
 
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
   const token = global?.localStorage?.getItem('token');
-  console.log(token);
+  console.log('token', token);
   // return the headers to the context so httpLink can read them
   return {
     headers: {
