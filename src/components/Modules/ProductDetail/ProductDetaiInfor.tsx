@@ -2,6 +2,7 @@ import Link from 'next/link';
 import React from 'react';
 import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
 
+import AddCart from '../AddCart';
 import ProductBadge from '../ProductCard/ProductBadge';
 import QuantityInput from '../QuantityInput';
 
@@ -88,15 +89,9 @@ const ProductDetailInfor = (props: PropsType): JSX.Element => {
           })}
         </div>
         <div className="product__status mb-4" />
-
-        <div className="row">
-          <div className="col-md-5">
-            <QuantityInput productId={props.id} price={props.list_price} name={props.name} />
-          </div>
-          <div className="col-md-7">
-            <button className="btn btn-sm btn-primary">Thêm vào giỏ hàng</button>
-          </div>
-        </div>
+        {!token ? null : (
+          <AddCart productId={props.id} price={props.list_price} name={props.name} />
+        )}
       </div>
     </div>
   );

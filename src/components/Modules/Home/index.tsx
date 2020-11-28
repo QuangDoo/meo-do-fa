@@ -83,6 +83,10 @@ const Home = ({ dealsOfTheDayData, bestSellingData, promotionProductsData, newPr
       </div>
 
       <Strength />
+      {/* {isLoggedIn ? null : (
+        <>
+        </>
+      )} */}
       {isLoggedIn ? null : (
         <>
           <Login />
