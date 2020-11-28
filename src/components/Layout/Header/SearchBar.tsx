@@ -77,7 +77,7 @@ const SearchBar = (): JSX.Element => {
   };
 
   return (
-    <div className="d-flex justify-content-center flex-grow-1 mr-3 w-100">
+    <div className="d-flex justify-content-center flex-grow-1 mr-3">
       <ClickAwayListener onClickAway={() => setIsFocused(false)}>
         <div className="search">
           <form onSubmit={handleSubmit} autoComplete="off" acceptCharset="UTF-8">
