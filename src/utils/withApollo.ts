@@ -6,7 +6,7 @@ import { withApollo } from 'next-apollo';
 const getURI = () => {
   if (typeof window === 'undefined') {
     console.log('SERVER...');
-    return 'https://graphql.medofa.bedigital.vn';
+    return 'http://gateway.medofa.svc.cluster.local';
   }
 
   return 'https://graphql.medofa.bedigital.vn';
