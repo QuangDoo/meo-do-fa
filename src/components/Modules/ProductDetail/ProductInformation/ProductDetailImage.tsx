@@ -4,7 +4,7 @@ const ProuductDetailImage = (props): JSX.Element => {
   return (
     <div className="col-12">
       <div className="d-flex justify-content-between mb-2">
-        <div className="product__thumbnails scrollbar-on-hover pr-1 mr-3">
+        {/* <div className="product__thumbnails scrollbar-on-hover pr-1 mr-3">
           <div className="d-flex flex-column">
             <img
               className="img-fluid product__thumbnail lozad selected"
@@ -16,7 +16,7 @@ const ProuductDetailImage = (props): JSX.Element => {
               alt=""
             />
           </div>
-        </div>
+        </div> */}
         <div className="flex-grow-1">
           <div
             className="lozad product__image"

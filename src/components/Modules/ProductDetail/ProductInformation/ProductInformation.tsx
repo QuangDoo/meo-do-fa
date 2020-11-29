@@ -1,11 +1,10 @@
 import Link from 'next/link';
 import React from 'react';
 
-import Tab from '../../../Tab/Tab';
 import ProductDetailInfor from '../ProductDetaiInfor';
 import ProducerInformation from './ProducerInformation';
-import ProductSidebar from './ProductSideBar';
-import ProuductDetailImage from './ProduductDetailImage';
+import ProuductDetailImage from './ProductDetailImage';
+import ProductSidebar from './ProductSidebar';
 type PropsType = {
   id: string;
   image_128: string;
@@ -30,29 +29,30 @@ type PropsType = {
   interaction?: string;
   preservation?: string;
   overdose?: string;
+  itemImgUrl?: string;
+  title?: string;
 };
 type Display_name = {
   name: string;
   id: number;
   amount: string;
 };
-
 const ProductInformation = (props: PropsType): JSX.Element => {
   return (
     <div className="row py-3 mb-5 elevated">
       <div className="col-sm-9">
         <div className="row">
-          <div className="col-md-5">
+          <div className="col-md-6">
             <ProuductDetailImage imageUrl={props.image_512} />
           </div>
-          <div className="col-md-7">
+          <div className="col-md-6">
             <ProductDetailInfor {...props} />
           </div>
         </div>
         <ProducerInformation {...props} />
       </div>
       <div className="col-sm-3 mb-3 ">
-        <ProductSidebar />
+        <ProductSidebar itemImgUrl={props.itemImgUrl} title={props.title}></ProductSidebar>
       </div>
     </div>
   );

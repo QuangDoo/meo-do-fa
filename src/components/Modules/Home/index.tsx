@@ -1,6 +1,7 @@
 import { useTranslation } from 'i18n';
 import React from 'react';
 import SlickSlider from 'react-slick';
+import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
 
 import ProductCard from '../ProductCard';
 import { ProductsCarousel } from '../ProductsCarousel';
@@ -18,6 +19,7 @@ const bannerImages = [
 
 const Home = ({ dealsOfTheDayData, bestSellingData, promotionProductsData, newProductsData }) => {
   const { t } = useTranslation(['carousels']);
+  const isLoggedIn = useIsLoggedIn();
 
   const carousels = [
     {
@@ -81,9 +83,15 @@ const Home = ({ dealsOfTheDayData, bestSellingData, promotionProductsData, newPr
       </div>
 
       <Strength />
-
-      <Login />
-
+      {/* {isLoggedIn ? null : (
+        <>
+        </>
+      )} */}
+      {isLoggedIn ? null : (
+        <>
+          <Login />
+        </>
+      )}
       <Question />
 
       <Partner />
