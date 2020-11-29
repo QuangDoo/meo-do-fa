@@ -13,7 +13,8 @@
 		{
 			"src": "/icons/android-icon-192x192-menofa-manifest-20129.png",
 			"type": "image/png",
-			"sizes": "192x192"
+			"sizes": "192x192",
+			"purpose": "any maskable"
 		},
 		{
 			"src": "/icons/apple-icon-180x180-medofa-manifest-20129.png",
