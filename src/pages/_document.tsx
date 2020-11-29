@@ -45,7 +45,7 @@ class MyDocument extends Document {
 
   render() {
     return (
-      <Html>
+      <Html lang="vi">
         <Head>
           <meta charSet="utf-8" />
 
@@ -78,6 +78,17 @@ class MyDocument extends Document {
         <body>
           <Main />
           <NextScript />
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+              const terminationEvent = 'onpagehide' in self ? 'pagehide' : 'unload';
+
+              addEventListener(terminationEvent, (event) => {
+                console.log(event)
+              }, {capture: true});
+              `
+            }}
+          />
         </body>
       </Html>
     );

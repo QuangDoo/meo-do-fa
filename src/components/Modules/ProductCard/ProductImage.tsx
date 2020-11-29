@@ -12,7 +12,13 @@ export const ProductImage = (props: ProductImageProps): JSX.Element => {
   return (
     <Link href={`/products/${props.productId}`}>
       <a>
-        <Image width="205" height="160" src={img} className="product-card__image mb-3 lozad" />
+        <Image
+          alt={props.productId}
+          width="205"
+          height="160"
+          src={img}
+          className="product-card__image mb-3 lozad"
+        />
       </a>
     </Link>
   );
