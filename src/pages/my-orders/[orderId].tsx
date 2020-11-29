@@ -25,6 +25,7 @@ import { DateTime } from 'luxon';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
 import Nav from 'src/components/Layout/Nav';
@@ -36,8 +37,7 @@ import useUser from 'src/hooks/useUser';
 import { theme } from 'src/theme';
 import withApollo from 'src/utils/withApollo';
 
-import ButtonDialog from '../../components/Form/ButtonDialog';
-import CancelForm from '../../components/Modules/Form/CancelForm';
+import ConfirmCancelOrder from '../../components/Modules/My-orders/ConfirmCancelOrder';
 
 const stepIconSize = 75;
 
@@ -252,6 +252,7 @@ const CustomBodyCell = ({ children, textAlign }: CustomBodyCellProps) => {
 
 const OrderDetails = () => {
   const router = useRouter();
+  const [open, setOpen] = useState(false);
 
   const { orderId } = router.query;
 
@@ -260,6 +261,14 @@ const OrderDetails = () => {
   const { data: orderDetail, error: orderError } = useQueryAuth(GET_ORDER, {
     variables: { id: orderId }
   });
+
+  const onCancelClick = () => {
+    if (activeStep >= 3) {
+      toast.error('cant cancel order');
+      return;
+    }
+    setOpen(true);
+  };
 
   const { user } = useUser();
   console.log('orderError', orderError);
@@ -323,9 +332,17 @@ const OrderDetails = () => {
                         Gửi phản hồi
                       </Button>
                     </Link>
-                    <ButtonDialog buttonTitle="Hủy" formTitle="Hủy Đơn Hàng">
+                    <button className="btn btn-danger" onClick={onCancelClick}>
+                      hủy đơn hàng
+                    </button>
+                    {/* <ButtonDialog buttonTitle="Hủy" formTitle="Hủy Đơn Hàng">
                       <CancelForm orderId={String(orderId)} />
-                    </ButtonDialog>
+                    </ButtonDialog> */}
+                    <ConfirmCancelOrder
+                      open={open}
+                      onClose={() => setOpen(false)}
+                      orderId={orderId.toString()}
+                    />
                   </Box>
                 </CustomCard>
               </Grid>

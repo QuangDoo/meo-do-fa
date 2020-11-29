@@ -1,8 +1,7 @@
-import React from 'react';
-import ApplyJobForm from 'src/components/Modules/Form/ApplyJobForm';
+import React, { useState } from 'react';
+import ConfirmApplyJob from 'src/components/Modules/Career/ConfirmApplyJob';
 import withApollo from 'src/utils/withApollo';
 
-import ButtonDialog from '../../../components/Form/ButtonDialog';
 import Footer from '../../../components/Layout/Footer';
 import Head from '../../../components/Layout/Head';
 import Header from '../../../components/Layout/Header';
@@ -40,6 +39,8 @@ const job = {
 };
 
 const CareerPage = (): JSX.Element => {
+  const [open, setOpen] = useState(false);
+
   return (
     <>
       <Head>
@@ -61,9 +62,10 @@ const CareerPage = (): JSX.Element => {
       />
 
       <div className="d-block text-center w-100 mb-3">
-        <ButtonDialog buttonTitle="Apply" formTitle="Apply this job">
-          <ApplyJobForm></ApplyJobForm>
-        </ButtonDialog>
+        <button className="btn btn-primary" onClick={() => setOpen(true)}>
+          Apply this job
+        </button>
+        <ConfirmApplyJob open={open} onClose={() => setOpen(false)} />
       </div>
 
       <Footer />
