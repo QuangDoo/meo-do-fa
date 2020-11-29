@@ -15900,6 +15900,11 @@ abbr[title] {
   text-transform: capitalize;
   transition: color 0.2s;
   font-weight: 500;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+
 }
 .cart-item__name:hover {
   color: $primary;
@@ -17518,7 +17523,7 @@ abbr[title] {
   font-weight: 500;
 }
 .cart__info-item {
-  padding: 0.75em 1em;
+  padding: 0.5rem;
   line-height: 1.25em;
 }
 .cart__info-quantity {

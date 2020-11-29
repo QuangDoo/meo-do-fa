@@ -1,5 +1,6 @@
 import React from 'react';
 import News from 'src/components/Modules/News';
+import withApollo from 'src/utils/withApollo';
 
 import Footer from '../../components/Layout/Footer';
 import Head from '../../components/Layout/Head';
@@ -106,4 +107,4 @@ NewsPage.getInitialProps = async () => ({
   namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge']
 });
 
-export default NewsPage;
+export default withApollo({ ssr: true })(NewsPage);
