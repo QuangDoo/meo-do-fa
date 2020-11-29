@@ -75,6 +75,11 @@
 			"src": "/icons/favicon-16x16-medofa-manifest-20129.png",
 			"type": "image/png",
 			"sizes": "16x16"
+		},
+		{
+			"src": "/icons/favicon-512x512-medofa-manifest-20129.png",
+			"type": "image/png",
+			"sizes": "512x512"
 		}
 	],
 	"prefer_related_applications": false

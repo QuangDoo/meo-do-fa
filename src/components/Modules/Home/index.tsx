@@ -1,4 +1,5 @@
 import { useTranslation } from 'i18n';
+import Image from 'next/image';
 import React from 'react';
 import SlickSlider from 'react-slick';
 import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
@@ -48,13 +49,7 @@ const Home = ({ dealsOfTheDayData, bestSellingData, promotionProductsData, newPr
         className="align-items-center mb-0 slick-dotted">
         {bannerImages.map((img) => (
           <div key={img} className="banner__slide">
-            <div className="banner__bg-img"></div>
-            <div
-              className="banner__img"
-              style={{
-                backgroundImage: `url("${img}")`
-              }}
-            />
+            <Image width="1018" height="530" src={img} className="banner__img" />
           </div>
         ))}
       </SlickSlider>

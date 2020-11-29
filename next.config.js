@@ -14,5 +14,8 @@ module.exports = withPWA({
   },
   pwa: {
     dest: 'public'
+  },
+  images: {
+    domains: ['firebasestorage.googleapis.com', 'googleapis.com']
   }
 });
