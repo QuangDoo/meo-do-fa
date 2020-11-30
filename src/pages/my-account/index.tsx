@@ -9,6 +9,8 @@ import Nav from 'src/components/Layout/Nav';
 import ProfileLayout from 'src/components/Modules/ProfileLayout';
 import ProfileSidebar from 'src/components/Modules/ProfileSidebar';
 
+import withApollo from '../../utils/withApollo';
+
 type Inputs = {
   name: string;
   display_name: string;
@@ -397,4 +399,4 @@ const MyAccount = (props): JSX.Element => {
     </>
   );
 };
-export default MyAccount;
+export default withApollo({ ssr: true })(MyAccount);

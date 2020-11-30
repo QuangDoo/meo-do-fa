@@ -1,4 +1,3 @@
-import { useLazyQuery } from '@apollo/client';
 import clsx from 'clsx';
 import { useTranslation, withTranslation } from 'i18n';
 import { WithTranslation } from 'next-i18next';
@@ -10,26 +9,24 @@ import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
 import Nav from 'src/components/Layout/Nav';
 import ProfileLayout from 'src/components/Modules/ProfileLayout';
-import {
-  GET_ORDER_LIST,
-  GetOrderList,
-  GetOrderListData,
-  GetOrderListVars
-} from 'src/graphql/my-orders/getOrderList';
+import { GET_ORDER_LIST, GetOrderList } from 'src/graphql/my-orders/getOrderList';
 import { useLazyQueryAuth } from 'src/hooks/useApolloHookAuth';
 import withApollo from 'src/utils/withApollo';
+
+import ConfirmCancelOrder from '../../components/Modules/My-orders/ConfirmCancelOrder';
 
 type FilterKey = 'all' | 'waiting_for_confirmation' | 'completed' | 'canceled';
 
 const pageSize = 20;
 
 const OrderItem = (props: GetOrderList): JSX.Element => {
+  const [open, setOpen] = useState(false);
   const { t } = useTranslation();
   return (
     <div className="my-orders__item my-orders__item:hover pl-4 mt-1">
       <div className="my-orders__info">
         <h2 className="h4 d-flex align-items-center">
-          <Link href={`/my-orders/${props.id}`}>
+          <Link href={`/my-orders/${props.orderNo}`}>
             <a className="mr-2">#{props.id}</a>
           </Link>
 
@@ -69,14 +66,22 @@ const OrderItem = (props: GetOrderList): JSX.Element => {
           {t('myOrders:billing_export')}
         </button>
         <button className="btn btn-outline-info btn-sm">{t('myOrders:report')}</button>
+        <button className="btn btn-danger" onClick={() => setOpen(true)}>
+          hủy đơn hàng
+        </button>
       </div>
+      <ConfirmCancelOrder
+        open={open}
+        onClose={() => setOpen(false)}
+        orderId={`${props.orderNo.toString()}`}
+      />
     </div>
   );
 };
 
 const MyOrders = ({ t }: WithTranslation): JSX.Element => {
   const [getOrderList, { data, error }] = useLazyQueryAuth(GET_ORDER_LIST);
-
+  console.log(data);
   useEffect(() => {
     if (!error) return;
 
