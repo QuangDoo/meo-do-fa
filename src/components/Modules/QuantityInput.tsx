@@ -36,6 +36,11 @@ function QuantityInput(props: Props) {
       return;
     }
 
+    if (+quantity < 0) {
+      toast.error(t('errors:add_to_cart_less_than_0'));
+      return;
+    }
+
     addToCart({
       variables: {
         productId,
