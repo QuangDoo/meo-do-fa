@@ -41,13 +41,13 @@ const Footer = (): JSX.Element => {
         <div className="row align-items-end">
           <div className="align-items-end">
             <img
-              style={{ height: '100px' }}
+              style={{ height: '80px' }}
               src="/assets/images/newsletter.png"
               alt="newsletter"
               className="img-fluid"
             />
           </div>
-          <div className="mb-1">
+          <div className="mb-1 ml-3">
             <p className="font-weight-bold mb-0">{t('footer:subscribe_title')}</p>
             <p className="font-weight-bold mb-0" style={{ fontSize: '0.8rem' }}>
               {t('footer:subscribe_content')}
