@@ -7,7 +7,7 @@ import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
 import Nav from 'src/components/Layout/Nav';
 // import CartItem from 'src/components/Modules/Cart/CartItem';
-import CartItem2 from 'src/components/Modules/Cart/CartItem2';
+import CartItem from 'src/components/Modules/Cart/CartItem';
 // import { useCartContext } from 'src/contexts/Cart';
 import { CREATE_COUNSEL } from 'src/graphql/order/order.mutation';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
@@ -15,18 +15,9 @@ import useCart from 'src/hooks/useCart';
 import withApollo from 'src/utils/withApollo';
 
 function Cart(): JSX.Element {
-  // const { cart } = useCartContext();
-  // console.log('cart', cart);
-  const { refetchCart, cart, getCart } = useCart();
-  // console.log('useCart', useCart());
-  console.log(cart);
-  // const { carts, totalQty, totalPrice, refetchCart } = cart;
+  const { refetchCart, cart } = useCart();
 
   const { t } = useTranslation(['cart']);
-
-  // useEffect(() => {
-  //   refetchCart;
-  // }, [refetchCart]);
 
   const [createCounsel, { error }] = useMutationAuth(CREATE_COUNSEL);
 
@@ -79,7 +70,7 @@ function Cart(): JSX.Element {
               </div> */}
               <div className="elevated cart__items mb-3">
                 {cart?.getCart.carts.map((item, index) => (
-                  <CartItem2
+                  <CartItem
                     key={index}
                     _id={item._id}
                     image={item.product.image_512}

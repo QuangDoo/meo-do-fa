@@ -5,7 +5,6 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { UPDATE_CART, UpdateCartData, UpdateCartVars } from 'src/graphql/cart/updateCart.mutation';
-import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import useCart from 'src/hooks/useCart';
 
 import { ProductPrice } from '../ProductCard/ProductPrice';
@@ -13,21 +12,13 @@ import ConfirmDeleteModal from './ConfirmDeleteModal';
 
 type Props = WithTranslation & {
   image: string;
-
   productName: string;
-
   productId: string;
-
   uom_name: string;
-
   price: number;
-
   standard_price: number;
-
   quantity: number;
-
   _id: string;
-
   refetchCart: () => void;
 };
 
@@ -36,13 +27,11 @@ function CartItem(props: Props): JSX.Element {
 
   const [open, setOpen] = useState(false);
 
-  // const [isImportant, setIsImportant] = useState(false);
-
   const [quantity, setQuantity] = useState<string>(props.quantity.toString());
 
   const { refetchCart } = useCart();
 
-  const [updateCart, { data, error }] = useMutationAuth(UPDATE_CART);
+  const [updateCart, { data, error }] = useMutation<UpdateCartData, UpdateCartVars>(UPDATE_CART);
 
   // onCompleted
   useEffect(() => {
@@ -57,7 +46,7 @@ function CartItem(props: Props): JSX.Element {
     if (!error) return;
 
     console.log('Update cart error:', { error });
-    toast.error('Update cart error:' + error);
+    toast.error('Update cart error: ' + error);
   }, [error]);
 
   const handlePlusClick = () => {
@@ -124,82 +113,70 @@ function CartItem(props: Props): JSX.Element {
   return (
     <div className="cart-item">
       <div className="row align-items-center">
-        <div className="col-7 d-flex align-items-center pl-4">
-          {/* <button
-            className={clsx('cart-item__important-btn', isImportant ? 'active' : 'inactive')}
-            onClick={() => setIsImportant((isImportant) => !isImportant)}>
-            <i className="fas fa-star" />
-          </button> */}
-          <div
-            className="cart-item__image lozad mr-2 loaded"
-            style={{
-              backgroundImage: `url(${props.image})`
-            }}
-          />
+        <div
+          className="cart-item__image lozadloaded flex-shrink-0"
+          style={{
+            backgroundImage: `url(${props.image})`
+          }}
+        />
+        <div className="flex-1 pl-2 pr-2">
+          <div className="d-flex align-items-center">
+            <div>
+              <Link href={'products/' + props.productId}>
+                <a className="cart-item__name" title={props.productName}>
+                  {props.productName}
+                </a>
+              </Link>
 
-          <div>
-            <Link href={'products/' + props.productId}>
-              <a className="cart-item__name" title={props.productName}>
-                {props.productName}
-              </a>
-            </Link>
-
-            <div className="cart-item__package">
-              <small>{props.uom_name}</small>
+              <div className="cart-item__package">
+                <small>{props.uom_name}</small>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className="col-5 d-flex justify-content-between align-items-center">
-          <div className="w-100">
-            <div className="d-flex justify-content-between align-items-center">
-              <div>
-                <ProductPrice price={props.price} standard_price={props.standard_price} />
-              </div>
+          <div className="d-flex justify-content-between align-items-center">
+            <div className="flex-1 flex-column">
+              <div className="d-flex justify-content-between align-items-center">
+                <div>
+                  <ProductPrice price={props.price} standard_price={props.standard_price} />
+                </div>
 
-              <div className="cart-item__qty">
-                <div className="qty js-qty">
-                  <button
-                    className="btn btn-sm qty__button qty__button--minus"
-                    onClick={handleMinusClick}>
-                    <i className="fas fa-minus" />
-                  </button>
+                <div className="cart-item__qty">
+                  <div className="qty js-qty">
+                    <button
+                      className="btn btn-sm qty__button qty__button--minus"
+                      onClick={handleMinusClick}>
+                      <i className="fas fa-minus" />
+                    </button>
 
-                  <input
-                    type="tel"
-                    className="form-control px-1 no-spinner text-center qty__input"
-                    min={0}
-                    max={100000}
-                    value={quantity}
-                    onChange={handleChange}
-                    onKeyDown={handleKeyDown}
-                    onBlur={handleBlur}
-                  />
+                    <input
+                      type="tel"
+                      className="form-control px-1 no-spinner text-center qty__input"
+                      min={0}
+                      max={100000}
+                      value={quantity}
+                      onChange={handleChange}
+                      onKeyDown={handleKeyDown}
+                      onBlur={handleBlur}
+                    />
 
-                  <button
-                    className="btn btn-sm qty__button qty__button--plus"
-                    onClick={handlePlusClick}>
-                    <i className="fas fa-plus" />
-                  </button>
+                    <button
+                      className="btn btn-sm qty__button qty__button--plus"
+                      onClick={handlePlusClick}>
+                      <i className="fas fa-plus" />
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <div className="ml-3">
-            <button onClick={() => setOpen(true)} className="cart-item__remove">
-              <i className="fas fa-trash" />
-            </button>
+            <div className="ml-3">
+              <button onClick={() => setOpen(true)} className="cart-item__remove">
+                <i className="fas fa-trash" />
+              </button>
+            </div>
           </div>
         </div>
-
-        {/* {props.limit && (
-          <div className="col-12">
-            <small className="text-danger">
-              Số lượng có hạn! Hãy mau thanh toán để được hưởng giá ưu đãi.
-            </small>
-          </div>
-        )} */}
       </div>
 
       <ConfirmDeleteModal
