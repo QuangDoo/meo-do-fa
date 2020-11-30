@@ -48,12 +48,12 @@ function CartItem2(props: Props): JSX.Element {
     if (!error) return;
 
     console.log('Update cart error:', { error });
-    toast.error('Update cart error:' + error);
+    toast.error('Update cart error: ' + error);
   }, [error]);
 
   const handlePlusClick = () => {
     const newQty = props.quantity + 1;
-
+    setQuantity(newQty + '');
     updateCart({
       variables: {
         inputs: {
@@ -65,8 +65,8 @@ function CartItem2(props: Props): JSX.Element {
   };
 
   const handleMinusClick = () => {
-    const newQty = props.quantity - 1;
-
+    const newQty = Math.max(props.quantity - 1, 0);
+    setQuantity(newQty + '');
     if (newQty === 0) {
       toast.error(<div>{t('cart:quantity_smaller_than_1')}</div>);
       return;
@@ -90,23 +90,26 @@ function CartItem2(props: Props): JSX.Element {
   };
 
   const handleBlur = () => {
-    const newQuantity = +quantity;
-
-    if (isNaN(newQuantity) || newQuantity === props.quantity) {
-      setQuantity(props.quantity + '');
-      return;
-    }
-
-    setQuantity(newQuantity + '');
-
-    updateCart({
-      variables: {
-        inputs: {
-          _id: props._id,
-          quantity: newQuantity
+    if (+quantity !== props.quantity) {
+      updateCart({
+        variables: {
+          inputs: {
+            _id: props._id,
+            quantity: +quantity
+          }
         }
-      }
-    });
+      });
+    }
+  };
+
+  const handleChange = (event) => {
+    const string = event.target.value.replace(/\D/g, '');
+
+    const newQuantity = parseInt(string, 10) || 0;
+
+    if (newQuantity + '' !== quantity) {
+      setQuantity(newQuantity + '');
+    }
   };
 
   return (
@@ -115,10 +118,7 @@ function CartItem2(props: Props): JSX.Element {
         <div
           className="cart-item__image lozadloaded flex-shrink-0"
           style={{
-            backgroundImage:
-              props.image && props.image.length > 0
-                ? `url(data:image/png;base64,${props.image})`
-                : `url('/assets/images/no-image.jpg')`
+            backgroundImage: `url(${props.image})`
           }}
         />
         <div className="flex-1 pl-2 pr-2">
@@ -163,7 +163,7 @@ function CartItem2(props: Props): JSX.Element {
                       min={0}
                       max={100000}
                       value={quantity}
-                      onChange={(e) => setQuantity(e.target.value)}
+                      onChange={handleChange}
                       onKeyDown={handleKeyDown}
                       onBlur={handleBlur}
                     />

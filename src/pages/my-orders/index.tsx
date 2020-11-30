@@ -1,6 +1,5 @@
 import clsx from 'clsx';
-import { useTranslation, withTranslation } from 'i18n';
-import { WithTranslation } from 'next-i18next';
+import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
@@ -19,9 +18,11 @@ type FilterKey = 'all' | 'waiting_for_confirmation' | 'completed' | 'canceled';
 
 const pageSize = 20;
 
-const OrderItem = (props: GetOrderList): JSX.Element => {
+const OrderItem = (props: GetOrderList) => {
   const [open, setOpen] = useState(false);
-  const { t } = useTranslation();
+
+  const { t } = useTranslation(['myOrders']);
+
   return (
     <div className="my-orders__item my-orders__item:hover pl-4 mt-1">
       <div className="my-orders__info">
@@ -79,9 +80,11 @@ const OrderItem = (props: GetOrderList): JSX.Element => {
   );
 };
 
-const MyOrders = ({ t }: WithTranslation): JSX.Element => {
+const MyOrders = () => {
   const [getOrderList, { data, error }] = useLazyQueryAuth(GET_ORDER_LIST);
-  console.log(data);
+
+  const { t } = useTranslation(['myOrders']);
+
   useEffect(() => {
     if (!error) return;
 
@@ -170,6 +173,4 @@ const MyOrders = ({ t }: WithTranslation): JSX.Element => {
   );
 };
 
-const Translated = withTranslation(['myOrders'])(MyOrders);
-
-export default withApollo({ ssr: true })(Translated);
+export default withApollo({ ssr: true })(MyOrders);
