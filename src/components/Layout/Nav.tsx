@@ -3,8 +3,6 @@ import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
-import { useCartContext } from 'src/contexts/Cart';
-import { useCountCartContext } from 'src/contexts/CountCart';
 import useCountCart from 'src/hooks/useCountCart';
 import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
 
@@ -13,14 +11,10 @@ export default function Nav(): JSX.Element {
 
   const router = useRouter();
 
-  const { cart } = useCartContext();
-
-  // const { countCart } = useCountCartContext();
-  // console.log('countCart', countCart);
   const { data: dataCount } = useCountCart();
+
   const totalQty = dataCount?.countCarts?.data;
 
-  console.log('totalQty', totalQty);
   const { t } = useTranslation(['navbar']);
 
   const logOut = () => {

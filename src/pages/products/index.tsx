@@ -1,8 +1,8 @@
 import { useQuery } from '@apollo/client';
-import { useTranslation, withTranslation } from 'i18n';
+import { useTranslation } from 'i18n';
 import _ from 'lodash';
 import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
@@ -26,72 +26,53 @@ const pageSize = 20;
 const defaultSortType = '07';
 
 function Products(): JSX.Element {
+  const { t } = useTranslation(['products']);
+
   const router = useRouter();
 
   const page = +router.query.page || 1;
-  const { t } = useTranslation(['products']);
-  // Get categories
-  const { data: categoriesData, error: categoriesError } = useQuery<
-    GetAllCategoriesData,
-    undefined
-  >(GET_ALL_CATEGORIES);
 
-  // onError (categories)
-  useEffect(() => {
-    if (!categoriesError) return;
-
-    console.log('Get all categories error:', categoriesError);
-  }, [categoriesError]);
-
-  // Get manufacturers
-  const { data: manufacturersData, error: manufacturersError } = useQuery<
-    GetManufacturersData,
-    GetManufacturersVars
-  >(GET_MANUFACTURERS, {
-    variables: {
-      page: 1,
-      pageSize: 20
+  const { data: categoriesData } = useQuery<GetAllCategoriesData, undefined>(GET_ALL_CATEGORIES, {
+    onError: (error) => {
+      console.log('Get all categories error:', error);
     }
   });
 
-  // onError (manufacturers)
-  useEffect(() => {
-    if (!manufacturersError) return;
+  const categories = categoriesData?.getCategoriesAll || [];
 
-    console.log('Get manufacturers error:', manufacturersError);
-  }, [manufacturersError]);
-
-  // Get products
-  const { data: productsData, error: productsError } = useQuery<GetProductsData, GetProductsVars>(
-    GET_PRODUCTS,
+  const { data: manufacturersData } = useQuery<GetManufacturersData, GetManufacturersVars>(
+    GET_MANUFACTURERS,
     {
       variables: {
-        page,
-        pageSize,
-        type: router.query.tab as string,
-        manufacturer_id: router.query.manufacturer as string,
-        category_id: router.query.category as string,
-        order_type: (router.query.sort as string) || defaultSortType
+        page: 1,
+        pageSize: 20
+      },
+      onError: (error) => {
+        console.log('Get manufacturers error:', error);
       }
     }
   );
 
-  console.log(productsData);
-
-  // onError (products)
-  useEffect(() => {
-    if (!productsError) return;
-
-    console.log('Get products error:', productsError);
-  }, [productsError]);
-
-  const total = productsData?.getProductByConditions.total || 0;
-
-  const products = productsData?.getProductByConditions.Products || [];
-
-  const categories = categoriesData?.getCategoriesAll || [];
-
   const manufacturers = manufacturersData?.getManufactories || [];
+
+  const { data: productsData } = useQuery<GetProductsData, GetProductsVars>(GET_PRODUCTS, {
+    variables: {
+      page,
+      pageSize,
+      type: router.query.tag as string,
+      manufacturer_id: router.query.manufacturer as string,
+      category_id: router.query.category as string,
+      order_type: (router.query.sort as string) || defaultSortType
+    },
+    onError: (error) => {
+      console.log('Get products error:', error);
+    }
+  });
+
+  const products = productsData?.getProductByConditions?.Products || [];
+
+  const total = productsData?.getProductByConditions?.total || 0;
+
   const getNameById = (array, id) => {
     return _.find(array, { id })?.name;
   };
@@ -113,7 +94,7 @@ function Products(): JSX.Element {
       <div className="products container-fluid mobile-content my-3 my-sm-5">
         <div className="row flex-nowrap justify-content-between px-lg-5 px-sm-3">
           <div className="products__sidebar pr-4 d-none d-sm-block">
-            <ProductsSidebarFilter categories={categories} manufacturer={manufacturers} />
+            <ProductsSidebarFilter categories={categories} manufacturers={manufacturers} />
           </div>
 
           <div className="flex-grow-1">
