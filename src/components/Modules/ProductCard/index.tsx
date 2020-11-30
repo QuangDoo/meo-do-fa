@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 import { withTranslation } from 'i18n';
 import { WithTranslation } from 'next-i18next';
+import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
@@ -10,7 +11,6 @@ import QuantityInput from '../QuantityInput';
 import { DiscountRibbon } from './DiscountRibbon';
 import LoginToSeePrice from './LoginToSeePrice';
 import ProductBadge from './ProductBadge';
-import { ProductImage } from './ProductImage';
 import { ProductPrice } from './ProductPrice';
 
 type Props = Product & WithTranslation;
@@ -34,7 +34,13 @@ const ProductCard = ({ t, ...props }: Props): JSX.Element => {
 
             {isDiscount && <DiscountRibbon discountPercent={discountPercent} />}
 
-            <ProductImage imageId={props.image_256} productId={props.id} />
+            <Link href={`/products/${props.id}`}>
+              <a>
+                <div className="product-card__image mb-3 lozad">
+                  <Image alt={props.id} src={props.image_256} layout="fill" objectFit="cover" />
+                </div>
+              </a>
+            </Link>
 
             <div>
               <Link href={`/products/${props.id}`}>
