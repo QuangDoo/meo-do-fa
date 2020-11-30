@@ -341,7 +341,7 @@ const OrderDetails = () => {
                     <ConfirmCancelOrder
                       open={open}
                       onClose={() => setOpen(false)}
-                      orderId={orderId.toString()}
+                      orderNo={orderId.toString()}
                     />
                   </Box>
                 </CustomCard>

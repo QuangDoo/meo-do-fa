@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
-import ConfirmApplyJob from 'src/components/Modules/Career/ConfirmApplyJob';
+import React from 'react';
 import withApollo from 'src/utils/withApollo';
 
 import Footer from '../../../components/Layout/Footer';
 import Head from '../../../components/Layout/Head';
 import Header from '../../../components/Layout/Header';
 import Nav from '../../../components/Layout/Nav';
-import JobDetail from '../../../components/Modules/JobDetail';
+import JobDetail from '../../../components/Modules/Career/JobDetail';
 
 const job = {
   name: 'Tax Accountant',
@@ -39,8 +38,6 @@ const job = {
 };
 
 const CareerPage = (): JSX.Element => {
-  const [open, setOpen] = useState(false);
-
   return (
     <>
       <Head>
@@ -60,13 +57,6 @@ const CareerPage = (): JSX.Element => {
         department={job.department}
         location={job.location}
       />
-
-      <div className="d-block text-center w-100 mb-3">
-        <button className="btn btn-primary" onClick={() => setOpen(true)}>
-          Apply this job
-        </button>
-        <ConfirmApplyJob open={open} onClose={() => setOpen(false)} />
-      </div>
 
       <Footer />
     </>
