@@ -1,6 +1,6 @@
 // import { useMutation } from '@apollo/client';
 import { useTranslation } from 'i18n';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { toast } from 'react-toastify';
 import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
@@ -19,15 +19,11 @@ function Cart(): JSX.Element {
 
   const { t } = useTranslation(['cart']);
 
-  const [createCounsel, { error }] = useMutationAuth(CREATE_COUNSEL);
-
-  // onError
-  useEffect(() => {
-    if (!error) return;
-
-    console.log('Create counsel error:', { error });
-    toast.error('Create counsel error: ' + error);
-  }, [error]);
+  const [createCounsel] = useMutationAuth(CREATE_COUNSEL, {
+    onError: (error) => {
+      toast.error('Create counsel error: ' + error);
+    }
+  });
 
   const handleCheckoutClick = () => {
     if (cart.getCart.carts.length === 0) return;

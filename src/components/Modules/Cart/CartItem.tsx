@@ -31,23 +31,15 @@ function CartItem(props: Props): JSX.Element {
 
   const { refetchCart } = useCart();
 
-  const [updateCart, { data, error }] = useMutation<UpdateCartData, UpdateCartVars>(UPDATE_CART);
-
-  // onCompleted
-  useEffect(() => {
-    if (!data) return;
-
-    toast.success('Update cart success');
-    refetchCart();
-  }, [data]);
-
-  // onError
-  useEffect(() => {
-    if (!error) return;
-
-    console.log('Update cart error:', { error });
-    toast.error('Update cart error: ' + error);
-  }, [error]);
+  const [updateCart] = useMutation<UpdateCartData, UpdateCartVars>(UPDATE_CART, {
+    onCompleted: () => {
+      toast.success('Update cart success');
+      refetchCart();
+    },
+    onError: (error) => {
+      toast.error('Update cart error: ' + error);
+    }
+  });
 
   const handlePlusClick = () => {
     const newQty = props.quantity + 1;

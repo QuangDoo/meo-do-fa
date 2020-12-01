@@ -2,7 +2,7 @@ import React, { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import Checkbox from 'src/components/Form/Checkbox';
-import Input from 'src/components/Form/Input';
+import Inputs from 'src/components/Form/Input';
 import Select from 'src/components/Form/Select';
 import Textarea from 'src/components/Form/Textarea';
 import ModalBase from 'src/components/Layout/Modal/ModalBase';
@@ -19,7 +19,7 @@ type Props = {
   orderId: string;
 };
 
-type Input = {
+type Inputs = {
   reason: string;
   text: string;
   check: true;
@@ -35,38 +35,25 @@ const options = [
 const ConfirmCancelOrder: FC<Props> = (props) => {
   const { open, onClose, orderId } = props;
 
-  const [cancelOrder, { data, error }] = useMutationAuth(CANCEL_ORDER);
+  const [cancelOrder] = useMutationAuth(CANCEL_ORDER, {
+    onCompleted: () => {
+      toast.success('Cancel success');
 
-  const { register, handleSubmit, watch, errors } = useForm();
+      onClose();
+    },
+    onError: (error) => {
+      toast.error(`errors:code_${error}`);
+      onClose();
+    }
+  });
 
-  useEffect(() => {
-    if (!data) return;
+  const { register, handleSubmit, watch } = useForm();
 
-    toast.success('cancel success');
-
-    onClose();
-  }, [data]);
-
-  // onError
-  useEffect(() => {
-    if (!error) return;
-
-    // console.log('Delete cart error:', { error });
-    toast.error(`errors:code_${error}`);
-    onClose();
-  }, [error]);
-
-  const onSubmit = (data: Input) => {
-    console.log(data);
-    console.log(typeof orderId, orderId);
+  const onSubmit = (data: Inputs) => {
     cancelOrder({
       variables: {
         orderNo: orderId
       }
-    }).catch((error) => {
-      // toast.error(error);
-      // console.log(error);
-      onClose();
     });
   };
 
@@ -74,7 +61,7 @@ const ConfirmCancelOrder: FC<Props> = (props) => {
     <ModalBase open={open} onClose={onClose}>
       <div className="container p-3">
         <div className="text-center">
-          <h3>hủy đơn</h3>
+          <h3>Hủy đơn</h3>
         </div>
         <form className="form" onSubmit={handleSubmit(onSubmit)}>
           <label className="my-1 mr-2" htmlFor="inlineFormCustomSelectPref">

@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { GET_DISTRICT, GET_WARD, GET_WARD_DETAIL } from 'src/graphql/address/city.query';
@@ -29,41 +29,28 @@ const CheckoutPage = (): JSX.Element => {
 
   const { data: datacity } = useCity();
 
-  const { data: dataGetPaymentDelivery, loading: loadingGetPaymentDelivery } = useQuery(
-    GET_PAYMENT_DELIVERY
-  );
+  const { data: dataGetPaymentDelivery } = useQuery(GET_PAYMENT_DELIVERY);
 
-  const { data: dataGetCounsel, loading: loadingGetCounsel } = useQueryAuth(GET_COUNSEL);
+  const { data: dataGetCounsel } = useQueryAuth(GET_COUNSEL);
 
   const router = useRouter();
 
   const { refetchCart } = useCart();
 
-  const [createOrder, { data, error }] = useMutationAuth(CREATE_ORDER);
-
-  useEffect(() => {
-    if (!data) return;
-
-    swal({
-      title: `Đơn hàng ${data.createOrder.orderNo} đã được đặt thành công!`,
-      icon: 'success'
-    }).then(() => {
-      refetchCart();
-      router.push('/');
-    });
-  }, [data]);
-
-  useEffect(() => {
-    if (!error) return;
-
-    console.log('Checkout error:', { error });
-
-    toast.error('Thanh toán thất bại.');
-  }, [error]);
-
-  useEffect(() => {
-    if (!dataGetCounsel) return;
-  }, [dataGetCounsel]);
+  const [createOrder] = useMutationAuth(CREATE_ORDER, {
+    onCompleted: (data) => {
+      swal({
+        title: `Đơn hàng ${data.createOrder.orderNo} đã được đặt thành công!`,
+        icon: 'success'
+      }).then(() => {
+        refetchCart();
+        router.push('/');
+      });
+    },
+    onError: (error) => {
+      toast.error('Thanh toán thất bại.');
+    }
+  });
 
   const city_id = Number(watch('cityId'));
   const district_id = Number(watch('districtId'));

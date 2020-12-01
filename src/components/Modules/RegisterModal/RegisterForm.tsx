@@ -52,27 +52,19 @@ const RegisterForm = (props: WithTranslation): JSX.Element => {
 
   const { getUser } = useUser();
 
-  const [createUser, { data, error }] = useMutation<CreateUserData, CreateUserVars>(CREATE_USER);
-
-  // onCompleted
-  useEffect(() => {
-    if (!data) return;
-
-    localStorage.setItem('token', data.createUser.token);
-    closeRegisterModal();
-    getUser();
-    router.reload();
-  }, [data]);
-
-  // onError
-  useEffect(() => {
-    if (!error) return;
-
-    console.log('Create user error:', { error });
-
-    error.graphQLErrors.length > 0 &&
-      toast.error(t(`errors:code_${error.graphQLErrors[0].extensions.code}`));
-  }, [error]);
+  const [createUser] = useMutation<CreateUserData, CreateUserVars>(CREATE_USER, {
+    onCompleted: (data) => {
+      localStorage.setItem('token', data.createUser.token);
+      closeRegisterModal();
+      getUser();
+      router.reload();
+    },
+    onError: (error) => {
+      console.log('Create user error:', { error });
+      error.graphQLErrors.length > 0 &&
+        toast.error(t(`errors:code_${error.graphQLErrors[0].extensions.code}`));
+    }
+  });
 
   // Watch account_type value, with initial state
   // This component re-renders when account_type changes
@@ -95,11 +87,13 @@ const RegisterForm = (props: WithTranslation): JSX.Element => {
 
   // On form error
   const onFormError = (errors) => {
-    const errorMessage = Object.keys(errors)
-      .map((name) => errors[name].message)
-      .join('\n');
-
-    toast.error(<ErrorToast>{errorMessage}</ErrorToast>);
+    toast.error(
+      <ErrorToast>
+        {Object.keys(errors)
+          .map((name) => errors[name].message)
+          .join('\n')}
+      </ErrorToast>
+    );
   };
 
   return (

@@ -37,7 +37,6 @@ const ManufacturersProvider = withApollo({ ssr: true })(({ children }: Props) =>
     <ManufacturersContext.Provider
       value={{
         data: manufacturers,
-
         loading,
         error
       }}>
