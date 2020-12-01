@@ -7,7 +7,7 @@ import { useCartContext } from '../contexts/Cart';
 import { useLazyQueryAuth } from './useApolloHookAuth';
 
 export default function useCart() {
-  const [getCart, { data, error, refetch }] = useLazyQueryAuth(GET_CART, {
+  const [getCart, { data, error, refetch, loading }] = useLazyQueryAuth(GET_CART, {
     fetchPolicy: 'network-only'
   });
 
@@ -37,6 +37,7 @@ export default function useCart() {
   return {
     refetchCart: refetch,
     getCart,
+    loading,
     cart: data
   };
 }

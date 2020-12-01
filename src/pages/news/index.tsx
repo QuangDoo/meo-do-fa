@@ -2,6 +2,7 @@ import { Trans, withTranslation } from 'i18n';
 import React from 'react';
 import withApollo from 'src/utils/withApollo';
 
+import BacktoTop from '../../components/Layout/BackToTop';
 import Footer from '../../components/Layout/Footer';
 import Head from '../../components/Layout/Head';
 import Header from '../../components/Layout/Header';
@@ -107,6 +108,8 @@ const NewsPage = (): JSX.Element => {
       <News bannerImgUrl={imgUrl} links={links}>
         <NewsList news={newsdata} />
       </News>
+
+      <BacktoTop />
 
       <Footer />
     </>

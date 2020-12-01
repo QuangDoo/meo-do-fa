@@ -15,7 +15,7 @@ import useCart from 'src/hooks/useCart';
 import withApollo from 'src/utils/withApollo';
 
 function Cart(): JSX.Element {
-  const { refetchCart, cart } = useCart();
+  const { refetchCart, cart, loading } = useCart();
 
   const { t } = useTranslation(['cart']);
 
