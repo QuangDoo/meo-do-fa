@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 /* eslint-disable react/jsx-no-comment-textnodes */
+import { Trans } from 'i18n';
 import React from 'react';
 
 import { Coupons } from '../../../mockData/mockCoupons';
@@ -11,7 +12,9 @@ export default function AnotherPromoCodes(props) {
       <div className="container">
         <div className="row mb-3">
           <div className="col text-center">
-            <h2>Các mã khác</h2>
+            <h2>
+              <Trans i18nKey="promoCodes:another_codes" />
+            </h2>
           </div>
         </div>
         <div className="row">

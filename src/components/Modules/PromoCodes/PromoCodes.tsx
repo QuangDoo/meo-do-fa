@@ -1,3 +1,4 @@
+import { Trans } from 'i18n';
 import React from 'react';
 
 export default function PromoCodes(props) {
@@ -6,31 +7,44 @@ export default function PromoCodes(props) {
       <div className="container mb-3">
         <div className="row">
           <div className="col-12 mb-3">
-            <h1>Mã giảm giá</h1>
-            <p>Hướng dẫn sử dụng:</p>
+            <h1>
+              <Trans i18nKey="promoCodes:promo_codes" />
+            </h1>
+            <p>
+              <Trans i18nKey="promoCodes:user_manual" />
+            </p>
             <ol className="pl-5">
               <li>
                 <span>
-                  <b>Đặt hàng: </b>
-                  {`Vào trang `}
-                  <a href="/quick-order">Đặt hàng nhanh</a>
-                  {` hoặc `}
-                  <a href="/products">Sản phẩm</a>
-                  {` để đặt hàng`}
+                  <Trans
+                    i18nKey="promoCodes:order"
+                    components={{
+                      b: <b />,
+                      a1: <a href="/asd">asd</a>,
+                      a2: <a href="/asd">asdasd</a>
+                    }}
+                  />
                 </span>
               </li>
               <li>
                 <span>
-                  <b>Vào giỏ hàng: </b>
-                  {`Vào trang `}
-                  <a href="/cart">Giỏ hàng</a>
-                  {`. Nhấn vào chữ "Dùng mã khuyến mãi"`}
+                  <Trans
+                    i18nKey="promoCodes:order_content"
+                    components={{
+                      a1: <a href="/asd">asd</a>,
+                      a2: <a href="/asd">asdasd</a>
+                    }}
+                  />
                 </span>
               </li>
               <li>
                 <span>
-                  <b>Dùng mã: </b>
-                  {`Nhập mã muốn dùng vào ô tìm kiếm, hoặc, chọn trong danh sách mã. Rồi nhấn vào nút "Dùng ngay"`}
+                  <Trans
+                    i18nKey="promoCodes:use_promocode"
+                    components={{
+                      b: <b />
+                    }}
+                  />
                 </span>
               </li>
             </ol>
@@ -40,13 +54,17 @@ export default function PromoCodes(props) {
       <div className="container">
         <div className="row">
           <div className="col-12 text-center">
-            <h2 className="text-center">Dành riêng cho bạn</h2>
+            <h2 className="text-center">
+              <Trans i18nKey="promoCodes:just_for_you" />
+            </h2>
             <p>
-              {`Tham gia chương trình `}
-              <a href="/users/referrals">Giới thiệu bạn bè</a>
-              {`, `}
-              <a href="/users/loyalty_points">Đổi điểm tích luỹ</a>
-              {` để nhận được code riêng`}
+              <Trans
+                i18nKey="promoCodes:just_for_you_content"
+                components={{
+                  a1: <a href="/">Giới thiệu bạn bè</a>,
+                  a2: <a href="/">Đổi điểm tích luỹ</a>
+                }}
+              />
             </p>
           </div>
         </div>

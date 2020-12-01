@@ -1,3 +1,4 @@
+import { Trans } from 'i18n';
 import React from 'react';
 import { SpecialCoupons } from 'src/mockData/mockSpecialCoupons';
 
@@ -9,7 +10,9 @@ export default function SpecialPromoCodes() {
       <div className="container">
         <div className="row mb-4">
           <div className="col-12 text-center">
-            <h2 className="text-white">Mã giảm giá đặc biệt</h2>
+            <h2 className="text-white">
+              <Trans i18nKey="promoCodes:special_codes" />
+            </h2>
           </div>
         </div>
         <div className="row">

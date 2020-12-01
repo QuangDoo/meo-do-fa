@@ -22,9 +22,9 @@
     -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
   }
 }
-@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap');
 * {
-  font-family: 'Raleway', sans-serif;
+  font-family: 'Open Sans', sans-serif;
   touch-action: manipulation;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -16158,7 +16158,7 @@ abbr[title] {
 .coupon2__amount {
   font-size: large;
   font-weight: 900;
-  color: #009058;
+  color: $primary;
   text-transform: uppercase;
 }
 .coupon2__text {
@@ -16166,7 +16166,7 @@ abbr[title] {
 }
 .coupon2__code {
   display: inline-block;
-  background-color: #009058;
+  background-color: $primary;
   color: white;
   font-weight: bold;
   text-transform: uppercase;

@@ -24,4 +24,8 @@ function PromotionCode(): JSX.Element {
   );
 }
 
+PromotionCode.getInitialProps = async () => ({
+  namespacesRequired: ['promoCodes']
+});
+
 export default withApollo({ ssr: true })(PromotionCode);
