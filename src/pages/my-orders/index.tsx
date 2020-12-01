@@ -84,11 +84,7 @@ const OrderItem = (props: GetOrderList) => {
         </div>
       )}
 
-      <ConfirmCancelOrder
-        open={open}
-        onClose={() => setOpen(false)}
-        orderId={`${props.orderNo.toString()}`}
-      />
+      <ConfirmCancelOrder open={open} onClose={() => setOpen(false)} orderNo={props.orderNo} />
     </div>
   );
 };

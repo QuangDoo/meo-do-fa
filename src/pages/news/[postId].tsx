@@ -6,7 +6,7 @@ import Footer from '../../components/Layout/Footer';
 import Head from '../../components/Layout/Head';
 import Header from '../../components/Layout/Header';
 import Nav from '../../components/Layout/Nav';
-import NewsDetail from '../../components/Modules/NewsDetail/NewsDetail';
+import NewsDetail from '../../components/Modules/News/NewsDetail';
 
 const data = {
   author: 'Admin',

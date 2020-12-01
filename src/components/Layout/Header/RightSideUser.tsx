@@ -33,7 +33,7 @@ const RightSideUser = () => {
     setShow((show) => !show);
   }
   return (
-    <div className="header-right d-none d-lg-block w-25">
+    <div className="header-right d-none d-lg-block">
       <ul className="nav align-items-center">
         {/* Notifications here */}
         <div
