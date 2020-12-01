@@ -23,6 +23,10 @@ const OrderItem = (props: GetOrderList) => {
 
   const { t } = useTranslation(['myOrders']);
 
+  const { state } = props;
+
+  console.log('check', state === 'cancel');
+
   return (
     <div className="my-orders__item my-orders__item:hover pl-4 mt-1">
       <div className="my-orders__info">
@@ -67,10 +71,19 @@ const OrderItem = (props: GetOrderList) => {
           {t('myOrders:billing_export')}
         </button>
         <button className="btn btn-outline-info btn-sm">{t('myOrders:report')}</button>
-        <button className="btn btn-danger" onClick={() => setOpen(true)}>
+        <button
+          hidden={state === 'cancel'}
+          className="btn btn-outline-danger btn-sm"
+          onClick={() => setOpen(true)}>
           hủy đơn hàng
         </button>
       </div>
+      {state === 'cancel' && (
+        <div className="my-orders__invoice">
+          <button className="btn btn-sm btn-outline-danger">Canceled</button>
+        </div>
+      )}
+
       <ConfirmCancelOrder
         open={open}
         onClose={() => setOpen(false)}
