@@ -1,16 +1,19 @@
+import { useQuery } from '@apollo/client';
 import { Menu } from '@material-ui/core';
+import clsx from 'clsx';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
+import { GET_ALL_CATEGORIES, GetAllCategoriesData } from 'src/graphql/category/category.query';
 import useCountCart from 'src/hooks/useCountCart';
 import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
+import { Category } from 'src/types/Category';
 
-export default function Nav(): JSX.Element {
+const Nav = () => {
   const isLoggedIn = useIsLoggedIn();
 
   const router = useRouter();
-
   const { data: dataCount } = useCountCart();
 
   const totalQty = dataCount?.countCarts?.data;
@@ -32,19 +35,59 @@ export default function Nav(): JSX.Element {
     setAnchorEl(null);
   };
 
+  const { data: categoriesData } = useQuery<GetAllCategoriesData, undefined>(GET_ALL_CATEGORIES, {
+    onError: (error) => {
+      console.log('Get all categories error:', error);
+    }
+  });
+
+  const categories = categoriesData?.getCategoriesAll || [];
+
   return (
     <nav className="rockland-nav shrink">
       <div className="container">
         <div className="row">
           <div className="col-12 d-flex align-items-center justify-content-between">
             <ul className="nav text-capitalize">
-              <li className="rockland-nav__item">
-                <Link href="/products">
-                  <a className="rockland-nav__link">
-                    <i className="rockland-nav__icon icomoon icon-product" />
-                    <span className="rockland-nav__title">{t('navbar:product')}</span>
-                  </a>
-                </Link>
+              <li className="rockland-nav__item dropdown">
+                <div data-toggle="dropdown" data-hover="dropdown">
+                  <Link href="/products">
+                    <a className="rockland-nav__link">
+                      <i className="rockland-nav__icon icomoon icon-product" />
+                      <span className="rockland-nav__title">{t('navbar:product')}</span>
+                    </a>
+                  </Link>
+                </div>
+                <ul className="dropdown-menu">
+                  {categories
+                    .slice()
+                    .sort((a, b) => a.name.localeCompare(b.name))
+                    .map(({ name, id }) => (
+                      <li key={id} className="mb-2 dropdown-item">
+                        <div className="dropdown">
+                          <div data-toggle="dropdown" data-hover="dropdown">
+                            <Link href={`/products?category=${id}`}>
+                              <a className={clsx('products__filter-category')}>{name}</a>
+                            </Link>
+                          </div>
+                          <div className="dropdown-menu dropdown-sub-menu">
+                            <li>
+                              <a href="/#">Lorem ipsum dolor sit Exercitationem autems</a>
+                            </li>
+                            <li>
+                              <a href="/#">amet consectetur adipisicing elit</a>
+                            </li>
+                            <li>
+                              <a href="/#">Exercitationem autem</a>
+                            </li>
+                            <li>
+                              <a href="/#">Exercitationem autem</a>
+                            </li>
+                          </div>
+                        </div>
+                      </li>
+                    ))}
+                </ul>
               </li>
 
               <li className="rockland-nav__item">
@@ -180,4 +223,6 @@ export default function Nav(): JSX.Element {
       </div>
     </nav>
   );
-}
+};
+
+export default Nav;

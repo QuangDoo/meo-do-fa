@@ -18899,3 +18899,17 @@ abbr[title] {
   font-size: 1rem;
   color: $gray-900;
 }
+
+.dropdown:hover>.dropdown-menu {
+  display: block !important;
+}
+
+.dropdown-sub-menu {
+  position: absolute;
+  left: 100%;
+  top: 0;
+  height: 400px;
+  width: 300px;
+  overflow: scroll;
+  text-overflow: ellipsis
+}
