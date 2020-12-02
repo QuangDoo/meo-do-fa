@@ -105,9 +105,17 @@ export const GET_ORDER = gql`
       expected_date
       order_line
       partner_shipping_id
+      partner_shipping {
+        name
+        street
+        city
+        email
+        phone
+      }
       order_lines {
         id
         name
+        product_uom_qty
         price_tax
         price_subtotal
         price_unit

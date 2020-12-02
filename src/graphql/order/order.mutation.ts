@@ -93,6 +93,7 @@ export const CREATE_ORDER = gql`
             district: $district
             ward: $ward
             street: $street
+            zipcode: $zipcode
           }
           email: $email
         }

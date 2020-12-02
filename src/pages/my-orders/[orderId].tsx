@@ -24,16 +24,14 @@ import clsx from 'clsx';
 import { DateTime } from 'luxon';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
 import Nav from 'src/components/Layout/Nav';
 import ExportInvoice from 'src/components/Modules/ExportInvoice';
 import ProfileSidebar from 'src/components/Modules/ProfileSidebar';
-import { GET_ORDER, GetOrderDetail, GetOrderDetailVar } from 'src/graphql/order/order.query';
-import { GET_INFOR_USER } from 'src/graphql/user/info.query';
-import useAddressUser from 'src/hooks/useAddressUser';
+import { GET_ORDER } from 'src/graphql/order/order.query';
 import { useQueryAuth } from 'src/hooks/useApolloHookAuth';
 import useUser from 'src/hooks/useUser';
 import { theme } from 'src/theme';
@@ -259,15 +257,17 @@ const OrderDetails = () => {
 
   const { orderId } = router.query;
 
-  const [activeStep, setActiveStep] = useState(2);
-
-  // const { data: dataUser, error: errorUser } = useQueryAuth(GET_INFOR_USER);
-  // console.log('dataUser', dataUser);
+  const [activeStep, setActiveStep] = useState(0);
 
   const { data: orderDetail, error: orderError } = useQueryAuth(GET_ORDER, {
     variables: { id: Number(orderId) }
   });
-  // const { data: dataInforUser, error: errorDataInforUser } = useQueryAuth(GET_ADDRESS_INFOR_USER);
+  console.log('orderDetail', orderDetail);
+  // useEffect(() => {
+  //   if (orderDetail?.getOrderDetail.order_lines.state) {
+  //   }
+  // }, [orderDetail?.getOrderDetail.order_lines]);
+
   const onCancelClick = () => {
     if (activeStep >= 3) {
       toast.error('cant cancel order');
@@ -277,7 +277,7 @@ const OrderDetails = () => {
   };
 
   const { user } = useUser();
-  console.log('user', user);
+
   return (
     <>
       <Head>
@@ -321,8 +321,8 @@ const OrderDetails = () => {
 
                   <Box display="flex" justifyContent="space-between" alignItems="center">
                     <Typography>
-                      Dự kiến giao vào{' '}
-                      {/* <strong>{orderDetail?.getOrderDetail?.expected_date?.substr(0, 10)}</strong> */}
+                      Dự kiến giao vào
+                      <strong>{orderDetail?.getOrderDetail?.expected_date}</strong>
                     </Typography>
 
                     <Link
@@ -376,17 +376,26 @@ const OrderDetails = () => {
                 <Grid container spacing={2}>
                   <Grid item sm={6} xs={12}>
                     <CustomCard>
-                      <TextWithLabel label="Tên người nhận" text={user?.getUser.name} />
+                      <TextWithLabel
+                        label="Tên người nhận"
+                        text={orderDetail?.getOrderDetail?.partner_shipping?.name}
+                      />
                       {/* nào có data địa chỉ thì bỏ vô đây nha <3 */}
 
-                      {/* <TextWithLabel
+                      <TextWithLabel
                         label="Địa chỉ giao hàng"
-                        text="12b/1e ấp đồng an 2, Phường Bình Hòa, Thành phố Thuận An, Bình Dương"
-                      /> */}
+                        text={orderDetail?.getOrderDetail?.partner_shipping?.street}
+                      />
 
-                      <TextWithLabel label="Số điện thoại" text={user?.getUser.phone} />
+                      <TextWithLabel
+                        label="Số điện thoại"
+                        text={orderDetail?.getOrderDetail?.partner_shipping?.phone}
+                      />
 
-                      <TextWithLabel label="Email" text={user?.getUser.email} />
+                      <TextWithLabel
+                        label="Email"
+                        text={orderDetail?.getOrderDetail?.partner_shipping?.email}
+                      />
                     </CustomCard>
                   </Grid>
                   {/* có data đơn vị vận chuyển thì fill vô nha <3 */}
@@ -439,7 +448,7 @@ const OrderDetails = () => {
                             {product.price_unit?.toLocaleString('de-DE')} đ
                           </CustomBodyCell>
 
-                          <CustomBodyCell>{product.quantity}</CustomBodyCell>
+                          <CustomBodyCell>{product.product_uom_qty}</CustomBodyCell>
 
                           <CustomBodyCell>
                             {product.price_total?.toLocaleString('de-DE')} đ
