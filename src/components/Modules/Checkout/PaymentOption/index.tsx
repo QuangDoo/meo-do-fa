@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { Trans, useTranslation } from 'i18n';
 import Link from 'next/link';
 import React from 'react';
@@ -17,7 +18,7 @@ const PaymentOption = (props: Props): JSX.Element => {
 
   const { t } = useTranslation('checkout');
 
-  if (!paymentMethods.length) return;
+  if (!paymentMethods.length) return null;
 
   const cashOnDelivery = paymentMethods[1];
   const bankTransfer = paymentMethods[0];
@@ -39,11 +40,9 @@ const PaymentOption = (props: Props): JSX.Element => {
               <Trans
                 i18nKey="checkout:bank_transfer"
                 components={{
-                  Link: (
-                    <Link href="/transfer-instructions">
-                      <a> </a>
-                    </Link>
-                  )
+                  // Link: <Link href="/transfer-instructions"></Link>
+                  // a: <a></a>
+                  Link: <a href="/transfer-instructions"> </a>
                 }}
               />
             ),
@@ -51,20 +50,17 @@ const PaymentOption = (props: Props): JSX.Element => {
             children: (
               <>
                 <br />
-
                 {/* <small className="text-muted">Giảm 0.5% cho đơn hàng chuyển khoản trước.</small> */}
-
                 <DescriptionBox>
                   <div className="bank-info">
-                    {/* {lines.map((line, index) => (
-                      <div
-                        key={index}
-                        className={clsx('d-flex', index < lines.length - 1 && 'mb-2')}>
-                        <div className="bank-info__label">{line.label}</div>
-                        <div className="bank-info__content">{line.content}</div>
+                    {['account_name', 'account_no', 'bank_name', 'note'].map((key, index, arr) => (
+                      <div key={key} className={clsx('d-flex', index < arr.length - 1 && 'mb-2')}>
+                        <div className="bank-info__label">
+                          {t(`checkout:bank_transfer__${key}`)}
+                        </div>
+                        <div className="bank-info__content">{bankTransfer[key]}</div>
                       </div>
-                    ))} */}
-                    {}
+                    ))}
                   </div>
                 </DescriptionBox>
               </>

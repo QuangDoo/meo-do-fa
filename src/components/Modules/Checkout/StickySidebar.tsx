@@ -1,10 +1,29 @@
+import clsx from 'clsx';
 import Link from 'next/link';
 import React from 'react';
 import Button from 'src/components/Form/Button';
 import { GetCounselData } from 'src/graphql/order/getCounsel';
 import { ReactHookFormRegister } from 'src/types/ReactHookFormRegister';
 
-import SidebarItem from './SidebarItem';
+type SidebarItemProps = {
+  label?: string;
+  children?: React.ReactNode;
+  containerClass?: string;
+};
+
+const SidebarItem = (props: SidebarItemProps) => {
+  return (
+    <div className={clsx('col-12', props.containerClass)}>
+      {(props.label || props.children) && (
+        <div className="checkout__info-item d-flex justify-content-between align-items-center">
+          <small className="checkout__info-item-label">{props.label}</small>
+
+          {props.children}
+        </div>
+      )}
+    </div>
+  );
+};
 
 type Props = ReactHookFormRegister & {
   counselData?: GetCounselData;
@@ -13,7 +32,7 @@ type Props = ReactHookFormRegister & {
 const StickySidebar = (props: Props): JSX.Element => {
   const { counselData } = props;
 
-  if (!counselData) return;
+  if (!counselData) return null;
 
   const data = counselData.getCounsel;
 

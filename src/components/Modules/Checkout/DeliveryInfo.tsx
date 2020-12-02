@@ -1,10 +1,11 @@
-import React, { forwardRef } from 'react';
+import React from 'react';
 import { emailRegex } from 'src/assets/regex/email';
 import { viPhoneNumberRegex } from 'src/assets/regex/viPhoneNumber';
 import Checkbox from 'src/components/Form/Checkbox';
 import { useUserContext } from 'src/contexts/User';
 import { City, Ward } from 'src/graphql/address/getCities';
 import { District } from 'src/graphql/address/getDistricts';
+import { ReactHookFormRegister } from 'src/types/ReactHookFormRegister';
 
 import InputCard from './InputCard';
 import InputWithLabel from './InputWithLabel';
@@ -19,17 +20,16 @@ type Props = {
   cities: City[];
   districts: District[];
   wards: Ward[];
-};
+} & ReactHookFormRegister;
 
-const DeliveryInfo = (props, register): JSX.Element => {
-  const { user } = useUserContext();
+const DeliveryInfo = (props: Props) => {
+  const { cities, districts, wards, register } = props;
 
   return (
     <InputCard title="Thông tin giao hàng" hasRequired>
       {/* Name input */}
       <InputWithLabel
         name="name"
-        defaultValue={user?.display_name}
         ref={register({
           required: 'Xin nhập họ tên.'
         })}
@@ -43,7 +43,6 @@ const DeliveryInfo = (props, register): JSX.Element => {
         {/* Phone input */}
         <InputWithLabel
           name="phone"
-          defaultValue={user?.phone}
           ref={register({
             required: 'Xin nhập số điện thoại.',
             pattern: {
@@ -61,7 +60,6 @@ const DeliveryInfo = (props, register): JSX.Element => {
         {/* Email input */}
         <InputWithLabel
           name="email"
-          defaultValue={user?.email}
           ref={register({
             pattern: {
               value: emailRegex,
@@ -106,7 +104,7 @@ const DeliveryInfo = (props, register): JSX.Element => {
           <option value="">Chọn tỉnh/thành phố...</option>
 
           {/* Map cities from api */}
-          {props.dataCity?.map((city: DataCityType) => (
+          {props.cities.map((city: DataCityType) => (
             <option key={city.id} value={city.id}>
               {city.name}
             </option>
@@ -125,7 +123,7 @@ const DeliveryInfo = (props, register): JSX.Element => {
           <option value="">Chọn quận/huyện...</option>
 
           {/* Map districts from chosen city */}
-          {props.dataDistrict?.map((district) => (
+          {props.districts.map((district) => (
             <option key={district.id} value={district.id}>
               {district.name}
             </option>
@@ -144,7 +142,7 @@ const DeliveryInfo = (props, register): JSX.Element => {
           <option value="">Chọn phường/xã...</option>
 
           {/* Map wards from chosen district */}
-          {props.dataWard?.map((ward) => (
+          {props.wards.map((ward) => (
             <option key={ward.id} value={ward.id}>
               {ward.name}
             </option>
@@ -164,4 +162,4 @@ const DeliveryInfo = (props, register): JSX.Element => {
   );
 };
 
-export default forwardRef(DeliveryInfo);
+export default DeliveryInfo;

@@ -1,5 +1,6 @@
 // import { useMutation } from '@apollo/client';
 import { useTranslation } from 'i18n';
+import { useRouter } from 'next/router';
 import React from 'react';
 import { toast } from 'react-toastify';
 import Footer from 'src/components/Layout/Footer';
@@ -19,7 +20,12 @@ function Cart(): JSX.Element {
 
   const { t } = useTranslation(['cart']);
 
+  const router = useRouter();
+
   const [createCounsel] = useMutationAuth(CREATE_COUNSEL, {
+    onCompleted: () => {
+      router.push('/checkout');
+    },
     onError: (error) => {
       toast.error('Create counsel error: ' + error);
     }
@@ -128,7 +134,7 @@ function Cart(): JSX.Element {
                     {cart?.getCart.totalPrice > 0 && (
                       <div className="col-12">
                         <div className="cart__info-item">
-                          <a className="btn btn-secondary btn-block text-small" href="/checkout">
+                          <a className="btn btn-secondary btn-block text-small">
                             <button onClick={handleCheckoutClick}> Tiếp tục thanh toán</button>
                           </a>
                         </div>

@@ -1,8 +1,12 @@
-import React, { forwardRef } from 'react';
+import React from 'react';
+import { ReactHookFormRegister } from 'src/types/ReactHookFormRegister';
 
 import InputCard from './InputCard';
 
-const CustomerNotes = (props, register): JSX.Element => {
+type Props = ReactHookFormRegister;
+
+const CustomerNotes = (props: Props) => {
+  const { register } = props;
   return (
     <InputCard
       title="Ghi chú khác"
@@ -18,4 +22,4 @@ const CustomerNotes = (props, register): JSX.Element => {
   );
 };
 
-export default forwardRef(CustomerNotes);
+export default CustomerNotes;

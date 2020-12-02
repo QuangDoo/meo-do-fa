@@ -2,9 +2,10 @@ import { useLazyQuery, useQuery } from '@apollo/client';
 import clsx from 'clsx';
 import { useTranslation } from 'i18n';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import { useUserContext } from 'src/contexts/User';
 import { GET_CITIES, GetCitiesData } from 'src/graphql/address/getCities';
 import {
   GET_DISTRICTS,
@@ -25,93 +26,85 @@ import swal from 'sweetalert';
 import Agreement from './Agreement';
 import CustomerNotes from './CustomerNotes';
 import DeliveryInfo from './DeliveryInfo';
+import DeliveryOption from './DeliveryOption';
 import PaymentOption from './PaymentOption';
 import StickySidebar from './StickySidebar';
-
-type DescriptionBoxProps = {
-  children: React.ReactNode;
-  white?: boolean;
-};
-
-const DescriptionBox = (props: DescriptionBoxProps) => {
-  return (
-    <div
-      className={clsx('checkout__description mt-2', props.white && 'checkout__description--white')}>
-      {props.children}
-    </div>
-  );
-};
-
-type InputCardProps = {
-  children: React.ReactNode;
-  title: string;
-  titleChildren?: React.ReactNode;
-  hasRequired?: boolean;
-  description?: string;
-};
-
-const InputCard = (props: InputCardProps) => {
-  return (
-    <div className="elevated p-3 p-md-4">
-      <div
-        className={clsx('mb-4', props.hasRequired && 'd-flex justify-content-between flex-wrap')}>
-        <h2 className="h6">{props.title}</h2>
-
-        {props.hasRequired && (
-          <small className="text-muted font-italic">
-            <i className="fas fa-exclamation-circle mr-1"></i>
-            Lưu ý: những ô có dấu <span className="required"></span> là thông tin bắt buộc
-          </small>
-        )}
-
-        {props.description && (
-          <small className="text-muted mb-2 d-inline-block">
-            Trường hợp không tìm được thuốc mong muốn, Quý khách vui lòng điền yêu cầu bên dưới.
-            Chúng tôi sẽ liên hệ mua thuốc và báo giá sớm nhất có thể.
-          </small>
-        )}
-      </div>
-
-      {props.children}
-    </div>
-  );
-};
 
 const CheckoutPage = () => {
   const { t } = useTranslation(['checkout']);
 
+  // Cities
   const { data: citiesData } = useQuery<GetCitiesData, undefined>(GET_CITIES);
   const cities = citiesData?.getCities || [];
 
+  // Districts
   const [getDistricts, { data: districtsData }] = useLazyQuery<GetDistrictsData, GetDistrictsVars>(
     GET_DISTRICTS
   );
   const districts = districtsData?.getDistricts || [];
 
+  // wards
   const [getWards, { data: wardsData }] = useLazyQuery<GetWardsData, GetWardsVars>(GET_WARDS);
   const wards = wardsData?.getWards || [];
 
+  // Payment & Delivery options
   const { data: paymentAndDeliveryData } = useQuery<GetPaymentAndDeliveryData, undefined>(
     GET_PAYMENT_DELIVERY
   );
   const paymentMethods = paymentAndDeliveryData?.getPaymentAndDeliveryMethod.paymentMethods || [];
   const deliveryMethods = paymentAndDeliveryData?.getPaymentAndDeliveryMethod.deliveryMethods || [];
 
+  // Counsel
   const { data: counselData } = useQueryAuth<GetCounselData, undefined>(GET_COUNSEL);
 
-  const { register, handleSubmit, watch } = useForm({
+  // User
+  const { user } = useUserContext();
+
+  // Form handler with default values
+  const { register, handleSubmit, watch, setValue } = useForm({
     defaultValues: {
-      deliveryOption: 2,
-      paymentOption: 1,
-      saveInfo: true
+      name: user?.name,
+      phone: user?.phone,
+      email: user?.email,
+      address: user?.street,
+      // cityId: user?.city.id,
+      // districtId: user?.district.id,
+      // wardId: user?.ward.id,
+      deliveryOption: '2',
+      paymentOption: '2',
+      saveInfo: true,
+      customerNotes: '',
+      agreement: false
     }
   });
+
+  useEffect(() => {
+    if (!user) return;
+
+    setValue('name', user.name);
+    setValue('phone', user.phone);
+    setValue('address', user.street);
+  }, [user]);
 
   const cityId = Number(watch('cityId'));
 
   const districtId = Number(watch('districtId'));
 
-  const wardId = Number(watch('wardId'));
+  useEffect(() => {
+    getDistricts({
+      variables: {
+        city_id: cityId
+      }
+    });
+  }, [cityId]);
+
+  useEffect(() => {
+    getWards({
+      variables: {
+        district_id: districtId
+      }
+    });
+  }, [districtId]);
 
   const router = useRouter();
 
@@ -144,10 +137,10 @@ const CheckoutPage = () => {
             shipping_address: {
               partnerId: '',
               isNew: true,
-              zipCode: wardId,
-              city: cities.find((city) => city.id === cityId).name,
-              district: districts.find((district) => district.id === districtId).name,
-              ward: wards.find((ward) => ward.id === wardId).name,
+              zipCode: data.wardId,
+              city: cities.find((city) => city.id === data.cityId).name,
+              district: districts.find((district) => district.id === data.districtId).name,
+              ward: wards.find((ward) => ward.id === data.wardId).name,
               street: data.address
             }
           },
@@ -177,21 +170,16 @@ const CheckoutPage = () => {
           <div className="col-md-8">
             <div className="mb-4">
               <DeliveryInfo
-                ref={register}
-                dataCity={citiesData?.getCities}
-                dataDistrict={districtsData?.getDistricts}
-                dataWard={wardsData?.getWards}
+                register={register}
+                cities={cities}
+                districts={districts}
+                wards={wards}
               />
             </div>
 
-            {/* <div className="mb-4">
-              <DeliveryOption
-                ref={register}
-                deliveryMethods={
-                  deliveryMethods
-                }
-              />
-            </div> */}
+            <div className="mb-4">
+              <DeliveryOption register={register} deliveryMethods={deliveryMethods} />
+            </div>
 
             {/* Payment */}
             <div className="mb-4">
@@ -200,7 +188,7 @@ const CheckoutPage = () => {
 
             {/* Notes */}
             <div className="mb-4">
-              <CustomerNotes ref={register} />
+              <CustomerNotes register={register} />
             </div>
 
             {/* Agreement */}
