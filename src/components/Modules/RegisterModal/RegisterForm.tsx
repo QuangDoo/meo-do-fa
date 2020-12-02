@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { emailRegex } from 'src/assets/regex/email';
+import { emailRegex, noSpecialChars } from 'src/assets/regex/email';
 import { viPhoneNumberRegex } from 'src/assets/regex/viPhoneNumber';
 import Button from 'src/components/Form/Button';
 import Checkbox from 'src/components/Form/Checkbox';
@@ -184,6 +184,10 @@ const RegisterForm = (props: WithTranslation): JSX.Element => {
             pattern: {
               value: emailRegex,
               message: `${t('register:input_email_error_invalid')}`
+            },
+            validate: {
+              noSpecialChars: (value) =>
+                noSpecialChars.test(value) || `${t('register:input_email_error_noSpecialChars')}`
             }
           })}
           containerClass="mb-4"
