@@ -1,11 +1,11 @@
 import React from 'react';
+import withApollo from 'src/utils/withApollo';
 
 import Footer from '../../../components/Layout/Footer';
 import Head from '../../../components/Layout/Head';
 import Header from '../../../components/Layout/Header';
 import Nav from '../../../components/Layout/Nav';
-import Career from '../../../components/Modules/Career';
-import JobDetail from '../../../components/Modules/JobDetail';
+import JobDetail from '../../../components/Modules/Career/JobDetail';
 
 const job = {
   name: 'Tax Accountant',
@@ -67,4 +67,4 @@ CareerPage.getInitialProps = async () => ({
   namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge']
 });
 
-export default CareerPage;
+export default withApollo({ ssr: false })(CareerPage);

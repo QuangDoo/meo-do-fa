@@ -104,7 +104,6 @@ export const GET_ORDER = gql`
       effective_date
       expected_date
       order_line
-      payment_method
       partner_shipping_id
       order_lines {
         id

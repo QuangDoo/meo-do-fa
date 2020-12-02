@@ -1,14 +1,13 @@
-import { useMutation, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { useCityContext } from 'src/contexts/City';
 import { GET_DISTRICT, GET_WARD, GET_WARD_DETAIL } from 'src/graphql/address/city.query';
 import { CREATE_ORDER } from 'src/graphql/order/order.mutation';
 import { GET_COUNSEL } from 'src/graphql/order/order.query';
 import { GET_PAYMENT_DELIVERY } from 'src/graphql/paymentAndDelivery/paymentAndDelivery,query';
-import { useLazyQueryAuth, useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
+import { useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
 import useCart from 'src/hooks/useCart';
 import useCity from 'src/hooks/useCity';
 import swal from 'sweetalert';
@@ -16,6 +15,7 @@ import swal from 'sweetalert';
 import Agreement from './Agreement';
 import CustomerNotes from './CustomerNotes';
 import DeliveryInfo from './DeliveryInfo';
+import DeliveryOption from './DeliveryOption';
 import PaymentOption from './PaymentOption';
 import StickySidebar from './StickySidebar';
 
@@ -30,7 +30,7 @@ const CheckoutPage = (): JSX.Element => {
 
   const { data: datacity } = useCity();
 
-  const { data: dataGetPaymentDelivery, loading: loadingGetPaymentDelivery } = useLazyQueryAuth(
+  const { data: dataGetPaymentDelivery, loading: loadingGetPaymentDelivery } = useQuery(
     GET_PAYMENT_DELIVERY
   );
 
@@ -83,13 +83,14 @@ const CheckoutPage = (): JSX.Element => {
   });
 
   const onSubmit = (data) => {
+    // console.log('data.paymentOption ', typeof data.paymentOption);
     createOrder({
       variables: {
         orderNo: dataGetCounsel.getCounsel?.counsel.orderNo,
         partnerId: '',
         isNew: true,
         use: false,
-        zipCode: '',
+        zipCode: dataward.getWard.ward.id,
         city: dataward.getWard.city.name,
         district: dataward.getWard.district.name,
         ward: dataward.getWard.ward.name,
@@ -105,9 +106,10 @@ const CheckoutPage = (): JSX.Element => {
           district: dataward.getWard.district.name
         },
         email: data.email,
-        paymentMethodId: 0,
+        paymentMethodId: Number(data.paymentOption),
         deliveryMethodId: 1,
-        note: data.customerNotes
+        note: data.customerNotes,
+        isInvoice: true
       }
     });
   };
@@ -148,7 +150,7 @@ const CheckoutPage = (): JSX.Element => {
             <div className="mb-4">
               <PaymentOption
                 ref={register}
-                paymentMethods={dataGetPaymentDelivery?.getPaymentAndDeliveryMethod.paymentMethods}
+                paymentMethods={dataGetPaymentDelivery?.getPaymentAndDeliveryMethod?.paymentMethods}
               />
             </div>
 

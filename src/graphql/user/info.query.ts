@@ -21,6 +21,46 @@ export const GET_USER = gql`
     }
   }
 `;
+export const GET_USER_ADDRESS = gql`
+  query getAddressInfoUser {
+    getAddressInfoUser {
+      deliveries {
+        id
+        userId
+        name
+        display_name
+        parent_id
+        phone
+        email
+        street
+        ward
+        district
+        city
+        type
+        use
+        create_date
+        update_date
+      }
+      invoices {
+        id
+        userId
+        name
+        display_name
+        parent_id
+        phone
+        email
+        street
+        ward
+        district
+        city
+        type
+        use
+        create_date
+        update_date
+      }
+    }
+  }
+`;
 export const GET_CITY = gql`
   query getAllCity {
     getCities {

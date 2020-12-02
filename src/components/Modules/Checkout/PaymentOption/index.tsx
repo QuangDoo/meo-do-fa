@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useEffect, useState } from 'react';
 import Radio from 'src/components/Form/Radio';
 
 import InputCard from '../InputCard';
@@ -6,7 +6,13 @@ import TransferPaymentInfo from './TransferPaymentInfo';
 import TransferPaymentLabel from './TransferPaymentLabel';
 
 const PaymentOption = (props, ref): JSX.Element => {
-  if (props) return;
+  const [paymentMethodsState, setPaymentMethodsState] = useState([]);
+  useEffect(() => {
+    if (props.paymentMethods) {
+      setPaymentMethodsState(props.paymentMethods);
+    }
+  }, [props]);
+
   return (
     <InputCard title="Hình thức thanh toán">
       <Radio
@@ -17,12 +23,12 @@ const PaymentOption = (props, ref): JSX.Element => {
         options={[
           {
             label: 'Thanh toán tiền mặt khi nhận hàng',
-            value: props?.paymentMethods[1].id
+            value: paymentMethodsState[1]?.id
           },
           {
             label: <TransferPaymentLabel />,
-            value: props.paymentMethods[0].id,
-            children: <TransferPaymentInfo {...props.paymentMethods[0]} />
+            value: paymentMethodsState[0]?.id,
+            children: <TransferPaymentInfo {...paymentMethodsState[0]} />
             // children: <TransferPaymentInfo />
           }
         ]}

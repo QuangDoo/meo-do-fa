@@ -1,42 +1,59 @@
-import React from 'react';
+import clsx from 'clsx';
+import Link from 'next/link';
+import React, { useState } from 'react';
 import { useUserContext } from 'src/contexts/User';
 import useUser from 'src/hooks/useUser';
+import { mockMyNoti } from 'src/mockData/mockMyNoti';
 
 type NotiItem = {
   time: string;
   notiInfo: string;
 };
 
-const notiItem: NotiItem[] = [
-  {
-    notiInfo: 'Giá sản phẩm Phosphalugel Boehringer Ingelheim (H/26g) đã được cập nhật giá',
-    time: '1 ngày trước'
-  },
-  {
-    notiInfo: 'Giá sản phẩm Phosphalugel Boehringer Ingelheim (H/26g) đã được cập nhật giá',
-    time: '1 ngày trước'
-  },
-  {
-    notiInfo: 'Giá sản phẩm Phosphalugel Boehringer Ingelheim (H/26g) đã được cập nhật giá',
-    time: '1 ngày trước'
-  },
-  {
-    notiInfo: 'Giá sản phẩm Phosphalugel Boehringer Ingelheim (H/26g) đã được cập nhật giá',
-    time: '1 ngày trước'
-  },
-  {
-    notiInfo: 'Giá sản phẩm Phosphalugel Boehringer Ingelheim (H/26g) đã được cập nhật giá',
-    time: '1 ngày trước'
-  }
-];
+const NotiItem = (props) => {
+  return (
+    <Link href="/">
+      <a className="notification__dropdown-item unread">
+        <div className="notification__icon">
+          <i className="status-icon status-notice"></i>
+        </div>
+        <div className="notification__content">
+          <div className="notification__content-title">{props.name}</div>
+          <small className="notification__content-created-at">{props.time}</small>
+        </div>
+      </a>
+    </Link>
+  );
+};
 const RightSideUser = () => {
   const { user } = useUser();
+  const [show, setShow] = useState(false);
 
+  function toggleShow() {
+    setShow((show) => !show);
+  }
   return (
-    <div className="header-right d-none d-md-block">
+    <div className="header-right d-none d-lg-block">
       <ul className="nav align-items-center">
         {/* Notifications here */}
-
+        <div
+          onClick={toggleShow}
+          onKeyPress={toggleShow}
+          className={clsx('dropdown header-right__link notification mr-2', !show && 'collapsed')}
+          role="button"
+          tabIndex={0}>
+          <i className="far fa-bell header-right__icon" />
+          <span className="notification__counter">41</span>
+          <div
+            className={clsx(
+              'dropdown-menu dropdown-menu-right notification__dropdown p-0 ',
+              show && 'show'
+            )}>
+            {mockMyNoti.map((item, index) => {
+              return <NotiItem key={index} {...item} />;
+            })}
+          </div>
+        </div>
         <div className="header__user ml-3">
           <div className="header__user-name text-center">{user?.getUser?.name}</div>
           {/* <div className="header__user-avatar">

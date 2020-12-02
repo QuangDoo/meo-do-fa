@@ -54,7 +54,7 @@ export const CREATE_ORDER = gql`
   mutation createOrder(
     $orderNo: String!
     $partnerId: String!
-    $zipCode: String!
+    $zipCode: Int!
     $city: String!
     $district: String!
     $ward: String!
@@ -67,6 +67,7 @@ export const CREATE_ORDER = gql`
     $paymentMethodId: Int!
     $deliveryMethodId: Int!
     $note: String!
+    $isInvoice: Boolean!
   ) {
     createOrder(
       inputs: {
@@ -98,6 +99,7 @@ export const CREATE_ORDER = gql`
         paymentMethodId: $paymentMethodId
         deliveryMethodId: $deliveryMethodId
         note: $note
+        isInvoice: $isInvoice
       }
     ) {
       status

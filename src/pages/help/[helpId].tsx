@@ -1,4 +1,5 @@
 import React from 'react';
+import withApollo from 'src/utils/withApollo';
 
 import Footer from '../../components/Layout/Footer';
 import Head from '../../components/Layout/Head';
@@ -54,4 +55,4 @@ HelpDetail.getInitialProps = async () => ({
   namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge']
 });
 
-export default HelpDetail;
+export default withApollo({ ssr: false })(HelpDetail);

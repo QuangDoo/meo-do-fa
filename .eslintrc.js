@@ -44,7 +44,8 @@ module.exports = {
         specialLink: ['hrefLeft', 'hrefRight'],
         aspects: ['invalidHref', 'preferButton']
       }
-    ]
+    ],
+    "no-irregular-whitespace": 0
   },
   plugins: ['simple-import-sort']
 };

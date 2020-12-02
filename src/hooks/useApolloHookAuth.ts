@@ -1,4 +1,17 @@
-import { useLazyQuery, useMutation, useQuery } from '@apollo/client';
+import {
+  DocumentNode,
+  LazyQueryHookOptions,
+  MutationHookOptions,
+  MutationTuple,
+  OperationVariables,
+  QueryHookOptions,
+  QueryResult,
+  QueryTuple,
+  TypedDocumentNode,
+  useLazyQuery,
+  useMutation,
+  useQuery
+} from '@apollo/client';
 
 function useHookAuth(query, options = {}, hookFunc) {
   const token = global?.localStorage?.getItem('token');
@@ -13,14 +26,23 @@ function useHookAuth(query, options = {}, hookFunc) {
   return hookFunc(query, newOptions);
 }
 
-export function useLazyQueryAuth(query, options?: any) {
+export function useLazyQueryAuth<TData = any, TVariables = OperationVariables>(
+  query: DocumentNode | TypedDocumentNode<TData, TVariables>,
+  options?: LazyQueryHookOptions<TData, TVariables>
+): QueryTuple<TData, TVariables> {
   return useHookAuth(query, options, useLazyQuery);
 }
 
-export function useQueryAuth(query, options?: any) {
+export function useQueryAuth<TData = any, TVariables = OperationVariables>(
+  query: DocumentNode | TypedDocumentNode<TData, TVariables>,
+  options?: QueryHookOptions<TData, TVariables>
+): QueryResult<TData, TVariables> {
   return useHookAuth(query, options, useQuery);
 }
 
-export function useMutationAuth(query, options?: any) {
-  return useHookAuth(query, options, useMutation);
+export function useMutationAuth<TData = any, TVariables = OperationVariables>(
+  mutation: DocumentNode | TypedDocumentNode<TData, TVariables>,
+  options?: MutationHookOptions<TData, TVariables>
+): MutationTuple<TData, TVariables> {
+  return useHookAuth(mutation, options, useMutation);
 }

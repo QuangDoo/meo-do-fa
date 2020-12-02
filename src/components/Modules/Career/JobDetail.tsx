@@ -1,6 +1,7 @@
-import React from 'react';
+import { useTranslation } from 'i18n';
+import React, { useState } from 'react';
 
-import CareerModal from '../CareerModal';
+import ConfirmApplyJob from './ConfirmApplyJob';
 
 type Props = {
   name?: string;
@@ -13,6 +14,9 @@ type Props = {
 };
 
 export default function JobDetail(props: Props): JSX.Element {
+  const [open, setOpen] = useState(false);
+  const { t } = useTranslation('jobDetail');
+
   return (
     <div className="container">
       <div className="job-detail__wrapper">
@@ -20,15 +24,21 @@ export default function JobDetail(props: Props): JSX.Element {
           <h1 className="mb-3 text-primary">{props.name}</h1>
           <div className="job-department-info">
             <div className="mr-3">
-              <strong className="job-label text-primary text-small">Bộ phận:</strong>
+              <strong className="job-label text-primary text-small">
+                {`${t('jobDetail:department')} :`}
+              </strong>
               <span className="text-small">People, Legal and Finance</span>
             </div>
             <div className="mr-3">
-              <strong className="job-label text-primary text-small">Cấp bậc:</strong>
+              <strong className="job-label text-primary text-small">
+                {`${t('jobDetail:level')} :`}
+              </strong>
               <span className="text-small">Experienced</span>
             </div>
             <div className="mr-3">
-              <strong className="job-label text-primary text-small">Địa điểm làm việc:</strong>
+              <strong className="job-label text-primary text-small">
+                {`${t('jobDetail:location')} :`}
+              </strong>
               <span className="text-small">Việt Nam - TP. Hồ Chí Minh</span>
             </div>
           </div>
@@ -36,7 +46,7 @@ export default function JobDetail(props: Props): JSX.Element {
         </div>
 
         <div className="row job-detail">
-          <strong className="text-primary">Job description:</strong>
+          <strong className="text-primary">{`${t('jobDetail:job_descriptions')} :`}</strong>
           <ul className="ml-5">
             {props?.jobDescription.map((description, index) => (
               <li className="text-small" key={index}>
@@ -44,7 +54,7 @@ export default function JobDetail(props: Props): JSX.Element {
               </li>
             ))}
           </ul>
-          <strong className="text-primary">Requirements:</strong>
+          <strong className="text-primary">{`${t('jobDetail:requirements')} :`}</strong>
           <ul className="ml-5">
             {props?.requirements.map((requirement, index) => (
               <li className="text-small" key={index}>
@@ -53,9 +63,12 @@ export default function JobDetail(props: Props): JSX.Element {
             ))}
           </ul>
         </div>
-        <div className="row job-detail">
-          <CareerModal />
-        </div>
+      </div>
+      <div className="d-block text-center w-100 mb-3">
+        <button className="btn btn-primary" onClick={() => setOpen(true)}>
+          {t('jobDetail:button_title')}
+        </button>
+        <ConfirmApplyJob open={open} onClose={() => setOpen(false)} />
       </div>
     </div>
   );

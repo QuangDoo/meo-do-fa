@@ -1,6 +1,8 @@
 import { useTranslation } from 'i18n';
+import Image from 'next/image';
 import React from 'react';
 import SlickSlider from 'react-slick';
+import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
 
 import ProductCard from '../ProductCard';
 import { ProductsCarousel } from '../ProductsCarousel';
@@ -12,12 +14,13 @@ import { Strength } from './Strength';
 
 const bannerImages = [
   '/assets/images/drugstore1.jpg',
-  'assets/images/drugstore2.jpg',
-  'assets/images/drugstore3.jpg'
+  '/assets/images/drugstore2.jpg',
+  '/assets/images/drugstore3.jpg'
 ];
 
 const Home = ({ dealsOfTheDayData, bestSellingData, promotionProductsData, newProductsData }) => {
   const { t } = useTranslation(['carousels']);
+  const isLoggedIn = useIsLoggedIn();
 
   const carousels = [
     {
@@ -45,14 +48,10 @@ const Home = ({ dealsOfTheDayData, bestSellingData, promotionProductsData, newPr
         dotsClass="slick__dots bullet slick-dots"
         className="align-items-center mb-0 slick-dotted">
         {bannerImages.map((img) => (
-          <div key={img} className="banner__slide">
-            <div className="banner__bg-img"></div>
-            <div
-              className="banner__img"
-              style={{
-                backgroundImage: `url("${img}")`
-              }}
-            />
+          <div className="banner__slide" key={img}>
+            <div className="banner__img">
+              <Image src={img} layout="fill" objectFit="contain" />
+            </div>
           </div>
         ))}
       </SlickSlider>
@@ -82,8 +81,11 @@ const Home = ({ dealsOfTheDayData, bestSellingData, promotionProductsData, newPr
 
       <Strength />
 
-      <Login />
-
+      {isLoggedIn ? null : (
+        <>
+          <Login />
+        </>
+      )}
       <Question />
 
       <Partner />

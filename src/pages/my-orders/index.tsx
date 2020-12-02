@@ -1,7 +1,5 @@
-import { useLazyQuery } from '@apollo/client';
 import clsx from 'clsx';
-import { useTranslation, withTranslation } from 'i18n';
-import { WithTranslation } from 'next-i18next';
+import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
@@ -10,21 +8,21 @@ import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
 import Nav from 'src/components/Layout/Nav';
 import ProfileLayout from 'src/components/Modules/ProfileLayout';
-import {
-  GET_ORDER_LIST,
-  GetOrderList,
-  GetOrderListData,
-  GetOrderListVars
-} from 'src/graphql/my-orders/getOrderList';
+import { GET_ORDER_LIST, GetOrderList } from 'src/graphql/my-orders/getOrderList';
 import { useLazyQueryAuth } from 'src/hooks/useApolloHookAuth';
 import withApollo from 'src/utils/withApollo';
+
+import ConfirmCancelOrder from '../../components/Modules/My-orders/ConfirmCancelOrder';
 
 type FilterKey = 'all' | 'waiting_for_confirmation' | 'completed' | 'canceled';
 
 const pageSize = 20;
 
-const OrderItem = (props: GetOrderList): JSX.Element => {
-  const { t } = useTranslation();
+const OrderItem = (props: GetOrderList) => {
+  const [open, setOpen] = useState(false);
+
+  const { t } = useTranslation(['myOrders']);
+
   return (
     <div className="my-orders__item my-orders__item:hover pl-4 mt-1">
       <div className="my-orders__info">
@@ -69,13 +67,19 @@ const OrderItem = (props: GetOrderList): JSX.Element => {
           {t('myOrders:billing_export')}
         </button>
         <button className="btn btn-outline-info btn-sm">{t('myOrders:report')}</button>
+        <button className="btn btn-danger" onClick={() => setOpen(true)}>
+          hủy đơn hàng
+        </button>
       </div>
+      <ConfirmCancelOrder open={open} onClose={() => setOpen(false)} orderNo={props.orderNo} />
     </div>
   );
 };
 
-const MyOrders = ({ t }: WithTranslation): JSX.Element => {
+const MyOrders = () => {
   const [getOrderList, { data, error }] = useLazyQueryAuth(GET_ORDER_LIST);
+
+  const { t } = useTranslation(['myOrders']);
 
   useEffect(() => {
     if (!error) return;
@@ -165,6 +169,4 @@ const MyOrders = ({ t }: WithTranslation): JSX.Element => {
   );
 };
 
-const Translated = withTranslation(['myOrders'])(MyOrders);
-
-export default withApollo({ ssr: true })(Translated);
+export default withApollo({ ssr: true })(MyOrders);

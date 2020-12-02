@@ -115,8 +115,7 @@ deploy-dev-frontend:
   interruptible: true
 
   tags:
-    - bebuy-gitlab-ci
-    - bb-gitlab-ci
+    - internal-medofa
   
   extends:
     - .pre-dev-deploy

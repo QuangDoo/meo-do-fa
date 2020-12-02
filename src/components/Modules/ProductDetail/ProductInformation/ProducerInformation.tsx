@@ -1,7 +1,8 @@
 import Link from 'next/link';
 import React from 'react';
+import Tab from 'src/components/Tab/Tab';
 
-import Tab from '../../../Tab/Tab';
+// import Tab from '../../../Tab/Tab';
 
 type Display_name = {
   name: string;
@@ -24,31 +25,29 @@ type PropsType = {
 
 const ProducerInformation = (props: PropsType): JSX.Element => {
   return (
-    <div className="row">
-      <div className="col-sm-10 ml-3 mt-3 ">
-        <div className="mb-3">
-          <div className="product__info-label">Thành phần</div>
-          <table className="table table-bordered table-sm">
-            <tbody>
-              <tr>
-                <th>Tên</th>
-                <th>Hàm lượng</th>
-              </tr>
-              {props.ingredients?.map((item, index) => {
-                return (
-                  <tr key={index}>
-                    <td>
-                      <Link href={`/ingredients/${item.id}`}>
-                        <a>{item.name}</a>
-                      </Link>
-                    </td>
-                    <td>{item.amount}</td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
+    <div className="ml-3 mt-3 ">
+      <div className="mb-3">
+        <div className="product__info-label">Thành phần</div>
+        <table className="table table-bordered table-sm">
+          <tbody>
+            <tr>
+              <th>Tên</th>
+              <th>Hàm lượng</th>
+            </tr>
+            {props.ingredients?.map((item, index) => {
+              return (
+                <tr key={index}>
+                  <td>
+                    <Link href={`/ingredients/${item.id}`}>
+                      <a>{item.name}</a>
+                    </Link>
+                  </td>
+                  <td>{item.amount}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
         <Tab
           info={props.info}
           indication={props.indication}

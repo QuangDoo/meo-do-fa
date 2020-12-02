@@ -48,7 +48,7 @@ const TabContent = (props): JSX.Element => {
 };
 export default function Tab(props) {
   return (
-    <div className="col-12 col-sm-9 product__details">
+    <div className="product__details">
       <Tabs>
         <TabContent label="Thông tin chung">
           {props.info !== 'false' ? props.info : 'Đang cập nhật'}

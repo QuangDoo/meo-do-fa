@@ -25,16 +25,21 @@ import { DateTime } from 'luxon';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
 import Nav from 'src/components/Layout/Nav';
 import ExportInvoice from 'src/components/Modules/ExportInvoice';
 import ProfileSidebar from 'src/components/Modules/ProfileSidebar';
 import { GET_ORDER, GetOrderDetail, GetOrderDetailVar } from 'src/graphql/order/order.query';
+import { GET_INFOR_USER } from 'src/graphql/user/info.query';
+import useAddressUser from 'src/hooks/useAddressUser';
 import { useQueryAuth } from 'src/hooks/useApolloHookAuth';
 import useUser from 'src/hooks/useUser';
 import { theme } from 'src/theme';
 import withApollo from 'src/utils/withApollo';
+
+import ConfirmCancelOrder from '../../components/Modules/My-orders/ConfirmCancelOrder';
 
 const stepIconSize = 75;
 
@@ -250,16 +255,29 @@ const CustomBodyCell = ({ children, textAlign }: CustomBodyCellProps) => {
 const OrderDetails = () => {
   const router = useRouter();
 
+  const [open, setOpen] = useState(false);
+
   const { orderId } = router.query;
 
   const [activeStep, setActiveStep] = useState(2);
 
+  // const { data: dataUser, error: errorUser } = useQueryAuth(GET_INFOR_USER);
+  // console.log('dataUser', dataUser);
+
   const { data: orderDetail, error: orderError } = useQueryAuth(GET_ORDER, {
     variables: { id: Number(orderId) }
   });
+  // const { data: dataInforUser, error: errorDataInforUser } = useQueryAuth(GET_ADDRESS_INFOR_USER);
+  const onCancelClick = () => {
+    if (activeStep >= 3) {
+      toast.error('cant cancel order');
+      return;
+    }
+    setOpen(true);
+  };
 
   const { user } = useUser();
-  console.log('orderDetail', orderDetail);
+  console.log('user', user);
   return (
     <>
       <Head>
@@ -304,7 +322,7 @@ const OrderDetails = () => {
                   <Box display="flex" justifyContent="space-between" alignItems="center">
                     <Typography>
                       Dự kiến giao vào{' '}
-                      <strong>{orderDetail?.getOrderDetail?.expected_date?.substr(0, 10)}</strong>
+                      {/* <strong>{orderDetail?.getOrderDetail?.expected_date?.substr(0, 10)}</strong> */}
                     </Typography>
 
                     <Link
@@ -312,14 +330,25 @@ const OrderDetails = () => {
                         pathname: '/feedback',
                         query: {
                           orderId: orderId,
-                          name: user?.name,
-                          phone: user?.phone
+                          name: user?.getUser.name,
+                          phone: user?.getUser.phone
                         }
                       }}>
                       <Button size="small" startIcon={<Sms />} variant="outlined" color="primary">
                         Gửi phản hồi
                       </Button>
                     </Link>
+                    <button className="btn btn-danger" onClick={onCancelClick}>
+                      hủy đơn hàng
+                    </button>
+                    {/* <ButtonDialog buttonTitle="Hủy" formTitle="Hủy Đơn Hàng">
+                      <CancelForm orderId={String(orderId)} />
+                    </ButtonDialog> */}
+                    <ConfirmCancelOrder
+                      open={open}
+                      onClose={() => setOpen(false)}
+                      orderNo={orderId.toString()}
+                    />
                   </Box>
                 </CustomCard>
               </Grid>
@@ -347,7 +376,7 @@ const OrderDetails = () => {
                 <Grid container spacing={2}>
                   <Grid item sm={6} xs={12}>
                     <CustomCard>
-                      <TextWithLabel label="Tên người nhận" text={user?.name} />
+                      <TextWithLabel label="Tên người nhận" text={user?.getUser.name} />
                       {/* nào có data địa chỉ thì bỏ vô đây nha <3 */}
 
                       {/* <TextWithLabel
@@ -355,9 +384,9 @@ const OrderDetails = () => {
                         text="12b/1e ấp đồng an 2, Phường Bình Hòa, Thành phố Thuận An, Bình Dương"
                       /> */}
 
-                      <TextWithLabel label="Số điện thoại" text={user?.phone} />
+                      <TextWithLabel label="Số điện thoại" text={user?.getUser.phone} />
 
-                      <TextWithLabel label="Email" text={user?.email} />
+                      <TextWithLabel label="Email" text={user?.getUser.email} />
                     </CustomCard>
                   </Grid>
                   {/* có data đơn vị vận chuyển thì fill vô nha <3 */}

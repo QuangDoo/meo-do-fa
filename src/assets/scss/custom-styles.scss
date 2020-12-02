@@ -6,6 +6,7 @@
 @import './home.scss';
 
 @import './news.scss';
+@import './productdetail.scss';
 
 button {
   background-color: transparent;
@@ -24,4 +25,18 @@ button {
       height: 100%;
     }
   }
+}
+
+.product-card__new-arrival {
+  z-index: 1;
+}
+
+.banner__img {
+  display: flex;
+  justify-content: center;
+  position: static;
+}
+
+.product-card__image {
+  position: relative;
 }
