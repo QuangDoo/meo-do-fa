@@ -20,4 +20,5 @@ export type Product = {
     id: string;
     short_name: string;
   };
+  slug: string;
 };

@@ -262,7 +262,7 @@ const OrderDetails = () => {
   const { data: orderDetail, error: orderError } = useQueryAuth(GET_ORDER, {
     variables: { id: Number(orderId) }
   });
-  console.log('orderDetail', orderDetail);
+
   // useEffect(() => {
   //   if (orderDetail?.getOrderDetail.order_lines.state) {
   //   }
