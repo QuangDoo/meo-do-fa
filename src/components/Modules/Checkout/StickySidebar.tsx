@@ -1,16 +1,28 @@
 import Link from 'next/link';
-import React, { forwardRef } from 'react';
+import React from 'react';
 import Button from 'src/components/Form/Button';
+import { GetCounselData } from 'src/graphql/order/getCounsel';
+import { ReactHookFormRegister } from 'src/types/ReactHookFormRegister';
 
 import SidebarItem from './SidebarItem';
 
-const StickySidebar = (props, ref): JSX.Element => {
+type Props = ReactHookFormRegister & {
+  counselData?: GetCounselData;
+};
+
+const StickySidebar = (props: Props): JSX.Element => {
+  const { counselData } = props;
+
+  if (!counselData) return;
+
+  const data = counselData.getCounsel;
+
   return (
     <div className="checkout__sticky">
       <div className="d-flex justify-content-between mb-3">
         <h4 className="d-flex flex-wrap align-items-center">
           Đơn Hàng
-          <small className="ml-1">{props.counsel?.counsel.counsels.length} sản phẩm</small>
+          <small className="ml-1">{data.counsel.counsels.length} sản phẩm</small>
         </h4>
 
         <div>
@@ -25,30 +37,23 @@ const StickySidebar = (props, ref): JSX.Element => {
       <div className="elevated checkout__info row no-gutters mb-3">
         <SidebarItem label="Tạm tính">
           <div className="d-flex">
-            {props.counsel?.totalPrice.toLocaleString('de-DE')}
+            {data.totalPrice.toLocaleString('de-DE')}
             <span className="unit">đ</span>
           </div>
         </SidebarItem>
 
         <SidebarItem label="Phí vận chuyển">
           <span data-target="checkout.shippingFee">
-            {props.counsel?.totalShippingFee}
+            {data.totalShippingFee}
             <span className="unit">đ</span>
           </span>
         </SidebarItem>
-
-        {/* <SidebarItem label="Giảm 0.5% cho đơn hàng chuyển khoản trước.">
-          <span>
-            {props.counsel?.totalDcAmt}
-            <span className="unit">đ</span>
-          </span>
-        </SidebarItem> */}
 
         <SidebarItem containerClass="checkout__info-promo"></SidebarItem>
 
         <SidebarItem label="Thành tiền" containerClass="checkout__info-total">
           <span className="checkout__total">
-            {props.counsel?.totalPrice.toLocaleString('de-DE')}
+            {data.totalPrice.toLocaleString('de-DE')}
             <span className="unit">đ</span>
           </span>
         </SidebarItem>
@@ -70,4 +75,4 @@ const StickySidebar = (props, ref): JSX.Element => {
   );
 };
 
-export default forwardRef(StickySidebar);
+export default StickySidebar;

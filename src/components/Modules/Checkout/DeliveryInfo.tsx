@@ -1,9 +1,10 @@
-import { withTranslation } from 'i18n';
 import React, { forwardRef } from 'react';
 import { emailRegex } from 'src/assets/regex/email';
 import { viPhoneNumberRegex } from 'src/assets/regex/viPhoneNumber';
 import Checkbox from 'src/components/Form/Checkbox';
 import { useUserContext } from 'src/contexts/User';
+import { City, Ward } from 'src/graphql/address/getCities';
+import { District } from 'src/graphql/address/getDistricts';
 
 import InputCard from './InputCard';
 import InputWithLabel from './InputWithLabel';
@@ -12,6 +13,12 @@ import SelectWithLabel from './SelectWithLabel';
 type DataCityType = {
   id: number;
   name: string;
+};
+
+type Props = {
+  cities: City[];
+  districts: District[];
+  wards: Ward[];
 };
 
 const DeliveryInfo = (props, register): JSX.Element => {

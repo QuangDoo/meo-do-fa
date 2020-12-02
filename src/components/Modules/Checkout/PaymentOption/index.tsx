@@ -1,29 +1,74 @@
-import React, { forwardRef } from 'react';
+import { Trans, useTranslation } from 'i18n';
+import Link from 'next/link';
+import React from 'react';
 import Radio from 'src/components/Form/Radio';
+import { PaymentMethod } from 'src/graphql/paymentAndDelivery/paymentAndDelivery,query';
+import { ReactHookFormRegister } from 'src/types/ReactHookFormRegister';
 
+import DescriptionBox from '../DescriptionBox';
 import InputCard from '../InputCard';
-import TransferPaymentInfo from './TransferPaymentInfo';
-import TransferPaymentLabel from './TransferPaymentLabel';
 
-const PaymentOption = (props, ref): JSX.Element => {
-  if (props) return;
+type Props = {
+  paymentMethods: PaymentMethod[];
+} & ReactHookFormRegister;
+
+const PaymentOption = (props: Props): JSX.Element => {
+  const { paymentMethods, register } = props;
+
+  const { t } = useTranslation('checkout');
+
+  if (!paymentMethods.length) return;
+
+  const cashOnDelivery = paymentMethods[1];
+  const bankTransfer = paymentMethods[0];
+
   return (
-    <InputCard title="Hình thức thanh toán">
+    <InputCard title={t('checkout:payment_option')}>
       <Radio
         name="paymentOption"
-        ref={ref({
+        ref={register({
           required: 'Xin chọn hình thức thanh toán.'
         })}
         options={[
           {
-            label: 'Thanh toán tiền mặt khi nhận hàng',
-            value: props?.paymentMethods[1].id
+            label: t('checkout:cash_on_delivery'),
+            value: cashOnDelivery.id
           },
           {
-            label: <TransferPaymentLabel />,
-            value: props.paymentMethods[0].id,
-            children: <TransferPaymentInfo {...props.paymentMethods[0]} />
-            // children: <TransferPaymentInfo />
+            label: (
+              <Trans
+                i18nKey="checkout:bank_transfer"
+                components={{
+                  Link: (
+                    <Link href="/transfer-instructions">
+                      <a> </a>
+                    </Link>
+                  )
+                }}
+              />
+            ),
+            value: bankTransfer.id,
+            children: (
+              <>
+                <br />
+
+                {/* <small className="text-muted">Giảm 0.5% cho đơn hàng chuyển khoản trước.</small> */}
+
+                <DescriptionBox>
+                  <div className="bank-info">
+                    {/* {lines.map((line, index) => (
+                      <div
+                        key={index}
+                        className={clsx('d-flex', index < lines.length - 1 && 'mb-2')}>
+                        <div className="bank-info__label">{line.label}</div>
+                        <div className="bank-info__content">{line.content}</div>
+                      </div>
+                    ))} */}
+                    {}
+                  </div>
+                </DescriptionBox>
+              </>
+            )
           }
         ]}
       />
@@ -31,4 +76,4 @@ const PaymentOption = (props, ref): JSX.Element => {
   );
 };
 
-export default forwardRef(PaymentOption);
+export default PaymentOption;

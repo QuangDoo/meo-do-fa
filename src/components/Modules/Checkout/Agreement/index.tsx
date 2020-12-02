@@ -1,30 +1,40 @@
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
-import React, { forwardRef } from 'react';
+import React from 'react';
 import Checkbox from 'src/components/Form/Checkbox';
+import { ReactHookFormRegister } from 'src/types/ReactHookFormRegister';
 
-import CheckoutWarning from './CheckoutWarning';
+import DescriptionBox from '../DescriptionBox';
 
-const Agreement = (props, register): JSX.Element => {
-  const { t } = useTranslation(['checkOut']);
+type Props = ReactHookFormRegister;
+
+const Agreement = (props: Props): JSX.Element => {
+  const { register } = props;
+  const { t } = useTranslation('checkout');
 
   return (
     <Checkbox
       ref={register({
-        required: 'Xin vui lòng xác thực điều khoản'
+        required: t('checkout:error__agreement_required') + ''
       })}
       name="agreement"
       label={
         <>
-          {t('checkOut:i_agree')}{' '}
+          {t('checkout:i_agree')}{' '}
           <Link href="/terms-of-service">
-            <a>{t('checkOut:terms_of_use')}</a>
+            <a>{t('checkout:terms_of_use')}</a>
           </Link>
         </>
       }>
-      <CheckoutWarning />
+      <DescriptionBox white>
+        <ol className="pl-4 mb-0">
+          <li>{t('checkout:description1')}</li>
+
+          <li>{t('checkout:description2')}</li>
+        </ol>
+      </DescriptionBox>
     </Checkbox>
   );
 };
 
-export default forwardRef(Agreement);
+export default Agreement;

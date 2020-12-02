@@ -258,7 +258,7 @@ const OrderDetails = () => {
 
   const [activeStep, setActiveStep] = useState(2);
 
-  const { data: orderDetail, error: orderError } = useQueryAuth(GET_ORDER, {
+  const { data: orderDetail } = useQueryAuth(GET_ORDER, {
     variables: { id: orderId }
   });
 
@@ -271,7 +271,7 @@ const OrderDetails = () => {
   };
 
   const { user } = useUser();
-  console.log('orderError', orderError);
+
   return (
     <>
       <Head>

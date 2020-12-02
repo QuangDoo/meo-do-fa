@@ -30,11 +30,8 @@ function Cart(): JSX.Element {
 
     createCounsel({
       variables: {
-        cardIds: cart.getCart.carts.map((i) => i._id)
+        cartIds: cart.getCart.carts.map((i) => i._id)
       }
-    }).catch((error) => {
-      console.log('Create counsel error:', { error });
-      toast.error('Create counsel error: ' + error);
     });
   };
 

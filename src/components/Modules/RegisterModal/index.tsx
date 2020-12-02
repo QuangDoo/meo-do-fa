@@ -16,16 +16,14 @@ const Register = ({ t }: RegisterModalProps): JSX.Element => {
   const { registerIsOpen } = useModalControlState();
 
   // Dispatch to update ModalControl context
-  const dispatch = useModalControlDispatch();
+  const { openModal, closeModal } = useModalControlDispatch();
+
+  const openRegisterModal = () => openModal('REGISTER');
 
   return (
     <>
       {/* Register button to open modal */}
-      <Button
-        onClick={() => dispatch({ type: 'OPEN_REGISTER_MODAL' })}
-        size="sm"
-        variant="primary"
-        className="mr-2">
+      <Button onClick={openRegisterModal} size="sm" variant="primary" className="mr-2">
         {t('header:register')}
       </Button>
 
@@ -33,7 +31,7 @@ const Register = ({ t }: RegisterModalProps): JSX.Element => {
       <ModalWithHeader
         open={registerIsOpen}
         title={t('register:create_an_account')}
-        onClose={() => dispatch({ type: 'CLOSE_REGISTER_MODAL' })}
+        onClose={closeModal}
         className="authentication signup">
         <RegisterForm />
       </ModalWithHeader>

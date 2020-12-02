@@ -1,9 +1,11 @@
 import { gql } from '@apollo/client';
 
-import { CancelOrderResponse } from '../../types/responses';
-
 export type CancelOrderData = {
-  cancelOrder: CancelOrderResponse;
+  cancelOrder: {
+    code: number;
+    status: string;
+    message: string;
+  };
 };
 
 export type CancelOrderVars = {

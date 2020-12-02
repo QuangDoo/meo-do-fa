@@ -1,8 +1,25 @@
 import { gql } from '@apollo/client';
-import { GetPaymentAndDeliveryResponse } from 'src/types/responses';
+
+export type PaymentMethod = {
+  id: number;
+  name: string;
+  account_name: string;
+  account_no: string;
+  bank_name: string;
+  note: string;
+};
+
+export type DeliveryMethod = {
+  id: number;
+  name: string;
+  tax: string;
+};
 
 export type GetPaymentAndDeliveryData = {
-  getPaymentAndDeliveryMethod: GetPaymentAndDeliveryResponse;
+  getPaymentAndDeliveryMethod: {
+    paymentMethods: PaymentMethod[];
+    deliveryMethods: DeliveryMethod[];
+  };
 };
 
 export const GET_PAYMENT_DELIVERY = gql`
@@ -11,7 +28,6 @@ export const GET_PAYMENT_DELIVERY = gql`
       paymentMethods {
         id
         name
-        display_name
         account_name
         account_no
         bank_name
@@ -20,7 +36,6 @@ export const GET_PAYMENT_DELIVERY = gql`
       deliveryMethods {
         id
         name
-        display_name
         tax
       }
     }
