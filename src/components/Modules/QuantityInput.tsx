@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import { ADD_TO_CART } from 'src/graphql/order/order.mutation';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import useCart from 'src/hooks/useCart';
+import useCountCart from 'src/hooks/useCountCart';
 
 type Props = WithTranslation & {
   size?: 'normal' | 'large';
@@ -25,6 +26,8 @@ function QuantityInput(props: Props) {
   const router = useRouter();
 
   const { refetchCart } = useCart();
+
+  const { refetchCountCart } = useCountCart();
 
   const [quantity, setQuantity] = useState<string>('0');
 
@@ -52,6 +55,7 @@ function QuantityInput(props: Props) {
       .then(() => {
         toast.success(t(`errors:add_to_cart_success`));
         refetchCart();
+        refetchCountCart();
       })
       .catch((error) => {
         console.log('Add to cart error:', { error });

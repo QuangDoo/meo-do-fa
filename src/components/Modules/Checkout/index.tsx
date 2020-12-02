@@ -10,6 +10,7 @@ import { GET_PAYMENT_DELIVERY } from 'src/graphql/paymentAndDelivery/paymentAndD
 import { useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
 import useCart from 'src/hooks/useCart';
 import useCity from 'src/hooks/useCity';
+import useCountCart from 'src/hooks/useCountCart';
 import swal from 'sweetalert';
 
 import Agreement from './Agreement';
@@ -40,6 +41,8 @@ const CheckoutPage = (): JSX.Element => {
 
   const { refetchCart } = useCart();
 
+  const { data: dataCount, refetchCountCart } = useCountCart();
+
   const [createOrder, { data, error }] = useMutationAuth(CREATE_ORDER);
 
   useEffect(() => {
@@ -50,6 +53,7 @@ const CheckoutPage = (): JSX.Element => {
       icon: 'success'
     }).then(() => {
       refetchCart();
+      refetchCountCart();
       router.push('/');
     });
   }, [data]);

@@ -12,17 +12,19 @@ type NotiItem = {
 
 const NotiItem = (props) => {
   return (
-    <Link href="/">
-      <a className="notification__dropdown-item unread">
-        <div className="notification__icon">
-          <i className="status-icon status-notice"></i>
-        </div>
-        <div className="notification__content">
-          <div className="notification__content-title">{props.name}</div>
-          <small className="notification__content-created-at">{props.time}</small>
-        </div>
-      </a>
-    </Link>
+    <>
+      <Link href="/">
+        <a className="notification__dropdown-item unread">
+          <div className="notification__icon">
+            <i className="status-icon status-notice"></i>
+          </div>
+          <div className="notification__content">
+            <div className="notification__content-title">{props.name}</div>
+            <small className="notification__content-created-at">{props.time}</small>
+          </div>
+        </a>
+      </Link>
+    </>
   );
 };
 const RightSideUser = () => {
@@ -43,7 +45,7 @@ const RightSideUser = () => {
           role="button"
           tabIndex={0}>
           <i className="far fa-bell header-right__icon" />
-          <span className="notification__counter">41</span>
+          <span className="notification__counter">{mockMyNoti.length}</span>
           <div
             className={clsx(
               'dropdown-menu dropdown-menu-right notification__dropdown p-0 ',
@@ -52,6 +54,11 @@ const RightSideUser = () => {
             {mockMyNoti.map((item, index) => {
               return <NotiItem key={index} {...item} />;
             })}
+            <div className="dropdown__item notification__view-all">
+              <Link href="/notifications">
+                <a>Xem tất cả thông báo</a>
+              </Link>
+            </div>
           </div>
         </div>
         <div className="header__user ml-3">
