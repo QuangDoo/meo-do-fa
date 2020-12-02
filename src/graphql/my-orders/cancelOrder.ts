@@ -11,8 +11,8 @@ export type CancelOrderVars = {
 };
 
 export const CANCEL_ORDER = gql`
-  mutation($id: string!) {
-    cancelOrder(id: $id) {
+  mutation($orderNo: String!) {
+    cancelOrder(orderNo: $orderNo) {
       code
       status
       message

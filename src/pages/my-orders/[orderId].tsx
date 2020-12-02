@@ -335,13 +335,11 @@ const OrderDetails = () => {
                     <button className="btn btn-danger" onClick={onCancelClick}>
                       hủy đơn hàng
                     </button>
-                    {/* <ButtonDialog buttonTitle="Hủy" formTitle="Hủy Đơn Hàng">
-                      <CancelForm orderId={String(orderId)} />
-                    </ButtonDialog> */}
+
                     <ConfirmCancelOrder
                       open={open}
                       onClose={() => setOpen(false)}
-                      orderId={orderId.toString()}
+                      orderNo={orderId.toString()}
                     />
                   </Box>
                 </CustomCard>

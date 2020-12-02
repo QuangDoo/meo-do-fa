@@ -1,6 +1,8 @@
-import React, { FC, useEffect } from 'react';
+import { useTranslation } from 'i18n';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import Button from 'src/components/Form/Button';
 import Checkbox from 'src/components/Form/Checkbox';
 import Inputs from 'src/components/Form/Input';
 import Select from 'src/components/Form/Select';
@@ -16,7 +18,7 @@ type Props = {
   // On modal close
   onClose: () => void;
 
-  orderId: string;
+  orderNo: string;
 };
 
 type Inputs = {
@@ -26,60 +28,73 @@ type Inputs = {
 };
 
 const options = [
-  { reason: 'Thời gian đặt hàng quá lâu', default: true },
-  { reason: 'Thay đổi ý', default: false },
-  { reason: 'Trùng đơn hàng', default: false },
-  { reason: 'Thay đổi địa chỉ giao hàng', default: false }
+  { key: 'delivery_is_too_long', reason: 'Thời gian đặt hàng quá lâu', default: true },
+  { key: 'change_of_mind', reason: 'Thay đổi ý', default: false },
+  { key: 'duplicate_order', reason: 'Trùng đơn hàng', default: false },
+  { key: 'change_delivery_address', reason: 'Thay đổi địa chỉ giao hàng', default: false }
 ];
 
-const ConfirmCancelOrder: FC<Props> = (props) => {
-  const { open, onClose, orderId } = props;
+const ConfirmCancelOrder = (props) => {
+  const { open, onClose, orderNo } = props;
 
   const [cancelOrder] = useMutationAuth(CANCEL_ORDER, {
     onCompleted: () => {
-      toast.success('Cancel success');
+      toast.success(t('cancelOrder:cancel_order_successful'));
 
       onClose();
     },
     onError: (error) => {
-      toast.error(`errors:code_${error}`);
+      // console.log('Delete cart error:', { error });
+      toast.error(t('cancelOrder:cancel_order_unsuccessful'));
+
       onClose();
     }
   });
 
-  const { register, handleSubmit, watch } = useForm();
+  const { register, handleSubmit } = useForm();
+
+  const { t } = useTranslation('cancelOrder');
 
   const onSubmit = (data: Inputs) => {
+    console.log(data);
+    console.log(typeof orderNo, orderNo);
     cancelOrder({
       variables: {
-        orderNo: orderId
+        orderNo: orderNo
       }
     });
   };
+
+  const hocTrans = (key) => t(`cancelOrder:${key}`);
 
   return (
     <ModalBase open={open} onClose={onClose}>
       <div className="container p-3">
         <div className="text-center">
-          <h3>Hủy đơn</h3>
+          <h3>{t('cancelOrder:request_cancellation')}</h3>
         </div>
+
         <form className="form" onSubmit={handleSubmit(onSubmit)}>
-          <label className="my-1 mr-2" htmlFor="inlineFormCustomSelectPref">
-            <b>Lý do hủy đơn</b>
+          <label className="my-1 mr-2">
+            <b>{t('cancelOrder:reason_for_cancellation')}</b>
           </label>
+
           <Select ref={register} className="custom-select my-1 mr-sm-2" name="reason">
             {options &&
-              options.map((option) => (
-                <option key={option.reason} value={option.reason}>
-                  {option.reason}
-                </option>
-              ))}
+              options.map((option) => {
+                const value = hocTrans(option.key);
+                return (
+                  <option key={value} value={value}>
+                    {value}
+                  </option>
+                );
+              })}
           </Select>
 
           <Textarea
             ref={register}
-            placeholder={`Lý do hủy đơn`}
-            label={`Thông tin thêm (không bắt buộc)`}
+            placeholder={t('cancelOrder:additional_information')}
+            label={t('cancelOrder:additional_information')}
             containerClass="my-1 mr-sm-2"
             htmlFor={'note'}
           />
@@ -88,11 +103,12 @@ const ConfirmCancelOrder: FC<Props> = (props) => {
             ref={register}
             containerClass="my-1 mr-sm-2"
             name="check"
-            label="Chính Sách Hủy Đơn Hàng"
+            label={t('cancelOrder:cancellation_policy')}
           />
-          <button type="submit" className="btn btn-primary my-1">
-            Hủy đơn
-          </button>
+
+          <Button type="submit" variant="primary" className="my-1">
+            {t('cancelOrder:cancellation_policy')}
+          </Button>
         </form>
       </div>
     </ModalBase>
