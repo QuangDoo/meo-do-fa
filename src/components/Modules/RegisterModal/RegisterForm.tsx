@@ -1,7 +1,6 @@
 import { useMutation } from '@apollo/client';
 import { Trans, withTranslation } from 'i18n';
 import { WithTranslation } from 'next-i18next';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useForm } from 'react-hook-form';
@@ -11,6 +10,7 @@ import { viPhoneNumberRegex } from 'src/assets/regex/viPhoneNumber';
 import Button from 'src/components/Form/Button';
 import Checkbox from 'src/components/Form/Checkbox';
 import Input from 'src/components/Form/Input';
+import LinkText from 'src/components/Form/LinkText';
 import { useModalControlDispatch } from 'src/contexts/ModalControl';
 import { CREATE_USER, CreateUserData, CreateUserVars } from 'src/graphql/user/createUser';
 import useUser from 'src/hooks/useUser';
@@ -227,11 +227,7 @@ const RegisterForm = (props: WithTranslation): JSX.Element => {
               <Trans
                 i18nKey="register:checkbox_acceptTerms_label"
                 components={{
-                  Link: (
-                    <Link href="/terms-of-use">
-                      <a> </a>
-                    </Link>
-                  )
+                  Link: <LinkText href="/terms-of-use"> </LinkText>
                 }}
               />
               <span className="text-danger"> *</span>

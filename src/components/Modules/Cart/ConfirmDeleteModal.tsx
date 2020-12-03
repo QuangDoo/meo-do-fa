@@ -3,6 +3,7 @@ import { withTranslation } from 'i18n';
 import { WithTranslation } from 'next-i18next';
 import React, { FC, useEffect } from 'react';
 import { toast } from 'react-toastify';
+import PriceText from 'src/components/Form/PriceText';
 import ModalBase from 'src/components/Layout/Modal/ModalBase';
 import { DELETE_CART, DeleteCartData, DeleteCartVars } from 'src/graphql/cart/deleteCart.mutation';
 import useCart from 'src/hooks/useCart';
@@ -82,7 +83,7 @@ const ConfirmDeleteModal: FC<Props> = (props) => {
                 <div className="text-left">
                   <div className="cart-item__name mb-2">{productName}</div>
                   <div className="cart-item__price">
-                    {price.toLocaleString('de-DE')}
+                    <PriceText price={price} />
                     <span className="unit">đ</span>
                   </div>
                 </div>

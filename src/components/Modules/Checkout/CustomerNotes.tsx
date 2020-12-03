@@ -1,3 +1,4 @@
+import { useTranslation } from 'i18n';
 import React from 'react';
 import { ReactHookFormRegister } from 'src/types/ReactHookFormRegister';
 
@@ -7,14 +8,15 @@ type Props = ReactHookFormRegister;
 
 const CustomerNotes = (props: Props) => {
   const { register } = props;
+
+  const { t } = useTranslation('checkout');
+
   return (
-    <InputCard
-      title="Ghi chú khác"
-      description="Trường hợp không tìm được thuốc mong muốn, Quý khách vui lòng điền yêu cầu bên dưới. Chúng tôi sẽ liên hệ mua thuốc và báo giá sớm nhất có thể.">
+    <InputCard title={t('checkout:notes_title')} description={t('checkout:notes_description')}>
       <textarea
         ref={register}
         rows={4}
-        placeholder="Ghi chú của khách hàng"
+        placeholder={t('checkout:notes_placeholder')}
         className="form-control"
         name="customerNotes"
       />

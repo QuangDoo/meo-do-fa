@@ -62,7 +62,8 @@ function Products(): JSX.Element {
       type: router.query.tag as string,
       manufacturer_id: router.query.manufacturer as string,
       category_id: router.query.category as string,
-      order_type: (router.query.sort as string) || defaultSortType
+      order_type: (router.query.sort as string) || defaultSortType,
+      name: router.query.search as string
     },
     onError: () => null
   });

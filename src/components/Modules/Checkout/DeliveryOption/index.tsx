@@ -1,3 +1,4 @@
+import { useTranslation } from 'i18n';
 import React from 'react';
 import RadioInput from 'src/components/Form/Radio';
 import { DeliveryMethod } from 'src/graphql/paymentAndDelivery/paymentAndDelivery,query';
@@ -12,14 +13,16 @@ type Props = ReactHookFormRegister & {
 const DeliveryOption = (props: Props) => {
   const { deliveryMethods, register } = props;
 
+  const { t } = useTranslation('checkout');
+
   if (!deliveryMethods.length) return null;
 
   return (
-    <InputCard title="Hình thức giao hàng">
+    <InputCard title={t('checkout:deliveryOption_title')}>
       <RadioInput
         name="deliveryOption"
         ref={register({
-          required: 'Xin chọn hình thức giao hàng.'
+          required: t('checkout:deliveryOption_required') + ''
         })}
         options={deliveryMethods.map((method) => ({
           label: method.name,

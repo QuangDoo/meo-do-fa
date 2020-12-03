@@ -1,7 +1,9 @@
 import clsx from 'clsx';
+import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import React from 'react';
 import Button from 'src/components/Form/Button';
+import PriceText from 'src/components/Form/PriceText';
 import { GetCounselData } from 'src/graphql/order/getCounsel';
 import { ReactHookFormRegister } from 'src/types/ReactHookFormRegister';
 
@@ -32,6 +34,8 @@ type Props = ReactHookFormRegister & {
 const StickySidebar = (props: Props): JSX.Element => {
   const { counselData } = props;
 
+  const { t } = useTranslation('checkout');
+
   if (!counselData) return null;
 
   const data = counselData.getCounsel;
@@ -40,28 +44,33 @@ const StickySidebar = (props: Props): JSX.Element => {
     <div className="checkout__sticky">
       <div className="d-flex justify-content-between mb-3">
         <h4 className="d-flex flex-wrap align-items-center">
-          Đơn Hàng
-          <small className="ml-1">{data.counsel.counsels.length} sản phẩm</small>
+          {t('checkout:confirm_checkout_title')}
+
+          <small className="ml-1">
+            {t('checkout:confirm_checkout_quantity', {
+              quantity: data.totalQty
+            })}
+          </small>
         </h4>
 
         <div>
           <Link href="/cart" passHref>
             <Button size="sm" variant="primary">
-              Sửa
+              {t('checkout:confirm_checkout_edit')}
             </Button>
           </Link>
         </div>
       </div>
 
       <div className="elevated checkout__info row no-gutters mb-3">
-        <SidebarItem label="Tạm tính">
+        <SidebarItem label={t('checkout:price_provisional_sums')}>
           <div className="d-flex">
-            {data.totalPrice.toLocaleString('de-DE')}
+            <PriceText price={data.totalPrice} />
             <span className="unit">đ</span>
           </div>
         </SidebarItem>
 
-        <SidebarItem label="Phí vận chuyển">
+        <SidebarItem label={t('checkout:price_shipping_fee')}>
           <span data-target="checkout.shippingFee">
             {data.totalShippingFee}
             <span className="unit">đ</span>
@@ -70,9 +79,9 @@ const StickySidebar = (props: Props): JSX.Element => {
 
         <SidebarItem containerClass="checkout__info-promo"></SidebarItem>
 
-        <SidebarItem label="Thành tiền" containerClass="checkout__info-total">
+        <SidebarItem label={t('checkout:price_total')} containerClass="checkout__info-total">
           <span className="checkout__total">
-            {data.totalPrice.toLocaleString('de-DE')}
+            <PriceText price={data.totalPrice} />
             <span className="unit">đ</span>
           </span>
         </SidebarItem>
@@ -80,14 +89,11 @@ const StickySidebar = (props: Props): JSX.Element => {
 
       <div className="text-right">
         <div className="mb-2">
-          <small>
-            Vui lòng kiểm tra kỹ thông tin giao hàng, hình thức thanh toán và nhấn nút &quot;Thanh
-            Toán&quot; để hoàn tất đặt hàng.
-          </small>
+          <small>{t('checkout:confirm_checkout_doubleCheck')}</small>
         </div>
 
         <Button variant="secondary" size="lg" type="submit">
-          Thanh toán
+          {t('checkout:confirm_checkout_button')}
         </Button>
       </div>
     </div>

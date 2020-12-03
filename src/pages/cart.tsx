@@ -3,6 +3,7 @@ import { useTranslation } from 'i18n';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { toast } from 'react-toastify';
+import PriceText from 'src/components/Form/PriceText';
 import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
@@ -108,7 +109,7 @@ function Cart(): JSX.Element {
                           <small>{t('cart:total')}</small>
                         </div>
                         <div className="cart__total text-small">
-                          {cart?.getCart.totalPrice.toLocaleString('de-DE')}{' '}
+                          <PriceText price={cart?.getCart.totalPrice} />
                           <span className="unit text-small">đ</span>
                         </div>
                         {/* <div className="cart__old-total">

@@ -1,7 +1,8 @@
-import { useTranslation } from 'i18n';
+import { Trans, useTranslation } from 'i18n';
 import Link from 'next/link';
 import React from 'react';
 import Checkbox from 'src/components/Form/Checkbox';
+import LinkText from 'src/components/Form/LinkText';
 import { ReactHookFormRegister } from 'src/types/ReactHookFormRegister';
 
 import DescriptionBox from '../DescriptionBox';
@@ -10,27 +11,28 @@ type Props = ReactHookFormRegister;
 
 const Agreement = (props: Props): JSX.Element => {
   const { register } = props;
+
   const { t } = useTranslation('checkout');
 
   return (
     <Checkbox
       ref={register({
-        required: t('checkout:error__agreement_required') + ''
+        required: t('checkout:agreement_required') + ''
       })}
       name="agreement"
       label={
-        <>
-          {t('checkout:i_agree')}{' '}
-          <Link href="/terms-of-service">
-            <a>{t('checkout:terms_of_use')}</a>
-          </Link>
-        </>
+        <Trans
+          i18nKey="checkout:agreement_label"
+          components={{
+            Link: <LinkText href="/terms_of_service"> </LinkText>
+          }}
+        />
       }>
       <DescriptionBox white>
         <ol className="pl-4 mb-0">
-          <li>{t('checkout:description1')}</li>
+          <li>{t('checkout:warning_1')}</li>
 
-          <li>{t('checkout:description2')}</li>
+          <li>{t('checkout:warning_2')}</li>
         </ol>
       </DescriptionBox>
     </Checkbox>

@@ -1,3 +1,4 @@
+import { Trans, useTranslation } from 'i18n';
 import React from 'react';
 import { emailRegex } from 'src/assets/regex/email';
 import { viPhoneNumberRegex } from 'src/assets/regex/viPhoneNumber';
@@ -25,17 +26,19 @@ type Props = {
 const DeliveryInfo = (props: Props) => {
   const { cities, districts, wards, register } = props;
 
+  const { t } = useTranslation('checkout');
+
   return (
-    <InputCard title="Thông tin giao hàng" hasRequired>
+    <InputCard title={t('checkout:deliveryInfo_title')} hasRequired>
       {/* Name input */}
       <InputWithLabel
         name="name"
         ref={register({
-          required: 'Xin nhập họ tên.'
+          required: t('checkout:name_required') + ''
         })}
-        label="Họ Tên khách hàng"
+        label={t('checkout:name_label')}
         type="text"
-        placeholder="Vd. Nguyễn Văn B"
+        placeholder={t('checkout:name_placeholder')}
         required
       />
 
@@ -44,16 +47,16 @@ const DeliveryInfo = (props: Props) => {
         <InputWithLabel
           name="phone"
           ref={register({
-            required: 'Xin nhập số điện thoại.',
+            required: t('checkout:phone_required') + '',
             pattern: {
               value: viPhoneNumberRegex,
-              message: 'Xin nhập số điện thoại hợp lệ.'
+              message: t('checkout:phone_invalid')
             }
           })}
           type="number"
-          label="Số điện thoại"
+          label={t('checkout:phone_label')}
           containerClass="col-sm-4"
-          placeholder="Vd. 0999123456"
+          placeholder={t('checkout:phone_placeholder')}
           required
         />
 
@@ -63,13 +66,13 @@ const DeliveryInfo = (props: Props) => {
           ref={register({
             pattern: {
               value: emailRegex,
-              message: 'Xin nhập email hợp lệ'
+              message: t('checkout:email_invalid')
             }
           })}
           type="text"
-          label="Email"
+          label={t('checkout:email_label')}
           containerClass="col-sm-8"
-          placeholder="Vd. nguyenvanb@gmail.com"
+          placeholder={t('checkout:email_placeholder')}
         />
       </div>
 
@@ -77,14 +80,12 @@ const DeliveryInfo = (props: Props) => {
       <InputWithLabel
         name="address"
         ref={register({
-          required: 'Xin nhập địa chỉ giao hàng. '
+          required: t('checkout:address_required') + ''
         })}
         label={
           <>
-            Địa chỉ giao hàng{' '}
-            <span className="text-muted">
-              (Nhập địa chỉ, tên đường. Rồi chọn tỉnh/thành phố, phường/xã, quận/huyện)
-            </span>
+            {t('checkout:address_label')}{' '}
+            <span className="text-muted">{t('checkout:address_instructions')}</span>
           </>
         }
         type="text"
@@ -96,15 +97,15 @@ const DeliveryInfo = (props: Props) => {
         <SelectWithLabel
           name="cityId"
           ref={register({
-            required: 'Xin chọn tỉnh/thành phố.'
+            required: t('checkout:city_required') + ''
           })}
-          label="Tỉnh/Thành phố"
+          label={t('checkout:city_label')}
           containerClass="col-md-4"
           required>
-          <option value="">Chọn tỉnh/thành phố...</option>
+          <option value="">{t('checkout:city_placeholder')}</option>
 
           {/* Map cities from api */}
-          {props.cities.map((city: DataCityType) => (
+          {cities.map((city: DataCityType) => (
             <option key={city.id} value={city.id}>
               {city.name}
             </option>
@@ -115,15 +116,15 @@ const DeliveryInfo = (props: Props) => {
         <SelectWithLabel
           name="districtId"
           ref={register({
-            required: 'Xin chọn quận/huyện.'
+            required: t('checkout:district_required') + ''
           })}
-          label="Quận/Huyện"
+          label={t('checkout:district_label')}
           labelClass="required"
           containerClass="col-md-4">
-          <option value="">Chọn quận/huyện...</option>
+          <option value="">{t('checkout:district_placeholder')}</option>
 
           {/* Map districts from chosen city */}
-          {props.districts.map((district) => (
+          {districts.map((district) => (
             <option key={district.id} value={district.id}>
               {district.name}
             </option>
@@ -134,15 +135,15 @@ const DeliveryInfo = (props: Props) => {
         <SelectWithLabel
           name="wardId"
           ref={register({
-            required: 'Xin chọn phường/xã.'
+            required: t('checkout:ward_required') + ''
           })}
-          label="Phường/Xã"
+          label={t('checkout:ward_label')}
           labelClass="required"
           containerClass="col-md-4">
-          <option value="">Chọn phường/xã...</option>
+          <option value="">{t('checkout:ward_placeholder')}</option>
 
           {/* Map wards from chosen district */}
-          {props.wards.map((ward) => (
+          {wards.map((ward) => (
             <option key={ward.id} value={ward.id}>
               {ward.name}
             </option>
@@ -155,7 +156,7 @@ const DeliveryInfo = (props: Props) => {
         ref={register}
         name="saveInfo"
         containerClass="mt-2"
-        label="Lưu thông tin cho lần sau"
+        label={t('checkout:saveInfo_label')}
         labelClass="form__label"
       />
     </InputCard>

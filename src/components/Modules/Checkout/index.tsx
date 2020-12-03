@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import { useTranslation } from 'i18n';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { useUserContext } from 'src/contexts/User';
 import { GET_CITIES, GetCitiesData } from 'src/graphql/address/getCities';
@@ -29,6 +29,21 @@ import DeliveryInfo from './DeliveryInfo';
 import DeliveryOption from './DeliveryOption';
 import PaymentOption from './PaymentOption';
 import StickySidebar from './StickySidebar';
+
+type FormInputs = {
+  name: string;
+  phone: string;
+  email: string;
+  address: string;
+  cityId: string;
+  districtId: string;
+  wardId: string;
+  deliveryOption: string;
+  paymentOption: string;
+  saveInfo: boolean;
+  customerNotes: string;
+  agreement: boolean;
+};
 
 const CheckoutPage = () => {
   const { t } = useTranslation(['checkout']);
@@ -61,7 +76,7 @@ const CheckoutPage = () => {
   const { user } = useUserContext();
 
   // Form handler with default values
-  const { register, handleSubmit, watch, setValue } = useForm({
+  const { register, handleSubmit, watch, setValue } = useForm<FormInputs>({
     defaultValues: {
       name: user?.name,
       phone: user?.phone,
@@ -113,7 +128,10 @@ const CheckoutPage = () => {
   const [createOrder] = useMutationAuth<CreateOrderData, CreateOrderVars>(CREATE_ORDER, {
     onCompleted: (data) => {
       swal({
-        title: `Đơn hàng ${data.createOrder.orderNo} đã được đặt thành công!`,
+        // title: `Đơn hàng ${data.createOrder.orderNo} đã được đặt thành công!`,
+        title: t('checkout:order_success_message', {
+          orderNo: data.createOrder.orderNo
+        }),
         icon: 'success'
       }).then(() => {
         refetchCart();
@@ -125,7 +143,7 @@ const CheckoutPage = () => {
     }
   });
 
-  const onSubmit = (data) => {
+  const onSubmit: SubmitHandler<FormInputs> = (data) => {
     createOrder({
       variables: {
         inputs: {
@@ -137,15 +155,15 @@ const CheckoutPage = () => {
             shipping_address: {
               partnerId: '',
               isNew: true,
-              zipCode: data.wardId,
-              city: cities.find((city) => city.id === data.cityId).name,
-              district: districts.find((district) => district.id === data.districtId).name,
-              ward: wards.find((ward) => ward.id === data.wardId).name,
+              zipCode: +data.wardId,
+              city: cities.find((city) => city.id === +data.cityId).name,
+              district: districts.find((district) => district.id === +data.districtId).name,
+              ward: wards.find((ward) => ward.id === +data.wardId).name,
               street: data.address
             }
           },
-          paymentMethodId: 0,
-          deliveryMethodId: 1,
+          paymentMethodId: +data.paymentOption,
+          deliveryMethodId: +data.deliveryOption,
           note: data.customerNotes,
           isInvoice: false
         }
@@ -164,7 +182,7 @@ const CheckoutPage = () => {
       <div className="checkout container py-5">
         <div className="row">
           <div className="col-12 mb-3">
-            <h1 className="h3">Thanh toán</h1>
+            <h1 className="h3">{t('checkout:title')}</h1>
           </div>
 
           <div className="col-md-8">
