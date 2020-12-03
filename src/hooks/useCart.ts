@@ -4,20 +4,20 @@ import { GET_CART } from 'src/graphql/order/order.query';
 import useLocalStorage from 'src/hooks/useLocalStorage';
 
 import { useCartContext } from '../contexts/Cart';
-import { useLazyQueryAuth } from './useApolloHookAuth';
+import { useQueryAuth } from './useApolloHookAuth';
 
 export default function useCart() {
-  const [getCart, { data, error, refetch, loading }] = useLazyQueryAuth(GET_CART, {
-    fetchPolicy: 'network-only'
+  const { data, loading, refetch } = useQueryAuth(GET_CART, {
+    fetchPolicy: 'network-only',
+    onCompleted: (data) => {
+      setCart(data);
+    },
+    onError: (error) => {
+      toast.error(error);
+    }
   });
 
   const { setCart } = useCartContext();
-
-  useEffect(() => {
-    if (!error) return;
-
-    toast.error(error);
-  }, [error]);
 
   const [token] = useLocalStorage('token');
 
@@ -25,19 +25,12 @@ export default function useCart() {
   useEffect(() => {
     if (!token) return;
 
-    getCart();
+    refetch();
   }, [token]);
-
-  useEffect(() => {
-    if (data) {
-      setCart(data);
-    }
-  }, [data, setCart]);
 
   return {
     refetchCart: refetch,
-    getCart,
-    loading,
-    cart: data
+    cart: data,
+    loading
   };
 }

@@ -1,4 +1,3 @@
-import { useMutation } from '@apollo/client';
 import clsx from 'clsx';
 import { withTranslation } from 'i18n';
 import { WithTranslation } from 'next-i18next';
@@ -73,13 +72,6 @@ function QuantityInput(props: Props) {
     }
   };
 
-  const handleChangeNumber = (temp) => {
-    if (isNaN(temp)) {
-      return;
-    }
-    temp < 0 ? setQuantity('0') : setQuantity(temp);
-  };
-
   const handleBlur = () => {
     setQuantity(isNaN(+quantity) ? '0' : +quantity + '');
   };
@@ -97,7 +89,7 @@ function QuantityInput(props: Props) {
           min={0}
           max={100000}
           value={quantity}
-          onChange={(e) => handleChangeNumber(e.target.value)}
+          onChange={(e) => setQuantity(e.target.value)}
           onKeyDown={handleKeyDown}
           onBlur={handleBlur}
         />

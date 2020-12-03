@@ -1,5 +1,5 @@
 import { gql } from '@apollo/client';
-import { Product } from 'src/types/Product';
+import { Product } from 'src/graphql/product/getProducts';
 
 export const GET_PRODUCTS_DEAL_OF_THE_DAY = gql`
   query getProductDealOfTheDay($page: Int!, $pageSize: Int!) {

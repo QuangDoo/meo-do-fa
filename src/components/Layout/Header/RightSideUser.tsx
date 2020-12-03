@@ -1,7 +1,6 @@
 import clsx from 'clsx';
 import Link from 'next/link';
 import React, { useState } from 'react';
-import { useUserContext } from 'src/contexts/User';
 import useUser from 'src/hooks/useUser';
 import { mockMyNoti } from 'src/mockData/mockMyNoti';
 
@@ -25,13 +24,16 @@ const NotiItem = (props) => {
     </Link>
   );
 };
+
 const RightSideUser = () => {
   const { user } = useUser();
+
   const [show, setShow] = useState(false);
 
   function toggleShow() {
     setShow((show) => !show);
   }
+
   return (
     <div className="header-right d-none d-lg-block">
       <ul className="nav align-items-center">
@@ -54,16 +56,19 @@ const RightSideUser = () => {
             })}
           </div>
         </div>
-        <div className="header__user ml-3">
-          <div className="header__user-name text-center">{user?.getUser?.name}</div>
-          {/* <div className="header__user-avatar">
+        {user?.name && (
+          <div className="header__user ml-3">
+            <div className="header__user-name text-center">{user.name}</div>
+
+            {/* <div className="header__user-avatar">
             <img
               alt="medofa.vn"
               className="img-fluid"
               src="https://assets.medofa.vn/assets/defaults/user-avatar-20b31d55208b900bf14c683f4fb7e9e3f1f5b40feeb291a56dacafb01999d751.svg"
             />
           </div> */}
-        </div>
+          </div>
+        )}
       </ul>
     </div>
   );

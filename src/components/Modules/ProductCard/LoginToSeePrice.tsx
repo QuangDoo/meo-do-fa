@@ -4,9 +4,9 @@ import React from 'react';
 import { useModalControlDispatch } from 'src/contexts/ModalControl';
 
 const LoginToSeePrice = ({ t }: WithTranslation): JSX.Element => {
-  const dispatch = useModalControlDispatch();
+  const { openModal } = useModalControlDispatch();
 
-  const openLoginModal = () => dispatch({ type: 'OPEN_LOGIN_MODAL' });
+  const openLoginModal = () => openModal('LOGIN');
 
   return (
     <button onClick={openLoginModal} className="btn btn-block btn-sm btn-outline-primary">

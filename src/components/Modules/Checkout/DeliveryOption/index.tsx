@@ -1,33 +1,36 @@
-import React, { forwardRef } from 'react';
+import { useTranslation } from 'i18n';
+import React from 'react';
 import RadioInput from 'src/components/Form/Radio';
+import { DeliveryMethod } from 'src/graphql/paymentAndDelivery/paymentAndDelivery,query';
+import { ReactHookFormRegister } from 'src/types/ReactHookFormRegister';
 
 import InputCard from '../InputCard';
-import FastDeliveryLabel from './FastDeliveryLabel';
-import FastDeliveryRules from './FastDeliveryRules';
 
-const DeliveryOption = (props, ref): JSX.Element => {
+type Props = ReactHookFormRegister & {
+  deliveryMethods: DeliveryMethod[];
+};
+
+const DeliveryOption = (props: Props) => {
+  const { deliveryMethods, register } = props;
+
+  const { t } = useTranslation('checkout');
+
+  if (!deliveryMethods.length) return null;
+
   return (
-    <InputCard title="Hình thức giao hàng">
+    <InputCard title={t('checkout:deliveryOption_title')}>
       <RadioInput
         name="deliveryOption"
-        ref={ref({
-          required: 'Xin chọn hình thức giao hàng.'
+        ref={register({
+          required: t('checkout:deliveryOption_required') + ''
         })}
-        options={[
-          {
-            label: 'Giao hàng tiêu chuẩn',
-            value: props.deliveryMethods[0].id
-          },
-          {
-            label: <FastDeliveryLabel />,
-            value: 0,
-            children: <FastDeliveryRules />,
-            disabled: true // Disable fast delivery or not
-          }
-        ]}
+        options={deliveryMethods.map((method) => ({
+          label: method.name,
+          value: method.id
+        }))}
       />
     </InputCard>
   );
 };
 
-export default forwardRef(DeliveryOption);
+export default DeliveryOption;

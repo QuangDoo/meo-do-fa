@@ -8,15 +8,16 @@ import Header from 'src/components/Layout/Header';
 import Nav from 'src/components/Layout/Nav';
 import Pagination from 'src/components/Modules/Pagination';
 import ProductCard from 'src/components/Modules/ProductCard';
-import { GET_PRODUCTS } from 'src/graphql/product/product.query';
-import { GetProductsData, GetProductsVars } from 'src/types/GetProducts';
+import { GET_PRODUCTS, GetProductsData, GetProductsVars } from 'src/graphql/product/getProducts';
 import withApollo from 'src/utils/withApollo';
 
 const pageSize = 20;
 
 function Deal() {
   const router = useRouter();
+
   const { t } = useTranslation(['deals']);
+
   const page = +router.query.page || 1;
 
   const { data: productsData, refetch: refetchProducts } = useQuery<
@@ -26,7 +27,9 @@ function Deal() {
     variables: {
       page: page,
       pageSize: pageSize,
-      order_type: '01'
+      condition: {
+        order_type: '01'
+      }
     }
   });
 
@@ -42,7 +45,9 @@ function Deal() {
     refetchProducts({
       page: page,
       pageSize: pageSize,
-      order_type: '01'
+      condition: {
+        order_type: '01'
+      }
     });
   };
 

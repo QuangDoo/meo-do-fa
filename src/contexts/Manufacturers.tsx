@@ -3,9 +3,9 @@ import { useQuery } from '@apollo/client';
 import React, { createContext, useContext, useEffect } from 'react';
 import {
   GET_ALL_MANUFACTURERS,
-  GetAllManufacturersData
+  GetAllManufacturersData,
+  Manufacturer
 } from 'src/graphql/manufacturers/manufacturers.query';
-import { Manufacturer } from 'src/types/Manufacturer';
 import withApollo from 'src/utils/withApollo';
 
 type Props = {

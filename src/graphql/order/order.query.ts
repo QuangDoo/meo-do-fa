@@ -69,29 +69,6 @@ export const GET_CART = gql`
     }
   }
 `;
-export const GET_COUNSEL = gql`
-  query {
-    getCounsel {
-      counsel {
-        _id
-        userId
-        orderNo
-        counsels {
-          cartId
-          productId
-          quantity
-          productName
-        }
-        create_date
-      }
-      totalQty
-      totalPrice
-      totalDcAmt
-      totalShippingFee
-      totalNetPrice
-    }
-  }
-`;
 
 export const GET_ORDER = gql`
   query getOrderDetail($id: Int!) {

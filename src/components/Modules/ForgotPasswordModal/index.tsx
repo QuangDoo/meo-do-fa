@@ -8,16 +8,14 @@ import ResetPassForm from './ResetPassForm';
 const ForgotPasswordModal = () => {
   const { t } = useTranslation(['password']);
 
-  const dispatch = useModalControlDispatch();
-
-  const closeResetPassModal = () => dispatch({ type: 'CLOSE_RESETPASS_MODAL' });
+  const { closeModal } = useModalControlDispatch();
 
   const { resetPassIsOpen } = useModalControlState();
 
   return (
     <ModalWithHeader
       open={resetPassIsOpen}
-      onClose={closeResetPassModal}
+      onClose={closeModal}
       title={t('password:reset_password')}
       className="authentication signup">
       <ResetPassForm />

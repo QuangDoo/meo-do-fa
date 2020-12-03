@@ -1,0 +1,72 @@
+{
+  "title": "Thanh toán",
+
+  "order_success_message": "Đơn hàng {{orderNo}} đã được đặt thành công!",
+
+  "deliveryInfo_title": "Thông tin giao hàng",
+
+  "name_label": "Họ Tên khách hàng",
+  "name_placeholder": "Vd. Nguyễn Văn B",
+  "name_required": "Xin nhập họ tên.",
+
+  "phone_label": "Số điện thoại",
+  "phone_placeholder": "Vd. 0999123456",
+  "phone_required": "Xin nhập số điện thoại.",
+  "phone_invalid": "Xin nhập số điện thoại hợp lệ.",
+
+  "email_label": "Email",
+  "email_placeholder": "Vd. nguyenvanb@gmail.com",
+  "email_invalid": "Xin nhập email hợp lệ",
+
+  "address_label": "Địa chỉ giao hàng",
+  "address_instructions": "(Nhập địa chỉ, tên đường. Rồi chọn tỉnh/thành phố, phường/xã, quận/huyện)",
+  "address_required": "Xin nhập địa chỉ giao hàng.",
+
+  "city_label": "Tỉnh/Thành phố",
+  "city_placeholder": "Chọn tỉnh/thành phố...",
+  "city_required": "Xin chọn tỉnh/thành phố.",
+
+  "district_label": "Quận/Huyện",
+  "district_placeholder": "Chọn quận/huyện...",
+  "district_required": "Xin chọn quận/huyện.",
+
+  "ward_label": "Phường/Xã",
+  "ward_placeholder": "Chọn phường/xã...",
+  "ward_required": "Xin chọn phường/xã.",
+
+  "saveInfo_label": "Lưu thông tin cho lần sau",
+
+  "deliveryOption_title": "Hình thức giao hàng",
+  "deliveryOption_required": "Xin chọn hình thức giao hàng.",
+
+  "paymentOption_title": "Hình thức thanh toán",
+  "paymentOption_required": "Xin chọn hình thức thanh toán.",
+  "paymentOption_COD": "Thanh toán tiền mặt khi nhận hàng",
+  "paymentOption_bank": "Chuyển khoản <Link>Hướng dẫn chuyển khoản</Link>",
+  "bank_info__account_name": "Chủ tài khoản",
+  "bank_info__account_no": "Số tài khoản",
+  "bank_info__bank_name": "Ngân hàng",
+  "bank_info__note": "Nội dung",
+
+  "notes_title": "Ghi chú khác",
+  "notes_description": "Trường hợp không tìm được thuốc mong muốn, Quý khách vui lòng điền yêu cầu bên dưới. Chúng tôi sẽ liên hệ mua thuốc và báo giá sớm nhất có thể.",
+  "notes_placeholder": "Ghi chú của khách hàng",
+
+  "agreement_label": "Tôi đồng ý với <Link>Điều khoản sử dụng</Link>",
+  "agreement_required": "Xin vui lòng xác thực điều khoản",
+
+  "warning_1": "Medofa có thể hủy đơn hàng của bạn nếu chênh lệch hơn 5% giá trị sản phẩm.",
+  "warning_2": "Số lượng sản phẩm khi giao có thể không đảm bảo đúng nhu cầu ban đầu tùy thuộc vào nhà cung cấp.",
+
+  "confirm_checkout_title": "Đơn hàng",
+  "confirm_checkout_quantity": "{{quantity}} sản phẩm",
+  "confirm_checkout_edit": "Sửa",
+
+  "price_provisional_sums": "Tạm tính",
+  "price_shipping_fee": "Phí vận chuyển",
+  "price_total_discount": "Khuyến mãi",
+  "price_total": "Thành tiền",
+
+  "confirm_checkout_doubleCheck": "Vui lòng kiểm tra kỹ thông tin giao hàng, hình thức thanh toán và nhấn nút \"Thanh Toán\" để hoàn tất đặt hàng.",
+  "confirm_checkout_button": "Thanh toán"
+}

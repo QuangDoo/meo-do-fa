@@ -1,54 +1,5 @@
 import { gql } from '@apollo/client';
 
-export const GET_PRODUCTS = gql`
-  query getProducts(
-    $page: Int!
-    $pageSize: Int!
-    $order_type: String!
-    $type: String
-    $category_id: String
-    $manufacturer_id: String
-    $name: String
-  ) {
-    getProductByConditions(
-      page: $page
-      pageSize: $pageSize
-      type: $type
-      condition: {
-        order_type: $order_type
-        category_id: $category_id
-        manufacturer_id: $manufacturer_id
-        name: $name
-      }
-    ) {
-      Products {
-        id
-        name
-        price
-        list_price
-        standard_price
-        image_128
-        image_512
-        image_256
-        uom_name
-        is_new
-        is_quick_invoice
-        is_vn
-        is_exclusive
-        categories {
-          id
-          name
-        }
-        manufacturer {
-          id
-          name
-        }
-      }
-      total
-    }
-  }
-`;
-
 export const GET_PRODUCT = gql`
   query getProduct($id: Int!) {
     getProduct(id: $id) {

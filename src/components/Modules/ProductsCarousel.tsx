@@ -1,6 +1,6 @@
 import React from 'react';
 import Slider from 'react-slick';
-import { Product } from 'src/types/Product';
+import { Product } from 'src/graphql/product/getProducts';
 
 import ProductCard from './ProductCard';
 

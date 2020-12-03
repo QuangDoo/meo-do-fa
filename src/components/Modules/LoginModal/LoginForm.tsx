@@ -9,7 +9,7 @@ import Button from 'src/components/Form/Button';
 import Checkbox from 'src/components/Form/Checkbox';
 import Input from 'src/components/Form/Input';
 import { useModalControlDispatch } from 'src/contexts/ModalControl';
-import { LOGIN_USER, LoginData, LoginVars } from 'src/graphql/user/login.mutation';
+import { LOGIN_USER, LoginData, LoginVars } from 'src/graphql/user/login';
 import useUser from 'src/hooks/useUser';
 
 type Inputs = {
@@ -20,13 +20,11 @@ type Inputs = {
 const LoginForm = (): JSX.Element => {
   const { t } = useTranslation('login');
 
-  const dispatch = useModalControlDispatch();
+  const { openModal, closeModal } = useModalControlDispatch();
 
-  const openRegisterModal = () => dispatch({ type: 'OPEN_REGISTER_MODAL' });
+  const openRegisterModal = () => openModal('REGISTER');
 
-  const openResetPassModal = () => dispatch({ type: 'OPEN_RESETPASS_MODAL' });
-
-  const closeLoginModal = () => dispatch({ type: 'CLOSE_LOGIN_MODAL' });
+  const openResetPassModal = () => openModal('RESET_PASSWORD');
 
   const router = useRouter();
 
@@ -37,7 +35,7 @@ const LoginForm = (): JSX.Element => {
   const [login] = useMutation<LoginData, LoginVars>(LOGIN_USER, {
     onCompleted: (data) => {
       localStorage.setItem('token', data.login.token);
-      closeLoginModal();
+      closeModal();
       getUser();
 
       if (router.pathname === '/products' || router.pathname === '/products/[productId]') {

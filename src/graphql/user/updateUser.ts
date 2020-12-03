@@ -1,5 +1,25 @@
 import { gql } from '@apollo/client';
-import { UpdateUserInput } from 'src/types/inputs';
+
+type ContactAddress = {
+  city: string;
+  district: string;
+  ward: string;
+  street: string;
+};
+
+export type UpdateUserInput = {
+  name: string;
+  display_name: string;
+  email: string;
+  contact_address: ContactAddress;
+  company_name: string;
+  vat: string;
+  representative: string;
+  business_license: string;
+  updateUser: {
+    status: string;
+  };
+};
 
 export type UpdateUserVars = {
   inputs: UpdateUserInput;
