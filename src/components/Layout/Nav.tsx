@@ -72,10 +72,14 @@ const Nav = () => {
                           </div>
                           <div className="dropdown-menu dropdown-sub-menu">
                             <li>
-                              <a href="/#">Lorem ipsum dolor sit Exercitationem autems</a>
-                            </li>
-                            <li>
-                              <a href="/#">amet consectetur adipisicing elit</a>
+                              <div className="dropdown">
+                                <div data-toggle="dropdown" data-hover="dropdown">
+                                  <a href="/#">amet consectetur</a>
+                                </div>
+                                <div className="dropdown-menu dropdown-sub-menu">
+                                  <a href="/#">adipisicing elit</a>
+                                </div>
+                              </div>
                             </li>
                             <li>
                               <a href="/#">Exercitationem autem</a>
