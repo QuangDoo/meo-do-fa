@@ -7,7 +7,7 @@ import React from 'react';
 import { Product } from 'src/graphql/product/getProducts';
 import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
 
-import QuantityInput from '../QuantityInput';
+import QuantityInput from '../../Form/QuantityInput';
 import { DiscountRibbon } from './DiscountRibbon';
 import LoginToSeePrice from './LoginToSeePrice';
 import ProductBadge from './ProductBadge';

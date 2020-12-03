@@ -73,6 +73,13 @@ function QuantityInput(props: Props) {
     }
   };
 
+  const handleChangeNumber = (temp) => {
+    if (isNaN(temp)) {
+      return;
+    }
+    temp < 0 ? setQuantity('0') : setQuantity(temp);
+  };
+
   const handleBlur = () => {
     setQuantity(isNaN(+quantity) ? '0' : +quantity + '');
   };
@@ -90,7 +97,7 @@ function QuantityInput(props: Props) {
           min={0}
           max={100000}
           value={quantity}
-          onChange={(e) => setQuantity(e.target.value)}
+          onChange={(e) => handleChangeNumber(e.target.value)}
           onKeyDown={handleKeyDown}
           onBlur={handleBlur}
         />
