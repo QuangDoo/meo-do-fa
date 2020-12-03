@@ -1,4 +1,3 @@
-import { useMutation } from '@apollo/client';
 import clsx from 'clsx';
 import { withTranslation } from 'i18n';
 import { WithTranslation } from 'next-i18next';
@@ -102,15 +101,10 @@ function QuantityInput(props: Props) {
         <button className="btn btn-sm qty__button qty__button--plus" onClick={handlePlus}>
           <i className="fas fa-plus" />
         </button>
-        {router.pathname === '/products/[productId]' ? (
-          <button className="ml-2 btn btn-sm qty__button qty__button--plus" onClick={handleClick}>
-            <i className="fas fa-check" />
-          </button>
-        ) : (
-          <button className="ml-2 btn btn-sm qty__button qty__button--plus" onClick={handleClick}>
-            <i className="fas fa-check" />
-          </button>
-        )}
+
+        <button className="ml-2 btn btn-sm qty__button qty__button--plus" onClick={handleClick}>
+          <i className="fas fa-check" />
+        </button>
       </div>
     </div>
   );

@@ -7,9 +7,8 @@ import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
 import Nav from 'src/components/Layout/Nav';
 import ProfileLayout from 'src/components/Modules/ProfileLayout';
-import ProfileSidebar from 'src/components/Modules/ProfileSidebar';
-
-import withApollo from '../../utils/withApollo';
+import useLocalStorage from 'src/hooks/useLocalStorage';
+import withApollo from 'src/utils/withApollo';
 
 type Inputs = {
   name: string;
@@ -22,16 +21,16 @@ type Inputs = {
   business_license: string;
   district_name: string;
 };
+
 const MyAccount = (props): JSX.Element => {
   const { t } = useTranslation(['account']);
-  let token = '';
-  if (typeof window !== 'undefined') {
-    token = localStorage.getItem('token');
-    // console.log('Product card data:', props)
-  }
+
+  const token = useLocalStorage('token');
+
   const { setValue } = useForm<Inputs>();
 
   const [fileName, setFileName] = useState('');
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     switch (e.target.name) {
       // Updated this
@@ -46,10 +45,15 @@ const MyAccount = (props): JSX.Element => {
         setFileName(e.target.value);
     }
   };
+
   let file = null;
+
   file = fileName ? <span>File Selected - {fileName}</span> : <span>Chọn file...</span>;
+
   const [disabledDistrict, setDisabledDistrict] = useState(true);
+
   const [disabledWard, setDisabledWard] = useState(true);
+
   const city = [
     {
       cityName: 'Chọn tỉnh/thành phố...',
@@ -60,6 +64,7 @@ const MyAccount = (props): JSX.Element => {
       id: 9131
     }
   ];
+
   const district = [
     {
       districtName: 'Chọn quận/huyện...',
@@ -70,6 +75,7 @@ const MyAccount = (props): JSX.Element => {
       id: 1476
     }
   ];
+
   const ward = [
     {
       wardName: 'Chọn phường/xã...',

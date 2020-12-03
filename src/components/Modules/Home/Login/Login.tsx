@@ -3,7 +3,8 @@ import React from 'react';
 import { useModalControlDispatch } from 'src/contexts/ModalControl';
 
 const Login = (): JSX.Element => {
-  const dispatch = useModalControlDispatch();
+  const { openModal } = useModalControlDispatch();
+
   const { t } = useTranslation(['header']);
 
   return (
@@ -17,14 +18,14 @@ const Login = (): JSX.Element => {
           <div className="col-12">
             <button
               className="login btn btn-secondary home__cta-btn m-2"
-              onClick={() => dispatch({ type: 'OPEN_LOGIN_MODAL' })}>
+              onClick={() => openModal('LOGIN')}>
               <i className="fas fa-sign-in-alt mr-1" />
               {t('header:login')}
             </button>
 
             <button
               className="register btn btn-primary home__cta-btn m-2"
-              onClick={() => dispatch({ type: 'OPEN_REGISTER_MODAL' })}>
+              onClick={() => openModal('REGISTER')}>
               <i className="fas fa-user-md mr-1" />
               {t('header:register')}
             </button>

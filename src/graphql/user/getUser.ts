@@ -1,5 +1,26 @@
 import { gql } from '@apollo/client';
-import { User } from 'src/types/User';
+
+export type User = {
+  _id: string;
+  id: number;
+  name: string;
+  display_name: string;
+  email: string;
+  phone: string;
+  account_type: string;
+  customer_rank: number;
+  roles: string[];
+  create_date: Date;
+  update_date: Date;
+  city: string;
+  district: string;
+  ward: string;
+  street: string;
+  company_name: string;
+  vat: string;
+  representative: string;
+  business_license: string;
+};
 
 export type GetUserData = {
   getUser: User;

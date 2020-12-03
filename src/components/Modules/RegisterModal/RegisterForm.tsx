@@ -2,7 +2,7 @@ import { useMutation } from '@apollo/client';
 import { Trans, withTranslation } from 'i18n';
 import { WithTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { emailRegex, noSpecialChars } from 'src/assets/regex/email';
@@ -10,8 +10,9 @@ import { viPhoneNumberRegex } from 'src/assets/regex/viPhoneNumber';
 import Button from 'src/components/Form/Button';
 import Checkbox from 'src/components/Form/Checkbox';
 import Input from 'src/components/Form/Input';
+import LinkText from 'src/components/Form/LinkText';
 import { useModalControlDispatch } from 'src/contexts/ModalControl';
-import { CREATE_USER, CreateUserData, CreateUserVars } from 'src/graphql/user/createUser.mutation';
+import { CREATE_USER, CreateUserData, CreateUserVars } from 'src/graphql/user/createUser';
 import useUser from 'src/hooks/useUser';
 import styled from 'styled-components';
 
@@ -41,21 +42,16 @@ const RegisterForm = (props: WithTranslation): JSX.Element => {
 
   const { register, handleSubmit, setValue, watch } = useForm<Inputs>();
 
-  const modalControlDispatch = useModalControlDispatch();
+  const { openModal, closeModal } = useModalControlDispatch();
 
-  const openLoginModal = () => modalControlDispatch({ type: 'OPEN_LOGIN_MODAL' });
-
-  const closeRegisterModal = () =>
-    modalControlDispatch({
-      type: 'CLOSE_REGISTER_MODAL'
-    });
+  const openLoginModal = () => openModal('LOGIN');
 
   const { getUser } = useUser();
 
   const [createUser] = useMutation<CreateUserData, CreateUserVars>(CREATE_USER, {
     onCompleted: (data) => {
       localStorage.setItem('token', data.createUser.token);
-      closeRegisterModal();
+      closeModal();
       getUser();
       router.reload();
     },
@@ -231,7 +227,7 @@ const RegisterForm = (props: WithTranslation): JSX.Element => {
               <Trans
                 i18nKey="register:checkbox_acceptTerms_label"
                 components={{
-                  Link: <a href="/terms-of-use">Terms of Use</a>
+                  Link: <LinkText href="/terms-of-use"> </LinkText>
                 }}
               />
               <span className="text-danger"> *</span>

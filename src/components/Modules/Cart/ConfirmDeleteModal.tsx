@@ -1,13 +1,13 @@
-import { useMutation } from '@apollo/client';
-import { withTranslation } from 'i18n';
-import { WithTranslation } from 'next-i18next';
-import React, { FC, useEffect } from 'react';
+import { useTranslation, withTranslation } from 'i18n';
+import React, { FC } from 'react';
 import { toast } from 'react-toastify';
+import PriceText from 'src/components/Form/PriceText';
 import ModalBase from 'src/components/Layout/Modal/ModalBase';
 import { DELETE_CART, DeleteCartData, DeleteCartVars } from 'src/graphql/cart/deleteCart.mutation';
+import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import useCart from 'src/hooks/useCart';
 
-type Props = WithTranslation & {
+type Props = {
   // Modal is open
   open: boolean;
 
@@ -24,11 +24,13 @@ type Props = WithTranslation & {
 };
 
 const ConfirmDeleteModal: FC<Props> = (props) => {
-  const { t, open, onClose, _id, productName, price, image } = props;
+  const { open, onClose, _id, productName, price, image } = props;
+
+  const { t } = useTranslation(['cart', 'errors']);
 
   const { refetchCart } = useCart();
 
-  const [deleteCart] = useMutation<DeleteCartData, DeleteCartVars>(DELETE_CART, {
+  const [deleteCart] = useMutationAuth<DeleteCartData, DeleteCartVars>(DELETE_CART, {
     onCompleted: () => {
       toast.success(t('cart:delete_success'));
 
@@ -37,7 +39,7 @@ const ConfirmDeleteModal: FC<Props> = (props) => {
       onClose();
     },
     onError: (error) => {
-      toast.error(t(`errors:code_${error.graphQLErrors[0].extensions.code}`));
+      toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions.code}`));
     }
   });
 
@@ -82,7 +84,7 @@ const ConfirmDeleteModal: FC<Props> = (props) => {
                 <div className="text-left">
                   <div className="cart-item__name mb-2">{productName}</div>
                   <div className="cart-item__price">
-                    {price.toLocaleString('de-DE')}
+                    <PriceText price={price} />
                     <span className="unit">đ</span>
                   </div>
                 </div>
@@ -109,4 +111,4 @@ const ConfirmDeleteModal: FC<Props> = (props) => {
   );
 };
 
-export default withTranslation(['cart', 'errors'])(ConfirmDeleteModal);
+export default ConfirmDeleteModal;

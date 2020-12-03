@@ -1,11 +1,12 @@
 import Link from 'next/link';
 import React from 'react';
+import PriceText from 'src/components/Form/PriceText';
 import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
 
+import QuantityInput from '../../Form/QuantityInput';
 import AddCart from '../AddCart';
 import LoginModal from '../LoginModal';
 import ProductBadge from '../ProductCard/ProductBadge';
-import QuantityInput from '../QuantityInput';
 
 type PropsType = {
   name: string;
@@ -45,7 +46,7 @@ const ProductDetailInfor = (props: PropsType): JSX.Element => {
             <div>
               <div className="product__price-group">
                 <span className="product__price">
-                  {props.list_price?.toLocaleString('de-DE')}
+                  <PriceText price={props.list_price} />
                   <span className="unit">đ </span>
                   <small className="text-muted">(Đã bao gồm VAT)</small>
                 </span>

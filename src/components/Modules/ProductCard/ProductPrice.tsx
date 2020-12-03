@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import React from 'react';
+import PriceText from 'src/components/Form/PriceText';
 
 type ProductPriceProps = {
   price: number;
@@ -12,13 +13,13 @@ export const ProductPrice = (props: ProductPriceProps) => {
   return (
     <>
       <span className={clsx('product-card__price', priceIsDifferent && 'mr-1')}>
-        {props.price.toLocaleString('de-DE')}
+        <PriceText price={props.price} />
         <span className="unit">đ</span>
       </span>
 
       {/* {priceIsDifferent && (
         <span className="product-card__old-price">
-          {props.standard_price.toLocaleString('de-DE')}
+          <PriceText price={props.standard_price} />
           <span className="unit">đ</span>
         </span>
       )} */}

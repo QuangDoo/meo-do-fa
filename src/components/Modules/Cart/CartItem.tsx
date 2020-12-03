@@ -1,8 +1,6 @@
-import { useMutation } from '@apollo/client';
-import { withTranslation } from 'i18n';
-import { WithTranslation } from 'next-i18next';
+import { useTranslation } from 'i18n';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import { UPDATE_CART, UpdateCartData, UpdateCartVars } from 'src/graphql/cart/updateCart.mutation';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
@@ -11,7 +9,7 @@ import useCart from 'src/hooks/useCart';
 import { ProductPrice } from '../ProductCard/ProductPrice';
 import ConfirmDeleteModal from './ConfirmDeleteModal';
 
-type Props = WithTranslation & {
+type Props = {
   image: string;
   productName: string;
   productId: string;
@@ -24,7 +22,7 @@ type Props = WithTranslation & {
 };
 
 function CartItem(props: Props): JSX.Element {
-  const { t } = props;
+  const { t } = useTranslation('cart');
 
   const [open, setOpen] = useState(false);
 
@@ -32,7 +30,7 @@ function CartItem(props: Props): JSX.Element {
 
   const { refetchCart } = useCart();
 
-  const [updateCart] = useMutation<UpdateCartData, UpdateCartVars>(UPDATE_CART, {
+  const [updateCart] = useMutationAuth<UpdateCartData, UpdateCartVars>(UPDATE_CART, {
     onCompleted: () => {
       toast.success('Update cart success');
       refetchCart();
@@ -57,11 +55,13 @@ function CartItem(props: Props): JSX.Element {
 
   const handleMinusClick = () => {
     const newQty = Math.max(props.quantity - 1, 0);
-    setQuantity(newQty + '');
     if (newQty === 0) {
-      toast.error(<div>{t('cart:quantity_smaller_than_1')}</div>);
+      setQuantity('1');
+      setOpen(true);
+      // toast.error(<div>{t('cart:quantity_smaller_than_1')}</div>);
       return;
     }
+    setQuantity(newQty + '');
 
     updateCart({
       variables: {
@@ -97,6 +97,9 @@ function CartItem(props: Props): JSX.Element {
     const string = event.target.value.replace(/\D/g, '');
 
     const newQuantity = parseInt(string, 10) || 0;
+
+    console.log(newQuantity);
+    console.log(typeof quantity);
 
     if (newQuantity + '' !== quantity) {
       setQuantity(newQuantity + '');
@@ -184,4 +187,4 @@ function CartItem(props: Props): JSX.Element {
   );
 }
 
-export default withTranslation(['cart'])(CartItem);
+export default CartItem;

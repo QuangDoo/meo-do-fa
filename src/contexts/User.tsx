@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
-import { User } from 'src/types/User';
+import { User } from 'src/graphql/user/getUser';
 
 type Props = {
   children: React.ReactNode;
@@ -7,7 +7,7 @@ type Props = {
 
 type ContextValue = {
   user?: User;
-  setUser?(value: any): void;
+  setUser?: (value) => void;
 };
 
 const UserContext = createContext<ContextValue>({});

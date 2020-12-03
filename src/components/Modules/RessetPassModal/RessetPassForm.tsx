@@ -8,7 +8,8 @@ import { viPhoneNumberRegex } from 'src/assets/regex/viPhoneNumber';
 import Button from 'src/components/Form/Button';
 import Input from 'src/components/Form/Input';
 import { useModalControlDispatch } from 'src/contexts/ModalControl';
-import { LOGIN_USER } from 'src/graphql/user/login.mutation';
+import { LOGIN_USER } from 'src/graphql/user/login';
+// import { LOGIN_USER } from 'src/graphql/user/login.mutation';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import withApollo from 'src/utils/withApollo';
 
