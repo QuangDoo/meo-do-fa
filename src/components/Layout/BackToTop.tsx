@@ -1,9 +1,12 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import React, { useEffect, useState } from 'react';
+import * as Scroll from 'react-scroll';
 
-export default function BackToTop() {
+function BackToTop() {
   const [show, setShow] = useState(false);
+
+  const scroll = Scroll.animateScroll;
 
   const onSetShow = () => {
     if (!show && window.pageYOffset > 400) {
@@ -18,18 +21,13 @@ export default function BackToTop() {
     return () => document.removeEventListener('scroll', onSetShow);
   });
 
-  useEffect(() => {
-    console.log(show);
-  });
-
-  const scrollTop = () => {
-    // eslint-disable-next-line no-var
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  const scrollToTop = () => {
+    scroll.scrollToTop();
   };
 
   return (
-    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-    <div className={show ? 'back-to-top show' : 'back-to-top'} onClick={scrollTop}>
+    // eslint-disable-next-line jsx-a11y/click-events-have-key-events
+    <div className={show ? 'back-to-top show' : 'back-to-top'} onClick={scrollToTop}>
       <span>
         <ExpandLessIcon style={{ fontSize: '1rem' }} />
       </span>
@@ -37,3 +35,5 @@ export default function BackToTop() {
     </div>
   );
 }
+
+export default BackToTop;

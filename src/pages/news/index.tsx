@@ -1,4 +1,3 @@
-import { Trans, withTranslation } from 'i18n';
 import React from 'react';
 import withApollo from 'src/utils/withApollo';
 
