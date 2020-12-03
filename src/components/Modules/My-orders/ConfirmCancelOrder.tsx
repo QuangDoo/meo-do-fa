@@ -1,9 +1,10 @@
 import { useTranslation } from 'i18n';
-import React, { FC, useEffect } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import Button from 'src/components/Form/Button';
 import Checkbox from 'src/components/Form/Checkbox';
-import Input from 'src/components/Form/Input';
+import Inputs from 'src/components/Form/Input';
 import Select from 'src/components/Form/Select';
 import Textarea from 'src/components/Form/Textarea';
 import ModalBase from 'src/components/Layout/Modal/ModalBase';
@@ -20,7 +21,7 @@ type Props = {
   orderNo: string;
 };
 
-type Input = {
+type Inputs = {
   reason: string;
   text: string;
   check: true;
@@ -33,46 +34,37 @@ const options = [
   { key: 'change_delivery_address', reason: 'Thay đổi địa chỉ giao hàng', default: false }
 ];
 
-const ConfirmCancelOrder: FC<Props> = (props) => {
+const ConfirmCancelOrder = (props) => {
   const { open, onClose, orderNo } = props;
 
-  const [cancelOrder, { data, error }] = useMutationAuth(CANCEL_ORDER);
+  const [cancelOrder] = useMutationAuth(CANCEL_ORDER, {
+    onCompleted: () => {
+      toast.success(t('cancelOrder:cancel_order_successful'));
 
-  const { register, handleSubmit, watch, errors } = useForm();
+      onClose();
+    },
+    onError: (error) => {
+      // console.log('Delete cart error:', { error });
+      toast.error(t('cancelOrder:cancel_order_unsuccessful'));
+
+      onClose();
+    }
+  });
+
+  const { register, handleSubmit } = useForm();
 
   const { t } = useTranslation('cancelOrder');
 
-  useEffect(() => {
-    if (!data) return;
-
-    toast.success(t('cancelOrder:cancel_order_successful'));
-
-    onClose();
-  }, [data]);
-
-  // onError
-  useEffect(() => {
-    if (!error) return;
-
-    // console.log('Delete cart error:', { error });
-    toast.error(t('cancelOrder:cancel_order_unsuccessful'));
-
-    onClose();
-  }, [error]);
-
-  const onSubmit = (data: Input) => {
+  const onSubmit = (data: Inputs) => {
     console.log(data);
     console.log(typeof orderNo, orderNo);
     cancelOrder({
       variables: {
         orderNo: orderNo
       }
-    }).catch((error) => {
-      // toast.error(error);
-      // console.log(error);
-      onClose();
     });
   };
+
   const hocTrans = (key) => t(`cancelOrder:${key}`);
 
   return (
@@ -81,10 +73,12 @@ const ConfirmCancelOrder: FC<Props> = (props) => {
         <div className="text-center">
           <h3>{t('cancelOrder:request_cancellation')}</h3>
         </div>
+
         <form className="form" onSubmit={handleSubmit(onSubmit)}>
-          <label className="my-1 mr-2" htmlFor="inlineFormCustomSelectPref">
+          <label className="my-1 mr-2">
             <b>{t('cancelOrder:reason_for_cancellation')}</b>
           </label>
+
           <Select ref={register} className="custom-select my-1 mr-sm-2" name="reason">
             {options &&
               options.map((option) => {
@@ -111,9 +105,10 @@ const ConfirmCancelOrder: FC<Props> = (props) => {
             name="check"
             label={t('cancelOrder:cancellation_policy')}
           />
-          <button type="submit" className="btn btn-primary my-1">
+
+          <Button type="submit" variant="primary" className="my-1">
             {t('cancelOrder:cancellation_policy')}
-          </button>
+          </Button>
         </form>
       </div>
     </ModalBase>

@@ -2,7 +2,7 @@ import { useQuery } from '@apollo/client';
 import { useTranslation } from 'i18n';
 import _ from 'lodash';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React from 'react';
 import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
@@ -64,9 +64,7 @@ function Products(): JSX.Element {
       category_id: router.query.category as string,
       order_type: (router.query.sort as string) || defaultSortType
     },
-    onError: (error) => {
-      console.log('Get products error:', error);
-    }
+    onError: () => null
   });
 
   const products = productsData?.getProductByConditions?.Products || [];
