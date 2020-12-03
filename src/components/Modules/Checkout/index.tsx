@@ -39,6 +39,8 @@ const CheckoutPage = (): JSX.Element => {
 
   const { refetchCart } = useCart();
 
+  const { refetchCountCart } = useCountCart();
+
   const [createOrder] = useMutationAuth(CREATE_ORDER, {
     onCompleted: (data) => {
       swal({
@@ -46,6 +48,7 @@ const CheckoutPage = (): JSX.Element => {
         icon: 'success'
       }).then(() => {
         refetchCart();
+        refetchCountCart();
         router.push('/');
       });
     },

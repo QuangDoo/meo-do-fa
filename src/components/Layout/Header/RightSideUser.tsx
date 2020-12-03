@@ -1,7 +1,6 @@
 import clsx from 'clsx';
 import Link from 'next/link';
 import React, { useState } from 'react';
-import { useUserContext } from 'src/contexts/User';
 import useUser from 'src/hooks/useUser';
 import { mockMyNoti } from 'src/mockData/mockMyNoti';
 
