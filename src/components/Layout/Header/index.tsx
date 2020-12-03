@@ -57,8 +57,8 @@ const Header = ({ t }: HeaderProps): JSX.Element => {
         </div>
       </nav>
       <div className="container py-4">
-        <div className="d-flex flex-column flex-sm-row align-items-start align-items-sm-center justify-content-between">
-          <div className="mr-3 flex-shrink-0 mb-3 mb-sm-0">
+        <div className="d-flex flex-column flex-sm-row align-items-stretch align-items-sm-center justify-content-between">
+          <div className="mr-sm-3 flex-shrink-0 mb-3 mb-sm-0 mr-0">
             <div className="rockland-logo">
               <a href="/" title="medofa.vn">
                 <img

@@ -13,6 +13,7 @@
   "input_phone_error_invalid": "Please provide a valid phone number.",
   "input_email_placeholder": "Email",
   "input_email_error_invalid": "Please provide a valid email.",
+  "input_email_error_noSpecialChars": "Email cannot contain special characters.",
   "input_password_placeholder": "Password (required)",
   "input_password_error_required": "Please provide a password.",
   "input_password_error_minLength": "Password requires a minimum of 6 characters.",

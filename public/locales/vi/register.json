@@ -13,6 +13,7 @@
   "input_phone_error_invalid": "Xin nhập số điện thoại hợp lệ.",
   "input_email_placeholder": "Nhập email",
   "input_email_error_invalid": "Xin nhập email hợp lệ.",
+  "input_email_error_noSpecialChars": "Email không được chứa kí tự đặc biệt.",
   "input_password_placeholder": "Nhập mật khẩu (bắt buộc)",
   "input_password_error_required": "Xin nhập mật khẩu.",
   "input_password_error_minLength": "Xin nhập mật khẩu tối thiểu 6 kí tự.",

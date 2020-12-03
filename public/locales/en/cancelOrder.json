@@ -1,0 +1,13 @@
+{
+  "cancel_order_successful": "cancel order successful",
+  "cancel_order_unsuccessful": "cancel order unsuccessful",
+  "reason_for_cancellation": "Reason for cancellation",
+  "additional_information": "Additional Information (optional)",
+  "cancellation_policy": "Cancellation Policy",
+  "request_cancellation": "Request Cancellation",
+  "delivery_is_too_long": "Delivery is too long",
+  "change_of_mind": "Change of mind",
+  "duplicate_order": "Duplicate order",
+  "change_delivery_address": "Change delivery address",
+  "button_title": "Submit"
+}

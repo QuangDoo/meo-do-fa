@@ -29,10 +29,9 @@ function Banner(props: Props) {
               <div className="wrapper">
                 <h3 className="about-us__title">We Modernise Healthcare Distribution</h3>
                 <p>
-                  Thuocsi.vn is the leading e-commerce healthcare e-commerce platform in Vietnam.
-                  The platform serves healthcare practices including pharmacies, clinics and
-                  hospitals by providing a wide variety of products with quality service and fast
-                  delivery
+                  Medofa is the leading e-commerce healthcare e-commerce platform in Vietnam. The
+                  platform serves healthcare practices including pharmacies, clinics and hospitals
+                  by providing a wide variety of products with quality service and fast delivery
                 </p>
               </div>
             </div>
