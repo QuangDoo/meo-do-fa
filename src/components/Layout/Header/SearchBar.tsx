@@ -37,7 +37,7 @@ const SearchBar = (): JSX.Element => {
 
   const [isFocused, setIsFocused] = useState(false);
 
-  // const [showResults, setShowResults] = useState(0);
+  const [showResults, setShowResults] = useState(false);
 
   const [showProducts, setShowProducts] = useState(false);
 
@@ -47,7 +47,7 @@ const SearchBar = (): JSX.Element => {
   useDebouncedEffect(
     () => {
       if (value === '') {
-        // setShowResults(0);
+        setShowResults(true);
         setShowProducts(false);
         setShowManufacturers(false);
         return;
@@ -81,7 +81,7 @@ const SearchBar = (): JSX.Element => {
         search: value
       }
     });
-
+    setShowResults(false);
     event.preventDefault();
   };
 
@@ -89,7 +89,7 @@ const SearchBar = (): JSX.Element => {
     setValue(e.target.value);
     setShowProducts(false);
     setShowManufacturers(false);
-    // setShowResults(2);
+    setShowResults(true);
   };
 
   const renderProducts = (products) => {
@@ -151,7 +151,7 @@ const SearchBar = (): JSX.Element => {
             </div>
           </form>
           {/* && showResults === 2 */}
-          <div className={clsx('elevated search__results', isFocused && 'show')}>
+          <div className={clsx('elevated search__results', isFocused && showResults && 'show')}>
             {showProducts &&
               (products.length > 0 ? (
                 <>
@@ -161,7 +161,7 @@ const SearchBar = (): JSX.Element => {
               ) : (
                 <>
                   <div className="search__result--empty">
-                    {t('searchBar:no_product')} {value}
+                    {t('searchBar:no_product')} <b>{value}</b>
                   </div>
                   <hr />
                 </>
@@ -174,7 +174,7 @@ const SearchBar = (): JSX.Element => {
                 </>
               ) : (
                 <div className="search__result--empty">
-                  {t('searchBar:no_manufacturer')} {value}
+                  {t('searchBar:no_manufacturer')} <b>{value}</b>
                 </div>
               ))}
             {(pLoading || mLoading) && (

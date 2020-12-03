@@ -7,6 +7,8 @@ import { useForm } from 'react-hook-form';
 import Button from '../Form/Button';
 import Input from '../Form/Input';
 
+import BackToTop from '../Layout/BackToTop';
+
 const links: { href: string; i18nKey: string }[] = [
   { href: '/about-us', i18nKey: 'footer:about_us' },
   { href: '', i18nKey: 'footer:privacy_policy' },
@@ -230,6 +232,7 @@ const Footer = (): JSX.Element => {
         </div>
       </div>
       <div className="copyright">{t('footer:copyright')}</div>
+      <BackToTop />
     </div>
   );
 };

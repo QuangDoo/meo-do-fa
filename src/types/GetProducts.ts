@@ -14,6 +14,7 @@ export type GetProductsVars = {
   type?: string;
   manufacturer_id?: string;
   category_id?: string;
+  name?: string;
 };
 
 export type ProductFilterType = 'invoice-exportable' | 'new' | 'use-vietnamese' | 'only-medofa';

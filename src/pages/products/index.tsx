@@ -31,6 +31,8 @@ function Products(): JSX.Element {
 
   const router = useRouter();
 
+  const search = router.query.search;
+
   const page = +router.query.page || 1;
 
   const { data: categoriesData } = useQuery<GetAllCategoriesData, undefined>(GET_ALL_CATEGORIES, {
@@ -66,7 +68,8 @@ function Products(): JSX.Element {
       type: router.query.tag as string,
       manufacturer_id: router.query.manufacturer as string,
       category_id: router.query.category as string,
-      order_type: (router.query.sort as string) || defaultSortType
+      order_type: (router.query.sort as string) || defaultSortType,
+      name: search as string
     },
     onError: () => null
   });
@@ -113,7 +116,14 @@ function Products(): JSX.Element {
                     {Math.min(page * pageSize, total)}
                   </b>{' '}
                   {t('products:on_of')}
-                  <b>{total}</b> {t('products:products')}
+                  <b>{`${total} `}</b>
+                  {search ? (
+                    <>
+                      {t('products:key')} <b>{search}</b>
+                    </>
+                  ) : (
+                    t('products:products')
+                  )}
                 </>
               ) : (
                 t('products:no_products')
