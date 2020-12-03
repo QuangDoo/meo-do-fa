@@ -56,7 +56,10 @@ const Notification = (): JSX.Element => {
                       dangerouslySetInnerHTML={{ __html: noti.body }}
                     />
                     <small className="notification__content-created-at">
-                      {formatDistance(subDays(new Date(), 3), noti.date)}
+                      {formatDistance(new Date(noti.date), new Date(), {
+                        addSuffix: true,
+                        includeSeconds: true
+                      })}
                     </small>
                   </div>
                 </a>

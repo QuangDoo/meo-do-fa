@@ -1,10 +1,9 @@
 import clsx from 'clsx';
+import { formatDistance } from 'date-fns';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
-import { useUserContext } from 'src/contexts/User';
 import useNoti from 'src/hooks/useNoti';
 import useUser from 'src/hooks/useUser';
-import { mockMyNoti } from 'src/mockData/mockMyNoti';
 
 type NotiItem = {
   time: string;
@@ -24,7 +23,12 @@ const NotiItem = (props) => {
               className="notification__content-title"
               dangerouslySetInnerHTML={{ __html: props.body }}
             />
-            <small className="notification__content-created-at">{props.date}</small>
+            <small className="notification__content-created-at">
+              {formatDistance(new Date(props.date), new Date(), {
+                addSuffix: true,
+                includeSeconds: true
+              })}
+            </small>
           </div>
         </a>
       </Link>
