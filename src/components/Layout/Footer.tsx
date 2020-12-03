@@ -2,7 +2,6 @@ import { useTranslation, withTranslation } from 'i18n';
 import { WithTranslation } from 'next-i18next';
 import Link from 'next/link';
 import React from 'react';
-import { useForm } from 'react-hook-form';
 
 import Button from '../Form/Button';
 import Input from '../Form/Input';
@@ -27,10 +26,6 @@ const FooterLink = (props: { href: string; text: string }) => (
     <a className="footer__link">{props.text}</a>
   </Link>
 );
-
-type Inputs = {
-  subcribeEmail: string;
-};
 
 const Footer = (): JSX.Element => {
   const { t } = useTranslation(['footer', 'common']);
