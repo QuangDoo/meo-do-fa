@@ -8,7 +8,6 @@ import React, { useState } from 'react';
 import { GET_ALL_CATEGORIES, GetAllCategoriesData } from 'src/graphql/category/category.query';
 import useCountCart from 'src/hooks/useCountCart';
 import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
-import { Category } from 'src/types/Category';
 
 const Nav = () => {
   const isLoggedIn = useIsLoggedIn();

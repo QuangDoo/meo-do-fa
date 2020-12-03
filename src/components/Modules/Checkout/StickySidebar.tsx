@@ -71,8 +71,15 @@ const StickySidebar = (props: Props): JSX.Element => {
         </SidebarItem>
 
         <SidebarItem label={t('checkout:price_shipping_fee')}>
-          <span data-target="checkout.shippingFee">
+          <span>
             {data.totalShippingFee}
+            <span className="unit">đ</span>
+          </span>
+        </SidebarItem>
+
+        <SidebarItem label={t('checkout:price_total_discount')}>
+          <span>
+            -{data.totalDcAmt}
             <span className="unit">đ</span>
           </span>
         </SidebarItem>

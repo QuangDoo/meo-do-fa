@@ -32,6 +32,8 @@ function Products(): JSX.Element {
 
   const page = +router.query.page || 1;
 
+  const search = router.query.search as string;
+
   const { data: categoriesData } = useQuery<GetAllCategoriesData, undefined>(GET_ALL_CATEGORIES, {
     onError: (error) => {
       console.log('Get all categories error:', error);
@@ -67,7 +69,7 @@ function Products(): JSX.Element {
         manufacturer_id: router.query.manufacturer as string,
         category_id: router.query.category as string,
         order_type: (router.query.sort as string) || defaultSortType,
-        name: router.query.search as string
+        name: search
       }
     },
     onError: () => null

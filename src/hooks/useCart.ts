@@ -7,7 +7,7 @@ import { useCartContext } from '../contexts/Cart';
 import { useQueryAuth } from './useApolloHookAuth';
 
 export default function useCart() {
-  const { data, refetch } = useQueryAuth(GET_CART, {
+  const { data, loading, refetch } = useQueryAuth(GET_CART, {
     fetchPolicy: 'network-only',
     onCompleted: (data) => {
       setCart(data);
@@ -30,6 +30,7 @@ export default function useCart() {
 
   return {
     refetchCart: refetch,
-    cart: data
+    cart: data,
+    loading
   };
 }
