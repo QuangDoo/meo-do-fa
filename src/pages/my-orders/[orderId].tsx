@@ -278,7 +278,7 @@ const OrderDetails = () => {
   };
 
   const { user } = useUser();
-
+  console.log('user', user);
   return (
     <>
       <Head>
@@ -328,12 +328,12 @@ const OrderDetails = () => {
 
                     <Link
                       href={{
-                        pathname: '/feedback',
-                        query: {
-                          orderId: orderId,
-                          name: user?.getUser.name,
-                          phone: user?.getUser.phone
-                        }
+                        pathname: '/feedback'
+                        // query: {
+                        //   orderId: orderId,
+                        //   name: user?.getUser.name,
+                        //   phone: user?.getUser.phone
+                        // }
                       }}>
                       <Button size="small" startIcon={<Sms />} variant="outlined" color="primary">
                         Gửi phản hồi

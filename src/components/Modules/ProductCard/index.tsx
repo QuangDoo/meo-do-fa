@@ -17,7 +17,7 @@ type Props = Product & WithTranslation;
 
 const ProductCard = ({ t, ...props }: Props): JSX.Element => {
   const isLoggedIn = useIsLoggedIn();
-  console.log('props', props);
+
   const discountPercent = Math.round(100 - (props.price * 100) / props.standard_price);
 
   // const isDiscount = discountPercent > 0;
