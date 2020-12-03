@@ -4,7 +4,7 @@ import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
 
 import AddCart from '../AddCart';
 import ProductBadge from '../ProductCard/ProductBadge';
-import QuantityInput from '../QuantityInput';
+import QuantityInput from '../../Form/QuantityInput';
 
 type PropsType = {
   name: string;

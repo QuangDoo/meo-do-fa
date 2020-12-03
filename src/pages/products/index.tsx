@@ -1,4 +1,5 @@
 import { useQuery } from '@apollo/client';
+import { useLazyQuery } from '@apollo/client';
 import { useTranslation } from 'i18n';
 import _ from 'lodash';
 import { useRouter } from 'next/router';
@@ -30,6 +31,8 @@ function Products(): JSX.Element {
   const { t } = useTranslation(['products']);
 
   const router = useRouter();
+
+  const search = router.query.search;
 
   const page = +router.query.page || 1;
 
@@ -66,7 +69,8 @@ function Products(): JSX.Element {
       type: router.query.tag as string,
       manufacturer_id: router.query.manufacturer as string,
       category_id: router.query.category as string,
-      order_type: (router.query.sort as string) || defaultSortType
+      order_type: (router.query.sort as string) || defaultSortType,
+      name: search as string
     },
     onError: (error) => {
       console.log('Get products error:', error);
@@ -115,7 +119,14 @@ function Products(): JSX.Element {
                     {Math.min(page * pageSize, total)}
                   </b>{' '}
                   {t('products:on_of')}
-                  <b>{total}</b> {t('products:products')}
+                  <b>{`${total} `}</b>
+                  {search ? (
+                    <>
+                      {t('products:key')} <b>{search}</b>
+                    </>
+                  ) : (
+                    t('products:products')
+                  )}
                 </>
               ) : (
                 t('products:no_products')

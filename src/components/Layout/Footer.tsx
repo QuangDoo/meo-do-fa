@@ -3,6 +3,8 @@ import { WithTranslation } from 'next-i18next';
 import Link from 'next/link';
 import React from 'react';
 
+import BackToTop from '../Layout/BackToTop';
+
 const links: { href: string; i18nKey: string }[] = [
   { href: '/about-us', i18nKey: 'footer:about_us' },
   { href: '', i18nKey: 'footer:privacy_policy' },
@@ -186,6 +188,7 @@ const Footer = ({ t }: WithTranslation): JSX.Element => {
         </div>
       </div>
       <div className="copyright">{t('footer:copyright')}</div>
+      <BackToTop />
     </div>
   );
 };
