@@ -6,6 +6,7 @@ import React from 'react';
 import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
+import Loading from 'src/components/Layout/Loading';
 import Nav from 'src/components/Layout/Nav';
 import FilterTags from 'src/components/Modules/FilterTags';
 import Pagination from 'src/components/Modules/Pagination';
@@ -55,7 +56,10 @@ function Products(): JSX.Element {
 
   const manufacturers = manufacturersData?.getManufactories || [];
 
-  const { data: productsData } = useQuery<GetProductsData, GetProductsVars>(GET_PRODUCTS, {
+  const { data: productsData, loading: productsLoading } = useQuery<
+    GetProductsData,
+    GetProductsVars
+  >(GET_PRODUCTS, {
     variables: {
       page,
       pageSize,
@@ -99,7 +103,9 @@ function Products(): JSX.Element {
             <div className="px-2 px-sm-0 mb-2">
               <h1 className="products__header text-capitalize mb-3">{title}</h1>
 
-              {total > 0 ? (
+              {productsLoading ? (
+                <b></b>
+              ) : total > 0 ? (
                 <>
                   {t('products:show')}{' '}
                   <b>
@@ -119,11 +125,17 @@ function Products(): JSX.Element {
             </div>
 
             <main className="products__products">
-              <div className="products__cards mb-3">
-                {products.map((product, index) => (
-                  <ProductCard key={index} {...product} />
-                ))}
-              </div>
+              {productsLoading ? (
+                <div className="container text-center pb-5 pt-5">
+                  <Loading />
+                </div>
+              ) : (
+                <div className="products__cards mb-3">
+                  {products.map((product, index) => (
+                    <ProductCard key={index} {...product} />
+                  ))}
+                </div>
+              )}
 
               <Pagination
                 count={Math.ceil(total / pageSize)}
