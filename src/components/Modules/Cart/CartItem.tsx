@@ -57,11 +57,13 @@ function CartItem(props: Props): JSX.Element {
 
   const handleMinusClick = () => {
     const newQty = Math.max(props.quantity - 1, 0);
-    setQuantity(newQty + '');
     if (newQty === 0) {
-      toast.error(<div>{t('cart:quantity_smaller_than_1')}</div>);
+      setQuantity('1');
+      setOpen(true);
+      // toast.error(<div>{t('cart:quantity_smaller_than_1')}</div>);
       return;
     }
+    setQuantity(newQty + '');
 
     updateCart({
       variables: {
@@ -97,6 +99,9 @@ function CartItem(props: Props): JSX.Element {
     const string = event.target.value.replace(/\D/g, '');
 
     const newQuantity = parseInt(string, 10) || 0;
+
+    console.log(newQuantity);
+    console.log(typeof quantity);
 
     if (newQuantity + '' !== quantity) {
       setQuantity(newQuantity + '');

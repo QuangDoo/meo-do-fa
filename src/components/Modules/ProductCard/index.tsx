@@ -7,7 +7,7 @@ import React from 'react';
 import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
 import { Product } from 'src/types/Product';
 
-import QuantityInput from '../QuantityInput';
+import QuantityInput from '../../Form/QuantityInput';
 import { DiscountRibbon } from './DiscountRibbon';
 import LoginToSeePrice from './LoginToSeePrice';
 import ProductBadge from './ProductBadge';

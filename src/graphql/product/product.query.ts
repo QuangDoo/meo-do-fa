@@ -8,6 +8,7 @@ export const GET_PRODUCTS = gql`
     $type: String
     $category_id: String
     $manufacturer_id: String
+    $name: String
   ) {
     getProductByConditions(
       page: $page
@@ -17,6 +18,7 @@ export const GET_PRODUCTS = gql`
         order_type: $order_type
         category_id: $category_id
         manufacturer_id: $manufacturer_id
+        name: $name
       }
     ) {
       Products {

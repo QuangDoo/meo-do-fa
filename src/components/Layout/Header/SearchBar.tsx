@@ -9,19 +9,27 @@ import { SEARCH_MANUFACTURERS_BY_NAME } from 'src/graphql/search/search.manufact
 import { SEARCH_PRODUCTS_BY_NAME } from 'src/graphql/search/search.products.query';
 import { useDebouncedEffect } from 'src/hooks/useDebouncedEffect';
 
+import Loading from '../Loading';
+
 const SearchBar = (): JSX.Element => {
   const { t } = useTranslation(['searchBar']);
   const router = useRouter();
 
-  const [searchProducts, { data: pData }] = useLazyQuery(SEARCH_PRODUCTS_BY_NAME, {
-    onCompleted: () => setShowResults((showResults) => showResults + 1)
-  });
+  const [searchProducts, { data: pData, loading: pLoading }] = useLazyQuery(
+    SEARCH_PRODUCTS_BY_NAME,
+    {
+      onCompleted: () => setShowProducts(true)
+    }
+  );
 
   const products = pData?.searchProduct || [];
 
-  const [searchManufacturers, { data: mData }] = useLazyQuery(SEARCH_MANUFACTURERS_BY_NAME, {
-    onCompleted: () => setShowResults((showResults) => showResults + 1)
-  });
+  const [searchManufacturers, { data: mData, loading: mLoading }] = useLazyQuery(
+    SEARCH_MANUFACTURERS_BY_NAME,
+    {
+      onCompleted: () => setShowManufacturers(true)
+    }
+  );
 
   const manufacturers = mData?.searchManufactory || [];
 
@@ -29,13 +37,19 @@ const SearchBar = (): JSX.Element => {
 
   const [isFocused, setIsFocused] = useState(false);
 
-  const [showResults, setShowResults] = useState(0);
+  const [showResults, setShowResults] = useState(false);
+
+  const [showProducts, setShowProducts] = useState(false);
+
+  const [showManufacturers, setShowManufacturers] = useState(false);
 
   // Search with debounce
   useDebouncedEffect(
     () => {
       if (value === '') {
-        setShowResults(0);
+        setShowResults(true);
+        setShowProducts(false);
+        setShowManufacturers(false);
         return;
       }
 
@@ -67,13 +81,54 @@ const SearchBar = (): JSX.Element => {
         search: value
       }
     });
-
+    setShowResults(false);
     event.preventDefault();
   };
 
   const handleChange = (e) => {
     setValue(e.target.value);
-    setShowResults(0);
+    setShowProducts(false);
+    setShowManufacturers(false);
+    setShowResults(true);
+  };
+
+  const renderProducts = (products) => {
+    return products.map((product) => (
+      <Link key={product.id} href={`/products/${product.id}`}>
+        <a className="search__result">{product.name}</a>
+      </Link>
+    ));
+  };
+
+  const renderManufacturers = (manufacturers) => {
+    return manufacturers.map((manufacturer) => (
+      <Link key={manufacturer.id} href={`/manufacturers/${manufacturer.id}`}>
+        <a className="search__result">{manufacturer.name}</a>
+      </Link>
+    ));
+  };
+
+  const renderSearchTitle = (type) => {
+    switch (type) {
+      case 'products':
+        return (
+          <Link href={`/products?sort=best_match&search=${value}`}>
+            <a className="search__result">
+              <em>{value}</em> {t('searchBar:in')}{' '}
+              <b className="text-primary">{t('searchBar:all_products')}</b>
+            </a>
+          </Link>
+        );
+      case 'manufacturers':
+        return (
+          <Link href={`/manufacturers?sort=best_match&search=${value}`}>
+            <a className="search__result pt-0">
+              <em>{value}</em> {t('searchBar:in')}{' '}
+              <b className="text-primary">{t('searchBar:all_manufacturers')}</b>
+            </a>
+          </Link>
+        );
+    }
   };
 
   return (
@@ -95,50 +150,36 @@ const SearchBar = (): JSX.Element => {
               />
             </div>
           </form>
-
-          <div
-            className={clsx('elevated search__results', isFocused && showResults === 2 && 'show')}>
-            {products.length > 0 ? (
-              <>
-                <Link href={`/products?sort=best_match&search=${value}`}>
-                  <a className="search__result">
-                    <em>{value}</em> {t('searchBar:in')}{' '}
-                    <b className="text-primary">{t('searchBar:all_products')}</b>
-                  </a>
-                </Link>
-
-                {products.map((product) => (
-                  <Link key={product.id} href={`/products/${product.id}`}>
-                    <a className="search__result">{product.name}</a>
-                  </Link>
-                ))}
-              </>
-            ) : (
-              <div className="search__result--empty">
-                {t('searchBar:no_product')} {value}
-              </div>
-            )}
-
-            <hr />
-
-            {manufacturers.length > 0 ? (
-              <>
-                <Link href={`/manufacturers?sort=best_match&search=${value}`}>
-                  <a className="search__result pt-0">
-                    <em>{value}</em> {t('searchBar:in')}{' '}
-                    <b className="text-primary">{t('searchBar:all_manufacturers')}</b>
-                  </a>
-                </Link>
-
-                {manufacturers.map((manufacturer) => (
-                  <Link key={manufacturer.id} href={`/manufacturers/${manufacturer.id}`}>
-                    <a className="search__result">{manufacturer.name}</a>
-                  </Link>
-                ))}
-              </>
-            ) : (
-              <div className="search__result--empty">
-                {t('searchBar:no_manufacturer')} {value}
+          {/* && showResults === 2 */}
+          <div className={clsx('elevated search__results', isFocused && showResults && 'show')}>
+            {showProducts &&
+              (products.length > 0 ? (
+                <>
+                  {renderSearchTitle('products')}
+                  {renderProducts(products)}
+                </>
+              ) : (
+                <>
+                  <div className="search__result--empty">
+                    {t('searchBar:no_product')} <b>{value}</b>
+                  </div>
+                  <hr />
+                </>
+              ))}
+            {showManufacturers &&
+              (manufacturers.length > 0 ? (
+                <>
+                  {renderSearchTitle('manufacturers')}
+                  {renderManufacturers(manufacturers)}
+                </>
+              ) : (
+                <div className="search__result--empty">
+                  {t('searchBar:no_manufacturer')} <b>{value}</b>
+                </div>
+              ))}
+            {(pLoading || mLoading) && (
+              <div className="search__result--empty text-center">
+                <Loading />
               </div>
             )}
           </div>

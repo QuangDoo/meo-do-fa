@@ -2,10 +2,10 @@ import Link from 'next/link';
 import React from 'react';
 import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
 
+import QuantityInput from '../../Form/QuantityInput';
 import AddCart from '../AddCart';
 import LoginModal from '../LoginModal';
 import ProductBadge from '../ProductCard/ProductBadge';
-import QuantityInput from '../QuantityInput';
 
 type PropsType = {
   name: string;

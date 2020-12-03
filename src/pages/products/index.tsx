@@ -6,6 +6,7 @@ import React from 'react';
 import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
+import Loading from 'src/components/Layout/Loading';
 import Nav from 'src/components/Layout/Nav';
 import FilterTags from 'src/components/Modules/FilterTags';
 import Pagination from 'src/components/Modules/Pagination';
@@ -29,6 +30,8 @@ function Products(): JSX.Element {
   const { t } = useTranslation(['products']);
 
   const router = useRouter();
+
+  const search = router.query.search;
 
   const page = +router.query.page || 1;
 
@@ -55,14 +58,18 @@ function Products(): JSX.Element {
 
   const manufacturers = manufacturersData?.getManufactories || [];
 
-  const { data: productsData } = useQuery<GetProductsData, GetProductsVars>(GET_PRODUCTS, {
+  const { data: productsData, loading: productsLoading } = useQuery<
+    GetProductsData,
+    GetProductsVars
+  >(GET_PRODUCTS, {
     variables: {
       page,
       pageSize,
       type: router.query.tag as string,
       manufacturer_id: router.query.manufacturer as string,
       category_id: router.query.category as string,
-      order_type: (router.query.sort as string) || defaultSortType
+      order_type: (router.query.sort as string) || defaultSortType,
+      name: search as string
     },
     onError: () => null
   });
@@ -99,7 +106,9 @@ function Products(): JSX.Element {
             <div className="px-2 px-sm-0 mb-2">
               <h1 className="products__header text-capitalize mb-3">{title}</h1>
 
-              {total > 0 ? (
+              {productsLoading ? (
+                <b></b>
+              ) : total > 0 ? (
                 <>
                   {t('products:show')}{' '}
                   <b>
@@ -107,7 +116,14 @@ function Products(): JSX.Element {
                     {Math.min(page * pageSize, total)}
                   </b>{' '}
                   {t('products:on_of')}
-                  <b>{total}</b> {t('products:products')}
+                  <b>{`${total} `}</b>
+                  {search ? (
+                    <>
+                      {t('products:key')} <b>{search}</b>
+                    </>
+                  ) : (
+                    t('products:products')
+                  )}
                 </>
               ) : (
                 t('products:no_products')
@@ -119,11 +135,17 @@ function Products(): JSX.Element {
             </div>
 
             <main className="products__products">
-              <div className="products__cards mb-3">
-                {products.map((product, index) => (
-                  <ProductCard key={index} {...product} />
-                ))}
-              </div>
+              {productsLoading ? (
+                <div className="container text-center pb-5 pt-5">
+                  <Loading />
+                </div>
+              ) : (
+                <div className="products__cards mb-3">
+                  {products.map((product, index) => (
+                    <ProductCard key={index} {...product} />
+                  ))}
+                </div>
+              )}
 
               <Pagination
                 count={Math.ceil(total / pageSize)}
