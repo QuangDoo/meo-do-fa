@@ -136,7 +136,7 @@ function Cart(): JSX.Element {
                       <div className="col-12">
                         <div className="cart__info-item">
                           <a className="btn btn-secondary btn-block text-small">
-                            <button onClick={handleCheckoutClick}> Tiếp tục thanh toán</button>
+                            <button onClick={handleCheckoutClick}>Tiếp tục thanh toán</button>
                           </a>
                         </div>
                       </div>

@@ -17,8 +17,7 @@ import {
   GetManufacturersData,
   GetManufacturersVars
 } from 'src/graphql/manufacturers/manufacturers.query';
-import { GET_PRODUCTS } from 'src/graphql/product/product.query';
-import { GetProductsData, GetProductsVars } from 'src/types/GetProducts';
+import { GET_PRODUCTS, GetProductsData, GetProductsVars } from 'src/graphql/product/getProducts';
 import withApollo from 'src/utils/withApollo';
 
 const pageSize = 20;
@@ -60,10 +59,12 @@ function Products(): JSX.Element {
       page,
       pageSize,
       type: router.query.tag as string,
-      manufacturer_id: router.query.manufacturer as string,
-      category_id: router.query.category as string,
-      order_type: (router.query.sort as string) || defaultSortType,
-      name: router.query.search as string
+      condition: {
+        manufacturer_id: router.query.manufacturer as string,
+        category_id: router.query.category as string,
+        order_type: (router.query.sort as string) || defaultSortType,
+        name: router.query.search as string
+      }
     },
     onError: () => null
   });

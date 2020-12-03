@@ -98,15 +98,10 @@ function QuantityInput(props: Props) {
         <button className="btn btn-sm qty__button qty__button--plus" onClick={handlePlus}>
           <i className="fas fa-plus" />
         </button>
-        {router.pathname === '/products/[productId]' ? (
-          <button className="ml-2 btn btn-sm qty__button qty__button--plus" onClick={handleClick}>
-            <i className="fas fa-check" />
-          </button>
-        ) : (
-          <button className="ml-2 btn btn-sm qty__button qty__button--plus" onClick={handleClick}>
-            <i className="fas fa-check" />
-          </button>
-        )}
+
+        <button className="ml-2 btn btn-sm qty__button qty__button--plus" onClick={handleClick}>
+          <i className="fas fa-check" />
+        </button>
       </div>
     </div>
   );

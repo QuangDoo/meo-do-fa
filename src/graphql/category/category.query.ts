@@ -1,10 +1,12 @@
 import { gql } from '@apollo/client';
 
+export type Category = {
+  id: number;
+  name: string;
+};
+
 export type GetAllCategoriesData = {
-  getCategoriesAll: {
-    id: number;
-    name: string;
-  }[];
+  getCategoriesAll: Category[];
 };
 
 export const GET_ALL_CATEGORIES = gql`

@@ -2,8 +2,8 @@ import clsx from 'clsx';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
-import { Category } from 'src/types/Category';
-import { Manufacturer } from 'src/types/Manufacturer';
+import { Category } from 'src/graphql/category/category.query';
+import { Manufacturer } from 'src/graphql/manufacturers/manufacturers.query';
 
 import Dropdown from '../Form/Dropdown';
 import Select from '../Form/Select';

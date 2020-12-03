@@ -1,5 +1,5 @@
 import { gql } from '@apollo/client';
-import { Product } from 'src/types/Product';
+import { Product } from 'src/graphql/product/getProducts';
 
 export type GetBestSellingProductsData = {
   getProductByConditions: {

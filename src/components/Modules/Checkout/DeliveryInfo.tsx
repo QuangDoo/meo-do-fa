@@ -1,11 +1,11 @@
-import { Trans, useTranslation } from 'i18n';
+import { useTranslation } from 'i18n';
 import React from 'react';
 import { emailRegex } from 'src/assets/regex/email';
 import { viPhoneNumberRegex } from 'src/assets/regex/viPhoneNumber';
 import Checkbox from 'src/components/Form/Checkbox';
-import { useUserContext } from 'src/contexts/User';
-import { City, Ward } from 'src/graphql/address/getCities';
+import { City } from 'src/graphql/address/getCities';
 import { District } from 'src/graphql/address/getDistricts';
+import { Ward } from 'src/graphql/address/getWards';
 import { ReactHookFormRegister } from 'src/types/ReactHookFormRegister';
 
 import InputCard from './InputCard';
