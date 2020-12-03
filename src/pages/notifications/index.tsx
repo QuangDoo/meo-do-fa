@@ -1,13 +1,30 @@
+import clsx from 'clsx';
 import Link from 'next/link';
-import React from 'react';
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
+import useNoti from 'src/hooks/useNoti';
 import withApollo from 'src/utils/withApollo';
 
 import Footer from '../../components/Layout/Footer';
 import Head from '../../components/Layout/Head';
 import Header from '../../components/Layout/Header';
 import Nav from '../../components/Layout/Nav';
-import { mockMyNoti } from '../../mockData/mockMyNoti';
+
 const Notification = (): JSX.Element => {
+  const [isRead, setIsRead] = useState(Boolean);
+
+  const { notifications } = useNoti();
+
+  const notificationsData = notifications?.getNotify;
+
+  useEffect(() => {
+    if (!notifications) return;
+  }, [notifications]);
+
+  const handleRead = () => {
+    setIsRead(true);
+  };
+
   return (
     <>
       <Head>
@@ -19,26 +36,45 @@ const Notification = (): JSX.Element => {
         <div className="row">
           <div className="col-12 d-flex align-items-center justify-content-between flex-wrap mb-3">
             <h1 className="h3">Thông Báo của tôi</h1>
-            <Link href="/notification/read">
-              <a className="btn btn-secondary btn-sm">Đánh dấu đọc tất cả</a>
-            </Link>
+
+            <button className="btn btn-secondary btn-sm" onClick={handleRead}>
+              Đánh dấu đọc tất cả
+            </button>
           </div>
-          {mockMyNoti.map((noti, index) => (
+          {notificationsData?.map((noti, index) => (
             <div className="col-12 mb-3" key={index}>
-              <a className="notification__item unread" href="/notifications/1571210">
+              <a
+                className={clsx('notification__item unread', isRead && 'notification__item read')}
+                href="/notifications/1571210">
                 <div className="notification__icon">
                   <i className="status-icon status-notice" />
                 </div>
                 <div className="notification__content">
-                  <div className="notification__content-title">{noti.name}</div>
-                  <small className="notification__content-created-at">{noti.time}</small>
+                  <div
+                    className="notification__content-title"
+                    dangerouslySetInnerHTML={{ __html: noti.body }}
+                  />
+                  <small className="notification__content-created-at">{noti.date}</small>
                 </div>
               </a>
             </div>
           ))}
         </div>
       </div>
-
+      {/* <Pagination
+        count={Math.ceil(total / pageSize)}
+        page={page}
+        siblingCount={4}
+        onChange={(page) =>
+          router.push({
+            pathname: router.pathname,
+            query: {
+              ...router.query,
+              page: page
+            }
+          })
+        }
+      /> */}
       <Footer />
     </>
   );

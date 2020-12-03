@@ -1,7 +1,8 @@
 import clsx from 'clsx';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useUserContext } from 'src/contexts/User';
+import useNoti from 'src/hooks/useNoti';
 import useUser from 'src/hooks/useUser';
 import { mockMyNoti } from 'src/mockData/mockMyNoti';
 
@@ -19,8 +20,11 @@ const NotiItem = (props) => {
             <i className="status-icon status-notice"></i>
           </div>
           <div className="notification__content">
-            <div className="notification__content-title">{props.name}</div>
-            <small className="notification__content-created-at">{props.time}</small>
+            <div
+              className="notification__content-title"
+              dangerouslySetInnerHTML={{ __html: props.body }}
+            />
+            <small className="notification__content-created-at">{props.date}</small>
           </div>
         </a>
       </Link>
@@ -30,6 +34,12 @@ const NotiItem = (props) => {
 const RightSideUser = () => {
   const { user } = useUser();
   const [show, setShow] = useState(false);
+  const { notifications } = useNoti();
+  const notificationsData = notifications?.getNotify;
+
+  useEffect(() => {
+    if (!notifications) return;
+  }, [notifications]);
 
   function toggleShow() {
     setShow((show) => !show);
@@ -45,13 +55,13 @@ const RightSideUser = () => {
           role="button"
           tabIndex={0}>
           <i className="far fa-bell header-right__icon" />
-          <span className="notification__counter">{mockMyNoti.length}</span>
+          <span className="notification__counter">{notificationsData?.length}</span>
           <div
             className={clsx(
               'dropdown-menu dropdown-menu-right notification__dropdown p-0 ',
               show && 'show'
             )}>
-            {mockMyNoti.map((item, index) => {
+            {notificationsData?.map((item, index) => {
               return <NotiItem key={index} {...item} />;
             })}
             <div className="dropdown__item notification__view-all">
