@@ -9,6 +9,7 @@ export type GetOrderList = {
     price_total: number;
   }[];
   is_expired: boolean;
+  state: string;
 };
 
 export type GetOrderListData = {
@@ -31,6 +32,7 @@ export const GET_ORDER_LIST = gql`
         price_total
       }
       is_expired
+      state
     }
   }
 `;

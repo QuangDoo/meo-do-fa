@@ -3,7 +3,7 @@ import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
 import Nav from 'src/components/Layout/Nav';
-import PageLayout from 'src/components/Layout/PageLayout';
+import PromoCodes from 'src/components/Modules/PromoCodes';
 import withApollo from 'src/utils/withApollo';
 
 function PromotionCode(): JSX.Element {
@@ -12,14 +12,20 @@ function PromotionCode(): JSX.Element {
       <Head>
         <title>Medofa</title>
       </Head>
+
       <Header />
+
       <Nav />
-      <PageLayout>
-        <h1>PromotionCode Component here !</h1>
-      </PageLayout>
+
+      <PromoCodes />
+
       <Footer />
     </>
   );
 }
+
+PromotionCode.getInitialProps = async () => ({
+  namespacesRequired: ['promoCodes']
+});
 
 export default withApollo({ ssr: true })(PromotionCode);
