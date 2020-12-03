@@ -3,16 +3,17 @@ import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import InputWithLabel from 'src/components/Form/InputWithLabel';
 import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
 import Nav from 'src/components/Layout/Nav';
-import InputWithLabel from 'src/components/Modules/Checkout/InputWithLabel';
 import FormCard from 'src/components/Modules/MyAccount/FormCard';
 import ProfileLayout from 'src/components/Modules/ProfileLayout';
 import ProfileSidebar from 'src/components/Modules/ProfileSidebar';
 import { useUserContext } from 'src/contexts/User';
 import { GET_CITIES, GetCitiesData } from 'src/graphql/address/getCities';
+import useAddress from 'src/hooks/useAddress';
 import useLocalStorage from 'src/hooks/useLocalStorage';
 import useUser from 'src/hooks/useUser';
 
@@ -29,29 +30,20 @@ type Inputs = {
   business_license: string;
   district_name: string;
 };
+
 const MyAccount = (): JSX.Element => {
-  const { t } = useTranslation(['account']);
+  const { t } = useTranslation('account');
 
-  const token = useLocalStorage('token');
+  const { register, handleSubmit, watch } = useForm<Inputs>();
 
-  const { setValue } = useForm<Inputs>({
-    defaultValues: {
-      name: ''
-    }
+  const { cities, districts, wards } = useAddress({
+    cityId: +watch('cityId'),
+    districtId: +watch('districtId')
   });
 
-  const { data: citiesData } = useQuery<GetCitiesData, undefined>(GET_CITIES);
-
-  const [getDistricts];
-
-  const { user } = useUserContext();
-
-  // useEffect(() => {
-  //   setValue('name', user.name);
-  //   setValue('phone', user.phone);
-  //   setValue('email', user.email);
-
-  // }, [user]);
+  const onSubmit = handleSubmit((data) => {
+    console.log('submit data:', data);
+  });
 
   return (
     <>
@@ -64,14 +56,24 @@ const MyAccount = (): JSX.Element => {
       <Nav />
 
       <ProfileLayout title={t('account:update_profile')}>
-        <form encType="multipart/form-data" action="/my-account">
+        <form onSubmit={onSubmit}>
           <FormCard title={t('account_infomation')}>
-            <InputWithLabel required label={t('account:fullname') + ''} name="name" type="text" />
+            <InputWithLabel
+              ref={register({
+                required: 'Xin nhập họ tên'
+              })}
+              required
+              label={t('account:fullname') + ''}
+              name="name"
+              type="text"
+              placeholder="Trần Thị B"
+            />
 
-            <div className="form-group">
+            {/* <div className="form-group">
               <label className="form__label required" htmlFor="user_name">
                 {t('account:fullname')}
               </label>
+
               <input
                 className="form-control"
                 placeholder="Trần Thị B"
@@ -81,7 +83,7 @@ const MyAccount = (): JSX.Element => {
                 name="user[name]"
                 id="user_name"
               />
-            </div>
+            </div> */}
             <div className="form-group">
               <label className="form__label required" htmlFor="user_name">
                 {t('account:mobile_number')}

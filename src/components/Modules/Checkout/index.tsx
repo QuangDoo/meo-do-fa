@@ -1,24 +1,17 @@
-import { useLazyQuery, useQuery } from '@apollo/client';
-import clsx from 'clsx';
+import { useQuery } from '@apollo/client';
 import { useTranslation } from 'i18n';
 import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { useUserContext } from 'src/contexts/User';
-import { GET_CITIES, GetCitiesData } from 'src/graphql/address/getCities';
-import {
-  GET_DISTRICTS,
-  GetDistrictsData,
-  GetDistrictsVars
-} from 'src/graphql/address/getDistricts';
-import { GET_WARDS, GetWardsData, GetWardsVars } from 'src/graphql/address/getWards';
 import { CREATE_ORDER, CreateOrderData, CreateOrderVars } from 'src/graphql/order/createOrder';
 import { GET_COUNSEL, GetCounselData } from 'src/graphql/order/getCounsel';
 import {
   GET_PAYMENT_DELIVERY,
   GetPaymentAndDeliveryData
 } from 'src/graphql/paymentAndDelivery/paymentAndDelivery,query';
+import useAddress from 'src/hooks/useAddress';
 import { useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
 import useCart from 'src/hooks/useCart';
 import swal from 'sweetalert';
@@ -48,20 +41,6 @@ type FormInputs = {
 const CheckoutPage = () => {
   const { t } = useTranslation(['checkout']);
 
-  // Cities
-  const { data: citiesData } = useQuery<GetCitiesData, undefined>(GET_CITIES);
-  const cities = citiesData?.getCities || [];
-
-  // Districts
-  const [getDistricts, { data: districtsData }] = useLazyQuery<GetDistrictsData, GetDistrictsVars>(
-    GET_DISTRICTS
-  );
-  const districts = districtsData?.getDistricts || [];
-
-  // wards
-  const [getWards, { data: wardsData }] = useLazyQuery<GetWardsData, GetWardsVars>(GET_WARDS);
-  const wards = wardsData?.getWards || [];
-
   // Payment & Delivery options
   const { data: paymentAndDeliveryData } = useQuery<GetPaymentAndDeliveryData, undefined>(
     GET_PAYMENT_DELIVERY
@@ -76,7 +55,7 @@ const CheckoutPage = () => {
   const { user } = useUserContext();
 
   // Form handler with default values
-  const { register, handleSubmit, watch, setValue } = useForm<FormInputs>({
+  const { register, handleSubmit, watch } = useForm<FormInputs>({
     defaultValues: {
       name: user?.name,
       phone: user?.phone,
@@ -93,33 +72,10 @@ const CheckoutPage = () => {
     }
   });
 
-  useEffect(() => {
-    if (!user) return;
-
-    setValue('name', user.name);
-    setValue('phone', user.phone);
-    setValue('address', user.street);
-  }, [user]);
-
-  const cityId = Number(watch('cityId'));
-
-  const districtId = Number(watch('districtId'));
-
-  useEffect(() => {
-    getDistricts({
-      variables: {
-        city_id: cityId
-      }
-    });
-  }, [cityId]);
-
-  useEffect(() => {
-    getWards({
-      variables: {
-        district_id: districtId
-      }
-    });
-  }, [districtId]);
+  const { cities, districts, wards, chosenCity, chosenDistrict, chosenWard } = useAddress({
+    cityId: +watch('cityId'),
+    districtId: +watch('districtId')
+  });
 
   const router = useRouter();
 
@@ -128,7 +84,6 @@ const CheckoutPage = () => {
   const [createOrder] = useMutationAuth<CreateOrderData, CreateOrderVars>(CREATE_ORDER, {
     onCompleted: (data) => {
       swal({
-        // title: `Đơn hàng ${data.createOrder.orderNo} đã được đặt thành công!`,
         title: t('checkout:order_success_message', {
           orderNo: data.createOrder.orderNo
         }),
@@ -138,7 +93,7 @@ const CheckoutPage = () => {
         router.push('/');
       });
     },
-    onError: (error) => {
+    onError: () => {
       toast.error('Thanh toán thất bại.');
     }
   });
@@ -156,9 +111,9 @@ const CheckoutPage = () => {
               partnerId: '',
               isNew: true,
               zipCode: +data.wardId,
-              city: cities.find((city) => city.id === +data.cityId).name,
-              district: districts.find((district) => district.id === +data.districtId).name,
-              ward: wards.find((ward) => ward.id === +data.wardId).name,
+              city: chosenCity.name,
+              district: chosenDistrict.name,
+              ward: chosenWard.name,
               street: data.address
             }
           },
