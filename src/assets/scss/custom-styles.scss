@@ -26,3 +26,17 @@ button {
     }
   }
 }
+
+.product-card__new-arrival {
+  z-index: 1;
+}
+
+.banner__img {
+  display: flex;
+  justify-content: center;
+  position: static;
+}
+
+.product-card__image {
+  position: relative;
+}

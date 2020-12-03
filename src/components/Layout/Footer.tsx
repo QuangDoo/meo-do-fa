@@ -1,7 +1,10 @@
-import { withTranslation } from 'i18n';
+import { useTranslation, withTranslation } from 'i18n';
 import { WithTranslation } from 'next-i18next';
 import Link from 'next/link';
 import React from 'react';
+
+import Button from '../Form/Button';
+import Input from '../Form/Input';
 
 const links: { href: string; i18nKey: string }[] = [
   { href: '/about-us', i18nKey: 'footer:about_us' },
@@ -24,10 +27,46 @@ const FooterLink = (props: { href: string; text: string }) => (
   </Link>
 );
 
-const Footer = ({ t }: WithTranslation): JSX.Element => {
+const Footer = (): JSX.Element => {
+  const { t } = useTranslation(['footer', 'common']);
+
   return (
     <div className="footer">
       <div className="container pb-5">
+        <div className="row align-items-end">
+          <div className="align-items-end">
+            <img
+              style={{ height: '80px' }}
+              src="/assets/images/newsletter.png"
+              alt="newsletter"
+              className="img-fluid"
+            />
+          </div>
+          <div className="mb-1 ml-3">
+            <p className="font-weight-bold mb-0">{t('footer:subscribe_title')}</p>
+            <p className="font-weight-bold mb-0" style={{ fontSize: '0.8rem' }}>
+              {t('footer:subscribe_content')}
+            </p>
+          </div>
+          <form className="row ml-3 align-items-end">
+            <div style={{ width: '345px', height: '42px' }} className="mx-3">
+              <Input
+                name="email"
+                containerClass="mb-4"
+                iconClass="icomoon icon-mail"
+                placeholder={t('footer:email_input')}
+              />
+            </div>
+            <div className="mb-1">
+              <Button type="submit" variant="primary" block className="rounded">
+                {t('footer:subscribe')}
+              </Button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div className="container pb-5 pt-5">
         <div className="row justify-content-between">
           <div className="col-md-4">
             <div className="footer__info mb-5">
@@ -190,4 +229,4 @@ const Footer = ({ t }: WithTranslation): JSX.Element => {
   );
 };
 
-export default withTranslation(['footer', 'common'])(Footer);
+export default Footer;

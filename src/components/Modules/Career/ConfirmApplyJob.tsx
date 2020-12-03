@@ -1,3 +1,4 @@
+import { useTranslation } from 'i18n';
 import React, { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -25,23 +26,33 @@ const ConfirmApplyJob: FC<Props> = (props) => {
 
   const { register, handleSubmit, watch, errors } = useForm();
 
+  const { t } = useTranslation('applyJob');
+
   const onSubmit = (data: Input) => {
     console.log(data);
     toast.success('Apply this job successful');
     onClose();
   };
 
+  const checkboxlabel = (
+    <>
+      {t('applyJob:warning_text')}
+      <span style={{ color: 'red' }}>*</span>
+    </>
+  );
+
   return (
     <ModalBase open={open} onClose={onClose}>
       <div className="container p-3">
         <div className="text-center">
-          <h3>Apply this job</h3>
+          <h3>{t('applyJob:apply_for_this_position')}</h3>
         </div>
         <form className="form w-100" onSubmit={handleSubmit(onSubmit)}>
           <div className="form-group">
             <label htmlFor="fullname">
               <b>
-                Full Name <span style={{ color: 'red' }}>*</span>
+                {t('applyJob:full_name')}
+                <span style={{ color: 'red' }}>*</span>
               </b>
             </label>
             <input
@@ -71,7 +82,8 @@ const ConfirmApplyJob: FC<Props> = (props) => {
           <div className="form-group">
             <label htmlFor="phone">
               <b>
-                Phone <span style={{ color: 'red' }}>*</span>
+                {t('applyJob:phone')}
+                <span style={{ color: 'red' }}>*</span>
               </b>
             </label>
             <input
@@ -85,14 +97,15 @@ const ConfirmApplyJob: FC<Props> = (props) => {
           </div>
           <Textarea
             ref={register}
-            placeholder={`Cover Leter`}
-            label={`Cover Letter`}
+            placeholder={t('applyJob:cover_letter')}
+            label={t('applyJob:cover_letter')}
             htmlFor={'coverLetter'}
           />
           <div className="form-group mb-3">
             <label htmlFor="inputFile">
               <b>
-                Upload CV <span style={{ color: 'red' }}>*</span>
+                {t('applyJob:cv')}
+                <span style={{ color: 'red' }}>*</span>
               </b>
             </label>
             <div>
@@ -104,11 +117,11 @@ const ConfirmApplyJob: FC<Props> = (props) => {
             ref={register}
             containerClass="my-1 mr-sm-2"
             name="check"
-            label="By using this form you agree with the storage and handling of your data by this website. *"
+            label={checkboxlabel}
           />
           <div className="form-group text-center">
             <button type="submit" className="btn btn-primary my-1">
-              Apply
+              {t('applyJob:button_title')}
             </button>
           </div>
         </form>

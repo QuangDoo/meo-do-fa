@@ -1,6 +1,5 @@
 import clsx from 'clsx';
-import { useTranslation, withTranslation } from 'i18n';
-import { WithTranslation } from 'next-i18next';
+import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
@@ -19,9 +18,15 @@ type FilterKey = 'all' | 'waiting_for_confirmation' | 'completed' | 'canceled';
 
 const pageSize = 20;
 
-const OrderItem = (props: GetOrderList): JSX.Element => {
+const OrderItem = (props: GetOrderList) => {
   const [open, setOpen] = useState(false);
-  const { t } = useTranslation();
+
+  const { t } = useTranslation(['myOrders']);
+
+  const { state } = props;
+
+  console.log('check', state === 'cancel');
+
   return (
     <div className="my-orders__item my-orders__item:hover pl-4 mt-1">
       <div className="my-orders__info">
@@ -66,22 +71,29 @@ const OrderItem = (props: GetOrderList): JSX.Element => {
           {t('myOrders:billing_export')}
         </button>
         <button className="btn btn-outline-info btn-sm">{t('myOrders:report')}</button>
-        <button className="btn btn-danger" onClick={() => setOpen(true)}>
+        <button
+          hidden={state === 'cancel'}
+          className="btn btn-outline-danger btn-sm"
+          onClick={() => setOpen(true)}>
           hủy đơn hàng
         </button>
       </div>
-      <ConfirmCancelOrder
-        open={open}
-        onClose={() => setOpen(false)}
-        orderId={`${props.orderNo.toString()}`}
-      />
+      {state === 'cancel' && (
+        <div className="my-orders__invoice">
+          <button className="btn btn-sm btn-outline-danger">Canceled</button>
+        </div>
+      )}
+
+      <ConfirmCancelOrder open={open} onClose={() => setOpen(false)} orderNo={props.orderNo} />
     </div>
   );
 };
 
-const MyOrders = ({ t }: WithTranslation): JSX.Element => {
+const MyOrders = () => {
   const [getOrderList, { data, error }] = useLazyQueryAuth(GET_ORDER_LIST);
-  console.log(data);
+
+  const { t } = useTranslation(['myOrders']);
+
   useEffect(() => {
     if (!error) return;
 
@@ -170,6 +182,4 @@ const MyOrders = ({ t }: WithTranslation): JSX.Element => {
   );
 };
 
-const Translated = withTranslation(['myOrders'])(MyOrders);
-
-export default withApollo({ ssr: true })(Translated);
+export default withApollo({ ssr: true })(MyOrders);

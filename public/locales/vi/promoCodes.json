@@ -1,0 +1,11 @@
+{
+  "promo_codes" : "Mã giảm giá",
+  "user_manual" : "Hướng dẫn sử dụng:",
+  "order" : "<b>Đặt hàng: </b> Vào trang <a1>Đặt hàng nhanh</a1> hoặc <a2>Sản phẩm để đặt hàng</a2>",
+  "order_content" : "<b>Vào giỏ hàng: </b>Vào trang <a1>Giỏ hàng</a1>. Nhấn vào chữ \"Dùng mã khuyến mãi\"",
+  "use_promocode": "<b>Dùng mã: </b>Nhập mã muốn dùng vào ô tìm kiếm, hoặc, chọn trong danh sách mã. Rồi nhấn vào nút \"Dùng ngay\"",
+  "just_for_you": "Dành riêng cho bạn",
+  "just_for_you_content": "Tham gia chương trình <a1>Giới thiệu bạn bè</a1>, <a2>Đổi điểm tích luỹ</a2> để nhận được code riêng",
+  "special_codes": "Mã giảm giá đặc biệt",
+  "another_codes": "Các mã khác"
+}

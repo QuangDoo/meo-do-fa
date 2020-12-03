@@ -7,7 +7,7 @@
   "invalid_password": "Please provide a password with minimum 6 characters.",
 
   "remember_password": "Remember password",
-  "forgot_password": "Forgot password",
+  "forgot_password": "<button>Forgot password</button>",
   "login": "Login",
   "login_for_deals": "<button><b>Register</b></button> to get hot deals."
 }

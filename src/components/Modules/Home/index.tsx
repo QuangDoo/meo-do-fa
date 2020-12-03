@@ -48,8 +48,10 @@ const Home = ({ dealsOfTheDayData, bestSellingData, promotionProductsData, newPr
         dotsClass="slick__dots bullet slick-dots"
         className="align-items-center mb-0 slick-dotted">
         {bannerImages.map((img) => (
-          <div key={img} className="banner__slide">
-            <Image width="1018" height="530" src={img} className="banner__img" />
+          <div className="banner__slide" key={img}>
+            <div className="banner__img">
+              <Image src={img} layout="fill" objectFit="contain" />
+            </div>
           </div>
         ))}
       </SlickSlider>
@@ -78,10 +80,7 @@ const Home = ({ dealsOfTheDayData, bestSellingData, promotionProductsData, newPr
       </div>
 
       <Strength />
-      {/* {isLoggedIn ? null : (
-        <>
-        </>
-      )} */}
+
       {isLoggedIn ? null : (
         <>
           <Login />

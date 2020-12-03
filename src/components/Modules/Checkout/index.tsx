@@ -1,14 +1,13 @@
-import { useMutation, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { useCityContext } from 'src/contexts/City';
 import { GET_DISTRICT, GET_WARD, GET_WARD_DETAIL } from 'src/graphql/address/city.query';
 import { CREATE_ORDER } from 'src/graphql/order/order.mutation';
 import { GET_COUNSEL } from 'src/graphql/order/order.query';
 import { GET_PAYMENT_DELIVERY } from 'src/graphql/paymentAndDelivery/paymentAndDelivery,query';
-import { useLazyQueryAuth, useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
+import { useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
 import useCart from 'src/hooks/useCart';
 import useCity from 'src/hooks/useCity';
 import swal from 'sweetalert';
@@ -30,42 +29,28 @@ const CheckoutPage = (): JSX.Element => {
 
   const { data: datacity } = useCity();
 
-  const { data: dataGetPaymentDelivery, loading: loadingGetPaymentDelivery } = useLazyQueryAuth(
-    GET_PAYMENT_DELIVERY
-  );
+  const { data: dataGetPaymentDelivery } = useQuery(GET_PAYMENT_DELIVERY);
 
-  const { data: dataGetCounsel, loading: loadingGetCounsel } = useQueryAuth(GET_COUNSEL);
+  const { data: dataGetCounsel } = useQueryAuth(GET_COUNSEL);
 
   const router = useRouter();
 
   const { refetchCart } = useCart();
 
-  const [createOrder, { data, error }] = useMutationAuth(CREATE_ORDER);
-  console.log(data);
-
-  useEffect(() => {
-    if (!data) return;
-
-    swal({
-      title: `Đơn hàng ${data.createOrder.orderNo} đã được đặt thành công!`,
-      icon: 'success'
-    }).then(() => {
-      refetchCart();
-      router.push('/');
-    });
-  }, [data]);
-
-  useEffect(() => {
-    if (!error) return;
-
-    console.log('Checkout error:', { error });
-
-    toast.error('Thanh toán thất bại.');
-  }, [error]);
-
-  useEffect(() => {
-    if (!dataGetCounsel) return;
-  }, [dataGetCounsel]);
+  const [createOrder] = useMutationAuth(CREATE_ORDER, {
+    onCompleted: (data) => {
+      swal({
+        title: `Đơn hàng ${data.createOrder.orderNo} đã được đặt thành công!`,
+        icon: 'success'
+      }).then(() => {
+        refetchCart();
+        router.push('/');
+      });
+    },
+    onError: (error) => {
+      toast.error('Thanh toán thất bại.');
+    }
+  });
 
   const city_id = Number(watch('cityId'));
   const district_id = Number(watch('districtId'));
@@ -90,7 +75,7 @@ const CheckoutPage = (): JSX.Element => {
         partnerId: '',
         isNew: true,
         use: false,
-        zipCode: '',
+        zipCode: dataward.getWard.ward.id,
         city: dataward.getWard.city.name,
         district: dataward.getWard.district.name,
         ward: dataward.getWard.ward.name,
