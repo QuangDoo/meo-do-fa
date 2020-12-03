@@ -7,10 +7,11 @@ type Props = {
   required?: boolean;
   type?: 'text' | 'number' | 'password' | 'email';
   containerClass?: string;
+  itemRight?: React.ReactNode;
 };
 
 const Input = (props: Props, ref): JSX.Element => {
-  const { containerClass = '', type = 'text' } = props;
+  const { containerClass = '', type = 'text', itemRight } = props;
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -29,7 +30,6 @@ const Input = (props: Props, ref): JSX.Element => {
         required={props.required}
         type={type === 'password' ? (showPassword ? 'text' : 'password') : type}
       />
-
       {/* Show password checkbox */}
       {type === 'password' && (
         <div
@@ -52,6 +52,7 @@ const Input = (props: Props, ref): JSX.Element => {
           )}
         </div>
       )}
+      {itemRight && <div className="input-group-prepend">{itemRight}</div>}
     </div>
   );
 };
