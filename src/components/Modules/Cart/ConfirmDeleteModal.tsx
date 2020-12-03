@@ -28,26 +28,18 @@ const ConfirmDeleteModal: FC<Props> = (props) => {
 
   const { refetchCart } = useCart();
 
-  const [deleteCart, { data, error }] = useMutation<DeleteCartData, DeleteCartVars>(DELETE_CART);
+  const [deleteCart] = useMutation<DeleteCartData, DeleteCartVars>(DELETE_CART, {
+    onCompleted: () => {
+      toast.success(t('cart:delete_success'));
 
-  // onCompleted
-  useEffect(() => {
-    if (!data) return;
+      refetchCart();
 
-    toast.success(t('cart:delete_success'));
-
-    refetchCart();
-
-    onClose();
-  }, [data]);
-
-  // onError
-  useEffect(() => {
-    if (!error) return;
-
-    console.log('Delete cart error:', { error });
-    toast.error(t(`errors:code_${error.graphQLErrors[0].extensions.code}`));
-  }, [error]);
+      onClose();
+    },
+    onError: (error) => {
+      toast.error(t(`errors:code_${error.graphQLErrors[0].extensions.code}`));
+    }
+  });
 
   const onConfirmDelete = () => {
     deleteCart({

@@ -2,6 +2,7 @@ import { withTranslation } from 'i18n';
 import { TFunction } from 'next-i18next';
 import React from 'react';
 import LanguagePicker from 'src/components/Layout/Header/LanguagePicker';
+import ForgotPasswordModal from 'src/components/Modules/ForgotPasswordModal';
 import LoginModal from 'src/components/Modules/LoginModal';
 import RegisterModal from 'src/components/Modules/RegisterModal';
 import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
@@ -82,6 +83,8 @@ const Header = ({ t }: HeaderProps): JSX.Element => {
               <LoginModal />
 
               <RegisterModal />
+
+              <ForgotPasswordModal />
             </div>
           )}
         </div>

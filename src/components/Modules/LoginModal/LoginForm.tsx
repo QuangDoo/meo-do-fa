@@ -1,19 +1,16 @@
 import { useMutation } from '@apollo/client';
 import { Trans, useTranslation } from 'i18n';
 import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { DeepMap, FieldError, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { viPhoneNumberRegex } from 'src/assets/regex/viPhoneNumber';
 import Button from 'src/components/Form/Button';
 import Checkbox from 'src/components/Form/Checkbox';
 import Input from 'src/components/Form/Input';
-import ModalWithHeader from 'src/components/Layout/Modal/ModalWithHeader';
-import { useModalControlDispatch, useModalControlState } from 'src/contexts/ModalControl';
+import { useModalControlDispatch } from 'src/contexts/ModalControl';
 import { LOGIN_USER, LoginData, LoginVars } from 'src/graphql/user/login.mutation';
 import useUser from 'src/hooks/useUser';
-
-import RessetPassForm from '../RessetPassModal/RessetPassForm';
 
 type Inputs = {
   username: string;
@@ -21,29 +18,14 @@ type Inputs = {
 };
 
 const LoginForm = (): JSX.Element => {
+  const { t } = useTranslation('login');
+
   const dispatch = useModalControlDispatch();
-  const { t } = useTranslation();
 
   const openRegisterModal = () => dispatch({ type: 'OPEN_REGISTER_MODAL' });
-  const openRessetPassModal = () => dispatch({ type: 'OPEN_RESSETPASS_MODAL' });
-  const { ressetPassIsOpen } = useModalControlState();
-  const { registerIsOpen } = useModalControlState();
 
-  const [open, setOpen] = React.useState(false);
+  const openResetPassModal = () => dispatch({ type: 'OPEN_RESETPASS_MODAL' });
 
-  const handleClose = () => {
-    setOpen(false);
-  };
-  const [openRessetPass, setOpenRessetPass] = React.useState(false);
-
-  const handleOpenRessetPass = () => {
-    setOpenRessetPass(true);
-    setOpen(false);
-  };
-  const handleCloseRessetPass = () => {
-    setOpenRessetPass(false);
-  };
-  // const openLoginModal = () => modalControlDispatch({ type: 'OPEN_RESSETPASSS_MODAL' });
   const closeLoginModal = () => dispatch({ type: 'CLOSE_LOGIN_MODAL' });
 
   const router = useRouter();
@@ -52,31 +34,22 @@ const LoginForm = (): JSX.Element => {
 
   const { register, handleSubmit } = useForm<Inputs>();
 
-  const [login, { data, error }] = useMutation<LoginData, LoginVars>(LOGIN_USER);
+  const [login] = useMutation<LoginData, LoginVars>(LOGIN_USER, {
+    onCompleted: (data) => {
+      localStorage.setItem('token', data.login.token);
+      closeLoginModal();
+      getUser();
 
-  // onCompleted
-  useEffect(() => {
-    if (!data) return;
-
-    localStorage.setItem('token', data.login.token);
-    closeLoginModal();
-    getUser();
-
-    if (router.pathname === '/products' || router.pathname === '/products/[productId]') {
-      router.reload();
-    } else {
-      router.push('/products');
+      if (router.pathname === '/products' || router.pathname === '/products/[productId]') {
+        router.reload();
+      } else {
+        router.push('/products');
+      }
+    },
+    onError: (error) => {
+      toast.error(t(`errors:code_${error.graphQLErrors[0].extensions.code}`));
     }
-  }, [data]);
-
-  // onError (GraphQL)
-  useEffect(() => {
-    if (!error) return;
-
-    console.log('Login error:', { error });
-
-    toast.error(t(`errors:code_${error.graphQLErrors[0].extensions.code}`));
-  }, [error]);
+  });
 
   const onFormError = (errors: DeepMap<Inputs, FieldError>) => {
     Object.keys(errors).forEach((field) => toast.error(errors[field].message));
@@ -132,29 +105,18 @@ const LoginForm = (): JSX.Element => {
           containerClass="form-group align-self-start"
           labelClass="pt-1"
         />
+
         <span className="mb-4 ">
           <Trans
             i18nKey="login:forgot_password"
             components={{
               button: (
-                <button
-                  className="text-primary ml-1"
-                  onClick={handleOpenRessetPass}
-                  type="button"
-                />
+                <button className="text-primary ml-1" onClick={openResetPassModal} type="button" />
               ),
               b: <b />
             }}
           />
         </span>
-        <ModalWithHeader
-          open={openRessetPass}
-          onClose={handleCloseRessetPass}
-          title={t('password:resset_password')}
-          // onClose={() => dispatch({ type: 'CLOSE_RESSETPASS_MODAL' })}
-          className="authentication signup">
-          <RessetPassForm />
-        </ModalWithHeader>
 
         <Button type="submit" variant="gradient" block className="mb-5">
           {t('login:login')}
