@@ -1,30 +1,42 @@
-import { useTranslation } from 'i18n';
+import { Trans, useTranslation } from 'i18n';
 import Link from 'next/link';
-import React, { forwardRef } from 'react';
+import React from 'react';
 import Checkbox from 'src/components/Form/Checkbox';
+import LinkText from 'src/components/Form/LinkText';
+import { ReactHookFormRegister } from 'src/types/ReactHookFormRegister';
 
-import CheckoutWarning from './CheckoutWarning';
+import DescriptionBox from '../DescriptionBox';
 
-const Agreement = (props, register): JSX.Element => {
-  const { t } = useTranslation(['checkOut']);
+type Props = ReactHookFormRegister;
+
+const Agreement = (props: Props): JSX.Element => {
+  const { register } = props;
+
+  const { t } = useTranslation('checkout');
 
   return (
     <Checkbox
       ref={register({
-        required: 'Xin vui lòng xác thực điều khoản'
+        required: t('checkout:agreement_required') + ''
       })}
       name="agreement"
       label={
-        <>
-          {t('checkOut:i_agree')}{' '}
-          <Link href="/terms-of-service">
-            <a>{t('checkOut:terms_of_use')}</a>
-          </Link>
-        </>
+        <Trans
+          i18nKey="checkout:agreement_label"
+          components={{
+            Link: <LinkText href="/terms_of_service"> </LinkText>
+          }}
+        />
       }>
-      <CheckoutWarning />
+      <DescriptionBox white>
+        <ol className="pl-4 mb-0">
+          <li>{t('checkout:warning_1')}</li>
+
+          <li>{t('checkout:warning_2')}</li>
+        </ol>
+      </DescriptionBox>
     </Checkbox>
   );
 };
 
-export default forwardRef(Agreement);
+export default Agreement;

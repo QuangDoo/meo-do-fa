@@ -26,6 +26,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
+import PriceText from 'src/components/Form/PriceText';
 import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
 import Nav from 'src/components/Layout/Nav';
@@ -259,8 +260,8 @@ const OrderDetails = () => {
 
   const [activeStep, setActiveStep] = useState(0);
 
-  const { data: orderDetail, error: orderError } = useQueryAuth(GET_ORDER, {
-    variables: { id: Number(orderId) }
+  const { data: orderDetail } = useQueryAuth(GET_ORDER, {
+    variables: { id: orderId }
   });
 
   // useEffect(() => {
@@ -443,13 +444,13 @@ const OrderDetails = () => {
                           </CustomBodyCell>
 
                           <CustomBodyCell>
-                            {product.price_unit?.toLocaleString('de-DE')} đ
+                            <PriceText price={product.price_unit} /> đ
                           </CustomBodyCell>
 
                           <CustomBodyCell>{product.product_uom_qty}</CustomBodyCell>
 
                           <CustomBodyCell>
-                            {product.price_total?.toLocaleString('de-DE')} đ
+                            <PriceText price={product.price_total} /> đ
                           </CustomBodyCell>
                         </TableRow>
                       ))}

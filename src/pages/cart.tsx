@@ -1,7 +1,9 @@
 // import { useMutation } from '@apollo/client';
 import { useTranslation } from 'i18n';
+import { useRouter } from 'next/router';
 import React from 'react';
 import { toast } from 'react-toastify';
+import PriceText from 'src/components/Form/PriceText';
 import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
@@ -19,7 +21,12 @@ function Cart(): JSX.Element {
 
   const { t } = useTranslation(['cart']);
 
+  const router = useRouter();
+
   const [createCounsel] = useMutationAuth(CREATE_COUNSEL, {
+    onCompleted: () => {
+      router.push('/checkout');
+    },
     onError: (error) => {
       toast.error('Create counsel error: ' + error);
     }
@@ -30,11 +37,8 @@ function Cart(): JSX.Element {
 
     createCounsel({
       variables: {
-        cardIds: cart.getCart.carts.map((i) => i._id)
+        cartIds: cart.getCart.carts.map((i) => i._id)
       }
-    }).catch((error) => {
-      console.log('Create counsel error:', { error });
-      toast.error('Create counsel error: ' + error);
     });
   };
 
@@ -105,7 +109,7 @@ function Cart(): JSX.Element {
                           <small>{t('cart:total')}</small>
                         </div>
                         <div className="cart__total text-small">
-                          {cart?.getCart.totalPrice.toLocaleString('de-DE')}{' '}
+                          <PriceText price={cart?.getCart.totalPrice} />
                           <span className="unit text-small">đ</span>
                         </div>
                         {/* <div className="cart__old-total">
@@ -131,8 +135,8 @@ function Cart(): JSX.Element {
                     {cart?.getCart.totalPrice > 0 && (
                       <div className="col-12">
                         <div className="cart__info-item">
-                          <a className="btn btn-secondary btn-block text-small" href="/checkout">
-                            <button onClick={handleCheckoutClick}> Tiếp tục thanh toán</button>
+                          <a className="btn btn-secondary btn-block text-small">
+                            <button onClick={handleCheckoutClick}>Tiếp tục thanh toán</button>
                           </a>
                         </div>
                       </div>

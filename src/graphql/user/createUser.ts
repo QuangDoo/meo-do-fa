@@ -1,9 +1,20 @@
 import { gql } from '@apollo/client';
-import { CreateUserInput } from 'src/types/inputs';
-import { LoginUserResponse } from 'src/types/responses';
 
 export type CreateUserData = {
-  createUser: LoginUserResponse;
+  createUser: {
+    token: string;
+    status: string;
+    code: number;
+    message: string;
+  };
+};
+
+export type CreateUserInput = {
+  phone: string;
+  name: string;
+  account_type: string;
+  password: string;
+  email: string;
 };
 
 export type CreateUserVars = {

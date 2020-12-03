@@ -28,8 +28,8 @@ export const ADD_TO_CART = gql`
   }
 `;
 export const CREATE_COUNSEL = gql`
-  mutation createCounsel($cardIds: [String]!) {
-    createCounsel(inputs: { cartIds: $cardIds }) {
+  mutation createCounsel($cartIds: [String]!) {
+    createCounsel(inputs: { cartIds: $cartIds }) {
       code
       status
       message

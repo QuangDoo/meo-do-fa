@@ -1,54 +1,94 @@
+import clsx from 'clsx';
+import { useTranslation } from 'i18n';
 import Link from 'next/link';
-import React, { forwardRef } from 'react';
+import React from 'react';
 import Button from 'src/components/Form/Button';
+import PriceText from 'src/components/Form/PriceText';
+import { GetCounselData } from 'src/graphql/order/getCounsel';
+import { ReactHookFormRegister } from 'src/types/ReactHookFormRegister';
 
-import SidebarItem from './SidebarItem';
+type SidebarItemProps = {
+  label?: string;
+  children?: React.ReactNode;
+  containerClass?: string;
+};
 
-const StickySidebar = (props, ref): JSX.Element => {
+const SidebarItem = (props: SidebarItemProps) => {
+  return (
+    <div className={clsx('col-12', props.containerClass)}>
+      {(props.label || props.children) && (
+        <div className="checkout__info-item d-flex justify-content-between align-items-center">
+          <small className="checkout__info-item-label">{props.label}</small>
+
+          {props.children}
+        </div>
+      )}
+    </div>
+  );
+};
+
+type Props = ReactHookFormRegister & {
+  counselData?: GetCounselData;
+};
+
+const StickySidebar = (props: Props): JSX.Element => {
+  const { counselData } = props;
+
+  const { t } = useTranslation('checkout');
+
+  if (!counselData) return null;
+
+  const data = counselData.getCounsel;
+
   return (
     <div className="checkout__sticky">
       <div className="d-flex justify-content-between mb-3">
         <h4 className="d-flex flex-wrap align-items-center">
-          Đơn Hàng
-          <small className="ml-1">{props.counsel?.counsel.counsels.length} sản phẩm</small>
+          {t('checkout:confirm_checkout_title')}
+
+          <small className="ml-1">
+            {t('checkout:confirm_checkout_quantity', {
+              quantity: data.totalQty
+            })}
+          </small>
         </h4>
 
         <div>
           <Link href="/cart" passHref>
             <Button size="sm" variant="primary">
-              Sửa
+              {t('checkout:confirm_checkout_edit')}
             </Button>
           </Link>
         </div>
       </div>
 
       <div className="elevated checkout__info row no-gutters mb-3">
-        <SidebarItem label="Tạm tính">
+        <SidebarItem label={t('checkout:price_provisional_sums')}>
           <div className="d-flex">
-            {props.counsel?.totalPrice.toLocaleString('de-DE')}
+            <PriceText price={data.totalPrice} />
             <span className="unit">đ</span>
           </div>
         </SidebarItem>
 
-        <SidebarItem label="Phí vận chuyển">
-          <span data-target="checkout.shippingFee">
-            {props.counsel?.totalShippingFee}
+        <SidebarItem label={t('checkout:price_shipping_fee')}>
+          <span>
+            {data.totalShippingFee}
             <span className="unit">đ</span>
           </span>
         </SidebarItem>
 
-        {/* <SidebarItem label="Giảm 0.5% cho đơn hàng chuyển khoản trước.">
+        <SidebarItem label={t('checkout:price_total_discount')}>
           <span>
-            {props.counsel?.totalDcAmt}
+            -{data.totalDcAmt}
             <span className="unit">đ</span>
           </span>
-        </SidebarItem> */}
+        </SidebarItem>
 
         <SidebarItem containerClass="checkout__info-promo"></SidebarItem>
 
-        <SidebarItem label="Thành tiền" containerClass="checkout__info-total">
+        <SidebarItem label={t('checkout:price_total')} containerClass="checkout__info-total">
           <span className="checkout__total">
-            {props.counsel?.totalPrice.toLocaleString('de-DE')}
+            <PriceText price={data.totalNetPrice} />
             <span className="unit">đ</span>
           </span>
         </SidebarItem>
@@ -56,18 +96,15 @@ const StickySidebar = (props, ref): JSX.Element => {
 
       <div className="text-right">
         <div className="mb-2">
-          <small>
-            Vui lòng kiểm tra kỹ thông tin giao hàng, hình thức thanh toán và nhấn nút &quot;Thanh
-            Toán&quot; để hoàn tất đặt hàng.
-          </small>
+          <small>{t('checkout:confirm_checkout_doubleCheck')}</small>
         </div>
 
         <Button variant="secondary" size="lg" type="submit">
-          Thanh toán
+          {t('checkout:confirm_checkout_button')}
         </Button>
       </div>
     </div>
   );
 };
 
-export default forwardRef(StickySidebar);
+export default StickySidebar;

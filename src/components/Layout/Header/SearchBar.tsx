@@ -77,7 +77,6 @@ const SearchBar = (): JSX.Element => {
     router.push({
       pathname: '/products',
       query: {
-        sort: 'best_match',
         search: value
       }
     });

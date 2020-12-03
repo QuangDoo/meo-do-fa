@@ -5,26 +5,16 @@ import { useForm } from 'react-hook-form';
 import Head from 'src/components/Layout/Head';
 import PageLayout from 'src/components/Layout/PageLayout';
 import SelectWithLabel from 'src/components/Modules/Checkout/SelectWithLabel';
-import { useCityContext } from 'src/contexts/City';
-import { City, GET_DISTRICT, GET_WARD, GET_WARD_DETAIL } from 'src/graphql/address/city.query';
-import { UPDATE_USER } from 'src/graphql/user/updateUser.mutation';
+import { City } from 'src/graphql/address/getCities';
+import { GET_DISTRICTS } from 'src/graphql/address/getDistricts';
+import { GET_WARD_DETAILS } from 'src/graphql/address/getWardDetails';
+import { GET_WARDS } from 'src/graphql/address/getWards';
+import { UPDATE_USER } from 'src/graphql/user/updateUser';
 import useCity from 'src/hooks/useCity';
-import { Status } from 'src/types/Status';
 import withApollo from 'src/utils/withApollo';
-
-type DataAddress = {
-  city: string;
-  district: string;
-  ward: string;
-};
-type DataUpdateUser = {
-  updateUser: Status;
-};
 
 function SignupBusiness(): JSX.Element {
   const [fileName, setFileName] = useState('');
-
-  const [dataAddress, setDataAddress] = useState<DataAddress>();
 
   const [fileBase64, setFileBase64] = useState('');
 
@@ -48,13 +38,7 @@ function SignupBusiness(): JSX.Element {
     console.log('error', JSON.stringify(error.message));
   }, [error]);
 
-  // const { cities: dataCity } = useCityContext();
   const { data: datacity } = useCity();
-
-  // const { data: dataDistrict, error: errorDistrict, refetch: refetchDistrict } = useQuery(
-  //   GET_DISTRICT
-  // );
-  // const { data: dataWard, error: errorWard, refetch: refetchWard } = useQuery(GET_WARD);
 
   const handleChange = async (e) => {
     setFileName(e.target.files[0].name);
@@ -84,15 +68,15 @@ function SignupBusiness(): JSX.Element {
   const district_id = Number(watch('districtId'));
   const ward_id = Number(watch('wardId'));
 
-  const { data: dataDistrict, error: errorDistrict } = useQuery(GET_DISTRICT, {
+  const { data: dataDistrict, error: errorDistrict } = useQuery(GET_DISTRICTS, {
     variables: { city_id }
   });
 
-  const { data: dataWards } = useQuery(GET_WARD, {
+  const { data: dataWards } = useQuery(GET_WARDS, {
     variables: { district_id }
   });
 
-  const { data: dataward } = useQuery(GET_WARD_DETAIL, {
+  const { data: dataward } = useQuery(GET_WARD_DETAILS, {
     variables: { ward_id }
   });
 

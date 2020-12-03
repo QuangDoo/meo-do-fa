@@ -1,4 +1,3 @@
-import { useMutation } from '@apollo/client';
 import clsx from 'clsx';
 import { withTranslation } from 'i18n';
 import { WithTranslation } from 'next-i18next';
@@ -8,7 +7,6 @@ import { toast } from 'react-toastify';
 import { ADD_TO_CART } from 'src/graphql/order/order.mutation';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import useCart from 'src/hooks/useCart';
-import useCountCart from 'src/hooks/useCountCart';
 
 type Props = WithTranslation & {
   size?: 'normal' | 'large';
@@ -26,8 +24,6 @@ function QuantityInput(props: Props) {
   const router = useRouter();
 
   const { refetchCart } = useCart();
-
-  const { refetchCountCart } = useCountCart();
 
   const [quantity, setQuantity] = useState<string>('0');
 
@@ -55,7 +51,6 @@ function QuantityInput(props: Props) {
       .then(() => {
         toast.success(t(`errors:add_to_cart_success`));
         refetchCart();
-        refetchCountCart();
       })
       .catch((error) => {
         console.log('Add to cart error:', { error });
@@ -77,13 +72,6 @@ function QuantityInput(props: Props) {
     }
   };
 
-  const handleChangeNumber = (temp) => {
-    if (isNaN(temp)) {
-      return;
-    }
-    temp < 0 ? setQuantity('0') : setQuantity(temp);
-  };
-
   const handleBlur = () => {
     setQuantity(isNaN(+quantity) ? '0' : +quantity + '');
   };
@@ -101,7 +89,7 @@ function QuantityInput(props: Props) {
           min={0}
           max={100000}
           value={quantity}
-          onChange={(e) => handleChangeNumber(e.target.value)}
+          onChange={(e) => setQuantity(e.target.value)}
           onKeyDown={handleKeyDown}
           onBlur={handleBlur}
         />

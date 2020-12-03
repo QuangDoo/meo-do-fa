@@ -1,5 +1,9 @@
 import { gql } from '@apollo/client';
-import { Manufacturer } from 'src/types/Manufacturer';
+
+export type Manufacturer = {
+  id: string;
+  short_name: string;
+};
 
 export const GET_ALL_MANUFACTURERS = gql`
   query {

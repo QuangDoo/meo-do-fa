@@ -1,39 +1,35 @@
 import { useEffect } from 'react';
 import { useUserContext } from 'src/contexts/User';
-import { GET_USER, GetUserData } from 'src/graphql/user/getUser.mutation';
+import { GET_USER, GetUserData } from 'src/graphql/user/getUser';
 
 import { useLazyQueryAuth } from './useApolloHookAuth';
 import useLocalStorage from './useLocalStorage';
 
 export default function useUser() {
-  const [getUser, { data, error }] = useLazyQueryAuth(GET_USER);
-
-  const [token] = useLocalStorage('token');
   const { setUser } = useUserContext();
 
-  useEffect(() => {
-    if (!error) return;
+  const [token, , removeToken] = useLocalStorage('token');
 
-    if (error?.graphQLErrors?.[0]?.extensions?.code === 500) {
-      localStorage.removeItem('token');
+  const [getUser, { data }] = useLazyQueryAuth<GetUserData, undefined>(GET_USER, {
+    onCompleted: (data) => {
+      setUser(data.getUser);
+    },
+    onError: (error) => {
+      if (error?.graphQLErrors?.[0]?.extensions?.code === 500) {
+        removeToken();
+      }
     }
-  }, [error]);
+  });
 
   useEffect(() => {
-    if (!token) return;
+    if (!token || data !== undefined) return;
 
     getUser();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token]);
 
-  useEffect(() => {
-    if (data && setUser) {
-      setUser(data);
-    }
-  }, [data]);
-
   return {
     getUser,
-    user: data
+    user: data?.getUser
   };
 }
