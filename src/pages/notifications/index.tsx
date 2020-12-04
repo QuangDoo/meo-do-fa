@@ -1,5 +1,7 @@
 import clsx from 'clsx';
 import { format, formatDistance, formatRelative, subDays } from 'date-fns';
+import { useTranslation } from 'i18n';
+import moment from 'moment';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
@@ -25,6 +27,8 @@ const Notification = (): JSX.Element => {
     setIsRead(true);
   };
 
+  const { t } = useTranslation();
+
   return (
     <>
       <Head>
@@ -35,10 +39,10 @@ const Notification = (): JSX.Element => {
       <div className="container py-5" data-controller="notification">
         <div className="row">
           <div className="col-12 d-flex align-items-center justify-content-between flex-wrap mb-3">
-            <h1 className="h3">Thông Báo của tôi</h1>
+            <h1 className="h3">{t('noti:my_noti')}</h1>
 
             <button className="btn btn-secondary btn-sm" onClick={handleRead}>
-              Đánh dấu đọc tất cả
+              {t('noti:mark_as_read')}
             </button>
           </div>
           {notificationsData?.map((noti, index) => {
@@ -56,10 +60,9 @@ const Notification = (): JSX.Element => {
                       dangerouslySetInnerHTML={{ __html: noti.body }}
                     />
                     <small className="notification__content-created-at">
-                      {formatDistance(new Date(noti.date), new Date(), {
-                        addSuffix: true,
-                        includeSeconds: true
-                      })}
+                      {moment(noti.date)
+                        .locale(`${t('noti:time')}`)
+                        .fromNow()}
                     </small>
                   </div>
                 </a>

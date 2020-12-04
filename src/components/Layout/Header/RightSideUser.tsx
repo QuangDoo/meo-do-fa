@@ -1,5 +1,7 @@
 import clsx from 'clsx';
 import { formatDistance } from 'date-fns';
+import { useTranslation } from 'i18n';
+import moment from 'moment';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import useNoti from 'src/hooks/useNoti';
@@ -11,6 +13,7 @@ type NotiItem = {
 };
 
 const NotiItem = (props) => {
+  const { t } = useTranslation();
   return (
     <>
       <Link href="/">
@@ -24,10 +27,9 @@ const NotiItem = (props) => {
               dangerouslySetInnerHTML={{ __html: props.body }}
             />
             <small className="notification__content-created-at">
-              {formatDistance(new Date(props.date), new Date(), {
-                addSuffix: true,
-                includeSeconds: true
-              })}
+              {moment(props.date)
+                .locale(`${t('noti:time')}`)
+                .fromNow()}
             </small>
           </div>
         </a>
@@ -40,8 +42,12 @@ const RightSideUser = () => {
   const { user } = useUser();
 
   const [show, setShow] = useState(false);
+
   const { notifications } = useNoti();
+
   const notificationsData = notifications?.getNotify;
+
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (!notifications) return;
@@ -50,6 +56,11 @@ const RightSideUser = () => {
   function toggleShow() {
     setShow((show) => !show);
   }
+
+  const size = 8;
+  const filterNotifications = notificationsData?.slice(0, size).map((item) => {
+    return item;
+  });
 
   return (
     <div className="header-right d-none d-lg-block">
@@ -68,7 +79,7 @@ const RightSideUser = () => {
               'dropdown-menu dropdown-menu-right notification__dropdown p-0 ',
               show && 'show'
             )}>
-            {notificationsData?.map((item, index) => {
+            {filterNotifications?.map((item, index) => {
               return <NotiItem key={index} {...item} />;
             })}
             <div className="dropdown__item notification__view-all">
