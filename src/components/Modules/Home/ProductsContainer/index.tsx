@@ -13,24 +13,22 @@ export const ProductsContainer: FC<ProductsContainerProps> = (props) => {
   const dealsClass = props.deals ? 'deals' : '';
   const { t } = useTranslation(['common']);
   return (
-    <section className={`py-5 container-fluid ${dealsClass} ${props.className}`}>
-      <div className="home__container">
-        <div className="text-center mb-4">
-          <h2 className={props.deals && 'text-white'}>{props.title}</h2>
-        </div>
-
-        <div className="mb-4">{props.children}</div>
-
-        {props.seeMoreUrl && (
-          <div className="text-center">
-            <Button
-              variant={props.deals ? 'outline-light' : 'outline-primary'}
-              className={props.deals ? 'btn-transparent' : 'btn-white'}>
-              {t('common:see_all')}
-            </Button>
-          </div>
-        )}
+    <section className={`py-5 container ${dealsClass} ${props.className}`}>
+      <div className="text-center mb-4">
+        <h2 className={props.deals && 'text-white'}>{props.title}</h2>
       </div>
+
+      <div className="mb-4">{props.children}</div>
+
+      {props.seeMoreUrl && (
+        <div className="text-center">
+          <Button
+            variant={props.deals ? 'outline-light' : 'outline-primary'}
+            className={props.deals ? 'btn-transparent' : 'btn-white'}>
+            {t('common:see_all')}
+          </Button>
+        </div>
+      )}
     </section>
   );
 };

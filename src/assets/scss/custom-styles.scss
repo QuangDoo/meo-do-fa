@@ -1,5 +1,4 @@
 @import './common/setting.scss';
-@import './common/image.scss';
 @import './application.scss';
 
 
@@ -12,6 +11,7 @@
 
 @import './loading.scss';
 
+@import './common/image.scss';
 button {
   background-color: transparent;
   border: none;
