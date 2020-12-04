@@ -1,5 +1,7 @@
-@import './setting.scss';
+@import './common/setting.scss';
+@import './common/image.scss';
 @import './application.scss';
+
 
 @import './header.scss';
 @import './footer.scss';
@@ -41,4 +43,13 @@ button {
 
 .product-card__image {
   position: relative;
+}
+@media (min-width: 1200px) {
+  .container,
+  .container-sm,
+  .container-md,
+  .container-lg,
+  .container-xl {
+    max-width: 1270px;
+  }
 }

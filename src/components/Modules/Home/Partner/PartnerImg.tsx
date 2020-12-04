@@ -5,7 +5,11 @@ type PartnerImgProps = {
 };
 
 const PartnerImg: FC<PartnerImgProps> = (props) => {
-  return <img src={props.imgUrl} alt="" className="img-fluid" />;
+  return (
+    <div className="d-flex align-items-center justify-content-center">
+      <img src={props.imgUrl} alt="" className="img-fluid " />
+    </div>
+  );
 };
 
 export default PartnerImg;

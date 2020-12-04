@@ -97,8 +97,8 @@ function Products(): JSX.Element {
 
       <Nav />
 
-      <div className="products container-fluid mobile-content my-3 my-sm-5">
-        <div className="row flex-nowrap justify-content-between px-lg-5 px-sm-3">
+      <div className="products container mobile-content my-3 my-sm-5">
+        <div className="d-flex flex-nowrap justify-content-between">
           <div className="products__sidebar pr-4 d-none d-sm-block">
             <ProductsSidebarFilter categories={categories} manufacturers={manufacturers} />
           </div>
