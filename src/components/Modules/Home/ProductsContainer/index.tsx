@@ -13,8 +13,8 @@ export const ProductsContainer: FC<ProductsContainerProps> = (props) => {
   const dealsClass = props.deals ? 'deals' : '';
   const { t } = useTranslation(['common']);
   return (
-    <section className={`py-5 container-fluid ${dealsClass} ${props.className}`}>
-      <div className="home__container">
+    <section className={`py-5 ${dealsClass} ${props.className}`}>
+      <div className="container">
         <div className="text-center mb-4">
           <h2 className={props.deals && 'text-white'}>{props.title}</h2>
         </div>
