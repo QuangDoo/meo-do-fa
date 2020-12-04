@@ -42,7 +42,7 @@ const Footer = (): JSX.Element => {
         <div className="container">
           <div className="row align-items-center ">
             <div className="col-xs col-md-7 text-md-center mb-2">
-              <div className="row">
+              <div className="row  align-items-center">
                 <div className="col-sm-auto d-none d-md-block col-12 align-items-end text-center">
                   <img
                     style={{ height: '80px' }}
@@ -51,7 +51,7 @@ const Footer = (): JSX.Element => {
                     className="img-fluid"
                   />
                 </div>
-                <div className="mb-2 mb-md-0 ml-sm-4 col-md text-center text-md-left">
+                <div className="mb-2 mb-md-0 ml-sm-3 col-md text-center text-md-left">
                   <p className="font-weight-bold mb-0">{t('footer:subscribe_title')}</p>
                   <p className=" d-none d-md-block mt-1 mb-0 ">{t('footer:subscribe_content')}</p>
                 </div>
