@@ -31,7 +31,7 @@ const OrderItem = (props: GetOrderList) => {
     <div className="my-orders__item my-orders__item:hover pl-4 mt-1">
       <div className="my-orders__info">
         <h2 className="h4 d-flex align-items-center">
-          <Link href={`/my-orders/${props.orderNo}`}>
+          <Link href={`/my-orders/${props.id}`}>
             <a className="mr-2">#{props.id}</a>
           </Link>
 

@@ -6,7 +6,6 @@ import { useForm } from 'react-hook-form';
 
 import Button from '../Form/Button';
 import Input from '../Form/Input';
-
 import BackToTop from '../Layout/BackToTop';
 
 const links: { href: string; i18nKey: string }[] = [
