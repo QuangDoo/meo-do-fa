@@ -3,9 +3,9 @@ import React from 'react';
 import PriceText from 'src/components/Form/PriceText';
 import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
 
+import QuantityInput from '../../Form/QuantityInput';
 import AddCart from '../AddCart';
 import ProductBadge from '../ProductCard/ProductBadge';
-import QuantityInput from '../../Form/QuantityInput';
 
 type PropsType = {
   name: string;

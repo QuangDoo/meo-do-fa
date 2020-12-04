@@ -1,12 +1,18 @@
-import { useTranslation, withTranslation } from 'i18n';
-import { WithTranslation } from 'next-i18next';
+import { useMutation } from '@apollo/client';
+import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import React from 'react';
-import { useForm } from 'react-hook-form';
+import { DeepMap, FieldError, useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
+import { emailRegex, noSpecialChars } from 'src/assets/regex/email';
+import {
+  SAVE_MAIL_SUBSCRIBE,
+  SubscriberData,
+  SubscriberVar
+} from 'src/graphql/subscribe/subscribe.mutation';
 
 import Button from '../Form/Button';
 import Input from '../Form/Input';
-
 import BackToTop from '../Layout/BackToTop';
 
 const links: { href: string; i18nKey: string }[] = [
@@ -31,45 +37,83 @@ const FooterLink = (props: { href: string; text: string }) => (
 );
 
 type Inputs = {
-  subcribeEmail: string;
+  email: string;
 };
 
 const Footer = (): JSX.Element => {
   const { t } = useTranslation(['footer', 'common']);
+  const { register, handleSubmit } = useForm<Inputs>();
+  const [saveMailSubscriber] = useMutation<SubscriberData, SubscriberVar>(SAVE_MAIL_SUBSCRIBE, {
+    onCompleted: (data) => {
+      toast.success(t('footer:success_subscribe'));
+    },
+    onError: (error) => {
+      toast.error(error);
+      // error.graphQLErrors.length > 0 &&
+      //   toast.error(t(`errors:code_${error.graphQLErrors[0].extensions.code}`));
+    }
+  });
+  // On form error
+  const onError = (errors: DeepMap<Inputs, FieldError>) => {
+    Object.keys(errors).forEach((field) => toast.error(errors[field].message));
+  };
+
+  const onSubmit = (data: Inputs) => {
+    saveMailSubscriber({
+      variables: {
+        inputs: {
+          email: data.email
+        }
+      }
+    }).catch((error) => toast.error(error));
+  };
 
   return (
     <div className="footer">
       <div className="container pb-5">
         <div className="row align-items-end">
-          <div className="align-items-end">
+          <div className="col-md-2 align-items-end">
             <img
-              style={{ height: '80px' }}
+              // style={{ height: '100%' }}
               src="/assets/images/newsletter.png"
               alt="newsletter"
               className="img-fluid"
             />
           </div>
-          <div className="mb-1 ml-3">
+          <div className="col-md-4">
             <p className="font-weight-bold mb-0">{t('footer:subscribe_title')}</p>
-            <p className="font-weight-bold mb-0" style={{ fontSize: '0.8rem' }}>
+            <p className="font-weight-bold mb-0 subsciber-content">
               {t('footer:subscribe_content')}
             </p>
           </div>
-          <form className="row ml-3 align-items-end">
-            <div style={{ width: '345px', height: '42px' }} className="mx-3">
-              <Input
-                name="email"
-                containerClass="mb-4"
-                iconClass="icomoon icon-mail"
-                placeholder={t('footer:email_input')}
-              />
-            </div>
-            <div className="mb-1">
-              <Button type="submit" variant="primary" block className="rounded">
-                {t('footer:subscribe')}
-              </Button>
-            </div>
-          </form>
+          <div className="col-md-6">
+            <form className="row align-items-end" onSubmit={handleSubmit(onSubmit, onError)}>
+              <div className="col-md-8 subsribe-input">
+                <Input
+                  name="email"
+                  ref={register({
+                    pattern: {
+                      value: emailRegex,
+                      message: `${t('register:input_email_error_invalid')}`
+                    },
+                    validate: {
+                      noSpecialChars: (value) =>
+                        noSpecialChars.test(value) ||
+                        `${t('register:input_email_error_noSpecialChars')}`
+                    }
+                  })}
+                  containerClass="mb-4"
+                  iconClass="icomoon icon-mail"
+                  placeholder={t('footer:email_input')}
+                />
+              </div>
+              <div className="col-md-4 mb-1">
+                <Button type="submit" variant="primary" block className="rounded">
+                  {t('footer:subscribe')}
+                </Button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
 
