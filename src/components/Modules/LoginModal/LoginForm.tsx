@@ -18,7 +18,7 @@ type Inputs = {
 };
 
 const LoginForm = (): JSX.Element => {
-  const { t } = useTranslation('login');
+  const { t } = useTranslation(['login', 'errors']);
 
   const { openModal, closeModal } = useModalControlDispatch();
 

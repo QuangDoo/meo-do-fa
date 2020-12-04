@@ -52,12 +52,12 @@ const Nav = () => {
                 <div data-toggle="dropdown" data-hover="dropdown">
                   <Link href="/products">
                     <a className="rockland-nav__link">
-                      <i className="rockland-nav__icon icomoon icon-product" />
-                      <span className="rockland-nav__title">{t('navbar:product')}</span>
+                      <i className="rockland-nav__icon fas fa-list-ul" />
+                      <span className="rockland-nav__title">{t('navbar:category')}</span>
                     </a>
                   </Link>
                 </div>
-                <ul className="dropdown-menu">
+                <ul className="dropdown-menu dropdown-list">
                   {categories
                     .slice()
                     .sort((a, b) => a.name.localeCompare(b.name))
@@ -70,20 +70,22 @@ const Nav = () => {
                             </Link>
                           </div>
                           <div className="dropdown-menu dropdown-sub-menu">
-                            <li>
+                            <li className="mb-2 dropdown-item">
                               <div className="dropdown">
                                 <div data-toggle="dropdown" data-hover="dropdown">
                                   <a href="/#">amet consectetur</a>
                                 </div>
                                 <div className="dropdown-menu dropdown-sub-menu">
-                                  <a href="/#">adipisicing elit</a>
+                                  <a className="dropdown-item" href="/#">
+                                    adipisicing elit
+                                  </a>
                                 </div>
                               </div>
                             </li>
-                            <li>
+                            <li className="mb-2 dropdown-item">
                               <a href="/#">Exercitationem autem</a>
                             </li>
-                            <li>
+                            <li className="mb-2 dropdown-item">
                               <a href="/#">Exercitationem autem</a>
                             </li>
                           </div>
@@ -92,7 +94,14 @@ const Nav = () => {
                     ))}
                 </ul>
               </li>
-
+              <li className="rockland-nav__item dropdown">
+                <Link href="/products">
+                  <a className="rockland-nav__link">
+                    <i className="rockland-nav__icon icomoon icon-product" />
+                    <span className="rockland-nav__title">{t('navbar:product')}</span>
+                  </a>
+                </Link>
+              </li>
               <li className="rockland-nav__item">
                 <Link href="/ingredients">
                   <a className="rockland-nav__link">
