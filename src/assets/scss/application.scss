@@ -15746,7 +15746,7 @@ abbr[title] {
   margin-right: 1em;
 }
 .banner {
-  max-width: 1880px;
+  max-width: 100%;
   margin: auto;
 }
 .banner__slide {
@@ -15774,7 +15774,7 @@ abbr[title] {
   background-position: center center;
   background-size: contain;
   width: 100%;
-  min-height: 530px;
+  min-height: 30vw;
   position: absolute;
   top: 0;
 }
