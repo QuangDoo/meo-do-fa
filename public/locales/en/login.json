@@ -3,6 +3,9 @@
   "placeholder_phone": "Phone number",
   "invalid_phone": "Please provide a valid phone number.",
 
+  "placeholder_username": "Username (Phone/Email)",
+  "invalid_username": "Please provide a valid username.",
+  
   "placeholder_password": "Password",
   "invalid_password": "Please provide a password with minimum 6 characters.",
 
