@@ -14,6 +14,7 @@ export type Product = {
   is_quick_invoice: boolean;
   is_vn: boolean;
   is_exclusive: boolean;
+  slug: string;
   categories: {
     id: string;
     name: string;
@@ -64,6 +65,7 @@ export const GET_PRODUCTS = gql`
         is_quick_invoice
         is_vn
         is_exclusive
+        slug
         categories {
           id
           name

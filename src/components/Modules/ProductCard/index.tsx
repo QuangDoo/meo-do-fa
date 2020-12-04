@@ -34,7 +34,7 @@ const ProductCard = ({ t, ...props }: Props): JSX.Element => {
 
             {isDiscount && <DiscountRibbon discountPercent={discountPercent} />}
 
-            <Link href={`/products/${props.id}`}>
+            <Link href={`/products/${props.slug}`}>
               <a>
                 <div className="product-card__image mb-3 lozad">
                   <Image alt={props.id} src={props.image_256} layout="fill" objectFit="cover" />
@@ -43,7 +43,7 @@ const ProductCard = ({ t, ...props }: Props): JSX.Element => {
             </Link>
 
             <div>
-              <Link href={`/products/${props.id}`}>
+              <Link href={`/products/${props.slug}`}>
                 <a className="text-decoration-none">
                   <span title={props.name} className="product-card__name">
                     {props.name}
