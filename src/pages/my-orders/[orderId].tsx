@@ -20,6 +20,7 @@ import {
   Typography
 } from '@material-ui/core';
 import { AssignmentTurnedIn, Done, LocalShipping, Receipt, Sms, Update } from '@material-ui/icons';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import clsx from 'clsx';
 import { DateTime } from 'luxon';
 import Link from 'next/link';
@@ -262,9 +263,9 @@ const OrderDetails = () => {
   const [activeStep, setActiveStep] = useState(0);
 
   const { data: orderDetail } = useQueryAuth(GET_ORDER, {
-    variables: { id: orderId }
+    variables: { id: +orderId }
   });
-  console.log('orderDetail', orderDetail);
+
   // useEffect(() => {
   //   if (orderDetail?.getOrderDetail.order_lines.state) {
   //   }
@@ -323,26 +324,49 @@ const OrderDetails = () => {
 
                   <Box display="flex" justifyContent="space-between" alignItems="center">
                     <Typography>
-                      Dự kiến giao vào
-                      <strong>{orderDetail?.getOrderDetail?.expected_date}</strong>
+                      Dự kiến giao vào{' '}
+                      <strong>
+                        {orderDetail?.getOrderDetail?.expected_date &&
+                          orderDetail?.getOrderDetail?.expected_date?.substr(0, 10)}
+                      </strong>
                     </Typography>
-
-                    <Link
-                      href={{
-                        pathname: '/feedback',
-                        query: {
-                          orderId: orderId,
-                          name: user?.name,
-                          phone: user?.phone
-                        }
-                      }}>
-                      <Button size="small" startIcon={<Sms />} variant="outlined" color="primary">
-                        Gửi phản hồi
+                    {activeStep > 2 ? (
+                      <Link
+                        href={{
+                          pathname: '/feedback',
+                          query: {
+                            orderId: orderDetail?.getOrderDetail?.name,
+                            name: user?.name,
+                            phone: user?.phone
+                          }
+                        }}>
+                        <Button size="small" startIcon={<Sms />} variant="outlined" color="primary">
+                          Gửi phản hồi
+                        </Button>
+                      </Link>
+                    ) : orderDetail?.getOrderDetail.state === 'cancel' ? (
+                      <Button
+                        size="small"
+                        startIcon={<DeleteForeverIcon />}
+                        variant="outlined"
+                        color="secondary">
+                        Canceled
                       </Button>
-                    </Link>
-                    <button className="btn btn-danger" onClick={onCancelClick}>
-                      hủy đơn hàng
-                    </button>
+                    ) : (
+                      <Button
+                        size="small"
+                        startIcon={<DeleteForeverIcon />}
+                        variant="outlined"
+                        onClick={onCancelClick}
+                        color="secondary">
+                        hủy đơn hàng
+                      </Button>
+                      // <button
+                      //   className="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-outlinedSizeSmall MuiButton-sizeSmall"
+                      //   onClick={onCancelClick}>
+                      //   hủy đơn hàng
+                      // </button>
+                    )}
 
                     <ConfirmCancelOrder
                       open={open}

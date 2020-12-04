@@ -1,3 +1,17 @@
-.logo-footer{
+.logo-footer {
   max-height: 40px;
+}
+
+.subscribe-container {
+  padding: 20px 0;
+  box-shadow: 0px 0px 10px 1px #dddddd73;
+  .group-input-footer {
+    border-radius: 3px;
+    overflow: hidden;
+    max-width: 300px;
+  }
+
+  .input-group-prepend .btn {
+    font-size: 12px;
+  }
 }

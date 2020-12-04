@@ -10,7 +10,7 @@ export type LoginData = {
 };
 
 export type LoginUserInput = {
-  phone: string;
+  username: string;
   password: string;
 };
 
