@@ -3,6 +3,9 @@
   "placeholder_phone": "Nhập số điện thoại",
   "invalid_phone": "Xin nhập số điện thoại hợp lệ.",
 
+  "placeholder_username": "Nhập tên đăng nhập (Sdt/Email)",
+  "invalid_username": "Xin nhập tên đăng nhập hợp lệ.",
+
   "placeholder_password": "Nhập mật khẩu",
   "invalid_password": "Xin nhập mật khẩu tối thiểu 6 kí tự.",
 
