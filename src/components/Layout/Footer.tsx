@@ -116,62 +116,62 @@ const Footer = (): JSX.Element => {
           </div>
         </div>
       </div>
-
-      <div className="container pb-5 pt-5">
-        <div className="row justify-content-between">
-          <div className="col-md-4">
-            <div className="footer__info mb-5">
-              <div className="footer__info-logo mb-3">
-                <div className="rockland-logo d-inline-block">
-                  <Link href="/">
-                    <a title="medofa.com">
-                      <img
-                        alt="medofa.com"
-                        className="img-fluid logo-footer"
-                        title="medofa.com"
-                        src="/assets/images/logo3.png"
-                      />
-                    </a>
-                  </Link>
+      <div className="footer">
+        <div className="container pb-5 pt-0">
+          <div className="row justify-content-between">
+            <div className="col-md-4">
+              <div className="footer__info mb-5">
+                <div className="footer__info-logo mb-3">
+                  <div className="rockland-logo d-inline-block">
+                    <Link href="/">
+                      <a title="medofa.com">
+                        <img
+                          alt="medofa.com"
+                          className="img-fluid logo-footer"
+                          title="medofa.com"
+                          src="/assets/images/logo3.png"
+                        />
+                      </a>
+                    </Link>
+                  </div>
                 </div>
-              </div>
-              <div className="footer__info-title mb-3">
-                <b className="text-primary">medofa.com</b> {t('footer:website_ownership')}
-              </div>
-              <p className="footer__info-company">
-                <b>{t('footer:company_name')}</b>
+                <div className="footer__info-title mb-3">
+                  <b className="text-primary">medofa.com</b> {t('footer:website_ownership')}
+                </div>
+                <p className="footer__info-company">
+                  <b>{t('footer:company_name')}</b>
 
-                <br />
+                  <br />
 
-                {t('footer:company_address_label') + ': '}
-                <b>{t('footer:company_address')}</b>
+                  {t('footer:company_address_label') + ': '}
+                  <b>{t('footer:company_address')}</b>
 
-                <br />
+                  <br />
 
-                {t('footer:business_certificate_label') + ': '}
-                <b>
-                  {t('footer:business_certificate_number') +
-                    ', ' +
-                    t('footer:business_certificate_issue_date') +
-                    ', '}
-                </b>
+                  {t('footer:business_certificate_label') + ': '}
+                  <b>
+                    {t('footer:business_certificate_number') +
+                      ', ' +
+                      t('footer:business_certificate_issue_date') +
+                      ', '}
+                  </b>
 
-                <br />
+                  <br />
 
-                {t('footer:business_certificate_issued_at')}
+                  {t('footer:business_certificate_issued_at')}
 
-                <br />
+                  <br />
 
-                {t('footer:ecommerce_license_label') + ': '}
-                <b>
-                  <FooterLink
-                    href="/ecommerce-license"
-                    text={t('footer:ecommerce_license_number')}
-                  />
-                </b>
-              </p>
+                  {t('footer:ecommerce_license_label') + ': '}
+                  <b>
+                    <FooterLink
+                      href="/ecommerce-license"
+                      text={t('footer:ecommerce_license_number')}
+                    />
+                  </b>
+                </p>
 
-              {/* <div className="footer__bct">
+                {/* <div className="footer__bct">
                 <a rel="nofollow">
                   <img
                     alt="Dấu đỏ của Bộ Công Thương"
@@ -181,73 +181,73 @@ const Footer = (): JSX.Element => {
                   />
                 </a>
               </div> */}
+              </div>
             </div>
-          </div>
-          <div className="col-xl-4 col-lg-5 col-md-6">
-            <div className="mb-5">
-              <div className="footer__header mb-3">{t('footer:general_info')}</div>
+            <div className="col-xl-4 col-lg-5 col-md-6">
+              <div className="mb-5">
+                <div className="footer__header mb-3">{t('footer:general_info')}</div>
 
-              <div className="row">
-                <div className="col-12 col-sm-6">
-                  {links.slice(0, linksHalfLength).map((link, index) => (
-                    <React.Fragment key={link.i18nKey}>
-                      <FooterLink href={link.href} text={t(link.i18nKey)} />
-                      {index < linksHalfLength - 1 && <br />}
-                    </React.Fragment>
-                  ))}
-                </div>
+                <div className="row">
+                  <div className="col-12 col-sm-6">
+                    {links.slice(0, linksHalfLength).map((link, index) => (
+                      <React.Fragment key={link.i18nKey}>
+                        <FooterLink href={link.href} text={t(link.i18nKey)} />
+                        {index < linksHalfLength - 1 && <br />}
+                      </React.Fragment>
+                    ))}
+                  </div>
 
-                <div className="col-12 col-sm-6">
-                  {links.slice(linksHalfLength).map((link, index) => (
-                    <React.Fragment key={link.i18nKey}>
-                      <FooterLink href={link.href} text={t(link.i18nKey)} />
-                      {index < linksHalfLength * 2 - 1 && <br />}
-                    </React.Fragment>
-                  ))}
+                  <div className="col-12 col-sm-6">
+                    {links.slice(linksHalfLength).map((link, index) => (
+                      <React.Fragment key={link.i18nKey}>
+                        <FooterLink href={link.href} text={t(link.i18nKey)} />
+                        {index < linksHalfLength * 2 - 1 && <br />}
+                      </React.Fragment>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div className="col-xl-4 col-lg-5 col-md-6">
-            <div className="footer__header mb-3">{t('footer:contacts')}</div>
+            <div className="col-xl-4 col-lg-5 col-md-6">
+              <div className="footer__header mb-3">{t('footer:contacts')}</div>
 
-            <div className="mb-3">
-              <p className="d-flex align-items-center">
-                <i className="far fa-envelope footer__icon footer__icon--email" />
+              <div className="mb-3">
+                <p className="d-flex align-items-center">
+                  <i className="far fa-envelope footer__icon footer__icon--email" />
 
-                <a className="footer__link footer__link--email px-2 mr-2"> cskh@medofa.com</a>
+                  <a className="footer__link footer__link--email px-2 mr-2"> cskh@medofa.com</a>
 
-                <a className="footer__icon footer__icon--fb">
-                  <i className="fab fa-facebook-f" />
-                </a>
-              </p>
-              <p />
-              <div className="d-flex align-items-center">
-                <i className="fa fa-phone footer__icon footer__icon--email" />
-                <a className="text-white px-2 mr-2" href="tel:0866624702">
-                  0866624702
-                </a>
+                  <a className="footer__icon footer__icon--fb">
+                    <i className="fab fa-facebook-f" />
+                  </a>
+                </p>
+                <p />
+                <div className="d-flex align-items-center">
+                  <i className="fa fa-phone footer__icon footer__icon--email" />
+                  <a className="text-white px-2 mr-2" href="tel:0866624702">
+                    0866624702
+                  </a>
+                </div>
+                {/* <small>{t('footer:work_time')}</small> */}
+                <p />
               </div>
-              {/* <small>{t('footer:work_time')}</small> */}
-              <p />
-            </div>
-            <div className="mb-5 mb-sm-0">
-              <div className="footer__header mb-3">{t('footer:delivery')}</div>
+              <div className="mb-5 mb-sm-0">
+                <div className="footer__header mb-3">{t('footer:delivery')}</div>
 
-              <div>
-                <img
-                  alt="MEDOFA"
-                  className="img-fluid footer__delivery"
-                  src="/assets/images/ghtk-22fbe4903100177078c795a37f7ce7260582b95c1bad6cf37a0dba76127e7f5d.png"
-                />
+                <div>
+                  <img
+                    alt="MEDOFA"
+                    className="img-fluid footer__delivery"
+                    src="/assets/images/ghtk-22fbe4903100177078c795a37f7ce7260582b95c1bad6cf37a0dba76127e7f5d.png"
+                  />
 
-                <img
-                  className="img-fluid footer__delivery"
-                  src="/assets/images/ahamove-da817db210e5d075aed3853aeed370863737426a27abc6e91c16ccc8a89e6e2f.png"
-                  alt="MEDOFA"
-                />
+                  <img
+                    className="img-fluid footer__delivery"
+                    src="/assets/images/ahamove-da817db210e5d075aed3853aeed370863737426a27abc6e91c16ccc8a89e6e2f.png"
+                    alt="MEDOFA"
+                  />
 
-                {/* <img
+                  {/* <img
                   className="img-fluid footer__delivery"
                   src="/assets/images/grab-0d623c296e4838dd4d67984a580fa1b244962d8e5e8de76f3acb548cddbf0c6c.png"
                   alt="MEDOFA"
@@ -265,18 +265,19 @@ const Footer = (): JSX.Element => {
                   alt="MEDOFA"
                 /> */}
 
-                {/* <img
+                  {/* <img
                   className="img-fluid footer__delivery"
                   src="/assets/images/ninjavan-df8ca83378c8c4f339ac240d845807ef5cfdef493b0e0a1762b8cb4ccce8feea.png"
                   alt="MEDOFA"
                 /> */}
+                </div>
               </div>
             </div>
           </div>
         </div>
+        <div className="copyright">{t('footer:copyright')}</div>
+        <BackToTop />
       </div>
-      <div className="copyright">{t('footer:copyright')}</div>
-      <BackToTop />
     </div>
   );
 };
