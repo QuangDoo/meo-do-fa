@@ -111,7 +111,7 @@ const MyOrders = () => {
   }, []);
 
   const orderList = data?.getOrderList || [];
-
+  console.log('orderList', orderList);
   const [filter, setFilter] = useState<FilterKey>('all');
 
   const filterHeaders: Record<FilterKey, string> = {

@@ -21,10 +21,14 @@ type Props = {
   price: number;
 
   image: string;
+
+  isKeyDown?: boolean;
+
+  updateCart?: (quanity) => void;
 };
 
 const ConfirmDeleteModal: FC<Props> = (props) => {
-  const { open, onClose, _id, productName, price, image } = props;
+  const { open, onClose, _id, productName, price, image, isKeyDown, updateCart } = props;
 
   const { t } = useTranslation(['cart', 'errors']);
 
@@ -43,6 +47,13 @@ const ConfirmDeleteModal: FC<Props> = (props) => {
     }
   });
 
+  const handleOnClose = () => {
+    if (isKeyDown) {
+      updateCart(1);
+    }
+    onClose();
+  };
+
   const onConfirmDelete = () => {
     deleteCart({
       variables: {
@@ -52,7 +63,7 @@ const ConfirmDeleteModal: FC<Props> = (props) => {
   };
 
   return (
-    <ModalBase open={open} onClose={onClose}>
+    <ModalBase open={open} onClose={handleOnClose}>
       <div className="modal-content">
         <div className="modal-body">
           <div className="swal2-header">
@@ -70,7 +81,7 @@ const ConfirmDeleteModal: FC<Props> = (props) => {
               className="swal2-close"
               aria-label="Close this dialog"
               style={{ display: 'flex' }}
-              onClick={onClose}>
+              onClick={handleOnClose}>
               ×
             </button>
           </div>
@@ -95,7 +106,7 @@ const ConfirmDeleteModal: FC<Props> = (props) => {
             <button
               type="button"
               className="swal2-cancel btn btn-outline-primary px-4 m-2"
-              onClick={onClose}>
+              onClick={handleOnClose}>
               Không
             </button>
             <button
