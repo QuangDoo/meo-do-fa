@@ -1,6 +1,8 @@
-import { useTranslation } from 'i18n';
+import { useMutation } from '@apollo/client';
+import { withTranslation } from 'i18n';
+import { WithTranslation } from 'next-i18next';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { UPDATE_CART, UpdateCartData, UpdateCartVars } from 'src/graphql/cart/updateCart.mutation';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
@@ -9,7 +11,7 @@ import useCart from 'src/hooks/useCart';
 import { ProductPrice } from '../ProductCard/ProductPrice';
 import ConfirmDeleteModal from './ConfirmDeleteModal';
 
-type Props = {
+type Props = WithTranslation & {
   image: string;
   productName: string;
   productId: string;
@@ -22,9 +24,11 @@ type Props = {
 };
 
 function CartItem(props: Props): JSX.Element {
-  const { t } = useTranslation('cart');
+  const { t } = props;
 
   const [open, setOpen] = useState(false);
+
+  const [isKeyDown, setIsKeyDown] = useState(false);
 
   const [quantity, setQuantity] = useState<string>(props.quantity.toString());
 
@@ -40,8 +44,14 @@ function CartItem(props: Props): JSX.Element {
     }
   });
 
+  const onHandleClick = () => {
+    setIsKeyDown(false);
+    setOpen(true);
+  };
+
   const handlePlusClick = () => {
     const newQty = props.quantity + 1;
+    setIsKeyDown(false);
     setQuantity(newQty + '');
     updateCart({
       variables: {
@@ -53,11 +63,24 @@ function CartItem(props: Props): JSX.Element {
     });
   };
 
+  const handleUpdateCart = (quantity) => {
+    updateCart({
+      variables: {
+        inputs: {
+          _id: props._id,
+          quantity: quantity
+        }
+      }
+    });
+  };
+
   const handleMinusClick = () => {
     const newQty = Math.max(props.quantity - 1, 0);
     if (newQty === 0) {
-      setQuantity('1');
+      setIsKeyDown(false);
       setOpen(true);
+      setQuantity('1');
+
       // toast.error(<div>{t('cart:quantity_smaller_than_1')}</div>);
       return;
     }
@@ -67,7 +90,7 @@ function CartItem(props: Props): JSX.Element {
       variables: {
         inputs: {
           _id: props._id,
-          quantity: newQty
+          quantity: +newQty
         }
       }
     });
@@ -75,13 +98,17 @@ function CartItem(props: Props): JSX.Element {
 
   // Blur on Esc or Enter
   const handleKeyDown = (e) => {
+    setIsKeyDown(true);
     if ([13, 27].includes(e.keyCode)) {
       e.target.blur();
     }
   };
 
   const handleBlur = () => {
-    if (+quantity !== props.quantity) {
+    if (+quantity === 0) {
+      setQuantity('1');
+      setOpen(true);
+    } else if (+quantity !== props.quantity) {
       updateCart({
         variables: {
           inputs: {
@@ -97,9 +124,6 @@ function CartItem(props: Props): JSX.Element {
     const string = event.target.value.replace(/\D/g, '');
 
     const newQuantity = parseInt(string, 10) || 0;
-
-    console.log(newQuantity);
-    console.log(typeof quantity);
 
     if (newQuantity + '' !== quantity) {
       setQuantity(newQuantity + '');
@@ -167,7 +191,7 @@ function CartItem(props: Props): JSX.Element {
             </div>
 
             <div className="ml-3">
-              <button onClick={() => setOpen(true)} className="cart-item__remove">
+              <button onClick={onHandleClick} className="cart-item__remove">
                 <i className="fas fa-trash" />
               </button>
             </div>
@@ -176,15 +200,17 @@ function CartItem(props: Props): JSX.Element {
       </div>
 
       <ConfirmDeleteModal
+        isKeyDown={isKeyDown}
         open={open}
         onClose={() => setOpen(false)}
         productName={props.productName}
         image={props.image}
         price={props.price}
         _id={props._id}
+        updateCart={handleUpdateCart}
       />
     </div>
   );
 }
 
-export default CartItem;
+export default withTranslation(['cart'])(CartItem);
