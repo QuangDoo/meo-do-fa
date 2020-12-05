@@ -1,13 +1,12 @@
 import { ApolloClient, from, HttpLink, InMemoryCache } from '@apollo/client';
-import { setContext } from '@apollo/client/link/context';
 import { onError } from '@apollo/client/link/error';
 import { withApollo } from 'next-apollo';
 
 const getURI = () => {
-  // if (typeof window === 'undefined') {
-  //   console.log('SERVER...');
-  //   return 'http://gateway.medofa.svc.cluster.local/graphql';
-  // }
+  if (typeof window === 'undefined') {
+    console.log('SERVER...');
+    return 'http://gateway.medofa.svc.cluster.local/graphql';
+  }
 
   return 'https://graphql.medofa.bedigital.vn';
 };
