@@ -72,52 +72,55 @@ const Footer = (): JSX.Element => {
     <>
       <div className="subscribe-container">
         <div className="container">
-          <div className="row align-items-end">
-            <div className="col-md-2 align-items-end">
-              <img
-                // style={{ height: '100%' }}
-                src="/assets/images/newsletter.png"
-                alt="newsletter"
-                className="img-fluid"
-              />
-            </div>
-            <div className="col-md-4">
-              <p className="font-weight-bold mb-0">{t('footer:subscribe_title')}</p>
-              <p className="font-weight-bold mb-0 subsciber-content">
-                {t('footer:subscribe_content')}
-              </p>
-            </div>
-            <div className="col-md-6">
-              <form className="row align-items-end" onSubmit={handleSubmit(onSubmit, onError)}>
-                <div className="col-md-8 subsribe-input">
-                  <Input
-                    name="email"
-                    ref={register({
-                      pattern: {
-                        value: emailRegex,
-                        message: `${t('register:input_email_error_invalid')}`
-                      },
-                      validate: {
-                        noSpecialChars: (value) =>
-                          noSpecialChars.test(value) ||
-                          `${t('register:input_email_error_noSpecialChars')}`
-                      }
-                    })}
-                    containerClass="mb-4"
-                    iconClass="icomoon icon-mail"
-                    placeholder={t('footer:email_input')}
+          <div className="row align-items-center ">
+            <div className="col-xs col-md-7 text-md-center mb-2">
+              <div className="row  align-items-center">
+                <div className="col-sm-auto d-none d-md-block col-12 align-items-end text-center">
+                  <img
+                    style={{ height: '80px' }}
+                    src="/assets/images/newsletter.png"
+                    alt="newsletter"
+                    className="img-fluid"
                   />
                 </div>
-                <div className="col-md-4 mb-1">
-                  <Button type="submit" variant="primary" block className="rounded">
+                <div className="mb-2 mb-md-0 ml-sm-3 col-md text-center text-md-left">
+                  <p className="font-weight-bold mb-0">{t('footer:subscribe_title')}</p>
+                  <p className=" d-none d-md-block mt-1 mb-0 ">{t('footer:subscribe_content')}</p>
+                </div>
+              </div>
+            </div>
+
+            <form
+              className=" align-items-center d-flex justify-content-center text-sm-left text-center col-md-5 col-12"
+              onSubmit={handleSubmit(onSubmit, onError)}>
+              <Input
+                name="email"
+                containerClass="group-input-footer"
+                iconClass="icomoon icon-mail"
+                placeholder={t('footer:email_input')}
+                ref={register({
+                  pattern: {
+                    value: emailRegex,
+                    message: `${t('register:input_email_error_invalid')}`
+                  },
+                  validate: {
+                    noSpecialChars: (value) =>
+                      noSpecialChars.test(value) ||
+                      `${t('register:input_email_error_noSpecialChars')}`
+                  }
+                })}
+                itemRight={
+                  <Button type="submit" variant="primary">
                     {t('footer:subscribe')}
                   </Button>
-                </div>
-              </form>
-            </div>
+                }
+              />
+              <div className="mb-1"></div>
+            </form>
           </div>
         </div>
       </div>
+
       <div className="footer">
         <div className="container pb-5 pt-0">
           <div className="row justify-content-between">
