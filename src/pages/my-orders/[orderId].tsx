@@ -20,11 +20,12 @@ import {
   Typography
 } from '@material-ui/core';
 import { AssignmentTurnedIn, Done, LocalShipping, Receipt, Sms, Update } from '@material-ui/icons';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import clsx from 'clsx';
 import { DateTime } from 'luxon';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import PriceText from 'src/components/Form/PriceText';
 import Head from 'src/components/Layout/Head';
@@ -32,7 +33,8 @@ import Header from 'src/components/Layout/Header';
 import Nav from 'src/components/Layout/Nav';
 import ExportInvoice from 'src/components/Modules/ExportInvoice';
 import ProfileSidebar from 'src/components/Modules/ProfileSidebar';
-import { GET_ORDER, GetOrderDetail, GetOrderDetailVar } from 'src/graphql/order/order.query';
+import { useUserContext } from 'src/contexts/User';
+import { GET_ORDER } from 'src/graphql/order/order.query';
 import { useQueryAuth } from 'src/hooks/useApolloHookAuth';
 import useUser from 'src/hooks/useUser';
 import { theme } from 'src/theme';
@@ -253,15 +255,21 @@ const CustomBodyCell = ({ children, textAlign }: CustomBodyCellProps) => {
 
 const OrderDetails = () => {
   const router = useRouter();
+
   const [open, setOpen] = useState(false);
 
   const { orderId } = router.query;
 
-  const [activeStep, setActiveStep] = useState(2);
+  const [activeStep, setActiveStep] = useState(0);
 
   const { data: orderDetail } = useQueryAuth(GET_ORDER, {
-    variables: { id: orderId }
+    variables: { id: +orderId }
   });
+
+  // useEffect(() => {
+  //   if (orderDetail?.getOrderDetail.order_lines.state) {
+  //   }
+  // }, [orderDetail?.getOrderDetail.order_lines]);
 
   const onCancelClick = () => {
     if (activeStep >= 3) {
@@ -271,7 +279,7 @@ const OrderDetails = () => {
     setOpen(true);
   };
 
-  const { user } = useUser();
+  const { user } = useUserContext();
 
   return (
     <>
@@ -317,25 +325,48 @@ const OrderDetails = () => {
                   <Box display="flex" justifyContent="space-between" alignItems="center">
                     <Typography>
                       Dự kiến giao vào{' '}
-                      <strong>{orderDetail?.getOrderDetail?.expected_date?.substr(0, 10)}</strong>
+                      <strong>
+                        {orderDetail?.getOrderDetail?.expected_date &&
+                          orderDetail?.getOrderDetail?.expected_date?.substr(0, 10)}
+                      </strong>
                     </Typography>
-
-                    <Link
-                      href={{
-                        pathname: '/feedback',
-                        query: {
-                          orderId: orderId,
-                          name: user?.name,
-                          phone: user?.phone
-                        }
-                      }}>
-                      <Button size="small" startIcon={<Sms />} variant="outlined" color="primary">
-                        Gửi phản hồi
+                    {activeStep > 2 ? (
+                      <Link
+                        href={{
+                          pathname: '/feedback',
+                          query: {
+                            orderId: orderDetail?.getOrderDetail?.name,
+                            name: user?.name,
+                            phone: user?.phone
+                          }
+                        }}>
+                        <Button size="small" startIcon={<Sms />} variant="outlined" color="primary">
+                          Gửi phản hồi
+                        </Button>
+                      </Link>
+                    ) : orderDetail?.getOrderDetail.state === 'cancel' ? (
+                      <Button
+                        size="small"
+                        startIcon={<DeleteForeverIcon />}
+                        variant="outlined"
+                        color="secondary">
+                        Canceled
                       </Button>
-                    </Link>
-                    <button className="btn btn-danger" onClick={onCancelClick}>
-                      hủy đơn hàng
-                    </button>
+                    ) : (
+                      <Button
+                        size="small"
+                        startIcon={<DeleteForeverIcon />}
+                        variant="outlined"
+                        onClick={onCancelClick}
+                        color="secondary">
+                        hủy đơn hàng
+                      </Button>
+                      // <button
+                      //   className="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-outlinedSizeSmall MuiButton-sizeSmall"
+                      //   onClick={onCancelClick}>
+                      //   hủy đơn hàng
+                      // </button>
+                    )}
 
                     <ConfirmCancelOrder
                       open={open}
@@ -369,17 +400,26 @@ const OrderDetails = () => {
                 <Grid container spacing={2}>
                   <Grid item sm={6} xs={12}>
                     <CustomCard>
-                      <TextWithLabel label="Tên người nhận" text={user?.name} />
+                      <TextWithLabel
+                        label="Tên người nhận"
+                        text={orderDetail?.getOrderDetail?.partner_shipping?.name}
+                      />
                       {/* nào có data địa chỉ thì bỏ vô đây nha <3 */}
 
-                      {/* <TextWithLabel
+                      <TextWithLabel
                         label="Địa chỉ giao hàng"
-                        text="12b/1e ấp đồng an 2, Phường Bình Hòa, Thành phố Thuận An, Bình Dương"
-                      /> */}
+                        text={orderDetail?.getOrderDetail?.partner_shipping?.street}
+                      />
 
-                      <TextWithLabel label="Số điện thoại" text={user?.phone} />
+                      <TextWithLabel
+                        label="Số điện thoại"
+                        text={orderDetail?.getOrderDetail?.partner_shipping?.phone}
+                      />
 
-                      <TextWithLabel label="Email" text={user?.email} />
+                      <TextWithLabel
+                        label="Email"
+                        text={orderDetail?.getOrderDetail?.partner_shipping?.email}
+                      />
                     </CustomCard>
                   </Grid>
                   {/* có data đơn vị vận chuyển thì fill vô nha <3 */}
@@ -432,7 +472,7 @@ const OrderDetails = () => {
                             <PriceText price={product.price_unit} /> đ
                           </CustomBodyCell>
 
-                          <CustomBodyCell>{product.quantity}</CustomBodyCell>
+                          <CustomBodyCell>{product.product_uom_qty}</CustomBodyCell>
 
                           <CustomBodyCell>
                             <PriceText price={product.price_total} /> đ

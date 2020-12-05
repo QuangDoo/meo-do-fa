@@ -31,6 +31,7 @@ export type GetOrderDetail = {
     order_line: string[];
     payment_method: string[];
     partner_shipping_id: string[];
+    state: string;
     order_lines: {
       id: number;
       name: string;
@@ -81,11 +82,19 @@ export const GET_ORDER = gql`
       effective_date
       expected_date
       order_line
-      payment_method
       partner_shipping_id
+      state
+      partner_shipping {
+        name
+        street
+        city
+        email
+        phone
+      }
       order_lines {
         id
         name
+        product_uom_qty
         price_tax
         price_subtotal
         price_unit

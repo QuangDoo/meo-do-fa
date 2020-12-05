@@ -1,5 +1,4 @@
 import { useTranslation } from 'i18n';
-import Link from 'next/link';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';

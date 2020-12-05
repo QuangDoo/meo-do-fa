@@ -50,7 +50,7 @@ const Home = ({ dealsOfTheDayData, bestSellingData, promotionProductsData, newPr
         {bannerImages.map((img) => (
           <div className="banner__slide" key={img}>
             <div className="banner__img">
-              <Image src={img} layout="fill" objectFit="contain" />
+              <Image src={img} layout="fill" objectFit="cover" />
             </div>
           </div>
         ))}

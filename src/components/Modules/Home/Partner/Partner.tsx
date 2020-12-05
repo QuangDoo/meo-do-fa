@@ -21,11 +21,11 @@ const Parner = (): JSX.Element => {
   return (
     <section className="bg-white py-5 home__partner">
       <div className="container">
-        <div className="row">
-          <div className="col-12 text-center mb-3">
+        <div>
+          <div className="text-center mb-3">
             <h2 className="text-primary">{t('partner:partner')}</h2>
           </div>
-          <div className="col-12">
+          <div className="mt-5">
             <Slider slidesToShow={6} slidesToScroll={3} arrows={false}>
               {examplePartners.map((url, index) => (
                 <PartnerImg key={index} imgUrl={url} />

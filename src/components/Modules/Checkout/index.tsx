@@ -14,6 +14,7 @@ import {
 import useAddress from 'src/hooks/useAddress';
 import { useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
 import useCart from 'src/hooks/useCart';
+import useCountCart from 'src/hooks/useCountCart';
 import swal from 'sweetalert';
 
 import Agreement from './Agreement';
@@ -82,6 +83,8 @@ const CheckoutPage = () => {
 
   const { refetchCart } = useCart();
 
+  const { refetchCountCart } = useCountCart();
+
   const [createOrder] = useMutationAuth<CreateOrderData, CreateOrderVars>(CREATE_ORDER, {
     onCompleted: (data) => {
       swal({
@@ -91,6 +94,7 @@ const CheckoutPage = () => {
         icon: 'success'
       }).then(() => {
         refetchCart();
+        refetchCountCart();
         router.push('/');
       });
     },

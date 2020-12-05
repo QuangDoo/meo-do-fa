@@ -1,5 +1,4 @@
 import { ApolloClient, from, HttpLink, InMemoryCache } from '@apollo/client';
-import { setContext } from '@apollo/client/link/context';
 import { onError } from '@apollo/client/link/error';
 import { withApollo } from 'next-apollo';
 

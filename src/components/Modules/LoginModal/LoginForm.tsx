@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { DeepMap, FieldError, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import { usernameRegex } from 'src/assets/regex/username';
 import { viPhoneNumberRegex } from 'src/assets/regex/viPhoneNumber';
 import Button from 'src/components/Form/Button';
 import Checkbox from 'src/components/Form/Checkbox';
@@ -57,7 +58,7 @@ const LoginForm = (): JSX.Element => {
     login({
       variables: {
         inputs: {
-          phone: data.username,
+          username: data.username,
           password: data.password
         }
       }
@@ -71,14 +72,14 @@ const LoginForm = (): JSX.Element => {
           name="username"
           ref={register({
             pattern: {
-              value: viPhoneNumberRegex,
-              message: t('login:invalid_phone')
+              value: usernameRegex,
+              message: t('login:invalid_username')
             }
           })}
           containerClass="mb-4"
-          iconClass="icomoon icon-phone"
+          iconClass="icomoon icon-user"
           required
-          placeholder={t('login:placeholder_phone')}
+          placeholder={t('login:placeholder_username')}
         />
 
         <Input

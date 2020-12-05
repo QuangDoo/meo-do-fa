@@ -12,10 +12,13 @@ module.exports = withPWA({
   env: {
     GRAPHQL_GATEWAY: process.env.GRAPHQL_GATEWAY
   },
-  pwa: {
-    dest: 'public'
-  },
   images: {
     domains: ['firebasestorage.googleapis.com', 'googleapis.com']
+  },
+  pwa: {
+    disable: process.env.NODE_ENV === 'development',
+    register: true,
+    sw: 'service-worker.js',
+    dest: 'public'
   }
 });
