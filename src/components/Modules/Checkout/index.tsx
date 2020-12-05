@@ -74,7 +74,8 @@ const CheckoutPage = () => {
 
   const { cities, districts, wards, chosenCity, chosenDistrict, chosenWard } = useAddress({
     cityId: +watch('cityId'),
-    districtId: +watch('districtId')
+    districtId: +watch('districtId'),
+    wardId: +watch('wardId')
   });
 
   const router = useRouter();
@@ -171,7 +172,7 @@ const CheckoutPage = () => {
           </div>
 
           <div className="col-md-4 mb-3">
-            <StickySidebar register={register} counselData={counselData} />
+            <StickySidebar counselData={counselData} />
           </div>
         </div>
       </div>
