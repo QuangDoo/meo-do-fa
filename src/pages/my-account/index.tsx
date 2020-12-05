@@ -36,7 +36,7 @@ const MyAccount = (): JSX.Element => {
 
   const formMethods = useForm<Inputs>();
 
-  const { register, handleSubmit, watch } = formMethods;
+  const { register, handleSubmit, watch, setValue } = formMethods;
 
   const chosenFile: FileList = watch('businessLicense');
 
