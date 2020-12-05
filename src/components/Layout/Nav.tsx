@@ -40,6 +40,7 @@ const Nav = () => {
     }
   });
 
+  // console.log(categoriesData?.getCategoriesAll, '23456789');
   const categories = categoriesData?.getCategoriesAll || [];
 
   return (
@@ -58,18 +59,16 @@ const Nav = () => {
                   </Link>
                 </div>
                 <ul className="dropdown-menu">
-                  {categories
-                    .slice()
-                    .sort((a, b) => a.name.localeCompare(b.name))
-                    .map(({ name, id }) => (
-                      <li key={id} className="mb-2 dropdown-item">
+                  {categories &&
+                    categories.map(({ name, id }) => (
+                      <li key={id} className="mb-2 dropdown-item 222">
                         <div className="dropdown">
                           <div data-toggle="dropdown" data-hover="dropdown">
                             <Link href={`/products?category=${id}`}>
                               <a className={clsx('products__filter-category')}>{name}</a>
                             </Link>
                           </div>
-                          <div className="dropdown-menu dropdown-sub-menu">
+                          <ul className="dropdown-menu dropdown-sub-menu">
                             <li>
                               <div className="dropdown">
                                 <div data-toggle="dropdown" data-hover="dropdown">
@@ -86,7 +85,7 @@ const Nav = () => {
                             <li>
                               <a href="/#">Exercitationem autem</a>
                             </li>
-                          </div>
+                          </ul>
                         </div>
                       </li>
                     ))}
