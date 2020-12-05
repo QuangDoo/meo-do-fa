@@ -40,6 +40,7 @@ const Nav = () => {
     }
   });
 
+  // console.log(categoriesData?.getCategoriesAll, '23456789');
   const categories = categoriesData?.getCategoriesAll || [];
 
   return (
@@ -57,23 +58,23 @@ const Nav = () => {
                     </a>
                   </Link>
                 </div>
-                <ul className="dropdown-menu dropdown-list">
-                  {categories
-                    .slice()
-                    .sort((a, b) => a.name.localeCompare(b.name))
-                    .map(({ name, id }) => (
-                      <li key={id} className="mb-2 dropdown-item">
+                <ul className="dropdown-menu">
+                  {categories &&
+                    categories.map(({ name, id }) => (
+                      <li key={id} className="mb-2 dropdown-item 222">
                         <div className="dropdown">
                           <div data-toggle="dropdown" data-hover="dropdown">
                             <Link href={`/products?category=${id}`}>
                               <a className={clsx('products__filter-category')}>{name}</a>
                             </Link>
                           </div>
-                          <div className="dropdown-menu dropdown-sub-menu">
+                          <ul className="dropdown-menu dropdown-sub-menu">
                             <li className="mb-2 dropdown-item">
                               <div className="dropdown">
                                 <div data-toggle="dropdown" data-hover="dropdown">
-                                  <a href="/#">amet consectetur</a>
+                                  <a className="text-dark" href="/#">
+                                    amet consectetur
+                                  </a>
                                 </div>
                                 <div className="dropdown-menu dropdown-sub-menu">
                                   <a className="dropdown-item" href="/#">
@@ -83,12 +84,16 @@ const Nav = () => {
                               </div>
                             </li>
                             <li className="mb-2 dropdown-item">
-                              <a href="/#">Exercitationem autem</a>
+                              <a className="text-dark" href="/#">
+                                Exercitationem autem
+                              </a>
                             </li>
                             <li className="mb-2 dropdown-item">
-                              <a href="/#">Exercitationem autem</a>
+                              <a className="text-dark" href="/#">
+                                Exercitationem autem
+                              </a>
                             </li>
-                          </div>
+                          </ul>
                         </div>
                       </li>
                     ))}
