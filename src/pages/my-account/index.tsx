@@ -103,7 +103,6 @@ const MyAccount = (): JSX.Element => {
   };
 
   const onError = (error) => {
-    console.log('form error:', error);
     toast.error(error[Object.keys(error)[0]].message);
   };
 
