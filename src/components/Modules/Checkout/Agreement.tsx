@@ -1,5 +1,4 @@
 import { Trans, useTranslation } from 'i18n';
-import Link from 'next/link';
 import React from 'react';
 import Checkbox from 'src/components/Form/Checkbox';
 import LinkText from 'src/components/Form/LinkText';

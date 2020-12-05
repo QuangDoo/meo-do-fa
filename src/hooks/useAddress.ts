@@ -11,6 +11,7 @@ import { GET_WARDS, GetWardsData, GetWardsVars } from 'src/graphql/address/getWa
 type Props = {
   cityId: number;
   districtId: number;
+  wardId: number;
 };
 
 export default function useAddress(props: Props) {

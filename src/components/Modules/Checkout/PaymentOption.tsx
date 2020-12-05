@@ -1,6 +1,5 @@
 import clsx from 'clsx';
 import { Trans, useTranslation } from 'i18n';
-import Link from 'next/link';
 import React from 'react';
 import LinkText from 'src/components/Form/LinkText';
 import Radio from 'src/components/Form/Radio';
