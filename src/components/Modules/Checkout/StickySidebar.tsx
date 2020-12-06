@@ -5,7 +5,6 @@ import React from 'react';
 import Button from 'src/components/Form/Button';
 import PriceText from 'src/components/Form/PriceText';
 import { GetCounselData } from 'src/graphql/order/getCounsel';
-import { ReactHookFormRegister } from 'src/types/ReactHookFormRegister';
 
 type SidebarItemProps = {
   label?: string;
@@ -27,7 +26,7 @@ const SidebarItem = (props: SidebarItemProps) => {
   );
 };
 
-type Props = ReactHookFormRegister & {
+type Props = {
   counselData?: GetCounselData;
 };
 

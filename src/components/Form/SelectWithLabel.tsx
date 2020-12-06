@@ -1,37 +1,37 @@
+import clsx from 'clsx';
 import React, { forwardRef } from 'react';
+import Select from 'src/components/Form/Select';
 
 import FormGroup from './FormGroup';
 import FormGroupLabel from './FormGroupLabel';
 
 type Props = {
-  label: React.ReactNode;
+  label: string;
   name: string;
-  type: 'text' | 'number';
-
+  children: React.ReactNode;
   containerClass?: string;
   labelClass?: string;
-  placeholder?: string;
+  selectClass?: string;
   required?: boolean;
-  defaultValue?: string;
+  disabled?: boolean;
 };
 
-const InputWithLabel = (props: Props, ref): JSX.Element => {
+const SelectWithLabel = (props: Props, ref): JSX.Element => {
   return (
     <FormGroup className={props.containerClass}>
       <FormGroupLabel required={props.required} className={props.labelClass}>
         {props.label}
       </FormGroupLabel>
 
-      <input
+      <Select
         ref={ref}
         name={props.name}
-        type={props.type}
-        className="form-control"
-        placeholder={props.placeholder}
-        defaultValue={props.defaultValue}
-      />
+        className={clsx('custom-select d-block', props.selectClass)}
+        disabled={props.disabled}>
+        {props.children}
+      </Select>
     </FormGroup>
   );
 };
 
-export default forwardRef(InputWithLabel);
+export default forwardRef(SelectWithLabel);
