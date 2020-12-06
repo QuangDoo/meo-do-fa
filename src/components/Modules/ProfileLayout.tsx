@@ -2,6 +2,7 @@ import React from 'react';
 import ProfileSidebar from 'src/components/Modules/ProfileSidebar';
 
 type Props = {
+  title?: string;
   children: React.ReactNode;
 };
 
@@ -13,7 +14,10 @@ const ProfileLayout = (props: Props) => {
           <ProfileSidebar />
         </div>
 
-        <div className="col-xl-9 col-sm-12">{props.children}</div>
+        <div className="col-xl-9 col-sm-12">
+          {props.title && <h1 className="h2 text-center mb-4 text-primary">{props.title}</h1>}
+          {props.children}
+        </div>
       </div>
     </section>
   );

@@ -7,22 +7,23 @@ type ContactAddress = {
   street: string;
 };
 
-export type UpdateUserInput = {
-  name: string;
-  display_name: string;
-  email: string;
+export type UpdateUserVars = {
+  name?: string;
+  display_name?: string;
+  email?: string;
   contact_address: ContactAddress;
-  company_name: string;
-  vat: string;
-  representative: string;
-  business_license: string;
-  updateUser: {
-    status: string;
-  };
+  company_name?: string;
+  vat?: string;
+  representative?: string;
+  business_license?: string;
 };
 
-export type UpdateUserVars = {
-  inputs: UpdateUserInput;
+export type UpdateUserData = {
+  updateUser: {
+    code: number;
+    status: number;
+    message: string;
+  };
 };
 
 export const UPDATE_USER = gql`
@@ -30,10 +31,7 @@ export const UPDATE_USER = gql`
     $name: String
     $display_name: String
     $email: String
-    $city: String!
-    $district: String!
-    $ward: String!
-    $street: String!
+    $contact_address: ContactAddress
     $company_name: String
     $vat: String
     $representative: String
@@ -44,7 +42,7 @@ export const UPDATE_USER = gql`
         name: $name
         display_name: $display_name
         email: $email
-        contact_address: { city: $city, district: $district, ward: $ward, street: $street }
+        contact_address: $contact_address
         company_name: $company_name
         vat: $vat
         representative: $representative

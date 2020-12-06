@@ -185,32 +185,40 @@ const Nav = () => {
 
                     <hr className="my-2" />
 
-                    <a className="dropdown__item dropdown__item-link" href="/my-account">
-                      <i className="far fa-user-circle dropdown__item-icon" />
-                      {t('navbar:account_info')}
-                    </a>
+                    <Link href="/my-account">
+                      <a className="dropdown__item dropdown__item-link">
+                        <i className="far fa-user-circle dropdown__item-icon" />
+                        {t('navbar:account_info')}
+                      </a>
+                    </Link>
 
-                    <a className="dropdown__item dropdown__item-link" href="/my-orders">
-                      <i className="icomoon icon-assignment dropdown__item-icon" />
-                      {t('navbar:my_order')}
-                    </a>
+                    <Link href="/my-orders">
+                      <a className="dropdown__item dropdown__item-link">
+                        <i className="icomoon icon-assignment dropdown__item-icon" />
+                        {t('navbar:my_order')}
+                      </a>
+                    </Link>
 
-                    <a className="dropdown__item dropdown__item-link" href="/users/referrals">
-                      <i className="icomoon icon-share dropdown__item-icon" />
-                      {t('navbar:introduce_friends')}
-                    </a>
+                    <Link href="/users/referrals">
+                      <a className="dropdown__item dropdown__item-link">
+                        <i className="icomoon icon-share dropdown__item-icon" />
+                        {t('navbar:introduce_friends')}
+                      </a>
+                    </Link>
 
-                    <a
-                      className="dropdown__item dropdown__item-link"
-                      href="/users/user-promo-codes">
-                      <i className="fas fa-tags dropdown__item-icon" />
-                      {t('navbar:my_promo_code')}
-                    </a>
+                    <Link href="/users/user-promo-codes">
+                      <a className="dropdown__item dropdown__item-link">
+                        <i className="fas fa-tags dropdown__item-icon" />
+                        {t('navbar:my_promo_code')}
+                      </a>
+                    </Link>
 
-                    <a className="dropdown__item dropdown__item-link" href="/users/loyalty_points">
-                      <i className="fas fa-hand-holding-usd dropdown__item-icon" />
-                      {t('navbar:cumulative_points')}
-                    </a>
+                    <Link href="/users/loyalty_points">
+                      <a className="dropdown__item dropdown__item-link">
+                        <i className="fas fa-hand-holding-usd dropdown__item-icon" />
+                        {t('navbar:cumulative_points')}
+                      </a>
+                    </Link>
 
                     <button className="dropdown__item dropdown__item-link w-100" onClick={logOut}>
                       <i className="fas fa-sign-out-alt dropdown__item-icon" />

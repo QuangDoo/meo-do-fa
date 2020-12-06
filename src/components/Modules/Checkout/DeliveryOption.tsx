@@ -4,7 +4,7 @@ import RadioInput from 'src/components/Form/Radio';
 import { DeliveryMethod } from 'src/graphql/paymentAndDelivery/paymentAndDelivery,query';
 import { ReactHookFormRegister } from 'src/types/ReactHookFormRegister';
 
-import InputCard from '../InputCard';
+import InputCard from './InputCard';
 
 type Props = ReactHookFormRegister & {
   deliveryMethods: DeliveryMethod[];
