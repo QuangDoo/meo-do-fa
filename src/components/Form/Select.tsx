@@ -7,6 +7,7 @@ type Props = {
   name?: string;
   className?: string;
   onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+  disabled?: boolean;
 };
 
 const Select = (props: Props, ref): JSX.Element => {
@@ -15,7 +16,8 @@ const Select = (props: Props, ref): JSX.Element => {
       onChange={props.onChange}
       ref={ref}
       name={props.name}
-      className={clsx('custom-select d-block', props.className)}>
+      className={clsx('custom-select d-block', props.className)}
+      disabled={props.disabled}>
       {props.children}
     </select>
   );

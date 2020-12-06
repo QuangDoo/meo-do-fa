@@ -141,25 +141,21 @@ const MyOrders = () => {
 
       <Nav />
 
-      <ProfileLayout>
-        <div>
-          <h1 className="h2 text-center text-primary mb-3">{t('myOrders:my_orders')}</h1>
+      <ProfileLayout title={t('myOrders:my_orders')}>
+        <p className="text-muted m-0">
+          {t('myOrders:vat_invoice')} <Link href="/invoice-export-rules">{t('myOrders:here')}</Link>
+          .
+        </p>
 
-          <p className="text-muted m-0">
-            {t('myOrders:vat_invoice')}{' '}
-            <Link href="/invoice-export-rules">{t('myOrders:here')}</Link>.
-          </p>
-
-          <div className="my-orders__filter mt-3">
-            {Object.keys(filterHeaders).map((key: FilterKey) => (
-              <button
-                key={key}
-                className={clsx('my-orders__header', filter === key && 'active')}
-                onClick={() => handleFilterClick(key)}>
-                {filterHeaders[key]}
-              </button>
-            ))}
-          </div>
+        <div className="my-orders__filter mt-3">
+          {Object.keys(filterHeaders).map((key: FilterKey) => (
+            <button
+              key={key}
+              className={clsx('my-orders__header', filter === key && 'active')}
+              onClick={() => handleFilterClick(key)}>
+              {filterHeaders[key]}
+            </button>
+          ))}
         </div>
 
         {orderList.map((order) => (

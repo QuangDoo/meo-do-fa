@@ -33,6 +33,7 @@ import Header from 'src/components/Layout/Header';
 import Nav from 'src/components/Layout/Nav';
 import ExportInvoice from 'src/components/Modules/ExportInvoice';
 import ProfileSidebar from 'src/components/Modules/ProfileSidebar';
+import { useUserContext } from 'src/contexts/User';
 import { GET_ORDER } from 'src/graphql/order/order.query';
 import { useQueryAuth } from 'src/hooks/useApolloHookAuth';
 import useUser from 'src/hooks/useUser';
@@ -278,8 +279,8 @@ const OrderDetails = () => {
     setOpen(true);
   };
 
-  const { user } = useUser();
-  console.log('user', user);
+  const { user } = useUserContext();
+
   return (
     <>
       <Head>

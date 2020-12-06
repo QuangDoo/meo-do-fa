@@ -8,9 +8,9 @@ import { District } from 'src/graphql/address/getDistricts';
 import { Ward } from 'src/graphql/address/getWards';
 import { ReactHookFormRegister } from 'src/types/ReactHookFormRegister';
 
+import InputWithLabel from '../../Form/InputWithLabel';
+import SelectWithLabel from '../../Form/SelectWithLabel';
 import InputCard from './InputCard';
-import InputWithLabel from './InputWithLabel';
-import SelectWithLabel from './SelectWithLabel';
 
 type DataCityType = {
   id: number;
