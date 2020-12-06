@@ -1,3 +1,4 @@
+import { useMutation } from '@apollo/client';
 import { useTranslation } from 'i18n';
 import React from 'react';
 import { DeepMap, FieldError, useForm } from 'react-hook-form';
@@ -5,6 +6,11 @@ import { toast } from 'react-toastify';
 import { emailRegex } from 'src/assets/regex/email';
 import Button from 'src/components/Form/Button';
 import Input from 'src/components/Form/Input';
+import {
+  RESET_PASSWORD,
+  ResetPasswordData,
+  ResetPasswordVars
+} from 'src/graphql/user/forgotPassword';
 
 type Inputs = {
   email: string;
@@ -18,10 +24,22 @@ const ResetPassForm = (): JSX.Element => {
   const onFormError = (errors: DeepMap<Inputs, FieldError>) => {
     Object.keys(errors).forEach((field) => toast.error(errors[field].message));
   };
+  const [abc] = useMutation<ResetPasswordData, any>(RESET_PASSWORD, {
+    onCompleted: (data) => {
+      console.log('data', data);
+    },
+    onError: (error) => {
+      toast.error(t(`errors:code_${error.graphQLErrors[0]?.extensions.code}`));
+    }
+  });
 
   const onSubmit = (data: Inputs) => {
     const { email } = data;
-    return null;
+    abc({
+      variables: {
+        email
+      }
+    });
   };
 
   return (
