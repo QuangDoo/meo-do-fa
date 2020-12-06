@@ -8,12 +8,12 @@ export type ResetPasswordData = {
   };
 };
 
-export type ResetPasswordInput = {
+export type SaveMailSubscriber = {
   email: string;
 };
 
 export type ResetPasswordVars = {
-  inputs: ResetPasswordInput;
+  inputs: { email: string };
 };
 
 export const RESET_PASSWORD = gql`

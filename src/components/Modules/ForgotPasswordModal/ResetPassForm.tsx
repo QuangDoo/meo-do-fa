@@ -9,7 +9,7 @@ import Input from 'src/components/Form/Input';
 import {
   RESET_PASSWORD,
   ResetPasswordData,
-  ResetPasswordVars
+  SaveMailSubscriber
 } from 'src/graphql/user/forgotPassword';
 
 type Inputs = {
@@ -24,7 +24,8 @@ const ResetPassForm = (): JSX.Element => {
   const onFormError = (errors: DeepMap<Inputs, FieldError>) => {
     Object.keys(errors).forEach((field) => toast.error(errors[field].message));
   };
-  const [abc] = useMutation<ResetPasswordData, any>(RESET_PASSWORD, {
+
+  const [abc] = useMutation(RESET_PASSWORD, {
     onCompleted: (data) => {
       console.log('data', data);
     },
@@ -37,7 +38,7 @@ const ResetPassForm = (): JSX.Element => {
     const { email } = data;
     abc({
       variables: {
-        email
+        email: email
       }
     });
   };
