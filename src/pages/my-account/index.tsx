@@ -1,5 +1,5 @@
 import { useTranslation } from 'i18n';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import AddressSelect from 'src/components/Form/AddressSelect';
@@ -21,25 +21,34 @@ import withApollo from '../../utils/withApollo';
 
 type Inputs = {
   name: string;
-  display_name: string;
+  phone: string;
   email: string;
-  contact_address: string;
-  company_name: string;
-  vat: string;
+  newPassword: string;
+  accountType: string;
+  companyName: string;
   representative: string;
-  business_license: string;
-  district_name: string;
+  businessLicense: FileList;
+  taxCode: string;
+  companyStreet: string;
+  companyCityId: string;
+  companyDistrictId: string;
+  companyWardId: string;
+  deliveryStreet: string;
+  deliveryCityId: string;
+  deliveryDistrictId: string;
+  deliveryWardId: string;
 };
 
 const MyAccount = (): JSX.Element => {
   const { t } = useTranslation('myAccount');
 
-  const formMethods = useForm<Inputs>();
+  const { user } = useUser();
 
-  const { register, handleSubmit, watch, setValue } = formMethods;
+  const { register, handleSubmit, watch, setValue } = useForm<Inputs>();
 
   const chosenFile: FileList = watch('businessLicense');
 
+  // Company city, district, ward select
   const {
     cities: companyCities,
     districts: companyDistricts,
@@ -52,6 +61,30 @@ const MyAccount = (): JSX.Element => {
     districtId: +watch('companyDistrictId'),
     wardId: +watch('companyWardId')
   });
+
+  // Set user current city to companyCity select
+  useEffect(() => {
+    if (!user || !companyCities.length) return;
+
+    setValue('companyCityId', companyCities.find((city) => city.name === user.city).id);
+  }, [user, companyCities]);
+
+  // Set user current district to companyDistrict select
+  useEffect(() => {
+    if (!companyDistricts.length) return;
+
+    setValue(
+      'companyDistrictId',
+      companyDistricts.find((district) => district.name === user.district).id
+    );
+  }, [companyDistricts]);
+
+  // Set user current ward to companyWard select
+  useEffect(() => {
+    if (!companyWards.length) return;
+
+    setValue('companyWardId', companyWards.find((ward) => ward.name === user.ward).id);
+  }, [companyWards]);
 
   const {
     cities: deliveryCities,
@@ -72,21 +105,22 @@ const MyAccount = (): JSX.Element => {
     }
   });
 
-  const { user } = useUser();
-
-  const onSubmit = async (data) => {
-    let businessLicenseBase64;
+  const onSubmit = async (data: Inputs) => {
+    let businessLicenseBase64 = '';
 
     if (data.businessLicense.length) {
-      businessLicenseBase64 = await toBase64(data.businessLicense[0]).catch((err) => {
+      try {
+        businessLicenseBase64 = await toBase64(data.businessLicense[0]);
+      } catch (err) {
         console.log('Error converting file to base64:', err);
-      });
+      }
     }
 
     updateUser({
       variables: {
         name: data.name,
         display_name: data.name,
+        email: data.email,
         contact_address: {
           street: data.companyStreet,
           city: companyChosenCity.name,
