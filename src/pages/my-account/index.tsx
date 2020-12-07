@@ -66,7 +66,7 @@ const MyAccount = (): JSX.Element => {
   useEffect(() => {
     if (!user || !companyCities.length) return;
 
-    setValue('companyCityId', companyCities.find((city) => city.name === user.city).id);
+    setValue('companyCityId', companyCities.find((city) => city.name === user.city)?.id || '');
   }, [user, companyCities]);
 
   // Set user current district to companyDistrict select
@@ -75,7 +75,7 @@ const MyAccount = (): JSX.Element => {
 
     setValue(
       'companyDistrictId',
-      companyDistricts.find((district) => district.name === user.district).id
+      companyDistricts.find((district) => district.name === user.district)?.id || ''
     );
   }, [companyDistricts]);
 
@@ -83,7 +83,7 @@ const MyAccount = (): JSX.Element => {
   useEffect(() => {
     if (!companyWards.length) return;
 
-    setValue('companyWardId', companyWards.find((ward) => ward.name === user.ward).id);
+    setValue('companyWardId', companyWards.find((ward) => ward.name === user.ward)?.id || '');
   }, [companyWards]);
 
   const {
@@ -204,7 +204,9 @@ const MyAccount = (): JSX.Element => {
                 label={t('myAccount:account_type_label')}
                 name="accountType"
                 type="text"
-                defaultValue={t(`myAccount:account_type_${user?.account_type}`)}
+                defaultValue={
+                  user?.account_type ? t(`myAccount:account_type_${user.account_type}`) : ''
+                }
               />
 
               {/* Pharmacy/clinic name */}
@@ -342,7 +344,7 @@ const MyAccount = (): JSX.Element => {
 };
 
 MyAccount.getInitialProps = async () => ({
-  namespacesRequired: ['account']
+  namespacesRequired: ['myAccount']
 });
 
 export default withApollo({ ssr: true })(MyAccount);
