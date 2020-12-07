@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import { emailRegex } from 'src/assets/regex/email';
 import Button from 'src/components/Form/Button';
 import Input from 'src/components/Form/Input';
+import { useModalControlDispatch } from 'src/contexts/ModalControl';
 import {
   RESET_PASSWORD,
   ResetPasswordData,
@@ -21,26 +22,28 @@ const ResetPassForm = (): JSX.Element => {
 
   const { t } = useTranslation(['password', 'errors', 'register']);
 
+  const { closeModal } = useModalControlDispatch();
+
   const onFormError = (errors: DeepMap<Inputs, FieldError>) => {
     Object.keys(errors).forEach((field) => toast.error(errors[field].message));
   };
 
-  const [abc] = useMutation(RESET_PASSWORD, {
-    onCompleted: (data) => {
-      console.log('data', data);
-    },
-    onError: (error) => {
-      toast.error(t(`errors:code_${error.graphQLErrors[0]?.extensions.code}`));
-    }
-  });
+  const [resetPassword] = useMutation(RESET_PASSWORD);
 
   const onSubmit = (data: Inputs) => {
     const { email } = data;
-    abc({
+    resetPassword({
       variables: {
         email: email
       }
-    });
+    })
+      .then(() => {
+        toast.success(t(`errors:send_password_to_email_success`));
+        closeModal();
+      })
+      .catch((error) => {
+        toast.error(t(`errors:code_${error.graphQLErrors[0]?.extensions.code}`));
+      });
   };
 
   return (
