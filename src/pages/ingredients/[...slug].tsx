@@ -23,7 +23,7 @@ import {
 } from 'src/graphql/product/getProductsByIngredient.query';
 import withApollo from 'src/utils/withApollo';
 
-const IngredientDetails = ({ t }: WithTranslation): JSX.Element => {
+const IngredientDetails = (): JSX.Element => {
   const router = useRouter();
 
   const ingredientId = router.query.slug[0];
@@ -100,6 +100,4 @@ const IngredientDetails = ({ t }: WithTranslation): JSX.Element => {
   );
 };
 
-const TranslatedPage = withTranslation(['ingredientDetails'])(IngredientDetails);
-
-export default withApollo({ ssr: true })(TranslatedPage);
+export default withApollo({ ssr: true })(IngredientDetails);
