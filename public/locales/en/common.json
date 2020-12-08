@@ -1,5 +1,11 @@
 {
   "supply": "Become a supplier",
   "recruitment": "Recruitment",
-  "see_all": "See all"
+  "see_all": "See all",
+  "city_select_label": "City/Province",
+  "city_select_placeholder": "Choose a city/province...",
+  "district_select_label": "District",
+  "district_select_placeholder": "Choost a district...",
+  "ward_select_label": "Ward",
+  "ward_select_placeholder": "Choose a ward..."
 }

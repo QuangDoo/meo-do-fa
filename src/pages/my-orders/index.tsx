@@ -100,7 +100,7 @@ const OrderItem = (props: GetOrderList) => {
 };
 
 const MyOrders = () => {
-  const [filter, setFilter] = useState<FilterKey>();
+  const [filter, setFilter] = useState<FilterKey>('all');
 
   const { t } = useTranslation(['myOrders', 'errors']);
 
