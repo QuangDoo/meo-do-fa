@@ -1,6 +1,6 @@
 {
     "search_filters": "Bộ lọc tìm kiếm",
-    "filter": "Sắp xếp",
+    "sort": "Sắp xếp",
     "price_low_to_high": "Giá: Cao - Thấp",
     "price_high_to_low": "Giá: Thấp - Cao",
     "name_a_to_z": "Tên: A - Z",
@@ -8,5 +8,6 @@
     "category": "Nhóm thuốc",
     "all": "Tất cả",
     "manufacturer": "Nhà sản xuất",
-    "see_more": "Xem thêm"
+    "see_more": "Xem thêm",
+    "filter": "Lọc"
 }

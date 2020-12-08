@@ -1,6 +1,6 @@
 {
     "search_filters": "Search filters",
-    "filter": "Filter",
+    "sort": "Sort",
     "price_low_to_high": "Price: Low - High",
     "price_high_to_low": "Price: High - Low",
     "name_a_to_z": "Name: A - Z",
@@ -8,5 +8,6 @@
     "category": "Category",
     "all": "All",
     "manufacturer": "Manufacturer",
-    "see_more": "See more"
+    "see_more": "See more",
+    "filter": "Filter"
 }
