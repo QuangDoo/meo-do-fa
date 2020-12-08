@@ -9,12 +9,12 @@ import Header from 'src/components/Layout/Header';
 import Nav from 'src/components/Layout/Nav';
 import ProfileLayout from 'src/components/Modules/ProfileLayout';
 import { GET_ORDER_LIST, GetOrderList } from 'src/graphql/my-orders/getOrderList';
-import { useLazyQueryAuth } from 'src/hooks/useApolloHookAuth';
+import { useLazyQueryAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
 import withApollo from 'src/utils/withApollo';
 
 import ConfirmCancelOrder from '../../components/Modules/My-orders/ConfirmCancelOrder';
 
-type FilterKey = 'all' | 'waiting_for_confirmation' | 'completed' | 'canceled';
+type FilterKey = 'all' | 'waiting_confirmation' | 'completed' | 'canceled';
 
 const pageSize = 20;
 
@@ -90,44 +90,35 @@ const OrderItem = (props: GetOrderList) => {
 };
 
 const MyOrders = () => {
-  const [getOrderList, { data, error }] = useLazyQueryAuth(GET_ORDER_LIST);
+  const [filter, setFilter] = useState<FilterKey>();
+
+  const { data, error, refetch } = useQueryAuth(GET_ORDER_LIST, {
+    variables: {
+      page: 1,
+      pageSize: pageSize
+    },
+    onError: (error) => {
+      console.log('Get order list error:', { error });
+      toast.error('Get order list error: ' + error);
+    }
+  });
 
   const { t } = useTranslation(['myOrders']);
 
-  useEffect(() => {
-    if (!error) return;
-
-    console.log('Get order list error:', { error });
-    toast.error('Get order list error: ' + error);
-  }, [error]);
-
-  useEffect(() => {
-    getOrderList({
-      variables: {
-        page: 1,
-        pageSize: pageSize
-      }
-    });
-  }, []);
-
   const orderList = data?.getOrderList || [];
-  console.log('orderList', orderList);
-  const [filter, setFilter] = useState<FilterKey>('all');
 
   const filterHeaders: Record<FilterKey, string> = {
     all: t('myOrders:all_order'),
-    waiting_for_confirmation: t('myOrders:wait_for_confirm'),
+    waiting_confirmation: t('myOrders:wait_for_confirm'),
     completed: t('myOrders:complete'),
     canceled: t('myOrders:canceled')
   };
 
   const handleFilterClick = (key: FilterKey) => {
     setFilter(key);
-    getOrderList({
-      variables: {
-        page: 1,
-        pageSize: pageSize
-      }
+    refetch({
+      page: 1,
+      pageSize: pageSize
     });
   };
 

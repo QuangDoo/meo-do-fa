@@ -1,8 +1,6 @@
-import { useMutation } from '@apollo/client';
-import { withTranslation } from 'i18n';
-import { WithTranslation } from 'next-i18next';
+import { useTranslation } from 'i18n';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import { UPDATE_CART, UpdateCartData, UpdateCartVars } from 'src/graphql/cart/updateCart.mutation';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
@@ -12,7 +10,7 @@ import useCountCart from 'src/hooks/useCountCart';
 import { ProductPrice } from '../ProductCard/ProductPrice';
 import ConfirmDeleteModal from './ConfirmDeleteModal';
 
-type Props = WithTranslation & {
+type Props = {
   image: string;
   productName: string;
   productId: string;
@@ -25,7 +23,7 @@ type Props = WithTranslation & {
 };
 
 function CartItem(props: Props): JSX.Element {
-  const { t } = props;
+  const { t } = useTranslation(['cart', 'errors']);
 
   const [open, setOpen] = useState(false);
 
@@ -39,12 +37,16 @@ function CartItem(props: Props): JSX.Element {
 
   const [updateCart] = useMutationAuth<UpdateCartData, UpdateCartVars>(UPDATE_CART, {
     onCompleted: () => {
-      toast.success('Update cart success');
+      toast.success(t('cart:update_success'));
       refetchCart();
       refetchCountCart();
     },
     onError: (error) => {
-      toast.error('Update cart error: ' + error);
+      const errorCode = error.graphQLErrors?.[0].extensions?.code;
+
+      if (errorCode) {
+        toast.error(t(`errors:code_${errorCode}`));
+      }
     }
   });
 
@@ -217,4 +219,4 @@ function CartItem(props: Props): JSX.Element {
   );
 }
 
-export default withTranslation(['cart'])(CartItem);
+export default CartItem;

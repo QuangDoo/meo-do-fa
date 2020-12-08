@@ -1,8 +1,15 @@
-import { useTranslation, withTranslation } from 'i18n';
-import { WithTranslation } from 'next-i18next';
+import { useMutation } from '@apollo/client';
+import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import React from 'react';
-import { useForm } from 'react-hook-form';
+import { DeepMap, FieldError, useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
+import { emailRegex, noSpecialChars } from 'src/assets/regex/email';
+import {
+  SAVE_MAIL_SUBSCRIBE,
+  SubscriberData,
+  SubscriberVar
+} from 'src/graphql/subscribe/subscribe.mutation';
 
 import Button from '../Form/Button';
 import Input from '../Form/Input';
@@ -30,11 +37,36 @@ const FooterLink = (props: { href: string; text: string }) => (
 );
 
 type Inputs = {
-  subcribeEmail: string;
+  email: string;
 };
 
 const Footer = (): JSX.Element => {
   const { t } = useTranslation(['footer', 'common']);
+  const { register, handleSubmit } = useForm<Inputs>();
+  const [saveMailSubscriber] = useMutation<SubscriberData, SubscriberVar>(SAVE_MAIL_SUBSCRIBE, {
+    onCompleted: (data) => {
+      toast.success(t('footer:success_subscribe'));
+    },
+    onError: (error) => {
+      toast.error(error);
+      // error.graphQLErrors.length > 0 &&
+      //   toast.error(t(`errors:code_${error.graphQLErrors[0].extensions.code}`));
+    }
+  });
+  // On form error
+  const onError = (errors: DeepMap<Inputs, FieldError>) => {
+    Object.keys(errors).forEach((field) => toast.error(errors[field].message));
+  };
+
+  const onSubmit = (data: Inputs) => {
+    saveMailSubscriber({
+      variables: {
+        inputs: {
+          email: data.email
+        }
+      }
+    }).catch((error) => toast.error(error));
+  };
 
   return (
     <>
@@ -58,12 +90,25 @@ const Footer = (): JSX.Element => {
               </div>
             </div>
 
-            <form className=" align-items-center d-flex justify-content-center text-sm-left text-center  col-md-5 col-12">
+            <form
+              className=" align-items-center d-flex justify-content-center text-sm-left text-center col-md-5 col-12"
+              onSubmit={handleSubmit(onSubmit, onError)}>
               <Input
                 name="email"
                 containerClass="group-input-footer"
                 iconClass="icomoon icon-mail"
                 placeholder={t('footer:email_input')}
+                ref={register({
+                  pattern: {
+                    value: emailRegex,
+                    message: `${t('register:input_email_error_invalid')}`
+                  },
+                  validate: {
+                    noSpecialChars: (value) =>
+                      noSpecialChars.test(value) ||
+                      `${t('register:input_email_error_noSpecialChars')}`
+                  }
+                })}
                 itemRight={
                   <Button type="submit" variant="primary">
                     {t('footer:subscribe')}
@@ -75,6 +120,7 @@ const Footer = (): JSX.Element => {
           </div>
         </div>
       </div>
+
       <div className="footer">
         <div className="container pb-5 pt-0">
           <div className="row justify-content-between">
