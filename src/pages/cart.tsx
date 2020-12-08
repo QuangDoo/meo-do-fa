@@ -19,7 +19,7 @@ import withApollo from 'src/utils/withApollo';
 function Cart(): JSX.Element {
   const { refetchCart, cart, loading } = useCart();
 
-  const { t } = useTranslation(['cart']);
+  const { t } = useTranslation(['cart', 'common']);
 
   const router = useRouter();
 
@@ -110,7 +110,7 @@ function Cart(): JSX.Element {
                         </div>
                         <div className="cart__total text-small">
                           <PriceText price={cart?.getCart.totalPrice} />
-                          <span className="unit text-small">đ</span>
+                          <span className="unit text-small">{t('common:vnd')}</span>
                         </div>
                         {/* <div className="cart__old-total">
                           90‰

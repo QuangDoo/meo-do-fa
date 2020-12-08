@@ -10,5 +10,19 @@
     "all_order": "Tất cả",
     "wait_for_confirm": "Chờ xác nhận",
     "complete": "Hoàn tất",
-    "canceled": "Đã huỷ"
+    "canceled": "Đã huỷ",
+    "confirmed": "Đã xác nhận",
+    "in_proceed": "Đang xử lý",
+    "in_delivery": "Đang giao hàng",
+    "order_detail": "Chi tiết đơn hàng #{orderId}",
+    "cancel_the_order": "Huỷ đơn hàng",
+    "recipients_name": "Tên người nhận",
+    "delivery_address": "Địa chỉ giao hàng",
+    "phone_number": "Số điện thoại",
+    "email": "Email",
+    "note": "Ghi chú",
+    "product": "Sản phẩm",
+    "unit_price": "Đơn giá",
+    "quantity": "Số lượng",
+    "total": "Tổng cộng"
 }
