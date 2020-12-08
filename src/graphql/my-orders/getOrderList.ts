@@ -5,8 +5,8 @@ export type OrderFlag = '10' | '20' | '25' | '30' | '40' | '80';
 export type GetOrderList = {
   id: string;
   orderNo: string;
-  date_order: Date;
-  expected_date: Date;
+  date_order: string;
+  expected_date: string;
   order_lines: {
     price_total: number;
   }[];

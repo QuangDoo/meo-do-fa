@@ -1,6 +1,7 @@
 import { Tab, Tabs } from '@material-ui/core';
 import clsx from 'clsx';
 import { useTranslation } from 'i18n';
+import { DateTime } from 'luxon';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
@@ -41,6 +42,11 @@ const filterKeys: FilterKey[] = [
   'canceled'
 ];
 
+const formatDate = (date: string) => {
+  if (!date) return null;
+  return DateTime.fromFormat(date, 'yyyy-MM-dd hh:mm:ss').toFormat('dd/MM/yyyy').toString();
+};
+
 const OrderItem = (props: GetOrderList) => {
   const [open, setOpen] = useState(false);
 
@@ -65,14 +71,16 @@ const OrderItem = (props: GetOrderList) => {
 
         <div className="my-orders__detail">
           <div>
-            <span className="title">{t('myOrders:date_order')}</span>
-            <span className="content">{props.date_order}</span>
+            <span className="title">{t('myOrders:date_order')}:</span>
+            <span className="content">{formatDate(props.date_order)}</span>
           </div>
 
-          <div>
-            <span className="title">{t('myOrders:expected_date')}</span>
-            <span className="content">{props.expected_date}</span>
-          </div>
+          {props.expected_date && (
+            <div>
+              <span className="title">{t('myOrders:expected_date')}:</span>
+              <span className="content">{formatDate(props.expected_date)}</span>
+            </div>
+          )}
         </div>
       </div>
 
@@ -148,17 +156,6 @@ const MyOrders = () => {
             ))}
           </Tabs>
         </div>
-
-        {/* <div className="my-orders__filter mt-3">
-          {filterKeys.map((key) => (
-            <button
-              key={key}
-              className={clsx('my-orders__header', filter === key && 'active')}
-              onClick={() => handleFilterClick(key)}>
-              {t(`myOrders:${key}`)}
-            </button>
-          ))}
-        </div> */}
 
         {orderList.map((order) => (
           <OrderItem key={order.id} {...order} />

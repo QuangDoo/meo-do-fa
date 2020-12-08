@@ -1,6 +1,6 @@
 {
-  "date_order": "Date order:",
-  "expected_date": "Expected date:",
+  "date_order": "Order date",
+  "expected_date": "Expected delivery",
   "billing_export": "Billing export",
   "report": "Send report",
   "my_orders": "My order",

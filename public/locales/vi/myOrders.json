@@ -1,6 +1,6 @@
 {
-  "date_order": "Ngày mua:",
-  "expected_date": "Dự kiến ngày giao:",
+  "date_order": "Ngày mua",
+  "expected_date": "Ngày giao dự kiến",
   "billing_export": "Xuất hoá đơn",
   "report": "Gửi phản hồi",
   "my_orders": "Đơn hàng của tôi",
