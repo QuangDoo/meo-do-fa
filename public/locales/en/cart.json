@@ -11,5 +11,6 @@
   "quantity": "Quantity",
   "total": "Total",
   "continue_payment": "Continue to payment",
-  "continue_order": "Continue to order"
+  "continue_order": "Continue to order",
+  "update_success": "Update cart success!"
 }

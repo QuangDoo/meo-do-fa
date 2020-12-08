@@ -8,9 +8,11 @@
   "e_wallet": "E-Wallet",
   "reward_points": "Reward points",
   "account_info": "Account infomation",
-  "my_order": "My orders",
+  "my_order": "My Orders",
   "introduce_friends": "Introduce friends",
   "my_promo_code": "My promo codes",
   "cumulative_points": "Cumulative points",
-  "logout": "Logout"
+  "logout": "Logout",
+  "see_all_notifications": "See all notifications",
+  "category": "Category"
 }
