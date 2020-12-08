@@ -19,7 +19,7 @@ const Nav = () => {
 
   const totalQty = dataCount?.countCarts?.data;
 
-  const { t } = useTranslation(['navbar', 'errors']);
+  const { t } = useTranslation(['navbar', 'errors', 'common']);
 
   const logOut = () => {
     localStorage.removeItem('token');
@@ -188,7 +188,7 @@ const Nav = () => {
                         <div className="text-left mr-3">
                           <small className="text-muted">{t('navbar:e_wallet')}</small>
                           <div className="text-primary">
-                            0<span className="unit">đ</span>
+                            0<span className="unit">{t('common:vnd')}</span>
                           </div>
                         </div>
 
