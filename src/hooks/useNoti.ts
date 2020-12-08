@@ -1,17 +1,18 @@
-import { useLazyQuery } from '@apollo/client';
 import { useEffect } from 'react';
 import { GET_NOTI } from 'src/graphql/notification/notify';
 
+import { useLazyQueryAuth, useQueryAuth } from './useApolloHookAuth';
+
 export default function useNoti() {
-  const [getNoti, { data, error }] = useLazyQuery(GET_NOTI);
+  const { data, error, refetch } = useQueryAuth(GET_NOTI);
 
   useEffect(() => {
-    getNoti();
-  }, [getNoti]);
+    if (!data) return;
+  }, [data]);
 
   return {
-    getNoti,
     notifications: data,
-    error
+    error,
+    refetchNoti: refetch
   };
 }

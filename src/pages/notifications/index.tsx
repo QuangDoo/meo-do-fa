@@ -1,9 +1,6 @@
 import clsx from 'clsx';
-import { format, formatDistance, formatRelative, subDays } from 'date-fns';
 import { useTranslation } from 'i18n';
 import moment from 'moment';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import useNoti from 'src/hooks/useNoti';
 import withApollo from 'src/utils/withApollo';
@@ -12,19 +9,22 @@ import Footer from '../../components/Layout/Footer';
 import Head from '../../components/Layout/Head';
 import Header from '../../components/Layout/Header';
 import Nav from '../../components/Layout/Nav';
+
 const Notification = (): JSX.Element => {
   const [isRead, setIsRead] = useState(Boolean);
 
   const { notifications } = useNoti();
 
-  const notificationsData = notifications?.getNotify;
-
   useEffect(() => {
     if (!notifications) return;
   }, [notifications]);
 
+  const notificationsData = notifications?.getNotify || [];
+
   const handleRead = () => {
-    setIsRead(true);
+    notificationsData.map((noti) => {
+      setIsRead(noti.isSeen);
+    });
   };
 
   const { t } = useTranslation();
@@ -45,30 +45,35 @@ const Notification = (): JSX.Element => {
               {t('noti:mark_as_read')}
             </button>
           </div>
-          {notificationsData?.map((noti, index) => {
-            return (
-              <div className="col-12 mb-3" key={index}>
-                <a
-                  className={clsx('notification__item unread', isRead && 'notification__item read')}
-                  href="/notifications/1571210">
-                  <div className="notification__icon">
-                    <i className="status-icon status-notice" />
+          {notificationsData.length > 0
+            ? notificationsData?.map((noti, index) => {
+                return (
+                  <div className="col-12 mb-3" key={index}>
+                    <a
+                      className={clsx(
+                        'notification__item unread',
+                        noti.isSeen && 'notification__item read'
+                      )}
+                      href="/notifications/1571210">
+                      <div className="notification__icon">
+                        <i className="status-icon status-notice" />
+                      </div>
+                      <div className="notification__content">
+                        <div
+                          className="notification__content-title"
+                          dangerouslySetInnerHTML={{ __html: noti.content }}
+                        />
+                        <small className="notification__content-created-at">
+                          {moment(noti.create_date)
+                            .locale(`${t('noti:time')}`)
+                            .fromNow()}
+                        </small>
+                      </div>
+                    </a>
                   </div>
-                  <div className="notification__content">
-                    <div
-                      className="notification__content-title"
-                      dangerouslySetInnerHTML={{ __html: noti.body }}
-                    />
-                    <small className="notification__content-created-at">
-                      {moment(noti.date)
-                        .locale(`${t('noti:time')}`)
-                        .fromNow()}
-                    </small>
-                  </div>
-                </a>
-              </div>
-            );
-          })}
+                );
+              })
+            : `${t('noti:is_noty')}`}
         </div>
       </div>
       {/* <Pagination
