@@ -16,10 +16,12 @@ export type User = {
   roles: string[];
   create_date: Date;
   update_date: Date;
-  city: City;
-  district: District;
-  ward: Ward;
-  street: string;
+  contact_address: null | {
+    city: City;
+    district: District;
+    ward: Ward;
+    street: string;
+  };
   company_name: string;
   vat: string;
   representative: string;
@@ -44,19 +46,21 @@ export const GET_USER = gql`
       roles
       create_date
       update_date
-      city {
-        id
-        name
+      contact_address {
+        city {
+          id
+          name
+        }
+        district {
+          id
+          name
+        }
+        ward {
+          id
+          name
+        }
+        street
       }
-      district {
-        id
-        name
-      }
-      ward {
-        id
-        name
-      }
-      street
       company_name
       vat
       representative
