@@ -13,6 +13,7 @@ const Nav = () => {
   const isLoggedIn = useIsLoggedIn();
 
   const router = useRouter();
+
   const { data: dataCount } = useCountCart();
 
   const totalQty = dataCount?.countCarts?.data;
@@ -40,7 +41,6 @@ const Nav = () => {
     }
   });
 
-  // console.log(categoriesData?.getCategoriesAll, '23456789');
   const categories = categoriesData?.getCategoriesAll || [];
 
   return (
@@ -127,10 +127,7 @@ const Nav = () => {
 
               <li className="rockland-nav__item">
                 <Link href="/deals">
-                  <a
-                    className="rockland-nav__link"
-                    href="https://medofa.vn/deals"
-                    title="Khuyến mãi">
+                  <a className="rockland-nav__link">
                     <i className="rockland-nav__icon fab fa-hotjar" />
                     <span className="rockland-nav__title">{t('navbar:promotion')}</span>
                   </a>
