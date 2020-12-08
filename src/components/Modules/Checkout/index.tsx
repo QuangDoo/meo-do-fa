@@ -123,7 +123,7 @@ const CheckoutPage = () => {
             }
           },
           paymentMethodId: +data.paymentOption,
-          deliveryMethodId: +data.deliveryOption,
+          deliveryMethodId: 0,
           note: data.customerNotes,
           isInvoice: false
         }
@@ -155,9 +155,9 @@ const CheckoutPage = () => {
               />
             </div>
 
-            {/* <div className="mb-4">
+            <div className="mb-4" hidden>
               <DeliveryOption register={register} deliveryMethods={deliveryMethods} />
-            </div> */}
+            </div>
 
             {/* Payment */}
             <div className="mb-4">
