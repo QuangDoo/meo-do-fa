@@ -1,5 +1,4 @@
 import clsx from 'clsx';
-import { formatDistance } from 'date-fns';
 import { useTranslation } from 'i18n';
 import moment from 'moment';
 import Link from 'next/link';
@@ -13,7 +12,7 @@ type NotiItem = {
 };
 
 const NotiItem = (props) => {
-  const { t } = useTranslation();
+  const { i18n } = useTranslation();
   return (
     <>
       <Link href="/">
@@ -27,9 +26,7 @@ const NotiItem = (props) => {
               dangerouslySetInnerHTML={{ __html: props.body }}
             />
             <small className="notification__content-created-at">
-              {moment(props.date)
-                .locale(`${t('noti:time')}`)
-                .fromNow()}
+              {moment(props.date).locale(i18n.language).fromNow()}
             </small>
           </div>
         </a>
