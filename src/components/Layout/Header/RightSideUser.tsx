@@ -80,7 +80,7 @@ const RightSideUser = () => {
             })}
             <div className="dropdown__item notification__view-all">
               <Link href="/notifications">
-                <a>{t('see_all_noti')}</a>
+                <a>{t('navbar:see_all_notifications')}</a>
               </Link>
             </div>
           </div>

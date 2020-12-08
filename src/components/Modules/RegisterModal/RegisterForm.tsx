@@ -58,7 +58,7 @@ const RegisterForm = (props: WithTranslation): JSX.Element => {
     onError: (error) => {
       console.log('Create user error:', { error });
       error.graphQLErrors.length > 0 &&
-        toast.error(t(`errors:code_${error.graphQLErrors[0].extensions.code}`));
+        toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
     }
   });
 
