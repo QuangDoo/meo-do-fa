@@ -155,9 +155,9 @@ const CheckoutPage = () => {
               />
             </div>
 
-            <div className="mb-4">
+            {/* <div className="mb-4">
               <DeliveryOption register={register} deliveryMethods={deliveryMethods} />
-            </div>
+            </div> */}
 
             {/* Payment */}
             <div className="mb-4">

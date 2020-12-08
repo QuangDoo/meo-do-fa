@@ -2,7 +2,7 @@
     "product": "Sản phẩm",
     "ingredient": "Hoạt chất",
     "fast_order": "Đặt hàng nhanh",
-    "promotion": "Khuyễn mãi",
+    "promotion": "Khuyến mãi",
     "promo_code": "Mã giảm giá",
     "new": "Mới",
     "e_wallet": "Ví điện tử",
@@ -12,5 +12,6 @@
     "introduce_friends": "Giới thiệu bạn bè",
     "my_promo_code": "Mã giảm giá của tôi",
     "cumulative_points": "Điểm tích luỹ",
-    "logout": "Đăng xuất"
+    "logout": "Đăng xuất",
+    "category": "Danh mục"
 }
