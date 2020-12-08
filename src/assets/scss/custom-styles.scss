@@ -1,7 +1,6 @@
 @import './common/setting.scss';
 @import './application.scss';
 
-
 @import './header.scss';
 @import './footer.scss';
 @import './home.scss';
@@ -52,4 +51,18 @@ button {
   .container-xl {
     max-width: 1270px;
   }
+}
+
+.my-orders__item {
+  grid-template-columns: 4fr 1fr;
+
+  .my-orders__invoice {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+}
+
+.my-orders__filter {
+  padding: 0;
 }

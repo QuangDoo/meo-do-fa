@@ -1,3 +1,4 @@
+import { Tab, Tabs } from '@material-ui/core';
 import clsx from 'clsx';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
@@ -48,12 +49,18 @@ const OrderItem = (props: GetOrderList) => {
   const { flag } = props;
 
   return (
-    <div className="my-orders__item my-orders__item:hover pl-4 mt-1">
+    <div className="my-orders__item p-3 my-1">
       <div className="my-orders__info">
         <h2 className="h4 d-flex align-items-center">
           <Link href={`/my-orders/${props.id}`}>
             <a className="mr-2">#{props.orderNo}</a>
           </Link>
+
+          {flag === '25' && (
+            <div className="my-orders__invoice">
+              <span className="badge badge-danger">{t('myOrders:canceled')}</span>
+            </div>
+          )}
         </h2>
 
         <div className="my-orders__detail">
@@ -79,12 +86,6 @@ const OrderItem = (props: GetOrderList) => {
         )}
       </div>
 
-      {flag === '25' && (
-        <div className="my-orders__invoice">
-          <button className="btn btn-sm btn-outline-danger">{t('myOrders:canceled')}</button>
-        </div>
-      )}
-
       <ConfirmCancelOrder open={open} onClose={() => setOpen(false)} orderNo={props.orderNo} />
     </div>
   );
@@ -107,8 +108,9 @@ const MyOrders = () => {
     }
   });
 
-  const handleFilterClick = (key: FilterKey) => {
+  const handleFilterChange = (e, key: FilterKey) => {
     setFilter(key);
+
     refetch({
       page: 1,
       pageSize: pageSize
@@ -134,6 +136,20 @@ const MyOrders = () => {
         </p>
 
         <div className="my-orders__filter mt-3">
+          <Tabs
+            variant="scrollable"
+            scrollButtons="on"
+            value={filter}
+            onChange={handleFilterChange}
+            indicatorColor="primary"
+            textColor="primary">
+            {filterKeys.map((key) => (
+              <Tab key={key} label={t(`myOrders:${key}`)} value={key} />
+            ))}
+          </Tabs>
+        </div>
+
+        {/* <div className="my-orders__filter mt-3">
           {filterKeys.map((key) => (
             <button
               key={key}
@@ -142,7 +158,7 @@ const MyOrders = () => {
               {t(`myOrders:${key}`)}
             </button>
           ))}
-        </div>
+        </div> */}
 
         {orderList.map((order) => (
           <OrderItem key={order.id} {...order} />
