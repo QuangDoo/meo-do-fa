@@ -16624,6 +16624,7 @@ abbr[title] {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  line-height: 1.2;
 }
 .product-card__name:hover {
   color: $primary;
@@ -18901,6 +18902,13 @@ abbr[title] {
   color: $gray-900;
 }
 
+.subsciber-content {
+  font-size: 0.8rem;
+}
+
+.subsribe-input {
+  margin-bottom: -1.25rem;
+}
 .dropdown:hover>.dropdown-menu {
   display: block !important;
 }
@@ -18912,4 +18920,9 @@ abbr[title] {
   padding: 10px;
   width: 300px;
   text-overflow: ellipsis;
+}
+
+.subscribe-container {
+  padding: 20px 0;
+  box-shadow: 0 0 10px 1px hsla(0,0%,86.7%,.45);
 }

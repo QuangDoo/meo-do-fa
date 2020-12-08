@@ -13,7 +13,7 @@ type ContextValue = {
 const UserContext = createContext<ContextValue>({});
 
 const UserProvider = ({ children }: Props) => {
-  const [state, setState] = useState();
+  const [state, setState] = useState<User>();
 
   return (
     <UserContext.Provider value={{ user: state, setUser: setState }}>

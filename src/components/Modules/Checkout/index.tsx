@@ -61,7 +61,7 @@ const CheckoutPage = () => {
       name: user?.name,
       phone: user?.phone,
       email: user?.email,
-      address: user?.street,
+      address: user?.contact_address?.street,
       // cityId: user?.city.id,
       // districtId: user?.district.id,
       // wardId: user?.ward.id,
@@ -123,7 +123,7 @@ const CheckoutPage = () => {
             }
           },
           paymentMethodId: +data.paymentOption,
-          deliveryMethodId: +data.deliveryOption,
+          deliveryMethodId: 0,
           note: data.customerNotes,
           isInvoice: false
         }
@@ -155,7 +155,7 @@ const CheckoutPage = () => {
               />
             </div>
 
-            <div className="mb-4">
+            <div className="mb-4" hidden>
               <DeliveryOption register={register} deliveryMethods={deliveryMethods} />
             </div>
 

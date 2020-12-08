@@ -5,6 +5,7 @@ import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 import { GET_ALL_CATEGORIES, GetAllCategoriesData } from 'src/graphql/category/category.query';
 import useCountCart from 'src/hooks/useCountCart';
 import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
@@ -13,11 +14,12 @@ const Nav = () => {
   const isLoggedIn = useIsLoggedIn();
 
   const router = useRouter();
+
   const { data: dataCount } = useCountCart();
 
   const totalQty = dataCount?.countCarts?.data;
 
-  const { t } = useTranslation(['navbar']);
+  const { t } = useTranslation(['navbar', 'errors']);
 
   const logOut = () => {
     localStorage.removeItem('token');
@@ -37,10 +39,15 @@ const Nav = () => {
   const { data: categoriesData } = useQuery<GetAllCategoriesData, undefined>(GET_ALL_CATEGORIES, {
     onError: (error) => {
       console.log('Get all categories error:', error);
+
+      const errorCode = error.graphQLErrors?.[0]?.extensions?.code;
+
+      if (errorCode) {
+        toast.error(t(`errors:code_${errorCode}`));
+      }
     }
   });
 
-  // console.log(categoriesData?.getCategoriesAll, '23456789');
   const categories = categoriesData?.getCategoriesAll || [];
 
   return (
@@ -53,8 +60,8 @@ const Nav = () => {
                 <div data-toggle="dropdown" data-hover="dropdown">
                   <Link href="/products">
                     <a className="rockland-nav__link">
-                      <i className="rockland-nav__icon icomoon icon-product" />
-                      <span className="rockland-nav__title">{t('navbar:product')}</span>
+                      <i className="rockland-nav__icon fas fa-list-ul" />
+                      <span className="rockland-nav__title">{t('navbar:category')}</span>
                     </a>
                   </Link>
                 </div>
@@ -69,21 +76,29 @@ const Nav = () => {
                             </Link>
                           </div>
                           <ul className="dropdown-menu dropdown-sub-menu">
-                            <li>
+                            <li className="mb-2 dropdown-item">
                               <div className="dropdown">
                                 <div data-toggle="dropdown" data-hover="dropdown">
-                                  <a href="/#">amet consectetur</a>
+                                  <a className="text-dark" href="/#">
+                                    amet consectetur
+                                  </a>
                                 </div>
                                 <div className="dropdown-menu dropdown-sub-menu">
-                                  <a href="/#">adipisicing elit</a>
+                                  <a className="dropdown-item" href="/#">
+                                    adipisicing elit
+                                  </a>
                                 </div>
                               </div>
                             </li>
-                            <li>
-                              <a href="/#">Exercitationem autem</a>
+                            <li className="mb-2 dropdown-item">
+                              <a className="text-dark" href="/#">
+                                Exercitationem autem
+                              </a>
                             </li>
-                            <li>
-                              <a href="/#">Exercitationem autem</a>
+                            <li className="mb-2 dropdown-item">
+                              <a className="text-dark" href="/#">
+                                Exercitationem autem
+                              </a>
                             </li>
                           </ul>
                         </div>
@@ -91,7 +106,14 @@ const Nav = () => {
                     ))}
                 </ul>
               </li>
-
+              <li className="rockland-nav__item dropdown">
+                <Link href="/products">
+                  <a className="rockland-nav__link">
+                    <i className="rockland-nav__icon icomoon icon-product" />
+                    <span className="rockland-nav__title">{t('navbar:product')}</span>
+                  </a>
+                </Link>
+              </li>
               <li className="rockland-nav__item">
                 <Link href="/ingredients">
                   <a className="rockland-nav__link">
@@ -112,10 +134,7 @@ const Nav = () => {
 
               <li className="rockland-nav__item">
                 <Link href="/deals">
-                  <a
-                    className="rockland-nav__link"
-                    href="https://medofa.vn/deals"
-                    title="Khuyến mãi">
+                  <a className="rockland-nav__link">
                     <i className="rockland-nav__icon fab fa-hotjar" />
                     <span className="rockland-nav__title">{t('navbar:promotion')}</span>
                   </a>

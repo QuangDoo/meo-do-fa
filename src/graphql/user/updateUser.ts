@@ -1,9 +1,14 @@
 import { gql } from '@apollo/client';
 
+type IdAndName = {
+  id: number;
+  name: string;
+};
+
 type ContactAddress = {
-  city: string;
-  district: string;
-  ward: string;
+  city: IdAndName;
+  district: IdAndName;
+  ward: IdAndName;
   street: string;
 };
 
