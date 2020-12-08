@@ -1,5 +1,4 @@
 import { useTranslation } from 'i18n';
-import { WithTranslation } from 'next-i18next';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
@@ -11,7 +10,7 @@ import useCountCart from 'src/hooks/useCountCart';
 import { ProductPrice } from '../ProductCard/ProductPrice';
 import ConfirmDeleteModal from './ConfirmDeleteModal';
 
-type Props = WithTranslation & {
+type Props = {
   image: string;
   productName: string;
   productId: string;
