@@ -1,5 +1,7 @@
 import { gql } from '@apollo/client';
 
+export type OrderFlag = '10' | '20' | '25' | '30' | '40' | '80';
+
 export type GetOrderList = {
   id: string;
   orderNo: string;
@@ -9,7 +11,7 @@ export type GetOrderList = {
     price_total: number;
   }[];
   is_expired: boolean;
-  state: string;
+  flag: OrderFlag;
 };
 
 export type GetOrderListData = {
@@ -32,7 +34,7 @@ export const GET_ORDER_LIST = gql`
         price_total
       }
       is_expired
-      state
+      flag
     }
   }
 `;

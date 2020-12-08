@@ -15,6 +15,7 @@ import {
   Table,
   TableBody,
   TableCell,
+  TableFooter,
   TableHead,
   TableRow,
   Typography
@@ -22,7 +23,6 @@ import {
 import { AssignmentTurnedIn, Done, LocalShipping, Receipt, Sms, Update } from '@material-ui/icons';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import clsx from 'clsx';
-import { DateTime } from 'luxon';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
@@ -31,7 +31,6 @@ import PriceText from 'src/components/Form/PriceText';
 import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
 import Nav from 'src/components/Layout/Nav';
-import ExportInvoice from 'src/components/Modules/ExportInvoice';
 import ProfileSidebar from 'src/components/Modules/ProfileSidebar';
 import { useUserContext } from 'src/contexts/User';
 import { GET_ORDER } from 'src/graphql/order/order.query';
@@ -265,11 +264,6 @@ const OrderDetails = () => {
     variables: { id: +orderId }
   });
 
-  // useEffect(() => {
-  //   if (orderDetail?.getOrderDetail.order_lines.state) {
-  //   }
-  // }, [orderDetail?.getOrderDetail.order_lines]);
-
   const onCancelClick = () => {
     if (activeStep >= 3) {
       toast.error('cant cancel order');
@@ -358,13 +352,8 @@ const OrderDetails = () => {
                         variant="outlined"
                         onClick={onCancelClick}
                         color="secondary">
-                        hủy đơn hàng
+                        Hủy đơn hàng
                       </Button>
-                      // <button
-                      //   className="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-outlinedSizeSmall MuiButton-sizeSmall"
-                      //   onClick={onCancelClick}>
-                      //   hủy đơn hàng
-                      // </button>
                     )}
 
                     <ConfirmCancelOrder
@@ -377,25 +366,6 @@ const OrderDetails = () => {
               </Grid>
 
               <Grid item xs={12}>
-                <CustomCard>
-                  <Box display="flex" alignItems="center">
-                    <ExportInvoice
-                      confirmDate={DateTime.local()
-                        .minus({
-                          days: 5
-                        })
-                        .toJSDate()}
-                    />
-
-                    {/* <Box ml={2}>
-                      Xem thông tin xuất hóa đơn đỏ{' '}
-                      <Link href="/invoice-export-rules">tại đây</Link>.
-                    </Box> */}
-                  </Box>
-                </CustomCard>
-              </Grid>
-
-              <Grid item xs={12}>
                 <Grid container spacing={2}>
                   <Grid item sm={6} xs={12}>
                     <CustomCard>
@@ -403,7 +373,6 @@ const OrderDetails = () => {
                         label="Tên người nhận"
                         text={orderDetail?.getOrderDetail?.partner_shipping?.name}
                       />
-                      {/* nào có data địa chỉ thì bỏ vô đây nha <3 */}
 
                       <TextWithLabel
                         label="Địa chỉ giao hàng"
@@ -421,7 +390,6 @@ const OrderDetails = () => {
                       />
                     </CustomCard>
                   </Grid>
-                  {/* có data đơn vị vận chuyển thì fill vô nha <3 */}
 
                   {/* <Grid item sm={6} xs={12}>
                     <CustomCard>
@@ -442,7 +410,10 @@ const OrderDetails = () => {
 
               <Grid item xs={12}>
                 <CustomCard>
-                  <TextWithLabel label="Ghi chú" text={orderDetail?.getOrderDetail.note} />
+                  <TextWithLabel
+                    label="Ghi chú"
+                    text={orderDetail?.getOrderDetail.note || 'Không có ghi chú'}
+                  />
                 </CustomCard>
               </Grid>
 
@@ -479,6 +450,17 @@ const OrderDetails = () => {
                         </TableRow>
                       ))}
                     </TableBody>
+
+                    <TableFooter>
+                      <TableRow>
+                        <TableCell colSpan={4}>
+                          <Typography variant="h5" align="right">
+                            Tổng cộng:{' '}
+                            <PriceText price={orderDetail?.getOrderDetail.amount_total} /> đ
+                          </Typography>
+                        </TableCell>
+                      </TableRow>
+                    </TableFooter>
                   </Table>
                 </CustomCard>
               </Grid>

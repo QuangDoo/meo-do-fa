@@ -1,57 +1,62 @@
 import clsx from 'clsx';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
 import Nav from 'src/components/Layout/Nav';
 import ProfileLayout from 'src/components/Modules/ProfileLayout';
-import { GET_ORDER_LIST, GetOrderList } from 'src/graphql/my-orders/getOrderList';
-import { useLazyQueryAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
+import {
+  GET_ORDER_LIST,
+  GetOrderList,
+  GetOrderListData,
+  GetOrderListVars
+} from 'src/graphql/my-orders/getOrderList';
+import { useQueryAuth } from 'src/hooks/useApolloHookAuth';
 import withApollo from 'src/utils/withApollo';
 
 import ConfirmCancelOrder from '../../components/Modules/My-orders/ConfirmCancelOrder';
 
-type FilterKey = 'all' | 'waiting_confirmation' | 'completed' | 'canceled';
-
 const pageSize = 20;
+
+export type FilterKey =
+  | 'all'
+  | 'wait_for_confirm'
+  | 'confirmed'
+  | 'handling'
+  | 'delivering'
+  | 'completed'
+  | 'canceled';
+
+const filterKeys: FilterKey[] = [
+  'all',
+  'wait_for_confirm',
+  'confirmed',
+  'handling',
+  'delivering',
+  'completed',
+  'canceled'
+];
 
 const OrderItem = (props: GetOrderList) => {
   const [open, setOpen] = useState(false);
 
   const { t } = useTranslation(['myOrders']);
 
-  const { state } = props;
-
-  console.log('check', state === 'cancel');
+  const { flag } = props;
 
   return (
     <div className="my-orders__item my-orders__item:hover pl-4 mt-1">
       <div className="my-orders__info">
         <h2 className="h4 d-flex align-items-center">
           <Link href={`/my-orders/${props.id}`}>
-            <a className="mr-2">#{props.id}</a>
+            <a className="mr-2">#{props.orderNo}</a>
           </Link>
-
-          {/* <span
-            className={clsx(
-              'badge py-1 text-capitalize',
-              props.status === 'Đã xác nhận'
-                ? 'my-orders__status--confirmed'
-                : 'my-orders__status--shipped'
-            )}>
-            <a href="/my-orders?status=confirmed">{props.status}</a>
-          </span> */}
         </h2>
 
         <div className="my-orders__detail">
-          {/* <div>
-            <span className="title">Sản phẩm:</span>
-            <span className="content">{props.totalProducts}</span>
-          </div> */}
-
           <div>
             <span className="title">{t('myOrders:date_order')}</span>
             <span className="content">{props.date_order}</span>
@@ -64,23 +69,19 @@ const OrderItem = (props: GetOrderList) => {
         </div>
       </div>
 
-      {/* <p className="my-orders__price">{props.totalPrice.toLocaleString()} đ</p> */}
-
       <div className="my-orders__invoice">
-        <button className="btn btn-secondary btn-sm mr-2" type="button">
-          {t('myOrders:billing_export')}
-        </button>
         <button className="btn btn-outline-info btn-sm">{t('myOrders:report')}</button>
-        <button
-          hidden={state === 'cancel'}
-          className="btn btn-outline-danger btn-sm"
-          onClick={() => setOpen(true)}>
-          hủy đơn hàng
-        </button>
+
+        {flag !== '25' && (
+          <button className="btn btn-outline-danger btn-sm" onClick={() => setOpen(true)}>
+            {t('myOrders:cancel_order')}
+          </button>
+        )}
       </div>
-      {state === 'cancel' && (
+
+      {flag === '25' && (
         <div className="my-orders__invoice">
-          <button className="btn btn-sm btn-outline-danger">Canceled</button>
+          <button className="btn btn-sm btn-outline-danger">{t('myOrders:canceled')}</button>
         </div>
       )}
 
@@ -92,27 +93,19 @@ const OrderItem = (props: GetOrderList) => {
 const MyOrders = () => {
   const [filter, setFilter] = useState<FilterKey>();
 
-  const { data, error, refetch } = useQueryAuth(GET_ORDER_LIST, {
+  const { t } = useTranslation(['myOrders', 'errors']);
+
+  const { data, refetch } = useQueryAuth<GetOrderListData, GetOrderListVars>(GET_ORDER_LIST, {
     variables: {
       page: 1,
       pageSize: pageSize
     },
     onError: (error) => {
-      console.log('Get order list error:', { error });
-      toast.error('Get order list error: ' + error);
+      const errorCode = error.graphQLErrors?.[0]?.extensions?.code;
+
+      if (errorCode) toast.error(t(`errors:code_${errorCode}`));
     }
   });
-
-  const { t } = useTranslation(['myOrders']);
-
-  const orderList = data?.getOrderList || [];
-
-  const filterHeaders: Record<FilterKey, string> = {
-    all: t('myOrders:all_order'),
-    waiting_confirmation: t('myOrders:wait_for_confirm'),
-    completed: t('myOrders:complete'),
-    canceled: t('myOrders:canceled')
-  };
 
   const handleFilterClick = (key: FilterKey) => {
     setFilter(key);
@@ -121,6 +114,8 @@ const MyOrders = () => {
       pageSize: pageSize
     });
   };
+
+  const orderList = data?.getOrderList || [];
 
   return (
     <>
@@ -139,12 +134,12 @@ const MyOrders = () => {
         </p>
 
         <div className="my-orders__filter mt-3">
-          {Object.keys(filterHeaders).map((key: FilterKey) => (
+          {filterKeys.map((key) => (
             <button
               key={key}
               className={clsx('my-orders__header', filter === key && 'active')}
               onClick={() => handleFilterClick(key)}>
-              {filterHeaders[key]}
+              {t(`myOrders:${key}`)}
             </button>
           ))}
         </div>
