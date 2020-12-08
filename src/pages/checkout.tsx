@@ -25,7 +25,7 @@ const Checkout = (): JSX.Element => {
 };
 
 Checkout.getInitialProps = async () => ({
-  namespacesRequired: ['']
+  namespacesRequired: ['checkout']
 });
 
 export default withApollo({ ssr: true })(Checkout);
