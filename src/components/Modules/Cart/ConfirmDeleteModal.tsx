@@ -74,7 +74,7 @@ const ConfirmDeleteModal: FC<Props> = (props) => {
             <div className="swal2-icon swal2-success" style={{ display: 'none' }} />
             <img className="swal2-image" style={{ display: 'none' }} alt="" />
             <h2 className="swal2-title" id="swal2-title" style={{ display: 'flex' }}>
-              Xin xác nhận
+              {t('cart:remove_title')}
             </h2>
             <button
               type="button"
@@ -87,7 +87,7 @@ const ConfirmDeleteModal: FC<Props> = (props) => {
           </div>
           <div className="cart-item-remove-dialog" id="cart-item-remove-dialog-3206540">
             <div className="container-fluid">
-              <div className="swal2-content">Bạn có chắc muốn xoá sản phẩm này khỏi giỏ hàng?</div>
+              <div className="swal2-content">{t('cart:remove_confirm')}</div>
               <div className="elevated p-3 d-flex">
                 <div className="mr-3">
                   <img alt="" className="lozad img-fluid loaded" src={image} width={100} />
@@ -107,13 +107,13 @@ const ConfirmDeleteModal: FC<Props> = (props) => {
               type="button"
               className="swal2-cancel btn btn-outline-primary px-4 m-2"
               onClick={handleOnClose}>
-              Không
+              {t('cart:No')}
             </button>
             <button
               type="button"
               className="swal2-confirm btn btn-primary px-4 m-2"
               onClick={onConfirmDelete}>
-              Có
+              {t('cart:Yes')}
             </button>
           </div>
         </div>

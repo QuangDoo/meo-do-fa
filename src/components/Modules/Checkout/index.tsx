@@ -99,7 +99,7 @@ const CheckoutPage = () => {
       });
     },
     onError: () => {
-      toast.error('Thanh toán thất bại.');
+      toast.error(t('order_fail_message'));
     }
   });
 

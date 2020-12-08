@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -15,7 +16,7 @@ type Props = {
 
 const ProductsSidebarFilter = (props: Props) => {
   const { categories, manufacturers } = props;
-
+  const { t } = useTranslation(['productsSideBar']);
   const router = useRouter();
 
   const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -36,34 +37,34 @@ const ProductsSidebarFilter = (props: Props) => {
     <aside className="text-capitalize w-100">
       <header className="products__filters-header">
         <span className="text-muted icomoon icon-tune mr-3" />
-        Bộ lọc tìm kiếm
+        {t('search_filters')}
       </header>
 
       <hr className="hr my-3" />
 
       <div>
-        <div className="products__filter-header mb-2">Sắp xếp</div>
+        <div className="products__filter-header mb-2">{t('filter')}</div>
 
         <Select onChange={handleSortChange}>
           {/* <option value="01">Sản phẩm mới</option> */}
           {/* <option value="02">Bán chạy nhất</option> */}
           {/* <option value="03">Phù hợp nhất</option> */}
-          <option value="04">Giá: Cao - Thấp</option>
-          <option value="05">Giá: Thấp - Cao</option>
-          <option value="06">Tên: Z - A</option>
+          <option value="04">{t('price_high_to_low')}</option>
+          <option value="05">{t('price_low_to_high')}</option>
+          <option value="06">{t('name_z_to_a')}</option>
           <option value="07" selected>
-            Tên: A - Z
+            {t('name_a_to_z')}
           </option>
         </Select>
       </div>
 
       <hr className="hr my-3" />
 
-      <Dropdown label="Nhóm thuốc">
+      <Dropdown label={t('category')}>
         <div className="mb-2">
           <Link href="/products">
             <a className={clsx('products__filter-category', !router.query.category && 'active')}>
-              Tất cả
+              {t('all')}
             </a>
           </Link>
         </div>
@@ -88,12 +89,12 @@ const ProductsSidebarFilter = (props: Props) => {
 
       <hr className="hr my-3" />
 
-      <Dropdown label="Nhà sản xuất">
+      <Dropdown label={t('manufacturer')}>
         <div className="mb-2">
           <Link href="/products">
             <a
               className={clsx('products__filter-category', !router.query.manufacturer && 'active')}>
-              Tất cả
+              {t('all')}
             </a>
           </Link>
         </div>
@@ -117,7 +118,7 @@ const ProductsSidebarFilter = (props: Props) => {
 
         <div>
           <Link href="/manufacturers">
-            <a className="products__filter-category">Xem thêm</a>
+            <a className="products__filter-category">{t('see_more')}</a>
           </Link>
         </div>
       </Dropdown>

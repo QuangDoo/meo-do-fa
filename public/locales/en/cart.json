@@ -10,6 +10,10 @@
   "customer_note": "Notes of customer",
   "quantity": "Quantity",
   "total": "Total",
-  "continue_payment": "Continue to payment",
-  "continue_order": "Continue to order"
+  "continue_payment": "Proceed to checkout",
+  "continue_order": "Continue to order",
+  "remove_confirm": "Are you sure you want to remove this product from the shopping cart?",
+  "remove_title": "Please confirm",
+  "yes": "Yes",
+  "no": "No"
 }

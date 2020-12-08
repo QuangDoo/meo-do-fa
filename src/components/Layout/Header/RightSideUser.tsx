@@ -40,14 +40,13 @@ const NotiItem = (props) => {
 
 const RightSideUser = () => {
   const { user } = useUser();
+  const { t } = useTranslation('noti');
 
   const [show, setShow] = useState(false);
 
   const { notifications } = useNoti();
 
   const notificationsData = notifications?.getNotify;
-
-  const { t } = useTranslation();
 
   useEffect(() => {
     if (!notifications) return;
@@ -84,7 +83,7 @@ const RightSideUser = () => {
             })}
             <div className="dropdown__item notification__view-all">
               <Link href="/notifications">
-                <a>Xem tất cả thông báo</a>
+                <a>{t('see_all_noti')}</a>
               </Link>
             </div>
           </div>

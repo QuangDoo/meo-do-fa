@@ -7,5 +7,7 @@
   "district_select_label": "Quận/Huyện",
   "district_select_placeholder": "Chọn quận/huyện...",
   "ward_select_label": "Phường/Xã",
-  "ward_select_placeholder": "Chọn phường/xã..."
+  "ward_select_placeholder": "Chọn phường/xã ...",
+  "updating": "Đang cập nhật",
+  "vnd": "đ"
 }
