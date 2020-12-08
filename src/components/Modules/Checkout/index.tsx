@@ -61,7 +61,7 @@ const CheckoutPage = () => {
       name: user?.name,
       phone: user?.phone,
       email: user?.email,
-      address: user?.street,
+      address: user?.contact_address?.street,
       // cityId: user?.city.id,
       // districtId: user?.district.id,
       // wardId: user?.ward.id,

@@ -5,6 +5,7 @@ import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 import { GET_ALL_CATEGORIES, GetAllCategoriesData } from 'src/graphql/category/category.query';
 import useCountCart from 'src/hooks/useCountCart';
 import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
@@ -18,7 +19,7 @@ const Nav = () => {
 
   const totalQty = dataCount?.countCarts?.data;
 
-  const { t } = useTranslation(['navbar']);
+  const { t } = useTranslation(['navbar', 'errors']);
 
   const logOut = () => {
     localStorage.removeItem('token');
@@ -38,6 +39,12 @@ const Nav = () => {
   const { data: categoriesData } = useQuery<GetAllCategoriesData, undefined>(GET_ALL_CATEGORIES, {
     onError: (error) => {
       console.log('Get all categories error:', error);
+
+      const errorCode = error.graphQLErrors?.[0]?.extensions?.code;
+
+      if (errorCode) {
+        toast.error(t(`errors:code_${errorCode}`));
+      }
     }
   });
 
