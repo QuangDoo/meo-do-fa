@@ -1,5 +1,5 @@
 {
-  "supply": "Đăng ký bán hàng cùng medofa",
+  "supply": "Đăng ký bán hàng cùng Medofa",
   "recruitment": "Tuyển dụng",
   "see_all": "Xem tất cả",
   "city_select_label": "Tỉnh/Thành phố",
@@ -7,5 +7,7 @@
   "district_select_label": "Quận/Huyện",
   "district_select_placeholder": "Chọn quận/huyện...",
   "ward_select_label": "Phường/Xã",
-  "ward_select_placeholder": "Chọn phường/xã..."
+  "ward_select_placeholder": "Chọn phường/xã ...",
+  "updating": "Đang cập nhật",
+  "vnd": "đ"
 }

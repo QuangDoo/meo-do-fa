@@ -1,0 +1,13 @@
+{
+    "search_filters": "Search filters",
+    "sort": "Sort",
+    "price_low_to_high": "Price: Low - High",
+    "price_high_to_low": "Price: High - Low",
+    "name_a_to_z": "Name: A - Z",
+    "name_z_to_a": "Name: Z - A",
+    "category": "Category",
+    "all": "All",
+    "manufacturer": "Manufacturer",
+    "see_more": "See more",
+    "filter": "Filter"
+}

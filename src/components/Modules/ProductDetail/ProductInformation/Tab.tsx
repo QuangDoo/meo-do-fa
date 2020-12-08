@@ -1,3 +1,4 @@
+import { useTranslation } from 'i18n';
 import React, { useState } from 'react';
 
 const TabButtons = ({ buttons, changeTab, activeTab }): JSX.Element => {
@@ -47,35 +48,36 @@ const TabContent = (props): JSX.Element => {
   );
 };
 export default function Tab(props) {
+  const { t } = useTranslation(['ingredientDetails', 'common']);
   return (
     <div className="product__details">
       <Tabs>
-        <TabContent label="Thông tin chung">
-          {props.info !== 'false' ? props.info : 'Đang cập nhật'}
+        <TabContent label={t('ingredientDetails:info_label')}>
+          {props.info !== 'false' ? props.info : t('common:updating')}
         </TabContent>
-        <TabContent label="Chỉ định">
-          {props.indication !== 'false' ? props.indication : 'Đang cập nhật'}
+        <TabContent label={t('ingredientDetails:indication_label')}>
+          {props.indication !== 'false' ? props.indication : t('common:updating')}
         </TabContent>
-        <TabContent label="Liều lượng - Cách dùng">
-          {props.contraindication !== 'false' ? props.contraindication : 'Đang cập nhật'}
+        <TabContent label={t('ingredientDetails:direction_label')}>
+          {props.contraindication !== 'false' ? props.contraindication : t('common:updating')}
         </TabContent>
-        <TabContent label="Chống chỉ định">
-          {props.direction !== 'false' ? props.direction : 'Đang cập nhật'}
+        <TabContent label={t('ingredientDetails:contraindication_label')}>
+          {props.direction !== 'false' ? props.direction : t('common:updating')}
         </TabContent>
-        <TabContent label="Tương tác thuốc">
-          {props.interaction !== 'false' ? props.interaction : 'Đang cập nhật'}
+        <TabContent label={t('ingredientDetails:interaction_label')}>
+          {props.interaction !== 'false' ? props.interaction : t('common:updating')}
         </TabContent>
-        <TabContent label="Bảo quản">
-          {props.preservation !== 'false' ? props.preservation : 'Đang cập nhật'}
+        <TabContent label={t('ingredientDetails:preservation_label')}>
+          {props.preservation !== 'false' ? props.preservation : t('common:updating')}
         </TabContent>
-        <TabContent label="Quá liều">
-          {props.overdose !== 'false' ? props.overdose : 'Đang cập nhật'}
+        <TabContent label={t('ingredientDetails:overdose_label')}>
+          {props.overdose !== 'false' ? props.overdose : t('common:updating')}
         </TabContent>
-        <TabContent label="Dược lực học">
-          {props.pharmacodynamics !== 'false' ? props.pharmacodynamics : 'Đang cập nhật'}
+        <TabContent label={t('pharmacodynamics_label')}>
+          {props.pharmacodynamics !== 'false' ? props.pharmacodynamics : t('common:updating')}
         </TabContent>
-        <TabContent label="Dược động học">
-          {props.pharmacokinetics !== 'false' ? props.pharmacokinetics : 'Đang cập nhật'}
+        <TabContent label={t('pharmacokinetics_label')}>
+          {props.pharmacokinetics !== 'false' ? props.pharmacokinetics : t('common:updating')}
         </TabContent>
       </Tabs>
     </div>
