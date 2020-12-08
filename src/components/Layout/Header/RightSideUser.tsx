@@ -44,7 +44,7 @@ const RightSideUser = () => {
 
   const notificationsData = notifications?.getNotify;
 
-  const { t } = useTranslation();
+  const { t } = useTranslation('navbar');
 
   useEffect(() => {
     if (!notifications) return;
@@ -81,7 +81,7 @@ const RightSideUser = () => {
             })}
             <div className="dropdown__item notification__view-all">
               <Link href="/notifications">
-                <a>Xem tất cả thông báo</a>
+                <a>{t('navbar:see_all_notifications')}</a>
               </Link>
             </div>
           </div>

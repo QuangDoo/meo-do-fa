@@ -6,7 +6,7 @@ type Props = {
 
 type ContextValue = {
   cart?: Value;
-  setCart?(value: any): void;
+  setCart?: (value) => void;
 };
 
 type Cart = {

@@ -11,5 +11,6 @@
   "quantity": "Số lượng",
   "total": "Tổng tiền",
   "continue_payment": "Tiếp tục thanh toán",
-  "continue_order": "Tiếp tục đặt hàng"
+  "continue_order": "Tiếp tục đặt hàng",
+  "update_success": "Cập nhật giỏ hàng thành công!"
 }
