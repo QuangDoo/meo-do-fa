@@ -1,5 +1,9 @@
 import { gql } from '@apollo/client';
 
+import { City } from '../address/getCities';
+import { District } from '../address/getDistricts';
+import { Ward } from '../address/getWards';
+
 export type User = {
   _id: string;
   id: number;
@@ -12,9 +16,9 @@ export type User = {
   roles: string[];
   create_date: Date;
   update_date: Date;
-  city: string;
-  district: string;
-  ward: string;
+  city: City;
+  district: District;
+  ward: Ward;
   street: string;
   company_name: string;
   vat: string;
@@ -40,9 +44,18 @@ export const GET_USER = gql`
       roles
       create_date
       update_date
-      city
-      district
-      ward
+      city {
+        id
+        name
+      }
+      district {
+        id
+        name
+      }
+      ward {
+        id
+        name
+      }
       street
       company_name
       vat

@@ -25,7 +25,7 @@ import clsx from 'clsx';
 import { DateTime } from 'luxon';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import PriceText from 'src/components/Form/PriceText';
 import Head from 'src/components/Layout/Head';
@@ -36,7 +36,6 @@ import ProfileSidebar from 'src/components/Modules/ProfileSidebar';
 import { useUserContext } from 'src/contexts/User';
 import { GET_ORDER } from 'src/graphql/order/order.query';
 import { useQueryAuth } from 'src/hooks/useApolloHookAuth';
-import useUser from 'src/hooks/useUser';
 import { theme } from 'src/theme';
 import withApollo from 'src/utils/withApollo';
 
