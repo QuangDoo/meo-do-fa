@@ -47,7 +47,6 @@ const Nav = () => {
       }
     }
   });
-
   const categories = categoriesData?.getCategoriesAll || [];
 
   return (
@@ -68,7 +67,7 @@ const Nav = () => {
                 <ul className="dropdown-menu">
                   {categories &&
                     categories.map(({ name, id }) => (
-                      <li key={id} className="mb-2 dropdown-item 222">
+                      <li key={id} className="mb-2 dropdown-item">
                         <div className="dropdown">
                           <div data-toggle="dropdown" data-hover="dropdown">
                             <Link href={`/products?category=${id}`}>
