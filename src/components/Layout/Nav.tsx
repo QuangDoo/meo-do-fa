@@ -53,8 +53,8 @@ const Nav = () => {
                 <div data-toggle="dropdown" data-hover="dropdown">
                   <Link href="/products">
                     <a className="rockland-nav__link">
-                      <i className="rockland-nav__icon icomoon icon-product" />
-                      <span className="rockland-nav__title">{t('navbar:product')}</span>
+                      <i className="rockland-nav__icon fas fa-list-ul" />
+                      <span className="rockland-nav__title">{t('navbar:category')}</span>
                     </a>
                   </Link>
                 </div>
@@ -69,21 +69,29 @@ const Nav = () => {
                             </Link>
                           </div>
                           <ul className="dropdown-menu dropdown-sub-menu">
-                            <li>
+                            <li className="mb-2 dropdown-item">
                               <div className="dropdown">
                                 <div data-toggle="dropdown" data-hover="dropdown">
-                                  <a href="/#">amet consectetur</a>
+                                  <a className="text-dark" href="/#">
+                                    amet consectetur
+                                  </a>
                                 </div>
                                 <div className="dropdown-menu dropdown-sub-menu">
-                                  <a href="/#">adipisicing elit</a>
+                                  <a className="dropdown-item" href="/#">
+                                    adipisicing elit
+                                  </a>
                                 </div>
                               </div>
                             </li>
-                            <li>
-                              <a href="/#">Exercitationem autem</a>
+                            <li className="mb-2 dropdown-item">
+                              <a className="text-dark" href="/#">
+                                Exercitationem autem
+                              </a>
                             </li>
-                            <li>
-                              <a href="/#">Exercitationem autem</a>
+                            <li className="mb-2 dropdown-item">
+                              <a className="text-dark" href="/#">
+                                Exercitationem autem
+                              </a>
                             </li>
                           </ul>
                         </div>
@@ -91,7 +99,14 @@ const Nav = () => {
                     ))}
                 </ul>
               </li>
-
+              <li className="rockland-nav__item dropdown">
+                <Link href="/products">
+                  <a className="rockland-nav__link">
+                    <i className="rockland-nav__icon icomoon icon-product" />
+                    <span className="rockland-nav__title">{t('navbar:product')}</span>
+                  </a>
+                </Link>
+              </li>
               <li className="rockland-nav__item">
                 <Link href="/ingredients">
                   <a className="rockland-nav__link">
