@@ -10,8 +10,8 @@ import { useModalControlDispatch } from 'src/contexts/ModalControl';
 import {
   RESET_PASSWORD,
   ResetPasswordData,
-  SaveMailSubscriber
-} from 'src/graphql/user/forgotPassword';
+  ResetPasswordVars
+} from 'src/graphql/user/resetPassword';
 
 type Inputs = {
   email: string;
@@ -36,14 +36,7 @@ const ResetPassForm = (): JSX.Element => {
       variables: {
         email: email
       }
-    })
-      .then(() => {
-        toast.success(t(`errors:send_password_to_email_success`));
-        closeModal();
-      })
-      .catch((error) => {
-        toast.error(t(`errors:code_${error.graphQLErrors[0]?.extensions.code}`));
-      });
+    });
   };
 
   return (
