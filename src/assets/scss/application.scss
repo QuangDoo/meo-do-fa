@@ -18928,3 +18928,16 @@ abbr[title] {
   box-shadow: 0 0 10px 1px hsla(0,0%,86.7%,.45);
 }
 
+.text-max-3{
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.text-max-2{
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

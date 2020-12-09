@@ -18,7 +18,11 @@ type FilterKey = 'all' | 'waiting_confirmation' | 'completed' | 'canceled';
 
 const pageSize = 20;
 
-const OrderItem = (props: GetOrderList) => {
+interface Props extends GetOrderList {
+  refetch: () => void;
+}
+
+const OrderItem = (props: Props) => {
   const [open, setOpen] = useState(false);
 
   const { t } = useTranslation(['myOrders']);

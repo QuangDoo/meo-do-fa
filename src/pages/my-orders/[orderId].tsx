@@ -299,7 +299,10 @@ const OrderDetails = () => {
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <CustomCard>
-                  <Typography variant="h5">{t('myOrders:order_detail')}</Typography>
+                  <Typography variant="h5">
+                    {t('myOrders:order_detail')}
+                    {`: ${orderDetail?.getOrderDetail?.name}`}
+                  </Typography>
 
                   <Box my={2}>
                     <Divider />
@@ -371,7 +374,7 @@ const OrderDetails = () => {
                     <ConfirmCancelOrder
                       open={open}
                       onClose={() => setOpen(false)}
-                      orderNo={orderId.toString()}
+                      orderNo={orderDetail?.getOrderDetail.name}
                     />
                   </Box>
                 </CustomCard>

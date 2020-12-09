@@ -19,6 +19,8 @@ type Props = {
   onClose: () => void;
 
   orderNo: string;
+
+  callBack?: () => void;
 };
 
 type Inputs = {
@@ -35,12 +37,12 @@ const options = [
 ];
 
 const ConfirmCancelOrder = (props) => {
-  const { open, onClose, orderNo } = props;
+  const { open, onClose, orderNo, callBack } = props;
 
   const [cancelOrder] = useMutationAuth(CANCEL_ORDER, {
     onCompleted: () => {
       toast.success(t('cancelOrder:cancel_order_successful'));
-
+      callBack();
       onClose();
     },
     onError: (error) => {
@@ -57,6 +59,10 @@ const ConfirmCancelOrder = (props) => {
 
   const onSubmit = (data: Inputs) => {
     console.log(data);
+    if (!data.check) {
+      toast.error(t('cancelOrder:is_check'));
+      return;
+    }
     console.log(typeof orderNo, orderNo);
     cancelOrder({
       variables: {

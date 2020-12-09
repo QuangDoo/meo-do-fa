@@ -14,7 +14,7 @@
     "confirmed": "Confirmed",
     "in_proceed": "In proceed",
     "in_delivery": "In delivery",
-    "order_detail": "Order #{orderId} detail",
+    "order_detail": "Order detail",
     "cancel_the_order": "Cancel the order",
     "recipients_name": "Recipient's name",
     "delivery_address": "Delivery address",
