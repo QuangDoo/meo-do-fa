@@ -25,8 +25,6 @@ const OrderItem = (props: GetOrderList) => {
 
   const { state } = props;
 
-  console.log('check', state === 'cancel');
-
   return (
     <div className="my-orders__item my-orders__item:hover pl-4 mt-1">
       <div className="my-orders__info">
@@ -54,12 +52,16 @@ const OrderItem = (props: GetOrderList) => {
 
           <div>
             <span className="title">{t('myOrders:date_order')}</span>
-            <span className="content">{props.date_order}</span>
+            <span className="content">
+              {new Date(props.date_order).toLocaleDateString('en-GB')}
+            </span>
           </div>
 
           <div>
             <span className="title">{t('myOrders:expected_date')}</span>
-            <span className="content">{props.expected_date}</span>
+            <span className="content">
+              {new Date(props.expected_date).toLocaleDateString('en-GB')}
+            </span>
           </div>
         </div>
       </div>

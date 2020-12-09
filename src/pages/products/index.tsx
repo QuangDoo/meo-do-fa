@@ -130,7 +130,9 @@ function Products(): JSX.Element {
                   )}
                 </>
               ) : (
-                t('products:no_products')
+                <div>
+                  {t('products:no_products')} <b>{search}</b>
+                </div>
               )}
             </div>
 

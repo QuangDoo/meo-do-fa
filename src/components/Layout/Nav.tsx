@@ -105,7 +105,8 @@ const Nav = () => {
                     ))}
                 </ul>
               </li>
-              <li className="rockland-nav__item dropdown">
+
+              <li className="rockland-nav__item">
                 <Link href="/products">
                   <a className="rockland-nav__link">
                     <i className="rockland-nav__icon icomoon icon-product" />
