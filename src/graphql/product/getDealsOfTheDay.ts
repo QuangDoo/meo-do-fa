@@ -26,6 +26,7 @@ export const GET_DEALS_OF_THE_DAY = gql`
       is_quick_invoice
       is_vn
       is_exclusive
+      slug
       categories {
         id
         name
