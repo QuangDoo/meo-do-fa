@@ -2,10 +2,12 @@
   "supply": "Become a supplier",
   "recruitment": "Recruitment",
   "see_all": "See all",
-  "city_select_label": "City/Province",
-  "city_select_placeholder": "Choose a city/province...",
+  "city_select_label": "Province/City",
+  "city_select_placeholder": "Select province/city...",
   "district_select_label": "District",
-  "district_select_placeholder": "Choost a district...",
+  "district_select_placeholder": "Select district...",
   "ward_select_label": "Ward",
-  "ward_select_placeholder": "Choose a ward..."
+  "ward_select_placeholder": "Select ward...",
+  "updating": "Updating",
+  "vnd": "VND"
 }

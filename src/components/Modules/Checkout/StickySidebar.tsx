@@ -33,7 +33,7 @@ type Props = {
 const StickySidebar = (props: Props): JSX.Element => {
   const { counselData } = props;
 
-  const { t } = useTranslation('checkout');
+  const { t } = useTranslation(['checkout', 'common']);
 
   if (!counselData) return null;
 
@@ -65,30 +65,39 @@ const StickySidebar = (props: Props): JSX.Element => {
         <SidebarItem label={t('checkout:price_provisional_sums')}>
           <div className="d-flex">
             <PriceText price={data.totalPrice} />
-            <span className="unit">đ</span>
+            <span className="unit">{t('common:vnd')}</span>
           </div>
         </SidebarItem>
 
         <SidebarItem label={t('checkout:price_shipping_fee')}>
           <span>
             {data.totalShippingFee}
-            <span className="unit">đ</span>
+            <span className="unit">{t('common:vnd')}</span>
           </span>
         </SidebarItem>
 
-        <SidebarItem label={t('checkout:price_total_discount')}>
-          <span>
-            -{data.totalDcAmt}
-            <span className="unit">đ</span>
-          </span>
-        </SidebarItem>
+        {data.totalDcAmt > 0 ? (
+          <SidebarItem label={t('checkout:price_total_discount')}>
+            <span>
+              -{data.totalDcAmt}
+              <span className="unit">{t('common:vnd')}</span>
+            </span>
+          </SidebarItem>
+        ) : (
+          <SidebarItem label={t('checkout:price_total_discount')}>
+            <span>
+              {data.totalDcAmt}
+              <span className="unit">{t('common:vnd')}</span>
+            </span>
+          </SidebarItem>
+        )}
 
         <SidebarItem containerClass="checkout__info-promo"></SidebarItem>
 
         <SidebarItem label={t('checkout:price_total')} containerClass="checkout__info-total">
           <span className="checkout__total">
             <PriceText price={data.totalNetPrice} />
-            <span className="unit">đ</span>
+            <span className="unit">{t('common:vnd')}</span>
           </span>
         </SidebarItem>
       </div>

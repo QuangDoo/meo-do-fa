@@ -31,13 +31,13 @@ const SidebarLink = (props: SidebarLinkProps) => {
 };
 
 const ProfileSidebar = () => {
-  const { t } = useTranslation('navbar');
+  const { t } = useTranslation(['navbar', 'common']);
   const { user } = useUserContext();
 
   return (
     <aside className="my-account__sidebar mb-3">
       <div className="mb-3">
-        Tài khoản của
+        {t('navbar:account_of')}
         <h5>{user?.name}</h5>
       </div>
 
@@ -72,9 +72,9 @@ const ProfileSidebar = () => {
       />
 
       <div className="my-account__sidebar-item">
-        Ví -{' '}
+        {t('navbar:wallet')} -{' '}
         <span>
-          0<span className="unit">đ</span>
+          0<span className="unit">{t('common:vnd')}</span>
         </span>
       </div>
     </aside>

@@ -34,5 +34,6 @@
   "code_131": "Phone number is invalid.",
   "add_to_cart_success": "Add to cart success.",
   "add_to_cart_quantity_0": "Please provide quantity.",
-  "add_to_cart_less_than_0": "quantity must be greater than 0"
+  "add_to_cart_less_than_0": "quantity must be greater than 0",
+  "send_password_to_email_success":"The new password has been sent to your inbox. Please check your email!"
 }

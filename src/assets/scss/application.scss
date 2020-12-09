@@ -18911,6 +18911,7 @@ abbr[title] {
 }
 .dropdown:hover>.dropdown-menu {
   display: block !important;
+  width: 100%;
 }
 
 .dropdown-sub-menu {
@@ -18918,7 +18919,7 @@ abbr[title] {
   left: 100%;
   top: -20%;
   padding: 10px;
-  width: 300px;
+  width: auto;
   text-overflow: ellipsis;
 }
 
@@ -18926,3 +18927,4 @@ abbr[title] {
   padding: 20px 0;
   box-shadow: 0 0 10px 1px hsla(0,0%,86.7%,.45);
 }
+

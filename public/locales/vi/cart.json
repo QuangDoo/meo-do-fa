@@ -12,5 +12,9 @@
   "total": "Tổng tiền",
   "continue_payment": "Tiếp tục thanh toán",
   "continue_order": "Tiếp tục đặt hàng",
+  "remove_confirm": "Bạn có chắc muốn xoá sản phẩm này khỏi giỏ hàng?",
+  "remove_title": "Xin xác nhận",
+  "yes": "Có",
+  "no": "Không",
   "update_success": "Cập nhật giỏ hàng thành công!"
 }

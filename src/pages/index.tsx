@@ -66,10 +66,10 @@ const Home = (): JSX.Element => {
       <Nav />
 
       <HomePage
-        dealsOfTheDayData={dealsOfTheDayData}
         bestSellingData={bestSellingData}
         newProductsData={newProductsData}
         promotionProductsData={promotionProductsData}
+        dealsOfTheDayData={dealsOfTheDayData}
       />
 
       <Footer />

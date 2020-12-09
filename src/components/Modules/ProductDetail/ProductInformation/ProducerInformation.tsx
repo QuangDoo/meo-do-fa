@@ -1,3 +1,4 @@
+import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import React from 'react';
 import Tab from 'src/components/Tab/Tab';
@@ -24,15 +25,16 @@ type PropsType = {
 };
 
 const ProducerInformation = (props: PropsType): JSX.Element => {
+  const { t } = useTranslation(['ingredientDetails']);
   return (
     <div className="ml-3 mt-3 ">
       <div className="mb-3">
-        <div className="product__info-label">Thành phần</div>
+        <div className="product__info-label">{t('ingredient')}</div>
         <table className="table table-bordered table-sm">
           <tbody>
             <tr>
-              <th>Tên</th>
-              <th>Hàm lượng</th>
+              <th>{t('name')}</th>
+              <th>{t('concentrations')}</th>
             </tr>
             {props.ingredients?.map((item, index) => {
               return (
@@ -56,15 +58,15 @@ const ProducerInformation = (props: PropsType): JSX.Element => {
           interaction={props.interaction}
           preservation={props.preservation}
           overdose={props.overdose}
-          labelInfo="Thông tin chung"
-          labelIndication="Chỉ định"
-          labelContraindion="Chống chỉ định"
-          labelDirection="Hướng dẫn sử dụng"
-          labelInteraction="Tương tác thuốc"
-          labelPreservation="Bảo quản"
-          labelOverdose="Quá liều"
-          labelPharmacodynamics="Dược lực học"
-          labelPharmacokinetics="Dược động học"
+          labelInfo={t('info_label')}
+          labelIndication={t('indication_label')}
+          labelContraindion={t('contraindication_label')}
+          labelDirection={t('user_manual')}
+          labelInteraction={t('interaction_label')}
+          labelPreservation={t('preservation_label')}
+          labelOverdose={t('overdose_label')}
+          labelPharmacodynamics={t('pharmacodynamics_label')}
+          labelPharmacokinetics={t('pharmacokinetics_label')}
         />
       </div>
     </div>

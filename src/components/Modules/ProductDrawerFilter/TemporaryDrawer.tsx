@@ -1,3 +1,6 @@
+import Button from '@material-ui/core/Button';
+import Drawer from '@material-ui/core/Drawer';
+import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
@@ -6,56 +9,59 @@ import React from 'react';
 import { Category } from 'src/graphql/category/category.query';
 import { Manufacturer } from 'src/graphql/manufacturers/manufacturers.query';
 
-import Dropdown from '../Form/Dropdown';
-import Select from '../Form/Select';
+import Dropdown from '../../Form/Dropdown';
+import Select from '../../Form/Select';
 
 type Props = {
   categories: Category[];
   manufacturers: Manufacturer[];
 };
 
-const ProductsSidebarFilter = (props: Props) => {
+const useStyles = makeStyles({
+  list: {
+    width: 250
+  },
+  fullList: {
+    width: 'auto',
+    padding: '20px'
+  }
+});
+
+const TemporaryDrawer = (props: Props) => {
   const { categories, manufacturers } = props;
   const { t } = useTranslation(['productsSidebar']);
   const router = useRouter();
+  const classes = useStyles();
+  const [state, setState] = React.useState({
+    top: false
+  });
 
-  const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    router.push(
-      {
-        pathname: router.pathname,
-        query: {
-          ...router.query,
-          sort: event.target.value
-        }
-      },
-      undefined,
-      { shallow: true }
-    );
+  const toggleDrawer = (anchor: 'top', open: boolean) => (
+    event: React.KeyboardEvent | React.MouseEvent
+  ) => {
+    if (
+      event.type === 'keydown' &&
+      ((event as React.KeyboardEvent).key === 'Tab' ||
+        (event as React.KeyboardEvent).key === 'Shift')
+    ) {
+      return;
+    }
+
+    setState({ ...state, [anchor]: open });
   };
 
-  return (
-    <aside className="text-capitalize w-100">
+  const list = (anchor: 'top') => (
+    <div
+      className={clsx(classes.list, {
+        [classes.fullList]: anchor === 'top' || anchor === 'bottom'
+      })}
+      role="presentation"
+      onClick={toggleDrawer(anchor, false)}
+      onKeyDown={toggleDrawer(anchor, false)}>
       <header className="products__filters-header">
         <span className="text-muted icomoon icon-tune mr-3" />
         {t('search_filters')}
       </header>
-      <hr className="hr my-3" />
-
-      <div>
-        <div className="products__filter-header mb-2">{t('sort')}</div>
-
-        <Select onChange={handleSortChange}>
-          {/* <option value="01">Sản phẩm mới</option> */}
-          {/* <option value="02">Bán chạy nhất</option> */}
-          {/* <option value="03">Phù hợp nhất</option> */}
-          <option value="04">{t('price_high_to_low')}</option>
-          <option value="05">{t('price_low_to_high')}</option>
-          <option value="06">{t('name_z_to_a')}</option>
-          <option value="07" selected>
-            {t('name_a_to_z')}
-          </option>
-        </Select>
-      </div>
 
       <hr className="hr my-3" />
 
@@ -121,8 +127,27 @@ const ProductsSidebarFilter = (props: Props) => {
           </Link>
         </div>
       </Dropdown>
-    </aside>
+    </div>
+  );
+
+  return (
+    <div>
+      <React.Fragment key={'top'}>
+        <Button
+          onClick={toggleDrawer('top', true)}
+          variant="contained"
+          color="primary"
+          style={{ borderRadius: '50px' }}>
+          <i className="fas fa-filter mr-1"></i>
+          {t('productsSidebar:filter')}
+        </Button>
+
+        <Drawer anchor={'top'} open={state['top']} onClose={toggleDrawer('top', false)}>
+          {list('top')}
+        </Drawer>
+      </React.Fragment>
+    </div>
   );
 };
 
-export default ProductsSidebarFilter;
+export default TemporaryDrawer;
