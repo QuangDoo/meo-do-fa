@@ -1,12 +1,17 @@
 {
   "info_label": "General Info",
+  "ingredient": "Ingredient",
   "indication_label": "Indication",
   "direction_label": "Instructions",
   "contraindication_label": "Contraindication",
   "interaction_label": "Interaction",
+  "user_manual": "User manual",
   "preservation_label": "Preservation",
   "overdose_label": "Overdose",
   "pharmacodynamics_label": "Pharmacodynamics",
   "pharmacokinetics_label": "Pharmacokinetics",
-  "products_containing_ingredient": "Products containing {{ingredientName}}"
+  "products_containing_ingredient": "Products containing {{ingredientName}}",
+  "updating": "Updating",
+  "name": "Name",
+  "concentrations": "Concentrations"
 }

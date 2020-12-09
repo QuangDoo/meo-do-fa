@@ -19,7 +19,7 @@ const Customer = (): JSX.Element => {
       <div className="container">
         <div className="row">
           <div className="col-12 text-center mb-4">
-            <h2 className="text-primary">Khách hàng nói gì về medofa</h2>
+            <h2 className="text-primary">Khách hàng nói gì về Medofa</h2>
           </div>
           <div className="col-12">
             <Slider

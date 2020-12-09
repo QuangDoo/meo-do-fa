@@ -99,7 +99,7 @@ function AddCart(props: Props) {
       </div>
       <div className="col-md-7">
         <button className="btn btn-sm btn-primary" onClick={handleClick}>
-          Thêm vào giỏ hàng
+          {t('productDetail:add_to_cart')}
         </button>
       </div>
     </div>

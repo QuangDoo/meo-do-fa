@@ -37,14 +37,13 @@ const NotiItem = (props) => {
 
 const RightSideUser = () => {
   const { user } = useUser();
+  const { t } = useTranslation('noti');
 
   const [show, setShow] = useState(false);
 
   const { notifications } = useNoti();
 
   const notificationsData = notifications?.getNotify;
-
-  const { t } = useTranslation('navbar');
 
   useEffect(() => {
     if (!notifications) return;

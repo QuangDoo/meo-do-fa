@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import { useTranslation } from 'i18n';
 import React from 'react';
 import PriceText from 'src/components/Form/PriceText';
 
@@ -8,13 +9,14 @@ type ProductPriceProps = {
 };
 
 export const ProductPrice = (props: ProductPriceProps) => {
+  const { t } = useTranslation('common');
   const priceIsDifferent = props.standard_price && props.price !== props.standard_price;
 
   return (
     <>
       <span className={clsx('product-card__price', priceIsDifferent && 'mr-1')}>
         <PriceText price={props.price} />
-        <span className="unit">đ</span>
+        <span className="unit">{t('common:vnd')}</span>
       </span>
 
       {/* {priceIsDifferent && (

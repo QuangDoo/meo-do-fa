@@ -42,7 +42,7 @@ type Inputs = {
 
 const Footer = (): JSX.Element => {
   const { t } = useTranslation(['footer', 'common']);
-  const { register, handleSubmit } = useForm<Inputs>();
+  const { register, handleSubmit, reset } = useForm<Inputs>();
   const [saveMailSubscriber] = useMutation<SubscriberData, SubscriberVar>(SAVE_MAIL_SUBSCRIBE, {
     onCompleted: (data) => {
       toast.success(t('footer:success_subscribe'));
@@ -66,6 +66,7 @@ const Footer = (): JSX.Element => {
         }
       }
     }).catch((error) => toast.error(error));
+    reset({ email: '' });
   };
 
   return (
