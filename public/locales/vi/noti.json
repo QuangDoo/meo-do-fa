@@ -1,5 +1,6 @@
 {
     "my_noti" : "Thông báo của tôi",
     "mark_as_read": "Đánh dấu đọc tất cả",
-    "time":"vi"
+    "time":"vi",
+    "is_noty": "Không có thông báo"
  }
