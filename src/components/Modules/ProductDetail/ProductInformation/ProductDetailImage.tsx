@@ -1,6 +1,8 @@
+import { useTranslation } from 'i18n';
 import React from 'react';
 
 const ProuductDetailImage = (props): JSX.Element => {
+  const { t } = useTranslation('productDetail');
   return (
     <div className="col-12">
       <div className="d-flex justify-content-between mb-2">
@@ -13,7 +15,7 @@ const ProuductDetailImage = (props): JSX.Element => {
           />
         </div>
       </div>
-      <small className="text-muted">* Hình sản phẩm có thể thay đổi theo thời gian</small>
+      <small className="text-muted">* {t('image_change')}</small>
     </div>
   );
 };

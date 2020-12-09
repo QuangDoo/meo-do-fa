@@ -10,5 +10,19 @@
     "all_order": "All",
     "wait_for_confirm": "Wait for confirm",
     "complete": "Complete",
-    "canceled": "Canceled"
+    "canceled": "Canceled",
+    "confirmed": "Confirmed",
+    "in_proceed": "In proceed",
+    "in_delivery": "In delivery",
+    "order_detail": "Order #{orderId} detail",
+    "cancel_the_order": "Cancel the order",
+    "recipients_name": "Recipient's name",
+    "delivery_address": "Delivery address",
+    "phone_number": "Phone number",
+    "email": "Email",
+    "note": "Note",
+    "product": "Product",
+    "unit_price": "Unit price",
+    "quantity": "Quantity",
+    "total": "Total"
 }

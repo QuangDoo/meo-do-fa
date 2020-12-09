@@ -22,6 +22,7 @@ import {
 import { AssignmentTurnedIn, Done, LocalShipping, Receipt, Sms, Update } from '@material-ui/icons';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import clsx from 'clsx';
+import { useTranslation } from 'i18n';
 import { DateTime } from 'luxon';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -40,6 +41,7 @@ import { theme } from 'src/theme';
 import withApollo from 'src/utils/withApollo';
 
 import ConfirmCancelOrder from '../../components/Modules/My-orders/ConfirmCancelOrder';
+import myOrders from '.';
 
 const stepIconSize = 75;
 
@@ -119,29 +121,6 @@ const useStyles = makeStyles((materialTheme) => ({
     textAlign: 'left'
   }
 }));
-
-const steps = [
-  {
-    icon: <Receipt />,
-    text: 'Chờ xác nhận'
-  },
-  {
-    icon: <AssignmentTurnedIn />,
-    text: 'Đã xác nhận'
-  },
-  {
-    icon: <Update />,
-    text: 'Đang xử lý'
-  },
-  {
-    icon: <LocalShipping />,
-    text: 'Đang giao hàng'
-  },
-  {
-    icon: <Done />,
-    text: 'Hoàn tất'
-  }
-];
 
 const CustomCard = (props: CardProps) => {
   const classes = useStyles();
@@ -253,6 +232,7 @@ const CustomBodyCell = ({ children, textAlign }: CustomBodyCellProps) => {
 };
 
 const OrderDetails = () => {
+  const { t } = useTranslation(['myOrders']);
   const router = useRouter();
 
   const [open, setOpen] = useState(false);
@@ -260,7 +240,28 @@ const OrderDetails = () => {
   const { orderId } = router.query;
 
   const [activeStep, setActiveStep] = useState(0);
-
+  const steps = [
+    {
+      icon: <Receipt />,
+      text: t('myOrders:wait_for_confirm')
+    },
+    {
+      icon: <AssignmentTurnedIn />,
+      text: t('myOrders:confirmed')
+    },
+    {
+      icon: <Update />,
+      text: t('myOrders:in_proceed')
+    },
+    {
+      icon: <LocalShipping />,
+      text: t('myOrders:in_delivery')
+    },
+    {
+      icon: <Done />,
+      text: t('myOrders:complete')
+    }
+  ];
   const { data: orderDetail } = useQueryAuth(GET_ORDER, {
     variables: { id: +orderId }
   });
@@ -298,7 +299,7 @@ const OrderDetails = () => {
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <CustomCard>
-                  <Typography variant="h5">Chi tiết đơn hàng #{orderId}</Typography>
+                  <Typography variant="h5">{t('myOrders:order_detail')}</Typography>
 
                   <Box my={2}>
                     <Divider />
@@ -323,7 +324,7 @@ const OrderDetails = () => {
 
                   <Box display="flex" justifyContent="space-between" alignItems="center">
                     <Typography>
-                      Dự kiến giao vào{' '}
+                      {t('myOrders:expected_date')}{' '}
                       <strong>
                         {orderDetail?.getOrderDetail?.expected_date &&
                           orderDetail?.getOrderDetail?.expected_date?.substr(0, 10)}
@@ -340,7 +341,7 @@ const OrderDetails = () => {
                           }
                         }}>
                         <Button size="small" startIcon={<Sms />} variant="outlined" color="primary">
-                          Gửi phản hồi
+                          {t('myOrders:report')}
                         </Button>
                       </Link>
                     ) : orderDetail?.getOrderDetail.state === 'cancel' ? (
@@ -349,7 +350,7 @@ const OrderDetails = () => {
                         startIcon={<DeleteForeverIcon />}
                         variant="outlined"
                         color="secondary">
-                        Canceled
+                        {t('myOrders:canceled')}
                       </Button>
                     ) : (
                       <Button
@@ -358,7 +359,7 @@ const OrderDetails = () => {
                         variant="outlined"
                         onClick={onCancelClick}
                         color="secondary">
-                        hủy đơn hàng
+                        {t('myOrders:cancel_the_order')}
                       </Button>
                       // <button
                       //   className="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-outlinedSizeSmall MuiButton-sizeSmall"
@@ -400,23 +401,23 @@ const OrderDetails = () => {
                   <Grid item sm={6} xs={12}>
                     <CustomCard>
                       <TextWithLabel
-                        label="Tên người nhận"
+                        label={t('myOrders:recipients_name')}
                         text={orderDetail?.getOrderDetail?.partner_shipping?.name}
                       />
                       {/* nào có data địa chỉ thì bỏ vô đây nha <3 */}
 
                       <TextWithLabel
-                        label="Địa chỉ giao hàng"
+                        label={t('myOrders:delivery_address')}
                         text={orderDetail?.getOrderDetail?.partner_shipping?.street}
                       />
 
                       <TextWithLabel
-                        label="Số điện thoại"
+                        label={t('myOrders:phone_number')}
                         text={orderDetail?.getOrderDetail?.partner_shipping?.phone}
                       />
 
                       <TextWithLabel
-                        label="Email"
+                        label={t('myOrders:email')}
                         text={orderDetail?.getOrderDetail?.partner_shipping?.email}
                       />
                     </CustomCard>
@@ -442,7 +443,10 @@ const OrderDetails = () => {
 
               <Grid item xs={12}>
                 <CustomCard>
-                  <TextWithLabel label="Ghi chú" text={orderDetail?.getOrderDetail.note} />
+                  <TextWithLabel
+                    label={t('myOrders:note')}
+                    text={orderDetail?.getOrderDetail.note}
+                  />
                 </CustomCard>
               </Grid>
 
@@ -451,10 +455,10 @@ const OrderDetails = () => {
                   <Table>
                     <TableHead>
                       <TableRow>
-                        <CustomHeadCell label="Sản phẩm" textAlign="left" />
-                        <CustomHeadCell label="Đơn giá" />
-                        <CustomHeadCell label="Số lượng" />
-                        <CustomHeadCell label="Tổng cộng" />
+                        <CustomHeadCell label={t('myOrders:product')} textAlign="left" />
+                        <CustomHeadCell label={t('myOrders:unit_price')} />
+                        <CustomHeadCell label={t('myOrders:quantity')} />
+                        <CustomHeadCell label={t('myOrders:total')} />
                       </TableRow>
                     </TableHead>
 

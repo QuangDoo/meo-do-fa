@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -8,17 +9,18 @@ type Tag = {
   tag?: string;
 };
 
-const tags: Tag[] = [
-  { name: 'Tất cả' },
-  { name: 'Mới', tag: 'new' },
-  { name: 'Hóa đơn nhanh', tag: 'invoice-exportagle' },
-  { name: 'Chỉ có tại medofa', tag: 'only-medofa' },
-  { name: 'Người Việt dùng hàng Việt', tag: 'use-vietnamese' }
-];
-
 const FilterTags = () => {
-  const router = useRouter();
+  const { t } = useTranslation('filterTags');
 
+  const tags: Tag[] = [
+    { name: t('all') },
+    { name: t('new'), tag: 'new' },
+    { name: t('quick_invoice'), tag: 'invoice-exportagle' },
+    { name: t('only_medofa'), tag: 'only-medofa' },
+    { name: t('vn'), tag: 'use-vietnamese' }
+  ];
+
+  const router = useRouter();
   const getHref = (tag) => {
     if (tag) {
       return {

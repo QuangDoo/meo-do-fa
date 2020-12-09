@@ -1,3 +1,4 @@
+import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import React from 'react';
 
@@ -10,6 +11,7 @@ type Props = {
 };
 
 function ProductSidebar(props: Props): JSX.Element {
+  const { t } = useTranslation(['productDetail']);
   const imgUrl = 'https://news.thuocsi.vn/wp-content/uploads/2020/05/160x600.png';
   const links = [
     {
@@ -31,7 +33,7 @@ function ProductSidebar(props: Props): JSX.Element {
       <table className="table table-bordered table-sm ">
         <tbody>
           <tr>
-            <th className="text-center py-2">CAM KẾT</th>
+            <th className="text-center py-2">{t('commitment')}</th>
           </tr>
           <tr>
             <td>

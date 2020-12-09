@@ -19,7 +19,7 @@ const Nav = () => {
 
   const totalQty = dataCount?.countCarts?.data;
 
-  const { t } = useTranslation(['navbar', 'errors']);
+  const { t } = useTranslation(['navbar', 'errors', 'common']);
 
   const logOut = () => {
     localStorage.removeItem('token');
@@ -47,7 +47,6 @@ const Nav = () => {
       }
     }
   });
-
   const categories = categoriesData?.getCategoriesAll || [];
 
   return (
@@ -68,7 +67,7 @@ const Nav = () => {
                 <ul className="dropdown-menu">
                   {categories &&
                     categories.map(({ name, id }) => (
-                      <li key={id} className="mb-2 dropdown-item 222">
+                      <li key={id} className="mb-2 dropdown-item">
                         <div className="dropdown">
                           <div data-toggle="dropdown" data-hover="dropdown">
                             <Link href={`/products?category=${id}`}>
@@ -189,7 +188,7 @@ const Nav = () => {
                         <div className="text-left mr-3">
                           <small className="text-muted">{t('navbar:e_wallet')}</small>
                           <div className="text-primary">
-                            0<span className="unit">đ</span>
+                            0<span className="unit">{t('common:vnd')}</span>
                           </div>
                         </div>
 

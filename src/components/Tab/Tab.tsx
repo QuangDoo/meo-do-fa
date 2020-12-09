@@ -1,3 +1,4 @@
+import { useTranslation } from 'i18n';
 import React, { useState } from 'react';
 
 const TabButtons = ({ buttons, changeTab, activeTab }): JSX.Element => {
@@ -47,35 +48,36 @@ const TabContent = (props): JSX.Element => {
   );
 };
 export default function Tab(props) {
+  const { t } = useTranslation(['common']);
   return (
     <div className="product__details">
       <Tabs>
         <TabContent label={props.labelInfo}>
-          {props.info !== 'false' ? props.info : 'Đang cập nhật'}
+          {props.info !== 'false' ? props.info : t('updating')}
         </TabContent>
         <TabContent label={props.labelIndication}>
-          {props.indication !== 'false' ? props.indication : 'Đang cập nhật'}
+          {props.indication !== 'false' ? props.indication : t('updating')}
         </TabContent>
         <TabContent label={props.labelContraindion}>
-          {props.contraindication !== 'false' ? props.contraindication : 'Đang cập nhật'}
+          {props.contraindication !== 'false' ? props.contraindication : t('updating')}
         </TabContent>
         <TabContent label={props.labelDirection}>
-          {props.direction !== 'false' ? props.direction : 'Đang cập nhật'}
+          {props.direction !== 'false' ? props.direction : t('updating')}
         </TabContent>
         <TabContent label={props.labelInteraction}>
-          {props.interaction !== 'false' ? props.interaction : 'Đang cập nhật'}
+          {props.interaction !== 'false' ? props.interaction : t('updating')}
         </TabContent>
         <TabContent label={props.labelPreservation}>
-          {props.preservation !== 'false' ? props.preservation : 'Đang cập nhật'}
+          {props.preservation !== 'false' ? props.preservation : t('updating')}
         </TabContent>
         <TabContent label={props.labelOverdose}>
-          {props.overdose !== 'false' ? props.overdose : 'Đang cập nhật'}
+          {props.overdose !== 'false' ? props.overdose : t('updating')}
         </TabContent>
         <TabContent label={props.labelPharmacodynamics}>
-          {props.pharmacodynamics !== 'false' ? props.pharmacodynamics : 'Đang cập nhật'}
+          {props.pharmacodynamics !== 'false' ? props.pharmacodynamics : t('updating')}
         </TabContent>
         <TabContent label={props.labelPharmacokinetics}>
-          {props.pharmacokinetics !== 'false' ? props.pharmacokinetics : 'Đang cập nhật'}
+          {props.pharmacokinetics !== 'false' ? props.pharmacokinetics : t('updating')}
         </TabContent>
       </Tabs>
     </div>

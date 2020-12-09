@@ -1,3 +1,4 @@
+import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import React from 'react';
 import PriceText from 'src/components/Form/PriceText';
@@ -34,6 +35,7 @@ type Display_name = {
 };
 const ProductDetailInfor = (props: PropsType): JSX.Element => {
   const isLoggedIn = useIsLoggedIn();
+  const { t } = useTranslation(['common', 'productDetail']);
   return (
     <div className="row">
       <div className="col-12">
@@ -47,8 +49,8 @@ const ProductDetailInfor = (props: PropsType): JSX.Element => {
               <div className="product__price-group">
                 <span className="product__price">
                   <PriceText price={props.list_price} />
-                  <span className="unit">đ </span>
-                  <small className="text-muted">(Đã bao gồm VAT)</small>
+                  <span className="unit">{t('common:vnd')}</span>
+                  <small className="text-muted"> ({t('productDetail:vat_included')})</small>
                 </span>
               </div>
             </div>
@@ -62,7 +64,7 @@ const ProductDetailInfor = (props: PropsType): JSX.Element => {
           {props.is_vn && <ProductBadge type="is_vn" />}
         </div>
         <div className="mb-3">
-          <div className="product__info-label">Nhà sản xuất</div>
+          <div className="product__info-label">{t('productDetail:manufacturer')}</div>
           <div className="text-capitalize">
             <Link href={`/manufacturers/${props.manufacturers?.id}`}>
               <a>{props.manufacturers?.name}</a>
@@ -70,7 +72,7 @@ const ProductDetailInfor = (props: PropsType): JSX.Element => {
           </div>
         </div>
         <div className="mb-3">
-          <div className="product__info-label">Nhóm thuốc</div>
+          <div className="product__info-label">{t('productDetail:category')}</div>
           {props?.categories?.map((item, index) => {
             return (
               <>

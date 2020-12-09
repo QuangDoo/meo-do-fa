@@ -11,6 +11,7 @@ import Nav from 'src/components/Layout/Nav';
 import FilterTags from 'src/components/Modules/FilterTags';
 import Pagination from 'src/components/Modules/Pagination';
 import ProductCard from 'src/components/Modules/ProductCard';
+import ProductsDrawerFilter from 'src/components/Modules/ProductDrawerFilter/ProductsDrawerFilter';
 import ProductsSidebarFilter from 'src/components/Modules/ProductsSidebarFilter';
 import { GET_ALL_CATEGORIES, GetAllCategoriesData } from 'src/graphql/category/category.query';
 import {
@@ -105,8 +106,10 @@ function Products(): JSX.Element {
 
           <div className="flex-grow-1">
             <div className="px-2 px-sm-0 mb-2">
+              <div className="d-block d-sm-none mb-3">
+                <ProductsDrawerFilter categories={categories} manufacturers={manufacturers} />
+              </div>
               <h1 className="products__header text-capitalize mb-3">{title}</h1>
-
               {productsLoading ? (
                 <b></b>
               ) : total > 0 ? (
