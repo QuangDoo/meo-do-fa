@@ -29,6 +29,7 @@ export const GET_BEST_SELLING_PRODUCTS = gql`
         is_quick_invoice
         is_vn
         is_exclusive
+        slug
         categories {
           id
           name
