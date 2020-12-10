@@ -44,7 +44,6 @@ const ConfirmCancelOrder = (props) => {
       onClose();
     },
     onError: (error) => {
-      // console.log('Delete cart error:', { error });
       toast.error(t('cancelOrder:cancel_order_unsuccessful'));
 
       onClose();
@@ -55,9 +54,7 @@ const ConfirmCancelOrder = (props) => {
 
   const { t } = useTranslation('cancelOrder');
 
-  const onSubmit = (data: Inputs) => {
-    console.log(data);
-    console.log(typeof orderNo, orderNo);
+  const onSubmit = () => {
     cancelOrder({
       variables: {
         orderNo: orderNo
@@ -96,7 +93,7 @@ const ConfirmCancelOrder = (props) => {
             placeholder={t('cancelOrder:additional_information')}
             label={t('cancelOrder:additional_information')}
             containerClass="my-1 mr-sm-2"
-            htmlFor={'note'}
+            name="notes"
           />
 
           <Checkbox
