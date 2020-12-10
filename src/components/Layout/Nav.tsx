@@ -54,7 +54,7 @@ const Nav = () => {
       <div className="container">
         <div className="row">
           <div className="col-12 d-flex align-items-center justify-content-between">
-            <ul className="nav text-capitalize">
+            <ul className=".d-none .d-sm-block nav text-capitalize">
               <li className="rockland-nav__item dropdown">
                 <div data-toggle="dropdown" data-hover="dropdown">
                   <Link href="/products">
@@ -114,6 +114,7 @@ const Nav = () => {
                   </a>
                 </Link>
               </li>
+
               <li className="rockland-nav__item">
                 <Link href="/ingredients">
                   <a className="rockland-nav__link">
