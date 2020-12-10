@@ -25,5 +25,8 @@
   "unit_price": "Unit price",
   "quantity": "Quantity",
   "total": "Total",
-  "time_out_invoice": "Your order has timed out to invoice"
+  "time_out_invoice": "Your order has timed out to invoice",
+  "handling": "Handling",
+  "delivering": "Delevering",
+  "completed": "Completed"
 }

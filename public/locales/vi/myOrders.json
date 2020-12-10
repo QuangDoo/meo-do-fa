@@ -25,5 +25,8 @@
   "unit_price": "Đơn giá",
   "quantity": "Số lượng",
   "total": "Tổng cộng",
-  "time_out_invoice": "Đơn hàng của bạn đã quá thời gian để xuất hóa đơn"
+  "time_out_invoice": "Đơn hàng của bạn đã quá thời gian để xuất hóa đơn",
+  "handling": "Đã xử lý",
+  "delivering": "Đang vận chuyển",
+  "completed": "Đã hoàn thành"
 }
