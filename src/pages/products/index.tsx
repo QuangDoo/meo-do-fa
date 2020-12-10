@@ -91,7 +91,7 @@ function Products(): JSX.Element {
   return (
     <>
       <Head>
-        <title>{title} - Medofa</title>
+        <title>Medofa - {title}</title>
       </Head>
 
       <Header />

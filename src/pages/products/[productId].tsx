@@ -1,4 +1,5 @@
 import { useQuery } from '@apollo/client';
+import _ from 'lodash';
 import { useRouter } from 'next/router';
 import React from 'react';
 import Footer from 'src/components/Layout/Footer';
@@ -18,10 +19,16 @@ function ProductDetail(): JSX.Element {
 
   const { data: dataProduct } = useQuery(GET_PRODUCT, { variables: { id: Number(productPid) } });
 
+  const getNameById = (array, id) => {
+    return _.find(array, { id })?.name;
+  };
+
+  const title = Number(productPid) ? getNameById(dataProduct, Number(productPid)) : '';
+
   return (
     <>
       <Head>
-        <title>medofa</title>
+        <title>Medofa - {title}</title>
       </Head>
 
       <Header />

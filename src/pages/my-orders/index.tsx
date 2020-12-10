@@ -77,12 +77,14 @@ const OrderItem = (props: GetOrderList) => {
           hidden={state === 'cancel'}
           className="btn btn-outline-danger btn-sm"
           onClick={() => setOpen(true)}>
-          hủy đơn hàng
+          {t('myOrders:cancel_the_order')}
         </button>
       </div>
       {state === 'cancel' && (
         <div className="my-orders__invoice">
-          <button className="btn btn-sm btn-outline-danger">Canceled</button>
+          <button className="btn btn-sm btn-outline-danger" disabled>
+            {t('myOrders:canceled')}
+          </button>
         </div>
       )}
 

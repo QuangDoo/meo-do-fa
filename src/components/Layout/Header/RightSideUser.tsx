@@ -69,7 +69,12 @@ const RightSideUser = () => {
           role="button"
           tabIndex={0}>
           <i className="far fa-bell header-right__icon" />
-          <span className="notification__counter">{notificationsData?.length}</span>
+          {notificationsData?.length > 0 ? (
+            <span className="notification__counter">{notificationsData?.length}</span>
+          ) : (
+            <span className="notification__counter">0</span>
+          )}
+          {/* <span className="notification__counter">{notificationsData?.length}</span> */}
           <div
             className={clsx(
               'dropdown-menu dropdown-menu-right notification__dropdown p-0 ',

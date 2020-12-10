@@ -105,9 +105,8 @@ const ConfirmCancelOrder = (props) => {
             name="check"
             label={t('cancelOrder:cancellation_policy')}
           />
-
           <Button type="submit" variant="primary" className="my-1">
-            {t('cancelOrder:cancellation_policy')}
+            {t('cancelOrder:button_title')}
           </Button>
         </form>
       </div>

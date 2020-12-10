@@ -328,8 +328,10 @@ const OrderDetails = () => {
                     <Typography>
                       {t('myOrders:expected_date')}{' '}
                       <strong>
-                        {orderDetail?.getOrderDetail?.expected_date('en-GB') &&
-                          orderDetail?.getOrderDetail?.expected_date?.substr(0, 10)}
+                        {orderDetail?.getOrderDetail?.expected_date &&
+                          new Date(orderDetail?.getOrderDetail?.expected_date).toLocaleDateString(
+                            'en-GB'
+                          )}
                       </strong>
                     </Typography>
                     {activeStep > 2 ? (
@@ -351,7 +353,8 @@ const OrderDetails = () => {
                         size="small"
                         startIcon={<DeleteForeverIcon />}
                         variant="outlined"
-                        color="secondary">
+                        color="secondary"
+                        disabled>
                         {t('myOrders:canceled')}
                       </Button>
                     ) : (
@@ -400,7 +403,7 @@ const OrderDetails = () => {
 
               <Grid item xs={12}>
                 <Grid container spacing={2}>
-                  <Grid item sm={6} xs={12}>
+                  <Grid item sm={12} xs={12}>
                     <CustomCard>
                       <TextWithLabel
                         label={t('myOrders:recipients_name')}
