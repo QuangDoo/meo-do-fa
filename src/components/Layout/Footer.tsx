@@ -17,12 +17,12 @@ import BackToTop from '../Layout/BackToTop';
 
 const links: { href: string; i18nKey: string }[] = [
   { href: '/about-us', i18nKey: 'footer:about_us' },
-  { href: '', i18nKey: 'footer:privacy_policy' },
+  { href: '/privacy-policy', i18nKey: 'footer:privacy_policy' },
   { href: '/help', i18nKey: 'footer:faq' },
   { href: '', i18nKey: 'footer:general_policy' },
   { href: '/career', i18nKey: 'common:recruitment' },
-  { href: '', i18nKey: 'footer:terms_of_service' },
-  { href: '', i18nKey: 'footer:dispute_resolution' },
+  { href: '/terms-of-service', i18nKey: 'footer:terms_of_service' },
+  { href: '/dispute-resolution', i18nKey: 'footer:dispute_resolution' },
   { href: '', i18nKey: 'footer:terms_and_conditions' },
   { href: '', i18nKey: 'footer:operating_regulations' }
   // { href: '', i18nKey: 'common:supply' }

@@ -110,11 +110,7 @@ const Question = (): JSX.Element => {
           </a>
         </div>
         <div className="col-12 text-center mt-3">
-          <a
-            className="btn btn-white"
-            href="https://medofa.zendesk.com/hc/vi/categories/360001885792-C%C3%A2u-h%E1%BB%8Fi-th%C6%B0%E1%BB%9Dng-g%E1%BA%B7p-Q-A-"
-            target="_blank"
-            rel="noreferrer">
+          <a className="btn btn-white" href="/help" target="_blank" rel="noreferrer">
             {t('question:see_all_question')}
           </a>
         </div>
