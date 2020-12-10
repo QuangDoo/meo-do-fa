@@ -44,6 +44,9 @@ export type GetOrderDetail = {
         list_price: number;
       };
     };
+    amount_untaxed: number;
+    amount_tax: number;
+    amount_total: number;
   }[];
 };
 
@@ -106,6 +109,9 @@ export const GET_ORDER = gql`
         }
         state
       }
+      amount_total
+      amount_tax
+      amount_untaxed
     }
   }
 `;
