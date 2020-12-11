@@ -1,13 +1,14 @@
 import { useQuery } from '@apollo/client';
 import { useTranslation } from 'i18n';
 import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import AddressSelect from 'src/components/Form/AddressSelect';
 import InputWithLabel from 'src/components/Form/InputWithLabel';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { useUserContext } from 'src/contexts/User';
+import { APPLY_PAYMENT, ApplyPaymentData, ApplyPaymentVars } from 'src/graphql/order/applyPayment';
 import {
   CREATE_INVOICE_USER,
   CreateInvoiceUserData,
@@ -23,6 +24,7 @@ import useAddress from 'src/hooks/useAddress';
 import { useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
 import useCart from 'src/hooks/useCart';
 import useCountCart from 'src/hooks/useCountCart';
+import useDidUpdate from 'src/hooks/useDidUpdate';
 import swal from 'sweetalert';
 
 import FormCard from '../MyAccount/FormCard';
@@ -68,8 +70,18 @@ const CheckoutPage = () => {
   const paymentMethods = paymentAndDeliveryData?.getPaymentAndDeliveryMethod.paymentMethods || [];
   const deliveryMethods = paymentAndDeliveryData?.getPaymentAndDeliveryMethod.deliveryMethods || [];
 
+  const [totalPrice, setTotalPrice] = useState<number>();
+
   // Counsel
-  const { data: counselData } = useQueryAuth<GetCounselData, undefined>(GET_COUNSEL);
+  const { data: counselData } = useQueryAuth<GetCounselData, undefined>(GET_COUNSEL, {
+    onCompleted: (data) => {
+      if (data.getCounsel === null) {
+        return;
+      }
+
+      setTotalPrice(data.getCounsel.totalPrice);
+    }
+  });
 
   // User
   const { user } = useUserContext();
@@ -95,6 +107,27 @@ const CheckoutPage = () => {
       emailInvoice: user?.email
     }
   });
+
+  // Update price on payment option change
+  const paymentOption = watch('paymentOption');
+
+  const [applyPayment] = useMutationAuth<ApplyPaymentData, ApplyPaymentVars>(APPLY_PAYMENT, {
+    onCompleted: (data) => {
+      setTotalPrice(data.applyPayment.totalPrice);
+    },
+    onError: (error) => {
+      return;
+    }
+  });
+
+  useDidUpdate(() => {
+    applyPayment({
+      variables: {
+        orderNo: counselData.getCounsel.counsel.orderNo,
+        payment_method: +paymentOption
+      }
+    });
+  }, [paymentOption]);
 
   const { cities, districts, wards, chosenCity, chosenDistrict, chosenWard } = useAddress({
     cityId: +watch('cityId'),
@@ -222,6 +255,12 @@ const CheckoutPage = () => {
 
     toast.error(errors[fields[0]].message);
   };
+
+  if (counselData?.getCounsel === null) {
+    router.push('/');
+    return null;
+  }
+
   return (
     <form className="checkout__form" onSubmit={handleSubmit(onSubmit, onError)}>
       <div className="checkout container py-5">
@@ -269,7 +308,7 @@ const CheckoutPage = () => {
           </div>
 
           <div className="col-md-4 mb-3">
-            <StickySidebar counselData={counselData} />
+            <StickySidebar counselData={counselData} totalPrice={totalPrice} />
           </div>
         </div>
       </div>
