@@ -9,5 +9,6 @@
   "ward_select_label": "Ward",
   "ward_select_placeholder": "Select ward...",
   "updating": "Updating",
-  "vnd": "VND"
+  "vnd": "VND",
+  "development": "This feature is under development"
 }
