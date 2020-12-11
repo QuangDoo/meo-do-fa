@@ -230,7 +230,7 @@ const CustomBodyCell = ({ children, textAlign }: CustomBodyCellProps) => {
 };
 
 const OrderDetails = () => {
-  const { t } = useTranslation(['myOrders']);
+  const { t } = useTranslation(['myOrders', 'common']);
   const router = useRouter();
 
   const [open, setOpen] = useState(false);
@@ -292,7 +292,9 @@ const OrderDetails = () => {
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <CustomCard>
-                  <Typography variant="h5">{t('myOrders:order_detail')}</Typography>
+                  <Typography variant="h5">
+                    {t('myOrders:order_detail')} #{orderId}
+                  </Typography>
 
                   <Box my={2}>
                     <Divider />
@@ -320,7 +322,9 @@ const OrderDetails = () => {
                       {t('myOrders:expected_date')}{' '}
                       <strong>
                         {orderDetail?.getOrderDetail?.expected_date &&
-                          orderDetail?.getOrderDetail?.expected_date?.substr(0, 10)}
+                          new Date(orderDetail?.getOrderDetail?.expected_date).toLocaleDateString(
+                            'en-GB'
+                          )}
                       </strong>
                     </Typography>
                     {activeStep > 2 ? (
@@ -342,7 +346,8 @@ const OrderDetails = () => {
                         size="small"
                         startIcon={<DeleteForeverIcon />}
                         variant="outlined"
-                        color="secondary">
+                        color="secondary"
+                        disabled>
                         {t('myOrders:canceled')}
                       </Button>
                     ) : (
@@ -367,7 +372,7 @@ const OrderDetails = () => {
 
               <Grid item xs={12}>
                 <Grid container spacing={2}>
-                  <Grid item sm={6} xs={12}>
+                  <Grid item sm={12} xs={12}>
                     <CustomCard>
                       <TextWithLabel
                         label={t('myOrders:recipients_name')}
@@ -439,13 +444,13 @@ const OrderDetails = () => {
                           </CustomBodyCell>
 
                           <CustomBodyCell>
-                            <PriceText price={product.price_unit} /> đ
+                            <PriceText price={product.price_unit} /> {t('common:vnd')}
                           </CustomBodyCell>
 
                           <CustomBodyCell>{product.product_uom_qty}</CustomBodyCell>
 
                           <CustomBodyCell>
-                            <PriceText price={product.price_total} /> đ
+                            <PriceText price={product.price_total} /> {t('common:vnd')}
                           </CustomBodyCell>
                         </TableRow>
                       ))}

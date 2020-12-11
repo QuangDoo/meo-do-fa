@@ -18,7 +18,7 @@ type Props = {
 
 const ProductsDrawerFilter = (props: Props) => {
   const { categories, manufacturers } = props;
-  const { t } = useTranslation(['productsSideBar']);
+  const { t } = useTranslation(['productsSidebar']);
   const router = useRouter();
 
   const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {

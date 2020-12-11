@@ -14,7 +14,7 @@
   "confirmed": "Đã xác nhận",
   "in_proceed": "Đang xử lý",
   "in_delivery": "Đang giao hàng",
-  "order_detail": "Chi tiết đơn hàng #{orderId}",
+  "order_detail": "Chi tiết đơn hàng",
   "cancel_the_order": "Huỷ đơn hàng",
   "recipients_name": "Tên người nhận",
   "delivery_address": "Địa chỉ giao hàng",
@@ -24,5 +24,9 @@
   "product": "Sản phẩm",
   "unit_price": "Đơn giá",
   "quantity": "Số lượng",
-  "total": "Tổng cộng"
+  "total": "Tổng cộng",
+  "time_out_invoice": "Đơn hàng của bạn đã quá thời gian để xuất hóa đơn",
+  "handling": "Đã xử lý",
+  "delivering": "Đang vận chuyển",
+  "completed": "Đã hoàn thành"
 }

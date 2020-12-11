@@ -17,12 +17,12 @@ import BackToTop from '../Layout/BackToTop';
 
 const links: { href: string; i18nKey: string }[] = [
   { href: '/about-us', i18nKey: 'footer:about_us' },
-  { href: '', i18nKey: 'footer:privacy_policy' },
+  { href: '/privacy-policy', i18nKey: 'footer:privacy_policy' },
   { href: '/help', i18nKey: 'footer:faq' },
   { href: '', i18nKey: 'footer:general_policy' },
   { href: '/career', i18nKey: 'common:recruitment' },
-  { href: '', i18nKey: 'footer:terms_of_service' },
-  { href: '', i18nKey: 'footer:dispute_resolution' },
+  { href: '/terms-of-service', i18nKey: 'footer:terms_of_service' },
+  { href: '/dispute-resolution', i18nKey: 'footer:dispute_resolution' },
   { href: '', i18nKey: 'footer:terms_and_conditions' },
   { href: '', i18nKey: 'footer:operating_regulations' }
   // { href: '', i18nKey: 'common:supply' }
@@ -221,7 +221,7 @@ const Footer = (): JSX.Element => {
                 <p className="d-flex align-items-center">
                   <i className="far fa-envelope footer__icon footer__icon--email" />
 
-                  <a className="footer__link footer__link--email px-2 mr-2"> cskh@medofa.com</a>
+                  <a className="footer__link footer__link--email px-2 mr-2"> info@medofa.com</a>
 
                   <a className="footer__icon footer__icon--fb">
                     <i className="fab fa-facebook-f" />
@@ -230,8 +230,8 @@ const Footer = (): JSX.Element => {
                 <p />
                 <div className="d-flex align-items-center">
                   <i className="fa fa-phone footer__icon footer__icon--email" />
-                  <a className="text-white px-2 mr-2" href="tel:0866624702">
-                    0866624702
+                  <a className="text-white px-2 mr-2" href="tel:1900232436">
+                    1900232436
                   </a>
                 </div>
                 {/* <small>{t('footer:work_time')}</small> */}

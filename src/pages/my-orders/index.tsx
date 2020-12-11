@@ -71,16 +71,18 @@ const OrderItem = (props: GetOrderList) => {
 
         <div className="my-orders__detail">
           <div>
-            <span className="title">{t('myOrders:date_order')}:</span>
-            <span className="content">{formatDate(props.date_order)}</span>
+            <span className="title">{t('myOrders:date_order')}</span>
+            <span className="content">
+              {new Date(props.date_order).toLocaleDateString('en-GB')}
+            </span>
           </div>
 
-          {props.expected_date && (
-            <div>
-              <span className="title">{t('myOrders:expected_date')}:</span>
-              <span className="content">{formatDate(props.expected_date)}</span>
-            </div>
-          )}
+          <div>
+            <span className="title">{t('myOrders:expected_date')}</span>
+            <span className="content">
+              {new Date(props.expected_date).toLocaleDateString('en-GB')}
+            </span>
+          </div>
         </div>
       </div>
 

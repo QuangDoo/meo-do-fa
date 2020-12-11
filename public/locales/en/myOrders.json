@@ -3,8 +3,8 @@
   "expected_date": "Expected date:",
   "billing_export": "Billing export",
   "report": "Send report",
-  "my_orders": "My order",
-  "vat_invoice": "see information about VAT invoice",
+  "my_orders": "My orders",
+  "vat_invoice": "See information about VAT invoice",
   "here": "here",
   "back_to_products_page": "Back to Products page",
   "all_order": "All",
@@ -14,7 +14,7 @@
   "confirmed": "Confirmed",
   "in_proceed": "In proceed",
   "in_delivery": "In delivery",
-  "order_detail": "Order #{orderId} detail",
+  "order_detail": "Order detail",
   "cancel_the_order": "Cancel the order",
   "recipients_name": "Recipient's name",
   "delivery_address": "Delivery address",
@@ -24,5 +24,9 @@
   "product": "Product",
   "unit_price": "Unit price",
   "quantity": "Quantity",
-  "total": "Total"
+  "total": "Total",
+  "time_out_invoice": "Your order has timed out to invoice",
+  "handling": "Handling",
+  "delivering": "Delevering",
+  "completed": "Completed"
 }

@@ -1,3 +1,4 @@
+import { useTranslation } from 'i18n';
 import React from 'react';
 import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
@@ -7,6 +8,7 @@ import PageLayout from 'src/components/Layout/PageLayout';
 import withApollo from 'src/utils/withApollo';
 
 function QuickOrder(): JSX.Element {
+  const { t } = useTranslation('common');
   return (
     <>
       <Head>
@@ -15,7 +17,7 @@ function QuickOrder(): JSX.Element {
       <Header />
       <Nav />
       <PageLayout>
-        <h1>Quick Order Component here!</h1>
+        <h1>{t('development')}</h1>
       </PageLayout>
       <Footer />
     </>
