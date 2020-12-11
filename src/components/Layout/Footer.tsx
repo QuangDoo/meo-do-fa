@@ -242,16 +242,16 @@ const Footer = (): JSX.Element => {
 
                 <div>
                   <img
-                    alt="MEDOFA"
                     className="img-fluid footer__delivery"
                     src="/assets/images/ghtk-22fbe4903100177078c795a37f7ce7260582b95c1bad6cf37a0dba76127e7f5d.png"
+                    alt="logo-ghtk"
                   />
 
-                  {/* <img
+                  <img
                     className="img-fluid footer__delivery"
-                    src="/assets/images/ahamove-da817db210e5d075aed3853aeed370863737426a27abc6e91c16ccc8a89e6e2f.png"
-                    alt="MEDOFA"
-                  /> */}
+                    src="/assets/images/logistics-pharma-logo.png"
+                    alt="logo-logistics-pharma"
+                  />
 
                   {/* <img
                   className="img-fluid footer__delivery"
