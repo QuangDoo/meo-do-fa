@@ -67,7 +67,7 @@ const ProductCard = ({ t, ...props }: Props): JSX.Element => {
 
               <br />
 
-              <small className="text-muted product-card__category">
+              <small className="text-muted product-card__category text-max-3">
                 {t('productCard:category')}:{' '}
                 {props.categories?.map(({ id, name }, index, arr) => (
                   <React.Fragment key={id}>

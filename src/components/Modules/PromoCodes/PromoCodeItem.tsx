@@ -16,7 +16,7 @@ export default function PromoCodeItem(props: Props) {
 
   const leftPromoCode = (type) => {
     switch (type) {
-      case 'gift':
+      case 'no_code_needed':
         return (
           <div className="mb-1 benefit">
             <div className="discount">
@@ -25,7 +25,7 @@ export default function PromoCodeItem(props: Props) {
             <div className="suffix">Quà Tặng</div>
           </div>
         );
-      case 'discount':
+      case 'code_needed':
         return (
           <div className="mb-1 benefit">
             <div className="discount">
@@ -42,23 +42,18 @@ export default function PromoCodeItem(props: Props) {
 
   const titlePromoCode = (type) => {
     switch (type) {
-      case 'gift':
+      case 'no_code_needed':
         return (
           <div className="mb-2">
             <div className="coupon__name">{props.couponName}</div>
+            <span>{props.couponDescription}</span>
           </div>
         );
-      case 'discount':
+      case 'code_needed':
         return (
           <div className="mb-2">
-            <div className="coupon__amount">
-              {props.couponAmount}
-              <span className="unit">đ</span>
-            </div>
-            <span>
-              {props.couponDescription}
-              <span className="unit">đ</span>
-            </span>
+            <div className="coupon__amount">{props.couponName}</div>
+            <span>{props.couponDescription}</span>
           </div>
         );
       default:
@@ -73,8 +68,14 @@ export default function PromoCodeItem(props: Props) {
         <div className="text-muted">Còn 05 ngày 11:13:54</div>
       </div>
       <div className="col-8 d-flex flex-column justify-content-between text-center">
-        {titlePromoCode(type)}
-        <div className="coupon__code mb-2">{props.couponCode}</div>
+        <div className="mb-2">
+          <div className="coupon__amount">{props.couponName}</div>
+          <span>{props.couponDescription}</span>
+        </div>
+        {props.couponCode !== 'false' && (
+          <div className="coupon__code mb-2">{props.couponCode}</div>
+        )}
+
         <div className="coupon__button">
           <a href="/products" className="btn btn-primary btn-sm btn-block">
             Đặt hàng ngay

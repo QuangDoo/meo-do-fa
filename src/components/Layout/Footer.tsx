@@ -130,11 +130,11 @@ const Footer = (): JSX.Element => {
                 <div className="footer__info-logo mb-3">
                   <div className="rockland-logo d-inline-block">
                     <Link href="/">
-                      <a title="medofa.com">
+                      <a title="Medofa.com">
                         <img
-                          alt="medofa.com"
+                          alt="Medofa.com"
                           className="img-fluid logo-footer"
-                          title="medofa.com"
+                          title="Medofa.com"
                           src="/assets/images/logo3.png"
                         />
                       </a>
@@ -168,13 +168,13 @@ const Footer = (): JSX.Element => {
 
                   <br />
 
-                  {t('footer:ecommerce_license_label') + ': '}
+                  {/* {t('footer:ecommerce_license_label') + ': '}
                   <b>
                     <FooterLink
                       href="/ecommerce-license"
                       text={t('footer:ecommerce_license_number')}
                     />
-                  </b>
+                  </b> */}
                 </p>
 
                 {/* <div className="footer__bct">
