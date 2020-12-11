@@ -28,16 +28,15 @@ const SidebarItem = (props: SidebarItemProps) => {
 
 type Props = {
   counselData?: GetCounselData;
+  totalPrice?: number;
 };
 
 const StickySidebar = (props: Props): JSX.Element => {
-  const { counselData } = props;
-
   const { t } = useTranslation(['checkout', 'common']);
 
-  if (!counselData) return null;
+  const data = props.counselData?.getCounsel;
 
-  const data = counselData.getCounsel;
+  if (!data) return null;
 
   return (
     <div className="checkout__sticky">
@@ -64,7 +63,7 @@ const StickySidebar = (props: Props): JSX.Element => {
       <div className="elevated checkout__info row no-gutters mb-3">
         <SidebarItem label={t('checkout:price_provisional_sums')}>
           <div className="d-flex">
-            <PriceText price={data.totalPrice} />
+            <PriceText price={props.totalPrice} />
             <span className="unit">{t('common:vnd')}</span>
           </div>
         </SidebarItem>
