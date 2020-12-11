@@ -3,7 +3,7 @@ import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
-import { useDebouncedEffect } from 'src/hooks/useDebouncedEffect';
+import { useForm } from 'react-hook-form';
 
 type Props = {
   data: {
@@ -20,9 +20,11 @@ export default function SearchScreen(props: Props) {
 
   const [data, setData] = useState(props.data);
 
-  const [searchValue, setSearchValue] = useState('');
-
   const { t } = useTranslation(['searchBar']);
+
+  const { register, handleSubmit, setValue } = useForm();
+
+  const [searchLabel, setSearchLabel] = useState<string>(t('searchBar:all'));
 
   useEffect(() => {
     if (!props.data) return;
@@ -31,45 +33,51 @@ export default function SearchScreen(props: Props) {
 
   const filterByChar = (searchChar: string) => {
     setSearchChar(searchChar);
+
+    setValue('search', '');
+
+    setSearchLabel(t('searchBar:all'));
+
     setData(
-      props.data.filter(
-        (item) =>
-          (searchChar === '#' || item.name.toLowerCase().startsWith(searchChar)) &&
-          item.name.toLowerCase().includes(searchValue.toLowerCase())
-      )
+      searchChar === '#'
+        ? props.data
+        : props.data.filter((item) => item.name.toLowerCase().startsWith(searchChar))
     );
   };
 
-  useDebouncedEffect(
-    () =>
-      setData(
-        props.data.filter(
-          (item) =>
-            (searchChar === '#' || item.name.toLowerCase().startsWith(searchChar)) &&
-            item.name.toLowerCase().includes(searchValue.toLowerCase())
-        )
-      ),
-    150,
-    [searchValue]
-  );
+  const onSubmit = handleSubmit((data) => {
+    if (data.search === '') {
+      setSearchChar('#');
+      setSearchLabel(t('searchBar:all'));
+      setData(props.data);
+
+      return;
+    }
+
+    setSearchChar('');
+    setSearchLabel(data.search);
+    setData(
+      props.data.filter((item) => item.name.toLowerCase().includes(data.search.toLowerCase()))
+    );
+  });
 
   const router = useRouter();
-
-  console.log('current path:', router.pathname);
 
   return (
     <div className="filter-search container mobile-content py-3 py-sm-5">
       <div className="filter-search__search text-right mb-4">
-        <input
-          className="search "
-          placeholder={t(`searchBar:enter_name_${router.pathname.substring(1)}`)}
-          value={searchValue}
-          onChange={(e) => setSearchValue(e.target.value)}
-        />
+        <form onSubmit={onSubmit}>
+          <input
+            ref={register}
+            className="search"
+            name="search"
+            placeholder={t(`searchBar:enter_name_${router.pathname.substring(1)}`)}
+          />
 
-        <button className="btn-search">
-          <i className="fa fa-search" />
-        </button>
+          <button type="submit" className="btn-search">
+            <i className="fa fa-search" />
+          </button>
+        </form>
       </div>
 
       <div className="filter my-4">
@@ -88,7 +96,7 @@ export default function SearchScreen(props: Props) {
         <em>
           {t('searchBar:show')} {data.length} {t('searchBar:result')}{' '}
         </em>
-        <b>{searchValue || t('searchBar:all')}</b>
+        <b>{searchLabel}</b>
       </div>
 
       <div className="filter-search__list py-3">
