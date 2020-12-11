@@ -74,7 +74,7 @@ const Nav = () => {
                               <a className={clsx('products__filter-category')}>{name}</a>
                             </Link>
                           </div>
-                          <ul className="dropdown-menu dropdown-sub-menu">
+                          {/* <ul className="dropdown-menu dropdown-sub-menu">
                             <li className="mb-2 dropdown-item">
                               <div className="dropdown">
                                 <div data-toggle="dropdown" data-hover="dropdown">
@@ -99,7 +99,7 @@ const Nav = () => {
                                 Exercitationem autem
                               </a>
                             </li>
-                          </ul>
+                          </ul> */}
                         </div>
                       </li>
                     ))}

@@ -3,6 +3,7 @@ import { useTranslation } from 'i18n';
 import _ from 'lodash';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useEffect } from 'react';
 import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
@@ -87,6 +88,10 @@ function Products(): JSX.Element {
   const title = Number(router.query.category)
     ? getNameById(categories, Number(router.query.category))
     : t('products:title');
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [products]);
 
   return (
     <>

@@ -142,7 +142,7 @@ const Footer = (): JSX.Element => {
                   </div>
                 </div>
                 <div className="footer__info-title mb-3">
-                  <b className="text-primary">medofa.com</b> {t('footer:website_ownership')}
+                  <b className="text-primary">Medofa.com</b> {t('footer:website_ownership')}
                 </div>
                 <p className="footer__info-company">
                   <b>{t('footer:company_name')}</b>
@@ -223,9 +223,9 @@ const Footer = (): JSX.Element => {
 
                   <a className="footer__link footer__link--email px-2 mr-2"> info@medofa.com</a>
 
-                  <a className="footer__icon footer__icon--fb">
+                  {/* <a className="footer__icon footer__icon--fb">
                     <i className="fab fa-facebook-f" />
-                  </a>
+                  </a> */}
                 </p>
                 <p />
                 <div className="d-flex align-items-center">
@@ -247,11 +247,11 @@ const Footer = (): JSX.Element => {
                     src="/assets/images/ghtk-22fbe4903100177078c795a37f7ce7260582b95c1bad6cf37a0dba76127e7f5d.png"
                   />
 
-                  <img
+                  {/* <img
                     className="img-fluid footer__delivery"
                     src="/assets/images/ahamove-da817db210e5d075aed3853aeed370863737426a27abc6e91c16ccc8a89e6e2f.png"
                     alt="MEDOFA"
-                  />
+                  /> */}
 
                   {/* <img
                   className="img-fluid footer__delivery"
