@@ -217,12 +217,12 @@ const Nav = () => {
                       </a>
                     </Link>
 
-                    <Link href="/users/referrals">
+                    {/* <Link href="/users/referrals">
                       <a className="dropdown__item dropdown__item-link">
                         <i className="icomoon icon-share dropdown__item-icon" />
                         {t('navbar:introduce_friends')}
                       </a>
-                    </Link>
+                    </Link> */}
 
                     <Link href="/users/user-promo-codes">
                       <a className="dropdown__item dropdown__item-link">
@@ -231,12 +231,12 @@ const Nav = () => {
                       </a>
                     </Link>
 
-                    <Link href="/users/loyalty_points">
+                    {/* <Link href="/users/loyalty_points">
                       <a className="dropdown__item dropdown__item-link">
                         <i className="fas fa-hand-holding-usd dropdown__item-icon" />
                         {t('navbar:cumulative_points')}
                       </a>
-                    </Link>
+                    </Link> */}
 
                     <button className="dropdown__item dropdown__item-link w-100" onClick={logOut}>
                       <i className="fas fa-sign-out-alt dropdown__item-icon" />

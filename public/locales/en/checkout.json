@@ -54,5 +54,8 @@
   "price_total": "Total",
   "confirm_checkout_doubleCheck": "Please double check your delivery info, payment method and click \"Checkout\" to confirm the order.",
   "confirm_checkout_button": "Place order",
-  "can_not_find": "If you cannot find the drug you want, please fill out the request below, we will contact you to buy the drug and quote as soon as possible."
+  "can_not_find": "If you cannot find the drug you want, please fill out the request below, we will contact you to buy the drug and quote as soon as possible.",
+  "billing_export": "Billing Export",
+  "billing_info_title": "Billing Infomation",
+  "taxcode_required": "Please provide a tax code"
 }

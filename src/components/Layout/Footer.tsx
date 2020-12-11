@@ -130,11 +130,11 @@ const Footer = (): JSX.Element => {
                 <div className="footer__info-logo mb-3">
                   <div className="rockland-logo d-inline-block">
                     <Link href="/">
-                      <a title="medofa.com">
+                      <a title="Medofa.com">
                         <img
-                          alt="medofa.com"
+                          alt="Medofa.com"
                           className="img-fluid logo-footer"
-                          title="medofa.com"
+                          title="Medofa.com"
                           src="/assets/images/logo3.png"
                         />
                       </a>
@@ -142,7 +142,7 @@ const Footer = (): JSX.Element => {
                   </div>
                 </div>
                 <div className="footer__info-title mb-3">
-                  <b className="text-primary">medofa.com</b> {t('footer:website_ownership')}
+                  <b className="text-primary">Medofa.com</b> {t('footer:website_ownership')}
                 </div>
                 <p className="footer__info-company">
                   <b>{t('footer:company_name')}</b>
@@ -168,13 +168,13 @@ const Footer = (): JSX.Element => {
 
                   <br />
 
-                  {t('footer:ecommerce_license_label') + ': '}
+                  {/* {t('footer:ecommerce_license_label') + ': '}
                   <b>
                     <FooterLink
                       href="/ecommerce-license"
                       text={t('footer:ecommerce_license_number')}
                     />
-                  </b>
+                  </b> */}
                 </p>
 
                 {/* <div className="footer__bct">
@@ -221,17 +221,17 @@ const Footer = (): JSX.Element => {
                 <p className="d-flex align-items-center">
                   <i className="far fa-envelope footer__icon footer__icon--email" />
 
-                  <a className="footer__link footer__link--email px-2 mr-2"> cskh@medofa.com</a>
+                  <a className="footer__link footer__link--email px-2 mr-2"> info@medofa.com</a>
 
-                  <a className="footer__icon footer__icon--fb">
+                  {/* <a className="footer__icon footer__icon--fb">
                     <i className="fab fa-facebook-f" />
-                  </a>
+                  </a> */}
                 </p>
                 <p />
                 <div className="d-flex align-items-center">
                   <i className="fa fa-phone footer__icon footer__icon--email" />
-                  <a className="text-white px-2 mr-2" href="tel:0866624702">
-                    0866624702
+                  <a className="text-white px-2 mr-2" href="tel:1900232436">
+                    1900232436
                   </a>
                 </div>
                 {/* <small>{t('footer:work_time')}</small> */}
