@@ -61,11 +61,11 @@ const Header = ({ t }: HeaderProps): JSX.Element => {
         <div className="d-flex flex-column flex-sm-row align-items-stretch align-items-sm-center justify-content-between">
           <div className="mr-sm-3 flex-shrink-0 mb-3 mb-sm-0 mr-0">
             <div className="rockland-logo">
-              <a href="/" title="medofa.vn">
+              <a href="/" title="Medofa.vn">
                 <img
-                  alt="medofa.vn"
+                  alt="Medofa.vn"
                   className="img-fluid logo-header"
-                  title="medofa.vn"
+                  title="Medofa.vn"
                   src="/assets/images/logo2.png"
                 />
               </a>

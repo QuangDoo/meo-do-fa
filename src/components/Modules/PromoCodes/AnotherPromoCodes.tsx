@@ -6,7 +6,19 @@ import React from 'react';
 import { Coupons } from '../../../mockData/mockCoupons';
 import PromoCodeItem from './PromoCodeItem';
 
-export default function AnotherPromoCodes(props) {
+type Props = {
+  active?: boolean;
+  id?: number;
+  program_type?: string;
+  promo_code_usage?: string;
+  reward_id?: string[];
+  rule_id?: string[];
+  sequence?: number;
+};
+
+export default function AnotherPromoCodes(props: any) {
+  const { data } = props;
+  console.log(data);
   return (
     <div className="another-promocodes mb-5">
       <div className="container">
@@ -19,17 +31,18 @@ export default function AnotherPromoCodes(props) {
         </div>
         <div className="row">
           <div className="col-12 coupons">
-            {Coupons.map((coupon, index) => (
-              <PromoCodeItem
-                key={index}
-                type={coupon.type}
-                couponName={coupon.couponName}
-                couponCode={coupon.couponCode}
-                couponAmount={coupon.couponAmount}
-                couponDescription={coupon.couponDescription}
-                discount={coupon.discount}
-              />
-            ))}
+            {data &&
+              data.map((coupon, index) => (
+                <PromoCodeItem
+                  key={coupon.id}
+                  type={coupon.promo_code_usage}
+                  couponName={coupon.name}
+                  couponCode={coupon.promo_code}
+                  couponAmount={coupon.reward_id[1]}
+                  couponDescription={coupon.reward_id[1]}
+                  discount={coupon.discount}
+                />
+              ))}
           </div>
         </div>
       </div>
