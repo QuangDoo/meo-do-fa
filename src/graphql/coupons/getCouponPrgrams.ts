@@ -12,6 +12,7 @@ export const GET_COUPON_PROGRAMS = gql`
       # maximun_use_number
       program_type
       promo_code_usage
+      promo_code
     }
   }
 `;

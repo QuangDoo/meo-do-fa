@@ -72,7 +72,10 @@ export default function PromoCodeItem(props: Props) {
           <div className="coupon__amount">{props.couponName}</div>
           <span>{props.couponDescription}</span>
         </div>
-        <div className="coupon__code mb-2">{props.couponCode}</div>
+        {props.couponCode !== 'false' && (
+          <div className="coupon__code mb-2">{props.couponCode}</div>
+        )}
+
         <div className="coupon__button">
           <a href="/products" className="btn btn-primary btn-sm btn-block">
             Đặt hàng ngay

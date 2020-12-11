@@ -37,7 +37,7 @@ export default function AnotherPromoCodes(props: any) {
                   key={coupon.id}
                   type={coupon.promo_code_usage}
                   couponName={coupon.name}
-                  couponCode={coupon.promo_code_usage}
+                  couponCode={coupon.promo_code}
                   couponAmount={coupon.reward_id[1]}
                   couponDescription={coupon.reward_id[1]}
                   discount={coupon.discount}
