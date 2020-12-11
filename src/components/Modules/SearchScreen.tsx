@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { useDebouncedEffect } from 'src/hooks/useDebouncedEffect';
 
@@ -52,12 +53,16 @@ export default function SearchScreen(props: Props) {
     [searchValue]
   );
 
+  const router = useRouter();
+
+  console.log('current path:', router.pathname);
+
   return (
     <div className="filter-search container mobile-content py-3 py-sm-5">
       <div className="filter-search__search text-right mb-4">
         <input
           className="search "
-          placeholder={t('searchBar:enter_name')}
+          placeholder={t(`searchBar:enter_name_${router.pathname.substring(1)}`)}
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
         />
