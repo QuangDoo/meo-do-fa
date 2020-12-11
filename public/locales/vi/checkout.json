@@ -54,5 +54,9 @@
   "price_total": "Thành tiền",
   "confirm_checkout_doubleCheck": "Vui lòng kiểm tra kỹ thông tin giao hàng, hình thức thanh toán và nhấn nút \"Thanh Toán\" để hoàn tất đặt hàng.",
   "confirm_checkout_button": "Thanh toán",
-  "can_not_find": "Trường hợp không tìm được thuốc mong muốn, Quý khách vui lòng điền yêu cầu bên dưới.Chúng tôi sẽ liên hệ mua thuốc và báo giá sớm nhất có thể."
+  "can_not_find": "Trường hợp không tìm được thuốc mong muốn, Quý khách vui lòng điền yêu cầu bên dưới.Chúng tôi sẽ liên hệ mua thuốc và báo giá sớm nhất có thể.",
+  "billing_export": "Xuất hoá đơn",
+  "billing_info_title": "Thông tin xuất hoá đơn",
+  "taxcode_required": "Xin nhập mã số thuế"
+  
 }

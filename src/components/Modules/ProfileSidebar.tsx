@@ -53,11 +53,11 @@ const ProfileSidebar = () => {
         iconClass="icomoon icon-assignment"
       />
 
-      <SidebarLink
+      {/* <SidebarLink
         text={t('navbar:introduce_friends')}
         href="/users/referrals"
         iconClass="icomoon icon-share"
-      />
+      /> */}
 
       <SidebarLink
         text={t('navbar:my_promo_code')}
@@ -65,11 +65,11 @@ const ProfileSidebar = () => {
         iconClass="fas fa-tags"
       />
 
-      <SidebarLink
+      {/* <SidebarLink
         text={t('navbar:cumulative_points')}
         href="/users/loyalty_points"
         iconClass="fas fa-hand-holding-usd"
-      />
+      /> */}
 
       <div className="my-account__sidebar-item">
         {t('navbar:wallet')} -{' '}
