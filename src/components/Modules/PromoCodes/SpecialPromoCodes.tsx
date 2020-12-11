@@ -4,7 +4,7 @@ import { SpecialCoupons } from 'src/mockData/mockSpecialCoupons';
 
 import SpecialPromoCodeItem from './SpecialPromoCodeItem';
 
-export default function SpecialPromoCodes() {
+export default function SpecialPromoCodes(props: any) {
   return (
     <div className="special-promocodes pt-4 pb-5 mb-5">
       <div className="container">
