@@ -46,7 +46,6 @@ const ConfirmCancelOrder = (props) => {
       onClose();
     },
     onError: (error) => {
-      // console.log('Delete cart error:', { error });
       toast.error(t('cancelOrder:cancel_order_unsuccessful'));
 
       onClose();
@@ -102,7 +101,7 @@ const ConfirmCancelOrder = (props) => {
             placeholder={t('cancelOrder:additional_information')}
             label={t('cancelOrder:additional_information')}
             containerClass="my-1 mr-sm-2"
-            htmlFor={'note'}
+            name="notes"
           />
 
           <Checkbox
@@ -113,7 +112,7 @@ const ConfirmCancelOrder = (props) => {
           />
 
           <Button type="submit" variant="primary" className="my-1">
-            {t('cancelOrder:cancellation_policy')}
+            {t('cancelOrder:button_title')}
           </Button>
         </form>
       </div>
