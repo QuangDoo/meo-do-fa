@@ -6,6 +6,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import AddressSelect from 'src/components/Form/AddressSelect';
 import InputWithLabel from 'src/components/Form/InputWithLabel';
+import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { useUserContext } from 'src/contexts/User';
 import {
   CREATE_INVOICE_USER,
@@ -121,7 +122,10 @@ const CheckoutPage = () => {
 
   const { refetchCountCart } = useCountCart();
 
-  const [createOrder] = useMutationAuth<CreateOrderData, CreateOrderVars>(CREATE_ORDER, {
+  const [createOrder, { loading: creatingOrder }] = useMutationAuth<
+    CreateOrderData,
+    CreateOrderVars
+  >(CREATE_ORDER, {
     onCompleted: (data) => {
       swal({
         title: t('checkout:order_success_message', {
@@ -269,6 +273,8 @@ const CheckoutPage = () => {
           </div>
         </div>
       </div>
+
+      <LoadingBackdrop open={creatingOrder} />
     </form>
   );
 };
