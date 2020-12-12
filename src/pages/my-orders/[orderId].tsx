@@ -260,7 +260,7 @@ const OrderDetails = () => {
       text: t('myOrders:complete')
     }
   ];
-  const { data: orderDetail } = useQueryAuth(GET_ORDER, {
+  const { data: orderDetail, refetch } = useQueryAuth(GET_ORDER, {
     variables: { id: +orderId }
   });
 
@@ -366,6 +366,7 @@ const OrderDetails = () => {
                       open={open}
                       onClose={() => setOpen(false)}
                       orderNo={orderDetail?.getOrderDetail.name}
+                      callBack={() => refetch()}
                     />
                   </Box>
                 </CustomCard>

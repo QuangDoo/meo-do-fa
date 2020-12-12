@@ -46,8 +46,8 @@ const ConfirmCancelOrder = (props) => {
       onClose();
     },
     onError: (error) => {
+      console.log('eror', error);
       toast.error(t('cancelOrder:cancel_order_unsuccessful'));
-
       onClose();
     }
   });
