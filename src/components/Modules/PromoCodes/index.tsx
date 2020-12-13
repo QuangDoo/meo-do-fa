@@ -94,14 +94,15 @@ export default function index() {
           </div>
           <div className="row">
             <div className="col-12 coupons2">
-              {SpecialCoupons.map((coupon, index) => (
-                <SpecialPromoCodeItem
-                  key={index}
-                  couponAmount={coupon.couponAmount}
-                  couponCode={coupon.couponCode}
-                  desctiption={coupon.description}
-                />
-              ))}
+              {couponsData?.getCouponPrograms &&
+                couponsData?.getCouponPrograms.map((coupon, index) => (
+                  <SpecialPromoCodeItem
+                    key={index}
+                    couponAmount={coupon.name}
+                    couponCode={coupon.promo_code}
+                    desctiption={coupon.reward_id[1]}
+                  />
+                ))}
             </div>
           </div>
         </div>
@@ -124,12 +125,12 @@ export default function index() {
                 couponsData?.getCouponPrograms.map((coupon, index) => (
                   <PromoCodeItem
                     key={index}
-                    type={coupon.promo_code_usage}
+                    rewardType={coupon.reward_type}
                     couponName={coupon.name}
                     couponCode={coupon.promo_code}
-                    couponAmount={coupon.reward_id[1]}
                     couponDescription={coupon.reward_id[1]}
-                    discount={coupon.discount}
+                    discount={coupon.discount_percentage}
+                    couponDateFrom={coupon.rule_date_from}
                   />
                 ))}
             </div>
