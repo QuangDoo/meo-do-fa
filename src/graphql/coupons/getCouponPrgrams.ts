@@ -6,13 +6,15 @@ export const GET_COUPON_PROGRAMS = gql`
       id
       name
       active
-      rule_id
-      reward_id
       sequence
-      # maximun_use_number
-      program_type
-      promo_code_usage
       promo_code
+      reward_description
+      reward_type
+      discount_type
+      rule_min_quantity
+      discount_percentage
+      reward_id
+      rule_date_from
     }
   }
 `;
