@@ -14,9 +14,9 @@ export default function FAQ(props: Props): JSX.Element {
   const categories = [
     { href: '/account', title: 'Câu hỏi về tài khoản' },
     { href: '/checkout', title: 'Câu hỏi về thanh toán' },
-    { href: '/account', title: 'Câu hỏi về vận chuyển' },
-    { href: '/account', title: 'Câu hỏi về đổi trả và hoàn tiền' },
-    { href: '/account', title: 'Câu hỏi về đơn hàng và đặt hàng' },
+    { href: '/delivery', title: 'Câu hỏi về vận chuyển' },
+    { href: '/refund', title: 'Câu hỏi về đổi trả và hoàn tiền' },
+    { href: '/order', title: 'Câu hỏi về đơn hàng và đặt hàng' },
     { href: '/account', title: 'Câu hỏi về tài khoản' }
   ];
 

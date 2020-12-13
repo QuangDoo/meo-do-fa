@@ -9,3 +9,13 @@ export const SEEN_NOTI = gql`
     }
   }
 `;
+
+export const SEEN_ALL_NOTI = gql`
+  mutation seenNotifies {
+    seenNotifies {
+      code
+      status
+      message
+    }
+  }
+`;

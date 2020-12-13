@@ -170,8 +170,7 @@ const Nav = () => {
                     <Link href="/cart">
                       <a className="rockland-nav__link notification">
                         <i className="icomoon icon-local-mall rockland-nav__icon" />
-
-                        <span className="notification__counter">{totalQty}</span>
+                        {totalQty > 0 && <span className="notification__counter">{totalQty}</span>}
                       </a>
                     </Link>
                   </li>

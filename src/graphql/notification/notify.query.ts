@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 export const GET_NOTI = gql`
-  query {
+  query getNotify {
     getNotify {
       _id
       content
