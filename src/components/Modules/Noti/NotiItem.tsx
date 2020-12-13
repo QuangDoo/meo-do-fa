@@ -50,10 +50,9 @@ const NotiItem = (props: Props): JSX.Element => {
     setSeenState(true);
   }, [props.isRead]);
 
-  console.log('seenState', seenState);
   return (
     // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-    <div className="col-12 mb-3" onClick={handleRead}>
+    <div className="col-12 mb-3">
       <Link href="/#">
         <a className={clsx('notification__item unread', seenState && 'notification__item read')}>
           <div className="notification__icon">
