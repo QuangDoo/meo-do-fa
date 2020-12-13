@@ -27,6 +27,7 @@ function Deal() {
     variables: {
       page: page,
       pageSize: pageSize,
+      type: 'promotion',
       condition: {
         order_type: '01'
       }

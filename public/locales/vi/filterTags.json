@@ -1,7 +1,7 @@
 {
-    "all": "Tất cả",
-    "new": "Mới",
-    "quick_invoice": "Hoá đơn nhanh",
-    "only_medofa": "Chỉ có tại Medofa",
-    "vn": "Người Việt dùng hàng Việt"
+  "all": "Tất cả",
+  "new": "Mới",
+  "invoice-exportable": "Hoá đơn nhanh",
+  "only-medofa": "Chỉ có tại Medofa",
+  "use-vietnamese": "Người Việt dùng hàng Việt"
 }

@@ -69,20 +69,18 @@ const RightSideUser = () => {
           role="button"
           tabIndex={0}>
           <i className="far fa-bell header-right__icon" />
-          {notificationsData?.length > 0 ? (
-            <span className="notification__counter">{notificationsData?.length}</span>
-          ) : (
-            <span className="notification__counter">0</span>
-          )}
+
+          <span className="notification__counter">{notificationsData?.length || 0}</span>
+
           {/* <span className="notification__counter">{notificationsData?.length}</span> */}
           <div
             className={clsx(
               'dropdown-menu dropdown-menu-right notification__dropdown p-0 ',
               show && 'show'
             )}>
-            {filterNotifications?.map((item, index) => {
-              return <NotiItem key={index} {...item} />;
-            })}
+            {filterNotifications?.map((item, index) => (
+              <NotiItem key={index} {...item} />
+            ))}
             <div className="dropdown__item notification__view-all">
               <Link href="/notifications">
                 <a>{t('navbar:see_all_notifications')}</a>

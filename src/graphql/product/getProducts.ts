@@ -25,6 +25,18 @@ export type Product = {
   };
 };
 
+export type ProductTag =
+  | 'invoice-exportable'
+  | 'out-of-stocks'
+  | 'only-medofa'
+  | 'promotion'
+  | 'flash-sale'
+  | 'common'
+  | 'change-style'
+  | 'close-date'
+  | 'use-vietnamese'
+  | 'new';
+
 export type GetProductsData = {
   getProductByConditions: {
     Products: Product[];
@@ -44,7 +56,7 @@ export type Condition = {
 export type GetProductsVars = {
   page: number;
   pageSize: number;
-  type?: string;
+  type?: ProductTag;
   condition: Condition;
 };
 
