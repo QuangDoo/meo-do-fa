@@ -55,20 +55,20 @@ const Nav = () => {
         <div className="row">
           <div className="col-12 d-flex align-items-center justify-content-between">
             <ul className="nav text-capitalize">
-              <li className="rockland-nav__item dropdown">
-                <div data-toggle="dropdown" data-hover="dropdown">
-                  <Link href="/products">
-                    <a className="rockland-nav__link">
-                      <i className="rockland-nav__icon fas fa-list-ul" />
-                      <span className="rockland-nav__title">{t('navbar:category')}</span>
-                    </a>
-                  </Link>
-                </div>
-                <ul className="dropdown-menu">
-                  {categories &&
-                    categories.map(({ name, id }) => (
+              {categories.length !== 0 ? (
+                <li className="rockland-nav__item dropdown dropdown-nav">
+                  <div data-toggle="dropdown" data-hover="dropdown">
+                    <Link href="/products">
+                      <a className="rockland-nav__link">
+                        <i className="rockland-nav__icon fas fa-list-ul" />
+                        <span className="rockland-nav__title">{t('navbar:category')}</span>
+                      </a>
+                    </Link>
+                  </div>
+                  <ul className="dropdown-menu">
+                    {categories.map(({ name, id }) => (
                       <li key={id} className="mb-2 dropdown-item">
-                        <div className="dropdown">
+                        <div className="dropdown dropdown-nav">
                           <div data-toggle="dropdown" data-hover="dropdown">
                             <Link href={`/products?category=${id}`}>
                               <a className={clsx('products__filter-category')}>{name}</a>
@@ -76,7 +76,7 @@ const Nav = () => {
                           </div>
                           {/* <ul className="dropdown-menu dropdown-sub-menu">
                             <li className="mb-2 dropdown-item">
-                              <div className="dropdown">
+                              <div className="dropdown dropdown-nav">
                                 <div data-toggle="dropdown" data-hover="dropdown">
                                   <a className="text-dark" href="/#">
                                     amet consectetur
@@ -103,8 +103,18 @@ const Nav = () => {
                         </div>
                       </li>
                     ))}
-                </ul>
-              </li>
+                  </ul>
+                </li>
+              ) : (
+                <li className="rockland-nav__item">
+                  <Link href="/products">
+                    <a className="rockland-nav__link">
+                      <i className="rockland-nav__icon fas fa-list-ul" />
+                      <span className="rockland-nav__title">{t('navbar:category')}</span>
+                    </a>
+                  </Link>
+                </li>
+              )}
 
               <li className="rockland-nav__item">
                 <Link href="/products">
@@ -187,12 +197,12 @@ const Nav = () => {
                     }}>
                     <div className="dropdown__item py-0">
                       <div className="d-flex justify-content-between">
-                        <div className="text-left mr-3">
+                        {/* <div className="text-left mr-3">
                           <small className="text-muted">{t('navbar:e_wallet')}</small>
                           <div className="text-primary">
                             0<span className="unit">{t('common:vnd')}</span>
                           </div>
-                        </div>
+                        </div> */}
 
                         <div className="text-right">
                           <a href="/users/loyalty_points">

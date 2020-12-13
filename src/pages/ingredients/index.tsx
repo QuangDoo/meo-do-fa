@@ -30,11 +30,14 @@ function Ingredients(): JSX.Element {
       <Header />
 
       <Nav />
-
-      <SearchScreen
-        data={data?.getIngredientsAll || []}
-        getItemHref={(id, name) => `/ingredients/${id}/${slugify(name)}`}
-      />
+      {data ? (
+        <SearchScreen
+          data={data?.getIngredientsAll || []}
+          getItemHref={(id, name) => `/ingredients/${id}/${slugify(name)}`}
+        />
+      ) : (
+        <div></div>
+      )}
 
       <Footer />
     </>
