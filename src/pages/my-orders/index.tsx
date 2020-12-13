@@ -148,50 +148,52 @@ const MyOrders = () => {
 
       <Nav />
 
-      <ProfileLayout title={t('myOrders:my_orders')}>
-        <p className="text-muted m-0">
-          {t('myOrders:vat_invoice')} <Link href="/invoice-export-rules">{t('myOrders:here')}</Link>
-          .
-        </p>
+      {orderList.length !== 0 ? (
+        <ProfileLayout title={t('myOrders:my_orders')}>
+          {/* <p className="text-muted m-0">
+              {t('myOrders:vat_invoice')} <Link href="/invoice-export-rules">{t('myOrders:here')}</Link>.
+            </p> */}
 
-        <div className="my-orders__filter mt-3">
-          <Tabs
-            variant="scrollable"
-            scrollButtons="on"
-            value={filter}
-            onChange={handleFilterChange}
-            indicatorColor="primary"
-            textColor="primary">
-            {filterKeys.map((key) => (
-              <Tab key={key} label={t(`myOrders:${key}`)} value={key} />
-            ))}
-          </Tabs>
-        </div>
+          <div className="my-orders__filter mt-3">
+            <Tabs
+              variant="scrollable"
+              scrollButtons="on"
+              value={filter}
+              onChange={handleFilterChange}
+              indicatorColor="primary"
+              textColor="primary">
+              {filterKeys.map((key) => (
+                <Tab key={key} label={t(`myOrders:${key}`)} value={key} />
+              ))}
+            </Tabs>
+          </div>
 
-        {orderList.map((order) => (
-          <OrderItem
-            key={order.id}
-            {...order}
-            callBack={() =>
-              refetch({
-                page: 1,
-                pageSize: pageSize
-              })
-            }
-          />
-        ))}
+          {orderList.map((order) => (
+            <OrderItem
+              key={order.id}
+              {...order}
+              callBack={() =>
+                refetch({
+                  page: 1,
+                  pageSize: pageSize
+                })
+              }
+            />
+          ))}
 
-        <div className="col-12 m-3 text-center">
-          <p>
-            <Link href="/products">
-              <a className="btn btn-primary" role="button">
-                {t('myOrders:back_to_products_page')}
-              </a>
-            </Link>
-          </p>
-        </div>
-      </ProfileLayout>
-
+          <div className="col-12 m-3 text-center">
+            <p>
+              <Link href="/products">
+                <a className="btn btn-primary" role="button">
+                  {t('myOrders:back_to_products_page')}
+                </a>
+              </Link>
+            </p>
+          </div>
+        </ProfileLayout>
+      ) : (
+        <div></div>
+      )}
       <Footer />
     </>
   );

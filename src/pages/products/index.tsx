@@ -102,80 +102,83 @@ function Products(): JSX.Element {
       <Header />
 
       <Nav />
+      {categories.length !== 0 ? (
+        <div className="products container mobile-content my-3 my-sm-5">
+          <div className="d-flex flex-nowrap justify-content-between">
+            <div className="products__sidebar pr-4 d-none d-sm-block">
+              <ProductsSidebarFilter categories={categories} manufacturers={manufacturers} />
+            </div>
 
-      <div className="products container mobile-content my-3 my-sm-5">
-        <div className="d-flex flex-nowrap justify-content-between">
-          <div className="products__sidebar pr-4 d-none d-sm-block">
-            <ProductsSidebarFilter categories={categories} manufacturers={manufacturers} />
-          </div>
-
-          <div className="flex-grow-1">
-            <div className="px-2 px-sm-0 mb-2">
-              <div className="d-block d-sm-none mb-3">
-                <ProductsDrawerFilter categories={categories} manufacturers={manufacturers} />
+            <div className="flex-grow-1">
+              <div className="px-2 px-sm-0 mb-2">
+                <div className="d-block d-sm-none mb-3">
+                  <ProductsDrawerFilter categories={categories} manufacturers={manufacturers} />
+                </div>
+                <h1 className="products__header text-capitalize mb-3">{title}</h1>
+                {productsLoading ? (
+                  <b></b>
+                ) : total > 0 ? (
+                  <>
+                    {t('products:show')}{' '}
+                    <b>
+                      {(page - 1) * pageSize + 1}&nbsp;-&nbsp;
+                      {Math.min(page * pageSize, total)}
+                    </b>{' '}
+                    {t('products:on_of')}
+                    <b>{`${total} `}</b>
+                    {search ? (
+                      <>
+                        {t('products:key')} <b>{search}</b>
+                      </>
+                    ) : (
+                      t('products:products')
+                    )}
+                  </>
+                ) : (
+                  <div>
+                    {t('products:no_products')} <b>{search}</b>
+                  </div>
+                )}
               </div>
-              <h1 className="products__header text-capitalize mb-3">{title}</h1>
-              {productsLoading ? (
-                <b></b>
-              ) : total > 0 ? (
-                <>
-                  {t('products:show')}{' '}
-                  <b>
-                    {(page - 1) * pageSize + 1}&nbsp;-&nbsp;
-                    {Math.min(page * pageSize, total)}
-                  </b>{' '}
-                  {t('products:on_of')}
-                  <b>{`${total} `}</b>
-                  {search ? (
-                    <>
-                      {t('products:key')} <b>{search}</b>
-                    </>
-                  ) : (
-                    t('products:products')
-                  )}
-                </>
-              ) : (
-                <div>
-                  {t('products:no_products')} <b>{search}</b>
-                </div>
-              )}
+
+              <div className="d-none d-sm-block mb-4">
+                <FilterTags />
+              </div>
+
+              <main className="products__products">
+                {productsLoading ? (
+                  <div className="container text-center pb-5 pt-5">
+                    <Loading />
+                  </div>
+                ) : (
+                  <div className="products__cards mb-3">
+                    {products.map((product, index) => (
+                      <ProductCard key={index} {...product} />
+                    ))}
+                  </div>
+                )}
+
+                <Pagination
+                  count={Math.ceil(total / pageSize)}
+                  page={page}
+                  siblingCount={4}
+                  onChange={(page) =>
+                    router.push({
+                      pathname: router.pathname,
+                      query: {
+                        ...router.query,
+                        page: page
+                      }
+                    })
+                  }
+                />
+              </main>
             </div>
-
-            <div className="d-none d-sm-block mb-4">
-              <FilterTags />
-            </div>
-
-            <main className="products__products">
-              {productsLoading ? (
-                <div className="container text-center pb-5 pt-5">
-                  <Loading />
-                </div>
-              ) : (
-                <div className="products__cards mb-3">
-                  {products.map((product, index) => (
-                    <ProductCard key={index} {...product} />
-                  ))}
-                </div>
-              )}
-
-              <Pagination
-                count={Math.ceil(total / pageSize)}
-                page={page}
-                siblingCount={4}
-                onChange={(page) =>
-                  router.push({
-                    pathname: router.pathname,
-                    query: {
-                      ...router.query,
-                      page: page
-                    }
-                  })
-                }
-              />
-            </main>
           </div>
         </div>
-      </div>
+      ) : (
+        <div></div>
+      )}
 
       <Footer />
     </>
