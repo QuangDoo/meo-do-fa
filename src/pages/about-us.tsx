@@ -7,12 +7,9 @@ import Header from '../components/Layout/Header';
 import Nav from '../components/Layout/Nav';
 
 const AboutUs = (): JSX.Element => {
-  const imgUrl1 =
-    'https://assets.thuocsi.vn/assets/about_us/ab-1-ef5703f1b686fb6f140a1de14550867329c468ed398b5869b939532b00f0544d.jpg';
-  const imgUrl2 =
-    'https://assets.thuocsi.vn/assets/about_us/ab-2-fb14875e7ffaecce2098736ee26dbc3c0628faad322b5207f01974adf4e4dd29.jpg';
-  const imgUrl3 =
-    'https://assets.thuocsi.vn/assets/about_us/ab-3-2f401cae77c2221ab4bf904bada14d521ea25bf51a9442a63a6ae44f64956809.jpg';
+  const imgUrl1 = '/assets/images/about-us-2.jpg';
+  const imgUrl2 = '/assets/images/about-us-3.jpg';
+  const imgUrl3 = '/assets/images/about-us-1.jpg';
 
   return (
     <>
