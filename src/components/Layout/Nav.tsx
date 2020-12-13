@@ -67,7 +67,7 @@ const Nav = () => {
                   </div>
                   <ul className="dropdown-menu">
                     {categories.map(({ name, id }) => (
-                      <li key={id} className="mb-2 dropdown-item">
+                      <li key={id} className="mb-2 dropdown-item text-wrap">
                         <div className="dropdown dropdown-nav">
                           <div data-toggle="dropdown" data-hover="dropdown">
                             <Link href={`/products?category=${id}`}>
