@@ -1,5 +1,6 @@
 import { Button, Dialog, Tooltip } from '@material-ui/core';
 import { Receipt } from '@material-ui/icons';
+import { useTranslation } from 'i18n';
 import { DateTime } from 'luxon';
 import React, { useState } from 'react';
 
@@ -11,6 +12,8 @@ type Props = {
 const expiration = 10;
 
 const ExportInvoice = (props: Props) => {
+  const { t } = useTranslation(['myOrders']);
+
   const { confirmDate } = props;
 
   const [open, setOpen] = useState(false);
@@ -28,8 +31,7 @@ const ExportInvoice = (props: Props) => {
 
   return (
     <>
-      <Tooltip
-        title={!invoiceExportable ? 'Đơn hàng của bạn đã quá thời gian để xuất hóa đơn' : ''}>
+      <Tooltip title={!invoiceExportable ? t('myOrders:time_out_invoice') : ''}>
         <Button
           size="small"
           variant="contained"
@@ -37,7 +39,7 @@ const ExportInvoice = (props: Props) => {
           onClick={handleOpen}
           disabled={!invoiceExportable}
           startIcon={<Receipt />}>
-          Xuất hóa đơn
+          {t('myOrders:billing_export')}
         </Button>
       </Tooltip>
 

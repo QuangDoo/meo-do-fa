@@ -15,6 +15,7 @@ import {
   Table,
   TableBody,
   TableCell,
+  TableFooter,
   TableHead,
   TableRow,
   Typography
@@ -23,16 +24,14 @@ import { AssignmentTurnedIn, Done, LocalShipping, Receipt, Sms, Update } from '@
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import clsx from 'clsx';
 import { useTranslation } from 'i18n';
-import { DateTime } from 'luxon';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { toast } from 'react-toastify';
 import PriceText from 'src/components/Form/PriceText';
 import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
 import Nav from 'src/components/Layout/Nav';
-import ExportInvoice from 'src/components/Modules/ExportInvoice';
 import ProfileSidebar from 'src/components/Modules/ProfileSidebar';
 import { useUserContext } from 'src/contexts/User';
 import { GET_ORDER } from 'src/graphql/order/order.query';
@@ -41,7 +40,6 @@ import { theme } from 'src/theme';
 import withApollo from 'src/utils/withApollo';
 
 import ConfirmCancelOrder from '../../components/Modules/My-orders/ConfirmCancelOrder';
-import myOrders from '.';
 
 const stepIconSize = 75;
 
@@ -232,7 +230,7 @@ const CustomBodyCell = ({ children, textAlign }: CustomBodyCellProps) => {
 };
 
 const OrderDetails = () => {
-  const { t } = useTranslation(['myOrders']);
+  const { t } = useTranslation(['myOrders', 'common']);
   const router = useRouter();
 
   const [open, setOpen] = useState(false);
@@ -266,11 +264,6 @@ const OrderDetails = () => {
     variables: { id: +orderId }
   });
 
-  // useEffect(() => {
-  //   if (orderDetail?.getOrderDetail.order_lines.state) {
-  //   }
-  // }, [orderDetail?.getOrderDetail.order_lines]);
-
   const onCancelClick = () => {
     if (activeStep >= 3) {
       toast.error('cant cancel order');
@@ -299,7 +292,10 @@ const OrderDetails = () => {
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <CustomCard>
-                  <Typography variant="h5">{t('myOrders:order_detail')}</Typography>
+                  <Typography variant="h5">
+                    {t('myOrders:order_detail')}
+                    {`: ${orderDetail?.getOrderDetail?.name}`}
+                  </Typography>
 
                   <Box my={2}>
                     <Divider />
@@ -327,7 +323,9 @@ const OrderDetails = () => {
                       {t('myOrders:expected_date')}{' '}
                       <strong>
                         {orderDetail?.getOrderDetail?.expected_date &&
-                          orderDetail?.getOrderDetail?.expected_date?.substr(0, 10)}
+                          new Date(orderDetail?.getOrderDetail?.expected_date).toLocaleDateString(
+                            'en-GB'
+                          )}
                       </strong>
                     </Typography>
                     {activeStep > 2 ? (
@@ -349,7 +347,8 @@ const OrderDetails = () => {
                         size="small"
                         startIcon={<DeleteForeverIcon />}
                         variant="outlined"
-                        color="secondary">
+                        color="secondary"
+                        disabled>
                         {t('myOrders:canceled')}
                       </Button>
                     ) : (
@@ -361,50 +360,25 @@ const OrderDetails = () => {
                         color="secondary">
                         {t('myOrders:cancel_the_order')}
                       </Button>
-                      // <button
-                      //   className="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-outlinedSizeSmall MuiButton-sizeSmall"
-                      //   onClick={onCancelClick}>
-                      //   hủy đơn hàng
-                      // </button>
                     )}
 
                     <ConfirmCancelOrder
                       open={open}
                       onClose={() => setOpen(false)}
-                      orderNo={orderId.toString()}
+                      orderNo={orderDetail?.getOrderDetail.name}
                     />
-                  </Box>
-                </CustomCard>
-              </Grid>
-
-              <Grid item xs={12}>
-                <CustomCard>
-                  <Box display="flex" alignItems="center">
-                    <ExportInvoice
-                      confirmDate={DateTime.local()
-                        .minus({
-                          days: 5
-                        })
-                        .toJSDate()}
-                    />
-
-                    {/* <Box ml={2}>
-                      Xem thông tin xuất hóa đơn đỏ{' '}
-                      <Link href="/invoice-export-rules">tại đây</Link>.
-                    </Box> */}
                   </Box>
                 </CustomCard>
               </Grid>
 
               <Grid item xs={12}>
                 <Grid container spacing={2}>
-                  <Grid item sm={6} xs={12}>
+                  <Grid item sm={12} xs={12}>
                     <CustomCard>
                       <TextWithLabel
                         label={t('myOrders:recipients_name')}
                         text={orderDetail?.getOrderDetail?.partner_shipping?.name}
                       />
-                      {/* nào có data địa chỉ thì bỏ vô đây nha <3 */}
 
                       <TextWithLabel
                         label={t('myOrders:delivery_address')}
@@ -422,7 +396,6 @@ const OrderDetails = () => {
                       />
                     </CustomCard>
                   </Grid>
-                  {/* có data đơn vị vận chuyển thì fill vô nha <3 */}
 
                   {/* <Grid item sm={6} xs={12}>
                     <CustomCard>
@@ -472,17 +445,28 @@ const OrderDetails = () => {
                           </CustomBodyCell>
 
                           <CustomBodyCell>
-                            <PriceText price={product.price_unit} /> đ
+                            <PriceText price={product.price_unit} /> {t('common:vnd')}
                           </CustomBodyCell>
 
                           <CustomBodyCell>{product.product_uom_qty}</CustomBodyCell>
 
                           <CustomBodyCell>
-                            <PriceText price={product.price_total} /> đ
+                            <PriceText price={product.price_total} /> {t('common:vnd')}
                           </CustomBodyCell>
                         </TableRow>
                       ))}
                     </TableBody>
+
+                    <TableFooter>
+                      <TableRow>
+                        <TableCell colSpan={4}>
+                          <Typography variant="h5" align="right">
+                            Tổng cộng:{' '}
+                            <PriceText price={orderDetail?.getOrderDetail.amount_total} /> đ
+                          </Typography>
+                        </TableCell>
+                      </TableRow>
+                    </TableFooter>
                   </Table>
                 </CustomCard>
               </Grid>

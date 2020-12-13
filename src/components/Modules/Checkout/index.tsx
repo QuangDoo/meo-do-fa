@@ -1,10 +1,19 @@
 import { useQuery } from '@apollo/client';
 import { useTranslation } from 'i18n';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import AddressSelect from 'src/components/Form/AddressSelect';
+import InputWithLabel from 'src/components/Form/InputWithLabel';
+import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { useUserContext } from 'src/contexts/User';
+import { APPLY_PAYMENT, ApplyPaymentData, ApplyPaymentVars } from 'src/graphql/order/applyPayment';
+import {
+  CREATE_INVOICE_USER,
+  CreateInvoiceUserData,
+  CreateInvoiceUserVars
+} from 'src/graphql/order/createInvoiceUser';
 import { CREATE_ORDER, CreateOrderData, CreateOrderVars } from 'src/graphql/order/createOrder';
 import { GET_COUNSEL, GetCounselData } from 'src/graphql/order/getCounsel';
 import {
@@ -15,12 +24,15 @@ import useAddress from 'src/hooks/useAddress';
 import { useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
 import useCart from 'src/hooks/useCart';
 import useCountCart from 'src/hooks/useCountCart';
+import useDidUpdate from 'src/hooks/useDidUpdate';
 import swal from 'sweetalert';
 
+import FormCard from '../MyAccount/FormCard';
 import Agreement from './Agreement';
 import CustomerNotes from './CustomerNotes';
 import DeliveryInfo from './DeliveryInfo';
 import DeliveryOption from './DeliveryOption';
+import InvoiceInfo from './InvoiceInfo';
 import PaymentOption from './PaymentOption';
 import StickySidebar from './StickySidebar';
 
@@ -37,6 +49,15 @@ type FormInputs = {
   saveInfo: boolean;
   customerNotes: string;
   agreement: boolean;
+  isInvoice: boolean;
+  fullnameInvoice: string;
+  emailInvoice: string;
+  companyStreet: string;
+  companyCityId: string;
+  companyDistrictId: string;
+  companyWardId: string;
+  vat: string;
+  id: string;
 };
 
 const CheckoutPage = () => {
@@ -49,14 +70,24 @@ const CheckoutPage = () => {
   const paymentMethods = paymentAndDeliveryData?.getPaymentAndDeliveryMethod.paymentMethods || [];
   const deliveryMethods = paymentAndDeliveryData?.getPaymentAndDeliveryMethod.deliveryMethods || [];
 
+  const [totalPrice, setTotalPrice] = useState<number>();
+
   // Counsel
-  const { data: counselData } = useQueryAuth<GetCounselData, undefined>(GET_COUNSEL);
+  const { data: counselData } = useQueryAuth<GetCounselData, undefined>(GET_COUNSEL, {
+    onCompleted: (data) => {
+      if (data.getCounsel === null) {
+        return;
+      }
+
+      setTotalPrice(data.getCounsel.totalPrice);
+    }
+  });
 
   // User
   const { user } = useUserContext();
 
   // Form handler with default values
-  const { register, handleSubmit, watch } = useForm<FormInputs>({
+  const { register, handleSubmit, watch, setValue } = useForm<FormInputs>({
     defaultValues: {
       name: user?.name,
       phone: user?.phone,
@@ -69,14 +100,53 @@ const CheckoutPage = () => {
       paymentOption: '2',
       saveInfo: true,
       customerNotes: '',
-      agreement: false
+      vat: user?.vat,
+      isInvoice: false,
+      agreement: false,
+      fullnameInvoice: user?.name,
+      emailInvoice: user?.email
     }
   });
+
+  // Update price on payment option change
+  const paymentOption = watch('paymentOption');
+
+  const [applyPayment] = useMutationAuth<ApplyPaymentData, ApplyPaymentVars>(APPLY_PAYMENT, {
+    onCompleted: (data) => {
+      setTotalPrice(data.applyPayment.totalPrice);
+    },
+    onError: (error) => {
+      return;
+    }
+  });
+
+  useDidUpdate(() => {
+    applyPayment({
+      variables: {
+        orderNo: counselData.getCounsel.counsel.orderNo,
+        payment_method: +paymentOption
+      }
+    });
+  }, [paymentOption]);
 
   const { cities, districts, wards, chosenCity, chosenDistrict, chosenWard } = useAddress({
     cityId: +watch('cityId'),
     districtId: +watch('districtId'),
     wardId: +watch('wardId')
+  });
+
+  // address invoice
+  const {
+    cities: companyCities,
+    districts: companyDistricts,
+    wards: companyWards,
+    chosenCity: companyChosenCity,
+    chosenDistrict: companyChosenDistrict,
+    chosenWard: companyChosenWard
+  } = useAddress({
+    cityId: +watch('companyCityId'),
+    districtId: +watch('companyDistrictId'),
+    wardId: +watch('companyWardId')
   });
 
   const router = useRouter();
@@ -85,7 +155,10 @@ const CheckoutPage = () => {
 
   const { refetchCountCart } = useCountCart();
 
-  const [createOrder] = useMutationAuth<CreateOrderData, CreateOrderVars>(CREATE_ORDER, {
+  const [createOrder, { loading: creatingOrder }] = useMutationAuth<
+    CreateOrderData,
+    CreateOrderVars
+  >(CREATE_ORDER, {
     onCompleted: (data) => {
       swal({
         title: t('checkout:order_success_message', {
@@ -102,6 +175,18 @@ const CheckoutPage = () => {
       toast.error(t('order_fail_message'));
     }
   });
+  // const [createInvoiceUser] = useMutationAuth<CreateInvoiceUserData, CreateInvoiceUserVars>(
+  //   CREATE_INVOICE_USER,
+  //   {
+  //     onCompleted: (data) => {
+  //       refetchCart();
+  //       router.push('/');
+  //     },
+  //     onError: () => {
+  //       toast.error(t('order_fail_message'));
+  //     }
+  //   }
+  // );
 
   const onSubmit: SubmitHandler<FormInputs> = (data) => {
     createOrder({
@@ -109,6 +194,15 @@ const CheckoutPage = () => {
         inputs: {
           orderNo: counselData?.getCounsel.counsel.orderNo,
           customer: {
+            billing_address: {
+              partnerId: '',
+              isNew: true,
+              zipCode: +data.wardId,
+              city: chosenCity.name,
+              district: chosenDistrict.name,
+              ward: chosenWard.name,
+              street: data.address
+            },
             fullName: data.name,
             phone: data.phone,
             email: data.email,
@@ -125,17 +219,47 @@ const CheckoutPage = () => {
           paymentMethodId: +data.paymentOption,
           deliveryMethodId: 0,
           note: data.customerNotes,
-          isInvoice: false
+          isInvoice: data.isInvoice
+          // vat: data.vat,
         }
       }
     });
+    // createInvoiceUser({
+    //   variables: {
+    //     inputs: {
+    //       fullName: data.name,
+    //       email: data.email,
+    //       shipping_address: {
+    //         street: data.companyStreet,
+    //         city: {
+    //           id: companyChosenCity.id,
+    //           name: companyChosenCity.name
+    //         },
+    //         district: {
+    //           id: companyChosenDistrict.id,
+    //           name: companyChosenDistrict.name
+    //         },
+    //         ward: {
+    //           id: companyChosenWard.id,
+    //           name: companyChosenWard.name
+    //         }
+    //       },
+    //       phone: data.phone,
+    //       id: 0
+    //     }
+    //   }
+    // });
   };
-
   const onError = (errors) => {
     const fields = Object.keys(errors);
 
     toast.error(errors[fields[0]].message);
   };
+
+  if (counselData?.getCounsel === null) {
+    router.push('/');
+    return null;
+  }
 
   return (
     <form className="checkout__form" onSubmit={handleSubmit(onSubmit, onError)}>
@@ -163,10 +287,18 @@ const CheckoutPage = () => {
             <div className="mb-4">
               <PaymentOption register={register} paymentMethods={paymentMethods} />
             </div>
-
             {/* Notes */}
             <div className="mb-4">
               <CustomerNotes register={register} />
+            </div>
+            {/* Invoice */}
+            <div className="mb-4">
+              <InvoiceInfo
+                register={register}
+                cities={cities}
+                districts={districts}
+                wards={wards}
+              />
             </div>
 
             {/* Agreement */}
@@ -176,10 +308,12 @@ const CheckoutPage = () => {
           </div>
 
           <div className="col-md-4 mb-3">
-            <StickySidebar counselData={counselData} />
+            <StickySidebar counselData={counselData} totalPrice={totalPrice} />
           </div>
         </div>
       </div>
+
+      <LoadingBackdrop open={creatingOrder} />
     </form>
   );
 };

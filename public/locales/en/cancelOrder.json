@@ -1,6 +1,6 @@
 {
-  "cancel_order_successful": "cancel order successful",
-  "cancel_order_unsuccessful": "cancel order unsuccessful",
+  "cancel_order_successful": "Cancel order successful",
+  "cancel_order_unsuccessful": "Cancel order unsuccessful",
   "reason_for_cancellation": "Reason for cancellation",
   "additional_information": "Additional Information (optional)",
   "cancellation_policy": "Cancellation Policy",
@@ -9,5 +9,6 @@
   "change_of_mind": "Change of mind",
   "duplicate_order": "Duplicate order",
   "change_delivery_address": "Change delivery address",
-  "button_title": "Submit"
+  "button_title": "Submit",
+  "is_check": "Please agree with the Terms of Use."
 }

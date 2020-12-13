@@ -19,6 +19,8 @@ type Props = {
   onClose: () => void;
 
   orderNo: string;
+
+  callBack?: () => void;
 };
 
 type Inputs = {
@@ -35,16 +37,15 @@ const options = [
 ];
 
 const ConfirmCancelOrder = (props) => {
-  const { open, onClose, orderNo } = props;
+  const { open, onClose, orderNo, callBack } = props;
 
   const [cancelOrder] = useMutationAuth(CANCEL_ORDER, {
     onCompleted: () => {
       toast.success(t('cancelOrder:cancel_order_successful'));
-
+      callBack();
       onClose();
     },
     onError: (error) => {
-      // console.log('Delete cart error:', { error });
       toast.error(t('cancelOrder:cancel_order_unsuccessful'));
 
       onClose();
@@ -57,6 +58,10 @@ const ConfirmCancelOrder = (props) => {
 
   const onSubmit = (data: Inputs) => {
     console.log(data);
+    if (!data.check) {
+      toast.error(t('cancelOrder:is_check'));
+      return;
+    }
     console.log(typeof orderNo, orderNo);
     cancelOrder({
       variables: {
@@ -96,7 +101,7 @@ const ConfirmCancelOrder = (props) => {
             placeholder={t('cancelOrder:additional_information')}
             label={t('cancelOrder:additional_information')}
             containerClass="my-1 mr-sm-2"
-            htmlFor={'note'}
+            name="notes"
           />
 
           <Checkbox
@@ -105,9 +110,8 @@ const ConfirmCancelOrder = (props) => {
             name="check"
             label={t('cancelOrder:cancellation_policy')}
           />
-
           <Button type="submit" variant="primary" className="my-1">
-            {t('cancelOrder:cancellation_policy')}
+            {t('cancelOrder:button_title')}
           </Button>
         </form>
       </div>

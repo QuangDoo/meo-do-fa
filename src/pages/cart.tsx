@@ -1,4 +1,5 @@
 // import { useMutation } from '@apollo/client';
+import { Backdrop, CircularProgress, makeStyles } from '@material-ui/core';
 import { useTranslation } from 'i18n';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -7,6 +8,7 @@ import PriceText from 'src/components/Form/PriceText';
 import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
+import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import Nav from 'src/components/Layout/Nav';
 // import CartItem from 'src/components/Modules/Cart/CartItem';
 import CartItem from 'src/components/Modules/Cart/CartItem';
@@ -23,7 +25,7 @@ function Cart(): JSX.Element {
 
   const router = useRouter();
 
-  const [createCounsel] = useMutationAuth(CREATE_COUNSEL, {
+  const [createCounsel, { loading: creatingCounsel }] = useMutationAuth(CREATE_COUNSEL, {
     onCompleted: () => {
       router.push('/checkout');
     },
@@ -150,6 +152,8 @@ function Cart(): JSX.Element {
         </div>
       </div>
       <Footer />
+
+      <LoadingBackdrop open={creatingCounsel} />
     </>
   );
 }

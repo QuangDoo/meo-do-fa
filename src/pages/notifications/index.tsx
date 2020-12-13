@@ -1,7 +1,9 @@
-import clsx from 'clsx';
 import { useTranslation } from 'i18n';
-import moment from 'moment';
 import React, { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
+import { SEEN_ALL_NOTI } from 'src/graphql/notification/seenNoti.mutation';
+import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import useNoti from 'src/hooks/useNoti';
 import withApollo from 'src/utils/withApollo';
 
@@ -9,22 +11,40 @@ import Footer from '../../components/Layout/Footer';
 import Head from '../../components/Layout/Head';
 import Header from '../../components/Layout/Header';
 import Nav from '../../components/Layout/Nav';
+import NotiItem from '../../components/Modules/Noti/NotiItem';
 
 const Notification = (): JSX.Element => {
-  const [isRead, setIsRead] = useState(Boolean);
+  const [isRead, setIsRead] = useState(false);
 
-  const { notifications } = useNoti();
+  const { notifications, loading: loadingNoti, refetchNoti } = useNoti();
+
+  const [seenAllNoti] = useMutationAuth(SEEN_ALL_NOTI, {
+    onCompleted: (data) => {
+      console.log('data', data);
+      if (data.code === 200) {
+        setIsRead(true);
+      }
+    },
+    onError: (err) => {
+      toast.error(t(`errors:code_${err.graphQLErrors[0].extensions.code}`));
+    }
+  });
 
   useEffect(() => {
     if (!notifications) return;
+    refetchNoti();
   }, [notifications]);
 
   const notificationsData = notifications?.getNotify || [];
 
-  const handleRead = () => {
-    notificationsData.map((noti) => {
-      setIsRead(noti.isSeen);
-    });
+  const notificationsReverse = notificationsData?.map((item) => {
+    return item;
+  });
+
+  const handleReadAll = () => {
+    // read all
+    seenAllNoti();
+    refetchNoti();
   };
 
   const { t } = useTranslation();
@@ -41,41 +61,24 @@ const Notification = (): JSX.Element => {
           <div className="col-12 d-flex align-items-center justify-content-between flex-wrap mb-3">
             <h1 className="h3">{t('noti:my_noti')}</h1>
 
-            <button className="btn btn-secondary btn-sm" onClick={handleRead}>
-              {t('noti:mark_as_read')}
-            </button>
+            {/* {notificationsData?.length > 0 && (
+              <button className="btn btn-secondary btn-sm" onClick={handleReadAll}>
+                {t('noti:mark_as_read')}
+              </button>
+            )} */}
           </div>
-          {notificationsData.length > 0
-            ? notificationsData?.map((noti, index) => {
-                return (
-                  <div className="col-12 mb-3" key={index}>
-                    <a
-                      className={clsx(
-                        'notification__item unread',
-                        noti.isSeen && 'notification__item read'
-                      )}
-                      href="/notifications/1571210">
-                      <div className="notification__icon">
-                        <i className="status-icon status-notice" />
-                      </div>
-                      <div className="notification__content">
-                        <div
-                          className="notification__content-title"
-                          dangerouslySetInnerHTML={{ __html: noti.content }}
-                        />
-                        <small className="notification__content-created-at">
-                          {moment(noti.create_date)
-                            .locale(`${t('noti:time')}`)
-                            .fromNow()}
-                        </small>
-                      </div>
-                    </a>
-                  </div>
-                );
-              })
-            : `${t('noti:is_noty')}`}
+          {notificationsData?.length > 0 ? (
+            notificationsReverse?.reverse()?.map((noti, index) => {
+              return <NotiItem {...noti} key={index} isRead={isRead} />;
+            })
+          ) : (
+            <div className="col-12 d-flex align-items-center justify-content-between flex-wrap mb-3">
+              {t('noti:is_noty')}
+            </div>
+          )}
         </div>
       </div>
+
       {/* <Pagination
         count={Math.ceil(total / pageSize)}
         page={page}
@@ -90,6 +93,7 @@ const Notification = (): JSX.Element => {
           })
         }
       /> */}
+      <LoadingBackdrop open={loadingNoti} />
       <Footer />
     </>
   );

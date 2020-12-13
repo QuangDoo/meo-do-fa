@@ -1,7 +1,7 @@
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import React from 'react';
-import Tab from 'src/components/Tab/Tab';
+import ScrollableTabsButtonAuto from 'src/components/ScrollableTabsButtonAuto/ScrollableTabsButtonAuto';
 
 // import Tab from '../../../Tab/Tab';
 
@@ -22,6 +22,8 @@ type PropsType = {
   interaction?: string;
   preservation?: string;
   overdose?: string;
+  pharmacodynamics?: string;
+  pharmacokinetics?: string;
 };
 
 const ProducerInformation = (props: PropsType): JSX.Element => {
@@ -50,7 +52,7 @@ const ProducerInformation = (props: PropsType): JSX.Element => {
             })}
           </tbody>
         </table>
-        <Tab
+        <ScrollableTabsButtonAuto
           info={props.info}
           indication={props.indication}
           contraindication={props.contraindication}
@@ -58,6 +60,8 @@ const ProducerInformation = (props: PropsType): JSX.Element => {
           interaction={props.interaction}
           preservation={props.preservation}
           overdose={props.overdose}
+          pharmacodynamics={props.pharmacodynamics}
+          pharmacokinetics={props.pharmacokinetics}
           labelInfo={t('info_label')}
           labelIndication={t('indication_label')}
           labelContraindion={t('contraindication_label')}

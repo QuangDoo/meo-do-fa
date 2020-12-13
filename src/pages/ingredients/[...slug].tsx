@@ -9,7 +9,7 @@ import Header from 'src/components/Layout/Header';
 import Nav from 'src/components/Layout/Nav';
 import { ProductsContainer } from 'src/components/Modules/Home/ProductsContainer';
 import { ProductsCarousel } from 'src/components/Modules/ProductsCarousel';
-import Tab from 'src/components/Tab/Tab';
+import ScrollableTabsButtonAuto from 'src/components/ScrollableTabsButtonAuto/ScrollableTabsButtonAuto';
 import {
   GET_INGREDIENT_DETAILS,
   GetIngredientDetailsData,
@@ -54,11 +54,11 @@ const IngredientDetails = (): JSX.Element => {
     console.log('Get products by ingredient error:', { productsError });
     toast.error('Get products by ingredient error:' + productsError);
   }, [productsError]);
-
+  const title = detailsData?.getIngredient.name;
   return (
     <>
       <Head>
-        <title>Medofa</title>
+        <title>Medofa - {title}</title>
       </Head>
 
       <Header />
@@ -67,22 +67,21 @@ const IngredientDetails = (): JSX.Element => {
 
       <main className="ingredient container py-3 py-sm-5">
         <div className="row justify-content-center">
-          <div className="col-sm-8">
-            <h1 className="mb-3">{detailsData?.getIngredient.name}</h1>
+          <div className="col-sm-10">
+            <h1 className="mb-3">{title}</h1>
+            <ScrollableTabsButtonAuto
+              {...detailsData?.getIngredient}
+              labelInfo={t('info_label')}
+              labelIndication={t('indication_label')}
+              labelContraindion={t('contraindication_label')}
+              labelDirection={t('direction_label')}
+              labelInteraction={t('interaction_label')}
+              labelPreservation={t('preservation_label')}
+              labelOverdose={t('overdose_label')}
+              labelPharmacodynamics={t('pharmacodynamics_label')}
+              labelPharmacokinetics={t('pharmacokinetics_label')}
+            />
           </div>
-
-          <Tab
-            {...detailsData?.getIngredient}
-            labelInfo={t('info_label')}
-            labelIndication={t('indication_label')}
-            labelContraindion={t('contraindication_label')}
-            labelDirection={t('direction_label')}
-            labelInteraction={t('interaction_label')}
-            labelPreservation={t('preservation_label')}
-            labelOverdose={t('overdose_label')}
-            labelPharmacodynamics={t('pharmacodynamics_label')}
-            labelPharmacokinetics={t('pharmacokinetics_label')}
-          />
         </div>
       </main>
 

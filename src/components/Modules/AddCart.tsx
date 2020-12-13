@@ -77,7 +77,7 @@ function AddCart(props: Props) {
 
   return (
     <div className="row">
-      <div className="col-md-5 mt-1">
+      <div className="col-5 mt-1">
         <div className={clsx('qty js-qty', size === 'large' && 'qty--lg')}>
           <button className="btn btn-sm qty__button qty__button--minus" onClick={handleMinus}>
             <i className="fas fa-minus" />
@@ -97,7 +97,7 @@ function AddCart(props: Props) {
           </button>
         </div>
       </div>
-      <div className="col-md-7">
+      <div className="col-7">
         <button className="btn btn-sm btn-primary" onClick={handleClick}>
           {t('productDetail:add_to_cart')}
         </button>

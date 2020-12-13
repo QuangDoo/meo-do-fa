@@ -3,6 +3,7 @@ import { useTranslation } from 'i18n';
 import moment from 'moment';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
+import NotiItem from 'src/components/Modules/Noti/NotiItem';
 import useNoti from 'src/hooks/useNoti';
 import useUser from 'src/hooks/useUser';
 
@@ -11,53 +12,36 @@ type NotiItem = {
   notiInfo: string;
 };
 
-const NotiItem = (props) => {
-  const { i18n } = useTranslation();
-  return (
-    <>
-      <Link href="/">
-        <a className="notification__dropdown-item unread">
-          <div className="notification__icon">
-            <i className="status-icon status-notice"></i>
-          </div>
-          <div className="notification__content">
-            <div
-              className="notification__content-title"
-              dangerouslySetInnerHTML={{ __html: props.body }}
-            />
-            <small className="notification__content-created-at">
-              {moment(props.date).locale(i18n.language).fromNow()}
-            </small>
-          </div>
-        </a>
-      </Link>
-    </>
-  );
-};
-
 const RightSideUser = () => {
   const { user } = useUser();
   const { t } = useTranslation('noti');
 
   const [show, setShow] = useState(false);
 
-  const { notifications } = useNoti();
+  const { notifications, refetchNoti } = useNoti();
 
   const notificationsData = notifications?.getNotify;
 
   useEffect(() => {
     if (!notifications) return;
+    refetchNoti();
   }, [notifications]);
 
   function toggleShow() {
     setShow((show) => !show);
   }
 
-  const size = 8;
-  const filterNotifications = notificationsData?.slice(0, size).map((item) => {
-    return item;
+  const lengthNotifications = notificationsData?.filter((noti) => {
+    if (!noti.isSeen) {
+      return noti;
+    }
   });
 
+  const size = 8;
+  const filterNotifications = lengthNotifications?.slice(0, size).map((item) => {
+    return item;
+  });
+  console.log('filterNotifications', filterNotifications);
   return (
     <div className="header-right d-none d-lg-block">
       <ul className="nav align-items-center">
@@ -69,15 +53,25 @@ const RightSideUser = () => {
           role="button"
           tabIndex={0}>
           <i className="far fa-bell header-right__icon" />
-          <span className="notification__counter">{notificationsData?.length}</span>
+          {notificationsData?.length > 0 ? (
+            <span className="notification__counter">{lengthNotifications?.length}</span>
+          ) : (
+            <span className="notification__counter">0</span>
+          )}
+          {/* <span className="notification__counter">{notificationsData?.length}</span> */}
           <div
             className={clsx(
               'dropdown-menu dropdown-menu-right notification__dropdown p-0 ',
               show && 'show'
             )}>
-            {filterNotifications?.map((item, index) => {
-              return <NotiItem key={index} {...item} />;
-            })}
+            {filterNotifications?.length > 0 &&
+              filterNotifications?.reverse()?.map((item, index) => {
+                return (
+                  <>
+                    <NotiItem key={index} {...item} />
+                  </>
+                );
+              })}
             <div className="dropdown__item notification__view-all">
               <Link href="/notifications">
                 <a>{t('navbar:see_all_notifications')}</a>
