@@ -61,7 +61,7 @@ const ProfileSidebar = () => {
 
       <SidebarLink
         text={t('navbar:my_promo_code')}
-        href="/users/user-promo-codes"
+        href="/my-promo-codes"
         iconClass="fas fa-tags"
       />
 
@@ -71,12 +71,12 @@ const ProfileSidebar = () => {
         iconClass="fas fa-hand-holding-usd"
       /> */}
 
-      <div className="my-account__sidebar-item">
+      {/* <div className="my-account__sidebar-item">
         {t('navbar:wallet')} -{' '}
         <span>
           0<span className="unit">{t('common:vnd')}</span>
         </span>
-      </div>
+      </div> */}
     </aside>
   );
 };

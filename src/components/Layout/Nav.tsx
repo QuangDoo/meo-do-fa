@@ -185,7 +185,7 @@ const Nav = () => {
                       vertical: 'top',
                       horizontal: 'right'
                     }}>
-                    <div className="dropdown__item py-0">
+                    {/* <div className="dropdown__item py-0">
                       <div className="d-flex justify-content-between">
                         <div className="text-left mr-3">
                           <small className="text-muted">{t('navbar:e_wallet')}</small>
@@ -203,7 +203,7 @@ const Nav = () => {
                       </div>
                     </div>
 
-                    <hr className="my-2" />
+                    <hr className="my-2" /> */}
 
                     <Link href="/my-account">
                       <a className="dropdown__item dropdown__item-link">
@@ -226,7 +226,7 @@ const Nav = () => {
                       </a>
                     </Link> */}
 
-                    <Link href="/users/user-promo-codes">
+                    <Link href="/my-promo-codes">
                       <a className="dropdown__item dropdown__item-link">
                         <i className="fas fa-tags dropdown__item-icon" />
                         {t('navbar:my_promo_code')}
