@@ -38,7 +38,7 @@ const RightSideUser = () => {
   });
 
   const size = 8;
-  const filterNotifications = lengthNotifications?.slice(0, size).map((item) => {
+  const filterNotifications = notificationsData?.slice(0, size).map((item) => {
     return item;
   });
   console.log('filterNotifications', filterNotifications);
@@ -64,19 +64,18 @@ const RightSideUser = () => {
               'dropdown-menu dropdown-menu-right notification__dropdown p-0 ',
               show && 'show'
             )}>
-            {filterNotifications?.length > 0 &&
-              filterNotifications?.reverse()?.map((item, index) => {
-                return (
-                  <>
-                    <NotiItem key={index} {...item} />
-                  </>
-                );
-              })}
-            <div className="dropdown__item notification__view-all">
-              <Link href="/notifications">
-                <a>{t('navbar:see_all_notifications')}</a>
-              </Link>
-            </div>
+            {filterNotifications?.length > 0 && (
+              <>
+                {filterNotifications?.reverse()?.map((item, index) => {
+                  return <NotiItem key={index} {...item} />;
+                })}
+                <div className="dropdown__item notification__view-all">
+                  <Link href="/notifications">
+                    <a>{t('navbar:see_all_notifications')}</a>
+                  </Link>
+                </div>
+              </>
+            )}
           </div>
         </div>
         {user?.name && (
