@@ -12,7 +12,7 @@ type NotiItem = {
   notiInfo: string;
 };
 
-const RightSideUser = () => {
+const RightSideUser = (): JSX.Element => {
   const { user } = useUser();
   const { t } = useTranslation('noti');
 
