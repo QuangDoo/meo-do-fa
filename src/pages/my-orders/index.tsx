@@ -47,12 +47,12 @@ const formatDate = (date: string) => {
   return DateTime.fromFormat(date, 'yyyy-MM-dd hh:mm:ss').toFormat('dd/MM/yyyy').toString();
 };
 
-const OrderItem = (props: GetOrderList) => {
+const OrderItem = (props: any) => {
   const [open, setOpen] = useState(false);
 
   const { t } = useTranslation(['myOrders']);
 
-  const { flag } = props;
+  const { callBack } = props;
 
   return (
     <div className="my-orders__item p-3 my-1">
@@ -62,7 +62,7 @@ const OrderItem = (props: GetOrderList) => {
             <a className="mr-2">#{props.orderNo}</a>
           </Link>
 
-          {flag === '25' && (
+          {props.state === 'cancel' && (
             <div className="my-orders__invoice">
               <span className="badge badge-danger">{t('myOrders:canceled')}</span>
             </div>
@@ -89,14 +89,23 @@ const OrderItem = (props: GetOrderList) => {
       <div className="my-orders__invoice">
         <button className="btn btn-outline-info btn-sm">{t('myOrders:report')}</button>
 
-        {flag !== '25' && (
+        {props.state !== 'cancel' ? (
           <button className="btn btn-outline-danger btn-sm" onClick={() => setOpen(true)}>
             {t('myOrders:cancel_order')}
+          </button>
+        ) : (
+          <button className="btn btn-outline-danger btn-sm" disabled onClick={() => setOpen(true)}>
+            {t('myOrders:canceled')}
           </button>
         )}
       </div>
 
-      <ConfirmCancelOrder open={open} onClose={() => setOpen(false)} orderNo={props.orderNo} />
+      <ConfirmCancelOrder
+        open={open}
+        onClose={() => setOpen(false)}
+        orderNo={props.orderNo}
+        callBack={callBack}
+      />
     </div>
   );
 };
@@ -160,7 +169,16 @@ const MyOrders = () => {
           </div>
 
           {orderList.map((order) => (
-            <OrderItem key={order.id} {...order} />
+            <OrderItem
+              key={order.id}
+              {...order}
+              callBack={() =>
+                refetch({
+                  page: 1,
+                  pageSize: pageSize
+                })
+              }
+            />
           ))}
 
           <div className="col-12 m-3 text-center">
@@ -176,7 +194,6 @@ const MyOrders = () => {
       ) : (
         <div></div>
       )}
-
       <Footer />
     </>
   );

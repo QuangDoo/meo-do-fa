@@ -28,5 +28,6 @@
   "time_out_invoice": "Đơn hàng của bạn đã quá thời gian để xuất hóa đơn",
   "handling": "Đã xử lý",
   "delivering": "Đang vận chuyển",
-  "completed": "Đã hoàn thành"
+  "completed": "Đã hoàn thành",
+  "cancel_order": "Hủy đơn hàng"
 }

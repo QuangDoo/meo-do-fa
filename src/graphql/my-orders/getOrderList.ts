@@ -35,6 +35,7 @@ export const GET_ORDER_LIST = gql`
       }
       is_expired
       flag
+      state
     }
   }
 `;

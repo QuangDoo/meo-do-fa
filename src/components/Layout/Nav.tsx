@@ -204,7 +204,7 @@ const Nav = () => {
                           </div>
                         </div> */}
 
-                        <div className="text-right">
+                        <div>
                           <a href="/users/loyalty_points">
                             <small className="text-muted">{t('navbar:reward_points')}</small>
                             <div className="text-secondary">0</div>
