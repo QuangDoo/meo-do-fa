@@ -19,12 +19,12 @@ const links: { href: string; i18nKey: string }[] = [
   { href: '/about-us', i18nKey: 'footer:about_us' },
   { href: '/privacy-policy', i18nKey: 'footer:privacy_policy' },
   { href: '/help', i18nKey: 'footer:faq' },
-  { href: '', i18nKey: 'footer:general_policy' },
-  { href: '/career', i18nKey: 'common:recruitment' },
+  { href: '/general-policy', i18nKey: 'footer:general_policy' },
+  // { href: '/career', i18nKey: 'common:recruitment' },
   { href: '/terms-of-service', i18nKey: 'footer:terms_of_service' },
   { href: '/dispute-resolution', i18nKey: 'footer:dispute_resolution' },
-  { href: '', i18nKey: 'footer:terms_and_conditions' },
-  { href: '', i18nKey: 'footer:operating_regulations' }
+  { href: '/terms-and-conditions', i18nKey: 'footer:terms_and_conditions' },
+  { href: '/operating-regulations', i18nKey: 'footer:operating_regulations' }
   // { href: '', i18nKey: 'common:supply' }
 ];
 

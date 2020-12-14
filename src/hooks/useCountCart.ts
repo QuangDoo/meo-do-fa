@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { toast } from 'react-toastify';
 import { useCountCartContext } from 'src/contexts/CountCart';
 import { COUNT_CART, CountCartData } from 'src/graphql/cart/countCart.query';
 import useLocalStorage from 'src/hooks/useLocalStorage';
@@ -18,7 +17,7 @@ export default function useCountCart() {
       }
     }
   );
-  //   console.log('data', data);
+
   useEffect(() => {
     if (!error) return;
 

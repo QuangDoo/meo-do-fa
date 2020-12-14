@@ -1,4 +1,5 @@
-import React from 'react';
+import { useRouter } from 'next/router';
+import React, { useEffect } from 'react';
 import withApollo from 'src/utils/withApollo';
 
 import Footer from '../../components/Layout/Footer';
@@ -93,23 +94,31 @@ const links = [
 ];
 
 const NewsPage = (): JSX.Element => {
-  return (
-    <>
-      <Head>
-        <title>Medofa</title>
-      </Head>
+  const router = useRouter();
 
-      <Header />
+  useEffect(() => {
+    router.push('/');
+  }, []);
 
-      <Nav />
+  return null;
 
-      <News bannerImgUrl={imgUrl} links={links}>
-        <NewsList news={newsdata} />
-      </News>
+  // return (
+  //   <>
+  //     <Head>
+  //       <title>Medofa</title>
+  //     </Head>
 
-      <Footer />
-    </>
-  );
+  //     <Header />
+
+  //     <Nav />
+
+  //     <News bannerImgUrl={imgUrl} links={links}>
+  //       <NewsList news={newsdata} />
+  //     </News>
+
+  //     <Footer />
+  //   </>
+  // );
 };
 
 NewsPage.getInitialProps = async () => ({

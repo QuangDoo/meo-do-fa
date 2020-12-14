@@ -1,23 +1,26 @@
-import React, { ReactChild } from 'react';
+import { useTranslation } from 'i18n';
+import React from 'react';
 
 import FAQSidebar from '../../Layout/SideBar/FAQSidebar';
 import InputSearch from '../News/InputSearch';
-import Contact from './Contact';
+// import Contact from './Contact';
 
 type Props = {
-  children?: ReactChild;
+  children?: React.ReactNode;
   questions?: any;
   title?: string;
   categories?: any;
 };
+
 export default function FAQ(props: Props): JSX.Element {
+  const { t } = useTranslation('help');
+
   const categories = [
-    { href: '/account', title: 'Câu hỏi về tài khoản' },
-    { href: '/checkout', title: 'Câu hỏi về thanh toán' },
-    { href: '/delivery', title: 'Câu hỏi về vận chuyển' },
-    { href: '/refund', title: 'Câu hỏi về đổi trả và hoàn tiền' },
-    { href: '/order', title: 'Câu hỏi về đơn hàng và đặt hàng' },
-    { href: '/account', title: 'Câu hỏi về tài khoản' }
+    { href: '/help/account', title: t('help:question_account') },
+    { href: '/help/checkout', title: t('help:question_checkout') },
+    { href: '/help/delivery', title: t('help:question_delivery') },
+    { href: '/help/refund', title: t('help:question_refund') },
+    { href: '/help/order', title: t('help:question_order') }
   ];
 
   return (
@@ -49,7 +52,7 @@ export default function FAQ(props: Props): JSX.Element {
         </div>
       </div>
 
-      <Contact />
+      {/* <Contact /> */}
     </>
   );
 }
