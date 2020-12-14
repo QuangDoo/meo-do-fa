@@ -29,5 +29,6 @@
   "handling": "Handling",
   "delivering": "Delevering",
   "completed": "Completed",
-  "cancel_order": "Cancel Order"
+  "cancel_order": "Cancel Order",
+  "no_orders": "No orders"
 }

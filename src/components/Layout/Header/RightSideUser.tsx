@@ -41,7 +41,6 @@ const RightSideUser = (): JSX.Element => {
   const filterNotifications = notificationsData?.slice(0, size).map((item) => {
     return item;
   });
-  console.log('filterNotifications', filterNotifications);
   return (
     <div className="header-right d-none d-lg-block">
       <ul className="nav align-items-center">
