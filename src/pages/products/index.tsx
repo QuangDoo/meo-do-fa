@@ -4,6 +4,7 @@ import _ from 'lodash';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useEffect } from 'react';
+import { animateScroll } from 'react-scroll';
 import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
@@ -20,12 +21,17 @@ import {
   GetManufacturersData,
   GetManufacturersVars
 } from 'src/graphql/manufacturers/manufacturers.query';
-import { GET_PRODUCTS, GetProductsData, GetProductsVars } from 'src/graphql/product/getProducts';
+import {
+  GET_PRODUCTS,
+  GetProductsData,
+  GetProductsVars,
+  ProductTag
+} from 'src/graphql/product/getProducts';
 import withApollo from 'src/utils/withApollo';
 
 const pageSize = 20;
 
-const defaultSortType = '07';
+const defaultSortType = '07'; // Name ascending
 
 function Products(): JSX.Element {
   const { t } = useTranslation(['products']);
@@ -37,9 +43,7 @@ function Products(): JSX.Element {
   const search = router.query.search as string;
 
   const { data: categoriesData } = useQuery<GetAllCategoriesData, undefined>(GET_ALL_CATEGORIES, {
-    onError: (error) => {
-      console.log('Get all categories error:', error);
-    }
+    onError: () => null
   });
 
   const categories = categoriesData?.getCategoriesAll || [];
@@ -51,9 +55,7 @@ function Products(): JSX.Element {
         page: 1,
         pageSize: 20
       },
-      onError: (error) => {
-        console.log('Get manufacturers error:', error);
-      }
+      onError: () => null
     }
   );
 
@@ -66,7 +68,7 @@ function Products(): JSX.Element {
     variables: {
       page,
       pageSize,
-      type: router.query.tag as string,
+      type: router.query.tag as ProductTag,
       condition: {
         manufacturer_id: router.query.manufacturer as string,
         category_id: router.query.category as string,
@@ -90,8 +92,10 @@ function Products(): JSX.Element {
     : t('products:title');
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [products]);
+    if (productsLoading) {
+      animateScroll.scrollToTop();
+    }
+  }, [productsLoading]);
 
   return (
     <>

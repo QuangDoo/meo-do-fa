@@ -1,0 +1,9 @@
+{
+  "my_promo_codes": "My promo codes",
+  "promo_code": "Promo code",
+  "receive_date": "Receive date",
+  "expire_date": "Expire date",
+  "status": "Status",
+  "related_order_number": "Order number",
+  "no_promo_codes": "You don't have any promo codes"
+}

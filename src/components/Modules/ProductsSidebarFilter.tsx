@@ -1,3 +1,5 @@
+import { IconButton } from '@material-ui/core';
+import CloseIcon from '@material-ui/icons/Close';
 import clsx from 'clsx';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
@@ -12,6 +14,7 @@ import Select from '../Form/Select';
 type Props = {
   categories: Category[];
   manufacturers: Manufacturer[];
+  onClose?: () => void;
 };
 
 const ProductsSidebarFilter = (props: Props) => {
@@ -35,13 +38,22 @@ const ProductsSidebarFilter = (props: Props) => {
 
   return (
     <aside className="text-capitalize w-100">
-      <header className="products__filters-header">
-        <span className="text-muted icomoon icon-tune mr-3" />
-        {t('search_filters')}
-      </header>
-      <hr className="hr my-3" />
+      <header className="products__filters-header d-flex align-items-center justify-content-between">
+        <div>
+          <span className="text-muted icomoon icon-tune mr-3" />
+          {t('search_filters')}
+        </div>
 
-      <div>
+        <div className="d-block d-sm-none">
+          <IconButton aria-label="close" onClick={props.onClose}>
+            <CloseIcon />
+          </IconButton>
+        </div>
+      </header>
+
+      <hr className="hr my-3 d-none d-sm-block" />
+
+      <div className="d-none d-sm-block">
         <div className="products__filter-header mb-2">{t('sort')}</div>
 
         <Select onChange={handleSortChange}>

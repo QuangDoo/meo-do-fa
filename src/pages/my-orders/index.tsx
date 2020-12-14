@@ -1,5 +1,4 @@
 import { Tab, Tabs } from '@material-ui/core';
-import clsx from 'clsx';
 import { useTranslation } from 'i18n';
 import { DateTime } from 'luxon';
 import Link from 'next/link';
@@ -12,7 +11,6 @@ import Nav from 'src/components/Layout/Nav';
 import ProfileLayout from 'src/components/Modules/ProfileLayout';
 import {
   GET_ORDER_LIST,
-  GetOrderList,
   GetOrderListData,
   GetOrderListVars
 } from 'src/graphql/my-orders/getOrderList';
