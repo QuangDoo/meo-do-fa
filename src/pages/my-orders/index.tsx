@@ -1,8 +1,5 @@
 import { AppBar, Box, makeStyles, Tab, Tabs, Theme, Typography } from '@material-ui/core';
-import clsx from 'clsx';
-import { NoUndefinedVariablesRule } from 'graphql';
 import { useTranslation } from 'i18n';
-import { DateTime } from 'luxon';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
@@ -13,6 +10,7 @@ import Nav from 'src/components/Layout/Nav';
 import ProfileLayout from 'src/components/Modules/ProfileLayout';
 import {
   GET_ORDER_LIST,
+  GetOrderList,
   GetOrderListData,
   GetOrderListVars,
   OrderFlag
