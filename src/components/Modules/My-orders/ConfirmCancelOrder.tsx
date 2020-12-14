@@ -45,8 +45,7 @@ const ConfirmCancelOrder = (props) => {
       callBack();
       onClose();
     },
-    onError: (error) => {
-      console.log('eror', error);
+    onError: () => {
       toast.error(t('cancelOrder:cancel_order_unsuccessful'));
       onClose();
     }
@@ -57,7 +56,6 @@ const ConfirmCancelOrder = (props) => {
   const { t } = useTranslation('cancelOrder');
 
   const onSubmit = (data: Inputs) => {
-    console.log(data);
     if (!data.check) {
       toast.error(t('cancelOrder:is_check'));
       return;

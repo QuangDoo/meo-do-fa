@@ -29,7 +29,6 @@ const ConfirmApplyJob: FC<Props> = (props) => {
   const { t } = useTranslation('applyJob');
 
   const onSubmit = (data: Input) => {
-    console.log(data);
     toast.success('Apply this job successful');
     onClose();
   };

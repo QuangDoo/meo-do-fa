@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React from 'react';
 
 type category = {
@@ -15,9 +16,9 @@ function Sidebar(props: Props): JSX.Element {
       <ul className="list-unstyled">
         {props?.categories?.map((category, index) => (
           <li key={index} className="pb-2">
-            <a href={`/help${category}`} className="faq-link">
-              {category.title}
-            </a>
+            <Link href={category.href}>
+              <a className="faq-link">{category.title}</a>
+            </Link>
           </li>
         ))}
       </ul>

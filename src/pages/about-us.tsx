@@ -1,3 +1,4 @@
+import { useTranslation } from 'i18n';
 import React from 'react';
 import withApollo from 'src/utils/withApollo';
 
@@ -7,9 +8,11 @@ import Header from '../components/Layout/Header';
 import Nav from '../components/Layout/Nav';
 
 const AboutUs = (): JSX.Element => {
-  const imgUrl1 = '/assets/images/about-us-2.jpg';
-  const imgUrl2 = '/assets/images/about-us-3.jpg';
-  const imgUrl3 = '/assets/images/about-us-1.jpg';
+  // const imgUrl1 = '/assets/images/about-us-2.jpg';
+  // const imgUrl2 = '/assets/images/about-us-3.jpg';
+  // const imgUrl3 = '/assets/images/about-us-1.jpg';
+
+  const { t } = useTranslation('common');
 
   return (
     <>
@@ -21,7 +24,15 @@ const AboutUs = (): JSX.Element => {
 
       <Nav />
 
-      <div className="container mt-t about-us">
+      <div className="container my-5">
+        <h2 className="text-center my-5">{t('aboutUs:title')}</h2>
+
+        <div className="d-flex justify-content-center align-items-center p-5">
+          {t('common:updating')}
+        </div>
+      </div>
+
+      {/* <div className="container mt-t about-us">
         <div className="row">
           <div className="col-md-6 animated fadeIn">
             <img className="about-us__img" alt="medofa" src={imgUrl1}></img>
@@ -79,7 +90,7 @@ const AboutUs = (): JSX.Element => {
             </p>
           </div>
         </div>
-      </div>
+      </div> */}
 
       <Footer />
     </>

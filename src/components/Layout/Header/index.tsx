@@ -24,12 +24,12 @@ const Header = ({ t }: HeaderProps): JSX.Element => {
           <div className="row">
             <div className="col-12 d-flex align-items-center justify-content-end">
               <ul className="nav">
-                <li className="promotion-nav__item">
+                {/* <li className="promotion-nav__item">
                   <a className="promotion-nav__link" href="/news" title={t('header:news')}>
                     <i className="promotion-nav__icon icomoon icon-news" />
                     <span>{t('header:news')}</span>
                   </a>
-                </li>
+                </li> */}
                 {/* <li className="promotion-nav__item">
                   <a
                     className="promotion-nav__link"

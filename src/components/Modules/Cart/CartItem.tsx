@@ -5,7 +5,6 @@ import { toast } from 'react-toastify';
 import { UPDATE_CART, UpdateCartData, UpdateCartVars } from 'src/graphql/cart/updateCart.mutation';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import useCart from 'src/hooks/useCart';
-import useCountCart from 'src/hooks/useCountCart';
 
 import { ProductPrice } from '../ProductCard/ProductPrice';
 import ConfirmDeleteModal from './ConfirmDeleteModal';
@@ -33,13 +32,10 @@ function CartItem(props: Props): JSX.Element {
 
   const { refetchCart } = useCart();
 
-  const { refetchCountCart } = useCountCart();
-
   const [updateCart] = useMutationAuth<UpdateCartData, UpdateCartVars>(UPDATE_CART, {
     onCompleted: () => {
       toast.success(t('cart:update_success'));
       refetchCart();
-      refetchCountCart();
     },
     onError: (error) => {
       const errorCode = error.graphQLErrors?.[0].extensions?.code;

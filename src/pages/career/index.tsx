@@ -1,4 +1,5 @@
-import React from 'react';
+import { useRouter } from 'next/router';
+import React, { useEffect } from 'react';
 import withApollo from 'src/utils/withApollo';
 
 import Footer from '../../components/Layout/Footer';
@@ -7,26 +8,33 @@ import Header from '../../components/Layout/Header';
 import Nav from '../../components/Layout/Nav';
 import Career from '../../components/Modules/Career';
 
-const CareerPage = (): JSX.Element => {
-  return (
-    <>
-      <Head>
-        <title>Medofa</title>
-      </Head>
+const CareerPage = () => {
+  const router = useRouter();
 
-      <Header />
+  useEffect(() => {
+    router.push('/');
+  }, []);
 
-      <Nav />
+  return null;
+  // return (
+  //   <>
+  //     <Head>
+  //       <title>Medofa</title>
+  //     </Head>
 
-      <Career />
+  //     <Header />
 
-      <Footer />
-    </>
-  );
+  //     <Nav />
+
+  //     <Career />
+
+  //     <Footer />
+  //   </>
+  // );
 };
 
-CareerPage.getInitialProps = async () => ({
-  namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge']
-});
+// CareerPage.getInitialProps = async () => ({
+//   namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge']
+// });
 
 export default withApollo({ ssr: false })(CareerPage);

@@ -11,9 +11,7 @@ function Questions(props: Props): JSX.Element {
       <div className="list-unstyled mb-3">
         {props?.questions.map((question, index) => (
           <li key={index} className="faq-question mb-3">
-            <Link href={`/help${question.href}`}>
-              <a className="faq-link">{question.title}</a>
-            </Link>
+            <a className="faq-link">{question.title}</a>
           </li>
         ))}
       </div>

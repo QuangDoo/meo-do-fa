@@ -1,14 +1,11 @@
-import { useMutation } from '@apollo/client';
 import clsx from 'clsx';
 import { withTranslation } from 'i18n';
 import { WithTranslation } from 'next-i18next';
-import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import { ADD_TO_CART } from 'src/graphql/order/order.mutation';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import useCart from 'src/hooks/useCart';
-import useCountCart from 'src/hooks/useCountCart';
 
 type Props = WithTranslation & {
   size?: 'normal' | 'large';
@@ -23,15 +20,20 @@ type Props = WithTranslation & {
 function QuantityInput(props: Props) {
   const { size, productId, price, name, t } = props;
 
-  const router = useRouter();
-
   const { refetchCart } = useCart();
-
-  const { refetchCountCart } = useCountCart();
 
   const [quantity, setQuantity] = useState<string>('0');
 
-  const [addToCart] = useMutationAuth(ADD_TO_CART);
+  const [addToCart] = useMutationAuth(ADD_TO_CART, {
+    onCompleted: () => {
+      toast.success(t(`errors:add_to_cart_success`));
+      refetchCart();
+    },
+    onError: (error) => {
+      console.log('Add to cart error:', { error });
+      toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
+    }
+  });
 
   const handleClick = () => {
     if (+quantity === 0) {
@@ -51,16 +53,7 @@ function QuantityInput(props: Props) {
         price,
         productName: name
       }
-    })
-      .then(() => {
-        toast.success(t(`errors:add_to_cart_success`));
-        refetchCart();
-        refetchCountCart();
-      })
-      .catch((error) => {
-        console.log('Add to cart error:', { error });
-        toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
-      });
+    });
   };
 
   const handleMinus = () => {
