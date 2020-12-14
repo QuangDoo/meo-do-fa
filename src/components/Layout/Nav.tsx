@@ -199,12 +199,12 @@ const Nav = () => {
                     }}>
                     {/* <div className="dropdown__item py-0">
                       <div className="d-flex justify-content-between">
-                        {/* <div className="text-left mr-3">
+                        <div className="text-left mr-3">
                           <small className="text-muted">{t('navbar:e_wallet')}</small>
                           <div className="text-primary">
                             0<span className="unit">{t('common:vnd')}</span>
                           </div>
-                        </div> */}
+                        </div> 
 
                         <div>
                           <a href="/users/loyalty_points">
