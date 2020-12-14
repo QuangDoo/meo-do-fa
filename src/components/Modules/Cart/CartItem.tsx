@@ -2,9 +2,12 @@ import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
+import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
+import { DELETE_CART, DeleteCartData, DeleteCartVars } from 'src/graphql/cart/deleteCart.mutation';
 import { UPDATE_CART, UpdateCartData, UpdateCartVars } from 'src/graphql/cart/updateCart.mutation';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import useCart from 'src/hooks/useCart';
+import { useDebouncedEffect } from 'src/hooks/useDebouncedEffect';
 
 import { ProductPrice } from '../ProductCard/ProductPrice';
 import ConfirmDeleteModal from './ConfirmDeleteModal';
@@ -18,7 +21,6 @@ type Props = {
   standard_price: number;
   quantity: number;
   _id: string;
-  refetchCart: () => void;
 };
 
 function CartItem(props: Props): JSX.Element {
@@ -26,111 +28,125 @@ function CartItem(props: Props): JSX.Element {
 
   const [open, setOpen] = useState(false);
 
-  const [isKeyDown, setIsKeyDown] = useState(false);
+  const openDeleteModal = () => setOpen(true);
+  const closeDeleteModal = () => setOpen(false);
 
-  const [quantity, setQuantity] = useState<string>(props.quantity.toString());
+  const [displayQuantity, setDisplayQuantity] = useState<string>(props.quantity + '');
+
+  const [quantity, setQuantity] = useState<number>(props.quantity);
 
   const { refetchCart } = useCart();
 
-  const [updateCart] = useMutationAuth<UpdateCartData, UpdateCartVars>(UPDATE_CART, {
-    onCompleted: () => {
-      toast.success(t('cart:update_success'));
-      refetchCart();
-    },
-    onError: (error) => {
-      const errorCode = error.graphQLErrors?.[0].extensions?.code;
+  const [updateCart, { loading: updatingCart }] = useMutationAuth<UpdateCartData, UpdateCartVars>(
+    UPDATE_CART,
+    {
+      onCompleted: () => {
+        toast.success(t('cart:update_success'));
+        refetchCart();
+      },
+      onError: (error) => {
+        const errorCode = error.graphQLErrors?.[0].extensions?.code;
 
-      if (errorCode) {
-        toast.error(t(`errors:code_${errorCode}`));
+        if (errorCode) {
+          toast.error(t(`errors:code_${errorCode}`));
+        }
       }
     }
-  });
+  );
 
-  const onHandleClick = () => {
-    setIsKeyDown(false);
-    setOpen(true);
+  const [deleteCart, { loading: deletingCart }] = useMutationAuth<DeleteCartData, DeleteCartVars>(
+    DELETE_CART,
+    {
+      onCompleted: () => {
+        toast.success(t('cart:delete_success'));
+        refetchCart();
+        closeDeleteModal();
+      },
+      onError: (error) => {
+        const errorCode = error.graphQLErrors?.[0].extensions?.code;
+
+        if (errorCode) {
+          toast.error(t(`errors:code_${errorCode}`));
+        }
+      }
+    }
+  );
+
+  // Set quantity back to 1 if user doesn't confirm delete
+  const handleCloseModal = () => {
+    if (quantity === 0) {
+      setDisplayQuantity('1');
+      setQuantity(1);
+    }
+    closeDeleteModal();
+  };
+
+  const handleDeleteCart = () => {
+    deleteCart({
+      variables: {
+        _id: props._id
+      }
+    });
   };
 
   const handlePlusClick = () => {
-    const newQty = props.quantity + 1;
-    setIsKeyDown(false);
-    setQuantity(newQty + '');
-    updateCart({
-      variables: {
-        inputs: {
-          _id: props._id,
-          quantity: newQty
-        }
-      }
-    });
-  };
-
-  const handleUpdateCart = (quantity) => {
-    updateCart({
-      variables: {
-        inputs: {
-          _id: props._id,
-          quantity: quantity
-        }
-      }
-    });
+    const newQty = +displayQuantity + 1;
+    setDisplayQuantity(newQty + '');
+    setQuantity(newQty);
   };
 
   const handleMinusClick = () => {
-    const newQty = Math.max(props.quantity - 1, 0);
-    if (newQty === 0) {
-      setIsKeyDown(false);
-      setOpen(true);
-      setQuantity('1');
-
-      // toast.error(<div>{t('cart:quantity_smaller_than_1')}</div>);
-      return;
-    }
-    setQuantity(newQty + '');
-
-    updateCart({
-      variables: {
-        inputs: {
-          _id: props._id,
-          quantity: +newQty
-        }
-      }
-    });
+    const newQty = Math.max(+displayQuantity - 1, 0);
+    setDisplayQuantity(newQty + '');
+    setQuantity(newQty);
   };
 
   // Blur on Esc or Enter
   const handleKeyDown = (e) => {
-    setIsKeyDown(true);
     if ([13, 27].includes(e.keyCode)) {
       e.target.blur();
     }
   };
 
-  const handleBlur = () => {
-    if (+quantity === 0) {
-      setQuantity('1');
-      setOpen(true);
-    } else if (+quantity !== props.quantity) {
+  // Change display quantity but not real quantity for update
+  const handleChange = (event) => {
+    const string = event.target.value.replace(/\D/g, '');
+
+    const newQuantity = +string || 0;
+
+    setDisplayQuantity(newQuantity + '');
+  };
+
+  // Only change real quantity on input blur
+  const handleInputBlur = () => {
+    setQuantity(+displayQuantity);
+  };
+
+  // Set display quantity to 0 on delete
+  const handleDeleteClick = () => {
+    openDeleteModal();
+  };
+
+  // Debounce when real quantity change
+  useDebouncedEffect(
+    () => {
+      if (quantity === 0) {
+        openDeleteModal();
+        return;
+      }
+
       updateCart({
         variables: {
           inputs: {
             _id: props._id,
-            quantity: +quantity
+            quantity: quantity
           }
         }
       });
-    }
-  };
-
-  const handleChange = (event) => {
-    const string = event.target.value.replace(/\D/g, '');
-
-    const newQuantity = parseInt(string, 10) || 0;
-
-    if (newQuantity + '' !== quantity) {
-      setQuantity(newQuantity + '');
-    }
-  };
+    },
+    450,
+    [quantity]
+  );
 
   return (
     <div className="cart-item">
@@ -176,10 +192,10 @@ function CartItem(props: Props): JSX.Element {
                       className="form-control px-1 no-spinner text-center qty__input"
                       min={0}
                       max={100000}
-                      value={quantity}
+                      value={displayQuantity}
                       onChange={handleChange}
                       onKeyDown={handleKeyDown}
-                      onBlur={handleBlur}
+                      onBlur={handleInputBlur}
                     />
 
                     <button
@@ -193,7 +209,7 @@ function CartItem(props: Props): JSX.Element {
             </div>
 
             <div className="ml-3">
-              <button onClick={onHandleClick} className="cart-item__remove">
+              <button onClick={handleDeleteClick} className="cart-item__remove">
                 <i className="fas fa-trash" />
               </button>
             </div>
@@ -202,15 +218,15 @@ function CartItem(props: Props): JSX.Element {
       </div>
 
       <ConfirmDeleteModal
-        isKeyDown={isKeyDown}
         open={open}
-        onClose={() => setOpen(false)}
+        onClose={handleCloseModal}
+        onConfirm={handleDeleteCart}
         productName={props.productName}
         image={props.image}
         price={props.price}
-        _id={props._id}
-        updateCart={handleUpdateCart}
       />
+
+      <LoadingBackdrop open={updatingCart || deletingCart} />
     </div>
   );
 }
