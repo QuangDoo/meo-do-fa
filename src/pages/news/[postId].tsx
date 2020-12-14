@@ -1,4 +1,5 @@
-import React from 'react';
+import { useRouter } from 'next/router';
+import React, { useEffect } from 'react';
 import News from 'src/components/Modules/News';
 import withApollo from 'src/utils/withApollo';
 
@@ -78,29 +79,36 @@ const links = [
   { href: '', title: 'Contrary to to populartext Contrary to populartext Contrary to populartext' }
 ];
 
-const NewsPage = (): JSX.Element => {
-  return (
-    <>
-      <Head>
-        <title>Medofa</title>
-      </Head>
+const NewsPage = () => {
+  const router = useRouter();
 
-      <Header />
+  useEffect(() => {
+    router.push('/');
+  }, []);
 
-      <Nav />
+  return null;
+  // return (
+  //   <>
+  //     <Head>
+  //       <title>Medofa</title>
+  //     </Head>
 
-      <News bannerImgUrl={imgUrl} links={links}>
-        <NewsDetail
-          imgUrl={data.imgUrl}
-          categories={data.categories}
-          description={data.description}
-          author={data.author}
-          title={data.title}></NewsDetail>
-      </News>
+  //     <Header />
 
-      <Footer />
-    </>
-  );
+  //     <Nav />
+
+  //     <News bannerImgUrl={imgUrl} links={links}>
+  //       <NewsDetail
+  //         imgUrl={data.imgUrl}
+  //         categories={data.categories}
+  //         description={data.description}
+  //         author={data.author}
+  //         title={data.title}></NewsDetail>
+  //     </News>
+
+  //     <Footer />
+  //   </>
+  // );
 };
 
 NewsPage.getInitialProps = async () => ({

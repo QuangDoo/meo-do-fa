@@ -1,16 +1,19 @@
 import { useQuery } from '@apollo/client';
-import { Trans } from 'i18n';
+import { Trans, useTranslation } from 'i18n';
 import React from 'react';
+import LinkText from 'src/components/Form/LinkText';
 import { GET_COUPON_PROGRAMS } from 'src/graphql/coupons/getCouponPrgrams';
-import { SpecialCoupons } from 'src/mockData/mockSpecialCoupons';
 
 import PromoCodeItem from './PromoCodeItem';
 import SpecialPromoCodeItem from './SpecialPromoCodeItem';
 
-export default function index() {
+export default function PromoCodes() {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const { data: couponsData, error } = useQuery(GET_COUPON_PROGRAMS);
   // console.log(couponsData?.getCouponPrograms);
+
+  const { t } = useTranslation('promoCodes');
+
   return (
     <>
       {/* <PromoCodes data={couponsData?.getCouponPrograms} /> */}
@@ -18,12 +21,8 @@ export default function index() {
         <div className="container mb-3">
           <div className="row">
             <div className="col-12 mb-3">
-              <h1>
-                <Trans i18nKey="promoCodes:promo_codes" />
-              </h1>
-              <p>
-                <Trans i18nKey="promoCodes:user_manual" />
-              </p>
+              <h1>{t('promoCodes:promo_codes')}</h1>
+              <p>{t('promoCodes:user_manual')}</p>
               <ol className="pl-5">
                 <li>
                   <span>
@@ -31,23 +30,24 @@ export default function index() {
                       i18nKey="promoCodes:order"
                       components={{
                         b: <b />,
-                        a1: <a href="/asd">asd</a>,
-                        a2: <a href="/asd">asdasd</a>
+                        a1: <LinkText href="/quick-order"> </LinkText>,
+                        a2: <LinkText href="/products"> </LinkText>
                       }}
                     />
                   </span>
                 </li>
-                <li>
+                {/* <li>
                   <span>
                     <Trans
                       i18nKey="promoCodes:order_content"
                       components={{
+                        b: <b />,
                         a1: <a href="/asd">asd</a>,
                         a2: <a href="/asd">asdasd</a>
                       }}
                     />
                   </span>
-                </li>
+                </li> */}
                 <li>
                   <span>
                     <Trans
@@ -62,7 +62,8 @@ export default function index() {
             </div>
           </div>
         </div>
-        <div className="container">
+
+        {/* <div className="container">
           <div className="row">
             <div className="col-12 text-center">
               <h2 className="text-center">
@@ -80,10 +81,10 @@ export default function index() {
             </div>
           </div>
           <div className="row" />
-        </div>
+        </div> */}
       </div>
 
-      <div className="special-promocodes pt-4 pb-5 mb-5">
+      {/* <div className="special-promocodes pt-4 pb-5 mb-5">
         <div className="container">
           <div className="row mb-4">
             <div className="col-12 text-center">
@@ -106,7 +107,7 @@ export default function index() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* <SpecialPromoCodes data={couponsData?.getCouponPrograms} /> */}
 
@@ -114,9 +115,7 @@ export default function index() {
         <div className="container">
           <div className="row mb-3">
             <div className="col text-center">
-              <h2>
-                <Trans i18nKey="promoCodes:another_codes" />
-              </h2>
+              <h2>{t('promoCodes:all_promo_codes')}</h2>
             </div>
           </div>
           <div className="row">
