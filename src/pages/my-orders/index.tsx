@@ -13,7 +13,6 @@ import Nav from 'src/components/Layout/Nav';
 import ProfileLayout from 'src/components/Modules/ProfileLayout';
 import {
   GET_ORDER_LIST,
-  GetOrderList,
   GetOrderListData,
   GetOrderListVars,
   OrderFlag

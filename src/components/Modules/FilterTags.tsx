@@ -3,36 +3,16 @@ import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { ProductTag } from 'src/graphql/product/getProducts';
 
-type Tag = {
-  name: React.ReactNode;
-  tag?: string;
-};
+const tags: ProductTag[] = ['new', 'invoice-exportable', 'only-medofa', 'use-vietnamese'];
 
 const FilterTags = () => {
   const { t } = useTranslation('filterTags');
 
-  const tags: Tag[] = [
-    { name: t('all') },
-    { name: t('new'), tag: 'new' },
-    { name: t('quick_invoice'), tag: 'invoice-exportagle' },
-    { name: t('only_medofa'), tag: 'only-medofa' },
-    { name: t('vn'), tag: 'use-vietnamese' }
-  ];
-
   const router = useRouter();
-  const getHref = (tag) => {
-    if (tag) {
-      return {
-        pathname: router.pathname,
-        query: {
-          ...router.query,
-          page: 1,
-          tag
-        }
-      };
-    }
 
+  const removeTag = () => {
     const oldQuery = { ...router.query };
 
     delete oldQuery.tag;
@@ -48,10 +28,25 @@ const FilterTags = () => {
 
   return (
     <>
-      {tags.map(({ tag, name }) => (
-        <Link key={tag} href={getHref(tag)}>
+      <Link key={'all'} href={removeTag()}>
+        <a className={clsx('btn products__filter-btn', router.query.tag === undefined && 'active')}>
+          {t('filterTags:all')}
+        </a>
+      </Link>
+
+      {tags.map((tag) => (
+        <Link
+          key={tag}
+          href={{
+            pathname: router.pathname,
+            query: {
+              ...router.query,
+              page: 1,
+              tag
+            }
+          }}>
           <a className={clsx('btn products__filter-btn', router.query.tag === tag && 'active')}>
-            {name}
+            {t('filterTags:' + tag)}
           </a>
         </Link>
       ))}

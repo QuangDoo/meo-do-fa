@@ -61,7 +61,7 @@ const ProfileSidebar = () => {
 
       <SidebarLink
         text={t('navbar:my_promo_code')}
-        href="/users/user-promo-codes"
+        href="/my-promo-codes"
         iconClass="fas fa-tags"
       />
 

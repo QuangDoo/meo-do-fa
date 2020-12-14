@@ -1,15 +1,16 @@
+import { Button, Drawer } from '@material-ui/core';
 import clsx from 'clsx';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useState } from 'react';
 import { Category } from 'src/graphql/category/category.query';
 import { Manufacturer } from 'src/graphql/manufacturers/manufacturers.query';
 
 import Dropdown from '../../Form/Dropdown';
 import Select from '../../Form/Select';
 import FilterTags from '../FilterTags';
-import TemporaryDrawer from './TemporaryDrawer';
+import ProductsSidebarFilter from '../ProductsSidebarFilter';
 
 type Props = {
   categories: Category[];
@@ -18,8 +19,12 @@ type Props = {
 
 const ProductsDrawerFilter = (props: Props) => {
   const { categories, manufacturers } = props;
+
   const { t } = useTranslation(['productsSidebar']);
+
   const router = useRouter();
+
+  const [open, setOpen] = useState(false);
 
   const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     router.push(
@@ -57,7 +62,24 @@ const ProductsDrawerFilter = (props: Props) => {
           </div>
         </div>
         <div className="col-xs">
-          <TemporaryDrawer categories={categories} manufacturers={manufacturers} />
+          <Button
+            onClick={() => setOpen(true)}
+            variant="contained"
+            color="primary"
+            style={{ borderRadius: '50px' }}>
+            <i className="fas fa-filter mr-1"></i>
+            {t('productsSidebar:filter')}
+          </Button>
+
+          <Drawer anchor="top" open={open} onClose={() => setOpen(false)}>
+            <div className="p-3 min-vh-100">
+              <ProductsSidebarFilter
+                categories={categories}
+                manufacturers={manufacturers}
+                onClose={() => setOpen(false)}
+              />
+            </div>
+          </Drawer>
         </div>
       </div>
       <div className="row justify-content-between align-items-center">
