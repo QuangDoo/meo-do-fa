@@ -1,6 +1,5 @@
 import clsx from 'clsx';
 import { useTranslation } from 'i18n';
-import moment from 'moment';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import NotiItem from 'src/components/Modules/Noti/NotiItem';
