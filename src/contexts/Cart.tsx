@@ -1,37 +1,19 @@
 import React, { createContext, useContext, useState } from 'react';
+import { GetCartData } from 'src/graphql/order/order.query';
 
 type Props = {
   children: React.ReactNode;
 };
 
 type ContextValue = {
-  cart?: Value;
-  setCart?: (value) => void;
-};
-
-type Cart = {
-  _id: string;
-  quantity: number;
-  productId: string;
-  productName: string;
-  price: number;
-  oldPrice: number;
-  product: {
-    image_512: string;
-  };
-};
-
-type Value = {
-  carts: Cart[];
-  totalQty: number;
-  totalPrice: number;
-  refetchCart: () => void;
+  cart?: GetCartData;
+  setCart?: (value: GetCartData) => void;
 };
 
 const CartContext = createContext<ContextValue>({});
 
 const CartProvider = ({ children }: Props) => {
-  const [state, setState] = useState();
+  const [state, setState] = useState<GetCartData>();
 
   return (
     <CartContext.Provider value={{ cart: state, setCart: setState }}>

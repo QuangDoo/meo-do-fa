@@ -38,7 +38,7 @@ const Home = ({ dealsOfTheDayData, bestSellingData, promotionProductsData, newPr
   ];
 
   const promotionProducts = promotionProductsData?.getProductByConditions.Products || [];
-  console.log('promotionProducts', promotionProducts);
+
   return (
     <div>
       <SlickSlider
