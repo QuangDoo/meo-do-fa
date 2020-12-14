@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import { UPDATE_CART, UpdateCartData, UpdateCartVars } from 'src/graphql/cart/updateCart.mutation';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import useCart from 'src/hooks/useCart';
+import { useDebouncedEffect } from 'src/hooks/useDebouncedEffect';
 
 import { ProductPrice } from '../ProductCard/ProductPrice';
 import ConfirmDeleteModal from './ConfirmDeleteModal';
@@ -26,9 +27,9 @@ function CartItem(props: Props): JSX.Element {
 
   const [open, setOpen] = useState(false);
 
-  const [isKeyDown, setIsKeyDown] = useState(false);
+  const [displayQuantity, setDisplayQuantity] = useState<string>(props.quantity + '');
 
-  const [quantity, setQuantity] = useState<string>(props.quantity.toString());
+  const [quantity, setQuantity] = useState(props.quantity);
 
   const { refetchCart } = useCart();
 
@@ -46,91 +47,60 @@ function CartItem(props: Props): JSX.Element {
     }
   });
 
-  const onHandleClick = () => {
-    setIsKeyDown(false);
-    setOpen(true);
-  };
-
   const handlePlusClick = () => {
-    const newQty = props.quantity + 1;
-    setIsKeyDown(false);
-    setQuantity(newQty + '');
-    updateCart({
-      variables: {
-        inputs: {
-          _id: props._id,
-          quantity: newQty
-        }
-      }
-    });
+    const newQty = parseInt(displayQuantity, 10) + 1;
+    setDisplayQuantity(newQty + '');
+    setQuantity(newQty);
   };
 
-  const handleUpdateCart = (quantity) => {
-    updateCart({
-      variables: {
-        inputs: {
-          _id: props._id,
-          quantity: quantity
-        }
-      }
-    });
+  const handleUpdateCart = () => {
+    // updateCart({
+    //   variables: {
+    //     inputs: {
+    //       _id: props._id,
+    //       quantity: quantity
+    //     }
+    //   }
+    // });
+    console.log('Update cart now with quantity:', quantity);
   };
 
   const handleMinusClick = () => {
-    const newQty = Math.max(props.quantity - 1, 0);
-    if (newQty === 0) {
-      setIsKeyDown(false);
-      setOpen(true);
-      setQuantity('1');
+    const newQty = Math.max(parseInt(displayQuantity, 10) - 1, 0);
 
-      // toast.error(<div>{t('cart:quantity_smaller_than_1')}</div>);
-      return;
-    }
-    setQuantity(newQty + '');
-
-    updateCart({
-      variables: {
-        inputs: {
-          _id: props._id,
-          quantity: +newQty
-        }
-      }
-    });
+    setDisplayQuantity(newQty + '');
+    setQuantity(newQty);
   };
 
   // Blur on Esc or Enter
   const handleKeyDown = (e) => {
-    setIsKeyDown(true);
     if ([13, 27].includes(e.keyCode)) {
       e.target.blur();
     }
   };
 
-  const handleBlur = () => {
-    if (+quantity === 0) {
-      setQuantity('1');
-      setOpen(true);
-    } else if (+quantity !== props.quantity) {
-      updateCart({
-        variables: {
-          inputs: {
-            _id: props._id,
-            quantity: +quantity
-          }
-        }
-      });
-    }
-  };
-
+  // Change display quantity but not real quantity for update
   const handleChange = (event) => {
     const string = event.target.value.replace(/\D/g, '');
 
     const newQuantity = parseInt(string, 10) || 0;
 
-    if (newQuantity + '' !== quantity) {
-      setQuantity(newQuantity + '');
-    }
+    setDisplayQuantity(newQuantity + '');
   };
+
+  // Only change real quantity for update when blur
+  const handleBlur = () => {
+    setQuantity(parseInt(displayQuantity, 10));
+  };
+
+  // Set display quantity to 0 on delete
+  const handleDelete = () => {
+    setDisplayQuantity('0');
+  };
+
+  useDebouncedEffect(() => {
+    handleUpdateCart();
+  }, [quantity]);
 
   return (
     <div className="cart-item">
@@ -176,7 +146,7 @@ function CartItem(props: Props): JSX.Element {
                       className="form-control px-1 no-spinner text-center qty__input"
                       min={0}
                       max={100000}
-                      value={quantity}
+                      value={displayQuantity}
                       onChange={handleChange}
                       onKeyDown={handleKeyDown}
                       onBlur={handleBlur}
@@ -193,7 +163,7 @@ function CartItem(props: Props): JSX.Element {
             </div>
 
             <div className="ml-3">
-              <button onClick={onHandleClick} className="cart-item__remove">
+              <button onClick={handleDelete} className="cart-item__remove">
                 <i className="fas fa-trash" />
               </button>
             </div>
@@ -202,7 +172,7 @@ function CartItem(props: Props): JSX.Element {
       </div>
 
       <ConfirmDeleteModal
-        isKeyDown={isKeyDown}
+        isKeyDown={false}
         open={open}
         onClose={() => setOpen(false)}
         productName={props.productName}
