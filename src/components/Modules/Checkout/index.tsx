@@ -23,7 +23,7 @@ import {
 import useAddress from 'src/hooks/useAddress';
 import { useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
 import useCart from 'src/hooks/useCart';
-import useDidUpdate from 'src/hooks/useDidUpdate';
+import useDidUpdateEffect from 'src/hooks/useDidUpdate';
 import swal from 'sweetalert';
 
 import FormCard from '../MyAccount/FormCard';
@@ -119,7 +119,7 @@ const CheckoutPage = () => {
     }
   });
 
-  useDidUpdate(() => {
+  useDidUpdateEffect(() => {
     applyPayment({
       variables: {
         orderNo: counselData.getCounsel.counsel.orderNo,

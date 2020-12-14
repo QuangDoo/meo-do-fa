@@ -2,6 +2,8 @@ import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
+import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
+import { DELETE_CART, DeleteCartData, DeleteCartVars } from 'src/graphql/cart/deleteCart.mutation';
 import { UPDATE_CART, UpdateCartData, UpdateCartVars } from 'src/graphql/cart/updateCart.mutation';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import useCart from 'src/hooks/useCart';
@@ -19,7 +21,6 @@ type Props = {
   standard_price: number;
   quantity: number;
   _id: string;
-  refetchCart: () => void;
 };
 
 function CartItem(props: Props): JSX.Element {
@@ -27,47 +28,75 @@ function CartItem(props: Props): JSX.Element {
 
   const [open, setOpen] = useState(false);
 
+  const openDeleteModal = () => setOpen(true);
+  const closeDeleteModal = () => setOpen(false);
+
   const [displayQuantity, setDisplayQuantity] = useState<string>(props.quantity + '');
 
-  const [quantity, setQuantity] = useState(props.quantity);
+  const [quantity, setQuantity] = useState<number>(props.quantity);
 
   const { refetchCart } = useCart();
 
-  const [updateCart] = useMutationAuth<UpdateCartData, UpdateCartVars>(UPDATE_CART, {
-    onCompleted: () => {
-      toast.success(t('cart:update_success'));
-      refetchCart();
-    },
-    onError: (error) => {
-      const errorCode = error.graphQLErrors?.[0].extensions?.code;
+  const [updateCart, { loading: updatingCart }] = useMutationAuth<UpdateCartData, UpdateCartVars>(
+    UPDATE_CART,
+    {
+      onCompleted: () => {
+        toast.success(t('cart:update_success'));
+        refetchCart();
+      },
+      onError: (error) => {
+        const errorCode = error.graphQLErrors?.[0].extensions?.code;
 
-      if (errorCode) {
-        toast.error(t(`errors:code_${errorCode}`));
+        if (errorCode) {
+          toast.error(t(`errors:code_${errorCode}`));
+        }
       }
     }
-  });
+  );
+
+  const [deleteCart, { loading: deletingCart }] = useMutationAuth<DeleteCartData, DeleteCartVars>(
+    DELETE_CART,
+    {
+      onCompleted: () => {
+        toast.success(t('cart:delete_success'));
+        refetchCart();
+        closeDeleteModal();
+      },
+      onError: (error) => {
+        const errorCode = error.graphQLErrors?.[0].extensions?.code;
+
+        if (errorCode) {
+          toast.error(t(`errors:code_${errorCode}`));
+        }
+      }
+    }
+  );
+
+  // Set quantity back to 1 if user doesn't confirm delete
+  const handleCloseModal = () => {
+    if (quantity === 0) {
+      setDisplayQuantity('1');
+      setQuantity(1);
+    }
+    closeDeleteModal();
+  };
+
+  const handleDeleteCart = () => {
+    deleteCart({
+      variables: {
+        _id: props._id
+      }
+    });
+  };
 
   const handlePlusClick = () => {
-    const newQty = parseInt(displayQuantity, 10) + 1;
+    const newQty = +displayQuantity + 1;
     setDisplayQuantity(newQty + '');
     setQuantity(newQty);
   };
 
-  const handleUpdateCart = () => {
-    // updateCart({
-    //   variables: {
-    //     inputs: {
-    //       _id: props._id,
-    //       quantity: quantity
-    //     }
-    //   }
-    // });
-    console.log('Update cart now with quantity:', quantity);
-  };
-
   const handleMinusClick = () => {
-    const newQty = Math.max(parseInt(displayQuantity, 10) - 1, 0);
-
+    const newQty = Math.max(+displayQuantity - 1, 0);
     setDisplayQuantity(newQty + '');
     setQuantity(newQty);
   };
@@ -83,24 +112,41 @@ function CartItem(props: Props): JSX.Element {
   const handleChange = (event) => {
     const string = event.target.value.replace(/\D/g, '');
 
-    const newQuantity = parseInt(string, 10) || 0;
+    const newQuantity = +string || 0;
 
     setDisplayQuantity(newQuantity + '');
   };
 
-  // Only change real quantity for update when blur
-  const handleBlur = () => {
-    setQuantity(parseInt(displayQuantity, 10));
+  // Only change real quantity on input blur
+  const handleInputBlur = () => {
+    setQuantity(+displayQuantity);
   };
 
   // Set display quantity to 0 on delete
-  const handleDelete = () => {
-    setDisplayQuantity('0');
+  const handleDeleteClick = () => {
+    openDeleteModal();
   };
 
-  useDebouncedEffect(() => {
-    handleUpdateCart();
-  }, [quantity]);
+  // Debounce when real quantity change
+  useDebouncedEffect(
+    () => {
+      if (quantity === 0) {
+        openDeleteModal();
+        return;
+      }
+
+      updateCart({
+        variables: {
+          inputs: {
+            _id: props._id,
+            quantity: quantity
+          }
+        }
+      });
+    },
+    450,
+    [quantity]
+  );
 
   return (
     <div className="cart-item">
@@ -149,7 +195,7 @@ function CartItem(props: Props): JSX.Element {
                       value={displayQuantity}
                       onChange={handleChange}
                       onKeyDown={handleKeyDown}
-                      onBlur={handleBlur}
+                      onBlur={handleInputBlur}
                     />
 
                     <button
@@ -163,7 +209,7 @@ function CartItem(props: Props): JSX.Element {
             </div>
 
             <div className="ml-3">
-              <button onClick={handleDelete} className="cart-item__remove">
+              <button onClick={handleDeleteClick} className="cart-item__remove">
                 <i className="fas fa-trash" />
               </button>
             </div>
@@ -172,15 +218,15 @@ function CartItem(props: Props): JSX.Element {
       </div>
 
       <ConfirmDeleteModal
-        isKeyDown={false}
         open={open}
-        onClose={() => setOpen(false)}
+        onClose={handleCloseModal}
+        onConfirm={handleDeleteCart}
         productName={props.productName}
         image={props.image}
         price={props.price}
-        _id={props._id}
-        updateCart={handleUpdateCart}
       />
+
+      <LoadingBackdrop open={updatingCart || deletingCart} />
     </div>
   );
 }
