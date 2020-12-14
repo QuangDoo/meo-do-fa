@@ -6,12 +6,8 @@ const getURI = () => {
   if (typeof window === 'undefined') {
     console.log('SERVER...');
 
-    return 'http://192.168.1.7:3901/graphql';
-
     return 'http://gateway.medofa.svc.cluster.local/graphql';
   }
-
-  return 'http://192.168.1.7:3901/graphql';
 
   return 'https://graphql.medofa.bedigital.vn';
 };
