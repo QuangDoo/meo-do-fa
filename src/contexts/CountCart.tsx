@@ -5,26 +5,17 @@ type Props = {
 };
 
 type ContextValue = {
-  countCart?: Value;
-  setCountCart?(value: any): void;
-};
-
-type CountCart = {
-  data: number;
-};
-
-type Value = {
-  countCart: CountCart;
-  refetchCountCart: () => void;
+  countCart?: number;
+  setCountCart?: (value: number) => void;
 };
 
 const CountCartContext = createContext<ContextValue>({});
 
 const CountCartProvider = ({ children }: Props) => {
-  const [state, setState] = useState();
+  const [countCart, setCountCart] = useState<number>();
 
   return (
-    <CountCartContext.Provider value={{ countCart: state, setCountCart: setState }}>
+    <CountCartContext.Provider value={{ countCart, setCountCart }}>
       {children}
     </CountCartContext.Provider>
   );

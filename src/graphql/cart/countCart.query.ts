@@ -1,7 +1,9 @@
 import { gql } from '@apollo/client';
 
 export type CountCartData = {
-  data: number;
+  countCarts: {
+    data: number;
+  };
 };
 
 export const COUNT_CART = gql`
