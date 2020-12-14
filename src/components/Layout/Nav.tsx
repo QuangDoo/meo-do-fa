@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
+import { useCountCartContext } from 'src/contexts/CountCart';
 import { GET_ALL_CATEGORIES, GetAllCategoriesData } from 'src/graphql/category/category.query';
 import useCountCart from 'src/hooks/useCountCart';
 import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
@@ -17,7 +18,9 @@ const Nav = () => {
 
   const { data: dataCount } = useCountCart();
 
-  const totalQty = dataCount?.countCarts?.data;
+  const { countCart } = useCountCartContext();
+
+  const totalQty = countCart;
 
   const { t } = useTranslation(['navbar', 'errors', 'common']);
 
@@ -55,20 +58,20 @@ const Nav = () => {
         <div className="row">
           <div className="col-12 d-flex align-items-center justify-content-between">
             <ul className="nav text-capitalize">
-              <li className="rockland-nav__item dropdown">
-                <div data-toggle="dropdown" data-hover="dropdown">
-                  <Link href="/products">
-                    <a className="rockland-nav__link">
-                      <i className="rockland-nav__icon fas fa-list-ul" />
-                      <span className="rockland-nav__title">{t('navbar:category')}</span>
-                    </a>
-                  </Link>
-                </div>
-                <ul className="dropdown-menu">
-                  {categories &&
-                    categories.map(({ name, id }) => (
-                      <li key={id} className="mb-2 dropdown-item">
-                        <div className="dropdown">
+              {categories.length !== 0 ? (
+                <li className="rockland-nav__item dropdown dropdown-nav">
+                  <div data-toggle="dropdown" data-hover="dropdown">
+                    <Link href="/products">
+                      <a className="rockland-nav__link">
+                        <i className="rockland-nav__icon fas fa-list-ul" />
+                        <span className="rockland-nav__title">{t('navbar:category')}</span>
+                      </a>
+                    </Link>
+                  </div>
+                  <ul className="dropdown-menu">
+                    {categories.map(({ name, id }) => (
+                      <li key={id} className="mb-2 dropdown-item text-wrap">
+                        <div className="dropdown dropdown-nav">
                           <div data-toggle="dropdown" data-hover="dropdown">
                             <Link href={`/products?category=${id}`}>
                               <a className={clsx('products__filter-category')}>{name}</a>
@@ -76,7 +79,7 @@ const Nav = () => {
                           </div>
                           {/* <ul className="dropdown-menu dropdown-sub-menu">
                             <li className="mb-2 dropdown-item">
-                              <div className="dropdown">
+                              <div className="dropdown dropdown-nav">
                                 <div data-toggle="dropdown" data-hover="dropdown">
                                   <a className="text-dark" href="/#">
                                     amet consectetur
@@ -103,8 +106,18 @@ const Nav = () => {
                         </div>
                       </li>
                     ))}
-                </ul>
-              </li>
+                  </ul>
+                </li>
+              ) : (
+                <li className="rockland-nav__item">
+                  <Link href="/products">
+                    <a className="rockland-nav__link">
+                      <i className="rockland-nav__icon fas fa-list-ul" />
+                      <span className="rockland-nav__title">{t('navbar:category')}</span>
+                    </a>
+                  </Link>
+                </li>
+              )}
 
               <li className="rockland-nav__item">
                 <Link href="/products">
@@ -160,8 +173,7 @@ const Nav = () => {
                     <Link href="/cart">
                       <a className="rockland-nav__link notification">
                         <i className="icomoon icon-local-mall rockland-nav__icon" />
-
-                        <span className="notification__counter">{totalQty}</span>
+                        {totalQty > 0 && <span className="notification__counter">{totalQty}</span>}
                       </a>
                     </Link>
                   </li>
@@ -187,14 +199,14 @@ const Nav = () => {
                     }}>
                     {/* <div className="dropdown__item py-0">
                       <div className="d-flex justify-content-between">
-                        <div className="text-left mr-3">
+                        {/* <div className="text-left mr-3">
                           <small className="text-muted">{t('navbar:e_wallet')}</small>
                           <div className="text-primary">
                             0<span className="unit">{t('common:vnd')}</span>
                           </div>
-                        </div>
+                        </div> */}
 
-                        <div className="text-right">
+                        <div>
                           <a href="/users/loyalty_points">
                             <small className="text-muted">{t('navbar:reward_points')}</small>
                             <div className="text-secondary">0</div>

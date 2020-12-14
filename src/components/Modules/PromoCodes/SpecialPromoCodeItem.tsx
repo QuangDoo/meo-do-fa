@@ -23,18 +23,16 @@ export default function SpecialPromoCodeItem(props: Props) {
       </div>
       <div className="coupon2__description flex-grow-1 d-flex flex-column justify-content-around">
         <div>
-          <div className="coupon2__amount">
-            {props.couponAmount}
-            <span className="unit">đ</span>
-          </div>
-          <span>
-            {props.desctiption}
-            <span className="unit">đ</span>
-          </span>
+          <div className="coupon2__amount text-max-2">{props.couponAmount}</div>
+          <span>{props.desctiption}</span>
         </div>
         <div>
-          <div className="coupon2__text">nhập mã</div>
-          <div className="coupon2__code">{props.couponCode}</div>
+          {props.couponCode !== 'false' && (
+            <>
+              <div className="coupon2__text">nhập mã</div>
+              <div className="coupon2__code">{props.couponCode}</div>
+            </>
+          )}
         </div>
       </div>
     </div>

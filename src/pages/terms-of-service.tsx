@@ -992,7 +992,6 @@ const TermsOfService = () => {
             dự kiến niêm yết và bán cho Khách Hàng trên và thông qua Sàn Giao Dịch.
           </li>
         </ul>
-        <h3 className="font-italic mt-3">Hết phần điều khoản dịch vụ</h3>
       </div>
 
       <Footer />

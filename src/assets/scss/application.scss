@@ -16044,6 +16044,7 @@ abbr[title] {
 }
 .coupon__amount {
   // font-size: large;
+  font-size: 1.1rem;
   font-weight: 900;
   text-transform: uppercase;
 }
@@ -18909,7 +18910,7 @@ abbr[title] {
 .subsribe-input {
   margin-bottom: -1.25rem;
 }
-.dropdown:hover>.dropdown-menu {
+.dropdown.dropdown-nav:hover>.dropdown-menu {
   display: block !important;
   width: 100%;
   height: 400px;
@@ -18923,8 +18924,8 @@ abbr[title] {
   top: -20%;
   padding: 10px;
   width: auto;
-  text-overflow: ellipsis;
 }
+
 
 .subscribe-container {
   padding: 20px 0;
@@ -18943,4 +18944,8 @@ abbr[title] {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+ul.list-group {
+  padding-left: 30px;
 }
