@@ -20,7 +20,7 @@ const Notification = (): JSX.Element => {
 
   const [seenAllNoti] = useMutationAuth(SEEN_ALL_NOTI, {
     onCompleted: (data) => {
-      console.log('data', data);
+      // console.log('data', data);
       if (data.code === 200) {
         setIsRead(true);
       }

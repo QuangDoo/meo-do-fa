@@ -6,9 +6,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
-import { useCountCartContext } from 'src/contexts/CountCart';
 import { GET_ALL_CATEGORIES, GetAllCategoriesData } from 'src/graphql/category/category.query';
-import useCountCart from 'src/hooks/useCountCart';
+import useCart from 'src/hooks/useCart';
 import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
 
 const Nav = () => {
@@ -16,11 +15,9 @@ const Nav = () => {
 
   const router = useRouter();
 
-  const { data: dataCount } = useCountCart();
+  const { cart } = useCart();
 
-  const { countCart } = useCountCartContext();
-
-  const totalQty = countCart;
+  const totalQty = cart?.getCart.totalQty;
 
   const { t } = useTranslation(['navbar', 'errors', 'common']);
 

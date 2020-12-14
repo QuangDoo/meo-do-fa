@@ -22,10 +22,10 @@ const RightSideUser = (): JSX.Element => {
 
   const notificationsData = notifications?.getNotify;
 
-  useEffect(() => {
-    if (!notifications) return;
-    refetchNoti();
-  }, [notifications]);
+  // useEffect(() => {
+  //   if (!notifications) return;
+  //   refetchNoti();
+  // }, [notifications]);
 
   function toggleShow() {
     setShow((show) => !show);
@@ -41,7 +41,7 @@ const RightSideUser = (): JSX.Element => {
   const filterNotifications = notificationsData?.slice(0, size).map((item) => {
     return item;
   });
-  console.log('filterNotifications', filterNotifications);
+
   return (
     <div className="header-right d-none d-lg-block">
       <ul className="nav align-items-center">

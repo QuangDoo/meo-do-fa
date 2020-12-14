@@ -23,7 +23,6 @@ import {
 import useAddress from 'src/hooks/useAddress';
 import { useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
 import useCart from 'src/hooks/useCart';
-import useCountCart from 'src/hooks/useCountCart';
 import useDidUpdate from 'src/hooks/useDidUpdate';
 import swal from 'sweetalert';
 
@@ -153,21 +152,19 @@ const CheckoutPage = () => {
 
   const { refetchCart } = useCart();
 
-  const { refetchCountCart } = useCountCart();
-
   const [createOrder, { loading: creatingOrder }] = useMutationAuth<
     CreateOrderData,
     CreateOrderVars
   >(CREATE_ORDER, {
     onCompleted: (data) => {
+      refetchCart();
+
       swal({
         title: t('checkout:order_success_message', {
           orderNo: data.createOrder.orderNo
         }),
         icon: 'success'
       }).then(() => {
-        refetchCart();
-        refetchCountCart();
         router.push('/');
       });
     },

@@ -12,7 +12,6 @@ import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import Nav from 'src/components/Layout/Nav';
 // import CartItem from 'src/components/Modules/Cart/CartItem';
 import CartItem from 'src/components/Modules/Cart/CartItem';
-// import { useCartContext } from 'src/contexts/Cart';
 import { CREATE_COUNSEL } from 'src/graphql/order/order.mutation';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import useCart from 'src/hooks/useCart';
