@@ -36,7 +36,7 @@ const InvoiceInfo = (props: Props): JSX.Element => {
       <InputCard title={t('checkout:billing_info_title')} hasRequired>
         {/* Name input */}
         <InputWithLabel
-          name="name"
+          name="invoiceName"
           ref={register({
             required: t('checkout:name_required') + ''
           })}
@@ -53,7 +53,7 @@ const InvoiceInfo = (props: Props): JSX.Element => {
               required: t('checkout:taxcode_required') + ''
             })}
             label={t('myAccount:tax_code_label')}
-            name="vat"
+            name="invoiceTaxCode"
             type="text"
             placeholder={t('myAccount:tax_code_placeholder')}
             defaultValue={user?.vat}
@@ -63,7 +63,7 @@ const InvoiceInfo = (props: Props): JSX.Element => {
 
           {/* Email input */}
           <InputWithLabel
-            name="email"
+            name="invoiceEmail"
             ref={register({
               pattern: {
                 value: emailRegex,
@@ -80,7 +80,7 @@ const InvoiceInfo = (props: Props): JSX.Element => {
 
         {/* Address input */}
         <InputWithLabel
-          name="address"
+          name="invoiceStreet"
           ref={register({
             required: t('checkout:address_required') + ''
           })}
@@ -98,7 +98,7 @@ const InvoiceInfo = (props: Props): JSX.Element => {
         <div className="row">
           {/* Select city */}
           <SelectWithLabel
-            name="cityId"
+            name="invoiceCity"
             ref={register({
               required: t('checkout:city_required') + ''
             })}
@@ -109,7 +109,7 @@ const InvoiceInfo = (props: Props): JSX.Element => {
 
             {/* Map cities from api */}
             {cities.map((city: DataCityType) => (
-              <option key={city.id} value={city.id}>
+              <option key={city.id} value={city.name + '__' + city.id}>
                 {city.name}
               </option>
             ))}
@@ -117,7 +117,7 @@ const InvoiceInfo = (props: Props): JSX.Element => {
 
           {/* Select district */}
           <SelectWithLabel
-            name="districtId"
+            name="invoiceDistrict"
             ref={register({
               required: t('checkout:district_required') + ''
             })}
@@ -128,7 +128,7 @@ const InvoiceInfo = (props: Props): JSX.Element => {
 
             {/* Map districts from chosen city */}
             {districts.map((district) => (
-              <option key={district.id} value={district.id}>
+              <option key={district.id} value={district.name + '__' + district.id}>
                 {district.name}
               </option>
             ))}
@@ -136,7 +136,7 @@ const InvoiceInfo = (props: Props): JSX.Element => {
 
           {/* Select ward */}
           <SelectWithLabel
-            name="wardId"
+            name="invoiceWard"
             ref={register({
               required: t('checkout:ward_required') + ''
             })}
@@ -147,7 +147,7 @@ const InvoiceInfo = (props: Props): JSX.Element => {
 
             {/* Map wards from chosen district */}
             {wards.map((ward) => (
-              <option key={ward.id} value={ward.id}>
+              <option key={ward.id} value={ward.name + '__' + ward.id}>
                 {ward.name}
               </option>
             ))}
@@ -156,7 +156,7 @@ const InvoiceInfo = (props: Props): JSX.Element => {
 
         <Checkbox
           ref={register}
-          name="saveInfo"
+          name="invoiceSaveInfo"
           containerClass="mt-2"
           label={t('checkout:saveInfo_label')}
           labelClass="form__label"

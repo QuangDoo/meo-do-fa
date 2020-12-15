@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client';
 import { useTranslation } from 'i18n';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
@@ -27,27 +27,35 @@ import InvoiceInfo from './InvoiceInfo';
 import PaymentOption from './PaymentOption';
 import StickySidebar from './StickySidebar';
 
+// Các city, district, ward đều có dạng "name__id"
+
 type FormInputs = {
-  name: string;
-  phone: string;
-  email: string;
-  address: string;
-  cityId: string;
-  districtId: string;
-  wardId: string;
-  deliveryOption: string;
-  paymentOption: string;
-  saveInfo: boolean;
+  deliveryName: string;
+  deliveryPhone: string;
+  deliveryEmail: string;
+  deliveryStreet: string;
+  deliveryCity: string;
+  deliveryDistrict: string;
+  deliveryWard: string;
+  deliveryTaxCode: string;
+  deliverySaveInfo: boolean;
+
+  deliveryMethodId: string;
+  paymentMethodId: string;
+
+  isInvoice: boolean;
+  invoiceName: string;
+  invoiceEmail: string;
+  invoiceStreet: string;
+  invoiceCity: string;
+  invoiceDistrict: string;
+  invoiceWard: string;
+  invoiceTaxCode: string;
+  invoiceSaveInfo: boolean;
+
   customerNotes: string;
   agreement: boolean;
-  isInvoice: boolean;
-  fullnameInvoice: string;
-  emailInvoice: string;
-  companyStreet: string;
-  companyCityId: string;
-  companyDistrictId: string;
-  companyWardId: string;
-  vat: string;
+
   id: string;
 };
 
@@ -55,21 +63,35 @@ const CheckoutPage = () => {
   const { t } = useTranslation(['checkout']);
 
   // User
-  const { user, loading: loadingUser } = useUser({
-    onCompleted: (data) => {
-      const user = data.getUser;
-      setValue('name', user.name);
-      setValue('phone', user.phone);
-      setValue('email', user.email);
-      setValue('address', user.contact_address.street);
-      setValue('cityId', user.contact_address.city.id);
-      setValue('districtId', user.contact_address.district.id);
-      setValue('wardId', user.contact_address.ward.id);
-      setValue('vat', user.vat);
-      setValue('fullnameInvoice', user.name);
-      setValue('emailInvoice', user.email);
-    }
-  });
+  const { user, loading: loadingUser } = useUser();
+
+  // When user data is loaded
+  useEffect(() => {
+    if (!user) return;
+
+    const { city, district, ward } = user.contact_address;
+
+    const { name: cityName, id: cityId } = city;
+    const { name: districtName, id: districtId } = district;
+    const { name: wardName, id: wardId } = ward;
+
+    setValue('deliveryName', user.name);
+    setValue('deliveryPhone', user.phone);
+    setValue('deliveryEmail', user.email);
+    setValue('deliveryStreet', user.contact_address.street);
+    setValue('deliveryCity', cityName + '__' + cityId);
+    setValue('deliveryDistrict', districtName + '__' + districtId);
+    setValue('deliveryWard', wardName + '__' + wardId);
+    setValue('deliveryTaxCode', user.vat);
+
+    setValue('invoiceName', user.name);
+    setValue('invoiceEmail', user.email);
+    setValue('invoiceStreet', user.contact_address.street);
+    setValue('invoiceCity', cityName + '__' + cityId);
+    setValue('invoiceDistrict', districtName + '__' + districtId);
+    setValue('invoiceWard', wardName + '__' + wardId);
+    setValue('invoiceTaxCode', user.vat);
+  }, [user]);
 
   // Payment & Delivery options
   const { data: paymentAndDeliveryData } = useQuery<GetPaymentAndDeliveryData, undefined>(
@@ -98,16 +120,10 @@ const CheckoutPage = () => {
   // Form handler with default values
   const { register, handleSubmit, watch, setValue } = useForm<FormInputs>({
     defaultValues: {
-      name: user?.name,
-      phone: user?.phone,
-      email: user?.email,
-      address: user?.contact_address.street,
-      cityId: user ? user.contact_address.city.id + '' : '',
-      districtId: user ? user.contact_address.district.id + '' : '',
-      wardId: user ? user.contact_address.ward.id + '' : '',
-      deliveryOption: '2',
-      paymentOption: '2',
-      saveInfo: true,
+      deliveryMethodId: '2',
+      paymentMethodId: '2',
+      deliverySaveInfo: true,
+      invoiceSaveInfo: true,
       customerNotes: '',
       isInvoice: false,
       agreement: false
@@ -133,29 +149,65 @@ const CheckoutPage = () => {
     });
   }, [paymentOption]);
 
-  const { cities, districts, wards, chosenCity, chosenDistrict, chosenWard } = useAddress({
-    cityId: +watch('cityId'),
-    districtId: +watch('districtId'),
-    wardId: +watch('wardId')
-  });
+  const { cities: deliveryCities, districts: deliveryDistricts, wards: deliveryWards } = useAddress(
+    {
+      cityId: +watch('deliveryCity')?.split('__')[1],
+      districtId: +watch('deliveryDistrict')?.split('__')[1],
+      wardId: +watch('deliveryWard')?.split('__')[1],
+      onGetCitiesCompleted: () => {
+        if (!user) return;
 
-  // address invoice
-  const {
-    cities: invoiceCities,
-    districts: invoiceDistricts,
-    wards: invoiceWards,
-    chosenCity: invoiceChosenCity,
-    chosenDistrict: invoiceChosenDistrict,
-    chosenWard: invoiceChosenWard
-  } = useAddress({
-    cityId: +watch('invoiceCityId'),
-    districtId: +watch('invoiceDistrictId'),
-    wardId: +watch('invoiceWardId')
+        const { name, id } = user.contact_address.city;
+
+        setValue('deliveryCity', name + '__' + id);
+      },
+      onGetDistrictsCompleted: () => {
+        if (!user) return;
+
+        const { name, id } = user.contact_address.district;
+
+        setValue('deliveryDistrict', name + '__' + id);
+      },
+      onGetWardsCompleted: () => {
+        if (!user) return;
+
+        const { name, id } = user.contact_address.ward;
+
+        setValue('deliveryWard', name + '__' + id);
+      }
+    }
+  );
+
+  const { cities: invoiceCities, districts: invoiceDistricts, wards: invoiceWards } = useAddress({
+    cityId: +watch('invoiceCity')?.split('__')[1],
+    districtId: +watch('invoiceDistrict')?.split('__')[1],
+    wardId: +watch('invoiceWard')?.split('__')[1],
+    onGetCitiesCompleted: () => {
+      if (!user) return;
+
+      const { name, id } = user.contact_address.city;
+
+      setValue('invoiceCity', name + '__' + id);
+    },
+    onGetDistrictsCompleted: () => {
+      if (!user) return;
+
+      const { name, id } = user.contact_address.district;
+
+      setValue('invoiceDistrict', name + '__' + id);
+    },
+    onGetWardsCompleted: () => {
+      if (!user) return;
+
+      const { name, id } = user.contact_address.ward;
+
+      setValue('invoiceWard', name + '__' + id);
+    }
   });
 
   const router = useRouter();
 
-  const { refetchCart } = useCart();
+  const { cart, refetchCart, loading: loadingCart } = useCart();
 
   const [createOrder, { loading: creatingOrder }] = useMutationAuth<
     CreateOrderData,
@@ -184,33 +236,37 @@ const CheckoutPage = () => {
         inputs: {
           orderNo: counselData?.getCounsel.counsel.orderNo,
           customer: {
-            billing_address: {
-              partnerId: '',
-              isNew: true,
-              zipCode: +data.wardId,
-              city: chosenCity.name,
-              district: chosenDistrict.name,
-              ward: chosenWard.name,
-              street: data.address
-            },
-            fullName: data.name,
-            phone: data.phone,
-            email: data.email,
+            fullName: data.deliveryName,
+            phone: data.deliveryPhone,
+            email: data.deliveryEmail,
             shipping_address: {
               partnerId: '',
               isNew: true,
-              zipCode: +data.wardId,
-              city: chosenCity.name,
-              district: chosenDistrict.name,
-              ward: chosenWard.name,
-              street: data.address
+              zipCode: +data.deliveryWard.split('__')[1],
+              city: data.deliveryCity.split('__')[0],
+              district: data.deliveryDistrict.split('__')[0],
+              ward: data.deliveryWard.split('__')[0],
+              street: data.deliveryStreet
+              // taxCode: data.deliveryTaxCode
+            },
+            billing_address: {
+              partnerId: '',
+              isNew: true,
+              zipCode: +data.invoiceWard.split('__')[1],
+              city: data.invoiceCity.split('__')[0],
+              district: data.invoiceDistrict.split('__')[0],
+              ward: data.invoiceWard.split('__')[0],
+              street: data.invoiceStreet
+              // fullName: data.invoiceName
+              // phone: data.invoicePhone
+              // email: data.invoiceEmail
+              // taxCode: data.invoiceTaxCode
             }
           },
-          paymentMethodId: +data.paymentOption,
+          paymentMethodId: +data.paymentMethodId,
           deliveryMethodId: 0,
           note: data.customerNotes,
           isInvoice: data.isInvoice
-          // vat: data.vat,
         }
       }
     });
@@ -238,9 +294,9 @@ const CheckoutPage = () => {
             <div className="mb-4">
               <DeliveryInfo
                 register={register}
-                cities={cities}
-                districts={districts}
-                wards={wards}
+                cities={deliveryCities}
+                districts={deliveryDistricts}
+                wards={deliveryWards}
               />
             </div>
 
@@ -252,17 +308,22 @@ const CheckoutPage = () => {
             <div className="mb-4">
               <PaymentOption register={register} paymentMethods={paymentMethods} />
             </div>
+
             {/* Notes */}
             <div className="mb-4">
               <CustomerNotes register={register} />
             </div>
+
             {/* Invoice */}
+            {cart?.getCart.carts.some(cart => cart.product.)
+
+            }
             <div className="mb-4">
               <InvoiceInfo
                 register={register}
-                cities={cities}
-                districts={districts}
-                wards={wards}
+                cities={invoiceCities}
+                districts={invoiceDistricts}
+                wards={invoiceWards}
               />
             </div>
 
@@ -278,7 +339,7 @@ const CheckoutPage = () => {
         </div>
       </div>
 
-      <LoadingBackdrop open={loadingCounsel || creatingOrder || loadingUser} />
+      <LoadingBackdrop open={loadingCounsel || creatingOrder || loadingUser || loadingCart} />
     </form>
   );
 };

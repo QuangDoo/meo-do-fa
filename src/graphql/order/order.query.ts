@@ -66,6 +66,7 @@ export const GET_CART = gql`
         oldPrice
         product {
           image_512
+          is_quick_invoice
         }
       }
       totalPrice

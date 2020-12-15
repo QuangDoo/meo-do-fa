@@ -12,18 +12,37 @@ type Props = {
   cityId: number;
   districtId: number;
   wardId: number;
+  onGetCitiesCompleted?: (data: GetCitiesData) => void;
+  onGetDistrictsCompleted?: (data: GetDistrictsData) => void;
+  onGetWardsCompleted?: (data: GetWardsData) => void;
+  onCityIdChange?: (cityId: number) => void;
+  onDistrictIdChange?: (districtId: number) => void;
+  onWardIdChange?: (wardId: number) => void;
 };
 
 export default function useAddress(props: Props) {
   const { cityId, districtId, wardId } = props;
 
-  const { data: citiesData } = useQuery<GetCitiesData, undefined>(GET_CITIES);
+  const { data: citiesData } = useQuery<GetCitiesData, undefined>(GET_CITIES, {
+    onCompleted: (data) => {
+      props.onGetCitiesCompleted?.(data);
+    }
+  });
 
   const [getDistricts, { data: districtsData }] = useLazyQuery<GetDistrictsData, GetDistrictsVars>(
-    GET_DISTRICTS
+    GET_DISTRICTS,
+    {
+      onCompleted: (data) => {
+        props.onGetDistrictsCompleted?.(data);
+      }
+    }
   );
 
-  const [getWards, { data: wardsData }] = useLazyQuery<GetWardsData, GetWardsVars>(GET_WARDS);
+  const [getWards, { data: wardsData }] = useLazyQuery<GetWardsData, GetWardsVars>(GET_WARDS, {
+    onCompleted: (data) => {
+      props.onGetWardsCompleted?.(data);
+    }
+  });
 
   useEffect(() => {
     getDistricts({
@@ -31,6 +50,8 @@ export default function useAddress(props: Props) {
         city_id: cityId
       }
     });
+
+    props.onCityIdChange?.(cityId);
   }, [cityId]);
 
   useEffect(() => {
@@ -39,7 +60,13 @@ export default function useAddress(props: Props) {
         district_id: districtId
       }
     });
+
+    props.onDistrictIdChange?.(districtId);
   }, [districtId]);
+
+  useEffect(() => {
+    props.onWardIdChange?.(wardId);
+  }, [wardId]);
 
   const cities = citiesData?.getCities || [];
 
