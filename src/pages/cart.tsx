@@ -1,5 +1,4 @@
 // import { useMutation } from '@apollo/client';
-import { Backdrop, CircularProgress, makeStyles } from '@material-ui/core';
 import { useTranslation } from 'i18n';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -10,7 +9,6 @@ import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import Nav from 'src/components/Layout/Nav';
-// import CartItem from 'src/components/Modules/Cart/CartItem';
 import CartItem from 'src/components/Modules/Cart/CartItem';
 import { CREATE_COUNSEL } from 'src/graphql/order/order.mutation';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
@@ -18,7 +16,7 @@ import useCart from 'src/hooks/useCart';
 import withApollo from 'src/utils/withApollo';
 
 function Cart(): JSX.Element {
-  const { refetchCart, cart, loading } = useCart();
+  const { cart, loading: loadingCart } = useCart();
 
   const { t } = useTranslation(['cart', 'common']);
 
@@ -81,7 +79,6 @@ function Cart(): JSX.Element {
                     productName={item.productName}
                     quantity={item.quantity}
                     uom_name="Unit"
-                    refetchCart={refetchCart}
                   />
                 ))}
               </div>
@@ -96,22 +93,22 @@ function Cart(): JSX.Element {
                   <div className="elevated row no-gutters mb-3">
                     <div className="col-md-12 col-lg-4 cart__info-quantity">
                       <div className="cart__info-item text-center">
-                        <div className="mb-2 text-small">
-                          <small>{t('cart:quantity')}</small>
+                        <div className="mb-2">
+                          <div>{t('cart:quantity')}</div>
                         </div>
-                        <div className="cart__quantity text-secondary text-small">
+                        <div className="cart__quantity text-secondary">
                           <b>{cart?.getCart.totalQty}</b>
                         </div>
                       </div>
                     </div>
                     <div className="col-md-12 col-lg-8 cart__info-total">
                       <div className="cart__info-item text-center text-lg-right">
-                        <div className="mb-2 text-small">
-                          <small>{t('cart:total')}</small>
+                        <div className="mb-2">
+                          <div>{t('cart:total')}</div>
                         </div>
-                        <div className="cart__total text-small">
+                        <div className="cart__total">
                           <PriceText price={cart?.getCart.totalPrice} />
-                          <span className="unit text-small">{t('common:vnd')}</span>
+                          <span className="unit">{t('common:vnd')}</span>
                         </div>
                         {/* <div className="cart__old-total">
                           90‰
@@ -152,7 +149,7 @@ function Cart(): JSX.Element {
       </div>
       <Footer />
 
-      <LoadingBackdrop open={creatingCounsel} />
+      <LoadingBackdrop open={creatingCounsel || loadingCart} />
     </>
   );
 }
