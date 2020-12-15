@@ -17947,6 +17947,19 @@ abbr[title] {
     grid-template-columns: 3fr 2fr 1fr;
   }
 }
+@media (max-width: 575.98px) {
+  .my-orders__item {
+    display: block;
+  }
+  .my-orders__info h2 {
+    font-size: 1rem;
+  }
+  .my-orders__invoice {
+    display: flex;
+    flex-direction: row !important;
+    align-items: stretch !important;
+  }
+}
 .my-orders__item:hover {
   background-color: #fafafa;
   transition: background-color 0.2s;

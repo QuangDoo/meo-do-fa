@@ -39,20 +39,26 @@ type Display_name = {
 };
 const ProductInformation = (props: PropsType): JSX.Element => {
   return (
-    <div className="row py-3 mb-5 elevated">
-      <div className="col-md-8">
-        <div className="row">
-          <div className="col-md-6">
-            <ProuductDetailImage imageUrl={props.image_512} />
-          </div>
-          <div className="col-md-6">
-            <ProductDetailInfor {...props} />
+    <div className="elevated">
+      <div className="row py-3 mb-5">
+        <div className="col-md-8">
+          <div className="row">
+            <div className="col-md-6">
+              <ProuductDetailImage imageUrl={props.image_512} />
+            </div>
+            <div className="col-md-6">
+              <ProductDetailInfor {...props} />
+            </div>
           </div>
         </div>
-        <ProducerInformation {...props} />
+        <div className="col-md-4 mb-3 ">
+          <ProductSidebar itemImgUrl={props.itemImgUrl} title={props.title}></ProductSidebar>
+        </div>
       </div>
-      <div className="col-md-4 mb-3 ">
-        <ProductSidebar itemImgUrl={props.itemImgUrl} title={props.title}></ProductSidebar>
+      <div className="row justify-content-center">
+        <div className="col-sm-10">
+          <ProducerInformation {...props} />
+        </div>
       </div>
     </div>
   );

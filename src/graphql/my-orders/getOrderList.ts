@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-export type OrderFlag = '10' | '20' | '25' | '30' | '40' | '80';
+export type OrderFlag = 10 | 20 | 25 | 30 | 40 | 80;
 
 export type GetOrderList = {
   id: string;
@@ -21,11 +21,12 @@ export type GetOrderListData = {
 export type GetOrderListVars = {
   page: number;
   pageSize: number;
+  flag?: OrderFlag;
 };
 
 export const GET_ORDER_LIST = gql`
-  query($page: Int!, $pageSize: Int!) {
-    getOrderList(page: $page, pageSize: $pageSize) {
+  query($page: Int!, $pageSize: Int!, $flag: Int) {
+    getOrderList(page: $page, pageSize: $pageSize, flag: $flag) {
       id
       orderNo
       date_order
