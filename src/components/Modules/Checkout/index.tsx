@@ -1,19 +1,11 @@
 import { useQuery } from '@apollo/client';
 import { useTranslation } from 'i18n';
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import AddressSelect from 'src/components/Form/AddressSelect';
-import InputWithLabel from 'src/components/Form/InputWithLabel';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
-import { useUserContext } from 'src/contexts/User';
 import { APPLY_PAYMENT, ApplyPaymentData, ApplyPaymentVars } from 'src/graphql/order/applyPayment';
-import {
-  CREATE_INVOICE_USER,
-  CreateInvoiceUserData,
-  CreateInvoiceUserVars
-} from 'src/graphql/order/createInvoiceUser';
 import { CREATE_ORDER, CreateOrderData, CreateOrderVars } from 'src/graphql/order/createOrder';
 import { GET_COUNSEL, GetCounselData } from 'src/graphql/order/getCounsel';
 import {
@@ -24,9 +16,9 @@ import useAddress from 'src/hooks/useAddress';
 import { useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
 import useCart from 'src/hooks/useCart';
 import useDidUpdateEffect from 'src/hooks/useDidUpdate';
+import useUser from 'src/hooks/useUser';
 import swal from 'sweetalert';
 
-import FormCard from '../MyAccount/FormCard';
 import Agreement from './Agreement';
 import CustomerNotes from './CustomerNotes';
 import DeliveryInfo from './DeliveryInfo';
@@ -62,28 +54,46 @@ type FormInputs = {
 const CheckoutPage = () => {
   const { t } = useTranslation(['checkout']);
 
+  // User
+  const { user, loading: loadingUser } = useUser({
+    onCompleted: (data) => {
+      const user = data.getUser;
+      setValue('name', user.name);
+      setValue('phone', user.phone);
+      setValue('email', user.email);
+      setValue('address', user.contact_address.street);
+      setValue('cityId', user.contact_address.city.id);
+      setValue('districtId', user.contact_address.district.id);
+      setValue('wardId', user.contact_address.ward.id);
+      setValue('vat', user.vat);
+      setValue('fullnameInvoice', user.name);
+      setValue('emailInvoice', user.email);
+    }
+  });
+
   // Payment & Delivery options
   const { data: paymentAndDeliveryData } = useQuery<GetPaymentAndDeliveryData, undefined>(
     GET_PAYMENT_DELIVERY
   );
+
   const paymentMethods = paymentAndDeliveryData?.getPaymentAndDeliveryMethod.paymentMethods || [];
   const deliveryMethods = paymentAndDeliveryData?.getPaymentAndDeliveryMethod.deliveryMethods || [];
 
   const [totalPrice, setTotalPrice] = useState<number>();
 
   // Counsel
-  const { data: counselData } = useQueryAuth<GetCounselData, undefined>(GET_COUNSEL, {
-    onCompleted: (data) => {
-      if (data.getCounsel === null) {
-        return;
+  const { data: counselData, loading: loadingCounsel } = useQueryAuth<GetCounselData, undefined>(
+    GET_COUNSEL,
+    {
+      onCompleted: (data) => {
+        if (data.getCounsel === null) {
+          return;
+        }
+
+        setTotalPrice(data.getCounsel.totalPrice);
       }
-
-      setTotalPrice(data.getCounsel.totalPrice);
     }
-  });
-
-  // User
-  const { user } = useUserContext();
+  );
 
   // Form handler with default values
   const { register, handleSubmit, watch, setValue } = useForm<FormInputs>({
@@ -91,19 +101,16 @@ const CheckoutPage = () => {
       name: user?.name,
       phone: user?.phone,
       email: user?.email,
-      address: user?.contact_address?.street,
-      // cityId: user?.city.id,
-      // districtId: user?.district.id,
-      // wardId: user?.ward.id,
+      address: user?.contact_address.street,
+      cityId: user ? user.contact_address.city.id + '' : '',
+      districtId: user ? user.contact_address.district.id + '' : '',
+      wardId: user ? user.contact_address.ward.id + '' : '',
       deliveryOption: '2',
       paymentOption: '2',
       saveInfo: true,
       customerNotes: '',
-      vat: user?.vat,
       isInvoice: false,
-      agreement: false,
-      fullnameInvoice: user?.name,
-      emailInvoice: user?.email
+      agreement: false
     }
   });
 
@@ -114,9 +121,7 @@ const CheckoutPage = () => {
     onCompleted: (data) => {
       setTotalPrice(data.applyPayment.totalPrice);
     },
-    onError: (error) => {
-      return;
-    }
+    onError: () => null
   });
 
   useDidUpdateEffect(() => {
@@ -136,16 +141,16 @@ const CheckoutPage = () => {
 
   // address invoice
   const {
-    cities: companyCities,
-    districts: companyDistricts,
-    wards: companyWards,
-    chosenCity: companyChosenCity,
-    chosenDistrict: companyChosenDistrict,
-    chosenWard: companyChosenWard
+    cities: invoiceCities,
+    districts: invoiceDistricts,
+    wards: invoiceWards,
+    chosenCity: invoiceChosenCity,
+    chosenDistrict: invoiceChosenDistrict,
+    chosenWard: invoiceChosenWard
   } = useAddress({
-    cityId: +watch('companyCityId'),
-    districtId: +watch('companyDistrictId'),
-    wardId: +watch('companyWardId')
+    cityId: +watch('invoiceCityId'),
+    districtId: +watch('invoiceDistrictId'),
+    wardId: +watch('invoiceWardId')
   });
 
   const router = useRouter();
@@ -172,18 +177,6 @@ const CheckoutPage = () => {
       toast.error(t('order_fail_message'));
     }
   });
-  // const [createInvoiceUser] = useMutationAuth<CreateInvoiceUserData, CreateInvoiceUserVars>(
-  //   CREATE_INVOICE_USER,
-  //   {
-  //     onCompleted: (data) => {
-  //       refetchCart();
-  //       router.push('/');
-  //     },
-  //     onError: () => {
-  //       toast.error(t('order_fail_message'));
-  //     }
-  //   }
-  // );
 
   const onSubmit: SubmitHandler<FormInputs> = (data) => {
     createOrder({
@@ -221,31 +214,6 @@ const CheckoutPage = () => {
         }
       }
     });
-    // createInvoiceUser({
-    //   variables: {
-    //     inputs: {
-    //       fullName: data.name,
-    //       email: data.email,
-    //       shipping_address: {
-    //         street: data.companyStreet,
-    //         city: {
-    //           id: companyChosenCity.id,
-    //           name: companyChosenCity.name
-    //         },
-    //         district: {
-    //           id: companyChosenDistrict.id,
-    //           name: companyChosenDistrict.name
-    //         },
-    //         ward: {
-    //           id: companyChosenWard.id,
-    //           name: companyChosenWard.name
-    //         }
-    //       },
-    //       phone: data.phone,
-    //       id: 0
-    //     }
-    //   }
-    // });
   };
   const onError = (errors) => {
     const fields = Object.keys(errors);
@@ -310,7 +278,7 @@ const CheckoutPage = () => {
         </div>
       </div>
 
-      <LoadingBackdrop open={creatingOrder} />
+      <LoadingBackdrop open={loadingCounsel || creatingOrder || loadingUser} />
     </form>
   );
 };

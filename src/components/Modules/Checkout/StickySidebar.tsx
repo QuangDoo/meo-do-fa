@@ -75,21 +75,18 @@ const StickySidebar = (props: Props): JSX.Element => {
           </span>
         </SidebarItem>
 
-        {data.totalDcAmt > 0 ? (
-          <SidebarItem label={t('checkout:price_total_discount')}>
-            <span>
-              -{data.totalDcAmt}
-              <span className="unit">{t('common:vnd')}</span>
-            </span>
-          </SidebarItem>
-        ) : (
-          <SidebarItem label={t('checkout:price_total_discount')}>
-            <span>
-              {data.totalDcAmt}
-              <span className="unit">{t('common:vnd')}</span>
-            </span>
-          </SidebarItem>
-        )}
+        <SidebarItem label={t('checkout:price_total_discount')}>
+          <span>
+            {data.totalDcAmt ? (
+              <>
+                -<PriceText price={data.totalDcAmt} />
+              </>
+            ) : (
+              0
+            )}
+            <span className="unit">{t('common:vnd')}</span>
+          </span>
+        </SidebarItem>
 
         <SidebarItem containerClass="checkout__info-promo"></SidebarItem>
 
