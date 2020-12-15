@@ -9,7 +9,9 @@ export type GetCouponsByUserData = {
       create_date: string;
       expiration_date: string;
       state: CouponStatus;
-      order_id: number;
+      order_id: string[];
+      orderId: number;
+      orderNo: string;
     }[];
     total: number;
   };
@@ -29,6 +31,8 @@ export const GET_COUPONS_BY_USER = gql`
         expiration_date
         state
         order_id
+        orderId
+        orderNo
       }
       total
     }

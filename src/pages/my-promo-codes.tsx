@@ -24,18 +24,6 @@ import {
 import { useQueryAuth } from 'src/hooks/useApolloHookAuth';
 import withApollo from 'src/utils/withApollo';
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9)
-];
-
 const pageSize = 10;
 
 const TableHeader = ({ children, ...props }) => {
@@ -66,7 +54,6 @@ const MyPromoCodes = () => {
   const total = data?.getCouponsByUser.total || 0;
 
   const handlePageChange = (page: number) => {
-    console.log('Changed page');
     router.push({
       pathname: router.pathname,
       query: {
@@ -119,7 +106,7 @@ const MyPromoCodes = () => {
                       <TableCell align="right">{coupon.create_date}</TableCell>
                       <TableCell align="right">{coupon.expiration_date}</TableCell>
                       <TableCell align="right">{coupon.state}</TableCell>
-                      <TableCell align="right">{coupon.order_id}</TableCell>
+                      <TableCell align="right">{coupon.orderNo}</TableCell>
                     </TableRow>
                   ))
                 ) : (
