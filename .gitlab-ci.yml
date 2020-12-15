@@ -167,7 +167,7 @@ deploy-frontend-prod:
     - internal-medofa
   
   extends:
-    - .pre-prod-deploy
+    - .pre-deploy-master
 
   script:
     - cd ./deployments/charts/frontend
