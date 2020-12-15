@@ -2,6 +2,7 @@
 @import './application.scss';
 
 @import './header.scss';
+@import './menu.scss';
 @import './footer.scss';
 @import './home.scss';
 
@@ -9,8 +10,8 @@
 @import './productdetail.scss';
 
 @import './loading.scss';
+@import './menu.scss';
 
-@import './common/image.scss';
 button {
   background-color: transparent;
   border: none;
