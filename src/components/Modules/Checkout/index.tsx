@@ -315,17 +315,16 @@ const CheckoutPage = () => {
             </div>
 
             {/* Invoice */}
-            {cart?.getCart.carts.some(cart => cart.product.)
-
-            }
-            <div className="mb-4">
-              <InvoiceInfo
-                register={register}
-                cities={invoiceCities}
-                districts={invoiceDistricts}
-                wards={invoiceWards}
-              />
-            </div>
+            {cart?.getCart.carts.some((cart) => cart.product.is_quick_invoice) && (
+              <div className="mb-4">
+                <InvoiceInfo
+                  register={register}
+                  cities={invoiceCities}
+                  districts={invoiceDistricts}
+                  wards={invoiceWards}
+                />
+              </div>
+            )}
 
             {/* Agreement */}
             <div className="form-group">

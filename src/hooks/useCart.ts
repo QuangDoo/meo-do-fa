@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { toast } from 'react-toastify';
-import { GET_CART, GetCartData } from 'src/graphql/order/order.query';
+import { GET_CART, GetCartData } from 'src/graphql/cart/getCart';
 import useLocalStorage from 'src/hooks/useLocalStorage';
 
 import { useCartContext } from '../contexts/Cart';

@@ -1,24 +1,5 @@
 import { gql } from '@apollo/client';
 
-export type GetCartData = {
-  getCart: {
-    carts: {
-      _id: string;
-      quantity: number;
-      productId: string;
-      productName: string;
-      price: number;
-      list_price: number;
-      oldPrice: number;
-      product: {
-        image_512: string;
-      };
-    }[];
-    totalPrice: number;
-    totalQty: number;
-  };
-};
-
 export type GetOrderDetail = {
   getOrderDetail: {
     id: number;
@@ -53,27 +34,6 @@ export type GetOrderDetail = {
 export type GetOrderDetailVar = {
   id: number;
 };
-
-export const GET_CART = gql`
-  query {
-    getCart {
-      carts {
-        _id
-        quantity
-        productId
-        productName
-        price
-        oldPrice
-        product {
-          image_512
-          is_quick_invoice
-        }
-      }
-      totalPrice
-      totalQty
-    }
-  }
-`;
 
 export const GET_ORDER = gql`
   query getOrderDetail($id: Int!) {
