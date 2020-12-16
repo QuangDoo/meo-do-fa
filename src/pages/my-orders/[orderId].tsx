@@ -29,6 +29,7 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import PriceText from 'src/components/Form/PriceText';
+import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
 import Nav from 'src/components/Layout/Nav';
@@ -452,7 +453,8 @@ const OrderDetails = () => {
                   <TableRow>
                     <TableCell colSpan={4}>
                       <Typography variant="h5" align="right">
-                        Tổng cộng: <PriceText price={orderDetail?.getOrderDetail.amount_total} /> đ
+                        {t('myOrders:total')}{' '}
+                        <PriceText price={orderDetail?.getOrderDetail.amount_total} /> đ
                       </Typography>
                     </TableCell>
                   </TableRow>
@@ -462,6 +464,8 @@ const OrderDetails = () => {
           </Grid>
         </Grid>
       </ProfileLayout>
+
+      <Footer />
     </>
   );
 };

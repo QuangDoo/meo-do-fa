@@ -70,7 +70,7 @@ const StickySidebar = (props: Props): JSX.Element => {
 
         <SidebarItem label={t('checkout:price_shipping_fee')}>
           <span>
-            {data.totalShippingFee}
+            {data.totalShippingFee.toLocaleString('de-DE')}
             <span className="unit">{t('common:vnd')}</span>
           </span>
         </SidebarItem>

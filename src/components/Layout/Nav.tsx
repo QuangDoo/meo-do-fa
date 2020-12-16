@@ -50,7 +50,7 @@ const Nav = () => {
   const categories = categoriesData?.getCategoriesAll || [];
 
   return (
-    <nav className="rockland-nav shrink">
+    <nav className="rockland-nav shrink header-menu">
       <div className="container">
         <div className="row">
           <div className="col-12 d-flex align-items-center justify-content-between">

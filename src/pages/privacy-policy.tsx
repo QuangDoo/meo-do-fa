@@ -21,11 +21,6 @@ const PrivacyPolicy = () => {
 
       <div className="container my-5">
         <h2 className="text-center my-5">{t('privacyPolicy:title')}</h2>
-
-        <div className="d-flex justify-content-center align-items-center p-5">
-          {t('common:updating')}
-        </div>
-        {/* <h2 className="text-center my-5">Chính sách bảo mật</h2>
         <p>
           Khi sử dụng dịch vụ của Medofa, bạn đã tin tưởng cung cấp thông tin của bạn cho chúng tôi.
           Chúng tôi hiểu rằng đây là một trách nhiệm lớn. Vì vậy, chúng tôi nỗ lực bảo vệ thông tin
@@ -135,7 +130,7 @@ const PrivacyPolicy = () => {
           và không mong muốn của tất cả các bên. Chúng tôi sẽ nhờ tới sự can thiệp của các cơ quan
           chức năng có thẩm quyền và không chịu trách nhiệm về việc thông tin của bạn có thể bị rò
           rỉ hay sử dụng cho các mục đích khác.
-        </p> */}
+        </p>
       </div>
 
       <Footer />
