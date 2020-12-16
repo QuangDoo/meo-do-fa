@@ -1,5 +1,6 @@
 {
   "code_500": "An error occurred. Please try again later.",
+  "code_undefined": "An error occurred. Please try again later.",
   "code_100": "Please login with an Admin account to continue.",
   "code_101": "Please login to continue.",
   "code_102": "Less than min price.",
@@ -35,5 +36,5 @@
   "add_to_cart_success": "Add to cart success.",
   "add_to_cart_quantity_0": "Please provide quantity.",
   "add_to_cart_less_than_0": "quantity must be greater than 0",
-  "send_password_to_email_success":"The new password has been sent to your inbox. Please check your email!"
+  "send_password_to_email_success": "The new password has been sent to your inbox. Please check your email!"
 }

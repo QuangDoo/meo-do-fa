@@ -1,5 +1,6 @@
 {
   "code_500": "Đã có lỗi xảy ra. Vui lòng thử lại sau.",
+  "code_undefined": "Đã có lỗi xảy ra. Vui lòng thử lại sau.",
   "code_100": "Vui lòng đăng nhập bằng tài khoản Admin để tiếp tục.",
   "code_101": "Vui lòng đăng nhập để tiếp tục.",
   "code_102": "Giá thấp hơn mức tối thiểu.",
@@ -35,5 +36,5 @@
   "add_to_cart_success": "Thêm vào giỏ hàng thành công.",
   "add_to_cart_quantity_0": "Xin hãy nhập số lượng.",
   "add_to_cart_less_than_0": "Số lượng phải lớn hơn 0",
-  "send_password_to_email_success":"Mật khẩu mới đã được gửi trong email của bạn. Vui lòng kiểm tra email của bạn!"
+  "send_password_to_email_success": "Mật khẩu mới đã được gửi trong email của bạn. Vui lòng kiểm tra email của bạn!"
 }
