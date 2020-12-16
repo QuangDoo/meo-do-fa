@@ -125,7 +125,7 @@ const Footer = (): JSX.Element => {
       <div className="footer">
         <div className="container pb-5 pt-0">
           <div className="row justify-content-between">
-            <div className="col-md-4">
+            <div className="col-xl-4 col-lg-4 col-md-4  col-sm-12">
               <div className="footer__info mb-5">
                 <div className="footer__info-logo mb-3">
                   <div className="rockland-logo d-inline-block">
@@ -189,7 +189,7 @@ const Footer = (): JSX.Element => {
               </div> */}
               </div>
             </div>
-            <div className="col-xl-4 col-lg-5 col-md-6">
+            <div className="col-xl-4 col-lg-5 col-md-4 col-sm-7">
               <div className="mb-5">
                 <div className="footer__header mb-3">{t('footer:general_info')}</div>
 
@@ -214,7 +214,7 @@ const Footer = (): JSX.Element => {
                 </div>
               </div>
             </div>
-            <div className="col-xl-4 col-lg-5 col-md-6">
+            <div className="col-xl-4 col-lg-3 col-md-4 col-sm-5">
               <div className="footer__header mb-3">{t('footer:contacts')}</div>
 
               <div className="mb-3">
