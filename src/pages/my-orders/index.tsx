@@ -6,11 +6,11 @@ import { toast } from 'react-toastify';
 import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
+import Loading from 'src/components/Layout/Loading';
 import Nav from 'src/components/Layout/Nav';
 import ProfileLayout from 'src/components/Modules/ProfileLayout';
 import {
   GET_ORDER_LIST,
-  GetOrderList,
   GetOrderListData,
   GetOrderListVars,
   OrderFlag
@@ -60,6 +60,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: '100%'
   }
 }));
+
+type Props = {
+  flag: OrderFlag;
+};
 
 const OrderItem = (props: any) => {
   const [open, setOpen] = useState(false);
@@ -123,31 +127,32 @@ const OrderItem = (props: any) => {
   );
 };
 
-type FilterProps = {
-  list: GetOrderList[];
-  flag: OrderFlag;
-};
+const OrderList = (props: Props) => {
+  const { t } = useTranslation(['myOrders']);
+  const { data, refetch, loading } = useQueryAuth<GetOrderListData, GetOrderListVars>(
+    GET_ORDER_LIST,
+    {
+      variables: {
+        page: 1,
+        pageSize: pageSize,
+        flag: props.flag
+      },
+      onError: (error) => {
+        const errorCode = error.graphQLErrors?.[0]?.extensions?.code;
 
-const OrderListFiltered = (props: FilterProps) => {
-  const { t } = useTranslation(['errors']);
-
-  const { data, refetch } = useQueryAuth<GetOrderListData, GetOrderListVars>(GET_ORDER_LIST, {
-    variables: {
-      page: 1,
-      pageSize: pageSize
-    },
-    onError: (error) => {
-      const errorCode = error.graphQLErrors?.[0]?.extensions?.code;
-
-      if (errorCode) toast.error(t(`errors:code_${errorCode}`));
+        if (errorCode) toast.error(t(`errors:code_${errorCode}`));
+      }
     }
-  });
+  );
+
+  const orderList = data?.getOrderList || [];
 
   return (
-    <div>
-      {props.list
-        .filter((x) => x.flag == props.flag)
-        .map((order) => (
+    <>
+      {loading ? (
+        <Loading />
+      ) : orderList.length !== 0 ? (
+        orderList.map((order) => (
           <OrderItem
             key={order.id}
             {...order}
@@ -158,8 +163,11 @@ const OrderListFiltered = (props: FilterProps) => {
               })
             }
           />
-        ))}
-    </div>
+        ))
+      ) : (
+        <div>{t('myOrders:no_orders')}</div>
+      )}
+    </>
   );
 };
 
@@ -242,46 +250,22 @@ const MyOrders = () => {
               ))}
             </TabPanel>
             <TabPanel value={value} index={1}>
-              {orderList.filter((order) => order.flag == '10').length !== 0 ? (
-                <OrderListFiltered list={orderList} flag="10" />
-              ) : (
-                t('myOrders:no_orders')
-              )}
+              <OrderList flag={10} />
             </TabPanel>
             <TabPanel value={value} index={2}>
-              {orderList.filter((order) => order.flag == '20').length !== 0 ? (
-                <OrderListFiltered list={orderList} flag="20" />
-              ) : (
-                t('myOrders:no_orders')
-              )}
+              <OrderList flag={20} />
             </TabPanel>
             <TabPanel value={value} index={3}>
-              {orderList.filter((order) => order.flag == '30').length !== 0 ? (
-                <OrderListFiltered list={orderList} flag="30" />
-              ) : (
-                t('myOrders:no_orders')
-              )}
+              <OrderList flag={30} />
             </TabPanel>
             <TabPanel value={value} index={4}>
-              {orderList.filter((order) => order.flag == '40').length !== 0 ? (
-                <OrderListFiltered list={orderList} flag="40" />
-              ) : (
-                t('myOrders:no_orders')
-              )}
+              <OrderList flag={40} />
             </TabPanel>
             <TabPanel value={value} index={5}>
-              {orderList.filter((order) => order.flag == '80').length !== 0 ? (
-                <OrderListFiltered list={orderList} flag="80" />
-              ) : (
-                t('myOrders:no_orders')
-              )}
+              <OrderList flag={80} />
             </TabPanel>
             <TabPanel value={value} index={6}>
-              {orderList.filter((order) => order.flag == '25').length !== 0 ? (
-                <OrderListFiltered list={orderList} flag="25" />
-              ) : (
-                t('myOrders:no_orders')
-              )}
+              <OrderList flag={25} />
             </TabPanel>
           </div>
 

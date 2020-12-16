@@ -21,11 +21,7 @@ const DisputeResolution = () => {
 
       <div className="container my-5">
         <h2 className="text-center my-5">{t('disputeResolution:title')}</h2>
-
-        <div className="d-flex justify-content-center align-items-center p-5">
-          {t('common:updating')}
-        </div>
-        {/* <p>
+        <p>
           Medofa và Công ty TNHH Dược phẩm Dayton có trách nhiệm tiếp nhận khiếu nại và hỗ trợ Khách
           hàng liên quan đến giao dịch tại website Medofa.
           <br />
@@ -59,7 +55,7 @@ const DisputeResolution = () => {
           trị Medofa. Khách hàng cần có trách nhiệm cung cấp văn bản giấy tờ chứng thực thông tin
           liên quan đến sự việc đang gây mâu thuẫn cho khách hàng. Trong thời gian sớm nhất có thể,
           ban quản trị Medofa sẽ có email phải hồi lại ý kiến phản ánh của khách hàng.
-        </p> */}
+        </p>
       </div>
 
       <Footer />
