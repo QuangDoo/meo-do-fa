@@ -25,7 +25,7 @@ stages:
     - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
     - chmod +x ./kubectl && mv ./kubectl /usr/local/bin/kubectl
     - mkdir -p $HOME/.kube
-    - cp $KUBE_CONFIG $HOME/.kube/config
+    - cp $KUBE_CONFIG_DEV $HOME/.kube/config
     - git clone https://${DOCKER_USER}:${DOCKER_PASSWORD}@gitlab.com/bebuy.vn/clients/thuocn/deployments.git
 
 .pre-deploy-master:
@@ -56,28 +56,28 @@ lint-frontend:
     - yarn
     - yarn lint
 
-sonar:
-  stage: sonar
-  image: sonarsource/sonar-scanner-cli
-  only:
-    - develop
-  script:
-    - echo $SONAR_HOST_URL
-    - echo $SONAR_KEY
-    - sonar-scanner -D sonar.projectKey=bb-medofa-frontend -D sonar.sources=. -D sonar.host.url=${SONAR_HOST_URL} -D sonar.login=${SONAR_KEY} -D sonar.exclusions=src/__source_html__/** -D sonar.gitlab.commit_sha=$CI_COMMIT_SHA -D sonar.gitlab.ref_name=$CI_COMMIT_REF_NAME -D sonar.gitlab.project_id=$CI_PROJECT_ID -D sonar.gitlab.unique_issue_per_inline=true -X
+# sonar:
+#   stage: sonar
+#   image: sonarsource/sonar-scanner-cli
+#   only:
+#     - develop
+#   script:
+#     - echo $SONAR_HOST_URL
+#     - echo $SONAR_KEY
+#     - sonar-scanner -D sonar.projectKey=bb-medofa-frontend -D sonar.sources=. -D sonar.host.url=${SONAR_HOST_URL} -D sonar.login=${SONAR_KEY} -D sonar.exclusions=src/__source_html__/** -D sonar.gitlab.commit_sha=$CI_COMMIT_SHA -D sonar.gitlab.ref_name=$CI_COMMIT_REF_NAME -D sonar.gitlab.project_id=$CI_PROJECT_ID -D sonar.gitlab.unique_issue_per_inline=true -X
 
-  allow_failure: true
+#   allow_failure: true
   
-  interruptible: true
-  # allow_failure: true
-  variables:
-    SONAR_PROJECT_BASE_DIR: "${CI_PROJECT_DIR}"
-    GIT_DEPTH: 0
-  cache:
-    key: "sonar-${CI_PROJECT_ID}"
-    paths:
-      - ".scannerwork"
-      - ".sonar"
+#   interruptible: true
+#   # allow_failure: true
+#   variables:
+#     SONAR_PROJECT_BASE_DIR: "${CI_PROJECT_DIR}"
+#     GIT_DEPTH: 0
+#   cache:
+#     key: "sonar-${CI_PROJECT_ID}"
+#     paths:
+#       - ".scannerwork"
+#       - ".sonar"
 
 build-frontend-mr:
   stage: build
@@ -125,7 +125,7 @@ deploy-frontend-dev:
   interruptible: true
 
   tags:
-    - internal-medofa
+    - bebuy-gitlab-ci
   
   extends:
     - .pre-deploy-dev
@@ -164,7 +164,7 @@ deploy-frontend-prod:
   interruptible: true
 
   tags:
-    - internal-medofa
+    - bebuy-gitlab-ci
   
   extends:
     - .pre-deploy-master
