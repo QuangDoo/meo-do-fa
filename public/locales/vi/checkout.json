@@ -57,6 +57,6 @@
   "can_not_find": "Trường hợp không tìm được thuốc mong muốn, Quý khách vui lòng điền yêu cầu bên dưới.Chúng tôi sẽ liên hệ mua thuốc và báo giá sớm nhất có thể.",
   "billing_export": "Xuất hoá đơn",
   "billing_info_title": "Thông tin xuất hoá đơn",
-  "taxcode_required": "Xin nhập mã số thuế"
-  
+  "taxcode_required": "Xin nhập mã số thuế",
+  "apply_coupon_success": "Áp dụng mã khuyến mãi thành công"
 }

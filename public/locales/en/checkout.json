@@ -57,5 +57,6 @@
   "can_not_find": "If you cannot find the drug you want, please fill out the request below, we will contact you to buy the drug and quote as soon as possible.",
   "billing_export": "Billing Export",
   "billing_info_title": "Billing Infomation",
-  "taxcode_required": "Please provide a tax code"
+  "taxcode_required": "Please provide a tax code",
+  "apply_coupon_success": "Successfully applied coupon"
 }

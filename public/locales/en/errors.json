@@ -1,6 +1,7 @@
 {
   "code_500": "An error occurred. Please try again later.",
   "code_undefined": "An error occurred. Please try again later.",
+  "code_INTERNAL_SERVER_ERROR": "An error occurred. Please try again later.",
   "code_100": "Please login with an Admin account to continue.",
   "code_101": "Please login to continue.",
   "code_102": "Less than min price.",

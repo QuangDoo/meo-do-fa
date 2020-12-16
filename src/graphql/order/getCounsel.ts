@@ -1,13 +1,13 @@
 import { gql } from '@apollo/client';
 
-export type CounselDetail = {
+type CounselDetail = {
   cartId: string;
   productId: number;
   quantity: number;
   productName: string;
 };
 
-export type Counsel = {
+type Counsel = {
   _id: string;
   userId: number;
   orderNo: string;
@@ -15,15 +15,32 @@ export type Counsel = {
   create_date: Date;
 };
 
+type GiftInfo = {
+  giftId: number;
+  giftName: string;
+  giftQty: number;
+};
+
+type PromotionType = {
+  coupon_code: string;
+  dc_coupon_amt: number;
+  discount_type: string;
+  giftInfo: GiftInfo;
+};
+
+export type OutputCounsel = {
+  counsel: Counsel;
+  totalQty: number;
+  totalPrice: number;
+  totalDcAmt: number;
+  totalShippingFee: number;
+  totalNetPrice: number;
+  totalDcPayment: number;
+  promotion: PromotionType;
+};
+
 export type GetCounselData = {
-  getCounsel: {
-    counsel: Counsel;
-    totalQty: number;
-    totalPrice: number;
-    totalDcAmt: number;
-    totalShippingFee: number;
-    totalNetPrice: number;
-  };
+  getCounsel: OutputCounsel;
 };
 
 export const GET_COUNSEL = gql`
@@ -46,6 +63,17 @@ export const GET_COUNSEL = gql`
       totalDcAmt
       totalShippingFee
       totalNetPrice
+      totalDcPayment
+      promotion {
+        coupon_code
+        dc_coupon_amt
+        discount_type
+        giftInfo {
+          giftId
+          giftName
+          giftQty
+        }
+      }
     }
   }
 `;

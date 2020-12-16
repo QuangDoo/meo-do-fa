@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { APPLY_PAYMENT, ApplyPaymentData, ApplyPaymentVars } from 'src/graphql/order/applyPayment';
 import { CREATE_ORDER, CreateOrderData, CreateOrderVars } from 'src/graphql/order/createOrder';
-import { GET_COUNSEL, GetCounselData } from 'src/graphql/order/getCounsel';
+import { GET_COUNSEL, GetCounselData, OutputCounsel } from 'src/graphql/order/getCounsel';
 import {
   GET_PAYMENT_DELIVERY,
   GetPaymentAndDeliveryData
@@ -65,6 +65,8 @@ const CheckoutPage = () => {
   // User
   const { user, loading: loadingUser } = useUser();
 
+  const [counselData, setCounselData] = useState<OutputCounsel>();
+
   // When user data is loaded
   useEffect(() => {
     if (!user) return;
@@ -101,21 +103,15 @@ const CheckoutPage = () => {
   const paymentMethods = paymentAndDeliveryData?.getPaymentAndDeliveryMethod.paymentMethods || [];
   const deliveryMethods = paymentAndDeliveryData?.getPaymentAndDeliveryMethod.deliveryMethods || [];
 
-  const [totalPrice, setTotalPrice] = useState<number>();
-
   // Counsel
-  const { data: counselData, loading: loadingCounsel } = useQueryAuth<GetCounselData, undefined>(
-    GET_COUNSEL,
-    {
-      onCompleted: (data) => {
-        if (data.getCounsel === null) {
-          return;
-        }
-
-        setTotalPrice(data.getCounsel.totalPrice);
-      }
+  const { loading: loadingCounsel } = useQueryAuth<GetCounselData, undefined>(GET_COUNSEL, {
+    onCompleted: (data) => {
+      setCounselData(data.getCounsel);
+    },
+    onError: (data) => {
+      toast.error(`errors:code_${data.graphQLErrors[0]?.extensions?.code}`);
     }
-  );
+  });
 
   // Form handler with default values
   const { register, handleSubmit, watch, setValue } = useForm<FormInputs>({
@@ -135,15 +131,17 @@ const CheckoutPage = () => {
 
   const [applyPayment] = useMutationAuth<ApplyPaymentData, ApplyPaymentVars>(APPLY_PAYMENT, {
     onCompleted: (data) => {
-      setTotalPrice(data.applyPayment.totalPrice);
+      setCounselData(data.applyPayment);
     },
-    onError: () => null
+    onError: (error) => {
+      toast.error(`errors:code_${error.graphQLErrors[0]?.extensions?.code}`);
+    }
   });
 
   useDidUpdateEffect(() => {
     applyPayment({
       variables: {
-        orderNo: counselData.getCounsel.counsel.orderNo,
+        orderNo: counselData.counsel.orderNo,
         payment_method: +paymentOption
       }
     });
@@ -234,7 +232,7 @@ const CheckoutPage = () => {
     createOrder({
       variables: {
         inputs: {
-          orderNo: counselData?.getCounsel.counsel.orderNo,
+          orderNo: counselData?.counsel.orderNo,
           customer: {
             fullName: data.deliveryName,
             phone: data.deliveryPhone,
@@ -271,13 +269,14 @@ const CheckoutPage = () => {
       }
     });
   };
+
   const onError = (errors) => {
     const fields = Object.keys(errors);
 
     toast.error(errors[fields[0]].message);
   };
 
-  if (counselData?.getCounsel === null) {
+  if (counselData === null) {
     router.push('/');
     return null;
   }
@@ -333,7 +332,7 @@ const CheckoutPage = () => {
           </div>
 
           <div className="col-md-4 mb-3">
-            <StickySidebar counselData={counselData} totalPrice={totalPrice} />
+            <StickySidebar counselData={counselData} />
           </div>
         </div>
       </div>

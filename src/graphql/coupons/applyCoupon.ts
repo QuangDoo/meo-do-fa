@@ -1,19 +1,20 @@
 import { gql } from '@apollo/client';
 
-import { OutputCounsel } from './getCounsel';
+import { OutputCounsel } from '../order/getCounsel';
 
-export type ApplyPaymentData = {
-  applyPayment: OutputCounsel;
+export type ApplyCouponData = {
+  applyCoupon: OutputCounsel;
 };
 
-export type ApplyPaymentVars = {
+export type ApplyCouponVars = {
   orderNo: string;
-  payment_method: number;
+  code: string;
+  type?: number;
 };
 
-export const APPLY_PAYMENT = gql`
-  mutation($orderNo: String!, $payment_method: Int!) {
-    applyPayment(inputs: { orderNo: $orderNo, payment_method: $payment_method }) {
+export const APPLY_COUPON = gql`
+  mutation($orderNo: String!, $code: String!, $type: Int) {
+    applyCoupon(inputs: { orderNo: $orderNo, code: $code, type: $type }) {
       counsel {
         _id
         userId
