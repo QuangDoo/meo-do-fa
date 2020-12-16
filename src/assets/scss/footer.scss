@@ -1,3 +1,138 @@
+.footer {
+  background: $blue3;
+  color: #fff;
+  padding-top: 6em;
+  position: relative;
+  .text-primary {
+    color: $secondary !important;
+  }
+  &:before {
+    height: 2rem;
+    width: 65%;
+    right: 0;
+    top: 0;
+    position: absolute;
+    background-color: $secondary;
+    content: '';
+  }
+}
+.footer__header {
+  text-transform: uppercase;
+  color: $secondary;
+  font-weight: bold;
+}
+.footer__info-title {
+  font-weight: bold;
+}
+.footer__info-company {
+  text-transform: capitalize;
+}
+.footer__bct {
+  width: 117px;
+}
+.footer__link {
+  display: inline-block;
+  color: #fff;
+  margin-bottom: 0.5em;
+  font-weight: 500;
+  transition: color 0.2s;
+  will-change: color;
+  width: fit-content;
+}
+.footer__link:hover {
+  color: $secondary;
+}
+.footer__link--email {
+  // border-right: 1px solid rgba(145, 154, 163, 0.822);
+  text-transform: lowercase;
+  margin-bottom: 0;
+}
+.footer__delivery {
+  height: 2em;
+  background: white;
+  border-radius: 5px;
+  padding: 0.25em 0.5em;
+  margin-right: 0.5em;
+  margin-bottom: 0.5em;
+}
+.footer__icon {
+  color: white;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.footer__icon--fb {
+  background: #3b5998;
+}
+.footer__icon--fb:hover {
+  color: white;
+}
+.footer__icon--email {
+  background: #dc4e41;
+}
+.footer__app {
+  position: relative;
+  padding-top: 3em;
+  max-width: 325px;
+}
+.footer__app-ios {
+  width: 195px;
+  height: 388px;
+}
+.footer__app-android {
+  position: absolute;
+  right: 0;
+  top: 0.5em;
+  width: 196px;
+  height: 390px;
+}
+.footer .copyright {
+  font-size: smaller;
+  text-align: center;
+  color: $secondary;
+  background: rgb(0 0 0 / 40%);
+  width: 100%;
+  padding: 1em 0;
+}
+.account {
+  position: relative;
+}
+.account.not-login {
+  color: #919aa3;
+  font-size: 1.5em;
+}
+.back-to-top {
+  position: fixed;
+  bottom: -2em;
+  right: 1em;
+  z-index: 100;
+  transition: bottom 0.5s;
+  width: 2em;
+  height: 2em;
+  border-radius: 50%;
+  background-color: white;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
+  color: #919aa3;
+  text-align: center;
+  cursor: pointer;
+  line-height: 1;
+  transition: 0.5s linear;
+}
+.back-to-top__text {
+  font-weight: bold;
+  font-size: 10px;
+}
+.back-to-top.show {
+  bottom: 5em;
+}
+@media (max-width: 575.98px) {
+  .back-to-top.show {
+    bottom: 8em;
+  }
+}
 .logo-footer {
   max-height: 40px;
 }

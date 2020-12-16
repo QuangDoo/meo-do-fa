@@ -70,7 +70,7 @@ const StickySidebar = (props: Props): JSX.Element => {
 
         <SidebarItem label={t('checkout:price_shipping_fee')}>
           <span>
-            {data.totalShippingFee}
+            {data.totalShippingFee.toLocaleString('de-DE')}
             <span className="unit">{t('common:vnd')}</span>
           </span>
         </SidebarItem>
@@ -78,7 +78,7 @@ const StickySidebar = (props: Props): JSX.Element => {
         {data.totalDcAmt > 0 ? (
           <SidebarItem label={t('checkout:price_total_discount')}>
             <span>
-              -{data.totalDcAmt}
+              -{data.totalDcAmt.toLocaleString('de-DE')}
               <span className="unit">{t('common:vnd')}</span>
             </span>
           </SidebarItem>
