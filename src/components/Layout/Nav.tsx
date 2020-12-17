@@ -47,8 +47,8 @@ const Nav = () => {
       }
     }
   });
-  const categories = categoriesData?.getCategoriesAll || [];
-
+  const categories = categoriesData?.getCategoriesLevel || [];
+  console.log(categories);
   return (
     <nav className="rockland-nav shrink header-menu">
       <div className="container">
@@ -66,40 +66,22 @@ const Nav = () => {
                     </Link>
                   </div>
                   <ul className="dropdown-menu">
-                    {categories.map(({ name, id }) => (
+                    {categories.map(({ name, id, categorySub }) => (
                       <li key={id} className="mb-2 dropdown-item text-wrap">
                         <div className="dropdown dropdown-nav">
                           <div data-toggle="dropdown" data-hover="dropdown">
+                            <i className="fas fa-capsules category-icon"></i>
                             <Link href={`/products?category=${id}`}>
                               <a className={clsx('products__filter-category')}>{name}</a>
                             </Link>
                           </div>
-                          {/* <ul className="dropdown-menu dropdown-sub-menu">
-                            <li className="mb-2 dropdown-item">
-                              <div className="dropdown dropdown-nav">
-                                <div data-toggle="dropdown" data-hover="dropdown">
-                                  <a className="text-dark" href="/#">
-                                    amet consectetur
-                                  </a>
-                                </div>
-                                <div className="dropdown-menu dropdown-sub-menu">
-                                  <a className="dropdown-item" href="/#">
-                                    adipisicing elit
-                                  </a>
-                                </div>
-                              </div>
-                            </li>
-                            <li className="mb-2 dropdown-item">
-                              <a className="text-dark" href="/#">
-                                Exercitationem autem
-                              </a>
-                            </li>
-                            <li className="mb-2 dropdown-item">
-                              <a className="text-dark" href="/#">
-                                Exercitationem autem
-                              </a>
-                            </li>
-                          </ul> */}
+                          <ul className="dropdown-menu dropdown-sub-menu">
+                            {categorySub.map(({ name, id }) => (
+                              <li key={id} className="mb-2 dropdown-item text-wrap">
+                                {name}
+                              </li>
+                            ))}
+                          </ul>
                         </div>
                       </li>
                     ))}

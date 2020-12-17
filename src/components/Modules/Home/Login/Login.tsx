@@ -30,12 +30,12 @@ const Login = (): JSX.Element => {
               {t('header:register')}
             </button>
 
-            <a
+            {/* <a
               className="call btn btn-info home__cta-btn m-2 d-inline-block d-sm-none"
               href="tel:0866624702">
               <i className="fas fa-phone mr-1" />
               02 873 008 840
-            </a>
+            </a> */}
           </div>
         </div>
       </div>
