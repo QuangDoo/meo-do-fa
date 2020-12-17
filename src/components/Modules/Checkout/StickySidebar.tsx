@@ -1,15 +1,14 @@
 import {
   Box,
   Button as MuiButton,
-  createStyles,
+  Card,
+  CardContent,
   Dialog,
   DialogContent,
   DialogTitle,
-  Divider,
+  Grid,
   IconButton,
-  InputBase,
   makeStyles,
-  Paper,
   TextField,
   Theme,
   Typography
@@ -21,13 +20,18 @@ import clsx from 'clsx';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import React, { useState } from 'react';
+import Countdown, { zeroPad } from 'react-countdown';
 import { toast } from 'react-toastify';
 import Button from 'src/components/Form/Button';
 import PriceText from 'src/components/Form/PriceText';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { APPLY_COUPON, ApplyCouponData, ApplyCouponVars } from 'src/graphql/coupons/applyCoupon';
-import { GetCounselData, OutputCounsel } from 'src/graphql/order/getCounsel';
-import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
+import { GET_USED_COUPONS, GetUsedCouponsData } from 'src/graphql/coupons/getUsedCoupons';
+import { OutputCounsel } from 'src/graphql/order/getCounsel';
+import { useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
+
+import PromoDiscountIcon from './PromoDiscountIcon';
+import PromoGiftIcon from './PromoGiftIcon';
 
 type SidebarItemProps = {
   label?: string;
@@ -65,6 +69,16 @@ const useStyles = makeStyles((theme: Theme) => ({
   applyPromoBtn: {
     minWidth: 'fit-content',
     marginLeft: theme.spacing(2)
+  },
+  cardActions: {
+    justifyContent: 'flex-end'
+  },
+  promoTypeLabel: {
+    textTransform: 'uppercase',
+    fontWeight: 700
+  },
+  promoTimeLeft: {
+    fontSize: 14
   }
 }));
 
@@ -73,35 +87,21 @@ type Props = {
   setCounselData?: (data: OutputCounsel) => void;
 };
 
-const StickySidebar = (props: Props): JSX.Element => {
-  const { t } = useTranslation(['checkout', 'common', 'errors']);
-
-  const classes = useStyles();
-
-  const [chosenCode, setChosenCode] = useState<string>();
-
-  const [open, setOpen] = useState<boolean>(false);
-
-  const [promoCode, setPromoCode] = useState<string>('');
-
-  const [applyCoupon, { loading: applyingCoupon }] = useMutationAuth<
-    ApplyCouponData,
-    ApplyCouponVars
-  >(APPLY_COUPON, {
-    onError: (error) => {
-      toast.error(`errors:code_${error.graphQLErrors[0]?.extensions?.code}`);
-    },
-    onCompleted: (data) => {
-      toast.success('checkout:apply_coupon_success');
-      props.setCounselData(data.applyCoupon);
-      setChosenCode(data.applyCoupon.promotion.coupon_code);
+// Fake coupons data
+const getUsedCouponsData = {
+  getUsedCoupon: [
+    {
+      code: '123',
+      type: 'discount',
+      display_name: 'Giảm ngay 200,000 cho đơn hàng tối thiểu giá trị từ 24.000.000',
+      expiration_date: new Date('December 30, 2020 12:00:00')
     }
-  });
+  ]
+};
 
-  // const data = props.counselData?.getCounsel;
-
-  // fake data to test
-  const data = {
+// Fake counsel data
+const counselData = {
+  getCounsel: {
     counsel: {
       orderNo: '123'
     },
@@ -109,9 +109,53 @@ const StickySidebar = (props: Props): JSX.Element => {
     totalShippingFee: 0,
     totalDcAmt: 0,
     totalNetPrice: 0
-  };
+  }
+};
 
-  // if (!data) return null;
+// Fake get used coupons loading state
+const gettingUsedCoupons = false;
+
+const StickySidebar = (props: Props): JSX.Element => {
+  const { t } = useTranslation(['checkout', 'common', 'errors']);
+
+  const classes = useStyles();
+
+  const [appliedCode, setAppliedCode] = useState<boolean>();
+
+  const [open, setOpen] = useState<boolean>(false);
+
+  const [promoCode, setPromoCode] = useState<string>('');
+
+  // const { data: getUsedCouponsData, loading: gettingUsedCoupons } = useQueryAuth<
+  //   GetUsedCouponsData,
+  //   undefined
+  // >(GET_USED_COUPONS, {
+  //   onError: (error) => {
+  //     toast.error(t(`errors:code_${error.graphQLErrors[0]?.extensions?.code}`));
+  //   }
+  // });
+
+  const [applyCoupon, { loading: applyingCoupon }] = useMutationAuth<
+    ApplyCouponData,
+    ApplyCouponVars
+  >(APPLY_COUPON, {
+    onError: (error) => {
+      toast.error(t(`errors:code_${error.graphQLErrors[0]?.extensions?.code}`));
+    },
+    onCompleted: (data) => {
+      toast.success('checkout:apply_coupon_success');
+      setOpen(false);
+      props.setCounselData(data.applyCoupon);
+      setAppliedCode(true);
+    }
+  });
+
+  // Fake counsel data
+  const data = counselData.getCounsel;
+
+  // const data = props.counselData?.getCounsel;
+
+  if (!data) return null;
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPromoCode(event.target.value);
@@ -121,6 +165,15 @@ const StickySidebar = (props: Props): JSX.Element => {
     applyCoupon({
       variables: {
         code: promoCode,
+        orderNo: data.counsel.orderNo
+      }
+    });
+  };
+
+  const handleApplyCoupon = (code: string) => {
+    applyCoupon({
+      variables: {
+        code: code,
         orderNo: data.counsel.orderNo
       }
     });
@@ -193,32 +246,32 @@ const StickySidebar = (props: Props): JSX.Element => {
           </span>
         </SidebarItem>
 
-        <SidebarItem label={'Mã khuyến mãi'}>
+        <SidebarItem label={t('checkout:apply_coupon_label')}>
           <MuiButton
             size="small"
             variant="text"
             color="primary"
             startIcon={<LocalOfferIcon />}
             onClick={handleOpen}>
-            {chosenCode || 'Dùng mã'}
+            {appliedCode || t('checkout:apply_coupon_btn_label')}
           </MuiButton>
 
-          {chosenCode && <DeleteIcon />}
+          {appliedCode && <DeleteIcon />}
 
           <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
             <DialogTitle className={classes.padding2}>
-              Chọn mã khuyến mãi
+              {t('checkout:apply_coupon_popup_title')}
               <IconButton className={classes.closeButton} onClick={handleClose}>
                 <CloseIcon />
               </IconButton>
             </DialogTitle>
 
             <DialogContent dividers className={classes.padding2}>
-              <Box display="flex">
+              <Box display="flex" marginBottom={2}>
                 <TextField
                   className={classes.promoCodeInput}
                   size="small"
-                  label="Nhập mã"
+                  label={t('checkout:apply_coupon_input_label')}
                   variant="outlined"
                   value={promoCode}
                   onChange={handleChange}
@@ -229,12 +282,59 @@ const StickySidebar = (props: Props): JSX.Element => {
                   className={classes.applyPromoBtn}
                   variant="contained"
                   color="primary">
-                  Áp dụng
+                  {t('checkout:apply_coupon_confirm_btn')}
                 </MuiButton>
               </Box>
+
+              {getUsedCouponsData?.getUsedCoupon.map((coupon) => (
+                <Card key={coupon.code} variant="outlined">
+                  <CardContent>
+                    <Grid container spacing={2}>
+                      <Grid item xs={2}>
+                        {coupon.type === 'discount' ? (
+                          <PromoDiscountIcon fill="#35409a" />
+                        ) : (
+                          <PromoGiftIcon fill="#35409a" />
+                        )}
+                      </Grid>
+
+                      <Grid item xs>
+                        <Typography color="primary" gutterBottom className={classes.promoTypeLabel}>
+                          {coupon.type === 'discount' ? 'Giảm giá' : 'Quà tặng'}
+                        </Typography>
+
+                        <Typography color="textPrimary" gutterBottom>
+                          {coupon.display_name}
+                        </Typography>
+
+                        <Box display="flex" alignItems="center" justifyContent="space-between">
+                          <Typography color="textSecondary" className={classes.promoTimeLeft}>
+                            <Countdown
+                              renderer={(props) => (
+                                <>
+                                  {zeroPad(props.days, 2)} ngày {zeroPad(props.hours, 2)} giờ{' '}
+                                  {zeroPad(props.minutes, 2)} phút {zeroPad(props.seconds, 2)} giây
+                                </>
+                              )}
+                              date={new Date('December 19, 2020 03:24:00')}
+                            />
+                          </Typography>
+                          <MuiButton
+                            className={classes.applyPromoBtn}
+                            onClick={() => handleApplyCoupon(coupon.code)}
+                            variant="contained"
+                            color="primary">
+                            {t('checkout:apply_coupon_confirm_btn')}
+                          </MuiButton>
+                        </Box>
+                      </Grid>
+                    </Grid>
+                  </CardContent>
+                </Card>
+              ))}
             </DialogContent>
 
-            <LoadingBackdrop open={applyingCoupon} />
+            <LoadingBackdrop open={applyingCoupon || gettingUsedCoupons} />
           </Dialog>
         </SidebarItem>
       </div>

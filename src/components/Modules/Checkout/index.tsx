@@ -60,7 +60,7 @@ type FormInputs = {
 };
 
 const CheckoutPage = () => {
-  const { t } = useTranslation(['checkout']);
+  const { t } = useTranslation(['checkout', 'errors']);
 
   // User
   const { user, loading: loadingUser } = useUser();
@@ -109,7 +109,7 @@ const CheckoutPage = () => {
       setCounselData(data.getCounsel);
     },
     onError: (data) => {
-      toast.error(`errors:code_${data.graphQLErrors[0]?.extensions?.code}`);
+      toast.error(t(`errors:code_${data.graphQLErrors[0]?.extensions?.code}`));
     }
   });
 
@@ -134,7 +134,7 @@ const CheckoutPage = () => {
       setCounselData(data.applyPayment);
     },
     onError: (error) => {
-      toast.error(`errors:code_${error.graphQLErrors[0]?.extensions?.code}`);
+      toast.error(t(`errors:code_${error.graphQLErrors[0]?.extensions?.code}`));
     }
   });
 

@@ -58,5 +58,10 @@
   "billing_export": "Billing Export",
   "billing_info_title": "Billing Infomation",
   "taxcode_required": "Please provide a tax code",
-  "apply_coupon_success": "Successfully applied coupon"
+  "apply_coupon_label": "Promo code",
+  "apply_coupon_btn_label": "Use promo code",
+  "apply_coupon_popup_title": "Apply promo code",
+  "apply_coupon_input_label": "Input promo code",
+  "apply_coupon_confirm_btn": "Apply",
+  "apply_coupon_success": "Successfully applied promo code"
 }
