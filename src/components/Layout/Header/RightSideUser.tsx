@@ -83,9 +83,9 @@ const RightSideUser = (): JSX.Element => {
 
             {/* <div className="header__user-avatar">
             <img
-              alt="medofa.vn"
+              alt="medofa.com"
               className="img-fluid"
-              src="https://assets.medofa.vn/assets/defaults/user-avatar-20b31d55208b900bf14c683f4fb7e9e3f1f5b40feeb291a56dacafb01999d751.svg"
+              src="https://assets.medofa.com/assets/defaults/user-avatar-20b31d55208b900bf14c683f4fb7e9e3f1f5b40feeb291a56dacafb01999d751.svg"
             />
           </div> */}
           </div>
