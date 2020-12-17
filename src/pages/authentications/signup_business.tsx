@@ -104,12 +104,12 @@ function SignupBusiness(): JSX.Element {
           <div className="d-flex align-items-center justify-content-between">
             <div className="mr-3">
               <div className="rockland-logo">
-                <a href="/" title="medofa.vn">
+                <a href="/" title="medofa.com">
                   <img
-                    alt="medofa.vn"
+                    alt="medofa.com"
                     data-src="/assets/images/logo-49156a6a8b6688f3eb1098b08d406267e8770cffd64b6f07bb31e2e52536346d.svg"
                     className="img-fluid lozad"
-                    title="medofa.vn"
+                    title="medofa.com"
                     src="/assets/images/logo-49156a6a8b6688f3eb1098b08d406267e8770cffd64b6f07bb31e2e52536346d.svg"
                     data-loaded="true"
                   />
