@@ -72,13 +72,15 @@ const Nav = () => {
                           <div data-toggle="dropdown" data-hover="dropdown">
                             <i className="fas fa-capsules category-icon"></i>
                             <Link href={`/products?category=${id}`}>
-                              <a className={clsx('products__filter-category')}>{name}</a>
+                              <a>{name}</a>
                             </Link>
                           </div>
                           <ul className="dropdown-menu dropdown-sub-menu">
                             {categorySub.map(({ name, id }) => (
                               <li key={id} className="mb-2 dropdown-item text-wrap">
-                                {name}
+                                <Link href={`/products?category=${id}`}>
+                                  <a>{name}</a>
+                                </Link>
                               </li>
                             ))}
                           </ul>
