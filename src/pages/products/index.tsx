@@ -15,7 +15,14 @@ import Pagination from 'src/components/Modules/Pagination';
 import ProductCard from 'src/components/Modules/ProductCard';
 import ProductsDrawerFilter from 'src/components/Modules/ProductDrawerFilter/ProductsDrawerFilter';
 import ProductsSidebarFilter from 'src/components/Modules/ProductsSidebarFilter';
-import { GET_ALL_CATEGORIES, GetAllCategoriesData } from 'src/graphql/category/category.query';
+import {
+  Category,
+  CategoryData,
+  CategoryVar,
+  GET_ALL_CATEGORIES,
+  GET_CATEGORY,
+  GetAllCategoriesData
+} from 'src/graphql/category/category.query';
 import {
   GET_MANUFACTURERS,
   GetManufacturersData,
@@ -46,7 +53,7 @@ function Products(): JSX.Element {
     onError: () => null
   });
 
-  const categories = categoriesData?.getCategoriesLevel || [];
+  const categories = categoriesData?.getCategoriesAll || [];
 
   const { data: manufacturersData } = useQuery<GetManufacturersData, GetManufacturersVars>(
     GET_MANUFACTURERS,
@@ -83,13 +90,22 @@ function Products(): JSX.Element {
 
   const total = productsData?.getProductByConditions?.total || 0;
 
-  const getNameById = (array, id) => {
-    return _.find(array, { id })?.name;
-  };
+  const { data: categoryData } = useQuery<CategoryData, CategoryVar>(GET_CATEGORY, {
+    variables: {
+      id: Number(router.query.category)
+    },
+    onError: () => null
+  });
 
-  const title = Number(router.query.category)
-    ? getNameById(categories, Number(router.query.category))
-    : t('products:title');
+  const title = categoryData?.getCategory ? categoryData.getCategory.name : t('products:title');
+
+  // const getNameById = (array, id) => {
+  //   return _.find(array, { id })?.name;
+  // };
+
+  // const title = Number(router.query.category)
+  //   ? getNameById(categories, Number(router.query.category))
+  //   : t('products:title');
 
   useEffect(() => {
     if (productsLoading) {

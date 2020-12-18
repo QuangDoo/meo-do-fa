@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
-import { GET_ALL_CATEGORIES, GetAllCategoriesData } from 'src/graphql/category/category.query';
+import { GET_CATEGORIES_LEVEL, GetCategoriesLevelData } from 'src/graphql/category/category.query';
 import useCart from 'src/hooks/useCart';
 import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
 
@@ -36,17 +36,20 @@ const Nav = () => {
     setAnchorEl(null);
   };
 
-  const { data: categoriesData } = useQuery<GetAllCategoriesData, undefined>(GET_ALL_CATEGORIES, {
-    onError: (error) => {
-      console.log('Get all categories error:', error);
+  const { data: categoriesData } = useQuery<GetCategoriesLevelData, undefined>(
+    GET_CATEGORIES_LEVEL,
+    {
+      onError: (error) => {
+        console.log('Get all categories error:', error);
 
-      const errorCode = error.graphQLErrors?.[0]?.extensions?.code;
+        const errorCode = error.graphQLErrors?.[0]?.extensions?.code;
 
-      if (errorCode) {
-        toast.error(t(`errors:code_${errorCode}`));
+        if (errorCode) {
+          toast.error(t(`errors:code_${errorCode}`));
+        }
       }
     }
-  });
+  );
   const categories = categoriesData?.getCategoriesLevel || [];
   console.log(categories);
   return (
@@ -69,8 +72,14 @@ const Nav = () => {
                     {categories.map(({ name, id, categorySub }) => (
                       <li key={id} className="mb-2 dropdown-item text-wrap">
                         <div className="dropdown dropdown-nav">
-                          <div data-toggle="dropdown" data-hover="dropdown">
-                            <i className="fas fa-capsules category-icon"></i>
+                          <div className="d-flex" data-toggle="dropdown" data-hover="dropdown">
+                            <img
+                              src={`/assets/images/category_${id}.png`}
+                              className="dropdown-item-icon"
+                              alt={`category-item-${id}`}
+                              width="60"
+                              height="30"
+                            />
                             <Link href={`/products?category=${id}`}>
                               <a>{name}</a>
                             </Link>

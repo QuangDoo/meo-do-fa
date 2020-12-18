@@ -6,11 +6,11 @@ export type Category = {
   categorySub: Category[];
 };
 
-export type GetAllCategoriesData = {
+export type GetCategoriesLevelData = {
   getCategoriesLevel: Category[];
 };
 
-export const GET_ALL_CATEGORIES = gql`
+export const GET_CATEGORIES_LEVEL = gql`
   query {
     getCategoriesLevel {
       id
@@ -19,6 +19,33 @@ export const GET_ALL_CATEGORIES = gql`
         id
         name
       }
+    }
+  }
+`;
+
+export type GetAllCategoriesData = {
+  getCategoriesAll: Category[];
+};
+export const GET_ALL_CATEGORIES = gql`
+  query {
+    getCategoriesAll {
+      id
+      name
+    }
+  }
+`;
+
+export type CategoryVar = {
+  id: number;
+};
+export type CategoryData = {
+  getCategory: Category;
+};
+export const GET_CATEGORY = gql`
+  query getCategory($id: Int!) {
+    getCategory(id: $id) {
+      id
+      name
     }
   }
 `;

@@ -79,6 +79,7 @@
 li.mb-2.dropdown-item a {
   font-size: 14px;
   padding: 0;
+  color: var(--dark);
 }
 
 li.mb-2.dropdown-item:hover .sub-menu-text:after {
@@ -133,6 +134,7 @@ ul li.mb-2.dropdown-item:last-child {
   padding-right: 1rem;
 }
 
-.category-icon {
-  padding-right: 10px;
+.dropdown-item:active {
+  color: $primary;
+  background-color: var(--light);
 }
