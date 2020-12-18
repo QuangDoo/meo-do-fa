@@ -46,7 +46,7 @@ function Products(): JSX.Element {
     onError: () => null
   });
 
-  const categories = categoriesData?.getCategoriesAll || [];
+  const categories = categoriesData?.getCategoriesLevel || [];
 
   const { data: manufacturersData } = useQuery<GetManufacturersData, GetManufacturersVars>(
     GET_MANUFACTURERS,

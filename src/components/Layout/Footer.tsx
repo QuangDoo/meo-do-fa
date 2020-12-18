@@ -19,12 +19,12 @@ const links: { href: string; i18nKey: string }[] = [
   { href: '/about-us', i18nKey: 'footer:about_us' },
   { href: '/privacy-policy', i18nKey: 'footer:privacy_policy' },
   { href: '/help', i18nKey: 'footer:faq' },
-  { href: '/general-policy', i18nKey: 'footer:general_policy' },
+  // { href: '/general-policy', i18nKey: 'footer:general_policy' },
   // { href: '/career', i18nKey: 'common:recruitment' },
   { href: '/terms-of-service', i18nKey: 'footer:terms_of_service' },
-  { href: '/dispute-resolution', i18nKey: 'footer:dispute_resolution' },
-  { href: '/terms-and-conditions', i18nKey: 'footer:terms_and_conditions' },
-  { href: '/operating-regulations', i18nKey: 'footer:operating_regulations' }
+  { href: '/dispute-resolution', i18nKey: 'footer:dispute_resolution' }
+  // { href: '/terms-and-conditions', i18nKey: 'footer:terms_and_conditions' },
+  // { href: '/operating-regulations', i18nKey: 'footer:operating_regulations' }
   // { href: '', i18nKey: 'common:supply' }
 ];
 
@@ -221,7 +221,11 @@ const Footer = (): JSX.Element => {
                 <p className="d-flex align-items-center">
                   <i className="far fa-envelope footer__icon footer__icon--email" />
 
-                  <a className="footer__link footer__link--email px-2 mr-2"> info@medofa.com</a>
+                  <a
+                    className="footer__link footer__link--email px-2 mr-2"
+                    href="mailto: info@medofa.com">
+                    info@medofa.com
+                  </a>
 
                   {/* <a className="footer__icon footer__icon--fb">
                     <i className="fab fa-facebook-f" />
@@ -249,7 +253,7 @@ const Footer = (): JSX.Element => {
 
                   <img
                     className="img-fluid footer__delivery"
-                    src="/assets/images/logistics-pharma-logo.png"
+                    src="/assets/images/pharma-logistics-logo.png"
                     alt="logo-logistics-pharma"
                   />
 

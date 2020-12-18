@@ -9,7 +9,7 @@ const getURI = () => {
     return 'http://gateway.medofa.svc.cluster.local/graphql';
   }
 
-  return 'https://graphql.medofa.bedigital.vn';
+  return 'https://graphql.medofa.com';
 };
 
 const httpLink = new HttpLink({

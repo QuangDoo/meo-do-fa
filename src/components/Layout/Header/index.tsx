@@ -33,7 +33,7 @@ const Header = ({ t }: HeaderProps): JSX.Element => {
                 {/* <li className="promotion-nav__item">
                   <a
                     className="promotion-nav__link"
-                    href="https://career.medofa.vn/"
+                    href="https://career.medofa.com/"
                     title={t('common:recruitment')}>
                     <i className="promotion-nav__icon fas fa-briefcase" />
                     <span>{t('common:recruitment')}</span>
@@ -42,7 +42,7 @@ const Header = ({ t }: HeaderProps): JSX.Element => {
                 {/* <li className="promotion-nav__item">
                   <a
                     className="promotion-nav__link"
-                    href="https://supplier.medofa.vn/"
+                    href="https://supplier.medofa.com/"
                     title={t('common:supply')}>
                     <i className="promotion-nav__icon fas fa-store-alt" />
                     <span>{t('common:supply')}</span>
@@ -61,11 +61,11 @@ const Header = ({ t }: HeaderProps): JSX.Element => {
         <div className="d-flex flex-column flex-sm-row align-items-stretch align-items-sm-center justify-content-between">
           <div className="mr-sm-3 flex-shrink-0 mb-3 mb-sm-0 mr-0">
             <div className="rockland-logo">
-              <a href="/" title="Medofa.vn">
+              <a href="/" title="Medofa.com">
                 <img
-                  alt="Medofa.vn"
+                  alt="Medofa.com"
                   className="img-fluid logo-header"
-                  title="Medofa.vn"
+                  title="Medofa.com"
                   src="/assets/images/logo2.png"
                 />
               </a>
