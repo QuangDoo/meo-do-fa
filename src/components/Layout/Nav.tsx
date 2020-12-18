@@ -51,7 +51,7 @@ const Nav = () => {
     }
   );
   const categories = categoriesData?.getCategoriesLevel || [];
-  console.log(categories);
+
   return (
     <nav className="rockland-nav shrink header-menu">
       <div className="container">
