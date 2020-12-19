@@ -34,17 +34,13 @@ const AboutUs = (): JSX.Element => {
               <h2 className="about-us__title text-center">Giới thiệu về Medofa</h2>
               <p>
                 <b className="text-primary">Medofa </b>
-                được thành lập từ năm 2018, là một trong những startup thành công trong lĩnh vực
-                công nghệ về y tế
+                được thành lập vào 2020, là một giải pháp công nghệ ngành dược kết nối nhà máy, nhà phân phối , nhà thuốc, dược sĩ nhằm hợp tạo mối liên kết trực tiếp và gia tăng doanh thu .
+
               </p>
               <p>
-                Hiện tại là cổng điện tử cung cấp thuốc cho hơn 1.000 nhà thuốc và phòng khám trên
-                khắp Việt Nam.
+                Phương châm của Medofa: Medicines , Online, Fast
               </p>
-              <p>
-                Là một trong những nơi làm việc thu hút các tài năng trẻ với đam mê ứng dụng công
-                nghệ 4.0 vào nền Y Tế.
-              </p>
+         
             </div>
           </div>
 
