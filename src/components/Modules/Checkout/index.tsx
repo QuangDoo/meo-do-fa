@@ -238,6 +238,10 @@ const CheckoutPage = () => {
             phone: data.deliveryPhone,
             email: data.deliveryEmail,
             shipping_address: {
+              fullName: data.deliveryName,
+              phone: data.deliveryPhone,
+              email: data.deliveryEmail,
+              tax: data.deliveryTaxCode,
               partnerId: '',
               isNew: true,
               zipCode: +data.deliveryWard.split('__')[1],
@@ -245,9 +249,11 @@ const CheckoutPage = () => {
               district: data.deliveryDistrict.split('__')[0],
               ward: data.deliveryWard.split('__')[0],
               street: data.deliveryStreet
-              // taxCode: data.deliveryTaxCode
             },
             billing_address: {
+              fullName: data.invoiceName,
+              email: data.invoiceEmail,
+              tax: data.invoiceTaxCode,
               partnerId: '',
               isNew: true,
               zipCode: +data.invoiceWard.split('__')[1],
@@ -255,10 +261,6 @@ const CheckoutPage = () => {
               district: data.invoiceDistrict.split('__')[0],
               ward: data.invoiceWard.split('__')[0],
               street: data.invoiceStreet
-              // fullName: data.invoiceName
-              // phone: data.invoicePhone
-              // email: data.invoiceEmail
-              // taxCode: data.invoiceTaxCode
             }
           },
           paymentMethodId: +data.paymentMethodId,

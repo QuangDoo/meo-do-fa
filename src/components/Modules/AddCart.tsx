@@ -52,8 +52,7 @@ function AddCart(props: Props) {
         refetchCart();
       })
       .catch((error) => {
-        console.log('Add to cart error:', { error });
-        toast.error(t(`errors:code_${error.graphQLErrors[0].extensions.code}`));
+        toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
       });
   };
 

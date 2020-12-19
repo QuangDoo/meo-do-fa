@@ -20,13 +20,12 @@ const Notification = (): JSX.Element => {
 
   const [seenAllNoti] = useMutationAuth(SEEN_ALL_NOTI, {
     onCompleted: (data) => {
-      // console.log('data', data);
       if (data.code === 200) {
         setIsRead(true);
       }
     },
     onError: (err) => {
-      toast.error(t(`errors:code_${err.graphQLErrors[0].extensions.code}`));
+      toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
     }
   });
 

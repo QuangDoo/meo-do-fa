@@ -26,13 +26,12 @@ function QuantityInput(props: Props) {
 
   const [quantity, setQuantity] = useState<string>('0');
 
-  const [addToCart, { loading: addingToCart }] = useMutationAuth(ADD_TO_CART, {
+  const [addToCart] = useMutationAuth(ADD_TO_CART, {
     onCompleted: () => {
       toast.success(t(`errors:add_to_cart_success`));
       refetchCart();
     },
     onError: (error) => {
-      console.log('Add to cart error:', { error });
       toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
     }
   });
@@ -111,8 +110,6 @@ function QuantityInput(props: Props) {
           </button>
         </div>
       </div>
-
-      <LoadingBackdrop open={addingToCart} />
     </>
   );
 }

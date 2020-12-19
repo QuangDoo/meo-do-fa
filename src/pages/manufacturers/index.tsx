@@ -1,6 +1,7 @@
 import { useQuery } from '@apollo/client';
 import { useTranslation } from 'i18n';
 import React, { useEffect } from 'react';
+import { toast } from 'react-toastify';
 import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
@@ -13,14 +14,13 @@ import {
 import withApollo from 'src/utils/withApollo';
 
 function Manufacturers(): JSX.Element {
-  const { data, error } = useQuery<GetAllManufacturersData, undefined>(GET_ALL_MANUFACTURERS);
-  const { t } = useTranslation(['manufacturers']);
-  // onError
-  useEffect(() => {
-    if (!error) return;
+  const { t } = useTranslation(['manufacturers', 'errors']);
 
-    console.log('Get manufacturers error:', error);
-  }, [error]);
+  const { data } = useQuery<GetAllManufacturersData, undefined>(GET_ALL_MANUFACTURERS, {
+    onError: (error) => {
+      toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
+    }
+  });
 
   return (
     <>

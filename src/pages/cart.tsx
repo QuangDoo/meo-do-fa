@@ -18,7 +18,7 @@ import withApollo from 'src/utils/withApollo';
 function Cart(): JSX.Element {
   const { cart, loading: loadingCart } = useCart();
 
-  const { t } = useTranslation(['cart', 'common']);
+  const { t } = useTranslation(['cart', 'common', 'errors']);
 
   const router = useRouter();
 
@@ -27,7 +27,7 @@ function Cart(): JSX.Element {
       router.push('/checkout');
     },
     onError: (error) => {
-      toast.error('Create counsel error: ' + error);
+      toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
     }
   });
 

@@ -28,7 +28,7 @@ import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { APPLY_COUPON, ApplyCouponData, ApplyCouponVars } from 'src/graphql/coupons/applyCoupon';
 import { GET_USED_COUPONS, GetUsedCouponsData } from 'src/graphql/coupons/getUsedCoupons';
 import { OutputCounsel } from 'src/graphql/order/getCounsel';
-import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
+import { useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
 
 import PromoDiscountIcon from './PromoDiscountIcon';
 import PromoGiftIcon from './PromoGiftIcon';
@@ -100,20 +100,20 @@ const getUsedCouponsData = {
 };
 
 // Fake counsel data
-const counselData = {
-  getCounsel: {
-    counsel: {
-      orderNo: '123'
-    },
-    totalQty: 0,
-    totalShippingFee: 0,
-    totalDcAmt: 0,
-    totalNetPrice: 0
-  }
-};
+// const counselData = {
+//   getCounsel: {
+//     counsel: {
+//       orderNo: '123'
+//     },
+//     totalQty: 0,
+//     totalShippingFee: 0,
+//     totalDcAmt: 0,
+//     totalNetPrice: 0
+//   }
+// };
 
 // Fake get used coupons loading state
-const gettingUsedCoupons = false;
+// const gettingUsedCoupons = false;
 
 const StickySidebar = (props: Props): JSX.Element => {
   const { t } = useTranslation(['checkout', 'common', 'errors']);
@@ -126,14 +126,14 @@ const StickySidebar = (props: Props): JSX.Element => {
 
   const [promoCode, setPromoCode] = useState<string>('');
 
-  // const { data: getUsedCouponsData, loading: gettingUsedCoupons } = useQueryAuth<
-  //   GetUsedCouponsData,
-  //   undefined
-  // >(GET_USED_COUPONS, {
-  //   onError: (error) => {
-  //     toast.error(t(`errors:code_${error.graphQLErrors[0]?.extensions?.code}`));
-  //   }
-  // });
+  const { data: getUsedCouponsData, loading: gettingUsedCoupons } = useQueryAuth<
+    GetUsedCouponsData,
+    undefined
+  >(GET_USED_COUPONS, {
+    onError: (error) => {
+      toast.error(t(`errors:code_${error.graphQLErrors[0]?.extensions?.code}`));
+    }
+  });
 
   const [applyCoupon, { loading: applyingCoupon }] = useMutationAuth<
     ApplyCouponData,
@@ -151,9 +151,9 @@ const StickySidebar = (props: Props): JSX.Element => {
   });
 
   // Fake counsel data
-  const data = counselData.getCounsel;
+  // const data = counselData.getCounsel;
 
-  // const data = props.counselData?.getCounsel;
+  const data = props.counselData;
 
   if (!data) return null;
 
