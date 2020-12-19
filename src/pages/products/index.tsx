@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { useEffect } from 'react';
 import { animateScroll } from 'react-scroll';
+import { toast } from 'react-toastify';
 import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
@@ -15,7 +16,16 @@ import Pagination from 'src/components/Modules/Pagination';
 import ProductCard from 'src/components/Modules/ProductCard';
 import ProductsDrawerFilter from 'src/components/Modules/ProductDrawerFilter/ProductsDrawerFilter';
 import ProductsSidebarFilter from 'src/components/Modules/ProductsSidebarFilter';
-import { GET_ALL_CATEGORIES, GetAllCategoriesData } from 'src/graphql/category/category.query';
+import {
+  Category,
+  CategoryData,
+  CategoryVar,
+  GET_ALL_CATEGORIES,
+  GET_CATEGORIES_LEVEL,
+  GET_CATEGORY,
+  GetAllCategoriesData,
+  GetCategoriesLevelData
+} from 'src/graphql/category/category.query';
 import {
   GET_MANUFACTURERS,
   GetManufacturersData,
@@ -42,11 +52,27 @@ function Products(): JSX.Element {
 
   const search = router.query.search as string;
 
-  const { data: categoriesData } = useQuery<GetAllCategoriesData, undefined>(GET_ALL_CATEGORIES, {
-    onError: () => null
-  });
+  // const { data: categoriesData } = useQuery<GetAllCategoriesData, undefined>(GET_ALL_CATEGORIES, {
+  //   onError: () => null
+  // });
 
-  const categories = categoriesData?.getCategoriesLevel || [];
+  // const categories = categoriesData?.getCategoriesAll || [];
+
+  const { data: categoriesLevelData } = useQuery<GetCategoriesLevelData, undefined>(
+    GET_CATEGORIES_LEVEL,
+    {
+      onError: (error) => {
+        console.log('Get all categories error:', error);
+
+        const errorCode = error.graphQLErrors?.[0]?.extensions?.code;
+
+        if (errorCode) {
+          toast.error(t(`errors:code_${errorCode}`));
+        }
+      }
+    }
+  );
+  const categoriesLevel = categoriesLevelData?.getCategoriesLevel || [];
 
   const { data: manufacturersData } = useQuery<GetManufacturersData, GetManufacturersVars>(
     GET_MANUFACTURERS,
@@ -83,13 +109,22 @@ function Products(): JSX.Element {
 
   const total = productsData?.getProductByConditions?.total || 0;
 
-  const getNameById = (array, id) => {
-    return _.find(array, { id })?.name;
-  };
+  const { data: categoryData } = useQuery<CategoryData, CategoryVar>(GET_CATEGORY, {
+    variables: {
+      id: Number(router.query.category)
+    },
+    onError: () => null
+  });
 
-  const title = Number(router.query.category)
-    ? getNameById(categories, Number(router.query.category))
-    : t('products:title');
+  const title = categoryData?.getCategory ? categoryData.getCategory.name : t('products:title');
+
+  // const getNameById = (array, id) => {
+  //   return _.find(array, { id })?.name;
+  // };
+
+  // const title = Number(router.query.category)
+  //   ? getNameById(categories, Number(router.query.category))
+  //   : t('products:title');
 
   useEffect(() => {
     if (productsLoading) {
@@ -106,17 +141,20 @@ function Products(): JSX.Element {
       <Header />
 
       <Nav />
-      {categories.length !== 0 ? (
+      {categoriesLevel.length !== 0 ? (
         <div className="products container mobile-content my-3 my-sm-5">
           <div className="d-flex flex-nowrap justify-content-between">
             <div className="products__sidebar pr-4 d-none d-sm-block">
-              <ProductsSidebarFilter categories={categories} manufacturers={manufacturers} />
+              <ProductsSidebarFilter categories={categoriesLevel} manufacturers={manufacturers} />
             </div>
 
             <div className="flex-grow-1">
               <div className="px-2 px-sm-0 mb-2">
                 <div className="d-block d-sm-none mb-3">
-                  <ProductsDrawerFilter categories={categories} manufacturers={manufacturers} />
+                  <ProductsDrawerFilter
+                    categories={categoriesLevel}
+                    manufacturers={manufacturers}
+                  />
                 </div>
                 <h1 className="products__header text-capitalize mb-3">{title}</h1>
                 {productsLoading ? (
