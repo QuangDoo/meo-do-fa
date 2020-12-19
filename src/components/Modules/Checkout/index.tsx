@@ -37,7 +37,6 @@ type FormInputs = {
   deliveryCity: string;
   deliveryDistrict: string;
   deliveryWard: string;
-  deliveryTaxCode: string;
   deliverySaveInfo: boolean;
 
   deliveryMethodId: string;
@@ -71,33 +70,41 @@ const CheckoutPage = () => {
   useEffect(() => {
     if (!user) return;
 
-    const { city, district, ward } = user.contact_address;
+    if (user.contact_address) {
+      const { city, district, ward, street } = user.contact_address;
 
-    const { name: cityName, id: cityId } = city;
-    const { name: districtName, id: districtId } = district;
-    const { name: wardName, id: wardId } = ward;
+      const { name: cityName, id: cityId } = city;
+      const { name: districtName, id: districtId } = district;
+      const { name: wardName, id: wardId } = ward;
+
+      setValue('deliveryCity', cityName + '__' + cityId);
+      setValue('deliveryDistrict', districtName + '__' + districtId);
+      setValue('deliveryWard', wardName + '__' + wardId);
+      setValue('deliveryStreet', street);
+
+      setValue('invoiceCity', cityName + '__' + cityId);
+      setValue('invoiceDistrict', districtName + '__' + districtId);
+      setValue('invoiceWard', wardName + '__' + wardId);
+      setValue('invoiceStreet', street);
+    }
 
     setValue('deliveryName', user.name);
     setValue('deliveryPhone', user.phone);
     setValue('deliveryEmail', user.email);
-    setValue('deliveryStreet', user.contact_address.street);
-    setValue('deliveryCity', cityName + '__' + cityId);
-    setValue('deliveryDistrict', districtName + '__' + districtId);
-    setValue('deliveryWard', wardName + '__' + wardId);
-    setValue('deliveryTaxCode', user.vat);
 
     setValue('invoiceName', user.name);
     setValue('invoiceEmail', user.email);
-    setValue('invoiceStreet', user.contact_address.street);
-    setValue('invoiceCity', cityName + '__' + cityId);
-    setValue('invoiceDistrict', districtName + '__' + districtId);
-    setValue('invoiceWard', wardName + '__' + wardId);
     setValue('invoiceTaxCode', user.vat);
   }, [user]);
 
   // Payment & Delivery options
   const { data: paymentAndDeliveryData } = useQuery<GetPaymentAndDeliveryData, undefined>(
-    GET_PAYMENT_DELIVERY
+    GET_PAYMENT_DELIVERY,
+    {
+      onError: (err) => {
+        toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
+      }
+    }
   );
 
   const paymentMethods = paymentAndDeliveryData?.getPaymentAndDeliveryMethod.paymentMethods || [];
@@ -108,8 +115,8 @@ const CheckoutPage = () => {
     onCompleted: (data) => {
       setCounselData(data.getCounsel);
     },
-    onError: (data) => {
-      toast.error(t(`errors:code_${data.graphQLErrors[0]?.extensions?.code}`));
+    onError: (err) => {
+      toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
     }
   });
 
@@ -133,8 +140,8 @@ const CheckoutPage = () => {
     onCompleted: (data) => {
       setCounselData(data.applyPayment);
     },
-    onError: (error) => {
-      toast.error(t(`errors:code_${error.graphQLErrors[0]?.extensions?.code}`));
+    onError: (err) => {
+      toast.error(t(`errors:code_${err.graphQLErrors[0]?.extensions?.code}`));
     }
   });
 
@@ -153,21 +160,21 @@ const CheckoutPage = () => {
       districtId: +watch('deliveryDistrict')?.split('__')[1],
       wardId: +watch('deliveryWard')?.split('__')[1],
       onGetCitiesCompleted: () => {
-        if (!user) return;
+        if (!user?.contact_address) return;
 
         const { name, id } = user.contact_address.city;
 
         setValue('deliveryCity', name + '__' + id);
       },
       onGetDistrictsCompleted: () => {
-        if (!user) return;
+        if (!user?.contact_address) return;
 
         const { name, id } = user.contact_address.district;
 
         setValue('deliveryDistrict', name + '__' + id);
       },
       onGetWardsCompleted: () => {
-        if (!user) return;
+        if (!user?.contact_address) return;
 
         const { name, id } = user.contact_address.ward;
 
@@ -181,21 +188,21 @@ const CheckoutPage = () => {
     districtId: +watch('invoiceDistrict')?.split('__')[1],
     wardId: +watch('invoiceWard')?.split('__')[1],
     onGetCitiesCompleted: () => {
-      if (!user) return;
+      if (!user?.contact_address) return;
 
       const { name, id } = user.contact_address.city;
 
       setValue('invoiceCity', name + '__' + id);
     },
     onGetDistrictsCompleted: () => {
-      if (!user) return;
+      if (!user?.contact_address) return;
 
       const { name, id } = user.contact_address.district;
 
       setValue('invoiceDistrict', name + '__' + id);
     },
     onGetWardsCompleted: () => {
-      if (!user) return;
+      if (!user?.contact_address) return;
 
       const { name, id } = user.contact_address.ward;
 
@@ -241,7 +248,6 @@ const CheckoutPage = () => {
               fullName: data.deliveryName,
               phone: data.deliveryPhone,
               email: data.deliveryEmail,
-              tax: data.deliveryTaxCode,
               partnerId: '',
               isNew: true,
               zipCode: +data.deliveryWard.split('__')[1],
@@ -334,7 +340,7 @@ const CheckoutPage = () => {
           </div>
 
           <div className="col-md-4 mb-3">
-            <StickySidebar counselData={counselData} />
+            <StickySidebar counselData={counselData} setCounselData={setCounselData} />
           </div>
         </div>
       </div>

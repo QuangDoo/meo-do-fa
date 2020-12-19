@@ -120,7 +120,7 @@ const StickySidebar = (props: Props): JSX.Element => {
 
   const classes = useStyles();
 
-  const [appliedCode, setAppliedCode] = useState<boolean>();
+  const [appliedCode, setAppliedCode] = useState<string>('');
 
   const [open, setOpen] = useState<boolean>(false);
 
@@ -140,13 +140,14 @@ const StickySidebar = (props: Props): JSX.Element => {
     ApplyCouponVars
   >(APPLY_COUPON, {
     onError: (error) => {
-      toast.error(t(`errors:code_${error.graphQLErrors[0]?.extensions?.code}`));
+      console.log('error', { error });
+      toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
     },
     onCompleted: (data) => {
-      toast.success('checkout:apply_coupon_success');
+      toast.success(t('checkout:apply_coupon_success'));
       setOpen(false);
-      props.setCounselData(data.applyCoupon);
-      setAppliedCode(true);
+      props?.setCounselData?.(data.applyCoupon);
+      setAppliedCode(data.applyCoupon.promotion.coupon_code);
     }
   });
 
@@ -174,7 +175,18 @@ const StickySidebar = (props: Props): JSX.Element => {
     applyCoupon({
       variables: {
         code: code,
-        orderNo: data.counsel.orderNo
+        orderNo: data.counsel.orderNo,
+        type: 1
+      }
+    });
+  };
+
+  const handleCancelCoupon = () => {
+    applyCoupon({
+      variables: {
+        code: appliedCode,
+        orderNo: data.counsel.orderNo,
+        type: 0
       }
     });
   };
@@ -201,7 +213,7 @@ const StickySidebar = (props: Props): JSX.Element => {
         </h4>
 
         <div>
-          <Link href="/cart" passHref>
+          <Link href="/cart">
             <Button size="sm" variant="primary">
               {t('checkout:confirm_checkout_edit')}
             </Button>
@@ -247,16 +259,22 @@ const StickySidebar = (props: Props): JSX.Element => {
         </SidebarItem>
 
         <SidebarItem label={t('checkout:apply_coupon_label')}>
-          <MuiButton
-            size="small"
-            variant="text"
-            color="primary"
-            startIcon={<LocalOfferIcon />}
-            onClick={handleOpen}>
-            {appliedCode || t('checkout:apply_coupon_btn_label')}
-          </MuiButton>
+          <div>
+            <MuiButton
+              size="small"
+              variant="text"
+              color="primary"
+              startIcon={<LocalOfferIcon />}
+              onClick={handleOpen}>
+              {appliedCode || t('checkout:apply_coupon_btn_label')}
+            </MuiButton>
 
-          {appliedCode && <DeleteIcon />}
+            {appliedCode && (
+              <IconButton onClick={handleCancelCoupon}>
+                <DeleteIcon />
+              </IconButton>
+            )}
+          </div>
 
           <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
             <DialogTitle className={classes.padding2}>

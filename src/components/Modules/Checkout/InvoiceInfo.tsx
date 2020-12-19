@@ -1,8 +1,7 @@
-import { Trans, useTranslation } from 'i18n';
-import React, { useState } from 'react';
+import { useTranslation } from 'i18n';
+import React from 'react';
 import { emailRegex } from 'src/assets/regex/email';
 import Checkbox from 'src/components/Form/Checkbox';
-import Dropdown from 'src/components/Form/Dropdown';
 import InputWithLabel from 'src/components/Form/InputWithLabel';
 import SelectWithLabel from 'src/components/Form/SelectWithLabel';
 import { City } from 'src/graphql/address/getCities';
