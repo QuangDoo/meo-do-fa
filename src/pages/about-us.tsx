@@ -34,13 +34,11 @@ const AboutUs = (): JSX.Element => {
               <h2 className="about-us__title text-center">Giới thiệu về Medofa</h2>
               <p>
                 <b className="text-primary">Medofa </b>
-                được thành lập vào 2020, là một giải pháp công nghệ ngành dược kết nối nhà máy, nhà phân phối , nhà thuốc, dược sĩ nhằm hợp tạo mối liên kết trực tiếp và gia tăng doanh thu .
-
+                được thành lập vào 2020, là một giải pháp công nghệ ngành dược kết nối nhà máy, nhà
+                phân phối , nhà thuốc, dược sĩ nhằm hợp tạo mối liên kết trực tiếp và gia tăng doanh
+                thu .
               </p>
-              <p>
-                Phương châm của Medofa: Medicines , Online, Fast
-              </p>
-         
+              <p>Phương châm của Medofa: Medicines , Online, Fast</p>
             </div>
           </div>
 
