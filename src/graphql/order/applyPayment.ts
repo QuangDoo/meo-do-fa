@@ -37,8 +37,8 @@ export const APPLY_PAYMENT = gql`
         dc_coupon_amt
         discount_type
         giftInfo {
-          gitfId
-          gitfName
+          giftId
+          giftName
           giftQty
         }
       }

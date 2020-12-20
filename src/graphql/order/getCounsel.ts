@@ -16,8 +16,8 @@ type Counsel = {
 };
 
 type GiftInfo = {
-  gitfId: number;
-  gitfName: string;
+  giftId: number;
+  giftName: string;
   giftQty: number;
 };
 
@@ -69,8 +69,8 @@ export const GET_COUNSEL = gql`
         dc_coupon_amt
         discount_type
         giftInfo {
-          gitfId
-          gitfName
+          giftId
+          giftName
           giftQty
         }
       }
