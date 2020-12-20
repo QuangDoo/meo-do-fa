@@ -2,6 +2,8 @@ import { gql } from '@apollo/client';
 
 import { CouponStatus } from '../user/getCouponsByUser';
 
+// reward_type = "discount" | "product" | "free_shipping"
+
 export type GetUsedCouponsData = {
   getUsedCoupon: {
     code: string;
@@ -9,6 +11,9 @@ export type GetUsedCouponsData = {
     create_date: string;
     expiration_date: string;
     state: CouponStatus;
+    program: {
+      reward_type: 'discount' | 'product' | 'free_shipping';
+    };
   }[];
 };
 
@@ -20,6 +25,9 @@ export const GET_USED_COUPONS = gql`
       create_date
       expiration_date
       state
+      program {
+        reward_type
+      }
     }
   }
 `;

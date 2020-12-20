@@ -87,34 +87,6 @@ type Props = {
   setCounselData?: (data: OutputCounsel) => void;
 };
 
-// Fake coupons data
-const getUsedCouponsData = {
-  getUsedCoupon: [
-    {
-      code: '123',
-      type: 'discount',
-      display_name: 'Giảm ngay 200,000 cho đơn hàng tối thiểu giá trị từ 24.000.000',
-      expiration_date: new Date('December 30, 2020 12:00:00')
-    }
-  ]
-};
-
-// Fake counsel data
-// const counselData = {
-//   getCounsel: {
-//     counsel: {
-//       orderNo: '123'
-//     },
-//     totalQty: 0,
-//     totalShippingFee: 0,
-//     totalDcAmt: 0,
-//     totalNetPrice: 0
-//   }
-// };
-
-// Fake get used coupons loading state
-// const gettingUsedCoupons = false;
-
 const StickySidebar = (props: Props): JSX.Element => {
   const { t } = useTranslation(['checkout', 'common', 'errors']);
 
@@ -309,7 +281,7 @@ const StickySidebar = (props: Props): JSX.Element => {
                   <CardContent>
                     <Grid container spacing={2}>
                       <Grid item xs={2}>
-                        {coupon.type === 'discount' ? (
+                        {coupon.program.reward_type === 'discount' ? (
                           <PromoDiscountIcon fill="#35409a" />
                         ) : (
                           <PromoGiftIcon fill="#35409a" />
@@ -318,7 +290,7 @@ const StickySidebar = (props: Props): JSX.Element => {
 
                       <Grid item xs>
                         <Typography color="primary" gutterBottom className={classes.promoTypeLabel}>
-                          {coupon.type === 'discount' ? 'Giảm giá' : 'Quà tặng'}
+                          {coupon.program.reward_type === 'discount' ? 'Giảm giá' : 'Quà tặng'}
                         </Typography>
 
                         <Typography color="textPrimary" gutterBottom>
@@ -330,11 +302,17 @@ const StickySidebar = (props: Props): JSX.Element => {
                             <Countdown
                               renderer={(props) => (
                                 <>
-                                  {zeroPad(props.days, 2)} ngày {zeroPad(props.hours, 2)} giờ{' '}
-                                  {zeroPad(props.minutes, 2)} phút {zeroPad(props.seconds, 2)} giây
+                                  {zeroPad(props.days, 2) + ' '}
+                                  {(t('checkout:days'), { count: props.days }) + ' '}
+                                  {zeroPad(props.hours, 2) + ' '}
+                                  {(t('checkout:hours'), { count: props.hours }) + ' '}
+                                  {zeroPad(props.minutes, 2) + ' '}
+                                  {(t('checkout:minutes'), { count: props.minutes }) + ' '}
+                                  {zeroPad(props.seconds, 2) + ' '}
+                                  {(t('checkout:seconds'), { count: props.seconds }) + ' '}
                                 </>
                               )}
-                              date={new Date('December 19, 2020 03:24:00')}
+                              date={new Date(coupon.expiration_date)}
                             />
                           </Typography>
                           <MuiButton

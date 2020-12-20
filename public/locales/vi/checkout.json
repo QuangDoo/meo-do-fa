@@ -63,5 +63,9 @@
   "apply_coupon_popup_title": "Áp dụng mã khuyến mãi",
   "apply_coupon_input_label": "Nhập mã",
   "apply_coupon_confirm_btn": "Áp dụng",
-  "apply_coupon_success": "Áp dụng mã khuyến mãi thành công"
+  "apply_coupon_success": "Áp dụng mã khuyến mãi thành công",
+  "days": "ngày",
+  "hours": "giờ",
+  "minutes": "phút",
+  "seconds": "giây"
 }
