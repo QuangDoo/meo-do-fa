@@ -63,7 +63,8 @@
   "apply_coupon_popup_title": "Apply promo code",
   "apply_coupon_input_label": "Input promo code",
   "apply_coupon_confirm_btn": "Apply",
-  "apply_coupon_success": "Successfully applied promo code",
+  "unapply_coupon_btn": "Unapply",
+  "apply_coupon_success": "Successfully updated promo code",
   "days": "day",
   "days_plural": "days",
   "hours": "hour",
@@ -71,5 +72,8 @@
   "minutes": "minute",
   "minutes_plural": "minutes",
   "seconds": "second",
-  "seconds_plural": "seconds"
+  "seconds_plural": "seconds",
+  "reward_type_discount": "Discount",
+  "reward_type_product": "Gift",
+  "coupon_code_required": "Please provide a coupon code"
 }

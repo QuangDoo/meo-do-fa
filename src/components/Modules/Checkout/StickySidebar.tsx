@@ -14,13 +14,13 @@ import {
   Typography
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
-import DeleteIcon from '@material-ui/icons/Delete';
 import LocalOfferIcon from '@material-ui/icons/LocalOffer';
 import clsx from 'clsx';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import Countdown, { zeroPad } from 'react-countdown';
+import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import Button from 'src/components/Form/Button';
 import PriceText from 'src/components/Form/PriceText';
@@ -88,20 +88,33 @@ type Props = {
 };
 
 const StickySidebar = (props: Props): JSX.Element => {
+  const { counselData } = props;
+
+  const appliedCoupon = counselData?.counsel?.coupon_code;
+
   const { t } = useTranslation(['checkout', 'common', 'errors']);
 
   const classes = useStyles();
 
-  const [appliedCode, setAppliedCode] = useState<string>('');
-
   const [open, setOpen] = useState<boolean>(false);
 
-  const [promoCode, setPromoCode] = useState<string>('');
+  const [promoInput, setPromoInput] = useState<string>();
+
+  const handlePromoInputKeyUp = (e) => {
+    e.key === 'Enter' && handleApplyCoupon(promoInput);
+  };
 
   const { data: getUsedCouponsData, loading: gettingUsedCoupons } = useQueryAuth<
     GetUsedCouponsData,
     undefined
   >(GET_USED_COUPONS, {
+    onCompleted: (data) => {
+      if (data.getUsedCoupon.some((myCoupon) => myCoupon.code === appliedCoupon)) {
+        return;
+      }
+
+      setPromoInput(appliedCoupon);
+    },
     onError: (error) => {
       toast.error(t(`errors:code_${error.graphQLErrors[0]?.extensions?.code}`));
     }
@@ -112,50 +125,35 @@ const StickySidebar = (props: Props): JSX.Element => {
     ApplyCouponVars
   >(APPLY_COUPON, {
     onError: (error) => {
-      console.log('error', { error });
       toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
     },
     onCompleted: (data) => {
       toast.success(t('checkout:apply_coupon_success'));
-      setOpen(false);
       props?.setCounselData?.(data.applyCoupon);
-      setAppliedCode(data.applyCoupon.promotion.coupon_code);
     }
   });
 
-  const data = props.counselData;
-
-  if (!data) return null;
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPromoCode(event.target.value);
-  };
-
-  const handleSubmitPromoCode = () => {
-    applyCoupon({
-      variables: {
-        code: promoCode,
-        orderNo: data.counsel.orderNo,
-        type: 1
-      }
-    });
-  };
+  if (!counselData) return null;
 
   const handleApplyCoupon = (code: string) => {
+    if (!code) {
+      toast.error(t('checkout:coupon_code_required'));
+    }
+
     applyCoupon({
       variables: {
         code: code,
-        orderNo: data.counsel.orderNo,
+        orderNo: counselData.counsel.orderNo,
         type: 1
       }
     });
   };
 
-  const handleCancelCoupon = () => {
+  const handleUnapplyCoupon = () => {
     applyCoupon({
       variables: {
-        code: appliedCode,
-        orderNo: data.counsel.orderNo,
+        code: appliedCoupon,
+        orderNo: counselData.counsel.orderNo,
         type: 0
       }
     });
@@ -177,7 +175,7 @@ const StickySidebar = (props: Props): JSX.Element => {
 
           <small className="ml-1">
             {t('checkout:confirm_checkout_quantity', {
-              quantity: data.totalQty
+              quantity: counselData.totalQty
             })}
           </small>
         </h4>
@@ -194,23 +192,23 @@ const StickySidebar = (props: Props): JSX.Element => {
       <div className="elevated checkout__info row no-gutters mb-3">
         <SidebarItem label={t('checkout:price_provisional_sums')}>
           <span>
-            <PriceText price={props.counselData?.totalPrice} />
+            <PriceText price={counselData.totalPrice} />
             <span className="unit">{t('common:vnd')}</span>
           </span>
         </SidebarItem>
 
         <SidebarItem label={t('checkout:price_shipping_fee')}>
           <span>
-            <PriceText price={props.counselData?.totalShippingFee} />
+            <PriceText price={counselData.totalShippingFee} />
             <span className="unit">{t('common:vnd')}</span>
           </span>
         </SidebarItem>
 
         <SidebarItem label={t('checkout:price_total_discount')}>
           <span>
-            {props.counselData?.totalDcAmt ? (
+            {counselData.totalDcAmt ? (
               <>
-                -<PriceText price={props.counselData?.totalDcAmt} />
+                -<PriceText price={counselData.totalDcAmt} />
               </>
             ) : (
               0
@@ -223,7 +221,7 @@ const StickySidebar = (props: Props): JSX.Element => {
 
         <SidebarItem label={t('checkout:price_total')} containerClass="checkout__info-total">
           <span className="checkout__total">
-            <PriceText price={data.totalNetPrice} />
+            <PriceText price={counselData.totalNetPrice} />
             <span className="unit">{t('common:vnd')}</span>
           </span>
         </SidebarItem>
@@ -236,14 +234,8 @@ const StickySidebar = (props: Props): JSX.Element => {
               color="primary"
               startIcon={<LocalOfferIcon />}
               onClick={handleOpen}>
-              {appliedCode || t('checkout:apply_coupon_btn_label')}
+              {appliedCoupon || t('checkout:apply_coupon_btn_label')}
             </MuiButton>
-
-            {appliedCode && (
-              <IconButton onClick={handleCancelCoupon}>
-                <DeleteIcon />
-              </IconButton>
-            )}
           </div>
 
           <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
@@ -255,77 +247,112 @@ const StickySidebar = (props: Props): JSX.Element => {
             </DialogTitle>
 
             <DialogContent dividers className={classes.padding2}>
-              <Box display="flex" marginBottom={2}>
-                <TextField
-                  className={classes.promoCodeInput}
-                  size="small"
-                  label={t('checkout:apply_coupon_input_label')}
-                  variant="outlined"
-                  value={promoCode}
-                  onChange={handleChange}
-                />
+              <Grid container spacing={3}>
+                <Grid item xs={12}>
+                  <Box display="flex">
+                    <TextField
+                      className={classes.promoCodeInput}
+                      name="promoCode"
+                      size="small"
+                      label={t('checkout:apply_coupon_input_label')}
+                      variant="outlined"
+                      value={promoInput}
+                      onChange={(event) => setPromoInput(event.target.value)}
+                      onKeyUp={handlePromoInputKeyUp}
+                      disabled={!!appliedCoupon}
+                    />
 
-                <MuiButton
-                  onClick={handleSubmitPromoCode}
-                  className={classes.applyPromoBtn}
-                  variant="contained"
-                  color="primary">
-                  {t('checkout:apply_coupon_confirm_btn')}
-                </MuiButton>
-              </Box>
+                    {appliedCoupon === promoInput ? (
+                      <MuiButton
+                        className={classes.applyPromoBtn}
+                        onClick={handleUnapplyCoupon}
+                        variant="contained"
+                        color="secondary">
+                        {t('checkout:unapply_coupon_btn')}
+                      </MuiButton>
+                    ) : (
+                      <MuiButton
+                        className={classes.applyPromoBtn}
+                        onClick={() => handleApplyCoupon(promoInput)}
+                        variant="contained"
+                        color="primary"
+                        disabled={!!appliedCoupon}>
+                        {t('checkout:apply_coupon_confirm_btn')}
+                      </MuiButton>
+                    )}
+                  </Box>
+                </Grid>
 
-              {getUsedCouponsData?.getUsedCoupon.map((coupon) => (
-                <Card key={coupon.code} variant="outlined">
-                  <CardContent>
-                    <Grid container spacing={2}>
-                      <Grid item xs={2}>
-                        {coupon.program.reward_type === 'discount' ? (
-                          <PromoDiscountIcon fill="#35409a" />
-                        ) : (
-                          <PromoGiftIcon fill="#35409a" />
-                        )}
-                      </Grid>
+                {getUsedCouponsData?.getUsedCoupon.map((coupon) => (
+                  <Grid key={coupon.code} item xs={12}>
+                    <Card variant="outlined">
+                      <CardContent>
+                        <Grid container spacing={2}>
+                          <Grid item xs={2}>
+                            {coupon.program.reward_type === 'discount' ? (
+                              <PromoDiscountIcon fill="#35409a" />
+                            ) : (
+                              <PromoGiftIcon fill="#35409a" />
+                            )}
+                          </Grid>
 
-                      <Grid item xs>
-                        <Typography color="primary" gutterBottom className={classes.promoTypeLabel}>
-                          {coupon.program.reward_type === 'discount' ? 'Giảm giá' : 'Quà tặng'}
-                        </Typography>
+                          <Grid item xs>
+                            <Typography
+                              color="primary"
+                              gutterBottom
+                              className={classes.promoTypeLabel}>
+                              {t(`checkout:reward_type_${coupon.program.reward_type}`)}
+                            </Typography>
 
-                        <Typography color="textPrimary" gutterBottom>
-                          {coupon.display_name}
-                        </Typography>
+                            <Typography color="textPrimary" gutterBottom>
+                              {coupon.program.name}
+                            </Typography>
 
-                        <Box display="flex" alignItems="center" justifyContent="space-between">
-                          <Typography color="textSecondary" className={classes.promoTimeLeft}>
-                            <Countdown
-                              renderer={(props) => (
-                                <>
-                                  {zeroPad(props.days, 2) + ' '}
-                                  {(t('checkout:days'), { count: props.days }) + ' '}
-                                  {zeroPad(props.hours, 2) + ' '}
-                                  {(t('checkout:hours'), { count: props.hours }) + ' '}
-                                  {zeroPad(props.minutes, 2) + ' '}
-                                  {(t('checkout:minutes'), { count: props.minutes }) + ' '}
-                                  {zeroPad(props.seconds, 2) + ' '}
-                                  {(t('checkout:seconds'), { count: props.seconds }) + ' '}
-                                </>
+                            <Box display="flex" alignItems="center" justifyContent="space-between">
+                              <Typography color="textSecondary" className={classes.promoTimeLeft}>
+                                <Countdown
+                                  renderer={(props) => (
+                                    <>
+                                      {zeroPad(props.days, 2) + ' '}
+                                      {t('checkout:days', { count: props.days }) + ' '}
+                                      {zeroPad(props.hours, 2) + ' '}
+                                      {t('checkout:hours', { count: props.hours }) + ' '}
+                                      {zeroPad(props.minutes, 2) + ' '}
+                                      {t('checkout:minutes', { count: props.minutes }) + ' '}
+                                      {zeroPad(props.seconds, 2) + ' '}
+                                      {t('checkout:seconds', { count: props.seconds })}
+                                    </>
+                                  )}
+                                  date={new Date(coupon.expiration_date)}
+                                />
+                              </Typography>
+
+                              {appliedCoupon === coupon.code ? (
+                                <MuiButton
+                                  className={classes.applyPromoBtn}
+                                  onClick={handleUnapplyCoupon}
+                                  variant="contained"
+                                  color="secondary">
+                                  {t('checkout:unapply_coupon_btn')}
+                                </MuiButton>
+                              ) : (
+                                <MuiButton
+                                  className={classes.applyPromoBtn}
+                                  onClick={() => handleApplyCoupon(coupon.code)}
+                                  variant="contained"
+                                  color="primary"
+                                  disabled={!!appliedCoupon}>
+                                  {t('checkout:apply_coupon_confirm_btn')}
+                                </MuiButton>
                               )}
-                              date={new Date(coupon.expiration_date)}
-                            />
-                          </Typography>
-                          <MuiButton
-                            className={classes.applyPromoBtn}
-                            onClick={() => handleApplyCoupon(coupon.code)}
-                            variant="contained"
-                            color="primary">
-                            {t('checkout:apply_coupon_confirm_btn')}
-                          </MuiButton>
-                        </Box>
-                      </Grid>
-                    </Grid>
-                  </CardContent>
-                </Card>
-              ))}
+                            </Box>
+                          </Grid>
+                        </Grid>
+                      </CardContent>
+                    </Card>
+                  </Grid>
+                ))}
+              </Grid>
             </DialogContent>
 
             <LoadingBackdrop open={applyingCoupon || gettingUsedCoupons} />

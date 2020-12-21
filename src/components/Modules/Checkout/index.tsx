@@ -260,7 +260,7 @@ const CheckoutPage = () => {
           paymentMethodId: +data.paymentMethodId,
           deliveryMethodId: 0,
           note: data.customerNotes,
-          isInvoice: data.isInvoice
+          isInvoice: !!data.isInvoice
         }
       }
     });
@@ -275,6 +275,10 @@ const CheckoutPage = () => {
   if (counselData === null) {
     router.push('/');
     return null;
+  }
+
+  if (loadingCounsel) {
+    return <LoadingBackdrop open={true} />;
   }
 
   return (

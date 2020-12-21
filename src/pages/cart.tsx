@@ -133,9 +133,11 @@ function Cart(): JSX.Element {
                     {cart?.getCart.totalPrice > 0 && (
                       <div className="col-12">
                         <div className="cart__info-item">
-                          <a className="btn btn-secondary btn-block text-small">
-                            <button onClick={handleCheckoutClick}>{t('continue_payment')}</button>
-                          </a>
+                          <button
+                            onClick={handleCheckoutClick}
+                            className="btn btn-secondary btn-block text-small">
+                            {t('continue_payment')}
+                          </button>
                         </div>
                       </div>
                     )}

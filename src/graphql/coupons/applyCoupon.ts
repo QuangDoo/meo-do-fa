@@ -26,6 +26,8 @@ export const APPLY_COUPON = gql`
           productName
         }
         create_date
+        coupon_code
+        coupon_type
       }
       totalQty
       totalPrice

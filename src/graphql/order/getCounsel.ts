@@ -1,5 +1,7 @@
 import { gql } from '@apollo/client';
 
+import { CouponType } from '../coupons/getUsedCoupons';
+
 type CounselDetail = {
   cartId: string;
   productId: number;
@@ -13,6 +15,8 @@ type Counsel = {
   orderNo: string;
   counsels: CounselDetail[];
   create_date: Date;
+  coupon_code: string;
+  coupon_type: CouponType;
 };
 
 type GiftInfo = {
@@ -57,6 +61,8 @@ export const GET_COUNSEL = gql`
           productName
         }
         create_date
+        coupon_code
+        coupon_type
       }
       totalQty
       totalPrice
