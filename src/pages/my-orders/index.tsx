@@ -19,6 +19,7 @@ import { useQueryAuth } from 'src/hooks/useApolloHookAuth';
 import withApollo from 'src/utils/withApollo';
 
 import ConfirmCancelOrder from '../../components/Modules/My-orders/ConfirmCancelOrder';
+import { mockMyOrders } from '../../mockData/mockMyOrders';
 
 const pageSize = 20;
 
@@ -70,7 +71,7 @@ const OrderItem = (props: any) => {
 
   const { t } = useTranslation(['myOrders']);
 
-  const { callBack } = props;
+  const { callBack, flag } = props;
   return (
     <div className="my-orders__item p-3 my-1">
       <div className="my-orders__info">
@@ -79,7 +80,7 @@ const OrderItem = (props: any) => {
             <a className="mr-2">#{props.orderNo}</a>
           </Link>
 
-          {props.state === 'cancel' && (
+          {flag === 25 && (
             <div className="my-orders__invoice">
               <span className="badge badge-danger">{t('myOrders:canceled')}</span>
             </div>
@@ -106,7 +107,7 @@ const OrderItem = (props: any) => {
       <div className="my-orders__invoice">
         <button className="btn btn-outline-info btn-sm">{t('myOrders:report')}</button>
 
-        {props.state !== 'cancel' ? (
+        {flag === 25 ? (
           <button className="btn btn-outline-danger btn-sm" onClick={() => setOpen(true)}>
             {t('myOrders:cancel_order')}
           </button>
@@ -151,8 +152,8 @@ const OrderList = (props: Props) => {
     <>
       {loading ? (
         <Loading />
-      ) : orderList.length !== 0 ? (
-        orderList.map((order) => (
+      ) : mockMyOrders.length !== 0 ? (
+        mockMyOrders.map((order) => (
           <OrderItem
             key={order.id}
             {...order}

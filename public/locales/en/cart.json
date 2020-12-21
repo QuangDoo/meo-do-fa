@@ -16,5 +16,6 @@
   "remove_title": "Please confirm",
   "yes": "Yes",
   "no": "No",
-  "update_success": "Update cart success!"
+  "update_success": "Update cart success!",
+  "view_cart": "View cart"
 }
