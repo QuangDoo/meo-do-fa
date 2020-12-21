@@ -107,7 +107,7 @@ const InvoiceInfo = (props: Props): JSX.Element => {
             label={t('checkout:city_label')}
             containerClass="col-md-4"
             required>
-            {user?.contact_address?.city.name && (
+            {user?.contact_address?.city.name != '' && (
               <option value="">{user?.contact_address?.city.name}</option>
             )}
             {cities.map((city) => (
