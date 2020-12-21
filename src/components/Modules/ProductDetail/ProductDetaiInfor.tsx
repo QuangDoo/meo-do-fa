@@ -50,7 +50,9 @@ const ProductDetailInfor = (props: PropsType): JSX.Element => {
                 <span className="product__price">
                   <PriceText price={props.list_price} />
                   <span className="unit">{t('common:vnd')}</span>
-                  <small className="text-muted"> ({t('productDetail:vat_included')})</small>
+                  {props?.is_quick_invoice && (
+                    <small className="text-muted"> ({t('productDetail:vat_included')})</small>
+                  )}
                 </span>
               </div>
             </div>
