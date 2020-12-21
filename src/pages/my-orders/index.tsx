@@ -19,7 +19,6 @@ import { useQueryAuth } from 'src/hooks/useApolloHookAuth';
 import withApollo from 'src/utils/withApollo';
 
 import ConfirmCancelOrder from '../../components/Modules/My-orders/ConfirmCancelOrder';
-import { mockMyOrders } from '../../mockData/mockMyOrders';
 
 const pageSize = 20;
 
@@ -152,8 +151,8 @@ const OrderList = (props: Props) => {
     <>
       {loading ? (
         <Loading />
-      ) : mockMyOrders.length !== 0 ? (
-        mockMyOrders.map((order) => (
+      ) : orderList.length !== 0 ? (
+        orderList.map((order) => (
           <OrderItem
             key={order.id}
             {...order}

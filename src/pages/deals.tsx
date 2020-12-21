@@ -35,8 +35,6 @@ function Deal() {
     }
   });
 
-  console.log(productsData);
-
   const changePage = (page: number) => {
     router.push({
       pathname: router.pathname,

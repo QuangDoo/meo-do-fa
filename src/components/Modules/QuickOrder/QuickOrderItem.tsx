@@ -1,4 +1,4 @@
-import { useTranslation } from 'i18n';
+// import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import React from 'react';
 
@@ -17,7 +17,7 @@ type Props = {
 };
 
 function QuickOrderItem(props: Props): JSX.Element {
-  const { t } = useTranslation(['cart', 'errors']);
+  // const { t } = useTranslation(['cart', 'errors']);
 
   return (
     <div className="cart-item">
