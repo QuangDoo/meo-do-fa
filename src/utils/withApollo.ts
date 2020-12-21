@@ -12,7 +12,7 @@ const getURI = () => {
     return `http://${serverRuntimeConfig.GRAPHQL_GATEWAY}/graphql`;
   }
 
-  return `https://${publicRuntimeConfig.GRAPHQL_GATEWAY_EXT}`;
+  return `https://graphql.medofa.bedigital.vn/graphql/`;
 };
 
 const httpLink = new HttpLink({
