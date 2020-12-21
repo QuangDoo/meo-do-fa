@@ -166,9 +166,9 @@ function CartItem(props: Props): JSX.Element {
                 </a>
               </Link>
 
-              <div className="cart-item__package">
+              {/* <div className="cart-item__package">
                 <small>{props.uom_name}</small>
-              </div>
+              </div> */}
             </div>
           </div>
 

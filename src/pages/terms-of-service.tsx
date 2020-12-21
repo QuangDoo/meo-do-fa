@@ -79,7 +79,11 @@ const TermsOfService = () => {
             Sàn Giao Dịch của Medofa chịu mọi trách nhiệm đăng tải nội dung liên quan đến sản phẩm
             trên Sàn Giao Dịch của Medofa, bao gồm cả thông tin, hình ảnh đăng tải, nội dung sản
             phẩm được cập nhật liên tục từ Công ty TNHH Dược phẩm Dayton. Công ty TNHH Dược phẩm
-            Dayton sẽ nhận được đầy đủ hỗ trợ qua hộp thư <u>hotro@Medofa</u> Chấm Dứt
+            Dayton sẽ nhận được đầy đủ hỗ trợ qua hộp thư{' '}
+            <a href="mailto:hotro@medofa.com">
+              <u>hotro@medofa.com</u>
+            </a>{' '}
+            Chấm Dứt
             <br /> Công ty TNHH Dược phẩm Dayton có thể chấm dứt giao kết hợp đồng với Medofa bất cứ
             lúc nào mà không bị xem là vi phạm hợp đồng nếu đã thông báo cho Medofa ít nhất 14 (mười
             bốn) ngày trước ngày dự kiến chấm dứt.
@@ -88,7 +92,7 @@ const TermsOfService = () => {
           <li>
             <p className="font-weight-bold">Tranh Chấp hoặc Khiếu Nại</p>
             Thỏa Thuận Về Dịch Vụ Thương Mại Điện Tử và Điều Khoản Dịch Vụ tương ứng được điều chỉnh
-            bởi pháp luật của nước Cộng hòa Xã hội Chủ nghĩa Việt Nam
+            bởi pháp luật của nước Cộng hòa Xã hội Chủ nghĩa Việt Nam.
             <br />
             Khi phát sinh tranh chấp hoặc khiếu nại, Các Bên có nghĩa vụ giải quyết trên tinh thần
             thương lượng và hòa giải. Nếu vẫn không giải quyết được, một trong Các Bên có quyền yêu

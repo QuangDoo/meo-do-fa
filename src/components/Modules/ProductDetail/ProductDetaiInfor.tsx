@@ -64,12 +64,16 @@ const ProductDetailInfor = (props: PropsType): JSX.Element => {
           {props.is_vn && <ProductBadge type="is_vn" />}
         </div>
         <div className="mb-3">
-          <div className="product__info-label">{t('productDetail:manufacturer')}</div>
-          <div className="text-capitalize">
-            <Link href={`/manufacturers/${props.manufacturers?.id}`}>
-              <a>{props.manufacturers?.name}</a>
-            </Link>
-          </div>
+          {props.manufacturers && (
+            <>
+              <div className="product__info-label">{t('productDetail:manufacturer')}</div>
+              <div className="text-capitalize">
+                <Link href={`/manufacturers/${props.manufacturers?.id}`}>
+                  <a>{props.manufacturers?.name}</a>
+                </Link>
+              </div>
+            </>
+          )}
         </div>
         <div className="mb-3">
           <div className="product__info-label">{t('productDetail:category')}</div>
