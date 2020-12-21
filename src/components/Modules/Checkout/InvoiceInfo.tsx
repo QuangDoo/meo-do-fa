@@ -107,8 +107,8 @@ const InvoiceInfo = (props: Props): JSX.Element => {
             label={t('checkout:city_label')}
             containerClass="col-md-4"
             required>
-            {user?.contact_address.city.name && (
-              <option value="">{user?.contact_address.city.name}</option>
+            {user?.contact_address?.city.name && (
+              <option value="">{user?.contact_address?.city.name}</option>
             )}
             {cities.map((city) => (
               <option key={city.id} value={city.id}>
@@ -126,8 +126,8 @@ const InvoiceInfo = (props: Props): JSX.Element => {
             label={t('checkout:district_label')}
             labelClass="required"
             containerClass="col-md-4">
-            {user?.contact_address.district.name && (
-              <option value="">{user?.contact_address.district.name}</option>
+            {user?.contact_address?.district.name && (
+              <option value="">{user?.contact_address?.district.name}</option>
             )}
 
             {/* Map districts from chosen city */}
@@ -147,7 +147,9 @@ const InvoiceInfo = (props: Props): JSX.Element => {
             label={t('checkout:ward_label')}
             labelClass="required"
             containerClass="col-md-4">
-            <option value="">{user?.contact_address.ward.name}</option>
+            {user?.contact_address?.ward.name && (
+              <option value="">{user?.contact_address?.ward.name}</option>
+            )}
 
             {/* Map wards from chosen district */}
             {wards.map((ward) => (
