@@ -120,7 +120,8 @@ const DeliveryInfo = (props: Props) => {
           })}
           label={t('checkout:district_label')}
           labelClass="required"
-          containerClass="col-md-4">
+          containerClass="col-md-4"
+          disabled={!districts.length}>
           <option value="">{t('checkout:district_placeholder')}</option>
 
           {/* Map districts from chosen city */}
@@ -139,7 +140,8 @@ const DeliveryInfo = (props: Props) => {
           })}
           label={t('checkout:ward_label')}
           labelClass="required"
-          containerClass="col-md-4">
+          containerClass="col-md-4"
+          disabled={!wards.length}>
           <option value="">{t('checkout:ward_placeholder')}</option>
 
           {/* Map wards from chosen district */}

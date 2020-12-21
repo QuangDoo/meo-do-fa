@@ -33,14 +33,14 @@ export function useLazyQueryAuth<TData = any, TVariables = OperationVariables>(
   return useHookAuth(query, options, useLazyQuery);
 }
 
-export function useQueryAuth<TData = any, TVariables = OperationVariables>(
+export function useQueryAuth<TData, TVariables = OperationVariables>(
   query: DocumentNode | TypedDocumentNode<TData, TVariables>,
   options?: QueryHookOptions<TData, TVariables>
 ): QueryResult<TData, TVariables> {
   return useHookAuth(query, options, useQuery);
 }
 
-export function useMutationAuth<TData = any, TVariables = OperationVariables>(
+export function useMutationAuth<TData, TVariables = OperationVariables>(
   mutation: DocumentNode | TypedDocumentNode<TData, TVariables>,
   options?: MutationHookOptions<TData, TVariables>
 ): MutationTuple<TData, TVariables> {

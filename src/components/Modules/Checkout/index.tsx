@@ -13,7 +13,7 @@ import {
   GetPaymentAndDeliveryData
 } from 'src/graphql/paymentAndDelivery/paymentAndDelivery,query';
 import useAddress from 'src/hooks/useAddress';
-import { useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
+import { useLazyQueryAuth, useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
 import useCart from 'src/hooks/useCart';
 import useDidUpdateEffect from 'src/hooks/useDidUpdate';
 import useUser from 'src/hooks/useUser';
@@ -71,30 +71,15 @@ const CheckoutPage = () => {
     if (!user) return;
 
     if (user.contact_address) {
-      const { city, district, ward, street } = user.contact_address;
+      const { city, street } = user.contact_address;
 
-      const { name: cityName, id: cityId } = city;
-      const { name: districtName, id: districtId } = district;
-      const { name: wardName, id: wardId } = ward;
-
-      setValue('deliveryCity', cityName + '__' + cityId);
-      setValue('deliveryDistrict', districtName + '__' + districtId);
-      setValue('deliveryWard', wardName + '__' + wardId);
+      setValue('deliveryCity', city.name + '__' + city.id);
       setValue('deliveryStreet', street);
-
-      setValue('invoiceCity', cityName + '__' + cityId);
-      setValue('invoiceDistrict', districtName + '__' + districtId);
-      setValue('invoiceWard', wardName + '__' + wardId);
-      setValue('invoiceStreet', street);
     }
 
     setValue('deliveryName', user.name);
     setValue('deliveryPhone', user.phone);
     setValue('deliveryEmail', user.email);
-
-    setValue('invoiceName', user.name);
-    setValue('invoiceEmail', user.email);
-    setValue('invoiceTaxCode', user.vat);
   }, [user]);
 
   // Payment & Delivery options
@@ -108,10 +93,11 @@ const CheckoutPage = () => {
   );
 
   const paymentMethods = paymentAndDeliveryData?.getPaymentAndDeliveryMethod.paymentMethods || [];
-  const deliveryMethods = paymentAndDeliveryData?.getPaymentAndDeliveryMethod.deliveryMethods || [];
+  // const deliveryMethods = paymentAndDeliveryData?.getPaymentAndDeliveryMethod.deliveryMethods || [];
 
   // Counsel
   const { loading: loadingCounsel } = useQueryAuth<GetCounselData, undefined>(GET_COUNSEL, {
+    fetchPolicy: 'network-only',
     onCompleted: (data) => {
       setCounselData(data.getCounsel);
     },
@@ -230,8 +216,8 @@ const CheckoutPage = () => {
         router.push('/');
       });
     },
-    onError: () => {
-      toast.error(t('order_fail_message'));
+    onError: (error) => {
+      toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
     }
   });
 
@@ -256,18 +242,20 @@ const CheckoutPage = () => {
               ward: data.deliveryWard.split('__')[0],
               street: data.deliveryStreet
             },
-            billing_address: {
-              fullName: data.invoiceName,
-              email: data.invoiceEmail,
-              tax: data.invoiceTaxCode,
-              partnerId: '',
-              isNew: true,
-              zipCode: +data.invoiceWard.split('__')[1],
-              city: data.invoiceCity.split('__')[0],
-              district: data.invoiceDistrict.split('__')[0],
-              ward: data.invoiceWard.split('__')[0],
-              street: data.invoiceStreet
-            }
+            billing_address: data.isInvoice
+              ? {
+                  fullName: data.invoiceName,
+                  email: data.invoiceEmail,
+                  tax: data.invoiceTaxCode,
+                  partnerId: '',
+                  isNew: true,
+                  zipCode: +data.invoiceWard.split('__')[1],
+                  city: data.invoiceCity.split('__')[0],
+                  district: data.invoiceDistrict.split('__')[0],
+                  ward: data.invoiceWard.split('__')[0],
+                  street: data.invoiceStreet
+                }
+              : undefined
           },
           paymentMethodId: +data.paymentMethodId,
           deliveryMethodId: 0,
@@ -307,9 +295,9 @@ const CheckoutPage = () => {
               />
             </div>
 
-            <div className="mb-4" hidden>
+            {/* <div className="mb-4">
               <DeliveryOption register={register} deliveryMethods={deliveryMethods} />
-            </div>
+            </div> */}
 
             {/* Payment */}
             <div className="mb-4">

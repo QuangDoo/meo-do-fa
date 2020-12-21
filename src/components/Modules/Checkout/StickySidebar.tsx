@@ -123,9 +123,6 @@ const StickySidebar = (props: Props): JSX.Element => {
     }
   });
 
-  // Fake counsel data
-  // const data = counselData.getCounsel;
-
   const data = props.counselData;
 
   if (!data) return null;
@@ -138,7 +135,8 @@ const StickySidebar = (props: Props): JSX.Element => {
     applyCoupon({
       variables: {
         code: promoCode,
-        orderNo: data.counsel.orderNo
+        orderNo: data.counsel.orderNo,
+        type: 1
       }
     });
   };

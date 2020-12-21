@@ -42,11 +42,12 @@ const InvoiceInfo = (props: Props): JSX.Element => {
           label={t('checkout:name_label')}
           type="text"
           placeholder={t('checkout:name_placeholder')}
+          defaultValue={user?.name}
           required
         />
 
         <div className="row">
-          {/* Taxe_code input */}
+          {/* Tax_code input */}
           <InputWithLabel
             ref={register({
               required: t('checkout:taxcode_required') + ''
