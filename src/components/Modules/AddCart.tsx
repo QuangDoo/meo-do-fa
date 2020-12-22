@@ -5,6 +5,7 @@ import { WithTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
+import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { ADD_TO_CART } from 'src/graphql/order/order.mutation';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import useCart from 'src/hooks/useCart';
@@ -31,7 +32,7 @@ function AddCart(props: Props) {
 
   const [quantity, setQuantity] = useState<string>('0');
 
-  const [addToCart] = useMutationAuth(ADD_TO_CART);
+  const [addToCart, { loading: loadingAddtoCart }] = useMutationAuth(ADD_TO_CART);
 
   const handleClick = () => {
     if (+quantity === 0) {
@@ -102,6 +103,7 @@ function AddCart(props: Props) {
           {t('productDetail:add_to_cart')}
         </button>
       </div>
+      <LoadingBackdrop open={loadingAddtoCart} />
     </div>
   );
 }

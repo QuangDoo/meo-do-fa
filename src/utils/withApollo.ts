@@ -12,7 +12,7 @@ const getURI = () => {
     return `http://graphql.medofa.bedigital.vn/graphql`;
   }
 
-  return `https://graphql.medofa.bedigital.vn`;
+  return `https://graphql.medofa.bedigital.vn/graphql/`;
 };
 
 const httpLink = new HttpLink({

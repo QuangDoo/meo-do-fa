@@ -5,6 +5,7 @@ import React from 'react';
 import { DeepMap, FieldError, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { emailRegex, noSpecialChars } from 'src/assets/regex/email';
+import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import {
   SAVE_MAIL_SUBSCRIBE,
   SubscriberData,
@@ -44,7 +45,10 @@ type Inputs = {
 const Footer = (): JSX.Element => {
   const { t } = useTranslation(['footer', 'common']);
   const { register, handleSubmit, reset } = useForm<Inputs>();
-  const [saveMailSubscriber] = useMutation<SubscriberData, SubscriberVar>(SAVE_MAIL_SUBSCRIBE, {
+  const [saveMailSubscriber, { loading: loadingSubcribe }] = useMutation<
+    SubscriberData,
+    SubscriberVar
+  >(SAVE_MAIL_SUBSCRIBE, {
     onCompleted: (data) => {
       toast.success(t('footer:success_subscribe'));
     },
@@ -287,6 +291,7 @@ const Footer = (): JSX.Element => {
           </div>
         </div>
         <div className="copyright">{t('footer:copyright')}</div>
+        <LoadingBackdrop open={loadingSubcribe} />
         <BackToTop />
       </div>
     </>

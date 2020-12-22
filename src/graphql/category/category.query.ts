@@ -3,6 +3,7 @@ import { gql } from '@apollo/client';
 export type Category = {
   id: number;
   name: string;
+  priority: number;
   categorySub: Category[];
 };
 
@@ -15,6 +16,7 @@ export const GET_CATEGORIES_LEVEL = gql`
     getCategoriesLevel {
       id
       name
+      priority
       categorySub {
         id
         name

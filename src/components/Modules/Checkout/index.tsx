@@ -62,6 +62,8 @@ type FormInputs = {
 const CheckoutPage = () => {
   const { t } = useTranslation(['checkout']);
 
+  const { refetchCart } = useCart();
+
   // Payment & Delivery options
   const { data: paymentAndDeliveryData } = useQuery<GetPaymentAndDeliveryData, undefined>(
     GET_PAYMENT_DELIVERY
@@ -72,7 +74,10 @@ const CheckoutPage = () => {
   const [totalPrice, setTotalPrice] = useState<number>();
 
   // Counsel
-  const { data: counselData } = useQueryAuth<GetCounselData, undefined>(GET_COUNSEL, {
+  const { data: counselData, refetch: refetchCounsel, loading: loadingCounsel } = useQueryAuth<
+    GetCounselData,
+    undefined
+  >(GET_COUNSEL, {
     onCompleted: (data) => {
       if (data.getCounsel === null) {
         return;
@@ -81,6 +86,11 @@ const CheckoutPage = () => {
       setTotalPrice(data.getCounsel.totalPrice);
     }
   });
+
+  useEffect(() => {
+    const timeOutId = setTimeout(() => refetchCounsel(), 0);
+    return () => clearTimeout(timeOutId);
+  }, []);
 
   // User
   const { user } = useUserContext();
@@ -149,8 +159,6 @@ const CheckoutPage = () => {
   });
 
   const router = useRouter();
-
-  const { refetchCart } = useCart();
 
   const [createOrder, { loading: creatingOrder }] = useMutationAuth<
     CreateOrderData,
@@ -276,9 +284,9 @@ const CheckoutPage = () => {
               />
             </div>
 
-            <div className="mb-4" hidden>
+            {/* <div className="mb-4" hidden>
               <DeliveryOption register={register} deliveryMethods={deliveryMethods} />
-            </div>
+            </div> */}
 
             {/* Payment */}
             <div className="mb-4">
@@ -310,7 +318,7 @@ const CheckoutPage = () => {
         </div>
       </div>
 
-      <LoadingBackdrop open={creatingOrder} />
+      <LoadingBackdrop open={creatingOrder || loadingCounsel} />
     </form>
   );
 };
