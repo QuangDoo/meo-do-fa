@@ -4,6 +4,7 @@ export type GetNotiData = {
   getNotify: {
     _id: string;
     content: string;
+    description: string;
     userId: string;
     isSeen: boolean;
     type: string;
@@ -17,6 +18,7 @@ export const GET_NOTI = gql`
     getNotify {
       _id
       content
+      description
       userId
       isSeen
       type

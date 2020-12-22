@@ -52,10 +52,8 @@ const RightSideUser = (): JSX.Element => {
           role="button"
           tabIndex={0}>
           <i className="far fa-bell header-right__icon" />
-          {notificationsData?.length > 0 ? (
+          {lengthNotifications?.length > 0 && (
             <span className="notification__counter">{lengthNotifications?.length}</span>
-          ) : (
-            <span className="notification__counter">0</span>
           )}
           {/* <span className="notification__counter">{notificationsData?.length}</span> */}
           <div

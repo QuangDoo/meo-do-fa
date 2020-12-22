@@ -26,19 +26,16 @@ import clsx from 'clsx';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import PriceText from 'src/components/Form/PriceText';
 import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
+import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import Nav from 'src/components/Layout/Nav';
 import ProfileLayout from 'src/components/Modules/ProfileLayout';
-import {
-  GET_ORDER_DETAIL,
-  GetOrderDetailData,
-  GetOrderDetailVars
-} from 'src/graphql/order/getOrder';
+import { GET_ORDER, GetOrderDetailData, GetOrderDetailVars } from 'src/graphql/order/getOrder';
 import { useQueryAuth } from 'src/hooks/useApolloHookAuth';
 import useUser from 'src/hooks/useUser';
 import { theme } from 'src/theme';
@@ -266,12 +263,21 @@ const OrderDetails = () => {
       text: t('myOrders:complete')
     }
   ];
-  const { data: orderDetail, refetch } = useQueryAuth<GetOrderDetailData, GetOrderDetailVars>(
-    GET_ORDER_DETAIL,
-    {
-      variables: { orderNo: orderNo as string }
-    }
-  );
+
+  const { data: orderDetail, refetch, loading: loadingOrderDetail } = useQueryAuth<
+    GetOrderDetailData,
+    GetOrderDetailVars
+  >(GET_ORDER, {
+    variables: { orderNo: orderNo as string }
+  });
+
+  useEffect(() => {
+    orderDetail?.getOrderDetail?.flag === 10 && setActiveStep(0);
+    orderDetail?.getOrderDetail?.flag === 20 && setActiveStep(1);
+    orderDetail?.getOrderDetail?.flag === 30 && setActiveStep(2);
+    orderDetail?.getOrderDetail?.flag === 40 && setActiveStep(3);
+    orderDetail?.getOrderDetail?.flag === 80 && setActiveStep(4);
+  }, [orderDetail?.getOrderDetail?.flag]);
 
   const onCancelClick = () => {
     if (activeStep >= 3) {
@@ -472,7 +478,7 @@ const OrderDetails = () => {
           </Grid>
         </Grid>
       </ProfileLayout>
-
+      <LoadingBackdrop open={loadingOrderDetail} />
       <Footer />
     </>
   );
