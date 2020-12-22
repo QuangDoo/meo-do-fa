@@ -9,10 +9,10 @@ const getURI = () => {
   if (typeof window === 'undefined') {
     console.log('SERVER...', JSON.stringify({ serverRuntimeConfig, publicRuntimeConfig }));
 
-    return `http://graphql.medofa.bedigital.vn/graphql`;
+    return `http://${serverRuntimeConfig.GRAPHQL_GATEWAY}/graphql`;
   }
 
-  return `https://graphql.medofa.bedigital.vn/graphql/`;
+  return `https://${publicRuntimeConfig.GRAPHQL_GATEWAY_EXT}`;
 };
 
 const httpLink = new HttpLink({

@@ -240,9 +240,10 @@ const OrderDetails = () => {
 
   const [open, setOpen] = useState(false);
 
-  const { orderId } = router.query;
+  const { orderNo } = router.query;
 
   const [activeStep, setActiveStep] = useState(0);
+
   const steps = [
     {
       icon: <Receipt />,
@@ -268,7 +269,7 @@ const OrderDetails = () => {
   const { data: orderDetail, refetch } = useQueryAuth<GetOrderDetailData, GetOrderDetailVars>(
     GET_ORDER_DETAIL,
     {
-      variables: { id: +orderId }
+      variables: { orderNo: orderNo }
     }
   );
 

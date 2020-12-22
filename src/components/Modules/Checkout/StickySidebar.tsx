@@ -98,7 +98,7 @@ const StickySidebar = (props: Props): JSX.Element => {
 
   const [open, setOpen] = useState<boolean>(false);
 
-  const [promoInput, setPromoInput] = useState<string>();
+  const [promoInput, setPromoInput] = useState<string>('');
 
   const handlePromoInputKeyUp = (e) => {
     e.key === 'Enter' && handleApplyCoupon(promoInput);
@@ -109,6 +109,8 @@ const StickySidebar = (props: Props): JSX.Element => {
     undefined
   >(GET_USED_COUPONS, {
     onCompleted: (data) => {
+      if (!appliedCoupon) return;
+
       if (data.getUsedCoupon.some((myCoupon) => myCoupon.code === appliedCoupon)) {
         return;
       }

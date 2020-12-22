@@ -1,4 +1,5 @@
 import { gql } from '@apollo/client';
+import { StringDecoder } from 'string_decoder';
 
 export type GetOrderDetailData = {
   getOrderDetail: {
@@ -40,12 +41,12 @@ export type GetOrderDetailData = {
 };
 
 export type GetOrderDetailVars = {
-  id: number;
+  orderNo: StringDecoder;
 };
 
 export const GET_ORDER_DETAIL = gql`
-  query getOrderDetail($id: Int!) {
-    getOrderDetail(id: $id) {
+  query getOrderDetail($orderNo: String!) {
+    getOrderDetail(orderNo: $orderNo) {
       id
       name
       date_order
