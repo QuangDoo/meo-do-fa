@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import NotiItem from 'src/components/Modules/Noti/NotiItem';
 import useNoti from 'src/hooks/useNoti';
 import useUser from 'src/hooks/useUser';

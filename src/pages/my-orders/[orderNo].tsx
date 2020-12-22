@@ -34,10 +34,13 @@ import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
 import Nav from 'src/components/Layout/Nav';
 import ProfileLayout from 'src/components/Modules/ProfileLayout';
-import ProfileSidebar from 'src/components/Modules/ProfileSidebar';
-import { useUserContext } from 'src/contexts/User';
-import { GET_ORDER } from 'src/graphql/order/order.query';
+import {
+  GET_ORDER_DETAIL,
+  GetOrderDetailData,
+  GetOrderDetailVars
+} from 'src/graphql/order/getOrder';
 import { useQueryAuth } from 'src/hooks/useApolloHookAuth';
+import useUser from 'src/hooks/useUser';
 import { theme } from 'src/theme';
 import withApollo from 'src/utils/withApollo';
 
@@ -237,9 +240,10 @@ const OrderDetails = () => {
 
   const [open, setOpen] = useState(false);
 
-  const { orderId } = router.query;
+  const { orderNo } = router.query;
 
   const [activeStep, setActiveStep] = useState(0);
+
   const steps = [
     {
       icon: <Receipt />,
@@ -262,9 +266,12 @@ const OrderDetails = () => {
       text: t('myOrders:complete')
     }
   ];
-  const { data: orderDetail, refetch } = useQueryAuth(GET_ORDER, {
-    variables: { id: +orderId }
-  });
+  const { data: orderDetail, refetch } = useQueryAuth<GetOrderDetailData, GetOrderDetailVars>(
+    GET_ORDER_DETAIL,
+    {
+      variables: { orderNo: orderNo as string }
+    }
+  );
 
   const onCancelClick = () => {
     if (activeStep >= 3) {
@@ -274,7 +281,7 @@ const OrderDetails = () => {
     setOpen(true);
   };
 
-  const { user } = useUserContext();
+  const { user } = useUser();
 
   return (
     <>

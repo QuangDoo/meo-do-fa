@@ -40,13 +40,7 @@ const Nav = () => {
     GET_CATEGORIES_LEVEL,
     {
       onError: (error) => {
-        console.log('Get all categories error:', error);
-
-        const errorCode = error.graphQLErrors?.[0]?.extensions?.code;
-
-        if (errorCode) {
-          toast.error(t(`errors:code_${errorCode}`));
-        }
+        toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
       }
     }
   );

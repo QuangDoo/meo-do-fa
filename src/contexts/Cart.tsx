@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
-import { GetCartData } from 'src/graphql/order/order.query';
+import { GetCartData } from 'src/graphql/cart/getCart';
 
 type Props = {
   children: React.ReactNode;

@@ -20,7 +20,7 @@ const DeliveryOption = (props: Props) => {
   return (
     <InputCard title={t('checkout:deliveryOption_title')}>
       <RadioInput
-        name="deliveryOption"
+        name="deliveryMethodId"
         ref={register({
           required: t('checkout:deliveryOption_required') + ''
         })}

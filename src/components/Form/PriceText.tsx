@@ -3,7 +3,7 @@ type Props = {
 };
 
 const PriceText = (props: Props) => {
-  if (!props.price) return null;
+  if (!props.price && props.price !== 0) return null;
 
   return <>{props.price.toLocaleString('de-DE')}</>;
 };

@@ -2,15 +2,13 @@ import { useQuery } from '@apollo/client';
 import { Trans, useTranslation } from 'i18n';
 import React from 'react';
 import LinkText from 'src/components/Form/LinkText';
-import { GET_COUPON_PROGRAMS } from 'src/graphql/coupons/getCouponPrgrams';
+import { GET_COUPON_PROGRAMS } from 'src/graphql/coupons/getCouponPrograms';
 
 import PromoCodeItem from './PromoCodeItem';
 import SpecialPromoCodeItem from './SpecialPromoCodeItem';
 
 export default function PromoCodes() {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const { data: couponsData, error } = useQuery(GET_COUPON_PROGRAMS);
-  // console.log(couponsData?.getCouponPrograms);
 
   const { t } = useTranslation('promoCodes');
 

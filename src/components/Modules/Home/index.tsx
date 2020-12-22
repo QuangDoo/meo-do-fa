@@ -86,6 +86,7 @@ const Home = ({ dealsOfTheDayData, bestSellingData, promotionProductsData, newPr
           <Login />
         </>
       )}
+
       {/* <Question /> */}
 
       {/* <Partner /> */}
