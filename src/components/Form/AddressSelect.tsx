@@ -10,7 +10,6 @@ type SelectProps = {
     id: number;
     name: string;
   }[];
-  currentValue: number;
 };
 
 type Props = {

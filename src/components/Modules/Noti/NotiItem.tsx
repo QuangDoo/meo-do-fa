@@ -15,8 +15,6 @@ type Props = {
   isSeen: boolean;
 
   create_date: string;
-
-  isRead: boolean;
 };
 
 const NotiItem = (props: Props): JSX.Element => {
@@ -46,9 +44,9 @@ const NotiItem = (props: Props): JSX.Element => {
   };
 
   useEffect(() => {
-    if (!props.isRead) return;
+    if (!props.isSeen) return;
     setSeenState(true);
-  }, [props.isRead]);
+  }, [props.isSeen]);
 
   return (
     // eslint-disable-next-line jsx-a11y/no-static-element-interactions

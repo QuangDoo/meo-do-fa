@@ -43,7 +43,7 @@ export default function useAddress(props: Props) {
         props.onGetDistrictsCompleted?.(data);
       },
       onError: (err) => {
-        toast.error(t(`errors:code_${err.graphQLErrors[0]?.extensions?.code}`));
+        toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
       }
     }
   );
@@ -53,7 +53,7 @@ export default function useAddress(props: Props) {
       props.onGetWardsCompleted?.(data);
     },
     onError: (err) => {
-      toast.error(t(`errors:code_${err.graphQLErrors[0]?.extensions?.code}`));
+      toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
     }
   });
 

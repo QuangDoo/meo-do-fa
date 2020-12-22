@@ -34,7 +34,11 @@ import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
 import Nav from 'src/components/Layout/Nav';
 import ProfileLayout from 'src/components/Modules/ProfileLayout';
-import { GET_ORDER } from 'src/graphql/order/getOrder';
+import {
+  GET_ORDER_DETAIL,
+  GetOrderDetailData,
+  GetOrderDetailVars
+} from 'src/graphql/order/getOrder';
 import { useQueryAuth } from 'src/hooks/useApolloHookAuth';
 import useUser from 'src/hooks/useUser';
 import { theme } from 'src/theme';
@@ -261,9 +265,12 @@ const OrderDetails = () => {
       text: t('myOrders:complete')
     }
   ];
-  const { data: orderDetail, refetch } = useQueryAuth(GET_ORDER, {
-    variables: { id: +orderId }
-  });
+  const { data: orderDetail, refetch } = useQueryAuth<GetOrderDetailData, GetOrderDetailVars>(
+    GET_ORDER_DETAIL,
+    {
+      variables: { id: +orderId }
+    }
+  );
 
   const onCancelClick = () => {
     if (activeStep >= 3) {

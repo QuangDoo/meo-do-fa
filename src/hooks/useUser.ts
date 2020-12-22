@@ -14,7 +14,10 @@ export default function useUser(props: Props = {}) {
 
   const [token, , removeToken] = useLocalStorage('token');
 
-  const [getUser, { data, loading }] = useLazyQueryAuth<GetUserData, undefined>(GET_USER, {
+  const [getUser, { data, loading, refetch: refetchUser }] = useLazyQueryAuth<
+    GetUserData,
+    undefined
+  >(GET_USER, {
     fetchPolicy: 'network-only',
     notifyOnNetworkStatusChange: true,
     onCompleted: (data) => {
@@ -38,6 +41,7 @@ export default function useUser(props: Props = {}) {
   return {
     user,
     loading,
-    getUser
+    getUser,
+    refetchUser
   };
 }

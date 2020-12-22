@@ -31,84 +31,43 @@ type Inputs = {
   businessLicense: FileList;
   taxCode: string;
   companyStreet: string;
-  companyCityId: string;
-  companyDistrictId: string;
-  companyWardId: string;
+  companyCity: string;
+  companyDistrict: string;
+  companyWard: string;
   deliveryStreet: string;
-  deliveryCityId: string;
-  deliveryDistrictId: string;
-  deliveryWardId: string;
+  deliveryCity: string;
+  deliveryDistrict: string;
+  deliveryWard: string;
 };
 
 const MyAccount = (): JSX.Element => {
   const { t } = useTranslation('myAccount');
 
-  const { user } = useUser();
+  const { user, refetchUser } = useUser();
 
-  const { register, handleSubmit, watch, setValue } = useForm<Inputs>();
+  const { register, handleSubmit, watch } = useForm<Inputs>();
 
   const chosenFile: FileList = watch('businessLicense');
 
   // Company city, district, ward select
-  const {
-    cities: companyCities,
-    districts: companyDistricts,
-    wards: companyWards,
-    chosenCity: companyChosenCity,
-    chosenDistrict: companyChosenDistrict,
-    chosenWard: companyChosenWard
-  } = useAddress({
-    cityId: +watch('companyCityId'),
-    districtId: +watch('companyDistrictId'),
-    wardId: +watch('companyWardId')
+  const { cities: companyCities, districts: companyDistricts, wards: companyWards } = useAddress({
+    cityId: +watch('companyCity')?.split('__')[1],
+    districtId: +watch('companyDistrict')?.split('__')[1],
+    wardId: +watch('companyWard')?.split('__')[1]
   });
 
-  // Set user current city to companyCity select
-  useEffect(() => {
-    if (!user || !companyCities.length) return;
-
-    setValue(
-      'companyCityId',
-      companyCities.find((city) => city.name === user.contact_address?.city?.name)?.id || ''
-    );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user, companyCities]);
-
-  // Set user current district to companyDistrict select
-  useEffect(() => {
-    if (!companyDistricts.length) return;
-
-    setValue(
-      'companyDistrictId',
-      companyDistricts.find((district) => district.name === user.contact_address?.district?.name)
-        ?.id || ''
-    );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [companyDistricts]);
-
-  // Set user current ward to companyWard select
-  useEffect(() => {
-    if (!companyWards.length) return;
-
-    setValue(
-      'companyWardId',
-      companyWards.find((ward) => ward.name === user.contact_address?.ward?.name)?.id || ''
-    );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [companyWards]);
-
-  const {
-    cities: deliveryCities,
-    districts: deliveryDistricts,
-    wards: deliveryWards,
-    chosenCity: deliveryChosenCity,
-    chosenDistrict: deliveryChosenDistrict,
-    chosenWard: deliveryChosenWard
-  } = useAddress({
-    cityId: +watch('deliveryCityId'),
-    districtId: +watch('deliveryDistrictId'),
-    wardId: +watch('deliveryWardId')
-  });
+  // const {
+  //   cities: deliveryCities,
+  //   districts: deliveryDistricts,
+  //   wards: deliveryWards,
+  //   chosenCity: deliveryChosenCity,
+  //   chosenDistrict: deliveryChosenDistrict,
+  //   chosenWard: deliveryChosenWard
+  // } = useAddress({
+  //   cityId: +watch('deliveryCity').split('__')[1],
+  //   districtId: +watch('deliveryDistrict').split('__')[1],
+  //   wardId: +watch('deliveryWard').split('__')[1]
+  // });
 
   const [updateUser, { loading: loadingUpdateUser }] = useMutationAuth<
     UpdateUserData,
@@ -116,6 +75,7 @@ const MyAccount = (): JSX.Element => {
   >(UPDATE_USER, {
     onCompleted: () => {
       toast.success(t('myAccount:update_success'));
+      refetchUser();
     }
   });
 
@@ -130,6 +90,10 @@ const MyAccount = (): JSX.Element => {
       }
     }
 
+    const [cityName, cityId] = data.companyCity.split('__');
+    const [districtName, districtId] = data.companyDistrict.split('__');
+    const [wardName, wardId] = data.companyWard.split('__');
+
     updateUser({
       variables: {
         name: data.name,
@@ -138,16 +102,16 @@ const MyAccount = (): JSX.Element => {
         contact_address: {
           street: data.companyStreet,
           city: {
-            id: companyChosenCity.id,
-            name: companyChosenCity.name
+            id: +cityId,
+            name: cityName
           },
           district: {
-            id: companyChosenDistrict.id,
-            name: companyChosenDistrict.name
+            id: +districtId,
+            name: districtName
           },
           ward: {
-            id: companyChosenWard.id,
-            name: companyChosenWard.name
+            id: +wardId,
+            name: wardName
           }
         },
         company_name: data.companyName,
@@ -209,13 +173,13 @@ const MyAccount = (): JSX.Element => {
             />
 
             {/* New password */}
-            <InputWithLabel
+            {/* <InputWithLabel
               ref={register}
               label={t('myAccount:new_password_label')}
               name="newPassword"
               type="password"
               guide={t('myAccount:new_password_rule')}
-            />
+            /> */}
           </FormCard>
 
           <FormCard title={t('myAccount:business_info')}>
@@ -286,37 +250,35 @@ const MyAccount = (): JSX.Element => {
               type="text"
               placeholder={t('myAccount:company_street_placeholder')}
               defaultValue={user?.contact_address?.street || ''}
+              required
             />
 
             <AddressSelect
               cityProps={{
-                name: 'companyCityId',
+                name: 'companyCity',
                 register: register({
                   required: t('myAccount:company_city_required') + ''
                 }),
-                options: companyCities,
-                currentValue: companyChosenCity?.id
+                options: companyCities
               }}
               districtProps={{
-                name: 'companyDistrictId',
+                name: 'companyDistrict',
                 register: register({
                   required: t('myAccount:company_district_required') + ''
                 }),
-                options: companyDistricts,
-                currentValue: companyChosenDistrict?.id
+                options: companyDistricts
               }}
               wardProps={{
-                name: 'companyWardId',
+                name: 'companyWard',
                 register: register({
                   required: t('myAccount:company_Ward_required') + ''
                 }),
-                options: companyWards,
-                currentValue: companyChosenWard?.id
+                options: companyWards
               }}
             />
           </FormCard>
 
-          <FormCard title={t('myAccount:delivery_info')}>
+          {/* <FormCard title={t('myAccount:delivery_info')}>
             <InputWithLabel
               ref={register}
               label={t('myAccount:delivery_street_label')}
@@ -351,7 +313,7 @@ const MyAccount = (): JSX.Element => {
                 currentValue: deliveryChosenWard?.id
               }}
             />
-          </FormCard>
+          </FormCard> */}
 
           <div className="col-12 d-flex justify-content-center">
             <Button type="submit" variant="primary" size="lg">
