@@ -5,6 +5,7 @@ import React from 'react';
 import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
+import Loading from 'src/components/Layout/Loading';
 import Nav from 'src/components/Layout/Nav';
 import Pagination from 'src/components/Modules/Pagination';
 import ProductCard from 'src/components/Modules/ProductCard';
@@ -20,7 +21,7 @@ function Deal() {
 
   const page = +router.query.page || 1;
 
-  const { data: productsData, refetch: refetchProducts } = useQuery<
+  const { data: productsData, refetch: refetchProducts, loading: loadingProducts } = useQuery<
     GetProductsData,
     GetProductsVars
   >(GET_PRODUCTS, {
@@ -70,21 +71,31 @@ function Deal() {
               <p>{t('deals:deal_info')}</p>
             </div>
 
-            <main className="col-12">
-              <div className="products__cards mb-3">
-                {productsData?.getProductByConditions.Products.map((product) => (
-                  <ProductCard key={product.id} {...product} />
-                ))}
+            {loadingProducts ? (
+              <div className="d-flex w-100 p-5 justify-content-center">
+                <Loading className="lds-roller-white" />
               </div>
+            ) : productsData?.getProductByConditions.Products.length < 1 ? (
+              <div className="col-12 mb-3 px-5 text-white">
+                <h1 className="text-white text-center">{t('deals:deal_empty')}</h1>
+              </div>
+            ) : (
+              <main className="col-12">
+                <div className="products__cards mb-3">
+                  {productsData?.getProductByConditions.Products.map((product) => (
+                    <ProductCard key={product.id} {...product} />
+                  ))}
+                </div>
 
-              <div className="mb-3">
-                <Pagination
-                  count={Math.ceil(productsData?.getProductByConditions.total / pageSize)}
-                  page={page}
-                  onChange={changePage}
-                />
-              </div>
-            </main>
+                <div className="mb-3">
+                  <Pagination
+                    count={Math.ceil(productsData?.getProductByConditions.total / pageSize)}
+                    page={page}
+                    onChange={changePage}
+                  />
+                </div>
+              </main>
+            )}
           </div>
         </div>
       </section>

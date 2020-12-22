@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import { emailRegex } from 'src/assets/regex/email';
 import Button from 'src/components/Form/Button';
 import Input from 'src/components/Form/Input';
+import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { useModalControlDispatch } from 'src/contexts/ModalControl';
 import {
   RESET_PASSWORD,
@@ -28,7 +29,7 @@ const ResetPassForm = (): JSX.Element => {
     Object.keys(errors).forEach((field) => toast.error(errors[field].message));
   };
 
-  const [resetPassword] = useMutation(RESET_PASSWORD);
+  const [resetPassword, { loading: loadingResetPassword }] = useMutation(RESET_PASSWORD);
 
   const onSubmit = (data: Inputs) => {
     const { email } = data;
@@ -66,6 +67,7 @@ const ResetPassForm = (): JSX.Element => {
           {t('password:send_recovery_link')}
         </Button>
       </form>
+      <LoadingBackdrop open={loadingResetPassword} />
     </div>
   );
 };

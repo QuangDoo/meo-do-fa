@@ -11,18 +11,6 @@ import ModalBase from 'src/components/Layout/Modal/ModalBase';
 import { CANCEL_ORDER } from 'src/graphql/my-orders/cancelOrder';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 
-type Props = {
-  // Modal is open
-  open: boolean;
-
-  // On modal close
-  onClose: () => void;
-
-  orderNo: string;
-
-  callBack?: () => void;
-};
-
 type Inputs = {
   reason: string;
   text: string;
@@ -60,7 +48,6 @@ const ConfirmCancelOrder = (props) => {
       toast.error(t('cancelOrder:is_check'));
       return;
     }
-
     cancelOrder({
       variables: {
         orderNo: orderNo

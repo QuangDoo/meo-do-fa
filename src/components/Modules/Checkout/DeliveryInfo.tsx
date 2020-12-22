@@ -6,6 +6,7 @@ import Checkbox from 'src/components/Form/Checkbox';
 import { City } from 'src/graphql/address/getCities';
 import { District } from 'src/graphql/address/getDistricts';
 import { Ward } from 'src/graphql/address/getWards';
+import useUser from 'src/hooks/useUser';
 import { ReactHookFormRegister } from 'src/types/ReactHookFormRegister';
 
 import InputWithLabel from '../../Form/InputWithLabel';
@@ -28,6 +29,10 @@ const DeliveryInfo = (props: Props) => {
 
   const { t } = useTranslation('checkout');
 
+  const { user } = useUser();
+
+  const { name, phone, email, contact_address } = user || {};
+
   return (
     <InputCard title={t('checkout:deliveryInfo_title')} hasRequired>
       {/* Name input */}
@@ -38,6 +43,7 @@ const DeliveryInfo = (props: Props) => {
         })}
         label={t('checkout:name_label')}
         type="text"
+        defaultValue={name}
         placeholder={t('checkout:name_placeholder')}
         required
       />
@@ -56,6 +62,7 @@ const DeliveryInfo = (props: Props) => {
           type="number"
           label={t('checkout:phone_label')}
           containerClass="col-sm-4"
+          defaultValue={phone}
           placeholder={t('checkout:phone_placeholder')}
           required
         />
@@ -72,6 +79,7 @@ const DeliveryInfo = (props: Props) => {
           type="text"
           label={t('checkout:email_label')}
           containerClass="col-sm-8"
+          defaultValue={email}
           placeholder={t('checkout:email_placeholder')}
         />
       </div>

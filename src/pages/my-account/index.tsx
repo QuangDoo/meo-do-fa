@@ -8,6 +8,7 @@ import InputWithLabel from 'src/components/Form/InputWithLabel';
 import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
+import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import Nav from 'src/components/Layout/Nav';
 import FormCard from 'src/components/Modules/MyAccount/FormCard';
 import ProfileLayout from 'src/components/Modules/ProfileLayout';
@@ -109,7 +110,10 @@ const MyAccount = (): JSX.Element => {
     wardId: +watch('deliveryWardId')
   });
 
-  const [updateUser] = useMutationAuth<UpdateUserData, UpdateUserVars>(UPDATE_USER, {
+  const [updateUser, { loading: loadingUpdateUser }] = useMutationAuth<
+    UpdateUserData,
+    UpdateUserVars
+  >(UPDATE_USER, {
     onCompleted: () => {
       toast.success(t('myAccount:update_success'));
     }
@@ -356,6 +360,8 @@ const MyAccount = (): JSX.Element => {
           </div>
         </form>
       </ProfileLayout>
+
+      <LoadingBackdrop open={loadingUpdateUser} />
 
       <Footer />
     </>

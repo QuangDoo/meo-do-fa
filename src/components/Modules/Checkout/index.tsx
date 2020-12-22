@@ -96,8 +96,10 @@ const CheckoutPage = () => {
   // const deliveryMethods = paymentAndDeliveryData?.getPaymentAndDeliveryMethod.deliveryMethods || [];
 
   // Counsel
-  const { loading: loadingCounsel } = useQueryAuth<GetCounselData, undefined>(GET_COUNSEL, {
-    fetchPolicy: 'network-only',
+  const { refetch: refetchCounsel, loading: loadingCounsel } = useQueryAuth<
+    GetCounselData,
+    undefined
+  >(GET_COUNSEL, {
     onCompleted: (data) => {
       setCounselData(data.getCounsel);
     },
@@ -105,6 +107,11 @@ const CheckoutPage = () => {
       toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
     }
   });
+
+  useEffect(() => {
+    const timeOutId = setTimeout(() => refetchCounsel(), 0);
+    return () => clearTimeout(timeOutId);
+  }, []);
 
   // Form handler with default values
   const { register, handleSubmit, watch, setValue } = useForm<FormInputs>({

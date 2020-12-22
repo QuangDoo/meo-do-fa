@@ -3,11 +3,10 @@ import { withTranslation } from 'i18n';
 import { WithTranslation } from 'next-i18next';
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
+import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { ADD_TO_CART } from 'src/graphql/order/order.mutation';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import useCart from 'src/hooks/useCart';
-
-import LoadingBackdrop from '../Layout/LoadingBackdrop';
 
 type Props = WithTranslation & {
   size?: 'normal' | 'large';
@@ -26,7 +25,7 @@ function QuantityInput(props: Props) {
 
   const [quantity, setQuantity] = useState<string>('0');
 
-  const [addToCart] = useMutationAuth(ADD_TO_CART, {
+  const [addToCart, { loading: loadingAddToCart }] = useMutationAuth(ADD_TO_CART, {
     onCompleted: () => {
       toast.success(t(`errors:add_to_cart_success`));
       refetchCart();
@@ -110,6 +109,7 @@ function QuantityInput(props: Props) {
           </button>
         </div>
       </div>
+      <LoadingBackdrop open={loadingAddToCart} />
     </>
   );
 }

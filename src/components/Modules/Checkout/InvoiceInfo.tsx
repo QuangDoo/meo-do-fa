@@ -30,6 +30,7 @@ const InvoiceInfo = (props: Props): JSX.Element => {
   const { t } = useTranslation(['checkout', 'myAccount']);
 
   const { user } = useUser();
+
   return (
     <BillingExport ref={register} name="isInvoice" label={t('checkout:billing_export')}>
       <InputCard title={t('checkout:billing_info_title')} hasRequired>
@@ -124,7 +125,9 @@ const InvoiceInfo = (props: Props): JSX.Element => {
             label={t('checkout:district_label')}
             labelClass="required"
             containerClass="col-md-4">
-            <option value="">{t('checkout:district_placeholder')}</option>
+            {user?.contact_address?.district.name && (
+              <option value="">{user?.contact_address?.district.name}</option>
+            )}
 
             {/* Map districts from chosen city */}
             {districts.map((district) => (
@@ -143,7 +146,9 @@ const InvoiceInfo = (props: Props): JSX.Element => {
             label={t('checkout:ward_label')}
             labelClass="required"
             containerClass="col-md-4">
-            <option value="">{t('checkout:ward_placeholder')}</option>
+            {user?.contact_address?.ward.name && (
+              <option value="">{user?.contact_address?.ward.name}</option>
+            )}
 
             {/* Map wards from chosen district */}
             {wards.map((ward) => (

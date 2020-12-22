@@ -50,7 +50,9 @@ const ProductDetailInfor = (props: PropsType): JSX.Element => {
                 <span className="product__price">
                   <PriceText price={props.list_price} />
                   <span className="unit">{t('common:vnd')}</span>
-                  <small className="text-muted"> ({t('productDetail:vat_included')})</small>
+                  {props?.is_quick_invoice && (
+                    <small className="text-muted"> ({t('productDetail:vat_included')})</small>
+                  )}
                 </span>
               </div>
             </div>
@@ -64,12 +66,16 @@ const ProductDetailInfor = (props: PropsType): JSX.Element => {
           {props.is_vn && <ProductBadge type="is_vn" />}
         </div>
         <div className="mb-3">
-          <div className="product__info-label">{t('productDetail:manufacturer')}</div>
-          <div className="text-capitalize">
-            <Link href={`/manufacturers/${props.manufacturers?.id}`}>
-              <a>{props.manufacturers?.name}</a>
-            </Link>
-          </div>
+          {props.manufacturers && (
+            <>
+              <div className="product__info-label">{t('productDetail:manufacturer')}</div>
+              <div className="text-capitalize">
+                <Link href={`/manufacturers/${props.manufacturers?.id}`}>
+                  <a>{props.manufacturers?.name}</a>
+                </Link>
+              </div>
+            </>
+          )}
         </div>
         <div className="mb-3">
           <div className="product__info-label">{t('productDetail:category')}</div>
