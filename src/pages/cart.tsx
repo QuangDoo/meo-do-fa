@@ -18,7 +18,7 @@ import withApollo from 'src/utils/withApollo';
 function Cart(): JSX.Element {
   const { cart, loading: loadingCart } = useCart();
 
-  const { t } = useTranslation(['cart', 'common']);
+  const { t } = useTranslation(['cart', 'common', 'errors']);
 
   const router = useRouter();
 
@@ -27,7 +27,7 @@ function Cart(): JSX.Element {
       router.push('/checkout');
     },
     onError: (error) => {
-      toast.error('Create counsel error: ' + error);
+      toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
     }
   });
 
@@ -68,9 +68,9 @@ function Cart(): JSX.Element {
                 nhiều cái cũng tính là 1)
               </div> */}
               <div className="elevated cart__items mb-3">
-                {cart?.getCart.carts.map((item, index) => (
+                {cart?.getCart.carts.map((item) => (
                   <CartItem
-                    key={index}
+                    key={item._id}
                     _id={item._id}
                     image={item.product.image_512}
                     price={item.price}
@@ -133,9 +133,11 @@ function Cart(): JSX.Element {
                     {cart?.getCart.totalPrice > 0 && (
                       <div className="col-12">
                         <div className="cart__info-item">
-                          <a className="btn btn-secondary btn-block text-small">
-                            <button onClick={handleCheckoutClick}>{t('continue_payment')}</button>
-                          </a>
+                          <button
+                            onClick={handleCheckoutClick}
+                            className="btn btn-secondary btn-block text-small">
+                            {t('continue_payment')}
+                          </button>
                         </div>
                       </div>
                     )}

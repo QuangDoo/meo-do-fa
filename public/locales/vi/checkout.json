@@ -57,6 +57,19 @@
   "can_not_find": "Trường hợp không tìm được thuốc mong muốn, Quý khách vui lòng điền yêu cầu bên dưới.Chúng tôi sẽ liên hệ mua thuốc và báo giá sớm nhất có thể.",
   "billing_export": "Xuất hoá đơn",
   "billing_info_title": "Thông tin xuất hoá đơn",
-  "taxcode_required": "Xin nhập mã số thuế"
-  
+  "taxcode_required": "Xin nhập mã số thuế",
+  "apply_coupon_label": "Mã khuyến mãi",
+  "apply_coupon_btn_label": "Dùng mã",
+  "apply_coupon_popup_title": "Áp dụng mã khuyến mãi",
+  "apply_coupon_input_label": "Nhập mã",
+  "apply_coupon_confirm_btn": "Áp dụng",
+  "unapply_coupon_btn": "Bỏ áp dụng",
+  "apply_coupon_success": "Cập nhật mã khuyến mãi thành công",
+  "days": "ngày",
+  "hours": "giờ",
+  "minutes": "phút",
+  "seconds": "giây",
+  "reward_type_discount": "Giảm giá",
+  "reward_type_product": "Quà tặng",
+  "coupon_code_required": "Hãy nhập mã giảm giá"
 }

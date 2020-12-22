@@ -9,7 +9,7 @@ export type Product = {
   image_128: string;
   image_256: string;
   image_512: string;
-  uom_name: string;
+  packing_unit: string;
   is_new: boolean;
   is_quick_invoice: boolean;
   is_vn: boolean;
@@ -72,7 +72,7 @@ export const GET_PRODUCTS = gql`
         image_128
         image_512
         image_256
-        uom_name
+        packing_unit
         is_new
         is_quick_invoice
         is_vn

@@ -1,17 +1,12 @@
-import { useMutation } from '@apollo/client';
 import clsx from 'clsx';
 import { withTranslation } from 'i18n';
 import { WithTranslation } from 'next-i18next';
-import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { ADD_TO_CART } from 'src/graphql/order/order.mutation';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import useCart from 'src/hooks/useCart';
-import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
-
-import Login from './Home/Login/Login';
 
 type Props = WithTranslation & {
   size?: 'normal' | 'large';
@@ -26,13 +21,21 @@ type Props = WithTranslation & {
 function AddCart(props: Props) {
   const { size, productId, price, name, t } = props;
 
-  const isLoggedIn = useIsLoggedIn();
+  const { cart, refetchCart, loading: loadingCart } = useCart();
 
-  const { refetchCart } = useCart();
+  useEffect(() => {
+    if (!cart) return;
+
+    const thisProduct = cart.getCart.carts.find((product) => product.productId === productId);
+
+    if (thisProduct) {
+      setQuantity(thisProduct.quantity + '');
+    }
+  }, [cart]);
 
   const [quantity, setQuantity] = useState<string>('0');
 
-  const [addToCart, { loading: loadingAddtoCart }] = useMutationAuth(ADD_TO_CART);
+  const [addToCart, { loading: addingToCart }] = useMutationAuth(ADD_TO_CART);
 
   const handleClick = () => {
     if (+quantity === 0) {
@@ -53,8 +56,7 @@ function AddCart(props: Props) {
         refetchCart();
       })
       .catch((error) => {
-        console.log('Add to cart error:', { error });
-        toast.error(t(`errors:code_${error.graphQLErrors[0].extensions.code}`));
+        toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
       });
   };
 
@@ -103,7 +105,7 @@ function AddCart(props: Props) {
           {t('productDetail:add_to_cart')}
         </button>
       </div>
-      <LoadingBackdrop open={loadingAddtoCart} />
+      <LoadingBackdrop open={addingToCart || loadingCart} />
     </div>
   );
 }

@@ -35,10 +35,9 @@ import Header from 'src/components/Layout/Header';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import Nav from 'src/components/Layout/Nav';
 import ProfileLayout from 'src/components/Modules/ProfileLayout';
-import ProfileSidebar from 'src/components/Modules/ProfileSidebar';
-import { useUserContext } from 'src/contexts/User';
-import { GET_ORDER } from 'src/graphql/order/order.query';
+import { GET_ORDER, GetOrderDetailData, GetOrderDetailVars } from 'src/graphql/order/getOrder';
 import { useQueryAuth } from 'src/hooks/useApolloHookAuth';
+import useUser from 'src/hooks/useUser';
 import { theme } from 'src/theme';
 import withApollo from 'src/utils/withApollo';
 
@@ -238,7 +237,7 @@ const OrderDetails = () => {
 
   const [open, setOpen] = useState(false);
 
-  const { orderId } = router.query;
+  const { orderNo } = router.query;
 
   const [activeStep, setActiveStep] = useState(0);
 
@@ -265,8 +264,11 @@ const OrderDetails = () => {
     }
   ];
 
-  const { data: orderDetail, refetch, loading: loadingOrderDetail } = useQueryAuth(GET_ORDER, {
-    variables: { orderNo: orderId }
+  const { data: orderDetail, refetch, loading: loadingOrderDetail } = useQueryAuth<
+    GetOrderDetailData,
+    GetOrderDetailVars
+  >(GET_ORDER, {
+    variables: { orderNo: orderNo as string }
   });
 
   useEffect(() => {
@@ -285,7 +287,7 @@ const OrderDetails = () => {
     setOpen(true);
   };
 
-  const { user } = useUserContext();
+  const { user } = useUser();
 
   return (
     <>

@@ -63,7 +63,7 @@ const ProductCard = ({ t, ...props }: Props): JSX.Element => {
                 )}
               </div>
 
-              <small className="text-muted">{props.uom_name}</small>
+              <small className="text-muted">{props.packing_unit}</small>
 
               <br />
 
