@@ -1,0 +1,15 @@
+ul.list-group, ol.list-group{
+    padding-left: 30px;
+}
+
+ul.list-group.upper-roman-list {
+    list-style-type: upper-roman;
+}
+
+ul.list-group.lower-roman-list {
+    list-style-type: lower-roman;
+}
+
+ul.list-group.decimal-list {
+    list-style-type: decimal;
+}
