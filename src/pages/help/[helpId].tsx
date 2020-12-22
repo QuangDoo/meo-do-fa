@@ -43,17 +43,7 @@ const HelpDetail = (): JSX.Element => {
       <Nav />
 
       <FAQ title={t(`help:question_${router.query.helpId}`)}>
-        {/* <QuestionDetail
-          question={question.question}
-          answer={question.answer}
-          author={question.author}
-          postDate={question.postDate}
-          status={question.status}
-        /> */}
-
-        <div className="d-flex justify-content-center align-items-center p-5">
-          {t('common:updating')}
-        </div>
+        <QuestionDetail answer={t(`help:answer_${router.query.helpId}`)} />
       </FAQ>
 
       <Footer />
