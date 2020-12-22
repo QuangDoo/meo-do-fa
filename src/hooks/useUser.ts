@@ -1,18 +1,28 @@
 import { useEffect } from 'react';
 import { useUserContext } from 'src/contexts/User';
-import { GET_USER, GetUserData } from 'src/graphql/user/getUser';
+import { GET_USER, GetUserData, User } from 'src/graphql/user/getUser';
 
 import { useLazyQueryAuth } from './useApolloHookAuth';
 import useLocalStorage from './useLocalStorage';
 
-export default function useUser() {
-  const { setUser } = useUserContext();
+type Props = {
+  onCompleted?: (data: GetUserData) => void;
+};
+
+export default function useUser(props: Props = {}) {
+  const { user, setUser } = useUserContext();
 
   const [token, , removeToken] = useLocalStorage('token');
 
-  const [getUser, { data }] = useLazyQueryAuth<GetUserData, undefined>(GET_USER, {
+  const [getUser, { data, loading, refetch: refetchUser }] = useLazyQueryAuth<
+    GetUserData,
+    undefined
+  >(GET_USER, {
+    fetchPolicy: 'network-only',
+    notifyOnNetworkStatusChange: true,
     onCompleted: (data) => {
       setUser(data.getUser);
+      props.onCompleted?.(data);
     },
     onError: (error) => {
       if (error?.graphQLErrors?.[0]?.extensions?.code === 500) {
@@ -29,7 +39,9 @@ export default function useUser() {
   }, [token]);
 
   return {
+    user,
+    loading,
     getUser,
-    user: data?.getUser
+    refetchUser
   };
 }

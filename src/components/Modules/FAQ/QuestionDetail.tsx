@@ -17,14 +17,7 @@ function QuestionDetail(props: Props): JSX.Element {
   }
   return (
     <div className="mb-3 mt-3">
-      <div className="news-header__poston text-small text-left">
-        {`post on `}
-        <b>{props.postDate}</b>
-        {` by `}
-        <b>{props.author}</b>
-      </div>
-      <div className="news__divider"></div>
-      <div dangerouslySetInnerHTML={createMarkup()} />
+      <div className="question_detail" dangerouslySetInnerHTML={createMarkup()} />
     </div>
   );
 }

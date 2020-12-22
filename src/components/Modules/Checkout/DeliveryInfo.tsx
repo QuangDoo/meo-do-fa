@@ -37,7 +37,7 @@ const DeliveryInfo = (props: Props) => {
     <InputCard title={t('checkout:deliveryInfo_title')} hasRequired>
       {/* Name input */}
       <InputWithLabel
-        name="name"
+        name="deliveryName"
         ref={register({
           required: t('checkout:name_required') + ''
         })}
@@ -51,7 +51,7 @@ const DeliveryInfo = (props: Props) => {
       <div className="row">
         {/* Phone input */}
         <InputWithLabel
-          name="phone"
+          name="deliveryPhone"
           ref={register({
             required: t('checkout:phone_required') + '',
             pattern: {
@@ -69,7 +69,7 @@ const DeliveryInfo = (props: Props) => {
 
         {/* Email input */}
         <InputWithLabel
-          name="email"
+          name="deliveryEmail"
           ref={register({
             pattern: {
               value: emailRegex,
@@ -84,9 +84,9 @@ const DeliveryInfo = (props: Props) => {
         />
       </div>
 
-      {/* Address input */}
+      {/* Street input */}
       <InputWithLabel
-        name="address"
+        name="deliveryStreet"
         ref={register({
           required: t('checkout:address_required') + ''
         })}
@@ -103,7 +103,7 @@ const DeliveryInfo = (props: Props) => {
       <div className="row">
         {/* Select city */}
         <SelectWithLabel
-          name="cityId"
+          name="deliveryCity"
           ref={register({
             required: t('checkout:city_required') + ''
           })}
@@ -114,7 +114,7 @@ const DeliveryInfo = (props: Props) => {
 
           {/* Map cities from api */}
           {cities.map((city: DataCityType) => (
-            <option key={city.id} value={city.id}>
+            <option key={city.id} value={city.name + '__' + city.id}>
               {city.name}
             </option>
           ))}
@@ -122,18 +122,19 @@ const DeliveryInfo = (props: Props) => {
 
         {/* Select district */}
         <SelectWithLabel
-          name="districtId"
+          name="deliveryDistrict"
           ref={register({
             required: t('checkout:district_required') + ''
           })}
           label={t('checkout:district_label')}
           labelClass="required"
-          containerClass="col-md-4">
+          containerClass="col-md-4"
+          disabled={!districts.length}>
           <option value="">{t('checkout:district_placeholder')}</option>
 
           {/* Map districts from chosen city */}
           {districts.map((district) => (
-            <option key={district.id} value={district.id}>
+            <option key={district.id} value={district.name + '__' + district.id}>
               {district.name}
             </option>
           ))}
@@ -141,18 +142,19 @@ const DeliveryInfo = (props: Props) => {
 
         {/* Select ward */}
         <SelectWithLabel
-          name="wardId"
+          name="deliveryWard"
           ref={register({
             required: t('checkout:ward_required') + ''
           })}
           label={t('checkout:ward_label')}
           labelClass="required"
-          containerClass="col-md-4">
+          containerClass="col-md-4"
+          disabled={!wards.length}>
           <option value="">{t('checkout:ward_placeholder')}</option>
 
           {/* Map wards from chosen district */}
           {wards.map((ward) => (
-            <option key={ward.id} value={ward.id}>
+            <option key={ward.id} value={ward.name + '__' + ward.id}>
               {ward.name}
             </option>
           ))}
@@ -162,7 +164,7 @@ const DeliveryInfo = (props: Props) => {
       {/* Save info for next time */}
       <Checkbox
         ref={register}
-        name="saveInfo"
+        name="deliverySaveInfo"
         containerClass="mt-2"
         label={t('checkout:saveInfo_label')}
         labelClass="form__label"

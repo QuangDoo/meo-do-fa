@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
-import { GET_NOTI } from 'src/graphql/notification/notify.query';
+import { GET_NOTI, GetNotiData } from 'src/graphql/notification/notify.query';
 
-import { useLazyQueryAuth, useQueryAuth } from './useApolloHookAuth';
+import { useQueryAuth } from './useApolloHookAuth';
 
 export default function useNoti() {
-  const { data, error, loading, refetch } = useQueryAuth(GET_NOTI);
+  const { data, error, loading, refetch } = useQueryAuth<GetNotiData, undefined>(GET_NOTI);
 
   useEffect(() => {
     if (!data) return;

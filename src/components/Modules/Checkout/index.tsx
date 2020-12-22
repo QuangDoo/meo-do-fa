@@ -4,18 +4,10 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import AddressSelect from 'src/components/Form/AddressSelect';
-import InputWithLabel from 'src/components/Form/InputWithLabel';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
-import { useUserContext } from 'src/contexts/User';
 import { APPLY_PAYMENT, ApplyPaymentData, ApplyPaymentVars } from 'src/graphql/order/applyPayment';
-import {
-  CREATE_INVOICE_USER,
-  CreateInvoiceUserData,
-  CreateInvoiceUserVars
-} from 'src/graphql/order/createInvoiceUser';
 import { CREATE_ORDER, CreateOrderData, CreateOrderVars } from 'src/graphql/order/createOrder';
-import { GET_COUNSEL, GetCounselData } from 'src/graphql/order/getCounsel';
+import { GET_COUNSEL, GetCounselData, OutputCounsel } from 'src/graphql/order/getCounsel';
 import {
   GET_PAYMENT_DELIVERY,
   GetPaymentAndDeliveryData
@@ -24,66 +16,93 @@ import useAddress from 'src/hooks/useAddress';
 import { useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
 import useCart from 'src/hooks/useCart';
 import useDidUpdateEffect from 'src/hooks/useDidUpdate';
+import useUser from 'src/hooks/useUser';
 import swal from 'sweetalert';
 
-import FormCard from '../MyAccount/FormCard';
 import Agreement from './Agreement';
 import CustomerNotes from './CustomerNotes';
 import DeliveryInfo from './DeliveryInfo';
-import DeliveryOption from './DeliveryOption';
 import InvoiceInfo from './InvoiceInfo';
 import PaymentOption from './PaymentOption';
 import StickySidebar from './StickySidebar';
 
+// Các city, district, ward đều có dạng "name__id"
+
 type FormInputs = {
-  name: string;
-  phone: string;
-  email: string;
-  address: string;
-  cityId: string;
-  districtId: string;
-  wardId: string;
-  deliveryOption: string;
-  paymentOption: string;
-  saveInfo: boolean;
+  deliveryName: string;
+  deliveryPhone: string;
+  deliveryEmail: string;
+  deliveryStreet: string;
+  deliveryCity: string;
+  deliveryDistrict: string;
+  deliveryWard: string;
+  deliverySaveInfo: boolean;
+
+  deliveryMethodId: string;
+  paymentMethodId: string;
+
+  isInvoice: boolean;
+  invoiceName: string;
+  invoiceEmail: string;
+  invoiceStreet: string;
+  invoiceCity: string;
+  invoiceDistrict: string;
+  invoiceWard: string;
+  invoiceTaxCode: string;
+  invoiceSaveInfo: boolean;
+
   customerNotes: string;
   agreement: boolean;
-  isInvoice: boolean;
-  fullnameInvoice: string;
-  emailInvoice: string;
-  companyStreet: string;
-  companyCityId: string;
-  companyDistrictId: string;
-  companyWardId: string;
-  vat: string;
+
   id: string;
 };
 
 const CheckoutPage = () => {
-  const { t } = useTranslation(['checkout']);
+  const { t } = useTranslation(['checkout', 'errors']);
 
-  const { refetchCart } = useCart();
+  // User
+  const { user, loading: loadingUser } = useUser();
+
+  const [counselData, setCounselData] = useState<OutputCounsel>();
+
+  // When user data is loaded
+  useEffect(() => {
+    if (!user) return;
+
+    if (user.contact_address) {
+      const { street } = user.contact_address;
+
+      setValue('deliveryStreet', street);
+    }
+
+    setValue('deliveryName', user.name);
+    setValue('deliveryPhone', user.phone);
+    setValue('deliveryEmail', user.email);
+  }, [user]);
 
   // Payment & Delivery options
   const { data: paymentAndDeliveryData } = useQuery<GetPaymentAndDeliveryData, undefined>(
-    GET_PAYMENT_DELIVERY
+    GET_PAYMENT_DELIVERY,
+    {
+      onError: (err) => {
+        toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
+      }
+    }
   );
-  const paymentMethods = paymentAndDeliveryData?.getPaymentAndDeliveryMethod.paymentMethods || [];
-  const deliveryMethods = paymentAndDeliveryData?.getPaymentAndDeliveryMethod.deliveryMethods || [];
 
-  const [totalPrice, setTotalPrice] = useState<number>();
+  const paymentMethods = paymentAndDeliveryData?.getPaymentAndDeliveryMethod.paymentMethods || [];
+  // const deliveryMethods = paymentAndDeliveryData?.getPaymentAndDeliveryMethod.deliveryMethods || [];
 
   // Counsel
-  const { data: counselData, refetch: refetchCounsel, loading: loadingCounsel } = useQueryAuth<
+  const { refetch: refetchCounsel, loading: loadingCounsel } = useQueryAuth<
     GetCounselData,
     undefined
   >(GET_COUNSEL, {
     onCompleted: (data) => {
-      if (data.getCounsel === null) {
-        return;
-      }
-
-      setTotalPrice(data.getCounsel.totalPrice);
+      setCounselData(data.getCounsel);
+    },
+    onError: (err) => {
+      toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
     }
   });
 
@@ -92,28 +111,16 @@ const CheckoutPage = () => {
     return () => clearTimeout(timeOutId);
   }, []);
 
-  // User
-  const { user } = useUserContext();
-
   // Form handler with default values
   const { register, handleSubmit, watch, setValue } = useForm<FormInputs>({
     defaultValues: {
-      name: user?.name,
-      phone: user?.phone,
-      email: user?.email,
-      address: user?.contact_address?.street,
-      // cityId: user?.city.id,
-      // districtId: user?.district.id,
-      // wardId: user?.ward.id,
-      deliveryOption: '2',
-      paymentOption: '2',
-      saveInfo: true,
+      deliveryMethodId: '2',
+      paymentMethodId: '2',
+      deliverySaveInfo: true,
+      invoiceSaveInfo: true,
       customerNotes: '',
-      vat: user?.vat,
       isInvoice: false,
-      agreement: false,
-      fullnameInvoice: user?.name,
-      emailInvoice: user?.email
+      agreement: false
     }
   });
 
@@ -122,43 +129,39 @@ const CheckoutPage = () => {
 
   const [applyPayment] = useMutationAuth<ApplyPaymentData, ApplyPaymentVars>(APPLY_PAYMENT, {
     onCompleted: (data) => {
-      setTotalPrice(data.applyPayment.totalPrice);
+      setCounselData(data.applyPayment);
     },
-    onError: (error) => {
-      return;
+    onError: (err) => {
+      toast.error(t(`errors:code_${err.graphQLErrors[0]?.extensions?.code}`));
     }
   });
 
   useDidUpdateEffect(() => {
     applyPayment({
       variables: {
-        orderNo: counselData.getCounsel.counsel.orderNo,
+        orderNo: counselData.counsel.orderNo,
         payment_method: +paymentOption
       }
     });
   }, [paymentOption]);
 
-  const { cities, districts, wards, chosenCity, chosenDistrict, chosenWard } = useAddress({
-    cityId: +watch('cityId'),
-    districtId: +watch('districtId'),
-    wardId: +watch('wardId')
-  });
+  const { cities: deliveryCities, districts: deliveryDistricts, wards: deliveryWards } = useAddress(
+    {
+      cityId: +watch('deliveryCity')?.split('__')[1],
+      districtId: +watch('deliveryDistrict')?.split('__')[1],
+      wardId: +watch('deliveryWard')?.split('__')[1]
+    }
+  );
 
-  // address invoice
-  const {
-    cities: companyCities,
-    districts: companyDistricts,
-    wards: companyWards,
-    chosenCity: companyChosenCity,
-    chosenDistrict: companyChosenDistrict,
-    chosenWard: companyChosenWard
-  } = useAddress({
-    cityId: +watch('companyCityId'),
-    districtId: +watch('companyDistrictId'),
-    wardId: +watch('companyWardId')
+  const { cities: invoiceCities, districts: invoiceDistricts, wards: invoiceWards } = useAddress({
+    cityId: +watch('invoiceCity')?.split('__')[1],
+    districtId: +watch('invoiceDistrict')?.split('__')[1],
+    wardId: +watch('invoiceWard')?.split('__')[1]
   });
 
   const router = useRouter();
+
+  const { cart, refetchCart, loading: loadingCart } = useCart();
 
   const [createOrder, { loading: creatingOrder }] = useMutationAuth<
     CreateOrderData,
@@ -176,94 +179,69 @@ const CheckoutPage = () => {
         router.push('/');
       });
     },
-    onError: () => {
-      toast.error(t('order_fail_message'));
+    onError: (error) => {
+      toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
     }
   });
-  // const [createInvoiceUser] = useMutationAuth<CreateInvoiceUserData, CreateInvoiceUserVars>(
-  //   CREATE_INVOICE_USER,
-  //   {
-  //     onCompleted: (data) => {
-  //       refetchCart();
-  //       router.push('/');
-  //     },
-  //     onError: () => {
-  //       toast.error(t('order_fail_message'));
-  //     }
-  //   }
-  // );
 
   const onSubmit: SubmitHandler<FormInputs> = (data) => {
     createOrder({
       variables: {
         inputs: {
-          orderNo: counselData?.getCounsel.counsel.orderNo,
+          orderNo: counselData?.counsel.orderNo,
           customer: {
-            billing_address: {
-              partnerId: '',
-              isNew: true,
-              zipCode: +data.wardId,
-              city: chosenCity.name,
-              district: chosenDistrict.name,
-              ward: chosenWard.name,
-              street: data.address
-            },
-            fullName: data.name,
-            phone: data.phone,
-            email: data.email,
+            fullName: data.deliveryName,
+            phone: data.deliveryPhone,
+            email: data.deliveryEmail,
             shipping_address: {
+              fullName: data.deliveryName,
+              phone: data.deliveryPhone,
+              email: data.deliveryEmail,
               partnerId: '',
               isNew: true,
-              zipCode: +data.wardId,
-              city: chosenCity.name,
-              district: chosenDistrict.name,
-              ward: chosenWard.name,
-              street: data.address
-            }
+              zipCode: +data.deliveryWard.split('__')[1],
+              city: data.deliveryCity.split('__')[0],
+              district: data.deliveryDistrict.split('__')[0],
+              ward: data.deliveryWard.split('__')[0],
+              street: data.deliveryStreet
+            },
+            billing_address: data.isInvoice
+              ? {
+                  fullName: data.invoiceName,
+                  email: data.invoiceEmail,
+                  tax: data.invoiceTaxCode,
+                  partnerId: '',
+                  isNew: true,
+                  zipCode: +data.invoiceWard.split('__')[1],
+                  city: data.invoiceCity.split('__')[0],
+                  district: data.invoiceDistrict.split('__')[0],
+                  ward: data.invoiceWard.split('__')[0],
+                  street: data.invoiceStreet
+                }
+              : undefined
           },
-          paymentMethodId: +data.paymentOption,
+          paymentMethodId: +data.paymentMethodId,
           deliveryMethodId: 0,
           note: data.customerNotes,
-          isInvoice: data.isInvoice
-          // vat: data.vat,
+          isInvoice: !!data.isInvoice
         }
       }
     });
-    // createInvoiceUser({
-    //   variables: {
-    //     inputs: {
-    //       fullName: data.name,
-    //       email: data.email,
-    //       shipping_address: {
-    //         street: data.companyStreet,
-    //         city: {
-    //           id: companyChosenCity.id,
-    //           name: companyChosenCity.name
-    //         },
-    //         district: {
-    //           id: companyChosenDistrict.id,
-    //           name: companyChosenDistrict.name
-    //         },
-    //         ward: {
-    //           id: companyChosenWard.id,
-    //           name: companyChosenWard.name
-    //         }
-    //       },
-    //       phone: data.phone,
-    //       id: 0
-    //     }
-    //   }
-    // });
   };
+
   const onError = (errors) => {
     const fields = Object.keys(errors);
 
     toast.error(errors[fields[0]].message);
   };
 
-  if (counselData?.getCounsel === null) {
+  if (counselData === null) {
     router.push('/');
     return null;
+  }
+
+  if (loadingCounsel) {
+    return <LoadingBackdrop open={true} />;
   }
 
   return (
@@ -278,13 +256,13 @@ const CheckoutPage = () => {
             <div className="mb-4">
               <DeliveryInfo
                 register={register}
-                cities={cities}
-                districts={districts}
-                wards={wards}
+                cities={deliveryCities}
+                districts={deliveryDistricts}
+                wards={deliveryWards}
               />
             </div>
 
-            {/* <div className="mb-4" hidden>
+            {/* <div className="mb-4">
               <DeliveryOption register={register} deliveryMethods={deliveryMethods} />
             </div> */}
 
@@ -292,19 +270,23 @@ const CheckoutPage = () => {
             <div className="mb-4">
               <PaymentOption register={register} paymentMethods={paymentMethods} />
             </div>
+
             {/* Notes */}
             <div className="mb-4">
               <CustomerNotes register={register} />
             </div>
+
             {/* Invoice */}
-            <div className="mb-4">
-              <InvoiceInfo
-                register={register}
-                cities={cities}
-                districts={districts}
-                wards={wards}
-              />
-            </div>
+            {cart?.getCart.carts.some((cart) => cart.product.is_quick_invoice) && (
+              <div className="mb-4">
+                <InvoiceInfo
+                  register={register}
+                  cities={invoiceCities}
+                  districts={invoiceDistricts}
+                  wards={invoiceWards}
+                />
+              </div>
+            )}
 
             {/* Agreement */}
             <div className="form-group">
@@ -313,12 +295,12 @@ const CheckoutPage = () => {
           </div>
 
           <div className="col-md-4 mb-3">
-            <StickySidebar counselData={counselData} totalPrice={totalPrice} />
+            <StickySidebar counselData={counselData} setCounselData={setCounselData} />
           </div>
         </div>
       </div>
 
-      <LoadingBackdrop open={creatingOrder || loadingCounsel} />
+      <LoadingBackdrop open={loadingCounsel || creatingOrder || loadingUser || loadingCart} />
     </form>
   );
 };

@@ -20,13 +20,13 @@ const PaymentOption = (props: Props): JSX.Element => {
 
   if (!paymentMethods.length) return null;
 
-  const cashOnDelivery = paymentMethods[1];
-  const bankTransfer = paymentMethods[0];
+  const cashOnDelivery = paymentMethods[0];
+  const bankTransfer = paymentMethods[1];
 
   return (
     <InputCard title={t('checkout:paymentOption_title')}>
       <Radio
-        name="paymentOption"
+        name="paymentMethodId"
         ref={register({
           required: t('checkout:paymentOption_required') + ''
         })}

@@ -1,6 +1,8 @@
 import { useQuery } from '@apollo/client';
 import slugify from '@sindresorhus/slugify';
+import { useTranslation } from 'i18n';
 import React, { useEffect } from 'react';
+import { toast } from 'react-toastify';
 import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
@@ -13,13 +15,17 @@ import {
 import withApollo from 'src/utils/withApollo';
 
 function Ingredients(): JSX.Element {
-  const { data, error } = useQuery<GetAllIngredientsData, undefined>(GET_ALL_INGREDIENTS);
+  const { t } = useTranslation('errors');
+
+  const { data, error } = useQuery<GetAllIngredientsData, undefined>(GET_ALL_INGREDIENTS, {
+    onError: (error) => {
+      toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
+    }
+  });
 
   // onError
   useEffect(() => {
     if (!error) return;
-
-    console.log('Get ingredients error:', error);
   }, [error]);
 
   return (

@@ -1,25 +1,7 @@
 import { gql } from '@apollo/client';
+import { StringDecoder } from 'string_decoder';
 
-export type GetCartData = {
-  getCart: {
-    carts: {
-      _id: string;
-      quantity: number;
-      productId: string;
-      productName: string;
-      price: number;
-      list_price: number;
-      oldPrice: number;
-      product: {
-        image_512: string;
-      };
-    }[];
-    totalPrice: number;
-    totalQty: number;
-  };
-};
-
-export type GetOrderDetail = {
+export type GetOrderDetailData = {
   getOrderDetail: {
     id: number;
     name: string;
@@ -29,13 +11,19 @@ export type GetOrderDetail = {
     effective_date: string;
     expected_date: string;
     order_line: string[];
-    payment_method: string[];
     partner_shipping_id: string[];
     state: string;
-    flag: string;
+    partner_shipping: {
+      name: string;
+      street: string;
+      city: string;
+      email: string;
+      phone: string;
+    };
     order_lines: {
       id: number;
       name: string;
+      product_uom_qty: number;
       price_tax: number;
       price_subtotal: number;
       price_unit: number;
@@ -44,15 +32,17 @@ export type GetOrderDetail = {
         name: string;
         list_price: number;
       };
-    };
-    amount_untaxed: number;
-    amount_tax: number;
+      state: string;
+    }[];
     amount_total: number;
-  }[];
+    amount_tax: number;
+    amount_untaxed: number;
+    flag: number;
+  };
 };
 
-export type GetOrderDetailVar = {
-  id: number;
+export type GetOrderDetailVars = {
+  orderNo: string;
 };
 
 export const GET_CART = gql`
@@ -103,7 +93,6 @@ export const GET_ORDER = gql`
         price_tax
         price_subtotal
         price_unit
-        price_tax
         price_total
         product {
           name
@@ -114,6 +103,7 @@ export const GET_ORDER = gql`
       amount_total
       amount_tax
       amount_untaxed
+      flag
     }
   }
 `;

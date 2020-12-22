@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import { withTranslation } from 'i18n';
 import { WithTranslation } from 'next-i18next';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { ADD_TO_CART } from 'src/graphql/order/order.mutation';
@@ -21,17 +21,26 @@ type Props = WithTranslation & {
 function QuantityInput(props: Props) {
   const { size, productId, price, name, t } = props;
 
-  const { refetchCart } = useCart();
+  const { cart, refetchCart } = useCart();
+
+  useEffect(() => {
+    if (!cart) return;
+
+    const thisProduct = cart.getCart.carts.find((product) => product.productId === productId);
+
+    if (thisProduct) {
+      setQuantity(thisProduct.quantity + '');
+    }
+  }, [cart]);
 
   const [quantity, setQuantity] = useState<string>('0');
 
-  const [addToCart, { loading: loadingAddToCart }] = useMutationAuth(ADD_TO_CART, {
+  const [addToCart, { loading: addingToCart }] = useMutationAuth(ADD_TO_CART, {
     onCompleted: () => {
       toast.success(t(`errors:add_to_cart_success`));
       refetchCart();
     },
     onError: (error) => {
-      console.log('Add to cart error:', { error });
       toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
     }
   });
@@ -110,7 +119,8 @@ function QuantityInput(props: Props) {
           </button>
         </div>
       </div>
-      <LoadingBackdrop open={loadingAddToCart} />
+
+      <LoadingBackdrop open={addingToCart} />
     </>
   );
 }

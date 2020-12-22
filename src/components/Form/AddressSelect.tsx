@@ -1,8 +1,5 @@
 import { useTranslation } from 'i18n';
 import React from 'react';
-import { City } from 'src/graphql/address/getCities';
-import { District } from 'src/graphql/address/getDistricts';
-import { Ward } from 'src/graphql/address/getWards';
 
 import SelectWithLabel from './SelectWithLabel';
 
@@ -13,7 +10,6 @@ type SelectProps = {
     id: number;
     name: string;
   }[];
-  currentValue: number;
 };
 
 type Props = {
@@ -25,18 +21,12 @@ type Props = {
 const AddressSelect = (props: Props) => {
   const { t } = useTranslation('common');
 
-  const {
-    options: cities,
-    register: cityRegister,
-    name: cityName,
-    currentValue: chosenCityId
-  } = props.cityProps;
+  const { options: cities, register: cityRegister, name: cityName } = props.cityProps;
 
   const {
     options: districts,
     register: districtRegister,
-    name: districtName,
-    currentValue: chosenDistrictId
+    name: districtName
   } = props.districtProps;
 
   const { options: wards, register: wardRegister, name: wardName } = props.wardProps;
@@ -44,31 +34,31 @@ const AddressSelect = (props: Props) => {
   return (
     <div className="row">
       <SelectWithLabel
+        name={cityName}
         ref={cityRegister}
         containerClass="col-md-4"
         required
-        label={t('common:city_select_label')}
-        name={cityName}>
+        label={t('common:city_select_label')}>
         <option value="">{t('common:city_select_placeholder')}</option>
 
         {cities.map(({ id, name }) => (
-          <option key={id} value={id}>
+          <option key={id} value={name + '__' + id}>
             {name}
           </option>
         ))}
       </SelectWithLabel>
 
       <SelectWithLabel
+        name={districtName}
         ref={districtRegister}
         containerClass="col-md-4"
         required
         label={t('common:district_select_label')}
-        name={districtName}
-        disabled={chosenCityId === undefined}>
+        disabled={!districts.length}>
         <option value="">{t('common:district_select_placeholder')}</option>
 
         {districts.map(({ id, name }) => (
-          <option key={id} value={id}>
+          <option key={id} value={name + '__' + id}>
             {name}
           </option>
         ))}
@@ -80,11 +70,11 @@ const AddressSelect = (props: Props) => {
         required
         label={t('common:ward_select_label')}
         name={wardName}
-        disabled={chosenDistrictId === undefined}>
+        disabled={!wards.length}>
         <option value="">{t('common:ward_select_placeholder')}</option>
 
         {wards.map(({ id, name }) => (
-          <option key={id} value={id}>
+          <option key={id} value={name + '__' + id}>
             {name}
           </option>
         ))}

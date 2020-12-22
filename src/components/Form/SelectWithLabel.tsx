@@ -14,6 +14,7 @@ type Props = {
   selectClass?: string;
   required?: boolean;
   disabled?: boolean;
+  onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 };
 
 const SelectWithLabel = (props: Props, ref): JSX.Element => {
@@ -27,7 +28,8 @@ const SelectWithLabel = (props: Props, ref): JSX.Element => {
         ref={ref}
         name={props.name}
         className={clsx('custom-select d-block', props.selectClass)}
-        disabled={props.disabled}>
+        disabled={props.disabled}
+        onChange={props.onChange}>
         {props.children}
       </Select>
     </FormGroup>

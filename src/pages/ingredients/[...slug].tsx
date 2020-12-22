@@ -24,7 +24,7 @@ import withApollo from 'src/utils/withApollo';
 
 const IngredientDetails = (): JSX.Element => {
   const router = useRouter();
-  const { t } = useTranslation(['ingredientDetails']);
+  const { t } = useTranslation(['ingredientDetails', 'errors']);
   const ingredientId = router.query.slug[0];
 
   const { data: detailsData } = useQuery<GetIngredientDetailsData, GetIngredientDetailsVars>(
@@ -32,29 +32,29 @@ const IngredientDetails = (): JSX.Element => {
     {
       variables: {
         id: +ingredientId
+      },
+      onError: (error) => {
+        toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
       }
     }
   );
 
-  const { data: productsData, error: productsError } = useQuery<
-    GetProductsByIngredientData,
-    GetProductsByIngredientVars
-  >(GET_PRODUCTS_BY_INGREDIENT, {
-    variables: {
-      page: 1,
-      pageSize: 20,
-      ingredientId: ingredientId
+  const { data: productsData } = useQuery<GetProductsByIngredientData, GetProductsByIngredientVars>(
+    GET_PRODUCTS_BY_INGREDIENT,
+    {
+      variables: {
+        page: 1,
+        pageSize: 20,
+        ingredientId: ingredientId
+      },
+      onError: (error) => {
+        toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
+      }
     }
-  });
+  );
 
-  // onError
-  useEffect(() => {
-    if (!productsError) return;
-
-    console.log('Get products by ingredient error:', { productsError });
-    toast.error('Get products by ingredient error:' + productsError);
-  }, [productsError]);
   const title = detailsData?.getIngredient.name;
+
   return (
     <>
       <Head>
