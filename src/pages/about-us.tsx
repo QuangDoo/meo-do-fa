@@ -12,7 +12,7 @@ const AboutUs = (): JSX.Element => {
   const imgUrl2 = '/assets/images/about-us-3.jpg';
   const imgUrl3 = '/assets/images/about-us-1.jpg';
 
-  const { t } = useTranslation(['common','aboutUs']);
+  const { t } = useTranslation(['common', 'aboutUs']);
 
   return (
     <>
@@ -25,7 +25,7 @@ const AboutUs = (): JSX.Element => {
       <Nav />
 
       <div className="container my-5">
-      <h2 className="text-center my-5">{t('aboutUs:title')}</h2>
+        <h2 className="text-center my-5">{t('aboutUs:title')}</h2>
         <p>
           Medofa được thành lập vào 2020, là một giải pháp công nghệ ngành dược kết nối nhà máy, nhà
           phân phối , nhà thuốc, dược sĩ nhằm hợp tạo mối liên kết trực tiếp và gia tăng doanh thu .
