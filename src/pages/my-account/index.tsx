@@ -1,10 +1,11 @@
+import { useLazyQuery, useQuery } from '@apollo/client';
 import { useTranslation } from 'i18n';
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import AddressSelect from 'src/components/Form/AddressSelect';
 import Button from 'src/components/Form/Button';
 import InputWithLabel from 'src/components/Form/InputWithLabel';
+import SelectWithLabel from 'src/components/Form/SelectWithLabel';
 import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
@@ -12,8 +13,14 @@ import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import Nav from 'src/components/Layout/Nav';
 import FormCard from 'src/components/Modules/MyAccount/FormCard';
 import ProfileLayout from 'src/components/Modules/ProfileLayout';
+import { GET_CITIES, GetCitiesData } from 'src/graphql/address/getCities';
+import {
+  GET_DISTRICTS,
+  GetDistrictsData,
+  GetDistrictsVars
+} from 'src/graphql/address/getDistricts';
+import { GET_WARDS, GetWardsData, GetWardsVars } from 'src/graphql/address/getWards';
 import { UPDATE_USER, UpdateUserData, UpdateUserVars } from 'src/graphql/user/updateUser';
-import useAddress from 'src/hooks/useAddress';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import useUser from 'src/hooks/useUser';
 import toBase64 from 'src/utils/toBase64';
@@ -41,33 +48,83 @@ type Inputs = {
 };
 
 const MyAccount = (): JSX.Element => {
-  const { t } = useTranslation('myAccount');
+  const { t } = useTranslation(['myAccount', 'common']);
 
   const { user, refetchUser } = useUser();
 
-  const { register, handleSubmit, watch } = useForm<Inputs>();
+  const { register, handleSubmit, watch, setValue } = useForm<Inputs>();
 
   const chosenFile: FileList = watch('businessLicense');
 
-  // Company city, district, ward select
-  const { cities: companyCities, districts: companyDistricts, wards: companyWards } = useAddress({
-    cityId: +watch('companyCity')?.split('__')[1],
-    districtId: +watch('companyDistrict')?.split('__')[1],
-    wardId: +watch('companyWard')?.split('__')[1]
+  useEffect(() => {
+    if (!user?.contact_address) return;
+
+    const { city, district } = user.contact_address;
+
+    setValue('name', user.name);
+    setValue('phone', user.phone);
+    setValue('email', user.email);
+    setValue('companyCity', city.name + '__' + city.id);
+    getDistricts({
+      variables: {
+        city_id: city.id
+      }
+    });
+    getWards({
+      variables: {
+        district_id: district.id
+      }
+    });
+  }, [user]);
+
+  const { data: citiesData } = useQuery<GetCitiesData, undefined>(GET_CITIES);
+
+  const cities = citiesData?.getCities || [];
+
+  const handleCityChange = (event) => {
+    refetchDistricts({
+      city_id: +event.target.value.split('__')[1]
+    });
+    setValue('companyDistrict', '');
+    setValue('companyWard', '');
+  };
+
+  const [
+    getDistricts,
+    { data: districtsData, refetch: refetchDistricts, loading: loadingDistricts }
+  ] = useLazyQuery<GetDistrictsData, GetDistrictsVars>(GET_DISTRICTS, {
+    onCompleted: () => {
+      if (!user?.contact_address) return;
+
+      const { district } = user.contact_address;
+
+      setValue('companyDistrict', district.name + '__' + district.id);
+    }
   });
 
-  // const {
-  //   cities: deliveryCities,
-  //   districts: deliveryDistricts,
-  //   wards: deliveryWards,
-  //   chosenCity: deliveryChosenCity,
-  //   chosenDistrict: deliveryChosenDistrict,
-  //   chosenWard: deliveryChosenWard
-  // } = useAddress({
-  //   cityId: +watch('deliveryCity').split('__')[1],
-  //   districtId: +watch('deliveryDistrict').split('__')[1],
-  //   wardId: +watch('deliveryWard').split('__')[1]
-  // });
+  const handleDistrictChange = (event) => {
+    refetchWards({
+      district_id: +event.target.value.split('__')[1]
+    });
+    setValue('companyWard', '');
+  };
+
+  const districts = districtsData?.getDistricts || [];
+
+  const [
+    getWards,
+    { data: wardsData, refetch: refetchWards, loading: loadingWards }
+  ] = useLazyQuery<GetWardsData, GetWardsVars>(GET_WARDS, {
+    onCompleted: () => {
+      if (!user?.contact_address) return;
+
+      const { ward } = user.contact_address;
+
+      setValue('companyWard', ward.name + '__' + ward.id);
+    }
+  });
+
+  const wards = wardsData?.getWards || [];
 
   const [updateUser, { loading: loadingUpdateUser }] = useMutationAuth<
     UpdateUserData,
@@ -253,67 +310,63 @@ const MyAccount = (): JSX.Element => {
               required
             />
 
-            <AddressSelect
-              cityProps={{
-                name: 'companyCity',
-                register: register({
+            <div className="row">
+              <SelectWithLabel
+                onChange={handleCityChange}
+                name="companyCity"
+                ref={register({
                   required: t('myAccount:company_city_required') + ''
-                }),
-                options: companyCities
-              }}
-              districtProps={{
-                name: 'companyDistrict',
-                register: register({
+                })}
+                containerClass="col-md-4"
+                required
+                label={t('common:city_select_label')}>
+                <option value="">{t('common:city_select_placeholder')}</option>
+
+                {cities.map(({ id, name }) => (
+                  <option key={id} value={name + '__' + id}>
+                    {name}
+                  </option>
+                ))}
+              </SelectWithLabel>
+
+              <SelectWithLabel
+                onChange={handleDistrictChange}
+                name="companyDistrict"
+                ref={register({
                   required: t('myAccount:company_district_required') + ''
-                }),
-                options: companyDistricts
-              }}
-              wardProps={{
-                name: 'companyWard',
-                register: register({
+                })}
+                containerClass="col-md-4"
+                required
+                label={t('common:district_select_label')}
+                disabled={!districts.length || loadingDistricts}>
+                <option value="">{t('common:district_select_placeholder')}</option>
+
+                {districts.map(({ id, name }) => (
+                  <option key={id} value={name + '__' + id}>
+                    {name}
+                  </option>
+                ))}
+              </SelectWithLabel>
+
+              <SelectWithLabel
+                name="companyWard"
+                ref={register({
                   required: t('myAccount:company_Ward_required') + ''
-                }),
-                options: companyWards
-              }}
-            />
+                })}
+                containerClass="col-md-4"
+                required
+                label={t('common:ward_select_label')}
+                disabled={!wards.length || loadingDistricts || loadingWards}>
+                <option value="">{t('common:ward_select_placeholder')}</option>
+
+                {wards.map(({ id, name }) => (
+                  <option key={id} value={name + '__' + id}>
+                    {name}
+                  </option>
+                ))}
+              </SelectWithLabel>
+            </div>
           </FormCard>
-
-          {/* <FormCard title={t('myAccount:delivery_info')}>
-            <InputWithLabel
-              ref={register}
-              label={t('myAccount:delivery_street_label')}
-              type="text"
-              name="deliveryStreet"
-              guide={t('myAccount:delivery_street_guide')}
-            />
-
-            <AddressSelect
-              cityProps={{
-                name: 'deliveryCityId',
-                register: register({
-                  required: t('myAccount:delivery_city_required') + ''
-                }),
-                options: deliveryCities,
-                currentValue: deliveryChosenCity?.id
-              }}
-              districtProps={{
-                name: 'deliveryDistrictId',
-                register: register({
-                  required: t('myAccount:delivery_district_required') + ''
-                }),
-                options: deliveryDistricts,
-                currentValue: deliveryChosenDistrict?.id
-              }}
-              wardProps={{
-                name: 'deliveryWardId',
-                register: register({
-                  required: t('myAccount:delivery_Ward_required') + ''
-                }),
-                options: deliveryWards,
-                currentValue: deliveryChosenWard?.id
-              }}
-            />
-          </FormCard> */}
 
           <div className="col-12 d-flex justify-content-center">
             <Button type="submit" variant="primary" size="lg">
