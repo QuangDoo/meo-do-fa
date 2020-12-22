@@ -6,11 +6,11 @@ import getConfig from 'next/config';
 const { serverRuntimeConfig, publicRuntimeConfig } = getConfig();
 
 const getURI = () => {
-  if (typeof window === 'undefined') {
-    console.log('SERVER...', JSON.stringify({ serverRuntimeConfig, publicRuntimeConfig }));
+  // if (typeof window === 'undefined') {
+  //   console.log('SERVER...', JSON.stringify({ serverRuntimeConfig, publicRuntimeConfig }));
 
-    return `http://${serverRuntimeConfig.GRAPHQL_GATEWAY}/graphql`;
-  }
+  //   return `http://${serverRuntimeConfig.GRAPHQL_GATEWAY}/graphql`;
+  // }
 
   return `https://graphql.medofa.bedigital.vn/graphql/`;
 };

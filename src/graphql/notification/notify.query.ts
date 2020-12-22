@@ -5,6 +5,7 @@ export const GET_NOTI = gql`
     getNotify {
       _id
       content
+      description
       userId
       isSeen
       type

@@ -47,6 +47,7 @@ export type GetOrderDetail = {
     amount_untaxed: number;
     amount_tax: number;
     amount_total: number;
+    flag: number;
   }[];
 };
 
@@ -75,8 +76,8 @@ export const GET_CART = gql`
 `;
 
 export const GET_ORDER = gql`
-  query getOrderDetail($id: Int!) {
-    getOrderDetail(id: $id) {
+  query getOrderDetail($orderNo: String!) {
+    getOrderDetail(orderNo: $orderNo) {
       id
       name
       date_order
@@ -112,6 +113,7 @@ export const GET_ORDER = gql`
       amount_total
       amount_tax
       amount_untaxed
+      flag
     }
   }
 `;

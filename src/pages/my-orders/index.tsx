@@ -75,7 +75,7 @@ const OrderItem = (props: any) => {
     <div className="my-orders__item p-3 my-1">
       <div className="my-orders__info">
         <h2 className="h4 d-flex align-items-center">
-          <Link href={`/my-orders/${props.id}`}>
+          <Link href={`/my-orders/${props.orderNo}`}>
             <a className="mr-2">#{props.orderNo}</a>
           </Link>
 
