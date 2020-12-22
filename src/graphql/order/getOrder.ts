@@ -41,7 +41,7 @@ export type GetOrderDetailData = {
 };
 
 export type GetOrderDetailVars = {
-  orderNo: StringDecoder;
+  orderNo: string;
 };
 
 export const GET_ORDER_DETAIL = gql`
