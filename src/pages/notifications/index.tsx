@@ -19,7 +19,7 @@ const Notification = (): JSX.Element => {
   const { notifications, loading: loadingNoti, refetchNoti } = useNoti();
 
   const [seenAllNoti] = useMutationAuth(SEEN_ALL_NOTI, {
-    onCompleted: (data) => {
+    onCompleted: (data: any) => {
       if (data.code === 200) {
         setIsRead(true);
       }
@@ -68,7 +68,7 @@ const Notification = (): JSX.Element => {
           </div>
           {notificationsData?.length > 0 ? (
             notificationsReverse?.reverse()?.map((noti, index) => {
-              return <NotiItem {...noti} key={index} isRead={isRead} />;
+              return <NotiItem {...noti} key={index} />;
             })
           ) : (
             <div className="col-12 d-flex align-items-center justify-content-between flex-wrap mb-3">
