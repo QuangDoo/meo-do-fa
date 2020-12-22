@@ -56,6 +56,12 @@ export default function ScrollableTabsButtonAuto(props) {
 
   const { t } = useTranslation('common');
 
+  function createMarkup(text) {
+    return {
+      __html: text
+    };
+  }
+
   return (
     <div className={classes.root}>
       <AppBar position="static" color="default">
@@ -79,31 +85,67 @@ export default function ScrollableTabsButtonAuto(props) {
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        {props.info !== 'false' ? props.info : t('updating')}
+        {props.info !== 'false' ? (
+          <p dangerouslySetInnerHTML={createMarkup(props.info)} />
+        ) : (
+          t('updating')
+        )}
       </TabPanel>
       <TabPanel value={value} index={1}>
-        {props.indication !== 'false' ? props.indication : t('updating')}
+        {props.indication !== 'false' ? (
+          <p dangerouslySetInnerHTML={createMarkup(props.indication)} />
+        ) : (
+          t('updating')
+        )}
       </TabPanel>
       <TabPanel value={value} index={2}>
-        {props.contraindication !== 'false' ? props.contraindication : t('updating')}
+        {props.contraindication !== 'false' ? (
+          <p dangerouslySetInnerHTML={createMarkup(props.contraindication)} />
+        ) : (
+          t('updating')
+        )}
       </TabPanel>
       <TabPanel value={value} index={3}>
-        {props.direction !== 'false' ? props.direction : t('updating')}
+        {props.direction !== 'false' ? (
+          <p dangerouslySetInnerHTML={createMarkup(props.direction)} />
+        ) : (
+          t('updating')
+        )}
       </TabPanel>
       <TabPanel value={value} index={4}>
-        {props.interaction !== 'false' ? props.interaction : t('updating')}
+        {props.interaction !== 'false' ? (
+          <p dangerouslySetInnerHTML={createMarkup(props.interaction)} />
+        ) : (
+          t('updating')
+        )}
       </TabPanel>
       <TabPanel value={value} index={5}>
-        {props.preservation !== 'false' ? props.preservation : t('updating')}
+        {props.preservation !== 'false' ? (
+          <p dangerouslySetInnerHTML={createMarkup(props.preservation)} />
+        ) : (
+          t('updating')
+        )}
       </TabPanel>
       <TabPanel value={value} index={6}>
-        {props.overdose !== 'false' ? props.overdose : t('updating')}
+        {props.overdose !== 'false' ? (
+          <p dangerouslySetInnerHTML={createMarkup(props.overdose)} />
+        ) : (
+          t('updating')
+        )}
       </TabPanel>
       <TabPanel value={value} index={7}>
-        {props.pharmacodynamics !== 'false' ? props.pharmacodynamics : t('updating')}
+        {props.pharmacodynamics !== 'false' ? (
+          <p dangerouslySetInnerHTML={createMarkup(props.pharmacodynamics)} />
+        ) : (
+          t('updating')
+        )}
       </TabPanel>
       <TabPanel value={value} index={8}>
-        {props.pharmacokinetics !== 'false' ? props.pharmacokinetics : t('updating')}
+        {props.pharmacokinetics !== 'false' ? (
+          <p dangerouslySetInnerHTML={createMarkup(props.pharmacokinetics)} />
+        ) : (
+          t('updating')
+        )}
       </TabPanel>
     </div>
   );

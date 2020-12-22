@@ -60,7 +60,7 @@ const ConfirmCancelOrder = (props) => {
       toast.error(t('cancelOrder:is_check'));
       return;
     }
-    console.log(typeof orderNo, orderNo);
+    // console.log(typeof orderNo, orderNo);
     cancelOrder({
       variables: {
         orderNo: orderNo
