@@ -26,7 +26,7 @@ import clsx from 'clsx';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import PriceText from 'src/components/Form/PriceText';
 import Footer from 'src/components/Layout/Footer';
@@ -239,7 +239,27 @@ const OrderDetails = () => {
 
   const { orderId } = router.query;
 
-  const [activeStep, setActiveStep] = useState(0);
+  const [activeStep, setActiveStep] = useState(-1);
+
+  const getActiveStep = (flag) => {
+    switch (flag) {
+      case 10:
+        return setActiveStep(0);
+      case 20:
+        return setActiveStep(1);
+      case 25:
+        return setActiveStep(-1);
+      case 30:
+        return setActiveStep(2);
+      case 40:
+        return setActiveStep(3);
+      case 80:
+        return setActiveStep(4);
+      default:
+        return setActiveStep(-1);
+    }
+  };
+
   const steps = [
     {
       icon: <Receipt />,
@@ -262,8 +282,9 @@ const OrderDetails = () => {
       text: t('myOrders:complete')
     }
   ];
+
   const { data: orderDetail, refetch } = useQueryAuth(GET_ORDER, {
-    variables: { id: +orderId }
+    variables: { orderNo: orderId }
   });
 
   const onCancelClick = () => {
@@ -273,6 +294,14 @@ const OrderDetails = () => {
     }
     setOpen(true);
   };
+
+  useEffect(() => {
+    orderDetail?.getOrderDetail && getActiveStep(orderDetail?.getOrderDetail?.flag);
+  }, [orderDetail]);
+
+  useEffect(() => {
+    console.log(activeStep);
+  }, [activeStep]);
 
   const { user } = useUserContext();
 
@@ -299,14 +328,26 @@ const OrderDetails = () => {
                 <Divider />
               </Box>
 
-              <Stepper alternativeLabel activeStep={activeStep} connector={<CustomStepConnector />}>
-                {steps.map((step) => (
-                  <Step key={step.text}>
-                    <StepLabel icon={step.icon} StepIconComponent={CustomStepIcon}>
-                      {step.text}
+              <Stepper
+                className="cancel"
+                alternativeLabel
+                activeStep={activeStep}
+                connector={<CustomStepConnector />}>
+                {orderDetail?.getOrderDetail?.flag === 25 && (
+                  <Step>
+                    <StepLabel icon={<Receipt />} StepIconComponent={CustomStepIcon} error>
+                      {t('myOrders:canceled')}
                     </StepLabel>
                   </Step>
-                ))}
+                )}
+                {orderDetail?.getOrderDetail?.flag !== 25 &&
+                  steps.map((step) => (
+                    <Step key={step.text}>
+                      <StepLabel icon={step.icon} StepIconComponent={CustomStepIcon}>
+                        {step.text}
+                      </StepLabel>
+                    </Step>
+                  ))}
               </Stepper>
 
               <Box my={2}>
@@ -317,7 +358,8 @@ const OrderDetails = () => {
                 <Typography>
                   {t('myOrders:expected_date')}{' '}
                   <strong>
-                    {orderDetail?.getOrderDetail?.expected_date &&
+                    {orderDetail?.getOrderDetail?.flag !== 25 &&
+                      orderDetail?.getOrderDetail?.expected_date &&
                       new Date(orderDetail?.getOrderDetail?.expected_date).toLocaleDateString(
                         'en-GB'
                       )}
@@ -337,12 +379,16 @@ const OrderDetails = () => {
                       {t('myOrders:report')}
                     </Button>
                   </Link>
-                ) : orderDetail?.getOrderDetail.state === 'cancel' ? (
+                ) : orderDetail?.getOrderDetail?.flag === 25 ? (
                   <Button
+                    style={{
+                      color: 'red',
+                      borderColor: 'red'
+                    }}
                     size="small"
                     startIcon={<DeleteForeverIcon />}
                     variant="outlined"
-                    color="secondary"
+                    color="inherit"
                     disabled>
                     {t('myOrders:canceled')}
                   </Button>
@@ -356,7 +402,6 @@ const OrderDetails = () => {
                     {t('myOrders:cancel_the_order')}
                   </Button>
                 )}
-
                 <ConfirmCancelOrder
                   open={open}
                   onClose={() => setOpen(false)}

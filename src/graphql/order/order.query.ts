@@ -32,6 +32,7 @@ export type GetOrderDetail = {
     payment_method: string[];
     partner_shipping_id: string[];
     state: string;
+    flag: string;
     order_lines: {
       id: number;
       name: string;
@@ -75,8 +76,8 @@ export const GET_CART = gql`
 `;
 
 export const GET_ORDER = gql`
-  query getOrderDetail($id: Int!) {
-    getOrderDetail(id: $id) {
+  query getOrderDetail($orderNo: String!) {
+    getOrderDetail(orderNo: $orderNo) {
       id
       name
       date_order
@@ -87,6 +88,7 @@ export const GET_ORDER = gql`
       order_line
       partner_shipping_id
       state
+      flag
       partner_shipping {
         name
         street

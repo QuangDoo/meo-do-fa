@@ -71,11 +71,13 @@ const OrderItem = (props: any) => {
   const { t } = useTranslation(['myOrders']);
 
   const { callBack, flag } = props;
+
+  console.log(props);
   return (
     <div className="my-orders__item p-3 my-1">
       <div className="my-orders__info">
         <h2 className="h4 d-flex align-items-center">
-          <Link href={`/my-orders/${props.id}`}>
+          <Link href={`/my-orders/${props.orderNo}`}>
             <a className="mr-2">#{props.orderNo}</a>
           </Link>
 
@@ -106,7 +108,7 @@ const OrderItem = (props: any) => {
       <div className="my-orders__invoice">
         <button className="btn btn-outline-info btn-sm">{t('myOrders:report')}</button>
 
-        {flag === 25 ? (
+        {flag !== 25 ? (
           <button className="btn btn-outline-danger btn-sm" onClick={() => setOpen(true)}>
             {t('myOrders:cancel_order')}
           </button>
@@ -128,6 +130,7 @@ const OrderItem = (props: any) => {
 };
 
 const OrderList = (props: Props) => {
+  console.log(props);
   const { t } = useTranslation(['myOrders']);
   const { data, refetch, loading } = useQueryAuth<GetOrderListData, GetOrderListVars>(
     GET_ORDER_LIST,
@@ -137,6 +140,8 @@ const OrderList = (props: Props) => {
         pageSize: pageSize,
         flag: props.flag
       },
+      fetchPolicy: 'network-only',
+      notifyOnNetworkStatusChange: true,
       onError: (error) => {
         const errorCode = error.graphQLErrors?.[0]?.extensions?.code;
 
