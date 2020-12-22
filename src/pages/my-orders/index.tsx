@@ -72,7 +72,15 @@ const OrderItem = (props: any) => {
 
   const { callBack, flag } = props;
 
-  console.log(props);
+  const getBadge = {
+    10: { color: 'info', tran: t('myOrders:wait_for_confirm') },
+    20: { color: 'success', tran: t('myOrders:confirmed') },
+    25: { color: 'danger', tran: t('myOrders:canceled') },
+    30: { color: 'secondary', tran: t('myOrders:in_proceed') },
+    40: { color: 'warning', tran: t('myOrders:delivering') },
+    80: { color: 'primary', tran: t('myOrders:completed') }
+  };
+
   return (
     <div className="my-orders__item p-3 my-1">
       <div className="my-orders__info">
@@ -81,9 +89,9 @@ const OrderItem = (props: any) => {
             <a className="mr-2">#{props.orderNo}</a>
           </Link>
 
-          {flag === 25 && (
+          {flag && (
             <div className="my-orders__invoice">
-              <span className="badge badge-danger">{t('myOrders:canceled')}</span>
+              <span className={`badge badge-${getBadge[flag].color}`}>{getBadge[flag].tran}</span>
             </div>
           )}
         </h2>
@@ -130,7 +138,6 @@ const OrderItem = (props: any) => {
 };
 
 const OrderList = (props: Props) => {
-  console.log(props);
   const { t } = useTranslation(['myOrders']);
   const { data, refetch, loading } = useQueryAuth<GetOrderListData, GetOrderListVars>(
     GET_ORDER_LIST,

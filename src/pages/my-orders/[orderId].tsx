@@ -299,10 +299,6 @@ const OrderDetails = () => {
     orderDetail?.getOrderDetail && getActiveStep(orderDetail?.getOrderDetail?.flag);
   }, [orderDetail]);
 
-  useEffect(() => {
-    console.log(activeStep);
-  }, [activeStep]);
-
   const { user } = useUserContext();
 
   return (
