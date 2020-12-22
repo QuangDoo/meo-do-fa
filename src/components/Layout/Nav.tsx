@@ -110,15 +110,6 @@ const Nav = () => {
               )}
 
               <li className="rockland-nav__item">
-                <Link href="/deals-of-the-day">
-                  <a className="rockland-nav__link">
-                    <i className="rockland-nav__icon icomoon icon-product" />
-                    <span className="rockland-nav__title">{t('navbar:deals_of_the_day')}</span>
-                  </a>
-                </Link>
-              </li>
-
-              <li className="rockland-nav__item">
                 <Link href="/products">
                   <a className="rockland-nav__link">
                     <i className="rockland-nav__icon icomoon icon-product" />
