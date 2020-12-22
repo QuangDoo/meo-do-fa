@@ -11,7 +11,7 @@ import useNoti from 'src/hooks/useNoti';
 type Props = {
   _id: string;
 
-  description: string;
+  description?: string;
 
   content: string;
 
@@ -19,7 +19,7 @@ type Props = {
 
   create_date: string;
 
-  isRead: boolean;
+  isRead?: boolean;
 
   type: string;
 };

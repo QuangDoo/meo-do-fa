@@ -4,6 +4,7 @@ export type GetNotiData = {
   getNotify: {
     _id: string;
     content: string;
+    description: string;
     userId: string;
     isSeen: boolean;
     type: string;
