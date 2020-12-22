@@ -13,7 +13,7 @@ import {
   GetPaymentAndDeliveryData
 } from 'src/graphql/paymentAndDelivery/paymentAndDelivery,query';
 import useAddress from 'src/hooks/useAddress';
-import { useLazyQueryAuth, useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
+import { useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
 import useCart from 'src/hooks/useCart';
 import useDidUpdateEffect from 'src/hooks/useDidUpdate';
 import useUser from 'src/hooks/useUser';
@@ -22,7 +22,6 @@ import swal from 'sweetalert';
 import Agreement from './Agreement';
 import CustomerNotes from './CustomerNotes';
 import DeliveryInfo from './DeliveryInfo';
-import DeliveryOption from './DeliveryOption';
 import InvoiceInfo from './InvoiceInfo';
 import PaymentOption from './PaymentOption';
 import StickySidebar from './StickySidebar';
@@ -71,9 +70,8 @@ const CheckoutPage = () => {
     if (!user) return;
 
     if (user.contact_address) {
-      const { city, street } = user.contact_address;
+      const { street } = user.contact_address;
 
-      setValue('deliveryCity', city.name + '__' + city.id);
       setValue('deliveryStreet', street);
     }
 
@@ -151,56 +149,14 @@ const CheckoutPage = () => {
     {
       cityId: +watch('deliveryCity')?.split('__')[1],
       districtId: +watch('deliveryDistrict')?.split('__')[1],
-      wardId: +watch('deliveryWard')?.split('__')[1],
-      onGetCitiesCompleted: () => {
-        if (!user?.contact_address) return;
-
-        const { name, id } = user.contact_address.city;
-
-        setValue('deliveryCity', name + '__' + id);
-      },
-      onGetDistrictsCompleted: () => {
-        if (!user?.contact_address) return;
-
-        const { name, id } = user.contact_address.district;
-
-        setValue('deliveryDistrict', name + '__' + id);
-      },
-      onGetWardsCompleted: () => {
-        if (!user?.contact_address) return;
-
-        const { name, id } = user.contact_address.ward;
-
-        setValue('deliveryWard', name + '__' + id);
-      }
+      wardId: +watch('deliveryWard')?.split('__')[1]
     }
   );
 
   const { cities: invoiceCities, districts: invoiceDistricts, wards: invoiceWards } = useAddress({
     cityId: +watch('invoiceCity')?.split('__')[1],
     districtId: +watch('invoiceDistrict')?.split('__')[1],
-    wardId: +watch('invoiceWard')?.split('__')[1],
-    onGetCitiesCompleted: () => {
-      if (!user?.contact_address) return;
-
-      const { name, id } = user.contact_address.city;
-
-      setValue('invoiceCity', name + '__' + id);
-    },
-    onGetDistrictsCompleted: () => {
-      if (!user?.contact_address) return;
-
-      const { name, id } = user.contact_address.district;
-
-      setValue('invoiceDistrict', name + '__' + id);
-    },
-    onGetWardsCompleted: () => {
-      if (!user?.contact_address) return;
-
-      const { name, id } = user.contact_address.ward;
-
-      setValue('invoiceWard', name + '__' + id);
-    }
+    wardId: +watch('invoiceWard')?.split('__')[1]
   });
 
   const router = useRouter();
