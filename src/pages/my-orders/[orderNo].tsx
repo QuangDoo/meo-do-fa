@@ -269,7 +269,7 @@ const OrderDetails = () => {
   const { data: orderDetail, refetch } = useQueryAuth<GetOrderDetailData, GetOrderDetailVars>(
     GET_ORDER_DETAIL,
     {
-      variables: { orderNo: orderNo }
+      variables: { orderNo: orderNo as string }
     }
   );
 
