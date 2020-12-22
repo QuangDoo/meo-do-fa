@@ -68,9 +68,9 @@ function Cart(): JSX.Element {
                 nhiều cái cũng tính là 1)
               </div> */}
               <div className="elevated cart__items mb-3">
-                {cart?.getCart.carts.map((item, index) => (
+                {cart?.getCart.carts.map((item) => (
                   <CartItem
-                    key={index}
+                    key={item._id}
                     _id={item._id}
                     image={item.product.image_512}
                     price={item.price}

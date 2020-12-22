@@ -4,7 +4,6 @@ import { WithTranslation } from 'next-i18next';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
-import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { Product } from 'src/graphql/product/getProducts';
 import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
 
@@ -64,7 +63,7 @@ const ProductCard = ({ t, ...props }: Props): JSX.Element => {
                 )}
               </div>
 
-              <small className="text-muted">{props.uom_name}</small>
+              <small className="text-muted">{props.packing_unit}</small>
 
               <br />
 

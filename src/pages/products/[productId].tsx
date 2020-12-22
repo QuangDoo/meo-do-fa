@@ -15,7 +15,7 @@ function ProductDetail(): JSX.Element {
 
   const { productId } = router.query;
 
-  const productPid = (productId as string).split('-').pop().substring(3, 7);
+  const productPid = (productId as string).split('-').pop().substring(3);
 
   const { data: dataProduct } = useQuery(GET_PRODUCT, { variables: { id: Number(productPid) } });
 
