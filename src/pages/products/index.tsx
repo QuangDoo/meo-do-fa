@@ -52,12 +52,6 @@ function Products(): JSX.Element {
 
   const search = router.query.search as string;
 
-  // const { data: categoriesData } = useQuery<GetAllCategoriesData, undefined>(GET_ALL_CATEGORIES, {
-  //   onError: () => null
-  // });
-
-  // const categories = categoriesData?.getCategoriesAll || [];
-
   const { data: categoriesLevelData } = useQuery<GetCategoriesLevelData, undefined>(
     GET_CATEGORIES_LEVEL,
     {
@@ -111,14 +105,6 @@ function Products(): JSX.Element {
   });
 
   const title = categoryData?.getCategory ? categoryData.getCategory.name : t('products:title');
-
-  // const getNameById = (array, id) => {
-  //   return _.find(array, { id })?.name;
-  // };
-
-  // const title = Number(router.query.category)
-  //   ? getNameById(categories, Number(router.query.category))
-  //   : t('products:title');
 
   useEffect(() => {
     if (productsLoading) {

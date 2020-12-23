@@ -93,7 +93,7 @@ const SearchBar = (): JSX.Element => {
 
   const renderProducts = (products) => {
     return products.map((product) => (
-      <Link key={product.id} href={`/products/${product.id}`}>
+      <Link key={product.id} href={`/products/${product.slug}`}>
         <a className="search__result">{product.name}</a>
       </Link>
     ));

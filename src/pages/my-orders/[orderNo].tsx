@@ -291,12 +291,18 @@ const OrderDetails = () => {
   });
 
   useEffect(() => {
-    orderDetail?.getOrderDetail?.flag === 10 && setActiveStep(0);
-    orderDetail?.getOrderDetail?.flag === 20 && setActiveStep(1);
-    orderDetail?.getOrderDetail?.flag === 30 && setActiveStep(2);
-    orderDetail?.getOrderDetail?.flag === 40 && setActiveStep(3);
-    orderDetail?.getOrderDetail?.flag === 80 && setActiveStep(4);
-  }, [orderDetail?.getOrderDetail?.flag]);
+    if (!orderDetail) return;
+
+    const flagSteps = [10, 20, 30, 40, 80];
+
+    // orderDetail?.getOrderDetail?.flag === 10 && setActiveStep(0);
+    // orderDetail?.getOrderDetail?.flag === 20 && setActiveStep(1);
+    // orderDetail?.getOrderDetail?.flag === 30 && setActiveStep(2);
+    // orderDetail?.getOrderDetail?.flag === 40 && setActiveStep(3);
+    // orderDetail?.getOrderDetail?.flag === 80 && setActiveStep(4);
+
+    setActiveStep(flagSteps.indexOf(orderDetail.getOrderDetail.flag));
+  }, [orderDetail]);
 
   const onCancelClick = () => {
     if (activeStep >= 3) {
@@ -328,7 +334,7 @@ const OrderDetails = () => {
             <CustomCard>
               <Typography variant="h5">
                 {t('myOrders:order_detail')}
-                {`: ${orderDetail?.getOrderDetail?.name}`}
+                {`: ${orderDetail?.getOrderDetail?.name || ''}`}
               </Typography>
 
               <Box my={2}>

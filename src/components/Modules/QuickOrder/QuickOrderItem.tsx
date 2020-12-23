@@ -14,6 +14,7 @@ type Props = {
   standard_price: number;
   quantity: number;
   _id: string;
+  slug: string;
 };
 
 function QuickOrderItem(props: Props): JSX.Element {
@@ -31,7 +32,7 @@ function QuickOrderItem(props: Props): JSX.Element {
         <div className="flex-1 pl-2 pr-2">
           <div className="d-flex align-items-center">
             <div>
-              <Link href={'products/' + props.productId}>
+              <Link href={'products/' + props.slug}>
                 <a className="cart-item__name" title={props.productName}>
                   {props.productName}
                 </a>

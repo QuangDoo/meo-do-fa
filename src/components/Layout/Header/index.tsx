@@ -10,11 +10,7 @@ import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
 import RightSideUser from './RightSideUser';
 import SearchBar from './SearchBar';
 
-type HeaderProps = {
-  readonly t: TFunction;
-};
-
-const Header = ({ t }: HeaderProps): JSX.Element => {
+const Header = () => {
   const isLoggedIn = useIsLoggedIn();
 
   return (
