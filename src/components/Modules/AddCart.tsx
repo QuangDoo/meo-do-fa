@@ -26,9 +26,6 @@ function AddCart(props: Props) {
   useEffect(() => {
     if (!cart || !productId) return;
 
-    console.log('this product id:', productId);
-    console.log('cart:', cart);
-
     const thisProduct = cart.getCart.carts.find((product) => product.productId === productId);
 
     if (thisProduct) {
