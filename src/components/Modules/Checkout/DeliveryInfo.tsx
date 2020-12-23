@@ -87,6 +87,7 @@ const DeliveryInfo = (props: Props) => {
       {/* Street input */}
       <InputWithLabel
         name="deliveryStreet"
+        defaultValue={contact_address?.street}
         ref={register({
           required: t('checkout:address_required') + ''
         })}
