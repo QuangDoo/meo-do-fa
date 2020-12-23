@@ -5,12 +5,12 @@ import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 import Typography from '@material-ui/core/Typography';
 import { useTranslation } from 'i18n';
-import React from 'react';
+import React, { useState } from 'react';
 
 interface TabPanelProps {
   children?: React.ReactNode;
-  index: any;
-  value: any;
+  index: number;
+  value: number;
 }
 
 function TabPanel(props: TabPanelProps) {
@@ -32,14 +32,14 @@ function TabPanel(props: TabPanelProps) {
   );
 }
 
-function a11yProps(index: any) {
+function a11yProps(index: number) {
   return {
     id: `scrollable-auto-tab-${index}`,
     'aria-controls': `scrollable-auto-tabpanel-${index}`
   };
 }
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     flexGrow: 1,
     width: '100%'
@@ -48,18 +48,20 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 export default function ScrollableTabsButtonAuto(props) {
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState<number>(0);
 
-  const handleChange = (event: React.ChangeEvent<unknown>, newValue: number) => {
+  const handleChange = (_, newValue: number) => {
     setValue(newValue);
   };
 
   const { t } = useTranslation('common');
 
-  function createMarkup(text) {
-    return {
-      __html: text
-    };
+  function parseHTML(string) {
+    return ['<p><br></p>', 'false'].includes(string) ? (
+      t('updating')
+    ) : (
+      <p dangerouslySetInnerHTML={{ __html: string }} />
+    );
   }
 
   return (
@@ -85,67 +87,31 @@ export default function ScrollableTabsButtonAuto(props) {
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        {props.info !== 'false' ? (
-          <p dangerouslySetInnerHTML={createMarkup(props.info)} />
-        ) : (
-          t('updating')
-        )}
+        {parseHTML(props.info)}
       </TabPanel>
       <TabPanel value={value} index={1}>
-        {props.indication !== 'false' ? (
-          <p dangerouslySetInnerHTML={createMarkup(props.indication)} />
-        ) : (
-          t('updating')
-        )}
+        {parseHTML(props.indication)}
       </TabPanel>
       <TabPanel value={value} index={2}>
-        {props.contraindication !== 'false' ? (
-          <p dangerouslySetInnerHTML={createMarkup(props.contraindication)} />
-        ) : (
-          t('updating')
-        )}
+        {parseHTML(props.contraindication)}
       </TabPanel>
       <TabPanel value={value} index={3}>
-        {props.direction !== 'false' ? (
-          <p dangerouslySetInnerHTML={createMarkup(props.direction)} />
-        ) : (
-          t('updating')
-        )}
+        {parseHTML(props.direction)}
       </TabPanel>
       <TabPanel value={value} index={4}>
-        {props.interaction !== 'false' ? (
-          <p dangerouslySetInnerHTML={createMarkup(props.interaction)} />
-        ) : (
-          t('updating')
-        )}
+        {parseHTML(props.interaction)}
       </TabPanel>
       <TabPanel value={value} index={5}>
-        {props.preservation !== 'false' ? (
-          <p dangerouslySetInnerHTML={createMarkup(props.preservation)} />
-        ) : (
-          t('updating')
-        )}
+        {parseHTML(props.preservation)}
       </TabPanel>
       <TabPanel value={value} index={6}>
-        {props.overdose !== 'false' ? (
-          <p dangerouslySetInnerHTML={createMarkup(props.overdose)} />
-        ) : (
-          t('updating')
-        )}
+        {parseHTML(props.overdose)}
       </TabPanel>
       <TabPanel value={value} index={7}>
-        {props.pharmacodynamics !== 'false' ? (
-          <p dangerouslySetInnerHTML={createMarkup(props.pharmacodynamics)} />
-        ) : (
-          t('updating')
-        )}
+        {parseHTML(props.pharmacodynamics)}
       </TabPanel>
       <TabPanel value={value} index={8}>
-        {props.pharmacokinetics !== 'false' ? (
-          <p dangerouslySetInnerHTML={createMarkup(props.pharmacokinetics)} />
-        ) : (
-          t('updating')
-        )}
+        {parseHTML(props.pharmacokinetics)}
       </TabPanel>
     </div>
   );
