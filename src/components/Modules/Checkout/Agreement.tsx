@@ -23,7 +23,7 @@ const Agreement = (props: Props): JSX.Element => {
         <Trans
           i18nKey="checkout:agreement_label"
           components={{
-            Link: <LinkText href="/terms-of-service"> </LinkText>
+            Link: <LinkText href="/terms-of-use"> </LinkText>
           }}
         />
       }>
