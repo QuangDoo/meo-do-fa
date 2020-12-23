@@ -20,22 +20,22 @@ const jobs = [
 
 const images = [
   {
-    imgUrl: 'https://loremflickr.com/320/240/dog',
+    imgUrl: '/assets/images/no-image.jpg',
     title: 'life at Medofa',
     alt: 'life at Medofa'
   },
   {
-    imgUrl: 'https://loremflickr.com/320/240/brazil,rio',
+    imgUrl: '/assets/images/no-image.jpg',
     title: 'life at Medofa',
     alt: 'life at Medofa'
   },
   {
-    imgUrl: 'https://loremflickr.com/320/240',
+    imgUrl: '/assets/images/no-image.jpg',
     title: 'life at Medofa',
     alt: 'life at Medofa'
   },
   {
-    imgUrl: 'https://loremflickr.com/g/320/240/paris,girl/all',
+    imgUrl: '/assets/images/no-image.jpg',
     title: 'life at Medofa',
     alt: 'life at Medofa'
   }
@@ -54,7 +54,7 @@ function Career(props): JSX.Element {
     setTempJobs(temp);
   };
   const imgUrl = `/assets/images/drugstore2.jpg`;
-  const rightImgUrl = `https://i.pinimg.com/236x/36/65/76/366576564c307ccd2e16fb08ea5b3493.jpg`;
+  const rightImgUrl = `/assets/images/no-image.jpg`;
 
   return (
     <>
@@ -70,7 +70,7 @@ function Career(props): JSX.Element {
         <div className="row">
           <div className="col text-center m-5">
             <h3 className="text-primary">Interested?</h3>
-            <a href="mailto:tranquochung6810@gmail.com" className="btn btn-primary">
+            <a href="mailto:info@medofa.com" className="btn btn-primary">
               Email us now
             </a>
           </div>

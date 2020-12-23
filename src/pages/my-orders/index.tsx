@@ -81,6 +81,14 @@ const OrderItem = (props: any) => {
     80: { color: 'primary', tran: t('myOrders:completed') }
   };
 
+  const handleOpenClick = (flag) => {
+    if (flag === 40 || flag === 80) {
+      toast.error(t('myOrders:report'));
+      return;
+    }
+    setOpen(true);
+  };
+
   return (
     <div className="my-orders__item p-3 my-1">
       <div className="my-orders__info">
@@ -117,11 +125,14 @@ const OrderItem = (props: any) => {
         <button className="btn btn-outline-info btn-sm">{t('myOrders:report')}</button>
 
         {flag !== 25 ? (
-          <button className="btn btn-outline-danger btn-sm" onClick={() => setOpen(true)}>
+          <button className="btn btn-outline-danger btn-sm" onClick={() => handleOpenClick(flag)}>
             {t('myOrders:cancel_order')}
           </button>
         ) : (
-          <button className="btn btn-outline-danger btn-sm" disabled onClick={() => setOpen(true)}>
+          <button
+            className="btn btn-outline-danger btn-sm"
+            disabled
+            onClick={() => handleOpenClick(flag)}>
             {t('myOrders:canceled')}
           </button>
         )}

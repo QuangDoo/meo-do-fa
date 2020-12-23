@@ -484,7 +484,7 @@ const OrderDetails = () => {
                   {orderDetail?.getOrderDetail.order_lines.map((product) => (
                     <TableRow key={product.id}>
                       <CustomBodyCell textAlign="left">
-                        <Link href={`/products/${product.id}`}>
+                        <Link href={`/products/${product.product.slug}`}>
                           <a>{product.name}</a>
                         </Link>
                       </CustomBodyCell>
