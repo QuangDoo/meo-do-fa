@@ -1,8 +1,9 @@
 import clsx from 'clsx';
 import { withTranslation } from 'i18n';
 import { WithTranslation } from 'next-i18next';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
+import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { ADD_TO_CART } from 'src/graphql/order/order.mutation';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import useCart from 'src/hooks/useCart';
@@ -20,17 +21,26 @@ type Props = WithTranslation & {
 function QuantityInput(props: Props) {
   const { size, productId, price, name, t } = props;
 
-  const { refetchCart } = useCart();
+  const { cart, refetchCart } = useCart();
+
+  useEffect(() => {
+    if (!cart) return;
+
+    const thisProduct = cart.getCart.carts.find((product) => product.productId === productId);
+
+    if (thisProduct) {
+      setQuantity(thisProduct.quantity + '');
+    }
+  }, [cart]);
 
   const [quantity, setQuantity] = useState<string>('0');
 
-  const [addToCart] = useMutationAuth(ADD_TO_CART, {
+  const [addToCart, { loading: addingToCart }] = useMutationAuth(ADD_TO_CART, {
     onCompleted: () => {
       toast.success(t(`errors:add_to_cart_success`));
       refetchCart();
     },
     onError: (error) => {
-      console.log('Add to cart error:', { error });
       toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
     }
   });
@@ -82,32 +92,36 @@ function QuantityInput(props: Props) {
   };
 
   return (
-    <div className="product_qty">
-      <div className={clsx('qty js-qty', size === 'large' && 'qty--lg')}>
-        <button className="btn btn-sm qty__button qty__button--minus" onClick={handleMinus}>
-          <i className="fas fa-minus" />
-        </button>
+    <>
+      <div className="product_qty">
+        <div className={clsx('qty js-qty', size === 'large' && 'qty--lg')}>
+          <button className="btn btn-sm qty__button qty__button--minus" onClick={handleMinus}>
+            <i className="fas fa-minus" />
+          </button>
 
-        <input
-          type="tel"
-          className="form-control px-1 no-spinner text-center qty__input"
-          min={0}
-          max={100000}
-          value={quantity}
-          onChange={(e) => handleChangeNumber(e.target.value)}
-          onKeyDown={handleKeyDown}
-          onBlur={handleBlur}
-        />
+          <input
+            type="tel"
+            className="form-control px-1 no-spinner text-center qty__input"
+            min={0}
+            max={100000}
+            value={quantity}
+            onChange={(e) => handleChangeNumber(e.target.value)}
+            onKeyDown={handleKeyDown}
+            onBlur={handleBlur}
+          />
 
-        <button className="btn btn-sm qty__button qty__button--plus" onClick={handlePlus}>
-          <i className="fas fa-plus" />
-        </button>
+          <button className="btn btn-sm qty__button qty__button--plus" onClick={handlePlus}>
+            <i className="fas fa-plus" />
+          </button>
 
-        <button className="ml-2 btn btn-sm qty__button qty__button--plus" onClick={handleClick}>
-          <i className="fas fa-check" />
-        </button>
+          <button className="ml-2 btn btn-sm qty__button qty__button--plus" onClick={handleClick}>
+            <i className="fas fa-check" />
+          </button>
+        </div>
       </div>
-    </div>
+
+      <LoadingBackdrop open={addingToCart} />
+    </>
   );
 }
 

@@ -34,12 +34,12 @@ const TermsOfService = () => {
           tất cả diều khoản dịch vụ, điều kiện sửa đổi, bổ sung (nếu có) trong tương lai.
         </p>
         <h3 className="mt-3 text-uppercase">Điều khoản tổng quát</h3>
-        <ul className="list-group">
+        <ul className="list-group upper-roman-list">
           <li>
             <p className="font-weight-bold"> Dịch vụ của medofa </p>
             Medofa cung cấp dịch vụ xử lý dữ liệu (“<b>Dịch Vụ</b>”) trên cơ sở tính phí, bao gồm
             các Dịch Vụ sau đây:
-            <ul className="ml-3 list-group">
+            <ul className="ml-3 list-group decimal-list">
               <li>Niêm yết và đăng tải Thông Tin Nội Dung;</li>
               <li>Dịch vụ chăm sóc khách hàng;</li>
               <li>Xác nhận đơn hàng;</li>
@@ -47,7 +47,8 @@ const TermsOfService = () => {
               <li>Theo dõi tình trạng trả hàng từ khách hàng.</li>
             </ul>
             và các dịch vụ bổ sung khác tùy vào yêu cầu của Công ty TNHH Dược phẩm Dayton.
-            <br /> Chi tiết vui lòng xem thêm <u>Điều 2</u> của Điều Khoản Dịch Vụ.
+            <br /> Chi tiết vui lòng xem thêm <a href="#terms-of-service-2">Điều 2</a> của Điều
+            Khoản Dịch Vụ.
           </li>
           <li>
             <p className="font-weight-bold">Sản Phẩm Bán Trên Sàn Giao Dịch</p>
@@ -56,7 +57,7 @@ const TermsOfService = () => {
             được phân phối bởi chính Công ty TNHH Dược phẩm Dayton, nên Công ty TNHH Dược phẩm
             Dayton là người chịu hoàn toàn trách nhiệm về đổi trả sản phẩm do lỗi, hư hỏng hoặc
             nghĩa vụ về bảo hành, …
-            <br /> Chi tiết vui lòng xem thêm <u>Điều 10</u> của Điều Khoản Dịch Vụ.
+            <br /> Chi tiết vui lòng xem thêm <a>Điều 10</a> của Điều Khoản Dịch Vụ.
           </li>
           <li>
             <p className="font-weight-bold">Phí</p>
@@ -72,46 +73,50 @@ const TermsOfService = () => {
             Công ty TNHH Dược phẩm Dayton chịu mọi trách nhiệm liên quan đến Sản Phẩm mà mình phân
             phối trên Sàn Giao Dịch của Medofa, bao gồm chất lượng, nguồn gốc sản phẩm, hóa đơn tài
             chính theo quy định của pháp luật thuế và các nghĩa vụ khác như được quy định tại{' '}
-            <u>Điều 10</u> của Điều Khoản Dịch Vụ.
+            <a>Điều 10</a> của Điều Khoản Dịch Vụ.
           </li>
           <li>
             <p className="font-weight-bold">Trách Nhiệm Của Medofa đối với nội dung sản phẩm</p>
             Sàn Giao Dịch của Medofa chịu mọi trách nhiệm đăng tải nội dung liên quan đến sản phẩm
             trên Sàn Giao Dịch của Medofa, bao gồm cả thông tin, hình ảnh đăng tải, nội dung sản
             phẩm được cập nhật liên tục từ Công ty TNHH Dược phẩm Dayton. Công ty TNHH Dược phẩm
-            Dayton sẽ nhận được đầy đủ hỗ trợ qua hộp thư <u>hotro@Medofa</u> Chấm Dứt
+            Dayton sẽ nhận được đầy đủ hỗ trợ qua hộp thư{' '}
+            <a href="mailto:hotro@medofa.com">
+              <u>hotro@medofa.com</u>
+            </a>{' '}
+            Chấm Dứt
             <br /> Công ty TNHH Dược phẩm Dayton có thể chấm dứt giao kết hợp đồng với Medofa bất cứ
             lúc nào mà không bị xem là vi phạm hợp đồng nếu đã thông báo cho Medofa ít nhất 14 (mười
             bốn) ngày trước ngày dự kiến chấm dứt.
-            <br /> Chi tiết vui lòng xem thêm <u>Điều 13</u> của Điều Khoản Dịch Vụ.
+            <br /> Chi tiết vui lòng xem thêm <a>Điều 13</a> của Điều Khoản Dịch Vụ.
           </li>
           <li>
             <p className="font-weight-bold">Tranh Chấp hoặc Khiếu Nại</p>
             Thỏa Thuận Về Dịch Vụ Thương Mại Điện Tử và Điều Khoản Dịch Vụ tương ứng được điều chỉnh
-            bởi pháp luật của nước Cộng hòa Xã hội Chủ nghĩa Việt Nam
+            bởi pháp luật của nước Cộng hòa Xã hội Chủ nghĩa Việt Nam.
             <br />
             Khi phát sinh tranh chấp hoặc khiếu nại, Các Bên có nghĩa vụ giải quyết trên tinh thần
             thương lượng và hòa giải. Nếu vẫn không giải quyết được, một trong Các Bên có quyền yêu
             cầu cơ quan trọng tài thương mại giải quyết.
-            <br /> Chi tiết vui lòng xem thêm <u>Điều 17</u> của Điều Khoản Dịch Vụ.
+            <br /> Chi tiết vui lòng xem thêm <a>Điều 17</a> của Điều Khoản Dịch Vụ.
           </li>
           <li>
             <p className="font-weight-bold">Định Nghĩa</p>
-            Vui lòng xem chi tiết tại <u>Biểu 1</u> đính kèm Điều Khoản Dịch Vụ.
+            Vui lòng xem chi tiết tại <a href="#form-1">Biểu 1</a> đính kèm Điều Khoản Dịch Vụ.
           </li>
         </ul>
 
         <h3 className="mt-3 text-uppercase">Điều khoản dịch vụ và điều kiện chung về dịch vụ</h3>
-        <ul className="list-group">
+        <ul className="list-group decimal-list">
           <li>
             <p className="font-weight-bold">Chấp thuận</p>
-            <ul className="ml-3 list-group">
+            <ul className="ml-3 list-group decimal-list">
               <li>
                 Việc sử dụng Dịch Vụ Sàn Giao Dịch chỉ được cấp giới hạn cho Công ty TNHH Dược phẩm
                 Dayton đã giao kết và thiết lập Thỏa Thuận với Medofa phù hợp với quy định của pháp
                 luật và Điều Khoản Dịch Vụ này. Công ty TNHH Dược phẩm Dayton theo đó tuyên bố và
                 cam kết rằng:
-                <ul style={{ listStyleType: 'lower-roman' }} className="list-group ml-3">
+                <ul className="list-group ml-3 lower-roman-list">
                   <li>
                     Công ty TNHH Dược phẩm Dayton là pháp nhân được thành lập hợp pháp theo quy định
                     của pháp luật doanh nghiệp, có đủ năng lực hành vi và năng lực pháp luật để giao
@@ -167,7 +172,7 @@ const TermsOfService = () => {
             liệu đã được cung cấp đó.
             <br />
             Các Dịch Vụ xử lý dữ liệu bao gồm:
-            <ul className="ml-3 list-group">
+            <ul className="ml-3 list-group decimal-list">
               <li>Niêm yết và đăng tải Thông Tin Nội Dung;</li>
               <li>Dịch vụ chăm sóc khách hàng;</li>
               <li>Xác nhận đơn hàng;</li>
@@ -184,12 +189,12 @@ const TermsOfService = () => {
 
           <li>
             <p className="font-weight-bold"> Cam Kết Của Công ty TNHH Dược phẩm Dayton</p>
-            <ul className="list-group ml-3">
+            <ul className="list-group ml-3 decimal-list">
               <li>
                 <p className="font-weight-bold">Cam kết chung</p>
                 Khi sử dụng Dịch Vụ, Công ty TNHH Dược phẩm Dayton tại đây bảo đảm, tuyên bố và xác
                 nhận rằng:
-                <ul className="list-group ml-3">
+                <ul className="list-group ml-3 decimal-list">
                   <li>
                     Công ty TNHH Dược phẩm Dayton đã hoặc sẽ xin được tất cả các giấy phép, cho phép
                     hoặc phê duyệt cần thiết theo quy định để bán Sản Phẩm thông qua Sàn Giao Dịch
@@ -229,7 +234,7 @@ const TermsOfService = () => {
                   <li>
                     Công ty TNHH Dược phẩm Dayton cam kết cung cấp các thông tin sau liên quan đến
                     Sản Phẩm của Công ty TNHH Dược phẩm Dayton niêm yết trên Sàn Giao Dịch:
-                    <ul className="list-group ml-3">
+                    <ul className="list-group ml-3 decimal-list">
                       <li>
                         Ký tự, hình ảnh và bất kỳ thông tin nào khác liên quan đến Sản Phẩm được
                         đăng tải chính xác, cập nhật và đầy đủ;
@@ -313,7 +318,7 @@ const TermsOfService = () => {
                 Công ty TNHH Dược phẩm Dayton bảo đảm, tuyên bố và xác nhận thêm rằng Công ty TNHH
                 Dược phẩm Dayton sẽ không, dù là trực tiếp hoặc gián tiếp, dù là vô ý hoặc cố ý,
                 thực hiện các hành vi sau đây:
-                <ul className="list-group ml-3">
+                <ul className="list-group ml-3 decimal-list">
                   <li>
                     Đăng tải Thông Tin Nội Dung của các Sản Phẩm chứa đựng bất kỳ yếu tố nào của các
                     tài sản sở hữu trí tuệ thuộc quyền sở hữu của bên thứ ba bất kỳ;
@@ -341,7 +346,7 @@ const TermsOfService = () => {
                   Cam kết riêng liên quan đến Sản Phẩm: đối với Sản Phẩm được đăng bán, Công ty TNHH
                   Dược phẩm Dayton bảo đảm, tuyên bố và xác nhận thêm rằng:
                 </p>
-                <ul className="list-group ml-3">
+                <ul className="list-group ml-3 decimal-list">
                   <li>
                     Các Sản Phẩm là hàng chính hãng, mới, chưa qua sử dụng, còn hạn sử dụng, không
                     được tân trang lại;
@@ -392,7 +397,7 @@ const TermsOfService = () => {
 
               <li>
                 <p className="font-weight-bold">Quyền Và Trách Nhiệm Của Medofa</p>
-                <ul className="list-group ml-3">
+                <ul className="list-group ml-3 decimal-list">
                   <li>
                     Không phụ thuộc vào bất kỳ nội dung nào của Điều Khoản Dịch Vụ, Medofa có thể,
                     tùy vào quyết định của mình, trì hoãn hoặc tạm ngừng việc niêm yết, hoặc từ chối
@@ -480,7 +485,7 @@ const TermsOfService = () => {
                 <p className="font-weight-bold">
                   Sự Độc Lập của Công ty TNHH Dược phẩm Dayton &#38; Bồi Hoàn
                 </p>
-                <ul className="list-group ml-3">
+                <ul className="list-group ml-3 decimal-list">
                   <li>
                     vn không phải là một bên tham gia các giao dịch giữa Khách Hàng và Công ty TNHH
                     Dược phẩm Dayton, và Công ty TNHH Dược phẩm Dayton tại đây giải trừ Medofa (và
@@ -507,7 +512,7 @@ const TermsOfService = () => {
                     nại, tổn thất, thiệt hại, khoản thanh toán, chi phí, phí tổn, phí phạt hành
                     chính, phí phạt, hoặc trách nhiệm khác (bao gồm, không giới hạn, phí luật sư)
                     (mỗi khoản như vậy gọi là <b>“Khiếu Nại”</b> ) phát sinh từ hoặc liên quan đến:
-                    <ul className="list-group ml-3">
+                    <ul className="list-group ml-3 decimal-list">
                       <li>
                         Vi phạm thực tế hoặc hành vi không tuân thủ của Công ty TNHH Dược phẩm
                         Dayton hoặc nhân viên, đại lý hoặc nhà thầu của Nhà Cung Cấp, đối với bất kỳ
@@ -567,11 +572,11 @@ const TermsOfService = () => {
 
               <li>
                 <p className="font-weight-bold">Chấm Dứt</p>
-                <ul className="list-group ml-3">
+                <ul className="list-group ml-3 decimal-list">
                   <li>
                     vn bảo lưu quyền đơn phương và ngay lập tức chấm dứt Các Điều Khoản khi xảy ra
                     bất kỳ sự kiện nào sau đây:
-                    <ul className="list-group ml-3">
+                    <ul className="list-group ml-3 decimal-list">
                       <li>
                         vn chậm thanh toán trong hơn 30 (ba mươi) ngày mà không có lý do hợp lệ theo
                         Các Điều Khoản và Chính Sách Của Medofa;
@@ -594,7 +599,7 @@ const TermsOfService = () => {
                   <li>
                     Công ty TNHH Dược phẩm Dayton có quyền đơn phương chấm dứt Các Điều Khoản trong
                     vòng 14 (mười bốn) ngày sau khi xảy ra bất kỳ sự kiện nào sau đây:
-                    <ul className="list-group ml-3">
+                    <ul className="list-group ml-3 decimal-list">
                       <li>
                         vn chậm thanh toán trong hơn 30 (ba mươi) ngày mà không có lý do hợp lệ theo
                         Các Điều Khoản và Chính Sách Của Medofa;
@@ -622,7 +627,7 @@ const TermsOfService = () => {
                   </li>
                   <li>
                     Trước khi chấm dứt Điều Khoản Dịch Vụ,
-                    <ul className="list-group ml-3">
+                    <ul className="list-group ml-3 decimal-list">
                       <li>
                         Công ty TNHH Dược phẩm Dayton sẽ thông báo với Medofa về tất cả các thỏa
                         thuận được ký kết với Khách Hàng, mà phải được thực hiện. Để tránh hiểu
@@ -644,7 +649,7 @@ const TermsOfService = () => {
                   </li>
                   <li>
                     Bảo Vệ Dữ Liệu Cá Nhân
-                    <ul className="list-group ml-3">
+                    <ul className="list-group ml-3 decimal-list">
                       <li>
                         Công ty TNHH Dược phẩm Dayton cam kết, tuyên bố và bảo đảm rằng Công ty TNHH
                         Dược phẩm Dayton sẽ chỉ sử dụng và xử lý Dữ Liệu Cá Nhân: i) cho mục đích
@@ -671,7 +676,7 @@ const TermsOfService = () => {
                   </li>
                   <li>
                     Bảo Mật
-                    <ul className="list-group ml-3">
+                    <ul className="list-group ml-3 decimal-list">
                       <li>
                         Vì các mục đích của Điều Khoản Dịch Vụ, <b>“Thông Tin Mật”</b> nghĩa là bất
                         kỳ dữ liệu hoặc thông tin nào thuộc quyền sở hữu của bên tiết lộ và các Bên
@@ -699,7 +704,7 @@ const TermsOfService = () => {
                         thể sử dụng Thông Tin Mật cho mục đích thực hiện Điều Khoản Dịch Vụ, và
                         không cho bất kỳ mục đích nào khác. Không phụ thuộc vào các quy định trên,
                         Bên Nhận có thể tiết lộ Thông Tin Mật vì bất kỳ lý do nào sau đây:
-                        <ul className="list-group ml-3">
+                        <ul className="list-group ml-3 decimal-list">
                           <li>
                             tuân thủ các quy định bắt buộc của Luật áp dụng hoặc các quy tắc của bất
                             kỳ vùng tài phán được công nhận nào;
@@ -726,7 +731,7 @@ const TermsOfService = () => {
                       </li>
                       <li>
                         Trả lại Thông Tin Mật:
-                        <ul className="list-group ml-3">
+                        <ul className="list-group ml-3 decimal-list">
                           <li>
                             Bên Nhận sẽ trả lại và giao lại cho Bên Tiết Lộ mọi tài liệu hữu hình
                             bao gồm Thông Tin Mật được cung cấp theo Điều Khoản Dịch Vụ và mọi biên
@@ -739,7 +744,7 @@ const TermsOfService = () => {
                             <b>“Các Bản Sao”</b>)) dựa trên hoặc bao gồm bất kỳ Thông Tin Mật nào, ở
                             bất kỳ dạng lưu trữ hay phục hồi, sau thời điểm nào xảy ra sớm hơn trong
                             các thời điểm sau đây:
-                            <ul className="list-group ml-3">
+                            <ul className="list-group ml-3 decimal-list">
                               <li>chấm dứt Điều Khoản Dịch Vụ;</li>
                               <li>vào thời điểm mà Bên Tiết Lộ yêu cầu như vậy.</li>
                             </ul>
@@ -768,7 +773,7 @@ const TermsOfService = () => {
 
           <li>
             <p className="font-weight-bold">Bất Khả Kháng</p>
-            <ul className="list-group ml-3">
+            <ul className="list-group ml-3 decimal-list">
               <li>
                 Không Bên nào chịu trách nhiệm với Bên còn lại hoặc được cho là vi phạm Điều Khoản
                 Dịch Vụ vì lý do của bất kỳ việc chậm trễ nào trong việc thực hiện hoặc bất kỳ việc
@@ -777,7 +782,7 @@ const TermsOfService = () => {
                 Bên đó (mỗi sự kiện như vậy gọi là <b>“Bất Khả Kháng”</b>). Không làm ảnh hưởng đến
                 tính tổng quát của các quy định trên đây, các sự kiện sau đây sẽ được xem là là các
                 sự kiện Bất Khả Kháng:
-                <ul className="list-group ml-3">
+                <ul className="list-group ml-3 decimal-list">
                   <li>Thiên tai, nổ, lũ lụt, giông, cháy hoặc tai nạn;</li>
                   <li>
                     Chiến tranh hoặc đe dọa chiến tranh, sự phá hoại, sự nổi dậy, bạo loạn dân sự
@@ -817,7 +822,7 @@ const TermsOfService = () => {
 
           <li>
             <p className="font-weight-bold">Luật Điều Chỉnh Và Giải Quyết Tranh Chấp</p>
-            <ul className="list-group ml-3">
+            <ul className="list-group ml-3 decimal-list">
               <li>Điều Khoản Dịch Vụ được điều chỉnh bởi pháp luật Việt Nam.</li>
               <li>
                 Mọi tranh chấp, mâu thuẫn hoặc khác biệt phát sinh từ việc thực hiện Điều Khoản Dịch
@@ -833,7 +838,7 @@ const TermsOfService = () => {
 
           <li>
             <p className="font-weight-bold">Điều Khoản Khác</p>
-            <ul className="list-group ml-3">
+            <ul className="list-group ml-3 decimal-list">
               <li>
                 Quy định của Điều Khoản Dịch Vụ là hoàn toàn riêng biệt, nếu có bất kỳ điều khoản
                 nào bị vô hiệu hoặc không thể thực thi được, với phạm vi toàn bộ hay một phần, thì
@@ -867,8 +872,10 @@ const TermsOfService = () => {
           </p>
         </ul>
 
-        <h3 className="text-upper-case">Biểu 1 - Định nghĩa đính kèm với điều khoản dịch vụ</h3>
-        <ul className="list-group">
+        <h3 id="form-1" className="text-upper-case">
+          Biểu 1 - Định nghĩa đính kèm với điều khoản dịch vụ
+        </h3>
+        <ol start={8} className="list-group decimal-list">
           Những từ, thuật ngữ và cụm từ khi được sử dụng trong tài liệu này, sẽ có ý nghĩa như sau:
           <li>
             <b>Bên Vận Hành:</b> có nghĩa là bất kỳ cá nhân hoặc doanh nghiệp thành lập hợp pháp tại
@@ -994,7 +1001,7 @@ const TermsOfService = () => {
             phẩm đó, bao gồm cả bao bì nguyên gốc của nhà sản xuất) mà Công ty TNHH Dược phẩm Dayton
             dự kiến niêm yết và bán cho Khách Hàng trên và thông qua Sàn Giao Dịch.
           </li>
-        </ul>
+        </ol>
       </div>
 
       <Footer />

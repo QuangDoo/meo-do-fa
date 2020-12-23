@@ -7,7 +7,7 @@ type Props = {
 
 type ContextValue = {
   user?: User;
-  setUser?: (value) => void;
+  setUser?: (value: User) => void;
 };
 
 const UserContext = createContext<ContextValue>({});

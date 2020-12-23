@@ -40,13 +40,7 @@ const Nav = () => {
     GET_CATEGORIES_LEVEL,
     {
       onError: (error) => {
-        console.log('Get all categories error:', error);
-
-        const errorCode = error.graphQLErrors?.[0]?.extensions?.code;
-
-        if (errorCode) {
-          toast.error(t(`errors:code_${errorCode}`));
-        }
+        toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
       }
     }
   );
@@ -69,14 +63,14 @@ const Nav = () => {
                     </Link>
                   </div>
                   <ul className="dropdown-menu">
-                    {categories.map(({ name, id, categorySub }) => (
+                    {categories.map(({ name, id, categorySub, priority }) => (
                       <li key={id} className="mb-2 dropdown-item text-wrap">
                         <div className="dropdown dropdown-nav">
                           <div className="d-flex" data-toggle="dropdown" data-hover="dropdown">
                             <img
-                              src={`/assets/images/category_${id}.png`}
+                              src={`/assets/images/category_${priority}.png`}
                               className="dropdown-item-icon"
-                              alt={`category-item-${id}`}
+                              alt={`category-item-${priority}`}
                               width="60"
                               height="30"
                             />

@@ -34,9 +34,9 @@ const Help = (): JSX.Element => {
       <Nav />
 
       <FAQ title={t('help:frequently_asked_questions')}>
-        <div className="d-flex justify-content-center align-items-center p-5">
+        {/* <div className="d-flex justify-content-center align-items-center p-5">
           {t('common:updating')}
-        </div>
+        </div> */}
         {/* <>
           <div className="news__divider"></div>
           <Questions questions={questions} />

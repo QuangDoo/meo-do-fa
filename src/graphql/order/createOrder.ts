@@ -1,6 +1,10 @@
 import { gql } from '@apollo/client';
 
-type Address = {
+type Info = {
+  fullName?: string;
+  phone?: string;
+  email?: string;
+  tax?: string;
   partnerId: string;
   isNew: boolean;
   use?: boolean;
@@ -12,11 +16,11 @@ type Address = {
 };
 
 type Customer = {
-  billing_address?: Address;
+  billing_address?: Info;
   fullName: string;
   phone: string;
   email?: string;
-  shipping_address: Address;
+  shipping_address: Info;
 };
 
 type OrderInput = {

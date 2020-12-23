@@ -1,18 +1,26 @@
+import { useLazyQuery, useQuery } from '@apollo/client';
 import { useTranslation } from 'i18n';
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import AddressSelect from 'src/components/Form/AddressSelect';
 import Button from 'src/components/Form/Button';
 import InputWithLabel from 'src/components/Form/InputWithLabel';
+import SelectWithLabel from 'src/components/Form/SelectWithLabel';
 import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
+import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import Nav from 'src/components/Layout/Nav';
 import FormCard from 'src/components/Modules/MyAccount/FormCard';
 import ProfileLayout from 'src/components/Modules/ProfileLayout';
+import { GET_CITIES, GetCitiesData } from 'src/graphql/address/getCities';
+import {
+  GET_DISTRICTS,
+  GetDistrictsData,
+  GetDistrictsVars
+} from 'src/graphql/address/getDistricts';
+import { GET_WARDS, GetWardsData, GetWardsVars } from 'src/graphql/address/getWards';
 import { UPDATE_USER, UpdateUserData, UpdateUserVars } from 'src/graphql/user/updateUser';
-import useAddress from 'src/hooks/useAddress';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import useUser from 'src/hooks/useUser';
 import toBase64 from 'src/utils/toBase64';
@@ -30,88 +38,101 @@ type Inputs = {
   businessLicense: FileList;
   taxCode: string;
   companyStreet: string;
-  companyCityId: string;
-  companyDistrictId: string;
-  companyWardId: string;
+  companyCity: string;
+  companyDistrict: string;
+  companyWard: string;
   deliveryStreet: string;
-  deliveryCityId: string;
-  deliveryDistrictId: string;
-  deliveryWardId: string;
+  deliveryCity: string;
+  deliveryDistrict: string;
+  deliveryWard: string;
 };
 
 const MyAccount = (): JSX.Element => {
-  const { t } = useTranslation('myAccount');
+  const { t } = useTranslation(['myAccount', 'common']);
 
-  const { user } = useUser();
+  const { user, refetchUser } = useUser();
 
   const { register, handleSubmit, watch, setValue } = useForm<Inputs>();
 
   const chosenFile: FileList = watch('businessLicense');
 
-  // Company city, district, ward select
-  const {
-    cities: companyCities,
-    districts: companyDistricts,
-    wards: companyWards,
-    chosenCity: companyChosenCity,
-    chosenDistrict: companyChosenDistrict,
-    chosenWard: companyChosenWard
-  } = useAddress({
-    cityId: +watch('companyCityId'),
-    districtId: +watch('companyDistrictId'),
-    wardId: +watch('companyWardId')
+  useEffect(() => {
+    if (!user?.contact_address) return;
+
+    const { city, district } = user.contact_address;
+
+    setValue('name', user.name);
+    setValue('phone', user.phone);
+    setValue('email', user.email);
+    setValue('companyCity', city.name + '__' + city.id);
+    getDistricts({
+      variables: {
+        city_id: city.id
+      }
+    });
+    getWards({
+      variables: {
+        district_id: district.id
+      }
+    });
+  }, [user]);
+
+  const { data: citiesData } = useQuery<GetCitiesData, undefined>(GET_CITIES);
+
+  const cities = citiesData?.getCities || [];
+
+  const handleCityChange = (event) => {
+    refetchDistricts({
+      city_id: +event.target.value.split('__')[1]
+    });
+    setValue('companyDistrict', '');
+    setValue('companyWard', '');
+  };
+
+  const [
+    getDistricts,
+    { data: districtsData, refetch: refetchDistricts, loading: loadingDistricts }
+  ] = useLazyQuery<GetDistrictsData, GetDistrictsVars>(GET_DISTRICTS, {
+    onCompleted: () => {
+      if (!user?.contact_address) return;
+
+      const { district } = user.contact_address;
+
+      setValue('companyDistrict', district.name + '__' + district.id);
+    }
   });
 
-  // Set user current city to companyCity select
-  useEffect(() => {
-    if (!user || !companyCities.length) return;
+  const handleDistrictChange = (event) => {
+    refetchWards({
+      district_id: +event.target.value.split('__')[1]
+    });
+    setValue('companyWard', '');
+  };
 
-    setValue(
-      'companyCityId',
-      companyCities.find((city) => city.name === user.contact_address?.city?.name)?.id || ''
-    );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user, companyCities]);
+  const districts = districtsData?.getDistricts || [];
 
-  // Set user current district to companyDistrict select
-  useEffect(() => {
-    if (!companyDistricts.length) return;
+  const [
+    getWards,
+    { data: wardsData, refetch: refetchWards, loading: loadingWards }
+  ] = useLazyQuery<GetWardsData, GetWardsVars>(GET_WARDS, {
+    onCompleted: () => {
+      if (!user?.contact_address) return;
 
-    setValue(
-      'companyDistrictId',
-      companyDistricts.find((district) => district.name === user.contact_address?.district?.name)
-        ?.id || ''
-    );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [companyDistricts]);
+      const { ward } = user.contact_address;
 
-  // Set user current ward to companyWard select
-  useEffect(() => {
-    if (!companyWards.length) return;
-
-    setValue(
-      'companyWardId',
-      companyWards.find((ward) => ward.name === user.contact_address?.ward?.name)?.id || ''
-    );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [companyWards]);
-
-  const {
-    cities: deliveryCities,
-    districts: deliveryDistricts,
-    wards: deliveryWards,
-    chosenCity: deliveryChosenCity,
-    chosenDistrict: deliveryChosenDistrict,
-    chosenWard: deliveryChosenWard
-  } = useAddress({
-    cityId: +watch('deliveryCityId'),
-    districtId: +watch('deliveryDistrictId'),
-    wardId: +watch('deliveryWardId')
+      setValue('companyWard', ward.name + '__' + ward.id);
+    }
   });
 
-  const [updateUser] = useMutationAuth<UpdateUserData, UpdateUserVars>(UPDATE_USER, {
+  const wards = wardsData?.getWards || [];
+
+  const [updateUser, { loading: loadingUpdateUser }] = useMutationAuth<
+    UpdateUserData,
+    UpdateUserVars
+  >(UPDATE_USER, {
     onCompleted: () => {
       toast.success(t('myAccount:update_success'));
+      refetchUser();
     }
   });
 
@@ -126,6 +147,10 @@ const MyAccount = (): JSX.Element => {
       }
     }
 
+    const [cityName, cityId] = data.companyCity.split('__');
+    const [districtName, districtId] = data.companyDistrict.split('__');
+    const [wardName, wardId] = data.companyWard.split('__');
+
     updateUser({
       variables: {
         name: data.name,
@@ -134,16 +159,16 @@ const MyAccount = (): JSX.Element => {
         contact_address: {
           street: data.companyStreet,
           city: {
-            id: companyChosenCity.id,
-            name: companyChosenCity.name
+            id: +cityId,
+            name: cityName
           },
           district: {
-            id: companyChosenDistrict.id,
-            name: companyChosenDistrict.name
+            id: +districtId,
+            name: districtName
           },
           ward: {
-            id: companyChosenWard.id,
-            name: companyChosenWard.name
+            id: +wardId,
+            name: wardName
           }
         },
         company_name: data.companyName,
@@ -205,13 +230,13 @@ const MyAccount = (): JSX.Element => {
             />
 
             {/* New password */}
-            <InputWithLabel
+            {/* <InputWithLabel
               ref={register}
               label={t('myAccount:new_password_label')}
               name="newPassword"
               type="password"
               guide={t('myAccount:new_password_rule')}
-            />
+            /> */}
           </FormCard>
 
           <FormCard title={t('myAccount:business_info')}>
@@ -282,71 +307,65 @@ const MyAccount = (): JSX.Element => {
               type="text"
               placeholder={t('myAccount:company_street_placeholder')}
               defaultValue={user?.contact_address?.street || ''}
+              required
             />
 
-            <AddressSelect
-              cityProps={{
-                name: 'companyCityId',
-                register: register({
+            <div className="row">
+              <SelectWithLabel
+                onChange={handleCityChange}
+                name="companyCity"
+                ref={register({
                   required: t('myAccount:company_city_required') + ''
-                }),
-                options: companyCities,
-                currentValue: companyChosenCity?.id
-              }}
-              districtProps={{
-                name: 'companyDistrictId',
-                register: register({
+                })}
+                containerClass="col-md-4"
+                required
+                label={t('common:city_select_label')}>
+                <option value="">{t('common:city_select_placeholder')}</option>
+
+                {cities.map(({ id, name }) => (
+                  <option key={id} value={name + '__' + id}>
+                    {name}
+                  </option>
+                ))}
+              </SelectWithLabel>
+
+              <SelectWithLabel
+                onChange={handleDistrictChange}
+                name="companyDistrict"
+                ref={register({
                   required: t('myAccount:company_district_required') + ''
-                }),
-                options: companyDistricts,
-                currentValue: companyChosenDistrict?.id
-              }}
-              wardProps={{
-                name: 'companyWardId',
-                register: register({
+                })}
+                containerClass="col-md-4"
+                required
+                label={t('common:district_select_label')}
+                disabled={!districts.length || loadingDistricts}>
+                <option value="">{t('common:district_select_placeholder')}</option>
+
+                {districts.map(({ id, name }) => (
+                  <option key={id} value={name + '__' + id}>
+                    {name}
+                  </option>
+                ))}
+              </SelectWithLabel>
+
+              <SelectWithLabel
+                name="companyWard"
+                ref={register({
                   required: t('myAccount:company_Ward_required') + ''
-                }),
-                options: companyWards,
-                currentValue: companyChosenWard?.id
-              }}
-            />
-          </FormCard>
+                })}
+                containerClass="col-md-4"
+                required
+                label={t('common:ward_select_label')}
+                disabled={!wards.length || loadingDistricts || loadingWards}>
+                <option value="">{t('common:ward_select_placeholder')}</option>
 
-          <FormCard title={t('myAccount:delivery_info')}>
-            <InputWithLabel
-              ref={register}
-              label={t('myAccount:delivery_street_label')}
-              type="text"
-              name="deliveryStreet"
-              guide={t('myAccount:delivery_street_guide')}
-            />
-
-            <AddressSelect
-              cityProps={{
-                name: 'deliveryCityId',
-                register: register({
-                  required: t('myAccount:delivery_city_required') + ''
-                }),
-                options: deliveryCities,
-                currentValue: deliveryChosenCity?.id
-              }}
-              districtProps={{
-                name: 'deliveryDistrictId',
-                register: register({
-                  required: t('myAccount:delivery_district_required') + ''
-                }),
-                options: deliveryDistricts,
-                currentValue: deliveryChosenDistrict?.id
-              }}
-              wardProps={{
-                name: 'deliveryWardId',
-                register: register({
-                  required: t('myAccount:delivery_Ward_required') + ''
-                }),
-                options: deliveryWards,
-                currentValue: deliveryChosenWard?.id
-              }}
-            />
+                {wards.map(({ id, name }) => (
+                  <option key={id} value={name + '__' + id}>
+                    {name}
+                  </option>
+                ))}
+              </SelectWithLabel>
+            </div>
           </FormCard>
 
           <div className="col-12 d-flex justify-content-center">
@@ -356,6 +375,8 @@ const MyAccount = (): JSX.Element => {
           </div>
         </form>
       </ProfileLayout>
+
+      <LoadingBackdrop open={loadingUpdateUser} />
 
       <Footer />
     </>

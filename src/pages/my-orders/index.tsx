@@ -70,16 +70,16 @@ const OrderItem = (props: any) => {
 
   const { t } = useTranslation(['myOrders']);
 
-  const { callBack } = props;
+  const { callBack, flag } = props;
   return (
     <div className="my-orders__item p-3 my-1">
       <div className="my-orders__info">
         <h2 className="h4 d-flex align-items-center">
-          <Link href={`/my-orders/${props.id}`}>
+          <Link href={`/my-orders/${props.orderNo}`}>
             <a className="mr-2">#{props.orderNo}</a>
           </Link>
 
-          {props.state === 'cancel' && (
+          {flag === 25 && (
             <div className="my-orders__invoice">
               <span className="badge badge-danger">{t('myOrders:canceled')}</span>
             </div>
@@ -106,7 +106,7 @@ const OrderItem = (props: any) => {
       <div className="my-orders__invoice">
         <button className="btn btn-outline-info btn-sm">{t('myOrders:report')}</button>
 
-        {props.state !== 'cancel' ? (
+        {flag === 25 ? (
           <button className="btn btn-outline-danger btn-sm" onClick={() => setOpen(true)}>
             {t('myOrders:cancel_order')}
           </button>

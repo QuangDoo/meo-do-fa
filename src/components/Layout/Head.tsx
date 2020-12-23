@@ -11,7 +11,7 @@ export default function Head(props) {
     <HeadNext>
       <meta httpEquiv="Content-Type" content="text/html; charset=UTF-8" />
       <title>Medofa</title>
-      <link href="https://web.medofa.bedigital.vn/" rel="canonical" />
+      <link href="https://medofa.com/" rel="canonical" />
       <meta
         content="Medofa là cổng thông tin hàng đầu giúp nhà thuốc, phòng khám, và bác sĩ tra cứu thuốc tây, hoạt chất, công dụng, giá thuốc, đặt thuốc nhanh và tiết kiệm nhất. Đây là chợ sỉ thuốc tây với đa dạng các loại thuốc từ các công ty dược phẩm tên tuổi và uy tín."
         name="description"
@@ -47,7 +47,7 @@ export default function Head(props) {
         rel="apple-touch-icon"
         href="/icons/apple-icon-120x120-medofa-manifest-20129.png"></link>
       <meta name="theme-color" content="#1476fb" />
-
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-95PXEWD1KY"></script>
       {props.children}
     </HeadNext>
   );

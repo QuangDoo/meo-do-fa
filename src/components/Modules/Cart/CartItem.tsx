@@ -35,13 +35,17 @@ function CartItem(props: Props): JSX.Element {
 
   const [quantity, setQuantity] = useState<number>(props.quantity);
 
-  const { refetchCart } = useCart();
+  // Refetch cart on update cart complete
+  const { refetchCart, loading: loadingCart } = useCart({
+    onCompleted: () => {
+      toast.success(t('cart:update_success'));
+    }
+  });
 
   const [updateCart, { loading: updatingCart }] = useMutationAuth<UpdateCartData, UpdateCartVars>(
     UPDATE_CART,
     {
       onCompleted: () => {
-        toast.success(t('cart:update_success'));
         refetchCart();
       },
       onError: (error) => {
@@ -58,9 +62,7 @@ function CartItem(props: Props): JSX.Element {
     DELETE_CART,
     {
       onCompleted: () => {
-        toast.success(t('cart:delete_success'));
         refetchCart();
-        closeDeleteModal();
       },
       onError: (error) => {
         const errorCode = error.graphQLErrors?.[0].extensions?.code;
@@ -87,6 +89,7 @@ function CartItem(props: Props): JSX.Element {
         _id: props._id
       }
     });
+    closeDeleteModal();
   };
 
   const handlePlusClick = () => {
@@ -166,9 +169,9 @@ function CartItem(props: Props): JSX.Element {
                 </a>
               </Link>
 
-              <div className="cart-item__package">
+              {/* <div className="cart-item__package">
                 <small>{props.uom_name}</small>
-              </div>
+              </div> */}
             </div>
           </div>
 
@@ -226,7 +229,7 @@ function CartItem(props: Props): JSX.Element {
         price={props.price}
       />
 
-      <LoadingBackdrop open={updatingCart || deletingCart} />
+      <LoadingBackdrop open={updatingCart || deletingCart || loadingCart} />
     </div>
   );
 }
