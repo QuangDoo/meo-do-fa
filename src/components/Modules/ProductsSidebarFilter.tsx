@@ -85,7 +85,7 @@ const ProductsSidebarFilter = (props: Props) => {
           .map(({ name, id, categorySub }) => (
             <div key={id} className="mb-2">
               <Link href={`/products?category=${id}`}>
-                <Dropdown label={name}>
+                <Dropdown initialShow={false} label={name}>
                   <div className="mb-3">
                     {categorySub
                       .slice()
@@ -113,14 +113,7 @@ const ProductsSidebarFilter = (props: Props) => {
       <hr className="hr my-3" />
 
       <Dropdown label={t('manufacturer')}>
-        <div className="mb-2">
-          <Link href="/products">
-            <a
-              className={clsx('products__filter-category', !router.query.manufacturer && 'active')}>
-              {t('all')}
-            </a>
-          </Link>
-        </div>
+        <div className="mb-2"></div>
 
         {manufacturers
           .slice()

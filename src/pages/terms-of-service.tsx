@@ -81,10 +81,9 @@ const TermsOfService = () => {
             trên Sàn Giao Dịch của Medofa, bao gồm cả thông tin, hình ảnh đăng tải, nội dung sản
             phẩm được cập nhật liên tục từ Công ty TNHH Dược phẩm Dayton. Công ty TNHH Dược phẩm
             Dayton sẽ nhận được đầy đủ hỗ trợ qua hộp thư{' '}
-            <a href="mailto:hotro@medofa.com">
-              <u>hotro@medofa.com</u>
+            <a href="mailto:info@medofa.com">
+              <u>info@medofa.com</u>
             </a>{' '}
-            Chấm Dứt
             <br /> Công ty TNHH Dược phẩm Dayton có thể chấm dứt giao kết hợp đồng với Medofa bất cứ
             lúc nào mà không bị xem là vi phạm hợp đồng nếu đã thông báo cho Medofa ít nhất 14 (mười
             bốn) ngày trước ngày dự kiến chấm dứt.

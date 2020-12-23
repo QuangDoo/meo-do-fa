@@ -150,6 +150,7 @@ function Products(): JSX.Element {
                     manufacturers={manufacturers}
                   />
                 </div>
+
                 <h1 className="products__header text-capitalize mb-3">{title}</h1>
                 {productsLoading ? (
                   <b></b>

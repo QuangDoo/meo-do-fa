@@ -225,7 +225,11 @@ const RegisterForm = (props: WithTranslation): JSX.Element => {
               <Trans
                 i18nKey="register:checkbox_acceptTerms_label"
                 components={{
-                  Link: <LinkText href="/terms-of-service"> </LinkText>
+                  Link: (
+                    <a href="/terms-of-use" target="_blank">
+                      {' '}
+                    </a>
+                  )
                 }}
               />
               <span className="text-danger"> *</span>
