@@ -113,7 +113,18 @@ const ProductsSidebarFilter = (props: Props) => {
       <hr className="hr my-3" />
 
       <Dropdown label={t('manufacturer')}>
-        <div className="mb-2"></div>
+        <div className="input-group form__input-group mb-3">
+          <i className="fas fa-search form__input-icon" />
+          <input
+            type="search"
+            className="form-control form-control-sm search-input"
+            placeholder={t('search')}
+            aria-label="search"
+            // value={value}
+            // onChange={handleChange}
+            // onFocus={() => setIsFocused(true)}
+          />
+        </div>
 
         {manufacturers
           .slice()
