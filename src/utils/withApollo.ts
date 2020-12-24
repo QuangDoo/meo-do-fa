@@ -23,6 +23,8 @@ const getURI = () => {
   }
 
   return `https://${publicRuntimeConfig.GRAPHQL_GATEWAY_EXT}`;
+
+  // return "https://192.168.1.30:3979/";
 };
 
 const httpLink = new HttpLink({

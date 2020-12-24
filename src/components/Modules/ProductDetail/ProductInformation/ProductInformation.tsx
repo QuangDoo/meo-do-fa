@@ -1,5 +1,7 @@
 import Link from 'next/link';
 import React from 'react';
+import { Category } from 'src/graphql/category/category.query';
+import { Manufacturer } from 'src/graphql/manufacturers/manufacturers.query';
 
 import ProductDetailInfor from '../ProductDetaiInfor';
 import ProducerInformation from './ProducerInformation';
@@ -19,8 +21,8 @@ type PropsType = {
   is_quick_invoice: string;
   is_exclusive: string;
   is_vn: string;
+  categories: Category[];
   manufacturers: Display_name;
-  categories: Display_name[];
   ingredients: Display_name[];
   info?: string;
   indication?: string;
