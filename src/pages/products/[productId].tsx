@@ -6,6 +6,7 @@ import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
 import Nav from 'src/components/Layout/Nav';
+import SimpleBreadcrumbs from 'src/components/Modules/BreadCrum/BreadCrum';
 import ProductDetailComponent from 'src/components/Modules/ProductDetail/ProductDetail';
 import { GET_PRODUCT } from 'src/graphql/product/product.query';
 import withApollo from 'src/utils/withApollo';
@@ -34,7 +35,7 @@ function ProductDetail(): JSX.Element {
       <Header />
 
       <Nav />
-
+      <SimpleBreadcrumbs />
       <ProductDetailComponent {...(dataProduct?.getProduct || [])} />
 
       <Footer />

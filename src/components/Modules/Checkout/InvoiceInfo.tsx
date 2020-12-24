@@ -10,6 +10,7 @@ import { Ward } from 'src/graphql/address/getWards';
 import useUser from 'src/hooks/useUser';
 import { ReactHookFormRegister } from 'src/types/ReactHookFormRegister';
 
+import ProductInvoice from '../ProductInvoice/productInvoice';
 import BillingExport from './BillingExport';
 import InputCard from './InputCard';
 
@@ -124,7 +125,8 @@ const InvoiceInfo = (props: Props): JSX.Element => {
             })}
             label={t('checkout:district_label')}
             labelClass="required"
-            containerClass="col-md-4">
+            containerClass="col-md-4"
+            disabled={!districts.length}>
             {user?.contact_address?.district.name && (
               <option value="">{user?.contact_address?.district.name}</option>
             )}
@@ -145,7 +147,8 @@ const InvoiceInfo = (props: Props): JSX.Element => {
             })}
             label={t('checkout:ward_label')}
             labelClass="required"
-            containerClass="col-md-4">
+            containerClass="col-md-4"
+            disabled={!wards.length}>
             {user?.contact_address?.ward.name && (
               <option value="">{user?.contact_address?.ward.name}</option>
             )}

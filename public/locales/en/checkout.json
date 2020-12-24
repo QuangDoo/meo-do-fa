@@ -75,5 +75,6 @@
   "seconds_plural": "seconds",
   "reward_type_discount": "Discount",
   "reward_type_product": "Gift",
-  "coupon_code_required": "Please provide a coupon code"
+  "coupon_code_required": "Please provide a coupon code",
+  "list_products_have_invoice":"Product list with invoice"
 }

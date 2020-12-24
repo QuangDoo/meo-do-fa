@@ -350,7 +350,7 @@ const OrderDetails = () => {
                       {t('myOrders:report')}
                     </Button>
                   </Link>
-                ) : orderDetail?.getOrderDetail.state === 'cancel' ? (
+                ) : orderDetail?.getOrderDetail?.flag === 25 ? (
                   <Button
                     size="small"
                     startIcon={<DeleteForeverIcon />}

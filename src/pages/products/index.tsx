@@ -11,6 +11,7 @@ import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
 import Loading from 'src/components/Layout/Loading';
 import Nav from 'src/components/Layout/Nav';
+import SimpleBreadcrumbs from 'src/components/Modules/BreadCrum/BreadCrum';
 import FilterTags from 'src/components/Modules/FilterTags';
 import Pagination from 'src/components/Modules/Pagination';
 import ProductCard from 'src/components/Modules/ProductCard';
@@ -135,6 +136,7 @@ function Products(): JSX.Element {
       <Header />
 
       <Nav />
+
       {categoriesLevel.length !== 0 ? (
         <div className="products container mobile-content my-3 my-sm-5">
           <div className="d-flex flex-nowrap justify-content-between">
@@ -150,6 +152,7 @@ function Products(): JSX.Element {
                     manufacturers={manufacturers}
                   />
                 </div>
+                <SimpleBreadcrumbs />
                 <h1 className="products__header text-capitalize mb-3">{title}</h1>
                 {productsLoading ? (
                   <b></b>
