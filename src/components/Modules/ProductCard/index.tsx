@@ -37,7 +37,7 @@ const ProductCard = (props: Props) => {
             <Link href={`/products/${props.slug}`}>
               <a>
                 <div className="product-card__image mb-3 lozad">
-                  <Image alt={props.id} src={props.image_256} layout="fill" objectFit="cover" />
+                  <Image src={props.image_256} layout="fill" objectFit="cover" />
                 </div>
               </a>
             </Link>
