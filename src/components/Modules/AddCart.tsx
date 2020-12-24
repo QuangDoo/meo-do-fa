@@ -12,7 +12,7 @@ type Props = WithTranslation & {
   size?: 'normal' | 'large';
   quantity?: number;
   handleChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  productId?: string;
+  productId?: number;
   price?: number;
   name?: string;
   product_variant_ids?: string[];

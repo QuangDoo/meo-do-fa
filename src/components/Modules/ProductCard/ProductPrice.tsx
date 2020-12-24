@@ -22,7 +22,7 @@ export const ProductPrice = (props: ProductPriceProps) => {
       {priceIsDifferent && (
         <span className="product-card__old-price">
           <PriceText price={props.standard_price} />
-          <span className="unit">đ</span>
+          <span className="unit">{t('common:vnd')}</span>
         </span>
       )}
     </>
