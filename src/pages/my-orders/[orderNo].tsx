@@ -239,7 +239,26 @@ const OrderDetails = () => {
 
   const { orderNo } = router.query;
 
-  const [activeStep, setActiveStep] = useState(0);
+  const [activeStep, setActiveStep] = useState(-1);
+
+  const getActiveStep = (flag) => {
+    switch (flag) {
+      case 10:
+        return setActiveStep(0);
+      case 20:
+        return setActiveStep(1);
+      case 25:
+        return setActiveStep(-1);
+      case 30:
+        return setActiveStep(2);
+      case 40:
+        return setActiveStep(3);
+      case 80:
+        return setActiveStep(4);
+      default:
+        return setActiveStep(-1);
+    }
+  };
 
   const steps = [
     {
@@ -293,6 +312,10 @@ const OrderDetails = () => {
     setOpen(true);
   };
 
+  useEffect(() => {
+    orderDetail?.getOrderDetail && getActiveStep(orderDetail?.getOrderDetail?.flag);
+  }, [orderDetail]);
+
   const { user } = useUser();
 
   return (
@@ -318,14 +341,26 @@ const OrderDetails = () => {
                 <Divider />
               </Box>
 
-              <Stepper alternativeLabel activeStep={activeStep} connector={<CustomStepConnector />}>
-                {steps.map((step) => (
-                  <Step key={step.text}>
-                    <StepLabel icon={step.icon} StepIconComponent={CustomStepIcon}>
-                      {step.text}
+              <Stepper
+                className="cancel"
+                alternativeLabel
+                activeStep={activeStep}
+                connector={<CustomStepConnector />}>
+                {orderDetail?.getOrderDetail?.flag === 25 && (
+                  <Step>
+                    <StepLabel icon={<Receipt />} StepIconComponent={CustomStepIcon} error>
+                      {t('myOrders:canceled')}
                     </StepLabel>
                   </Step>
-                ))}
+                )}
+                {orderDetail?.getOrderDetail?.flag !== 25 &&
+                  steps.map((step) => (
+                    <Step key={step.text}>
+                      <StepLabel icon={step.icon} StepIconComponent={CustomStepIcon}>
+                        {step.text}
+                      </StepLabel>
+                    </Step>
+                  ))}
               </Stepper>
 
               <Box my={2}>
@@ -336,7 +371,8 @@ const OrderDetails = () => {
                 <Typography>
                   {t('myOrders:expected_date')}{' '}
                   <strong>
-                    {orderDetail?.getOrderDetail?.expected_date &&
+                    {orderDetail?.getOrderDetail?.flag !== 25 &&
+                      orderDetail?.getOrderDetail?.expected_date &&
                       new Date(orderDetail?.getOrderDetail?.expected_date).toLocaleDateString(
                         'en-GB'
                       )}
@@ -356,12 +392,16 @@ const OrderDetails = () => {
                       {t('myOrders:report')}
                     </Button>
                   </Link>
-                ) : orderDetail?.getOrderDetail.state === 'cancel' ? (
+                ) : orderDetail?.getOrderDetail?.flag === 25 ? (
                   <Button
+                    style={{
+                      color: 'red',
+                      borderColor: 'red'
+                    }}
                     size="small"
                     startIcon={<DeleteForeverIcon />}
                     variant="outlined"
-                    color="secondary"
+                    color="inherit"
                     disabled>
                     {t('myOrders:canceled')}
                   </Button>
@@ -375,7 +415,6 @@ const OrderDetails = () => {
                     {t('myOrders:cancel_the_order')}
                   </Button>
                 )}
-
                 <ConfirmCancelOrder
                   open={open}
                   onClose={() => setOpen(false)}
@@ -451,7 +490,7 @@ const OrderDetails = () => {
                   {orderDetail?.getOrderDetail.order_lines.map((product) => (
                     <TableRow key={product.id}>
                       <CustomBodyCell textAlign="left">
-                        <Link href={`/products/${product.id}`}>
+                        <Link href={`/products/${product.product.slug}`}>
                           <a>{product.name}</a>
                         </Link>
                       </CustomBodyCell>
