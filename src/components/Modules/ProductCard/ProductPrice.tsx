@@ -10,7 +10,7 @@ type ProductPriceProps = {
 
 export const ProductPrice = (props: ProductPriceProps) => {
   const { t } = useTranslation('common');
-  const priceIsDifferent = props.standard_price && props.price !== props.standard_price;
+  const priceIsDifferent = props.price !== props.standard_price;
 
   return (
     <>
@@ -19,12 +19,12 @@ export const ProductPrice = (props: ProductPriceProps) => {
         <span className="unit">{t('common:vnd')}</span>
       </span>
 
-      {/* {priceIsDifferent && (
+      {priceIsDifferent && (
         <span className="product-card__old-price">
           <PriceText price={props.standard_price} />
           <span className="unit">đ</span>
         </span>
-      )} */}
+      )}
     </>
   );
 };

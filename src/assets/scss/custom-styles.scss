@@ -50,6 +50,10 @@ button {
   text-transform: none;
 }
 
+.product-card .ribbon {
+  z-index: 1;
+}
+
 @media (min-width: 1200px) {
   .container,
   .container-sm,
@@ -74,6 +78,6 @@ button {
   padding: 0;
 }
 
-.Mui-error .makeStyles-stepIconRoot-6{
+.Mui-error .makeStyles-stepIconRoot-6 {
   background: linear-gradient(102.04deg, #c31e1e 0%, #f00 100%);
 }
