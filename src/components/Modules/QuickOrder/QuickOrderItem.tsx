@@ -8,12 +8,12 @@ import { ProductPrice } from '../ProductCard/ProductPrice';
 type Props = {
   image: string;
   productName: string;
-  productId: string;
+  productId: number;
   uom_name: string;
   price: number;
   standard_price: number;
   quantity: number;
-  _id: string;
+  _id: number;
   slug: string;
 };
 
@@ -47,7 +47,14 @@ function QuickOrderItem(props: Props): JSX.Element {
                   <ProductPrice price={props.price} standard_price={props.price} />
                 </div>
 
-                <QuantityInput productId={props._id} price={props.price} name={props.productName} />
+                <div className="cart-item__qty">
+                  <QuantityInput
+                    productId={props.productId}
+                    productPrice={props.price}
+                    productName={props.productName}
+                    productImg={props.image}
+                  />
+                </div>
               </div>
             </div>
           </div>

@@ -88,7 +88,14 @@ const ProductCard = (props: Props) => {
                   <ProductPrice price={discountedPrice} standard_price={props.list_price} />
                 </div>
 
-                <QuantityInput productId={props.id} price={props.list_price} name={props.name} />
+                <div className="product_qty">
+                  <QuantityInput
+                    productId={props.id}
+                    productPrice={props.list_price}
+                    productName={props.name}
+                    productImg={props.image_512}
+                  />
+                </div>
               </>
             ) : (
               <LoginToSeePrice />

@@ -10,6 +10,8 @@ import { GET_CATEGORIES_LEVEL, GetCategoriesLevelData } from 'src/graphql/catego
 import useCart from 'src/hooks/useCart';
 import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
 
+import LoadingBackdrop from './LoadingBackdrop';
+
 const Nav = () => {
   const isLoggedIn = useIsLoggedIn();
 

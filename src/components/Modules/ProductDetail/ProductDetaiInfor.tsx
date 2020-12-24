@@ -2,10 +2,10 @@ import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import React from 'react';
 import PriceText from 'src/components/Form/PriceText';
+import QuantityInput from 'src/components/Form/QuantityInput';
 import { ProductDetails } from 'src/graphql/product/product.query';
 import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
 
-import AddCart from '../AddCart';
 import LoginModal from '../LoginModal';
 import ProductBadge from '../ProductCard/ProductBadge';
 
@@ -89,7 +89,12 @@ const ProductDetailInfor = (props: ProductDetails): JSX.Element => {
         </div>
         <div className="product__status mb-4" />
         {!isLoggedIn ? null : (
-          <AddCart productId={props.id} price={props.list_price} name={props.name} />
+          <QuantityInput
+            productId={props.id}
+            productPrice={props.list_price}
+            productName={props.name}
+            productImg={props.image_512}
+          />
         )}
       </div>
     </div>

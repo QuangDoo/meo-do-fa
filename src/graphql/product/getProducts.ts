@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 export type Product = {
-  id: string;
+  id: number;
   name: string;
   price: number;
   list_price: number;
@@ -16,11 +16,11 @@ export type Product = {
   is_exclusive: boolean;
   slug: string;
   categories: {
-    id: string;
+    id: number;
     name: string;
   }[];
   manufacturer: {
-    id: string;
+    id: number;
     short_name: string;
   };
 };
