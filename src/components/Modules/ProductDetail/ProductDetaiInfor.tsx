@@ -39,7 +39,6 @@ type Display_name = {
   amount: string;
 };
 const ProductDetailInfor = (props: PropsType): JSX.Element => {
-  console.log(props);
   const isLoggedIn = useIsLoggedIn();
   const { t } = useTranslation(['common', 'productDetail']);
   return (

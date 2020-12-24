@@ -28,8 +28,6 @@ function CartItem(props: Props): JSX.Element {
       return total + promo.discount_percentage;
     }, 0);
 
-  console.log('item:', item);
-
   const discountedPrice = item.price * ((100 - totalDiscountAmount) / 100);
 
   const [open, setOpen] = useState(false);
