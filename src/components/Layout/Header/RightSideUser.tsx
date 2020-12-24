@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import NotiItem from 'src/components/Modules/Noti/NotiItem';
 import useNoti from 'src/hooks/useNoti';
 import useUser from 'src/hooks/useUser';
@@ -21,10 +21,10 @@ const RightSideUser = (): JSX.Element => {
 
   const notificationsData = notifications?.getNotify;
 
-  // useEffect(() => {
-  //   if (!notifications) return;
-  //   refetchNoti();
-  // }, [notifications]);
+  useEffect(() => {
+    if (!notifications) return;
+    refetchNoti();
+  }, [notifications]);
 
   function toggleShow() {
     setShow((show) => !show);
@@ -52,10 +52,8 @@ const RightSideUser = (): JSX.Element => {
           role="button"
           tabIndex={0}>
           <i className="far fa-bell header-right__icon" />
-          {notificationsData?.length > 0 ? (
+          {lengthNotifications?.length > 0 && (
             <span className="notification__counter">{lengthNotifications?.length}</span>
-          ) : (
-            <span className="notification__counter">0</span>
           )}
           {/* <span className="notification__counter">{notificationsData?.length}</span> */}
           <div

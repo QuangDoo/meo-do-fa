@@ -39,6 +39,7 @@ type Display_name = {
   amount: string;
 };
 const ProductDetailInfor = (props: PropsType): JSX.Element => {
+  console.log(props);
   const isLoggedIn = useIsLoggedIn();
   const { t } = useTranslation(['common', 'productDetail']);
   return (
@@ -85,16 +86,22 @@ const ProductDetailInfor = (props: PropsType): JSX.Element => {
             </>
           )}
         </div>
-        <div className="mb-3" hidden={props.categories?.length === 0}>
-          <div className="product__info-label">{t('productDetail:category')}</div>
-          {props.categories?.map(({ id, name }, index, arr) => (
-            <React.Fragment key={id}>
-              <Link href={`/products?category=${id}`}>
-                <a>{name}</a>
-              </Link>
-              {index < arr.length - 1 && '; '}
-            </React.Fragment>
-          ))}
+        <div className="mb-3">
+          {props?.categories?.length > 0 && (
+            <div className="product__info-label">{t('productDetail:category')}</div>
+          )}
+          {props?.categories &&
+            props?.categories?.map((item, index) => {
+              return (
+                <>
+                  <Link href={`/categories/${item.id}`}>
+                    <a className="text-capitalize" key={index}>
+                      {item.name}
+                    </a>
+                  </Link>
+                </>
+              );
+            })}
         </div>
         <div className="product__status mb-4" />
         {!isLoggedIn ? null : (

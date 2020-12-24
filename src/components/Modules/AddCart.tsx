@@ -24,14 +24,14 @@ function AddCart(props: Props) {
   const { cart, refetchCart, loading: loadingCart } = useCart();
 
   useEffect(() => {
-    if (!cart) return;
+    if (!cart || !productId) return;
 
     const thisProduct = cart.getCart.carts.find((product) => product.productId === productId);
 
     if (thisProduct) {
       setQuantity(thisProduct.quantity + '');
     }
-  }, [cart]);
+  }, [cart, productId]);
 
   const [quantity, setQuantity] = useState<string>('0');
 
@@ -85,6 +85,7 @@ function AddCart(props: Props) {
           <button className="btn btn-sm qty__button qty__button--minus" onClick={handleMinus}>
             <i className="fas fa-minus" />
           </button>
+
           <input
             type="tel"
             className="form-control px-1 no-spinner text-center qty__input"

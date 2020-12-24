@@ -2,7 +2,7 @@ import { gql } from '@apollo/client';
 
 import { CouponStatus } from '../user/getCouponsByUser';
 
-export type CouponType = 'discount' | 'product' | 'free_shipping';
+export type RewardType = 'discount' | 'product' | 'free_shipping';
 
 export type GetUsedCouponsData = {
   getUsedCoupon: {
@@ -12,7 +12,7 @@ export type GetUsedCouponsData = {
     state: CouponStatus;
     program: {
       name: string;
-      reward_type: CouponType;
+      reward_type: RewardType;
     };
   }[];
 };

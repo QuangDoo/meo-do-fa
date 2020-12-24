@@ -71,6 +71,24 @@ const OrderItem = (props: any) => {
   const { t } = useTranslation(['myOrders']);
 
   const { callBack, flag } = props;
+
+  const getBadge = {
+    10: { color: 'info', tran: t('myOrders:wait_for_confirm') },
+    20: { color: 'success', tran: t('myOrders:confirmed') },
+    25: { color: 'danger', tran: t('myOrders:canceled') },
+    30: { color: 'secondary', tran: t('myOrders:in_proceed') },
+    40: { color: 'warning', tran: t('myOrders:delivering') },
+    80: { color: 'primary', tran: t('myOrders:completed') }
+  };
+
+  const handleOpenClick = (flag) => {
+    if (flag === 40 || flag === 80) {
+      toast.error(t('myOrders:report'));
+      return;
+    }
+    setOpen(true);
+  };
+
   return (
     <div className="my-orders__item p-3 my-1">
       <div className="my-orders__info">
@@ -79,9 +97,9 @@ const OrderItem = (props: any) => {
             <a className="mr-2">#{props.orderNo}</a>
           </Link>
 
-          {flag === 25 && (
+          {flag && (
             <div className="my-orders__invoice">
-              <span className="badge badge-danger">{t('myOrders:canceled')}</span>
+              <span className={`badge badge-${getBadge[flag].color}`}>{getBadge[flag].tran}</span>
             </div>
           )}
         </h2>
@@ -106,12 +124,15 @@ const OrderItem = (props: any) => {
       <div className="my-orders__invoice">
         <button className="btn btn-outline-info btn-sm">{t('myOrders:report')}</button>
 
-        {flag === 25 ? (
-          <button className="btn btn-outline-danger btn-sm" onClick={() => setOpen(true)}>
+        {flag !== 25 ? (
+          <button className="btn btn-outline-danger btn-sm" onClick={() => handleOpenClick(flag)}>
             {t('myOrders:cancel_order')}
           </button>
         ) : (
-          <button className="btn btn-outline-danger btn-sm" disabled onClick={() => setOpen(true)}>
+          <button
+            className="btn btn-outline-danger btn-sm"
+            disabled
+            onClick={() => handleOpenClick(flag)}>
             {t('myOrders:canceled')}
           </button>
         )}
@@ -137,6 +158,8 @@ const OrderList = (props: Props) => {
         pageSize: pageSize,
         flag: props.flag
       },
+      fetchPolicy: 'network-only',
+      notifyOnNetworkStatusChange: true,
       onError: (error) => {
         const errorCode = error.graphQLErrors?.[0]?.extensions?.code;
 

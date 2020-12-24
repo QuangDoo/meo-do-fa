@@ -20,22 +20,22 @@ const jobs = [
 
 const images = [
   {
-    imgUrl: 'https://career.thuocsi.vn/wp-content/uploads/2020/05/s4-300x225.png',
+    imgUrl: '/assets/images/no-image.jpg',
     title: 'life at Medofa',
     alt: 'life at Medofa'
   },
   {
-    imgUrl: 'https://career.thuocsi.vn/wp-content/uploads/2020/05/s3-300x225.png',
+    imgUrl: '/assets/images/no-image.jpg',
     title: 'life at Medofa',
     alt: 'life at Medofa'
   },
   {
-    imgUrl: 'https://career.thuocsi.vn/wp-content/uploads/2020/05/s2-300x225.png',
+    imgUrl: '/assets/images/no-image.jpg',
     title: 'life at Medofa',
     alt: 'life at Medofa'
   },
   {
-    imgUrl: 'https://career.thuocsi.vn/wp-content/uploads/2020/05/s1-300x225.png',
+    imgUrl: '/assets/images/no-image.jpg',
     title: 'life at Medofa',
     alt: 'life at Medofa'
   }
@@ -54,7 +54,7 @@ function Career(props): JSX.Element {
     setTempJobs(temp);
   };
   const imgUrl = `/assets/images/drugstore2.jpg`;
-  const rightImgUrl = `https://career.thuocsi.vn/wp-content/uploads/2020/04/thuocsi_example1-1-1024x683.jpg`;
+  const rightImgUrl = `/assets/images/no-image.jpg`;
 
   return (
     <>
@@ -70,7 +70,7 @@ function Career(props): JSX.Element {
         <div className="row">
           <div className="col text-center m-5">
             <h3 className="text-primary">Interested?</h3>
-            <a href="mailto:recruitment@thuocsi.vn" className="btn btn-primary">
+            <a href="mailto:info@medofa.com" className="btn btn-primary">
               Email us now
             </a>
           </div>

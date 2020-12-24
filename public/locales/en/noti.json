@@ -3,6 +3,11 @@
    "mark_as_read": "Mark read all",
    "time":"en",
    "is_noty": "No notifications available.",
-  
-   "see_all_noti": "See all notifications"
+   "see_all_noti": "See all notifications",
+   "10": "Your order #{{description}} has been received",
+   "20": "Your order #{{description}} has been confirmed",
+   "30": "Your order #{{description}} has been processed",
+   "40": "Your order #{{description}} is being delivered",
+   "80":"Your order #{{description}} has been successfully delivered",
+   "25":"Your order #{{description}} has been deleted"
 }

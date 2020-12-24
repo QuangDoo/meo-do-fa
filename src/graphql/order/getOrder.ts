@@ -31,12 +31,14 @@ export type GetOrderDetailData = {
       product: {
         name: string;
         list_price: number;
+        slug: string;
       };
       state: string;
     }[];
     amount_total: number;
     amount_tax: number;
     amount_untaxed: number;
+    flag: number;
   };
 };
 
@@ -44,7 +46,27 @@ export type GetOrderDetailVars = {
   orderNo: string;
 };
 
-export const GET_ORDER_DETAIL = gql`
+export const GET_CART = gql`
+  query {
+    getCart {
+      carts {
+        _id
+        quantity
+        productId
+        productName
+        price
+        oldPrice
+        product {
+          image_512
+        }
+      }
+      totalPrice
+      totalQty
+    }
+  }
+`;
+
+export const GET_ORDER = gql`
   query getOrderDetail($orderNo: String!) {
     getOrderDetail(orderNo: $orderNo) {
       id
@@ -57,6 +79,7 @@ export const GET_ORDER_DETAIL = gql`
       order_line
       partner_shipping_id
       state
+      flag
       partner_shipping {
         name
         street
@@ -75,12 +98,14 @@ export const GET_ORDER_DETAIL = gql`
         product {
           name
           list_price
+          slug
         }
         state
       }
       amount_total
       amount_tax
       amount_untaxed
+      flag
     }
   }
 `;
