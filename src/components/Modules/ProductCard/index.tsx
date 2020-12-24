@@ -85,14 +85,13 @@ const ProductCard = ({ t, ...props }: Props): JSX.Element => {
             {isLoggedIn ? (
               <>
                 <div className="mb-2">
-                  <ProductPrice
-                    price={props.list_price}
-                    standard_price={props.standard_price}
-                    sale_price={props.sale_price}
-                  />
+                  <ProductPrice list_price={props.list_price} sale_price={props.sale_price} />
                 </div>
-
-                <QuantityInput productId={props.id} price={props.list_price} name={props.name} />
+                {props.sale_price ? (
+                  <QuantityInput productId={props.id} price={props.sale_price} name={props.name} />
+                ) : (
+                  <QuantityInput productId={props.id} price={props.list_price} name={props.name} />
+                )}
               </>
             ) : (
               <LoginToSeePrice />

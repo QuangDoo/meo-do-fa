@@ -4,45 +4,43 @@ import React from 'react';
 import PriceText from 'src/components/Form/PriceText';
 
 type ProductPriceProps = {
-  price: number;
-  standard_price?: number;
+  list_price: number;
   sale_price?: number;
 };
 
 export const ProductPrice = (props: ProductPriceProps) => {
   const { t } = useTranslation('common');
-  const priceIsDifferent = props.standard_price && props.price !== props.standard_price;
-
-  let promotionPrice = props.sale_price && props.price !== props.sale_price;
-  promotionPrice = Number(promotionPrice) === 0 ? null : promotionPrice;
 
   return (
     <>
-      {promotionPrice ? (
+      {props.sale_price ? (
         <>
-          <span className={clsx('product-card__price', promotionPrice && 'mr-2')}>
+          <span className="product-card__price">
             <PriceText price={props.sale_price} />
             <span className="unit">{t('common:vnd')}</span>
           </span>
-          <span className="product-card__old-price">
-            <PriceText price={props.price} />
+          <span className="product-card__old-price ml-2">
+            <PriceText price={props.list_price} />
             <span className="unit">{t('common:vnd')}</span>
           </span>
         </>
       ) : (
-        <>
-          <span className={clsx('product-card__price', priceIsDifferent && 'mr-2')}>
-            <PriceText price={props.price} />
-            <span className="unit">{t('common:vnd')}</span>
-          </span>
-          {/* {priceIsDifferent && (
-            <span className="product-card__old-price">
-              <PriceText price={props.standard_price} />
-              <span className="unit">đ</span>
-            </span>
-          )} */}
-        </>
+        <span className="product-card__price">
+          <PriceText price={props.list_price} />
+          <span className="unit">{t('common:vnd')}</span>
+        </span>
       )}
+      {/* <span className={clsx('product-card__price', priceIsDifferent && 'mr-1')}>
+        <PriceText price={props.price} />
+        <span className="unit">{t('common:vnd')}</span>
+      </span>
+
+      {priceIsDifferent && (
+        <span className="product-card__old-price">
+          <PriceText price={props.standard_price} />
+          <span className="unit">{t('common:vnd')}</span>
+        </span>
+      )} */}
     </>
   );
 };

@@ -4,12 +4,13 @@ import React, { useState } from 'react';
 interface Props {
   label: string;
   children: React.ReactNode;
+  initialShow?: boolean;
 }
 
 const Dropdown = (props: Props): JSX.Element => {
   const { label: header } = props;
-
-  const [show, setShow] = useState(true);
+  const { initialShow = true } = props;
+  const [show, setShow] = useState(initialShow);
 
   function toggleShow() {
     setShow((show) => !show);
