@@ -10,8 +10,8 @@ type Props = {
   productName: string;
   productId: string;
   uom_name: string;
-  price: number;
-  standard_price: number;
+  list_price: number;
+  sale_price?: number;
   quantity: number;
   _id: string;
   slug: string;
@@ -44,10 +44,22 @@ function QuickOrderItem(props: Props): JSX.Element {
             <div className="flex-1 flex-column">
               <div className="d-flex justify-content-between align-items-center">
                 <div>
-                  <ProductPrice price={props.price} standard_price={props.price} />
+                  <ProductPrice list_price={props.list_price} sale_price={props.sale_price} />
                 </div>
 
-                <QuantityInput productId={props._id} price={props.price} name={props.productName} />
+                {props.sale_price ? (
+                  <QuantityInput
+                    productId={props._id}
+                    price={props.sale_price}
+                    name={props.productName}
+                  />
+                ) : (
+                  <QuantityInput
+                    productId={props._id}
+                    price={props.list_price}
+                    name={props.productName}
+                  />
+                )}
               </div>
             </div>
           </div>

@@ -4,25 +4,41 @@ import React from 'react';
 import PriceText from 'src/components/Form/PriceText';
 
 type ProductPriceProps = {
-  price: number;
-  standard_price?: number;
+  list_price: number;
+  sale_price?: number;
 };
 
 export const ProductPrice = (props: ProductPriceProps) => {
   const { t } = useTranslation('common');
-  const priceIsDifferent = props.standard_price && props.price !== props.standard_price;
 
   return (
     <>
-      <span className={clsx('product-card__price', priceIsDifferent && 'mr-1')}>
+      {props.sale_price ? (
+        <>
+          <span className="product-card__price">
+            <PriceText price={props.sale_price} />
+            <span className="unit">{t('common:vnd')}</span>
+          </span>
+          <span className="product-card__old-price ml-2">
+            <PriceText price={props.list_price} />
+            <span className="unit">{t('common:vnd')}</span>
+          </span>
+        </>
+      ) : (
+        <span className="product-card__price">
+          <PriceText price={props.list_price} />
+          <span className="unit">{t('common:vnd')}</span>
+        </span>
+      )}
+      {/* <span className={clsx('product-card__price', priceIsDifferent && 'mr-1')}>
         <PriceText price={props.price} />
         <span className="unit">{t('common:vnd')}</span>
       </span>
 
-      {/* {priceIsDifferent && (
+      {priceIsDifferent && (
         <span className="product-card__old-price">
           <PriceText price={props.standard_price} />
-          <span className="unit">đ</span>
+          <span className="unit">{t('common:vnd')}</span>
         </span>
       )} */}
     </>
