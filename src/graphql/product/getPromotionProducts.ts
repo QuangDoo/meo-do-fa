@@ -2,8 +2,9 @@ import { gql } from '@apollo/client';
 import { Product } from 'src/graphql/product/getProducts';
 
 export type GetPromotionProductsData = {
-  getProductByConditions: {
-    Products: Product[];
+  getPrmotionProducts: {
+    products: Product[];
+    total: number;
   };
 };
 
@@ -13,9 +14,10 @@ export type GetPromotionProductsVars = {
 };
 
 export const GET_PROMOTION_PRODUCTS = gql`
-  query getProducts($page: Int!, $pageSize: Int!) {
-    getProductByConditions(page: $page, pageSize: $pageSize, condition: { order_type: "01" }) {
-      Products {
+  query($page: Int!, $pageSize: Int!) {
+    getPrmotionProducts(page: $page, pageSize: $pageSize) {
+      total
+      products {
         id
         name
         price

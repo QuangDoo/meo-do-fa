@@ -133,6 +133,7 @@ const MyAccount = (): JSX.Element => {
     onCompleted: () => {
       toast.success(t('myAccount:update_success'));
       refetchUser();
+      window.scrollTo(0, 0);
     }
   });
 

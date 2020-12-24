@@ -2,7 +2,6 @@ import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import React from 'react';
 import ScrollableTabsButtonAuto from 'src/components/ScrollableTabsButtonAuto/ScrollableTabsButtonAuto';
-
 // import Tab from '../../../Tab/Tab';
 
 type Display_name = {
@@ -12,8 +11,6 @@ type Display_name = {
 };
 
 type PropsType = {
-  manufacturers: Display_name;
-  categories: Display_name[];
   ingredients: Display_name[];
   info?: string;
   indication?: string;
@@ -31,27 +28,29 @@ const ProducerInformation = (props: PropsType): JSX.Element => {
   return (
     <div className="ml-3 mt-3 ">
       <div className="mb-3">
-        <div className="product__info-label">{t('ingredient')}</div>
-        <table className="table table-bordered table-sm">
-          <tbody>
-            <tr>
-              <th>{t('name')}</th>
-              <th>{t('concentrations')}</th>
-            </tr>
-            {props.ingredients?.map((item, index) => {
-              return (
-                <tr key={index}>
-                  <td>
-                    <Link href={`/ingredients/${item.id}`}>
-                      <a>{item.name}</a>
-                    </Link>
-                  </td>
-                  <td>{item.amount}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+        <div hidden={props.ingredients?.length === 0}>
+          <div className="product__info-label">{t('ingredient')}</div>
+          <table className="table table-bordered table-sm">
+            <tbody>
+              <tr>
+                <th>{t('name')}</th>
+                <th>{t('concentrations')}</th>
+              </tr>
+              {props.ingredients?.map((item, index) => {
+                return (
+                  <tr key={index}>
+                    <td>
+                      <Link href={`/ingredients/${item.id}`}>
+                        <a>{item.name}</a>
+                      </Link>
+                    </td>
+                    <td>{item.amount}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
         <ScrollableTabsButtonAuto
           info={props.info}
           indication={props.indication}
