@@ -76,6 +76,7 @@ const InvoiceInfo = (props: Props): JSX.Element => {
             containerClass="col-sm-8"
             placeholder={t('checkout:email_placeholder')}
             defaultValue={user?.email}
+            required
           />
         </div>
 
