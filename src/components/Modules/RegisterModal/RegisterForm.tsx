@@ -11,6 +11,7 @@ import Button from 'src/components/Form/Button';
 import Checkbox from 'src/components/Form/Checkbox';
 import Input from 'src/components/Form/Input';
 import LinkText from 'src/components/Form/LinkText';
+import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { useModalControlDispatch } from 'src/contexts/ModalControl';
 import { CREATE_USER, CreateUserData, CreateUserVars } from 'src/graphql/user/createUser';
 import useUser from 'src/hooks/useUser';
@@ -48,17 +49,20 @@ const RegisterForm = (props: WithTranslation): JSX.Element => {
 
   const { getUser } = useUser();
 
-  const [createUser] = useMutation<CreateUserData, CreateUserVars>(CREATE_USER, {
-    onCompleted: (data) => {
-      localStorage.setItem('token', data.createUser.token);
-      closeModal();
-      getUser();
-      router.reload();
-    },
-    onError: (error) => {
-      toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
+  const [createUser, { loading: creatingUser }] = useMutation<CreateUserData, CreateUserVars>(
+    CREATE_USER,
+    {
+      onCompleted: (data) => {
+        localStorage.setItem('token', data.createUser.token);
+        closeModal();
+        getUser();
+        router.reload();
+      },
+      onError: (error) => {
+        toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
+      }
     }
-  });
+  );
 
   // Watch account_type value, with initial state
   // This component re-renders when account_type changes
@@ -251,6 +255,8 @@ const RegisterForm = (props: WithTranslation): JSX.Element => {
           {t('register:submit_button_text')}
         </Button>
       </div>
+
+      <LoadingBackdrop open={creatingUser} />
     </form>
   );
 };

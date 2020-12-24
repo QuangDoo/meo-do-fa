@@ -8,10 +8,6 @@ import Header from '../components/Layout/Header';
 import Nav from '../components/Layout/Nav';
 
 const AboutUs = (): JSX.Element => {
-  const imgUrl1 = '/assets/images/about-us-2.jpg';
-  const imgUrl2 = '/assets/images/about-us-3.jpg';
-  const imgUrl3 = '/assets/images/about-us-1.jpg';
-
   const { t } = useTranslation(['common', 'aboutUs']);
 
   return (
@@ -28,11 +24,11 @@ const AboutUs = (): JSX.Element => {
         <h2 className="text-center my-5">{t('aboutUs:title')}</h2>
         <p>
           Medofa được thành lập vào 2020, là một giải pháp công nghệ ngành dược kết nối nhà máy, nhà
-          phân phối , nhà thuốc, dược sĩ nhằm hợp tạo mối liên kết trực tiếp và gia tăng doanh thu .
+          phân phối, nhà thuốc, dược sĩ nhằm hợp tạo mối liên kết trực tiếp và gia tăng doanh thu.
           <br />
           Phương châm của Medofa: <b>Medicines</b> , <b>Online</b>, <b>Fast</b>
         </p>
-        <p>4 tính năng cốt lõi hướng đến nhà thuốc</p>
+        <p>4 tính năng cốt lõi hướng đến nhà thuốc:</p>
         <ul className="list-unstyled list-group ml-3 mb-3">
           <li>1. Công cụ hỗ trợ dành cho dược sĩ</li>
           <li>2. Công cụ kết nối giữa nhà cung cấp và dược sĩ</li>
@@ -40,7 +36,7 @@ const AboutUs = (): JSX.Element => {
           <li>4. Công cụ quản lý bán hàng cho nhà thuốc</li>
         </ul>
         <p>
-          Với tầm nhìn năm 2025,là đơn vị số 1 về tại việt nam về kết nối giữa nhà cung cấp và nhà
+          Với tầm nhìn năm 2025, là đơn vị số 1 về tại Việt Nam về kết nối giữa nhà cung cấp và nhà
           thuốc thông qua thương mại điện tử.
         </p>
         <p>

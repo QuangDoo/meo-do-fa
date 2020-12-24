@@ -12,8 +12,8 @@ import NewsDetail from '../../components/Modules/News/NewsDetail';
 const data = {
   author: 'Admin',
   categories: [
-    { href: '/news', title: 'ĐỒNG HÀNH CÙNG THUOCSI' },
-    { href: '/news', title: 'TIN TỨC THUOCSI.VN' }
+    { href: '/news', title: 'ĐỒNG HÀNH CÙNG Medofa' },
+    { href: '/news', title: 'TIN TỨC Medofa.com' }
   ],
   imgUrl: 'https://i1.sndcdn.com/avatars-xpq4R8nRHWRL7NiZ-pyJFyg-t500x500.jpg',
   title:

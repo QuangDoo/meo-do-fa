@@ -53,33 +53,13 @@ function Cart(): JSX.Element {
           <div className="row">
             <div className="col-12 mb-3">
               <h1 className="h3">{t('cart:cart')}</h1>
-              {/* <small className="text-danger">
-                <i className="fas fa-exclamation-circle mr-1" />
-                Lưu ý: Giỏ hàng có sản phẩm khuyến mãi. Sau khi thanh toán, đơn hàng sẽ không thể
-                chỉnh sửa được.
-              </small> */}
             </div>
           </div>
           <div className="row">
             <div className="col-12 col-md-9 col-lg-9">
-              {/* <div className="elevated text-muted p-3 mb-4">
-                <i className="fas fa-star text-warning mr-1" />
-                Nhấp để đánh dấu sản phẩm quan trọng (giới hạn 20% tổng số sản phẩm, 1 sản phẩm đặt
-                nhiều cái cũng tính là 1)
-              </div> */}
               <div className="elevated cart__items mb-3">
                 {cart?.getCart.carts.map((item) => (
-                  <CartItem
-                    key={item._id}
-                    _id={item._id}
-                    image={item.product.image_512}
-                    price={item.price}
-                    standard_price={item.oldPrice}
-                    productId={item.productId}
-                    productName={item.productName}
-                    quantity={item.quantity}
-                    uom_name="Unit"
-                  />
+                  <CartItem item={item} key={item._id} />
                 ))}
               </div>
               <div className="elevated text-muted p-3 mb-4">
@@ -110,25 +90,8 @@ function Cart(): JSX.Element {
                           <PriceText price={cart?.getCart.totalPrice} />
                           <span className="unit">{t('common:vnd')}</span>
                         </div>
-                        {/* <div className="cart__old-total">
-                          90‰
-                          <span className="unit">đ</span>
-                        </div> */}
                       </div>
                     </div>
-                    {/* <div className="col-12 cart__info-promo">
-                      <div className="cart__info-item d-flex justify-content-between align-items-center">
-                        <i className="fas fa-tags mr-3" />
-
-                        <a
-                          className="cart__info-promo-code flex-grow-1 ins-init-condition-tracking"
-                          href="/cart/promo-codes">
-                          Dùng mã khuyến mãi
-                        </a>
-
-                        {/* <i className="fas fa-trash cart-item__remove" /> */}
-                    {/* </div> */}
-                    {/* </div> */}
 
                     {cart?.getCart.totalPrice > 0 && (
                       <div className="col-12">
