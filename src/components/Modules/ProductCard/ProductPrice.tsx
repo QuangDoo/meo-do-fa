@@ -11,9 +11,6 @@ type ProductPriceProps = {
 export const ProductPrice = (props: ProductPriceProps) => {
   const { t } = useTranslation('common');
 
-  let promotionPrice = props.sale_price && props.price !== props.sale_price;
-  promotionPrice = Number(promotionPrice) === 0 ? null : promotionPrice;
-
   return (
     <>
       {props.sale_price ? (

@@ -1,4 +1,5 @@
 import { useQuery } from '@apollo/client';
+import { useTranslation } from 'i18n';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
@@ -20,6 +21,7 @@ const pageSize = 20;
 
 const DealOfTheDay = () => {
   const router = useRouter();
+  const { t } = useTranslation(['dealOfTheDay']);
 
   const hotDealsPage = +router.query.hotdeals || 1;
   const otherDealsPage = +router.query.otherdeals || 1;
@@ -85,10 +87,10 @@ const DealOfTheDay = () => {
       {hotDealData?.getProductByConditions && (
         <div className="deals deals--mobile py-5">
           <div className="container px-0">
-            <h1 className="text-white mb-3">Deals of the day</h1>
+            <h1 className="text-white mb-3">{t('dealOfTheDay:title')}</h1>
             <div className="row no-gutters">
               <div className="col-12 mb-3 px-3 text-white">
-                <h3 className="text-white text-center my-3">Hot deals</h3>
+                <h3 className="text-white text-center my-3">{t('dealOfTheDay:hot_deals')}</h3>
               </div>
               <>
                 <div className="col-12">
@@ -123,7 +125,7 @@ const DealOfTheDay = () => {
           <div className="container px-0">
             <div className="row no-gutters">
               <div className="col-12 mb-3 px-3">
-                <h3 className="text-center">Other deals</h3>
+                <h3 className="text-center">{t('dealOfTheDay:other_deals')}</h3>
               </div>
               <>
                 <div className="col-12">
