@@ -1,4 +1,3 @@
-// import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import React from 'react';
 
@@ -11,15 +10,13 @@ type Props = {
   productId: number;
   uom_name: string;
   price: number;
-  standard_price: number;
+  sale_price: number;
   quantity: number;
   _id: number;
   slug: string;
 };
 
 function QuickOrderItem(props: Props): JSX.Element {
-  // const { t } = useTranslation(['cart', 'errors']);
-
   return (
     <div className="cart-item">
       <div className="row align-items-center">
@@ -44,7 +41,7 @@ function QuickOrderItem(props: Props): JSX.Element {
             <div className="flex-1 flex-column">
               <div className="d-flex justify-content-between align-items-center">
                 <div>
-                  <ProductPrice price={props.price} standard_price={props.price} />
+                  <ProductPrice price={props.price} sale_price={props.sale_price} />
                 </div>
 
                 <div className="cart-item__qty">
