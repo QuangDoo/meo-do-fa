@@ -35,7 +35,7 @@ function ProductDetail(): JSX.Element {
       <Header />
 
       <Nav />
-      <SimpleBreadcrumbs />
+      {/* <SimpleBreadcrumbs /> */}
       <ProductDetailComponent {...(dataProduct?.getProduct || [])} />
 
       <Footer />
