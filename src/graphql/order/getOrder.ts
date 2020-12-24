@@ -31,6 +31,7 @@ export type GetOrderDetailData = {
       product: {
         name: string;
         list_price: number;
+        slug: string;
       };
       state: string;
     }[];
@@ -78,6 +79,7 @@ export const GET_ORDER = gql`
       order_line
       partner_shipping_id
       state
+      flag
       partner_shipping {
         name
         street
@@ -96,6 +98,7 @@ export const GET_ORDER = gql`
         product {
           name
           list_price
+          slug
         }
         state
       }

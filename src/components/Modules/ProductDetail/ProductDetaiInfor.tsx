@@ -2,12 +2,16 @@ import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import React from 'react';
 import PriceText from 'src/components/Form/PriceText';
+import { Category } from 'src/graphql/category/category.query';
+import { Manufacturer } from 'src/graphql/manufacturers/manufacturers.query';
 import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
+import manufacturers from 'src/pages/manufacturers';
 
 import QuantityInput from '../../Form/QuantityInput';
 import AddCart from '../AddCart';
 import LoginModal from '../LoginModal';
 import ProductBadge from '../ProductCard/ProductBadge';
+import { ProductPrice } from '../ProductCard/ProductPrice';
 
 type PropsType = {
   name: string;
@@ -17,9 +21,8 @@ type PropsType = {
   is_quick_invoice: string;
   is_exclusive: string;
   is_vn: string;
+  categories: Category[];
   manufacturers: Display_name;
-  categories: Display_name[];
-  ingredients: Display_name[];
   info?: string;
   indication?: string;
   contraindication?: string;
@@ -27,6 +30,8 @@ type PropsType = {
   interaction?: string;
   preservation?: string;
   overdose?: string;
+  sale_price?: number;
+  standard_price?: number;
 };
 type Display_name = {
   name: string;
@@ -34,6 +39,7 @@ type Display_name = {
   amount: string;
 };
 const ProductDetailInfor = (props: PropsType): JSX.Element => {
+  console.log(props);
   const isLoggedIn = useIsLoggedIn();
   const { t } = useTranslation(['common', 'productDetail']);
   return (
@@ -48,8 +54,11 @@ const ProductDetailInfor = (props: PropsType): JSX.Element => {
             <div>
               <div className="product__price-group">
                 <span className="product__price">
-                  <PriceText price={props.list_price} />
-                  <span className="unit">{t('common:vnd')}</span>
+                  <ProductPrice
+                    price={props.list_price}
+                    standard_price={props.standard_price}
+                    sale_price={props.sale_price}
+                  />
                   {props?.is_quick_invoice && (
                     <small className="text-muted"> ({t('productDetail:vat_included')})</small>
                   )}
@@ -78,18 +87,21 @@ const ProductDetailInfor = (props: PropsType): JSX.Element => {
           )}
         </div>
         <div className="mb-3">
-          <div className="product__info-label">{t('productDetail:category')}</div>
-          {props?.categories?.map((item, index) => {
-            return (
-              <>
-                <Link href={`/categories/${item.id}`}>
-                  <a className="text-capitalize" key={index}>
-                    {item.name}
-                  </a>
-                </Link>
-              </>
-            );
-          })}
+          {props?.categories?.length > 0 && (
+            <div className="product__info-label">{t('productDetail:category')}</div>
+          )}
+          {props?.categories &&
+            props?.categories?.map((item, index) => {
+              return (
+                <>
+                  <Link href={`/categories/${item.id}`}>
+                    <a className="text-capitalize" key={index}>
+                      {item.name}
+                    </a>
+                  </Link>
+                </>
+              );
+            })}
         </div>
         <div className="product__status mb-4" />
         {!isLoggedIn ? null : (

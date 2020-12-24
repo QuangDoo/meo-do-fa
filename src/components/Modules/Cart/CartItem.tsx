@@ -2,38 +2,44 @@ import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
+import PriceText from 'src/components/Form/PriceText';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { DELETE_CART, DeleteCartData, DeleteCartVars } from 'src/graphql/cart/deleteCart.mutation';
+import { CartItem as CartItemProps } from 'src/graphql/cart/getCart';
 import { UPDATE_CART, UpdateCartData, UpdateCartVars } from 'src/graphql/cart/updateCart.mutation';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import useCart from 'src/hooks/useCart';
 import { useDebouncedEffect } from 'src/hooks/useDebouncedEffect';
 
-import { ProductPrice } from '../ProductCard/ProductPrice';
 import ConfirmDeleteModal from './ConfirmDeleteModal';
 
 type Props = {
-  image: string;
-  productName: string;
-  productId: string;
-  uom_name: string;
-  price: number;
-  standard_price: number;
-  quantity: number;
-  _id: string;
+  item: CartItemProps;
 };
 
 function CartItem(props: Props): JSX.Element {
   const { t } = useTranslation(['cart', 'errors']);
+
+  const { item } = props;
+
+  const totalDiscountAmount = item.promotions
+    .filter((promo) => promo.reward_type === 'discount')
+    .reduce((total, promo) => {
+      return total + promo.discount_percentage;
+    }, 0);
+
+  console.log('item:', item);
+
+  const discountedPrice = item.price * ((100 - totalDiscountAmount) / 100);
 
   const [open, setOpen] = useState(false);
 
   const openDeleteModal = () => setOpen(true);
   const closeDeleteModal = () => setOpen(false);
 
-  const [displayQuantity, setDisplayQuantity] = useState<string>(props.quantity + '');
+  const [displayQuantity, setDisplayQuantity] = useState<string>(item.quantity + '');
 
-  const [quantity, setQuantity] = useState<number>(props.quantity);
+  const [quantity, setQuantity] = useState<number>(item.quantity);
 
   // Refetch cart on update cart complete
   const { refetchCart, loading: loadingCart } = useCart({
@@ -86,7 +92,7 @@ function CartItem(props: Props): JSX.Element {
   const handleDeleteCart = () => {
     deleteCart({
       variables: {
-        _id: props._id
+        _id: item._id
       }
     });
     closeDeleteModal();
@@ -141,7 +147,7 @@ function CartItem(props: Props): JSX.Element {
       updateCart({
         variables: {
           inputs: {
-            _id: props._id,
+            _id: item._id,
             quantity: quantity
           }
         }
@@ -157,21 +163,17 @@ function CartItem(props: Props): JSX.Element {
         <div
           className="cart-item__image lozadloaded flex-shrink-0"
           style={{
-            backgroundImage: `url(${props.image})`
+            backgroundImage: `url(${item.product.image_512})`
           }}
         />
         <div className="flex-1 pl-2 pr-2">
           <div className="d-flex align-items-center">
             <div>
-              <Link href={'products/' + props.productId}>
-                <a className="cart-item__name" title={props.productName}>
-                  {props.productName}
+              <Link href={'products/' + item.product.slug}>
+                <a className="cart-item__name" title={item.productName}>
+                  {item.productName}
                 </a>
               </Link>
-
-              {/* <div className="cart-item__package">
-                <small>{props.uom_name}</small>
-              </div> */}
             </div>
           </div>
 
@@ -179,7 +181,15 @@ function CartItem(props: Props): JSX.Element {
             <div className="flex-1 flex-column">
               <div className="d-flex justify-content-between align-items-center">
                 <div>
-                  <ProductPrice price={props.price} standard_price={props.standard_price} />
+                  {discountedPrice !== item.price && (
+                    <>
+                      -{totalDiscountAmount}%{' '}
+                      <del className="text-muted">
+                        <PriceText price={item.price} />
+                      </del>{' '}
+                    </>
+                  )}
+                  <PriceText price={discountedPrice} />
                 </div>
 
                 <div className="cart-item__qty">
@@ -224,9 +234,9 @@ function CartItem(props: Props): JSX.Element {
         open={open}
         onClose={handleCloseModal}
         onConfirm={handleDeleteCart}
-        productName={props.productName}
-        image={props.image}
-        price={props.price}
+        productName={item.productName}
+        image={item.product.image_512}
+        price={item.price}
       />
 
       <LoadingBackdrop open={updatingCart || deletingCart || loadingCart} />

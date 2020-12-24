@@ -77,6 +77,7 @@ const InvoiceInfo = (props: Props): JSX.Element => {
             containerClass="col-sm-8"
             placeholder={t('checkout:email_placeholder')}
             defaultValue={user?.email}
+            required
           />
         </div>
 
@@ -119,17 +120,15 @@ const InvoiceInfo = (props: Props): JSX.Element => {
 
           {/* Select district */}
           <SelectWithLabel
+            disabled={!districts?.length}
             name="invoiceDistrict"
             ref={register({
               required: t('checkout:district_required') + ''
             })}
             label={t('checkout:district_label')}
             labelClass="required"
-            containerClass="col-md-4"
-            disabled={!districts.length}>
-            {user?.contact_address?.district.name && (
-              <option value="">{user?.contact_address?.district.name}</option>
-            )}
+            containerClass="col-md-4">
+            <option value="">{t('checkout:district_placeholder')}</option>
 
             {/* Map districts from chosen city */}
             {districts.map((district) => (
@@ -141,17 +140,15 @@ const InvoiceInfo = (props: Props): JSX.Element => {
 
           {/* Select ward */}
           <SelectWithLabel
+            disabled={!wards?.length}
             name="invoiceWard"
             ref={register({
               required: t('checkout:ward_required') + ''
             })}
             label={t('checkout:ward_label')}
             labelClass="required"
-            containerClass="col-md-4"
-            disabled={!wards.length}>
-            {user?.contact_address?.ward.name && (
-              <option value="">{user?.contact_address?.ward.name}</option>
-            )}
+            containerClass="col-md-4">
+            <option value="">{t('checkout:ward_placeholder')}</option>
 
             {/* Map wards from chosen district */}
             {wards.map((ward) => (

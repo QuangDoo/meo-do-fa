@@ -93,7 +93,6 @@ const CheckoutPage = () => {
   );
 
   const paymentMethods = paymentAndDeliveryData?.getPaymentAndDeliveryMethod.paymentMethods || [];
-  // const deliveryMethods = paymentAndDeliveryData?.getPaymentAndDeliveryMethod.deliveryMethods || [];
 
   // Counsel
   const { refetch: refetchCounsel, loading: loadingCounsel } = useQueryAuth<
@@ -105,7 +104,9 @@ const CheckoutPage = () => {
     },
     onError: (err) => {
       toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
-    }
+    },
+    fetchPolicy: 'network-only',
+    notifyOnNetworkStatusChange: true
   });
   // get product list invoice
   const { productsInvoice, errorProductInvoice } = useInvoiceCounse({
@@ -116,8 +117,7 @@ const CheckoutPage = () => {
   });
 
   useEffect(() => {
-    const timeOutId = setTimeout(() => refetchCounsel(), 0);
-    return () => clearTimeout(timeOutId);
+    refetchCounsel();
   }, []);
 
   // Form handler with default values

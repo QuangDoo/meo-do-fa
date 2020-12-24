@@ -12,7 +12,6 @@ type Props = {
 
 function ProductSidebar(props: Props): JSX.Element {
   const { t } = useTranslation(['productDetail']);
-  const imgUrl = 'https://news.thuocsi.vn/wp-content/uploads/2020/05/160x600.png';
   const links = [
     {
       itemImgUrl: 'https://hasaki.vn/images/graphics/img_quality_3.png',
