@@ -14,8 +14,6 @@ const ProductDetailInfor = (props: ProductDetails): JSX.Element => {
 
   const { t } = useTranslation(['common', 'productDetail']);
 
-  const discountedPrice = props.list_price * ((100 - props.discount_percentage) / 100);
-
   return (
     <div className="row">
       <div className="col-12">
@@ -36,7 +34,7 @@ const ProductDetailInfor = (props: ProductDetails): JSX.Element => {
           <div className="d-flex align-items-center">
             <div className="product__price-group">
               <span className="product__price">
-                <PriceText price={discountedPrice} />
+                <PriceText price={props.sale_price} />
                 <span className="unit">{t('common:vnd')}</span>
               </span>
 

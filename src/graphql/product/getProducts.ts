@@ -5,6 +5,7 @@ export type Product = {
   name: string;
   price: number;
   list_price: number;
+  sale_price: number;
   discount_percentage: number;
   image_128: string;
   image_256: string;
@@ -68,7 +69,7 @@ export const GET_PRODUCTS = gql`
         name
         price
         list_price
-        standard_price
+        sale_price
         discount_percentage
         image_128
         image_512

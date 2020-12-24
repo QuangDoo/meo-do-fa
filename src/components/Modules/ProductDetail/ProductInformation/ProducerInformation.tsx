@@ -11,27 +11,29 @@ const ProducerInformation = (props: ProductDetails): JSX.Element => {
   return (
     <div className="ml-3 mt-3 ">
       <div className="mb-3">
-        <div className="product__info-label">{t('ingredient')}</div>
-        <table className="table table-bordered table-sm">
-          <tbody>
-            <tr>
-              <th>{t('name')}</th>
-              <th>{t('concentrations')}</th>
-            </tr>
-            {props.ingredients?.map((item, index) => {
-              return (
-                <tr key={index}>
-                  <td>
-                    <Link href={`/ingredients/${item.id}`}>
-                      <a>{item.name}</a>
-                    </Link>
-                  </td>
-                  <td>{item.amount}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+        <div hidden={props.ingredients?.length === 0}>
+          <div className="product__info-label">{t('ingredient')}</div>
+          <table className="table table-bordered table-sm">
+            <tbody>
+              <tr>
+                <th>{t('name')}</th>
+                <th>{t('concentrations')}</th>
+              </tr>
+              {props.ingredients?.map((item, index) => {
+                return (
+                  <tr key={index}>
+                    <td>
+                      <Link href={`/ingredients/${item.id}`}>
+                        <a>{item.name}</a>
+                      </Link>
+                    </td>
+                    <td>{item.amount}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
         <ScrollableTabsButtonAuto
           info={props.info}
           indication={props.indication}

@@ -21,6 +21,7 @@ export type ProductDetails = {
   id: number;
   name: string;
   list_price: number;
+  sale_price: number;
   discount_percentage: number;
   is_primary: boolean;
   is_new: boolean;
@@ -61,6 +62,7 @@ export const GET_PRODUCT = gql`
       id
       name
       list_price
+      sale_price
       discount_percentage
       is_primary
       is_new

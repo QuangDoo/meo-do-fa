@@ -21,8 +21,6 @@ const ProductCard = (props: Props) => {
 
   const isDiscount = props.discount_percentage > 0;
 
-  const discountedPrice = props.list_price * ((100 - props.discount_percentage) / 100);
-
   return (
     <div className="product-card-container">
       <article className={clsx('product-card card mx-auto', isDiscount && 'deal-card')}>
@@ -85,7 +83,7 @@ const ProductCard = (props: Props) => {
             {isLoggedIn ? (
               <>
                 <div className="mb-2">
-                  <ProductPrice price={discountedPrice} standard_price={props.list_price} />
+                  <ProductPrice price={props.list_price} sale_price={props.sale_price} />
                 </div>
 
                 <div className="product_qty">
