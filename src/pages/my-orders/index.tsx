@@ -189,7 +189,16 @@ const OrderList = (props: Props) => {
           />
         ))
       ) : (
-        <div>{t('myOrders:no_orders')}</div>
+        <div className="col-12 m-3 text-center">
+          <p>{t('myOrders:no_orders')}</p>
+          <p>
+            <Link href="/products">
+              <a className="btn btn-primary" role="button">
+                {t('myOrders:back_to_products_page')}
+              </a>
+            </Link>
+          </p>
+        </div>
       )}
     </>
   );
@@ -236,92 +245,79 @@ const MyOrders = () => {
 
       <Nav />
 
-      {orderList.length !== 0 ? (
-        <ProfileLayout title={t('myOrders:my_orders')}>
-          {/* <p className="text-muted m-0">
-              {t('myOrders:vat_invoice')} <Link href="/invoice-export-rules">{t('myOrders:here')}</Link>.
-            </p> */}
-
-          <div className={classes.root}>
-            <AppBar position="static" color="default">
-              <Tabs
-                variant="scrollable"
-                scrollButtons="auto"
-                value={value}
-                onChange={handleFilterChange}
-                indicatorColor="primary"
-                textColor="primary"
-                aria-label="scrollable auto tabs example">
-                <Tab label={t('myOrders:all_order')} {...a11yProps(0)} />
-                <Tab label={t('myOrders:wait_for_confirm')} {...a11yProps(1)} />
-                <Tab label={t('myOrders:confirmed')} {...a11yProps(2)} />
-                <Tab label={t('myOrders:handling')} {...a11yProps(3)} />
-                <Tab label={t('myOrders:delivering')} {...a11yProps(4)} />
-                <Tab label={t('myOrders:completed')} {...a11yProps(5)} />
-                <Tab label={t('myOrders:canceled')} {...a11yProps(6)} />
-              </Tabs>
-            </AppBar>
-            <TabPanel value={value} index={0}>
-              {orderList.map((order) => (
-                <OrderItem
-                  key={order.id}
-                  {...order}
-                  callBack={() =>
-                    refetch({
-                      page: page,
-                      pageSize: pageSize
-                    })
-                  }
-                />
-              ))}
-              <Pagination
-                count={Math.ceil(total / pageSize)}
-                page={page}
-                siblingCount={3}
-                onChange={(page) =>
-                  router.push({
-                    pathname: router.pathname,
-                    query: {
-                      ...router.query,
-                      page: page
+      <ProfileLayout title={t('myOrders:my_orders')}>
+        {/* <p className="text-muted m-0">
+            {t('myOrders:vat_invoice')} <Link href="/invoice-export-rules">{t('myOrders:here')}</Link>.
+          </p> */}
+        <div className={classes.root}>
+          <AppBar position="static" color="default">
+            <Tabs
+              variant="scrollable"
+              scrollButtons="auto"
+              value={value}
+              onChange={handleFilterChange}
+              indicatorColor="primary"
+              textColor="primary"
+              aria-label="scrollable auto tabs example">
+              <Tab label={t('myOrders:all_order')} {...a11yProps(0)} />
+              <Tab label={t('myOrders:wait_for_confirm')} {...a11yProps(1)} />
+              <Tab label={t('myOrders:confirmed')} {...a11yProps(2)} />
+              <Tab label={t('myOrders:handling')} {...a11yProps(3)} />
+              <Tab label={t('myOrders:delivering')} {...a11yProps(4)} />
+              <Tab label={t('myOrders:completed')} {...a11yProps(5)} />
+              <Tab label={t('myOrders:canceled')} {...a11yProps(6)} />
+            </Tabs>
+          </AppBar>
+          {orderList.length !== 0 ? (
+            <>
+              <TabPanel value={value} index={0}>
+                {orderList.map((order) => (
+                  <OrderItem
+                    key={order.id}
+                    {...order}
+                    callBack={() =>
+                      refetch({
+                        page: 1,
+                        pageSize: pageSize
+                      })
                     }
-                  })
-                }
-              />
-            </TabPanel>
-            <TabPanel value={value} index={1}>
-              <OrderList flag={10} />
-            </TabPanel>
-            <TabPanel value={value} index={2}>
-              <OrderList flag={20} />
-            </TabPanel>
-            <TabPanel value={value} index={3}>
-              <OrderList flag={30} />
-            </TabPanel>
-            <TabPanel value={value} index={4}>
-              <OrderList flag={40} />
-            </TabPanel>
-            <TabPanel value={value} index={5}>
-              <OrderList flag={80} />
-            </TabPanel>
-            <TabPanel value={value} index={6}>
-              <OrderList flag={25} />
-            </TabPanel>
-          </div>
+                  />
+                ))}
+              </TabPanel>
+              <TabPanel value={value} index={1}>
+                <OrderList flag={10} />
+              </TabPanel>
+              <TabPanel value={value} index={2}>
+                <OrderList flag={20} />
+              </TabPanel>
+              <TabPanel value={value} index={3}>
+                <OrderList flag={30} />
+              </TabPanel>
+              <TabPanel value={value} index={4}>
+                <OrderList flag={40} />
+              </TabPanel>
+              <TabPanel value={value} index={5}>
+                <OrderList flag={80} />
+              </TabPanel>
+              <TabPanel value={value} index={6}>
+                <OrderList flag={25} />
+              </TabPanel>
+            </>
+          ) : (
+            <div className="col-12 m-3 text-center">
+              <p>{t('myOrders:no_orders')}</p>
+              <p>
+                <Link href="/products">
+                  <a className="btn btn-primary" role="button">
+                    {t('myOrders:back_to_products_page')}
+                  </a>
+                </Link>
+              </p>
+            </div>
+          )}
+        </div>
+      </ProfileLayout>
 
-          <div className="col-12 m-3 text-center">
-            <p>
-              <Link href="/products">
-                <a className="btn btn-primary" role="button">
-                  {t('myOrders:back_to_products_page')}
-                </a>
-              </Link>
-            </p>
-          </div>
-        </ProfileLayout>
-      ) : (
-        <div></div>
-      )}
       <Footer />
     </>
   );

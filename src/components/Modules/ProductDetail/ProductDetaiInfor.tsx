@@ -60,7 +60,7 @@ const ProductDetailInfor = (props: ProductDetails): JSX.Element => {
             <>
               <div className="product__info-label">{t('productDetail:manufacturer')}</div>
               <div className="text-capitalize">
-                <Link href={`/manufacturers/${props.manufacturer?.id}`}>
+                <Link href={`/products?manufacturer=${props.manufacturer?.id}`}>
                   <a>{props.manufacturer?.name}</a>
                 </Link>
               </div>
@@ -72,14 +72,15 @@ const ProductDetailInfor = (props: ProductDetails): JSX.Element => {
             <div className="product__info-label">{t('productDetail:category')}</div>
           )}
           {props?.categories &&
-            props?.categories?.map((item, index) => {
+            props?.categories?.map((item, index, arr) => {
               return (
                 <>
-                  <Link href={`/categories/${item.id}`}>
+                  <Link href={`/products?category=${item.id}`}>
                     <a className="text-capitalize" key={index}>
                       {item.name}
                     </a>
                   </Link>
+                  {index < arr.length - 1 && '; '}
                 </>
               );
             })}
