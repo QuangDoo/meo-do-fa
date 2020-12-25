@@ -242,6 +242,10 @@ const Footer = (): JSX.Element => {
                   <a className="text-white px-2 mr-2" href="tel:1900232436">
                     1900232436
                   </a>
+                  /
+                  <a className="text-white px-2 mr-2" href="tel:0914956936">
+                    0914956936
+                  </a>
                 </div>
                 {/* <small>{t('footer:work_time')}</small> */}
                 <p />
@@ -260,6 +264,12 @@ const Footer = (): JSX.Element => {
                     className="img-fluid footer__delivery"
                     src="/assets/images/pharma-logistics-logo.png"
                     alt="logo-logistics-pharma"
+                  />
+
+                  <img
+                    className="img-fluid footer__delivery"
+                    src="/assets/images/ghn-logo.png"
+                    alt="logo-ghn"
                   />
 
                   {/* <img

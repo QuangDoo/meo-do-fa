@@ -81,10 +81,9 @@ const TermsOfService = () => {
             trên Sàn Giao Dịch của Medofa, bao gồm cả thông tin, hình ảnh đăng tải, nội dung sản
             phẩm được cập nhật liên tục từ Công ty TNHH Dược phẩm Dayton. Công ty TNHH Dược phẩm
             Dayton sẽ nhận được đầy đủ hỗ trợ qua hộp thư{' '}
-            <a href="mailto:hotro@medofa.com">
-              <u>hotro@medofa.com</u>
+            <a href="mailto:info@medofa.com">
+              <u>info@medofa.com</u>
             </a>{' '}
-            Chấm Dứt
             <br /> Công ty TNHH Dược phẩm Dayton có thể chấm dứt giao kết hợp đồng với Medofa bất cứ
             lúc nào mà không bị xem là vi phạm hợp đồng nếu đã thông báo cho Medofa ít nhất 14 (mười
             bốn) ngày trước ngày dự kiến chấm dứt.
@@ -124,23 +123,42 @@ const TermsOfService = () => {
                     Thuận đó;
                   </li>
                   <li>
-                    Công ty TNHH Dược phẩm Dayton cũng cam kết thêm rằng: (a) Công ty TNHH Dược phẩm
-                    Dayton đã có, đang và sẽ luôn duy trì, các giấy phép kinh doanh cần thiết để
-                    hoạt động dưới hình thức pháp nhân, được tồn tại và hoạt động hợp pháp phù hợp
-                    với pháp luật hiện hành nơi mà pháp nhân đặt trụ sở chính; (b) Công ty TNHH Dược
-                    phẩm Dayton đã đạt được tất cả các quyền lợi, năng lực và thẩm quyền tiên quyết
-                    để giao kết thỏa thuận với Medofa cũng như thực hiện các nghĩa vụ tương ứng với
-                    Thỏa thuận đó; và (c) mọi thông tin Công ty TNHH Dược phẩm Dayton tự cung cấp
-                    hoặc tạo ra, hoặc do các bên liên kết của Công ty TNHH Dược phẩm Dayton cung cấp
-                    hoặc tạo ra, luôn chính xác và đầy đủ. Công ty TNHH Dược phẩm Dayton cũng tuyên
-                    bố và khẳng định thêm rằng, Công ty TNHH Dược phẩm Dayton và bất kỳ cá nhân hoặc
-                    pháp nhân nào có quyền lợi tài chính liên quan đến hoạt động kinh doanh của
-                    chính Công ty TNHH Dược phẩm Dayton, hoặc các cá nhân hoặc pháp nhân nào đang
-                    hoạt động dưới sự ủy quyền của Công ty TNHH Dược phẩm Dayton, sẽ (a) không có
-                    quan hệ liên kết với nhân viên của Medofa hoặc Các Bên Liên Kết của Medofa; (b)
-                    chưa bị Medofa cấm bán Sản Phẩm trên Sàn Giao Dịch của Medofa; hoặc (c) chưa
-                    từng bị dính líu đến bất kỳ vụ kiện tụng hoặc khiếu nại nào liên quan đến Thỏa
-                    Thuận của Medofa.
+                    Công ty TNHH Dược phẩm Dayton cũng cam kết thêm rằng:
+                    <ul className="list-group lower-alpha-list">
+                      <li>
+                        Công ty TNHH Dược phẩm Dayton đã có, đang và sẽ luôn duy trì, các giấy phép
+                        kinh doanh cần thiết để hoạt động dưới hình thức pháp nhân, được tồn tại và
+                        hoạt động hợp pháp phù hợp với pháp luật hiện hành nơi mà pháp nhân đặt trụ
+                        sở chính;
+                      </li>
+                      <li>
+                        Công ty TNHH Dược phẩm Dayton đã đạt được tất cả các quyền lợi, năng lực và
+                        thẩm quyền tiên quyết để giao kết thỏa thuận với Medofa cũng như thực hiện
+                        các nghĩa vụ tương ứng với Thỏa thuận đó; và
+                      </li>
+                      <li>
+                        mọi thông tin Công ty TNHH Dược phẩm Dayton tự cung cấp hoặc tạo ra, hoặc do
+                        các bên liên kết của Công ty TNHH Dược phẩm Dayton cung cấp hoặc tạo ra,
+                        luôn chính xác và đầy đủ. Công ty TNHH Dược phẩm Dayton cũng tuyên bố và
+                        khẳng định thêm rằng, Công ty TNHH Dược phẩm Dayton và bất kỳ cá nhân hoặc
+                        pháp nhân nào có quyền lợi tài chính liên quan đến hoạt động kinh doanh của
+                        chính Công ty TNHH Dược phẩm Dayton, hoặc các cá nhân hoặc pháp nhân nào
+                        đang hoạt động dưới sự ủy quyền của Công ty TNHH Dược phẩm Dayton, sẽ:
+                        <ul className="list-group lower-alpha-list">
+                          <li>
+                            không có quan hệ liên kết với nhân viên của Medofa hoặc Các Bên Liên Kết
+                            của Medofa;
+                          </li>
+                          <li>
+                            chưa bị Medofa cấm bán Sản Phẩm trên Sàn Giao Dịch của Medofa; hoặc
+                          </li>
+                          <li>
+                            chưa từng bị dính líu đến bất kỳ vụ kiện tụng hoặc khiếu nại nào liên
+                            quan đến Thỏa Thuận của Medofa.
+                          </li>
+                        </ul>
+                      </li>
+                    </ul>
                   </li>
                 </ul>
               </li>
@@ -176,7 +194,7 @@ const TermsOfService = () => {
               <li>Niêm yết và đăng tải Thông Tin Nội Dung;</li>
               <li>Dịch vụ chăm sóc khách hàng;</li>
               <li>Xác nhận đơn hàng;</li>
-              <li>Quản lý Sản Phẩm hoàn trả, bị hủy bỏ và không giao được</li>
+              <li>Quản lý Sản Phẩm hoàn trả, bị hủy bỏ và không giao được.</li>
             </ul>
           </li>
 
@@ -217,7 +235,7 @@ const TermsOfService = () => {
                     quan nhà nước có thẩm quyền vì vận chuyển hàng hóa thương mại mà không có tài
                     liệu phù hợp. Trong trường hợp Công ty TNHH Dược phẩm Dayton không phát hành hóa
                     đơn tài chính theo yêu cầu của pháp luật Việt Nam, Medofa có toàn quyền chấm dứt
-                    Dịch Vụ xử lý dữ liệu với hiệu lực ngay lập tức
+                    Dịch Vụ xử lý dữ liệu với hiệu lực ngay lập tức.
                   </li>
                   <li>
                     Công ty TNHH Dược phẩm Dayton là chủ sở hữu hoặc có quyền hợp pháp đối với các
@@ -242,7 +260,7 @@ const TermsOfService = () => {
                       <li>
                         Thông Tin Nội Dung phải được cung cấp bằng tiếng Việt, tuân thủ Quy Định
                         Pháp Luật áp dụng và không chứa đựng bất kỳ tài liệu về giới tính, mang tính
-                        chất bôi nhọ hoặc khiêu dâm
+                        chất bôi nhọ hoặc khiêu dâm;
                       </li>
                       <li>
                         Công ty TNHH Dược phẩm Dayton phải thêm văn bản, Điều Khoản Dịch Vụ miễn
@@ -574,23 +592,23 @@ const TermsOfService = () => {
                 <p className="font-weight-bold">Chấm Dứt</p>
                 <ul className="list-group ml-3 decimal-list">
                   <li>
-                    vn bảo lưu quyền đơn phương và ngay lập tức chấm dứt Các Điều Khoản khi xảy ra
-                    bất kỳ sự kiện nào sau đây:
+                    Bảo lưu quyền đơn phương và ngay lập tức chấm dứt Các Điều Khoản khi xảy ra bất
+                    kỳ sự kiện nào sau đây:
                     <ul className="list-group ml-3 decimal-list">
                       <li>
-                        vn chậm thanh toán trong hơn 30 (ba mươi) ngày mà không có lý do hợp lệ theo
+                        Chậm thanh toán trong hơn 30 (ba mươi) ngày mà không có lý do hợp lệ theo
                         Các Điều Khoản và Chính Sách Của Medofa;
                       </li>
                       <li>
-                        vn chậm hoàn trả trong hơn 60 (sáu mươi) ngày mà không có lý do hợp lệ theo
-                        Các Điều Khoản và Chính Sách Của Medofa;
+                        Chậm hoàn trả trong hơn 60 (sáu mươi) ngày mà không có lý do hợp lệ theo Các
+                        Điều Khoản và Chính Sách Của Medofa;
                       </li>
                       <li>
-                        việc đưa ra quyết định hành chính quan đến Medofa hoặc việc chỉ định một bên
+                        Việc đưa ra quyết định hành chính quan đến Medofa hoặc việc chỉ định một bên
                         quản lý tài sản đối với tài sản của Medofa;
                       </li>
                       <li>
-                        vn dàn xếp hoặc thỏa hiệp với các chủ nợ của mình nói chung hoặc nộp đơn lên
+                        Dàn xếp hoặc thỏa hiệp với các chủ nợ của mình nói chung hoặc nộp đơn lên
                         Tòa Án của vùng tài phán có thẩm quyền xin bảo hộ khỏi các chủ nợ của mình;
                       </li>
                       <li>vn ngừng hoặc đe dọa ngừng thực hiện hoạt động kinh doanh.</li>
@@ -601,19 +619,19 @@ const TermsOfService = () => {
                     vòng 14 (mười bốn) ngày sau khi xảy ra bất kỳ sự kiện nào sau đây:
                     <ul className="list-group ml-3 decimal-list">
                       <li>
-                        vn chậm thanh toán trong hơn 30 (ba mươi) ngày mà không có lý do hợp lệ theo
+                        Chậm thanh toán trong hơn 30 (ba mươi) ngày mà không có lý do hợp lệ theo
                         Các Điều Khoản và Chính Sách Của Medofa;
                       </li>
                       <li>
-                        vn chậm hoàn trả trong hơn 60 (sáu mươi) ngày mà không có lý do hợp lệ theo
-                        Các Điều Khoản và Chính Sách Của Medofa;
+                        Chậm hoàn trả trong hơn 60 (sáu mươi) ngày mà không có lý do hợp lệ theo Các
+                        Điều Khoản và Chính Sách Của Medofa;
                       </li>
                       <li>
-                        việc đưa ra quyết định hành chính quan đến Medofa hoặc việc chỉ định một bên
+                        Việc đưa ra quyết định hành chính quan đến Medofa hoặc việc chỉ định một bên
                         quản lý tài sản đối với tài sản của Medofa;
                       </li>
                       <li>
-                        vn dàn xếp hoặc thỏa hiệp với các chủ nợ của mình nói chung hoặc nộp đơn lên
+                        Dàn xếp hoặc thỏa hiệp với các chủ nợ của mình nói chung hoặc nộp đơn lên
                         Tòa Án của vùng tài phán có thẩm quyền xin bảo hộ khỏi các chủ nợ của mình;
                       </li>
                       <li>vn ngừng hoặc đe dọa ngừng thực hiện hoạt động kinh doanh.</li>
@@ -682,21 +700,40 @@ const TermsOfService = () => {
                         kỳ dữ liệu hoặc thông tin nào thuộc quyền sở hữu của bên tiết lộ và các Bên
                         Liên Kết (<b>“Bên Tiết Lộ”</b>) và không được phổ biến ra công chúng, dù ở
                         dạng hữu hình hay vô hình, được tiết lộ bất kỳ lúc nào và bằng cách nào, bao
-                        gồm, nhưng không giới hạn: i) chiến lược marketing, kế hoạch, thông tin tài
-                        chính, hoặc các dự án, hoạt động, ước tính doanh số và kế hoạch kinh doanh
-                        liên quan đến các hoạt động kinh doanh trong quá khứ, ở hiện tại hoặc trong
-                        tương lai của bên đó; ii) kết quả thực hiện trong quá khứ hoặc ở hiện tại,
-                        bao gồm các Đơn Hàng và khối lượng; iii) kế hoạch và chiến lược mở rộng nào;
-                        iv) bất kỳ sản phẩm hoặc dịch vụ nào, và danh sách khách hàng và các nhà
-                        cung cấp; v) thông tin kỹ thuật hoặc khoa học, phát minh, thiết kế, quy
-                        trình, thủ tục, công thức, cải tiến, công nghệ hoặc phương pháp; vi) khái
-                        niệm, báo cáo, dữ liệu, bí quyết, công việc đang thực hiện, thiết kế, công
-                        cụ phát triển, thông số kỹ thuật, phần mềm máy tính, mã nguồn, mã đối tượng,
-                        biểu đồ, cơ sở dữ liệu, phát minh, thông tin và bí mật thương mại; và vii)
-                        bất kỳ thông tin nào khác mà sẽ được công nhận hợp lý là thông tin mật của
-                        Bên Tiết Lộ. Thông Tin Mật không nhất thiết phải mới lạ, độc nhất, thuộc
-                        bằng sáng chế, thuộc bản quyền hoặc cấu thành bí mật thương mại để được chỉ
-                        định là Thông Tin Mật.
+                        gồm, nhưng không giới hạn:
+                        <ul className="list-group lower-roman-list">
+                          <li>
+                            chiến lược marketing, kế hoạch, thông tin tài chính, hoặc các dự án,
+                            hoạt động, ước tính doanh số và kế hoạch kinh doanh liên quan đến các
+                            hoạt động kinh doanh trong quá khứ, ở hiện tại hoặc trong tương lai của
+                            bên đó;
+                          </li>
+                          <li>
+                            kết quả thực hiện trong quá khứ hoặc ở hiện tại, bao gồm các Đơn Hàng và
+                            khối lượng;
+                          </li>
+                          <li>kế hoạch và chiến lược mở rộng nào;</li>
+                          <li>
+                            bất kỳ sản phẩm hoặc dịch vụ nào, và danh sách khách hàng và các nhà
+                            cung cấp;
+                          </li>
+                          <li>
+                            thông tin kỹ thuật hoặc khoa học, phát minh, thiết kế, quy trình, thủ
+                            tục, công thức, cải tiến, công nghệ hoặc phương pháp;
+                          </li>
+                          <li>
+                            khái niệm, báo cáo, dữ liệu, bí quyết, công việc đang thực hiện, thiết
+                            kế, công cụ phát triển, thông số kỹ thuật, phần mềm máy tính, mã nguồn,
+                            mã đối tượng, biểu đồ, cơ sở dữ liệu, phát minh, thông tin và bí mật
+                            thương mại; và
+                          </li>
+                          <li>
+                            bất kỳ thông tin nào khác mà sẽ được công nhận hợp lý là thông tin mật
+                            của Bên Tiết Lộ. Thông Tin Mật không nhất thiết phải mới lạ, độc nhất,
+                            thuộc bằng sáng chế, thuộc bản quyền hoặc cấu thành bí mật thương mại để
+                            được chỉ định là Thông Tin Mật.
+                          </li>
+                        </ul>
                       </li>
                       <li>
                         Bên nhận Thông Tin Mật (“Bên Nhận”) sẽ không tiết lộ Thông Tin Mật, ngoại
@@ -745,8 +782,8 @@ const TermsOfService = () => {
                             bất kỳ dạng lưu trữ hay phục hồi, sau thời điểm nào xảy ra sớm hơn trong
                             các thời điểm sau đây:
                             <ul className="list-group ml-3 decimal-list">
-                              <li>chấm dứt Điều Khoản Dịch Vụ;</li>
-                              <li>vào thời điểm mà Bên Tiết Lộ yêu cầu như vậy.</li>
+                              <li>Chấm dứt Điều Khoản Dịch Vụ;</li>
+                              <li>Vào thời điểm mà Bên Tiết Lộ yêu cầu như vậy.</li>
                             </ul>
                             <br />
                             Việc trả lại các tài liệu đó phải được thực hiện trong vòng 24 (hai mươi

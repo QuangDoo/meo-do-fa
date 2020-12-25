@@ -1,6 +1,7 @@
 import { AppBar, Box, makeStyles, Tab, Tabs, Theme, Typography } from '@material-ui/core';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import Footer from 'src/components/Layout/Footer';
@@ -8,6 +9,7 @@ import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
 import Loading from 'src/components/Layout/Loading';
 import Nav from 'src/components/Layout/Nav';
+import Pagination from 'src/components/Modules/Pagination';
 import ProfileLayout from 'src/components/Modules/ProfileLayout';
 import {
   GET_ORDER_LIST,
@@ -147,7 +149,6 @@ const OrderItem = (props: any) => {
     </div>
   );
 };
-
 const OrderList = (props: Props) => {
   const { t } = useTranslation(['myOrders']);
   const { data, refetch, loading } = useQueryAuth<GetOrderListData, GetOrderListVars>(
@@ -196,13 +197,14 @@ const OrderList = (props: Props) => {
 
 const MyOrders = () => {
   const [value, setValue] = React.useState(0);
-
   const { t } = useTranslation(['myOrders', 'errors']);
+  const router = useRouter();
+  const page = +router.query.page || 1;
 
   const { data, refetch } = useQueryAuth<GetOrderListData, GetOrderListVars>(GET_ORDER_LIST, {
     variables: {
-      page: 1,
-      pageSize: pageSize
+      page,
+      pageSize
     },
     onError: (error) => {
       const errorCode = error.graphQLErrors?.[0]?.extensions?.code;
@@ -215,12 +217,13 @@ const MyOrders = () => {
     setValue(newValue);
 
     refetch({
-      page: 1,
+      page: page,
       pageSize: pageSize
     });
   };
 
   const orderList = data?.getOrderList || [];
+  const total = orderList.length;
   const classes = useStyles();
 
   return (
@@ -265,12 +268,26 @@ const MyOrders = () => {
                   {...order}
                   callBack={() =>
                     refetch({
-                      page: 1,
+                      page: page,
                       pageSize: pageSize
                     })
                   }
                 />
               ))}
+              <Pagination
+                count={Math.ceil(total / pageSize)}
+                page={page}
+                siblingCount={3}
+                onChange={(page) =>
+                  router.push({
+                    pathname: router.pathname,
+                    query: {
+                      ...router.query,
+                      page: page
+                    }
+                  })
+                }
+              />
             </TabPanel>
             <TabPanel value={value} index={1}>
               <OrderList flag={10} />

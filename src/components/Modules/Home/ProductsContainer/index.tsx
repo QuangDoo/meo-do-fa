@@ -1,4 +1,5 @@
 import { useTranslation } from 'i18n';
+import Link from 'next/link';
 import React, { FC } from 'react';
 import Button from 'src/components/Form/Button';
 
@@ -23,11 +24,13 @@ export const ProductsContainer: FC<ProductsContainerProps> = (props) => {
 
         {props.seeMoreUrl && (
           <div className="text-center">
-            <Button
-              variant={props.deals ? 'outline-light' : 'outline-primary'}
-              className={props.deals ? 'btn-transparent' : 'btn-white'}>
-              {t('common:see_all')}
-            </Button>
+            <Link href="/deals">
+              <Button
+                variant={props.deals ? 'outline-light' : 'outline-primary'}
+                className={props.deals ? 'btn-transparent' : 'btn-white'}>
+                {t('common:see_all')}
+              </Button>
+            </Link>
           </div>
         )}
       </div>

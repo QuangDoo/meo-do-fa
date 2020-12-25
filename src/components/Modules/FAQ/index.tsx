@@ -26,7 +26,7 @@ export default function FAQ(props: Props): JSX.Element {
   return (
     <>
       <div className="container help">
-        <div className="row">
+        {/* <div className="row">
           <div className="col-12">
             <div className="wrapper">
               <div className="mb-3 mt-3">
@@ -34,9 +34,9 @@ export default function FAQ(props: Props): JSX.Element {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
 
-        <div className="row">
+        <div className="row my-5">
           <div className="col-sm-12 col-lg-9 col-left__divider order-lg-2">
             <div className="wrapper">
               <h3 className="news__title">{props.title}</h3>
