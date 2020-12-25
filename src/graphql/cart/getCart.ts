@@ -13,7 +13,7 @@ export type PromotionInfo = {
 export type CartItem = {
   _id: string;
   quantity: number;
-  productId: string;
+  productId: number;
   productName: string;
   price: number;
   list_price: number;

@@ -3,13 +3,12 @@ import Link from 'next/link';
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import PriceText from 'src/components/Form/PriceText';
+import QuantityInput from 'src/components/Form/QuantityInput';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { DELETE_CART, DeleteCartData, DeleteCartVars } from 'src/graphql/cart/deleteCart.mutation';
 import { CartItem as CartItemProps } from 'src/graphql/cart/getCart';
-import { UPDATE_CART, UpdateCartData, UpdateCartVars } from 'src/graphql/cart/updateCart.mutation';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import useCart from 'src/hooks/useCart';
-import { useDebouncedEffect } from 'src/hooks/useDebouncedEffect';
 
 import ConfirmDeleteModal from './ConfirmDeleteModal';
 
@@ -28,18 +27,9 @@ function CartItem(props: Props): JSX.Element {
       return total + promo.discount_percentage;
     }, 0);
 
-  console.log('item:', item);
-
   const discountedPrice = item.price * ((100 - totalDiscountAmount) / 100);
 
-  const [open, setOpen] = useState(false);
-
-  const openDeleteModal = () => setOpen(true);
-  const closeDeleteModal = () => setOpen(false);
-
-  const [displayQuantity, setDisplayQuantity] = useState<string>(item.quantity + '');
-
-  const [quantity, setQuantity] = useState<number>(item.quantity);
+  const [open, setOpen] = useState<boolean>(false);
 
   // Refetch cart on update cart complete
   const { refetchCart, loading: loadingCart } = useCart({
@@ -48,114 +38,32 @@ function CartItem(props: Props): JSX.Element {
     }
   });
 
-  const [updateCart, { loading: updatingCart }] = useMutationAuth<UpdateCartData, UpdateCartVars>(
-    UPDATE_CART,
-    {
-      onCompleted: () => {
-        refetchCart();
-      },
-      onError: (error) => {
-        const errorCode = error.graphQLErrors?.[0].extensions?.code;
-
-        if (errorCode) {
-          toast.error(t(`errors:code_${errorCode}`));
-        }
-      }
-    }
-  );
-
   const [deleteCart, { loading: deletingCart }] = useMutationAuth<DeleteCartData, DeleteCartVars>(
     DELETE_CART,
     {
       onCompleted: () => {
         refetchCart();
       },
-      onError: (error) => {
-        const errorCode = error.graphQLErrors?.[0].extensions?.code;
-
-        if (errorCode) {
-          toast.error(t(`errors:code_${errorCode}`));
-        }
+      onError: (err) => {
+        toast.error(t(`errors:code_${err.graphQLErrors?.[0].extensions?.code}`));
       }
     }
   );
 
-  // Set quantity back to 1 if user doesn't confirm delete
-  const handleCloseModal = () => {
-    if (quantity === 0) {
-      setDisplayQuantity('1');
-      setQuantity(1);
-    }
-    closeDeleteModal();
+  const handleDeleteClick = () => {
+    setOpen(true);
   };
 
-  const handleDeleteCart = () => {
+  const handleCloseModal = () => setOpen(false);
+
+  const handleConfirmDelete = () => {
+    setOpen(false);
     deleteCart({
       variables: {
         _id: item._id
       }
     });
-    closeDeleteModal();
   };
-
-  const handlePlusClick = () => {
-    const newQty = +displayQuantity + 1;
-    setDisplayQuantity(newQty + '');
-    setQuantity(newQty);
-  };
-
-  const handleMinusClick = () => {
-    const newQty = Math.max(+displayQuantity - 1, 0);
-    setDisplayQuantity(newQty + '');
-    setQuantity(newQty);
-  };
-
-  // Blur on Esc or Enter
-  const handleKeyDown = (e) => {
-    if ([13, 27].includes(e.keyCode)) {
-      e.target.blur();
-    }
-  };
-
-  // Change display quantity but not real quantity for update
-  const handleChange = (event) => {
-    const string = event.target.value.replace(/\D/g, '');
-
-    const newQuantity = +string || 0;
-
-    setDisplayQuantity(newQuantity + '');
-  };
-
-  // Only change real quantity on input blur
-  const handleInputBlur = () => {
-    setQuantity(+displayQuantity);
-  };
-
-  // Set display quantity to 0 on delete
-  const handleDeleteClick = () => {
-    openDeleteModal();
-  };
-
-  // Debounce when real quantity change
-  useDebouncedEffect(
-    () => {
-      if (quantity === 0) {
-        openDeleteModal();
-        return;
-      }
-
-      updateCart({
-        variables: {
-          inputs: {
-            _id: item._id,
-            quantity: quantity
-          }
-        }
-      });
-    },
-    450,
-    [quantity]
-  );
 
   return (
     <div className="cart-item">
@@ -193,30 +101,12 @@ function CartItem(props: Props): JSX.Element {
                 </div>
 
                 <div className="cart-item__qty">
-                  <div className="qty js-qty">
-                    <button
-                      className="btn btn-sm qty__button qty__button--minus"
-                      onClick={handleMinusClick}>
-                      <i className="fas fa-minus" />
-                    </button>
-
-                    <input
-                      type="tel"
-                      className="form-control px-1 no-spinner text-center qty__input"
-                      min={0}
-                      max={100000}
-                      value={displayQuantity}
-                      onChange={handleChange}
-                      onKeyDown={handleKeyDown}
-                      onBlur={handleInputBlur}
-                    />
-
-                    <button
-                      className="btn btn-sm qty__button qty__button--plus"
-                      onClick={handlePlusClick}>
-                      <i className="fas fa-plus" />
-                    </button>
-                  </div>
+                  <QuantityInput
+                    productId={props.item.productId}
+                    productName={props.item.productName}
+                    productPrice={props.item.price}
+                    productImg={props.item.product.image_512}
+                  />
                 </div>
               </div>
             </div>
@@ -226,20 +116,20 @@ function CartItem(props: Props): JSX.Element {
                 <i className="fas fa-trash" />
               </button>
             </div>
+
+            <ConfirmDeleteModal
+              open={open}
+              onClose={handleCloseModal}
+              onConfirm={handleConfirmDelete}
+              productName={item.productName}
+              image={item.product.image_512}
+              price={item.price}
+            />
           </div>
         </div>
       </div>
 
-      <ConfirmDeleteModal
-        open={open}
-        onClose={handleCloseModal}
-        onConfirm={handleDeleteCart}
-        productName={item.productName}
-        image={item.product.image_512}
-        price={item.price}
-      />
-
-      <LoadingBackdrop open={updatingCart || deletingCart || loadingCart} />
+      <LoadingBackdrop open={deletingCart || loadingCart} />
     </div>
   );
 }
