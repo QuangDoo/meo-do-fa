@@ -22,6 +22,7 @@ export const GET_PROMOTION_PRODUCTS = gql`
         name
         price
         list_price
+        old_price
         sale_price
         standard_price
         image_128

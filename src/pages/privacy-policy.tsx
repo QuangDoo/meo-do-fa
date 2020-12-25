@@ -116,21 +116,22 @@ const PrivacyPolicy = () => {
             lạm dụng, các rủi ro về bảo mật và vấn đề kỹ thuật có thể có hại cho Medofa, cho bạn và
             cho thành viên của Medofa nói chung.
           </li>
+          <li>
+            Tại sao Medofa thu thập những thông tin trên?
+            <br />
+            Chúng tôi Cam kết mọi thông tin của bạn là tuyệt mật và không được cung cấp cho bất kỳ
+            tổ chức hay bên thứ 3 nào khác.
+            <br />
+            Trong trường hợp khi có yêu cầu của cơ quan chức năng hoặc yêu cầu từ chính bạn, Medofa
+            sẽ căn cứ trên Quy định của Luật pháp và tình hình thực tiễn để đưa ra quyết định cuối
+            cùng.
+            <br />
+            Trường hợp website bị hacker tấn công và đánh cắp dữ liệu, đây là tình huống bất khả
+            kháng và không mong muốn của tất cả các bên. Chúng tôi sẽ nhờ tới sự can thiệp của các
+            cơ quan chức năng có thẩm quyền và không chịu trách nhiệm về việc thông tin của bạn có
+            thể bị rò rỉ hay sử dụng cho các mục đích khác.
+          </li>
         </ul>
-
-        <p className="h3">Tại sao Medofa thu thập những thông tin trên?</p>
-        <p className="ml-3">
-          Chúng tôi Cam kết mọi thông tin của bạn là tuyệt mật và không được cung cấp cho bất kỳ tổ
-          chức hay bên thứ 3 nào khác.
-          <br />
-          Trong trường hợp khi có yêu cầu của cơ quan chức năng hoặc yêu cầu từ chính bạn, Medofa sẽ
-          căn cứ trên Quy định của Luật pháp và tình hình thực tiễn để đưa ra quyết định cuối cùng.
-          <br />
-          Trường hợp website bị hacker tấn công và đánh cắp dữ liệu, đây là tình huống bất khả kháng
-          và không mong muốn của tất cả các bên. Chúng tôi sẽ nhờ tới sự can thiệp của các cơ quan
-          chức năng có thẩm quyền và không chịu trách nhiệm về việc thông tin của bạn có thể bị rò
-          rỉ hay sử dụng cho các mục đích khác.
-        </p>
       </div>
 
       <Footer />

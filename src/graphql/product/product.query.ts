@@ -62,6 +62,7 @@ export const GET_PRODUCT = gql`
       id
       name
       list_price
+      old_price
       sale_price
       discount_percentage
       is_primary

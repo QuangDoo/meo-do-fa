@@ -5,13 +5,12 @@ import PriceText from 'src/components/Form/PriceText';
 type ProductPriceProps = {
   price: number;
   sale_price?: number;
-  discount_percentage: number;
 };
 
 export const ProductPrice = (props: ProductPriceProps) => {
   const { t } = useTranslation('common');
 
-  const isOnSale = props.discount_percentage > 0;
+  const isOnSale = !!props.sale_price && props.sale_price !== props.price;
 
   return isOnSale ? (
     <>
