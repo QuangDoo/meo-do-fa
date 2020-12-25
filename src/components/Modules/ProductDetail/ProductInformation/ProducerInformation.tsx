@@ -2,28 +2,11 @@ import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import React from 'react';
 import ScrollableTabsButtonAuto from 'src/components/ScrollableTabsButtonAuto/ScrollableTabsButtonAuto';
+import { ProductDetails } from 'src/graphql/product/product.query';
+
 // import Tab from '../../../Tab/Tab';
 
-type Display_name = {
-  name: string;
-  id: number;
-  amount: string;
-};
-
-type PropsType = {
-  ingredients: Display_name[];
-  info?: string;
-  indication?: string;
-  contraindication?: string;
-  direction?: string;
-  interaction?: string;
-  preservation?: string;
-  overdose?: string;
-  pharmacodynamics?: string;
-  pharmacokinetics?: string;
-};
-
-const ProducerInformation = (props: PropsType): JSX.Element => {
+const ProducerInformation = (props: ProductDetails): JSX.Element => {
   const { t } = useTranslation(['ingredientDetails']);
   return (
     <div className="ml-3 mt-3 ">
