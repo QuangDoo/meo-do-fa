@@ -3,6 +3,7 @@
     "show": "Show",
     "on_of": "on of ",
     "products": "products",
-    "no_products": "No products matching the keyword: ",
+    "no_products_matching_key": "No products matching the keyword: ",
+    "no_products": "No products",
     "key": "search results for: "
 }

@@ -26,7 +26,7 @@ export const ProductPrice = (props: ProductPriceProps) => {
     </>
   ) : (
     <span className="product-card__price">
-      <PriceText price={props.price} />
+      <PriceText price={props.sale_price} />
       <span className="unit">{t('common:vnd')}</span>
     </span>
   );

@@ -16,8 +16,8 @@ export type CartItem = {
   productId: number;
   productName: string;
   price: number;
-  list_price: number;
   oldPrice: number;
+  tax: number;
   product: {
     slug: string;
     image_512: string;
@@ -44,6 +44,7 @@ export const GET_CART = gql`
         productName
         price
         oldPrice
+        tax
         product {
           slug
           image_512

@@ -85,3 +85,18 @@ button {
 .product .product__image {
   background-position: inherit;
 }
+
+.cart-item__qty {
+  max-width: 9.25em;
+}
+
+.cart-item-img {
+  width: 130px;
+  height: 130px;
+  object-fit: contain;
+}
+
+.cart-item__name {
+  -webkit-line-clamp: 2;
+  text-transform: initial;
+}

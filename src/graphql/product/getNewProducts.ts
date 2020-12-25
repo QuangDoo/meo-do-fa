@@ -25,6 +25,7 @@ export const GET_NEW_PRODUCTS = gql`
         name
         price
         old_price
+        sale_price
         list_price
         standard_price
         image_128

@@ -2,25 +2,29 @@ import React, { createContext, useCallback, useContext, useMemo, useState } from
 
 type Modal = 'LOGIN' | 'REGISTER' | 'RESET_PASSWORD';
 
-type State = {
-  loginIsOpen: boolean;
-  registerIsOpen: boolean;
-  resetPassIsOpen: boolean;
-};
+type State =
+  | {
+      loginIsOpen: boolean;
+      registerIsOpen: boolean;
+      resetPassIsOpen: boolean;
+    }
+  | Record<string, never>;
 
-type Dispatch = {
-  openModal: (modal: Modal) => void;
-  closeModal: () => void;
-};
+type Dispatch =
+  | {
+      openModal: (modal: Modal) => void;
+      closeModal: () => void;
+    }
+  | Record<string, never>;
 
 type Props = {
   children: React.ReactNode;
 };
 
-const StateContext = createContext<State>(null);
+const StateContext = createContext<State>({});
 StateContext.displayName = 'ModalControlStateContext';
 
-const DispatchContext = createContext<Dispatch>(null);
+const DispatchContext = createContext<Dispatch>({});
 DispatchContext.displayName = 'ModalControlDispatchContext';
 
 const initialState: State = {

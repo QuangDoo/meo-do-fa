@@ -12,22 +12,16 @@ import useCart from 'src/hooks/useCart';
 
 import ConfirmDeleteModal from './ConfirmDeleteModal';
 
-type Props = {
-  item: CartItemProps;
-};
-
-function CartItem(props: Props): JSX.Element {
+function CartItem(props: CartItemProps): JSX.Element {
   const { t } = useTranslation(['cart', 'errors']);
 
-  const { item } = props;
-
-  const totalDiscountAmount = item.promotions
+  const totalDiscountAmount = props.promotions
     .filter((promo) => promo.reward_type === 'discount')
     .reduce((total, promo) => {
       return total + promo.discount_percentage;
     }, 0);
 
-  const discountedPrice = item.price * ((100 - totalDiscountAmount) / 100);
+  const discountedPrice = props.price * ((100 - totalDiscountAmount) / 100);
 
   const [open, setOpen] = useState<boolean>(false);
 
@@ -60,56 +54,60 @@ function CartItem(props: Props): JSX.Element {
     setOpen(false);
     deleteCart({
       variables: {
-        _id: item._id
+        _id: props._id
       }
     });
   };
 
+  const productLink = 'products/' + props.product.slug;
+
   return (
-    <div className="cart-item">
-      <div className="row align-items-center">
-        <div
-          className="cart-item__image lozadloaded flex-shrink-0"
-          style={{
-            backgroundImage: `url(${item.product.image_512})`
-          }}
-        />
-        <div className="flex-1 pl-2 pr-2">
-          <div className="d-flex align-items-center">
-            <div>
-              <Link href={'products/' + item.product.slug}>
-                <a className="cart-item__name" title={item.productName}>
-                  {item.productName}
-                </a>
-              </Link>
-            </div>
+    <div className="d-flex p-3">
+      <Link href={productLink}>
+        <a>
+          <img className="cart-item-img" src={props.product.image_512} alt="" />
+        </a>
+      </Link>
+
+      <div className="ml-3 d-flex flex-column flex-grow-1 flex-md-row justify-content-md-between">
+        <div>
+          <Link href={productLink}>
+            <a className="cart-item__name" title={props.productName}>
+              {props.productName}
+            </a>
+          </Link>
+
+          <div className="product__status">
+            <span className="badge badge-light display-status mr-1 mb-1 invoice_exportable">
+              <i className="fas mr-1"></i>
+              {t(`cart:quick_invoice_with_tax`, { tax: props.tax })}
+            </span>
+          </div>
+        </div>
+
+        <div className="mt-3 d-flex flex-shrink-0 flex-column align-items-start align-items-md-end mt-md-0">
+          <div>
+            <PriceText price={discountedPrice} />
+            {' ' + t('common:vnd')}
           </div>
 
-          <div className="d-flex justify-content-between align-items-center">
-            <div className="flex-1 flex-column">
-              <div className="d-flex justify-content-between align-items-center">
-                <div>
-                  {discountedPrice !== item.price && (
-                    <>
-                      -{totalDiscountAmount}%{' '}
-                      <del className="text-muted">
-                        <PriceText price={item.price} />
-                      </del>{' '}
-                    </>
-                  )}
-                  <PriceText price={discountedPrice} />
-                </div>
+          {totalDiscountAmount > 0 && (
+            <small className="d-flex align-items-center">
+              <del className="text-muted">
+                <PriceText price={props.price} />
+                {' ' + t('common:vnd')}
+              </del>
+              <div className="mx-2">I</div>-{totalDiscountAmount}%
+            </small>
+          )}
 
-                <div className="cart-item__qty">
-                  <QuantityInput
-                    productId={props.item.productId}
-                    productName={props.item.productName}
-                    productPrice={props.item.price}
-                    productImg={props.item.product.image_512}
-                  />
-                </div>
-              </div>
-            </div>
+          <div className="mt-3 d-flex cart-item__qty align-items-center">
+            <QuantityInput
+              productId={props.productId}
+              productName={props.productName}
+              productPrice={props.price}
+              productImg={props.product.image_512}
+            />
 
             <div className="ml-3">
               <button onClick={handleDeleteClick} className="cart-item__remove">
@@ -121,9 +119,9 @@ function CartItem(props: Props): JSX.Element {
               open={open}
               onClose={handleCloseModal}
               onConfirm={handleConfirmDelete}
-              productName={item.productName}
-              image={item.product.image_512}
-              price={item.price}
+              productName={props.productName}
+              image={props.product.image_512}
+              price={props.price}
             />
           </div>
         </div>
