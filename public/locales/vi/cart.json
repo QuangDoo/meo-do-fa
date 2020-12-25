@@ -16,5 +16,6 @@
   "remove_title": "Xin xác nhận",
   "yes": "Có",
   "no": "Không",
-  "update_success": "Cập nhật giỏ hàng thành công!"
+  "update_success": "Cập nhật giỏ hàng thành công!",
+  "quick_invoice_with_tax": "Hóa đơn nhanh ({{tax}}% thuế)"
 }

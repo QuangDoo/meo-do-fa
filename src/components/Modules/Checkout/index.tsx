@@ -16,9 +16,11 @@ import useAddress from 'src/hooks/useAddress';
 import { useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
 import useCart from 'src/hooks/useCart';
 import useDidUpdateEffect from 'src/hooks/useDidUpdate';
+import useInvoiceCounse from 'src/hooks/useInvoiceCounsel';
 import useUser from 'src/hooks/useUser';
 import swal from 'sweetalert';
 
+import ProductInvoice from '../ProductInvoice/productInvoice';
 import Agreement from './Agreement';
 import CustomerNotes from './CustomerNotes';
 import DeliveryInfo from './DeliveryInfo';
@@ -91,7 +93,6 @@ const CheckoutPage = () => {
   );
 
   const paymentMethods = paymentAndDeliveryData?.getPaymentAndDeliveryMethod.paymentMethods || [];
-  // const deliveryMethods = paymentAndDeliveryData?.getPaymentAndDeliveryMethod.deliveryMethods || [];
 
   // Counsel
   const { refetch: refetchCounsel, loading: loadingCounsel } = useQueryAuth<
@@ -103,12 +104,20 @@ const CheckoutPage = () => {
     },
     onError: (err) => {
       toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
-    }
+    },
+    fetchPolicy: 'network-only',
+    notifyOnNetworkStatusChange: true
+  });
+  // get product list invoice
+  const { productsInvoice, errorProductInvoice } = useInvoiceCounse({
+    cartId: counselData?.counsel?.counsels[0].cartId,
+    productId: counselData?.counsel?.counsels[0].productId,
+    quantity: counselData?.counsel?.counsels[0].quantity,
+    productName: counselData?.counsel?.counsels[0].productName
   });
 
   useEffect(() => {
-    const timeOutId = setTimeout(() => refetchCounsel(), 0);
-    return () => clearTimeout(timeOutId);
+    refetchCounsel();
   }, []);
 
   // Form handler with default values
@@ -285,6 +294,7 @@ const CheckoutPage = () => {
                   districts={invoiceDistricts}
                   wards={invoiceWards}
                 />
+                <ProductInvoice register={register} arrayProducts={productsInvoice} />
               </div>
             )}
 

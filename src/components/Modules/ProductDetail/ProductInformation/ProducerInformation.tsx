@@ -1,57 +1,39 @@
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import React from 'react';
-import ScrollableTabsButtonAuto from 'src/components/ScrollableTabsButtonAuto/ScrollableTabsButtonAuto';
+import ScrollableTabsButtonAuto from 'src/components/Modules/ScrollableTabsButtonAuto/ScrollableTabsButtonAuto';
+import { ProductDetails } from 'src/graphql/product/product.query';
 
 // import Tab from '../../../Tab/Tab';
 
-type Display_name = {
-  name: string;
-  id: number;
-  amount: string;
-};
-
-type PropsType = {
-  manufacturers: Display_name;
-  categories: Display_name[];
-  ingredients: Display_name[];
-  info?: string;
-  indication?: string;
-  contraindication?: string;
-  direction?: string;
-  interaction?: string;
-  preservation?: string;
-  overdose?: string;
-  pharmacodynamics?: string;
-  pharmacokinetics?: string;
-};
-
-const ProducerInformation = (props: PropsType): JSX.Element => {
+const ProducerInformation = (props: ProductDetails): JSX.Element => {
   const { t } = useTranslation(['ingredientDetails']);
   return (
     <div className="ml-3 mt-3 ">
       <div className="mb-3">
-        <div className="product__info-label">{t('ingredient')}</div>
-        <table className="table table-bordered table-sm">
-          <tbody>
-            <tr>
-              <th>{t('name')}</th>
-              <th>{t('concentrations')}</th>
-            </tr>
-            {props.ingredients?.map((item, index) => {
-              return (
-                <tr key={index}>
-                  <td>
-                    <Link href={`/ingredients/${item.id}`}>
-                      <a>{item.name}</a>
-                    </Link>
-                  </td>
-                  <td>{item.amount}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+        <div hidden={props.ingredients?.length === 0}>
+          <div className="product__info-label">{t('ingredient')}</div>
+          <table className="table table-bordered table-sm">
+            <tbody>
+              <tr>
+                <th>{t('name')}</th>
+                <th>{t('concentrations')}</th>
+              </tr>
+              {props.ingredients?.map((item, index) => {
+                return (
+                  <tr key={index}>
+                    <td>
+                      <Link href={`/ingredients/${item.id}`}>
+                        <a>{item.name}</a>
+                      </Link>
+                    </td>
+                    <td>{item.amount}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
         <ScrollableTabsButtonAuto
           info={props.info}
           indication={props.indication}

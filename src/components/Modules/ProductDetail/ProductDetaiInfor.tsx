@@ -2,62 +2,23 @@ import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import React from 'react';
 import PriceText from 'src/components/Form/PriceText';
+import QuantityInput from 'src/components/Form/QuantityInput';
+import { ProductDetails } from 'src/graphql/product/product.query';
 import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
 
-import QuantityInput from '../../Form/QuantityInput';
-import AddCart from '../AddCart';
 import LoginModal from '../LoginModal';
 import ProductBadge from '../ProductCard/ProductBadge';
 
-type PropsType = {
-  name: string;
-  list_price: number;
-  uom_name: string;
-  id: string;
-  is_quick_invoice: string;
-  is_exclusive: string;
-  is_vn: string;
-  manufacturers: Display_name;
-  categories: Display_name[];
-  ingredients: Display_name[];
-  info?: string;
-  indication?: string;
-  contraindication?: string;
-  direction?: string;
-  interaction?: string;
-  preservation?: string;
-  overdose?: string;
-};
-type Display_name = {
-  name: string;
-  id: number;
-  amount: string;
-};
-const ProductDetailInfor = (props: PropsType): JSX.Element => {
+const ProductDetailInfor = (props: ProductDetails): JSX.Element => {
   const isLoggedIn = useIsLoggedIn();
+
   const { t } = useTranslation(['common', 'productDetail']);
+
   return (
     <div className="row">
       <div className="col-12">
         <h1 className="h3 text-capitalize">{props.name}</h1>
-        <div className="product__status mb-1" />
-        {!isLoggedIn ? (
-          <LoginModal />
-        ) : (
-          <div className="d-flex align-items-center flex-wrap justify-content-between mb-4">
-            <div>
-              <div className="product__price-group">
-                <span className="product__price">
-                  <PriceText price={props.list_price} />
-                  <span className="unit">{t('common:vnd')}</span>
-                  {props?.is_quick_invoice && (
-                    <small className="text-muted"> ({t('productDetail:vat_included')})</small>
-                  )}
-                </span>
-              </div>
-            </div>
-          </div>
-        )}
+
         <div className="product__status mb-3">
           {props.is_quick_invoice && <ProductBadge type="is_quick_invoice" />}
 
@@ -65,35 +26,73 @@ const ProductDetailInfor = (props: PropsType): JSX.Element => {
 
           {props.is_vn && <ProductBadge type="is_vn" />}
         </div>
-        <div className="mb-3">
-          {props.manufacturers && (
+
+        {!isLoggedIn ? (
+          <LoginModal />
+        ) : (
+          <div className="d-flex align-items-center">
+            <div className="product__price-group">
+              <span className="product__price">
+                <PriceText price={props.sale_price} />
+                <span className="unit">{t('common:vnd')}</span>
+              </span>
+
+              {props.discount_percentage > 0 && (
+                <>
+                  <br />
+
+                  <span className="product__old-price">
+                    <PriceText price={props.list_price} />
+                    <span className="unit">{t('common:vnd')}</span>
+                  </span>
+                </>
+              )}
+            </div>
+
+            {props.is_quick_invoice && (
+              <small className="text-muted ml-3"> ({t('productDetail:vat_included')})</small>
+            )}
+          </div>
+        )}
+
+        <div className="my-3">
+          {props.manufacturer && (
             <>
               <div className="product__info-label">{t('productDetail:manufacturer')}</div>
               <div className="text-capitalize">
-                <Link href={`/manufacturers/${props.manufacturers?.id}`}>
-                  <a>{props.manufacturers?.name}</a>
+                <Link href={`/products?manufacturer=${props.manufacturer?.id}`}>
+                  <a>{props.manufacturer?.name}</a>
                 </Link>
               </div>
             </>
           )}
         </div>
         <div className="mb-3">
-          <div className="product__info-label">{t('productDetail:category')}</div>
-          {props?.categories?.map((item, index) => {
-            return (
-              <>
-                <Link href={`/categories/${item.id}`}>
-                  <a className="text-capitalize" key={index}>
-                    {item.name}
-                  </a>
-                </Link>
-              </>
-            );
-          })}
+          {props?.categories?.length > 0 && (
+            <div className="product__info-label">{t('productDetail:category')}</div>
+          )}
+          {props?.categories &&
+            props?.categories?.map((item, index, arr) => {
+              return (
+                <>
+                  <Link href={`/products?category=${item.id}`}>
+                    <a className="text-capitalize" key={index}>
+                      {item.name}
+                    </a>
+                  </Link>
+                  {index < arr.length - 1 && '; '}
+                </>
+              );
+            })}
         </div>
         <div className="product__status mb-4" />
         {!isLoggedIn ? null : (
-          <AddCart productId={props.id} price={props.list_price} name={props.name} />
+          <QuantityInput
+            productId={props.id}
+            productPrice={props.list_price}
+            productName={props.name}
+            productImg={props.image_512}
+          />
         )}
       </div>
     </div>

@@ -23,11 +23,12 @@
   "note": "Note",
   "product": "Product",
   "unit_price": "Unit price",
+  "price_tax": "Taxes",
   "quantity": "Quantity",
   "total": "Total",
   "time_out_invoice": "Your order has timed out to invoice",
   "handling": "Handling",
-  "delivering": "Delevering",
+  "delivering": "Delivering",
   "completed": "Completed",
   "cancel_order": "Cancel Order",
   "no_orders": "No orders"

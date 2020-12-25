@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-import { CouponType } from '../coupons/getUsedCoupons';
+import { RewardType } from '../coupons/getUsedCoupons';
 
 type CounselDetail = {
   cartId: string;
@@ -16,7 +16,7 @@ type Counsel = {
   counsels: CounselDetail[];
   create_date: Date;
   coupon_code: string;
-  coupon_type: CouponType;
+  coupon_type: RewardType;
 };
 
 type GiftInfo = {
@@ -39,6 +39,7 @@ export type OutputCounsel = {
   totalDcAmt: number;
   totalShippingFee: number;
   totalNetPrice: number;
+  totalPriceVat: number;
   totalDcPayment: number;
   promotion: PromotionType;
 };
@@ -66,6 +67,7 @@ export const GET_COUNSEL = gql`
       }
       totalQty
       totalPrice
+      totalPriceVat
       totalDcAmt
       totalShippingFee
       totalNetPrice

@@ -11,6 +11,7 @@ import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
 import Loading from 'src/components/Layout/Loading';
 import Nav from 'src/components/Layout/Nav';
+import SimpleBreadcrumbs from 'src/components/Modules/BreadCrum/BreadCrum';
 import FilterTags from 'src/components/Modules/FilterTags';
 import Pagination from 'src/components/Modules/Pagination';
 import ProductCard from 'src/components/Modules/ProductCard';
@@ -51,12 +52,6 @@ function Products(): JSX.Element {
   const page = +router.query.page || 1;
 
   const search = router.query.search as string;
-
-  // const { data: categoriesData } = useQuery<GetAllCategoriesData, undefined>(GET_ALL_CATEGORIES, {
-  //   onError: () => null
-  // });
-
-  // const categories = categoriesData?.getCategoriesAll || [];
 
   const { data: categoriesLevelData } = useQuery<GetCategoriesLevelData, undefined>(
     GET_CATEGORIES_LEVEL,
@@ -112,14 +107,6 @@ function Products(): JSX.Element {
 
   const title = categoryData?.getCategory ? categoryData.getCategory.name : t('products:title');
 
-  // const getNameById = (array, id) => {
-  //   return _.find(array, { id })?.name;
-  // };
-
-  // const title = Number(router.query.category)
-  //   ? getNameById(categories, Number(router.query.category))
-  //   : t('products:title');
-
   useEffect(() => {
     if (productsLoading) {
       animateScroll.scrollToTop();
@@ -135,6 +122,7 @@ function Products(): JSX.Element {
       <Header />
 
       <Nav />
+
       {categoriesLevel.length !== 0 ? (
         <div className="products container mobile-content my-3 my-sm-5">
           <div className="d-flex flex-nowrap justify-content-between">

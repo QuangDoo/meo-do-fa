@@ -1,6 +1,5 @@
 import clsx from 'clsx';
-import { withTranslation } from 'i18n';
-import { WithTranslation } from 'next-i18next';
+import { useTranslation } from 'i18n';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
@@ -13,15 +12,14 @@ import LoginToSeePrice from './LoginToSeePrice';
 import ProductBadge from './ProductBadge';
 import { ProductPrice } from './ProductPrice';
 
-type Props = Product & WithTranslation;
+type Props = Product;
 
-const ProductCard = ({ t, ...props }: Props): JSX.Element => {
+const ProductCard = (props: Props) => {
   const isLoggedIn = useIsLoggedIn();
 
-  const discountPercent = Math.round(100 - (props.price * 100) / props.standard_price);
+  const { t } = useTranslation('productCard');
 
-  // const isDiscount = discountPercent > 0;
-  const isDiscount = false;
+  const isDiscount = props.discount_percentage > 0;
 
   return (
     <div className="product-card-container">
@@ -32,12 +30,12 @@ const ProductCard = ({ t, ...props }: Props): JSX.Element => {
               <div className="product-card__new-arrival">{t('productCard:new')}</div>
             )}
 
-            {isDiscount && <DiscountRibbon discountPercent={discountPercent} />}
+            {isDiscount && <DiscountRibbon discountPercent={props.discount_percentage} />}
 
             <Link href={`/products/${props.slug}`}>
               <a>
                 <div className="product-card__image mb-3 lozad">
-                  <Image alt={props.id} src={props.image_256} layout="fill" objectFit="cover" />
+                  <Image src={props.image_256} layout="fill" objectFit="cover" />
                 </div>
               </a>
             </Link>
@@ -85,10 +83,17 @@ const ProductCard = ({ t, ...props }: Props): JSX.Element => {
             {isLoggedIn ? (
               <>
                 <div className="mb-2">
-                  <ProductPrice price={props.list_price} standard_price={props.standard_price} />
+                  <ProductPrice price={props.old_price} sale_price={props.sale_price} />
                 </div>
 
-                <QuantityInput productId={props.id} price={props.list_price} name={props.name} />
+                <div className="product_qty">
+                  <QuantityInput
+                    productId={props.id}
+                    productPrice={props.list_price}
+                    productName={props.name}
+                    productImg={props.image_512}
+                  />
+                </div>
               </>
             ) : (
               <LoginToSeePrice />
@@ -100,4 +105,4 @@ const ProductCard = ({ t, ...props }: Props): JSX.Element => {
   );
 };
 
-export default withTranslation(['productCard'])(ProductCard);
+export default ProductCard;

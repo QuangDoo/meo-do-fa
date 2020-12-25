@@ -37,8 +37,6 @@ function QuickOrderPage(): JSX.Element {
     GetBestSellingProductsVars
   >(GET_BEST_SELLING_PRODUCTS, paginationVars);
 
-  console.log(bestSellingData?.getProductByConditions.Products);
-
   return (
     <div className="container py-5">
       <div className="cart">
@@ -55,12 +53,14 @@ function QuickOrderPage(): JSX.Element {
                   key={index}
                   _id={item.id}
                   image={item.image_512}
-                  price={item.list_price}
-                  standard_price={item.price}
+                  price={item.old_price}
+                  sale_price={item.sale_price}
                   productId={item.id}
                   productName={item.name}
                   quantity={0}
                   uom_name="Unit"
+                  slug={item.slug}
+                  discount_percentage={item.discount_percentage}
                 />
               ))}
             </div>

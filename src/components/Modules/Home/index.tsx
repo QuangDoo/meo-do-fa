@@ -37,7 +37,7 @@ const Home = ({ dealsOfTheDayData, bestSellingData, promotionProductsData, newPr
     }
   ];
 
-  const promotionProducts = promotionProductsData?.getProductByConditions.Products || [];
+  const promotionProducts = promotionProductsData?.getPrmotionProducts.products || [];
 
   return (
     <div>

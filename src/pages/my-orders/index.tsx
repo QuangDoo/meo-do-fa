@@ -1,6 +1,7 @@
 import { AppBar, Box, makeStyles, Tab, Tabs, Theme, Typography } from '@material-ui/core';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import Footer from 'src/components/Layout/Footer';
@@ -8,6 +9,7 @@ import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
 import Loading from 'src/components/Layout/Loading';
 import Nav from 'src/components/Layout/Nav';
+import Pagination from 'src/components/Modules/Pagination';
 import ProfileLayout from 'src/components/Modules/ProfileLayout';
 import {
   GET_ORDER_LIST,
@@ -71,6 +73,24 @@ const OrderItem = (props: any) => {
   const { t } = useTranslation(['myOrders']);
 
   const { callBack, flag } = props;
+
+  const getBadge = {
+    10: { color: 'info', tran: t('myOrders:wait_for_confirm') },
+    20: { color: 'success', tran: t('myOrders:confirmed') },
+    25: { color: 'danger', tran: t('myOrders:canceled') },
+    30: { color: 'secondary', tran: t('myOrders:in_proceed') },
+    40: { color: 'warning', tran: t('myOrders:delivering') },
+    80: { color: 'primary', tran: t('myOrders:completed') }
+  };
+
+  const handleOpenClick = (flag) => {
+    if (flag === 40 || flag === 80) {
+      toast.error(t('myOrders:report'));
+      return;
+    }
+    setOpen(true);
+  };
+
   return (
     <div className="my-orders__item p-3 my-1">
       <div className="my-orders__info">
@@ -79,9 +99,9 @@ const OrderItem = (props: any) => {
             <a className="mr-2">#{props.orderNo}</a>
           </Link>
 
-          {flag === 25 && (
+          {flag && (
             <div className="my-orders__invoice">
-              <span className="badge badge-danger">{t('myOrders:canceled')}</span>
+              <span className={`badge badge-${getBadge[flag].color}`}>{getBadge[flag].tran}</span>
             </div>
           )}
         </h2>
@@ -106,12 +126,15 @@ const OrderItem = (props: any) => {
       <div className="my-orders__invoice">
         <button className="btn btn-outline-info btn-sm">{t('myOrders:report')}</button>
 
-        {flag === 25 ? (
-          <button className="btn btn-outline-danger btn-sm" onClick={() => setOpen(true)}>
+        {flag !== 25 ? (
+          <button className="btn btn-outline-danger btn-sm" onClick={() => handleOpenClick(flag)}>
             {t('myOrders:cancel_order')}
           </button>
         ) : (
-          <button className="btn btn-outline-danger btn-sm" disabled onClick={() => setOpen(true)}>
+          <button
+            className="btn btn-outline-danger btn-sm"
+            disabled
+            onClick={() => handleOpenClick(flag)}>
             {t('myOrders:canceled')}
           </button>
         )}
@@ -126,7 +149,6 @@ const OrderItem = (props: any) => {
     </div>
   );
 };
-
 const OrderList = (props: Props) => {
   const { t } = useTranslation(['myOrders']);
   const { data, refetch, loading } = useQueryAuth<GetOrderListData, GetOrderListVars>(
@@ -137,6 +159,8 @@ const OrderList = (props: Props) => {
         pageSize: pageSize,
         flag: props.flag
       },
+      fetchPolicy: 'network-only',
+      notifyOnNetworkStatusChange: true,
       onError: (error) => {
         const errorCode = error.graphQLErrors?.[0]?.extensions?.code;
 
@@ -165,7 +189,16 @@ const OrderList = (props: Props) => {
           />
         ))
       ) : (
-        <div>{t('myOrders:no_orders')}</div>
+        <div className="col-12 m-3 text-center">
+          <p>{t('myOrders:no_orders')}</p>
+          <p>
+            <Link href="/products">
+              <a className="btn btn-primary" role="button">
+                {t('myOrders:back_to_products_page')}
+              </a>
+            </Link>
+          </p>
+        </div>
       )}
     </>
   );
@@ -173,13 +206,14 @@ const OrderList = (props: Props) => {
 
 const MyOrders = () => {
   const [value, setValue] = React.useState(0);
-
   const { t } = useTranslation(['myOrders', 'errors']);
+  const router = useRouter();
+  const page = +router.query.page || 1;
 
   const { data, refetch } = useQueryAuth<GetOrderListData, GetOrderListVars>(GET_ORDER_LIST, {
     variables: {
-      page: 1,
-      pageSize: pageSize
+      page,
+      pageSize
     },
     onError: (error) => {
       const errorCode = error.graphQLErrors?.[0]?.extensions?.code;
@@ -192,12 +226,13 @@ const MyOrders = () => {
     setValue(newValue);
 
     refetch({
-      page: 1,
+      page: page,
       pageSize: pageSize
     });
   };
 
   const orderList = data?.getOrderList || [];
+  const total = orderList.length;
   const classes = useStyles();
 
   return (
@@ -210,78 +245,79 @@ const MyOrders = () => {
 
       <Nav />
 
-      {orderList.length !== 0 ? (
-        <ProfileLayout title={t('myOrders:my_orders')}>
-          {/* <p className="text-muted m-0">
-              {t('myOrders:vat_invoice')} <Link href="/invoice-export-rules">{t('myOrders:here')}</Link>.
-            </p> */}
+      <ProfileLayout title={t('myOrders:my_orders')}>
+        {/* <p className="text-muted m-0">
+            {t('myOrders:vat_invoice')} <Link href="/invoice-export-rules">{t('myOrders:here')}</Link>.
+          </p> */}
+        <div className={classes.root}>
+          <AppBar position="static" color="default">
+            <Tabs
+              variant="scrollable"
+              scrollButtons="auto"
+              value={value}
+              onChange={handleFilterChange}
+              indicatorColor="primary"
+              textColor="primary"
+              aria-label="scrollable auto tabs example">
+              <Tab label={t('myOrders:all_order')} {...a11yProps(0)} />
+              <Tab label={t('myOrders:wait_for_confirm')} {...a11yProps(1)} />
+              <Tab label={t('myOrders:confirmed')} {...a11yProps(2)} />
+              <Tab label={t('myOrders:handling')} {...a11yProps(3)} />
+              <Tab label={t('myOrders:delivering')} {...a11yProps(4)} />
+              <Tab label={t('myOrders:completed')} {...a11yProps(5)} />
+              <Tab label={t('myOrders:canceled')} {...a11yProps(6)} />
+            </Tabs>
+          </AppBar>
+          {orderList.length !== 0 ? (
+            <>
+              <TabPanel value={value} index={0}>
+                {orderList.map((order) => (
+                  <OrderItem
+                    key={order.id}
+                    {...order}
+                    callBack={() =>
+                      refetch({
+                        page: 1,
+                        pageSize: pageSize
+                      })
+                    }
+                  />
+                ))}
+              </TabPanel>
+              <TabPanel value={value} index={1}>
+                <OrderList flag={10} />
+              </TabPanel>
+              <TabPanel value={value} index={2}>
+                <OrderList flag={20} />
+              </TabPanel>
+              <TabPanel value={value} index={3}>
+                <OrderList flag={30} />
+              </TabPanel>
+              <TabPanel value={value} index={4}>
+                <OrderList flag={40} />
+              </TabPanel>
+              <TabPanel value={value} index={5}>
+                <OrderList flag={80} />
+              </TabPanel>
+              <TabPanel value={value} index={6}>
+                <OrderList flag={25} />
+              </TabPanel>
+            </>
+          ) : (
+            <div className="col-12 m-3 text-center">
+              <p>{t('myOrders:no_orders')}</p>
+              <p>
+                <Link href="/products">
+                  <a className="btn btn-primary" role="button">
+                    {t('myOrders:back_to_products_page')}
+                  </a>
+                </Link>
+              </p>
+            </div>
+          )}
+        </div>
+      </ProfileLayout>
 
-          <div className={classes.root}>
-            <AppBar position="static" color="default">
-              <Tabs
-                variant="scrollable"
-                scrollButtons="auto"
-                value={value}
-                onChange={handleFilterChange}
-                indicatorColor="primary"
-                textColor="primary"
-                aria-label="scrollable auto tabs example">
-                <Tab label={t('myOrders:all_order')} {...a11yProps(0)} />
-                <Tab label={t('myOrders:wait_for_confirm')} {...a11yProps(1)} />
-                <Tab label={t('myOrders:confirmed')} {...a11yProps(2)} />
-                <Tab label={t('myOrders:handling')} {...a11yProps(3)} />
-                <Tab label={t('myOrders:delivering')} {...a11yProps(4)} />
-                <Tab label={t('myOrders:completed')} {...a11yProps(5)} />
-                <Tab label={t('myOrders:canceled')} {...a11yProps(6)} />
-              </Tabs>
-            </AppBar>
-            <TabPanel value={value} index={0}>
-              {orderList.map((order) => (
-                <OrderItem
-                  key={order.id}
-                  {...order}
-                  callBack={() =>
-                    refetch({
-                      page: 1,
-                      pageSize: pageSize
-                    })
-                  }
-                />
-              ))}
-            </TabPanel>
-            <TabPanel value={value} index={1}>
-              <OrderList flag={10} />
-            </TabPanel>
-            <TabPanel value={value} index={2}>
-              <OrderList flag={20} />
-            </TabPanel>
-            <TabPanel value={value} index={3}>
-              <OrderList flag={30} />
-            </TabPanel>
-            <TabPanel value={value} index={4}>
-              <OrderList flag={40} />
-            </TabPanel>
-            <TabPanel value={value} index={5}>
-              <OrderList flag={80} />
-            </TabPanel>
-            <TabPanel value={value} index={6}>
-              <OrderList flag={25} />
-            </TabPanel>
-          </div>
-
-          <div className="col-12 m-3 text-center">
-            <p>
-              <Link href="/products">
-                <a className="btn btn-primary" role="button">
-                  {t('myOrders:back_to_products_page')}
-                </a>
-              </Link>
-            </p>
-          </div>
-        </ProfileLayout>
-      ) : (
-        <div></div>
-      )}
       <Footer />
     </>
   );

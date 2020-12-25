@@ -10,6 +10,8 @@ import { GET_CATEGORIES_LEVEL, GetCategoriesLevelData } from 'src/graphql/catego
 import useCart from 'src/hooks/useCart';
 import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
 
+import LoadingBackdrop from './LoadingBackdrop';
+
 const Nav = () => {
   const isLoggedIn = useIsLoggedIn();
 
@@ -104,19 +106,10 @@ const Nav = () => {
               )}
 
               <li className="rockland-nav__item">
-                <Link href="/products">
+                <Link href="/deals-of-the-day">
                   <a className="rockland-nav__link">
                     <i className="rockland-nav__icon icomoon icon-product" />
-                    <span className="rockland-nav__title">{t('navbar:product')}</span>
-                  </a>
-                </Link>
-              </li>
-
-              <li className="rockland-nav__item">
-                <Link href="/ingredients">
-                  <a className="rockland-nav__link">
-                    <i className="rockland-nav__icon icomoon icon-ingredients" />
-                    <span className="rockland-nav__title">{t('navbar:ingredient')}</span>
+                    <span className="rockland-nav__title">{t('navbar:deals_of_the_day')}</span>
                   </a>
                 </Link>
               </li>
@@ -130,21 +123,46 @@ const Nav = () => {
                 </Link>
               </li>
 
-              <li className="rockland-nav__item">
-                <Link href="/deals">
+              <li className="rockland-nav__item dropdown dropdown-nav">
+                <div data-toggle="dropdown" data-hover="dropdown">
                   <a className="rockland-nav__link">
                     <i className="rockland-nav__icon fab fa-hotjar" />
                     <span className="rockland-nav__title">{t('navbar:promotion')}</span>
+                  </a>
+                </div>
+                <ul className="dropdown-menu">
+                  <li className="dropdown-item">
+                    <Link href="/promo-codes">
+                      <a>
+                        <i className="rockland-nav__icon fas fa-tag" />
+                        <span>{t('navbar:promo_code')}</span>
+                      </a>
+                    </Link>
+                  </li>
+                  <li className="dropdown-item">
+                    <Link href="/deals">
+                      <a>
+                        <i className="rockland-nav__icon fas fa-gifts" />
+                        <span>{t('navbar:promo_products')}</span>
+                      </a>
+                    </Link>
+                  </li>
+                </ul>
+              </li>
+              <li className="rockland-nav__item">
+                <Link href="/pathological">
+                  <a className="rockland-nav__link">
+                    <i className="rockland-nav__icon fas fa-laptop-medical" />
+                    <span className="rockland-nav__title">{t('navbar:pathological')}</span>
                   </a>
                 </Link>
               </li>
 
               <li className="rockland-nav__item">
-                <Link href="/promo-codes">
+                <Link href="/ingredients">
                   <a className="rockland-nav__link">
-                    <i className="rockland-nav__icon fas fa-tag" />
-                    <span className="rockland-nav__title">{t('navbar:promo_code')}</span>
-                    <span className="rockland-nav__tag badge badge-pill">{t('navbar:new')}</span>
+                    <i className="rockland-nav__icon icomoon icon-ingredients" />
+                    <span className="rockland-nav__title">{t('navbar:ingredient')}</span>
                   </a>
                 </Link>
               </li>
