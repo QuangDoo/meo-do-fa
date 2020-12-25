@@ -218,7 +218,12 @@ const StickySidebar = (props: Props): JSX.Element => {
             <span className="unit">{t('common:vnd')}</span>
           </span>
         </SidebarItem>
-
+        <SidebarItem label={t('checkout:price_tax')}>
+          <span>
+            <PriceText price={counselData.totalPriceVat} />
+            <span className="unit">{t('common:vnd')}</span>
+          </span>
+        </SidebarItem>
         <SidebarItem containerClass="checkout__info-promo"></SidebarItem>
 
         <SidebarItem label={t('checkout:price_total')} containerClass="checkout__info-total">
