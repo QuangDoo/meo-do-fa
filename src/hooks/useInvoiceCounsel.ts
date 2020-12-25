@@ -8,14 +8,11 @@ import {
 import { useLazyQueryAuth } from './useApolloHookAuth';
 
 type Props = {
-  cartId: string;
-  productId: number;
-  quantity: number;
-  productName: string;
+  orderNo: string;
 };
 
 export default function useInvoiceCounse(props: Props) {
-  const { cartId, productId, quantity, productName } = props;
+  const { orderNo } = props;
 
   const [
     getProductInvoice,
@@ -27,19 +24,13 @@ export default function useInvoiceCounse(props: Props) {
 
     getProductInvoice({
       variables: {
-        counsels: [
-          {
-            cartId: cartId,
-            productId: productId,
-            quantity: quantity,
-            productName: productName
-          }
-        ]
+        orderNo
       }
     });
   }, [data]);
+  // console.log('error', error);
   const productsInvoice = data?.getInvoiceCounsel || [];
-  console.log('loading', loading);
+
   return {
     productsInvoice,
     errorProductInvoice: error

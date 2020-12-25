@@ -108,13 +108,12 @@ const CheckoutPage = () => {
     fetchPolicy: 'network-only',
     notifyOnNetworkStatusChange: true
   });
+
   // get product list invoice
-  const { productsInvoice, errorProductInvoice } = useInvoiceCounse({
-    cartId: counselData?.counsel?.counsels[0].cartId,
-    productId: counselData?.counsel?.counsels[0].productId,
-    quantity: counselData?.counsel?.counsels[0].quantity,
-    productName: counselData?.counsel?.counsels[0].productName
-  });
+
+  // const { productsInvoice, errorProductInvoice } = useInvoiceCounse({
+  //   orderNo: counselData?.counsel.orderNo
+  // });
 
   useEffect(() => {
     refetchCounsel();
@@ -294,7 +293,7 @@ const CheckoutPage = () => {
                   districts={invoiceDistricts}
                   wards={invoiceWards}
                 />
-                <ProductInvoice register={register} arrayProducts={productsInvoice} />
+                {/* <ProductInvoice register={register} arrayProducts={productsInvoice} /> */}
               </div>
             )}
 
