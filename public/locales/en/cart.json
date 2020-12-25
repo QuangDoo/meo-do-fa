@@ -17,5 +17,6 @@
   "yes": "Yes",
   "no": "No",
   "update_success": "Update cart success!",
-  "view_cart": "View cart"
+  "view_cart": "View cart",
+  "quick_invoice_with_tax": "Quick invoice ({{tax}}% tax)"
 }

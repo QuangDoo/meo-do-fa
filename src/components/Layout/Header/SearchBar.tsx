@@ -101,7 +101,7 @@ const SearchBar = (): JSX.Element => {
 
   const renderManufacturers = (manufacturers) => {
     return manufacturers.map((manufacturer) => (
-      <Link key={manufacturer.id} href={`/manufacturers/${manufacturer.id}`}>
+      <Link key={manufacturer.id} href={`/products?manufacturer=${manufacturer.id}`}>
         <a className="search__result">{manufacturer.name}</a>
       </Link>
     ));

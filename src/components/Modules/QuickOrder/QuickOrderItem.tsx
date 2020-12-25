@@ -14,6 +14,7 @@ type Props = {
   quantity: number;
   _id: number;
   slug: string;
+  discount_percentage: number;
 };
 
 function QuickOrderItem(props: Props): JSX.Element {
@@ -41,7 +42,11 @@ function QuickOrderItem(props: Props): JSX.Element {
             <div className="flex-1 flex-column">
               <div className="d-flex justify-content-between align-items-center">
                 <div>
-                  <ProductPrice price={props.price} sale_price={props.sale_price} />
+                  <ProductPrice
+                    price={props.price}
+                    sale_price={props.sale_price}
+                    discount_percentage={props.discount_percentage}
+                  />
                 </div>
 
                 <div className="cart-item__qty">

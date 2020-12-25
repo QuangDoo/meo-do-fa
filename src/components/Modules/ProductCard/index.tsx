@@ -83,7 +83,11 @@ const ProductCard = (props: Props) => {
             {isLoggedIn ? (
               <>
                 <div className="mb-2">
-                  <ProductPrice price={props.list_price} sale_price={props.sale_price} />
+                  <ProductPrice
+                    discount_percentage={props.discount_percentage}
+                    price={props.list_price}
+                    sale_price={props.sale_price}
+                  />
                 </div>
 
                 <div className="product_qty">
