@@ -3,6 +3,7 @@
     "show": "Hiển thị",
     "on_of": "trên tổng số ",
     "products": "sản phẩm",
-    "no_products": "Không có sản phẩm phù hợp với từ khoá: ",
+    "no_products_matching_key": "Không có sản phẩm phù hợp với từ khoá: ",
+    "no_products": "Không có sản phẩm",
     "key": "kết quả tìm kiếm cho: "
 }
