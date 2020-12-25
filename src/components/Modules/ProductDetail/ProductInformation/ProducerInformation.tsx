@@ -1,7 +1,7 @@
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import React from 'react';
-import ScrollableTabsButtonAuto from 'src/components/ScrollableTabsButtonAuto/ScrollableTabsButtonAuto';
+import ScrollableTabsButtonAuto from 'src/components/Modules/ScrollableTabsButtonAuto/ScrollableTabsButtonAuto';
 import { ProductDetails } from 'src/graphql/product/product.query';
 
 // import Tab from '../../../Tab/Tab';
