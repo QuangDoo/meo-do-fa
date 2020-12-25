@@ -1,9 +1,12 @@
 {
   "product": "Product",
+  "deals_of_the_day": "Deals of the day",
   "ingredient": "Ingredient",
   "fast_order": "Quick order",
   "promotion": "Promotion",
-  "promo_code": "Promo codes",
+  "promo_products": "Promotional products",
+  "promo_code": "Promotion codes",
+  "pathological": "Search by pathology",
   "new": "New",
   "e_wallet": "E-Wallet",
   "reward_points": "Reward points",

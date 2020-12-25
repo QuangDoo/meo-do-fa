@@ -113,7 +113,7 @@ ul li.mb-2.dropdown-item:last-child {
 
 .dropdown.dropdown-nav:hover > .dropdown-menu {
   display: block !important;
-  width: 100%;
+  width: auto;
   padding: 10px;
   height: auto;
 }

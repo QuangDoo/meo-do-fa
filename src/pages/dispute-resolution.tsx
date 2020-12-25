@@ -31,7 +31,8 @@ const DisputeResolution = () => {
         </p>
         <ul className="list-group ml-3">
           <li>
-            <b>Bước 1:</b> Khách hàng khiếu nại qua email: hotro@Medofa, hotro@dayton.vn
+            <b>Bước 1:</b> Khách hàng khiếu nại qua email:{' '}
+            <a href="mailto: info@medofa.com">info@medofa.com</a>
           </li>
           <li>
             <b>Bước 2:</b> Bộ phận Chăm Sóc Khách Hàng sẽ tiếp nhận các khiếu nại của thành viên,
