@@ -8,11 +8,11 @@ module.exports = withPWA({
   rewrites: async () => nextI18NextRewrites(localeSubpaths),
   publicRuntimeConfig: {
     localeSubpaths,
-  //  GRAPHQL_GATEWAY_EXT: process.env.GRAPHQL_GATEWAY_EXT
+    GRAPHQL_GATEWAY_EXT: process.env.GRAPHQL_GATEWAY_EXT
   },
   serverRuntimeConfig: {
     // Will only be available on the server side
-  //  GRAPHQL_GATEWAY: process.env.GRAPHQL_GATEWAY, // Pass through env variables
+    GRAPHQL_GATEWAY: process.env.GRAPHQL_GATEWAY, // Pass through env variables
   },
   images: {
     domains: ['firebasestorage.googleapis.com', 'googleapis.com']

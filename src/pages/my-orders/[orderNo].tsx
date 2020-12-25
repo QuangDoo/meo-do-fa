@@ -215,7 +215,7 @@ const CustomHeadCell = ({ label, textAlign }: CustomHeadCellProps) => {
 
 type CustomBodyCellProps = {
   children: React.ReactNode;
-  textAlign?: 'left' | 'right' | 'center';
+  textAlign?: 'left' | 'right';
 };
 
 const CustomBodyCell = ({ children, textAlign }: CustomBodyCellProps) => {
@@ -482,7 +482,6 @@ const OrderDetails = () => {
                     <CustomHeadCell label={t('myOrders:product')} textAlign="left" />
                     <CustomHeadCell label={t('myOrders:unit_price')} />
                     <CustomHeadCell label={t('myOrders:quantity')} />
-                    <CustomHeadCell label={t('myOrders:price_tax')} />
                     <CustomHeadCell label={t('myOrders:total')} />
                   </TableRow>
                 </TableHead>
@@ -500,12 +499,9 @@ const OrderDetails = () => {
                         <PriceText price={product.price_unit} /> {t('common:vnd')}
                       </CustomBodyCell>
 
-                      <CustomBodyCell textAlign="center">{product.product_uom_qty}</CustomBodyCell>
+                      <CustomBodyCell>{product.product_uom_qty}</CustomBodyCell>
 
-                      <CustomBodyCell textAlign="right">
-                        <PriceText price={product.price_tax} /> {t('common:vnd')}
-                      </CustomBodyCell>
-                      <CustomBodyCell textAlign="center">
+                      <CustomBodyCell>
                         <PriceText price={product.price_total} /> {t('common:vnd')}
                       </CustomBodyCell>
                     </TableRow>
@@ -514,7 +510,7 @@ const OrderDetails = () => {
 
                 <TableFooter>
                   <TableRow>
-                    <TableCell colSpan={5}>
+                    <TableCell colSpan={4}>
                       <Typography variant="h5" align="right">
                         {t('myOrders:total')}{' '}
                         <PriceText price={orderDetail?.getOrderDetail.amount_total} /> đ
