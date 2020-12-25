@@ -7,11 +7,6 @@ import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { Category } from 'src/graphql/category/category.query';
 import { Manufacturer } from 'src/graphql/manufacturers/manufacturers.query';
-import {
-  SEARCH_CATEGORIES_BY_NAME,
-  searchCategoryData,
-  searchCategoryVar
-} from 'src/graphql/search/search.categories.query';
 
 import Dropdown from '../Form/Dropdown';
 import Select from '../Form/Select';
