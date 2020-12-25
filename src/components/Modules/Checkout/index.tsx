@@ -294,7 +294,7 @@ const CheckoutPage = () => {
                   districts={invoiceDistricts}
                   wards={invoiceWards}
                 />
-                <ProductInvoice register={register} arrayProducts={productsInvoice} />
+                {/* <ProductInvoice register={register} arrayProducts={productsInvoice} /> */}
               </div>
             )}
 

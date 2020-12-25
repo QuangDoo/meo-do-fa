@@ -16,9 +16,11 @@ export const CREATE_COUNSEL = gql`
         }
         totalQty
         totalPrice
+        totalPriceVat
         totalDcAmt
         totalShippingFee
         totalNetPrice
+        totalDcPayment
       }
     }
   }

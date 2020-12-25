@@ -39,6 +39,7 @@ export type OutputCounsel = {
   totalDcAmt: number;
   totalShippingFee: number;
   totalNetPrice: number;
+  totalPriceVat: number;
   totalDcPayment: number;
   promotion: PromotionType;
 };
@@ -66,6 +67,7 @@ export const GET_COUNSEL = gql`
       }
       totalQty
       totalPrice
+      totalPriceVat
       totalDcAmt
       totalShippingFee
       totalNetPrice
