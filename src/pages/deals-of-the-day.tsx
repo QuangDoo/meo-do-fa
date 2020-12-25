@@ -84,10 +84,11 @@ const DealOfTheDay = () => {
       <Header />
 
       <Nav />
-      {hotDealData?.getProductByConditions && (
-        <div className="deals deals--mobile py-5">
-          <div className="container px-0">
-            <h1 className="text-white mb-3">{t('dealsOfTheDay:title')}</h1>
+
+      <div className="deals deals--mobile py-5">
+        <div className="container px-0">
+          <h1 className="text-white mb-3">{t('dealsOfTheDay:title')}</h1>
+          {hotDeals.length !== 0 && (
             <div className="row no-gutters">
               <div className="col-12 mb-3 px-3 text-white">
                 <h3 className="text-white text-center my-3">{t('dealsOfTheDay:hot_deals')}</h3>
@@ -116,11 +117,11 @@ const DealOfTheDay = () => {
                 </div>
               </>
             </div>
-          </div>
+          )}
         </div>
-      )}
+      </div>
 
-      {otherDealData?.getProductByConditions && (
+      {otherDeals.length !== 0 && (
         <div className="deals--mobile py-5">
           <div className="container px-0">
             <div className="row no-gutters">
