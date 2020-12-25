@@ -2,30 +2,23 @@ import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import React from 'react';
 
-import NewsBanner from '../../News/NewsBanner';
+const links = [
+  {
+    itemImgUrl: 'https://hasaki.vn/images/graphics/img_quality_3.png',
+    title: 'Phát hiện hàng giả, bạn trả hàng và nhận thêm 110% giá trị'
+  },
+  {
+    itemImgUrl: 'https://hasaki.vn/images/graphics/img_quality_4.png',
+    title: 'Phát hiện hàng giả, bạn trả hàng và nhận thêm 110% giá trị'
+  },
+  {
+    itemImgUrl: 'https://hasaki.vn/images/graphics/img_quality_3.png',
+    title: 'Phát hiện hàng giả, bạn trả hàng và nhận thêm 110% giá trị'
+  }
+];
 
-type Props = {
-  title: string;
-  itemImgUrl: string;
-  links?: any;
-};
-
-function ProductSidebar(props: Props): JSX.Element {
+function ProductSidebar(): JSX.Element {
   const { t } = useTranslation(['productDetail']);
-  const links = [
-    {
-      itemImgUrl: 'https://hasaki.vn/images/graphics/img_quality_3.png',
-      title: 'Phát hiện hàng giả, bạn trả hàng và nhận thêm 110% giá trị'
-    },
-    {
-      itemImgUrl: 'https://hasaki.vn/images/graphics/img_quality_4.png',
-      title: 'Phát hiện hàng giả, bạn trả hàng và nhận thêm 110% giá trị'
-    },
-    {
-      itemImgUrl: 'https://hasaki.vn/images/graphics/img_quality_3.png',
-      title: 'Phát hiện hàng giả, bạn trả hàng và nhận thêm 110% giá trị'
-    }
-  ];
 
   return (
     <>
@@ -36,7 +29,7 @@ function ProductSidebar(props: Props): JSX.Element {
           </tr>
           <tr>
             <td>
-              {links.map((item, index) => {
+              {links.map((item) => {
                 return (
                   <>
                     <Link href="/">

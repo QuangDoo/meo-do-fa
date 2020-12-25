@@ -2,67 +2,23 @@ import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import React from 'react';
 import PriceText from 'src/components/Form/PriceText';
-import { Category } from 'src/graphql/category/category.query';
-import { Manufacturer } from 'src/graphql/manufacturers/manufacturers.query';
+import QuantityInput from 'src/components/Form/QuantityInput';
+import { ProductDetails } from 'src/graphql/product/product.query';
 import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
-import manufacturers from 'src/pages/manufacturers';
 
-import QuantityInput from '../../Form/QuantityInput';
-import AddCart from '../AddCart';
 import LoginModal from '../LoginModal';
 import ProductBadge from '../ProductCard/ProductBadge';
-import { ProductPrice } from '../ProductCard/ProductPrice';
 
-type PropsType = {
-  name: string;
-  list_price: number;
-  uom_name: string;
-  id: string;
-  is_quick_invoice: string;
-  is_exclusive: string;
-  is_vn: string;
-  categories: Category[];
-  manufacturers: Display_name;
-  info?: string;
-  indication?: string;
-  contraindication?: string;
-  direction?: string;
-  interaction?: string;
-  preservation?: string;
-  overdose?: string;
-  sale_price?: number;
-  standard_price?: number;
-};
-type Display_name = {
-  name: string;
-  id: number;
-  amount: string;
-};
-const ProductDetailInfor = (props: PropsType): JSX.Element => {
-  console.log(props);
+const ProductDetailInfor = (props: ProductDetails): JSX.Element => {
   const isLoggedIn = useIsLoggedIn();
+
   const { t } = useTranslation(['common', 'productDetail']);
+
   return (
     <div className="row">
       <div className="col-12">
         <h1 className="h3 text-capitalize">{props.name}</h1>
-        <div className="product__status mb-1" />
-        {!isLoggedIn ? (
-          <LoginModal />
-        ) : (
-          <div className="d-flex align-items-center flex-wrap justify-content-between mb-4">
-            <div>
-              <div className="product__price-group">
-                <span className="product__price">
-                  <ProductPrice list_price={props.list_price} sale_price={props.sale_price} />
-                  {props?.is_quick_invoice && (
-                    <small className="text-muted"> ({t('productDetail:vat_included')})</small>
-                  )}
-                </span>
-              </div>
-            </div>
-          </div>
-        )}
+
         <div className="product__status mb-3">
           {props.is_quick_invoice && <ProductBadge type="is_quick_invoice" />}
 
@@ -70,13 +26,43 @@ const ProductDetailInfor = (props: PropsType): JSX.Element => {
 
           {props.is_vn && <ProductBadge type="is_vn" />}
         </div>
+
+        <div className="product__status mb-1" />
+        {!isLoggedIn ? (
+          <LoginModal />
+        ) : (
+          <div className="d-flex align-items-center">
+            <div className="product__price-group">
+              <span className="product__price">
+                <PriceText price={props.sale_price} />
+                <span className="unit">{t('common:vnd')}</span>
+              </span>
+
+              {props.discount_percentage > 0 && (
+                <>
+                  <br />
+
+                  <span className="product__old-price">
+                    <PriceText price={props.list_price} />
+                    <span className="unit">{t('common:vnd')}</span>
+                  </span>
+                </>
+              )}
+            </div>
+
+            {props.is_quick_invoice && (
+              <small className="text-muted ml-3"> ({t('productDetail:vat_included')})</small>
+            )}
+          </div>
+        )}
+
         <div className="mb-3">
-          {props.manufacturers && (
+          {props.manufacturer && (
             <>
               <div className="product__info-label">{t('productDetail:manufacturer')}</div>
               <div className="text-capitalize">
-                <Link href={`/manufacturers/${props.manufacturers?.id}`}>
-                  <a>{props.manufacturers?.name}</a>
+                <Link href={`/manufacturers/${props.manufacturer?.id}`}>
+                  <a>{props.manufacturer?.name}</a>
                 </Link>
               </div>
             </>
@@ -101,7 +87,12 @@ const ProductDetailInfor = (props: PropsType): JSX.Element => {
         </div>
         <div className="product__status mb-4" />
         {!isLoggedIn ? null : (
-          <AddCart productId={props.id} price={props.list_price} name={props.name} />
+          <QuantityInput
+            productId={props.id}
+            productPrice={props.list_price}
+            productName={props.name}
+            productImg={props.image_512}
+          />
         )}
       </div>
     </div>

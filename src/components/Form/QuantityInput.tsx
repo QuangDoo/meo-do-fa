@@ -1,128 +1,168 @@
-import clsx from 'clsx';
-import { withTranslation } from 'i18n';
-import { WithTranslation } from 'next-i18next';
+import { useTranslation } from 'i18n';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
-import { ADD_TO_CART } from 'src/graphql/order/order.mutation';
+import { ADD_TO_CART, AddToCartData, AddToCartVars } from 'src/graphql/cart/addToCart';
+import { DELETE_CART, DeleteCartData, DeleteCartVars } from 'src/graphql/cart/deleteCart.mutation';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import useCart from 'src/hooks/useCart';
+import useDebounce from 'src/hooks/useDebounce';
 
-type Props = WithTranslation & {
-  size?: 'normal' | 'large';
-  quantity?: number;
-  handleChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  productId?: string;
-  price?: number;
-  name?: string;
-  product_variant_ids?: string[];
+import ConfirmDeleteModal from '../Modules/Cart/ConfirmDeleteModal';
+
+type Props = {
+  productId: number;
+  productPrice: number;
+  productName: string;
+  productImg: string;
 };
 
 function QuantityInput(props: Props) {
-  const { size, productId, price, name, t } = props;
+  const { productId, productPrice, productName, productImg } = props;
+
+  const { t } = useTranslation(['errors', 'success']);
 
   const { cart, refetchCart } = useCart();
 
+  const thisProductInCart = cart?.getCart.carts.find((product) => product.productId === productId);
+
+  const quantityInCart = thisProductInCart?.quantity || 0;
+
+  const [quantity, setQuantity] = useState<number>(quantityInCart);
+
+  const [open, setOpen] = useState<boolean>(false);
+
   useEffect(() => {
-    if (!cart) return;
+    setQuantity(quantityInCart);
+  }, [quantityInCart]);
 
-    const thisProduct = cart.getCart.carts.find((product) => product.productId === productId);
-
-    if (thisProduct) {
-      setQuantity(thisProduct.quantity + '');
+  const [addToCart, { loading: addingToCart }] = useMutationAuth<AddToCartData, AddToCartVars>(
+    ADD_TO_CART,
+    {
+      onCompleted: () => {
+        toast.success(t(`success:update_cart`));
+        refetchCart();
+      },
+      onError: (err) => {
+        toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
+      }
     }
-  }, [cart]);
+  );
 
-  const [quantity, setQuantity] = useState<string>('0');
-
-  const [addToCart, { loading: addingToCart }] = useMutationAuth(ADD_TO_CART, {
-    onCompleted: () => {
-      toast.success(t(`errors:add_to_cart_success`));
-      refetchCart();
-    },
-    onError: (error) => {
-      toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
+  const [deleteCart, { loading: deletingCart }] = useMutationAuth<DeleteCartData, DeleteCartVars>(
+    DELETE_CART,
+    {
+      onCompleted: () => {
+        toast.success(t(`success:delete_cart`));
+        refetchCart();
+      },
+      onError: (err) => {
+        toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
+      }
     }
-  });
+  );
 
-  const handleClick = () => {
-    if (+quantity === 0) {
-      toast.error(t('errors:add_to_cart_quantity_0'));
+  const handleUpdate = (prevQuantity: number, newQuantity: number) => {
+    if (newQuantity === prevQuantity) {
       return;
     }
 
-    if (+quantity < 0) {
-      toast.error(t('errors:add_to_cart_less_than_0'));
+    if (newQuantity === 0) {
+      setOpen(true);
       return;
     }
 
     addToCart({
       variables: {
-        productId,
-        quantity: +quantity,
-        price,
-        productName: name
+        price: productPrice,
+        productId: productId,
+        productName: productName,
+        quantity: newQuantity
       }
     });
   };
 
-  const handleMinus = () => {
-    setQuantity((quantity) => Math.max(0, +quantity - 1) + '');
+  const debouncedHandleUpdate = useDebounce(handleUpdate, 450);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const string = e.target.value.replace(/\D/g, '');
+    const newQuantity = +string || 0;
+    setQuantity(newQuantity);
   };
 
-  const handlePlus = () => {
-    setQuantity((quantity) => +quantity + 1 + '');
-  };
-
-  const handleKeyDown = (e) => {
-    if ([13, 27].includes(e.keyCode)) {
-      e.target.blur();
+  // Blur on enter
+  const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.currentTarget.blur();
     }
   };
 
-  const handleChangeNumber = (temp) => {
-    if (isNaN(temp)) {
-      return;
-    }
-    temp < 0 ? setQuantity('0') : setQuantity(temp);
+  // Update quantity on blur
+  const handleInputBlur = () => {
+    handleUpdate(quantityInCart, quantity);
   };
 
-  const handleBlur = () => {
-    setQuantity(isNaN(+quantity) ? '0' : +quantity + '');
+  const handlePlusClick = () => {
+    const newQuantity = quantity + 1;
+    setQuantity(newQuantity);
+    debouncedHandleUpdate(quantityInCart, newQuantity);
+  };
+
+  const handleMinusClick = () => {
+    const newQuantity = Math.max(quantity - 1, 0);
+    setQuantity(newQuantity);
+    debouncedHandleUpdate(quantityInCart, newQuantity);
+  };
+
+  const handleCloseModal = () => {
+    setOpen(false);
+    setQuantity(quantityInCart);
+  };
+
+  const handleConfirmDelete = () => {
+    setOpen(false);
+    deleteCart({
+      variables: {
+        _id: thisProductInCart._id
+      }
+    });
   };
 
   return (
     <>
-      <div className="product_qty">
-        <div className={clsx('qty js-qty', size === 'large' && 'qty--lg')}>
-          <button className="btn btn-sm qty__button qty__button--minus" onClick={handleMinus}>
-            <i className="fas fa-minus" />
-          </button>
+      <div className="qty js-qty">
+        <button className="btn btn-sm qty__button qty__button--minus" onClick={handleMinusClick}>
+          <i className="fas fa-minus" />
+        </button>
 
-          <input
-            type="tel"
-            className="form-control px-1 no-spinner text-center qty__input"
-            min={0}
-            max={100000}
-            value={quantity}
-            onChange={(e) => handleChangeNumber(e.target.value)}
-            onKeyDown={handleKeyDown}
-            onBlur={handleBlur}
-          />
+        <input
+          type="tel"
+          className="form-control px-1 no-spinner text-center qty__input"
+          min={0}
+          max={100000}
+          value={quantity}
+          onChange={handleInputChange}
+          onKeyDown={handleInputKeyDown}
+          onBlur={handleInputBlur}
+        />
 
-          <button className="btn btn-sm qty__button qty__button--plus" onClick={handlePlus}>
-            <i className="fas fa-plus" />
-          </button>
-
-          <button className="ml-2 btn btn-sm qty__button qty__button--plus" onClick={handleClick}>
-            <i className="fas fa-check" />
-          </button>
-        </div>
+        <button className="btn btn-sm qty__button qty__button--plus" onClick={handlePlusClick}>
+          <i className="fas fa-plus" />
+        </button>
       </div>
 
-      <LoadingBackdrop open={addingToCart} />
+      <ConfirmDeleteModal
+        open={open}
+        onClose={handleCloseModal}
+        onConfirm={handleConfirmDelete}
+        productName={productName}
+        image={productImg}
+        price={productPrice}
+      />
+
+      <LoadingBackdrop open={addingToCart || deletingCart} />
     </>
   );
 }
 
-export default withTranslation(['errors'])(QuantityInput);
+export default QuantityInput;
