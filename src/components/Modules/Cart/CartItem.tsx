@@ -59,51 +59,55 @@ function CartItem(props: CartItemProps): JSX.Element {
     });
   };
 
+  const productLink = 'products/' + props.product.slug;
+
   return (
-    <div className="cart-item">
-      <div className="row align-items-center">
-        <div
-          className="cart-item__image lozadloaded flex-shrink-0"
-          style={{
-            backgroundImage: `url(${props.product.image_512})`
-          }}
-        />
-        <div className="flex-1 pl-2 pr-2">
-          <div className="d-flex align-items-center">
-            <div>
-              <Link href={'products/' + props.product.slug}>
-                <a className="cart-item__name" title={props.productName}>
-                  {props.productName}
-                </a>
-              </Link>
-            </div>
+    <div className="d-flex p-3">
+      <Link href={productLink}>
+        <a>
+          <img className="cart-item-img" src={props.product.image_512} alt="" />
+        </a>
+      </Link>
+
+      <div className="ml-3 d-flex flex-column flex-grow-1 flex-md-row justify-content-md-between">
+        <div>
+          <Link href={productLink}>
+            <a className="cart-item__name" title={props.productName}>
+              {props.productName}
+            </a>
+          </Link>
+
+          <div className="product__status">
+            <span className="badge badge-light display-status mr-1 mb-1 invoice_exportable">
+              <i className="fas mr-1"></i>
+              {t(`cart:quick_invoice_with_tax`, { tax: props.tax })}
+            </span>
+          </div>
+        </div>
+
+        <div className="mt-3 d-flex flex-shrink-0 flex-column align-items-start align-items-md-end mt-md-0">
+          <div>
+            <PriceText price={discountedPrice} />
+            {' ' + t('common:vnd')}
           </div>
 
-          <div className="d-flex justify-content-between align-items-center">
-            <div className="flex-1 flex-column">
-              <div className="d-flex justify-content-between align-items-center">
-                <div>
-                  {discountedPrice !== props.price && (
-                    <>
-                      -{totalDiscountAmount}%{' '}
-                      <del className="text-muted">
-                        <PriceText price={props.price} />
-                      </del>{' '}
-                    </>
-                  )}
-                  <PriceText price={discountedPrice} />
-                </div>
+          {totalDiscountAmount > 0 && (
+            <small className="d-flex align-items-center">
+              <del className="text-muted">
+                <PriceText price={props.price} />
+                {' ' + t('common:vnd')}
+              </del>
+              <div className="mx-2">I</div>-{totalDiscountAmount}%
+            </small>
+          )}
 
-                <div className="cart-item__qty">
-                  <QuantityInput
-                    productId={props.productId}
-                    productName={props.productName}
-                    productPrice={props.price}
-                    productImg={props.product.image_512}
-                  />
-                </div>
-              </div>
-            </div>
+          <div className="mt-3 d-flex cart-item__qty align-items-center">
+            <QuantityInput
+              productId={props.productId}
+              productName={props.productName}
+              productPrice={props.price}
+              productImg={props.product.image_512}
+            />
 
             <div className="ml-3">
               <button onClick={handleDeleteClick} className="cart-item__remove">

@@ -27,7 +27,6 @@ const ProductDetailInfor = (props: ProductDetails): JSX.Element => {
           {props.is_vn && <ProductBadge type="is_vn" />}
         </div>
 
-        <div className="product__status mb-1" />
         {!isLoggedIn ? (
           <LoginModal />
         ) : (
@@ -56,7 +55,7 @@ const ProductDetailInfor = (props: ProductDetails): JSX.Element => {
           </div>
         )}
 
-        <div className="mb-3">
+        <div className="my-3">
           {props.manufacturer && (
             <>
               <div className="product__info-label">{t('productDetail:manufacturer')}</div>

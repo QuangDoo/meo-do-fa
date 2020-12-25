@@ -57,11 +57,12 @@ function Cart(): JSX.Element {
           </div>
           <div className="row">
             <div className="col-12 col-md-9 col-lg-9">
-              <div className="elevated cart__items mb-3">
-                {cart?.getCart.carts.map((item) => (
-                  <CartItem {...item} key={item._id} />
-                ))}
-              </div>
+              {cart?.getCart.carts.map((item) => (
+                <div key={item._id} className="elevated cart__items mb-3">
+                  <CartItem {...item} />
+                </div>
+              ))}
+
               <div className="elevated text-muted p-3 mb-4">
                 <i className="fas fa-exclamation-circle mr-1" />
                 {t('cart:back_to_products')} <a href="/products">{t('cart:products')}</a>
