@@ -12,22 +12,16 @@ import useCart from 'src/hooks/useCart';
 
 import ConfirmDeleteModal from './ConfirmDeleteModal';
 
-type Props = {
-  item: CartItemProps;
-};
-
-function CartItem(props: Props): JSX.Element {
+function CartItem(props: CartItemProps): JSX.Element {
   const { t } = useTranslation(['cart', 'errors']);
 
-  const { item } = props;
-
-  const totalDiscountAmount = item.promotions
+  const totalDiscountAmount = props.promotions
     .filter((promo) => promo.reward_type === 'discount')
     .reduce((total, promo) => {
       return total + promo.discount_percentage;
     }, 0);
 
-  const discountedPrice = item.price * ((100 - totalDiscountAmount) / 100);
+  const discountedPrice = props.price * ((100 - totalDiscountAmount) / 100);
 
   const [open, setOpen] = useState<boolean>(false);
 
@@ -60,7 +54,7 @@ function CartItem(props: Props): JSX.Element {
     setOpen(false);
     deleteCart({
       variables: {
-        _id: item._id
+        _id: props._id
       }
     });
   };
@@ -71,15 +65,15 @@ function CartItem(props: Props): JSX.Element {
         <div
           className="cart-item__image lozadloaded flex-shrink-0"
           style={{
-            backgroundImage: `url(${item.product.image_512})`
+            backgroundImage: `url(${props.product.image_512})`
           }}
         />
         <div className="flex-1 pl-2 pr-2">
           <div className="d-flex align-items-center">
             <div>
-              <Link href={'products/' + item.product.slug}>
-                <a className="cart-item__name" title={item.productName}>
-                  {item.productName}
+              <Link href={'products/' + props.product.slug}>
+                <a className="cart-item__name" title={props.productName}>
+                  {props.productName}
                 </a>
               </Link>
             </div>
@@ -89,11 +83,11 @@ function CartItem(props: Props): JSX.Element {
             <div className="flex-1 flex-column">
               <div className="d-flex justify-content-between align-items-center">
                 <div>
-                  {discountedPrice !== item.price && (
+                  {discountedPrice !== props.price && (
                     <>
                       -{totalDiscountAmount}%{' '}
                       <del className="text-muted">
-                        <PriceText price={item.price} />
+                        <PriceText price={props.price} />
                       </del>{' '}
                     </>
                   )}
@@ -102,10 +96,10 @@ function CartItem(props: Props): JSX.Element {
 
                 <div className="cart-item__qty">
                   <QuantityInput
-                    productId={props.item.productId}
-                    productName={props.item.productName}
-                    productPrice={props.item.price}
-                    productImg={props.item.product.image_512}
+                    productId={props.productId}
+                    productName={props.productName}
+                    productPrice={props.price}
+                    productImg={props.product.image_512}
                   />
                 </div>
               </div>
@@ -121,9 +115,9 @@ function CartItem(props: Props): JSX.Element {
               open={open}
               onClose={handleCloseModal}
               onConfirm={handleConfirmDelete}
-              productName={item.productName}
-              image={item.product.image_512}
-              price={item.price}
+              productName={props.productName}
+              image={props.product.image_512}
+              price={props.price}
             />
           </div>
         </div>

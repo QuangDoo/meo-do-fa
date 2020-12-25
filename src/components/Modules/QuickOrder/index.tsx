@@ -60,6 +60,7 @@ function QuickOrderPage(): JSX.Element {
                   quantity={0}
                   uom_name="Unit"
                   slug={item.slug}
+                  discount_percentage={item.discount_percentage}
                 />
               ))}
             </div>
