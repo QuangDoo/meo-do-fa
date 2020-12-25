@@ -36,10 +36,13 @@ const RightSideUser = (): JSX.Element => {
     }
   });
 
-  const size = 8;
-  const filterNotifications = notificationsData?.slice(0, size).map((item) => {
-    return item;
-  });
+  const size = notificationsData?.length;
+
+  const filterNotifications = notificationsData
+    ?.slice(notificationsData?.length - 5, size)
+    .map((item) => {
+      return item;
+    });
 
   return (
     <div className="header-right d-none d-lg-block">
@@ -55,7 +58,6 @@ const RightSideUser = (): JSX.Element => {
           {lengthNotifications?.length > 0 && (
             <span className="notification__counter">{lengthNotifications?.length}</span>
           )}
-          {/* <span className="notification__counter">{notificationsData?.length}</span> */}
           <div
             className={clsx(
               'dropdown-menu dropdown-menu-right notification__dropdown p-0 ',
