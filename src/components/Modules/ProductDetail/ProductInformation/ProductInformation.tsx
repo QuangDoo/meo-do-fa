@@ -17,6 +17,7 @@ type PropsType = {
   views: number;
   totalOrders: number;
   list_price: number;
+  sale_price?: number;
   uom_name: string;
   is_quick_invoice: string;
   is_exclusive: string;

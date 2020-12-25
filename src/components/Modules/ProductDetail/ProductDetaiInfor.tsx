@@ -90,7 +90,7 @@ const ProductDetailInfor = (props: PropsType): JSX.Element => {
             props?.categories?.map((item, index) => {
               return (
                 <>
-                  <Link href={`/categories/${item.id}`}>
+                  <Link href={`/products?categories=${item.id}`}>
                     <a className="text-capitalize" key={index}>
                       {item.name}
                     </a>

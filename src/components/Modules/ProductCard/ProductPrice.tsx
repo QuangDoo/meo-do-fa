@@ -13,7 +13,7 @@ export const ProductPrice = (props: ProductPriceProps) => {
 
   return (
     <>
-      {props.sale_price ? (
+      {props.sale_price && props.sale_price < props.list_price ? (
         <>
           <span className="product-card__price">
             <PriceText price={props.sale_price} />
