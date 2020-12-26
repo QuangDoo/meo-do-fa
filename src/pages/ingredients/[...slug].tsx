@@ -9,7 +9,7 @@ import Header from 'src/components/Layout/Header';
 import Nav from 'src/components/Layout/Nav';
 import { ProductsContainer } from 'src/components/Modules/Home/ProductsContainer';
 import { ProductsCarousel } from 'src/components/Modules/ProductsCarousel';
-import ScrollableTabsButtonAuto from 'src/components/ScrollableTabsButtonAuto/ScrollableTabsButtonAuto';
+import ScrollableTabsButtonAuto from 'src/components/Modules/ScrollableTabsButtonAuto/ScrollableTabsButtonAuto';
 import {
   GET_INGREDIENT_DETAILS,
   GetIngredientDetailsData,

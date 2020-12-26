@@ -50,6 +50,7 @@
   "confirm_checkout_edit": "Edit",
   "price_provisional_sums": "Provisional sums",
   "price_shipping_fee": "Shipping fee",
+  "price_tax": "Taxes",
   "price_total_discount": "Discount",
   "price_total": "Total",
   "confirm_checkout_doubleCheck": "Please double check your delivery info, payment method and click \"Checkout\" to confirm the order.",

@@ -19,6 +19,8 @@ export const GET_BEST_SELLING_PRODUCTS = gql`
         id
         name
         price
+        old_price
+        sale_price
         list_price
         standard_price
         image_128

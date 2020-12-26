@@ -10,7 +10,7 @@ type ProductPriceProps = {
 export const ProductPrice = (props: ProductPriceProps) => {
   const { t } = useTranslation('common');
 
-  const isOnSale = !!props.sale_price;
+  const isOnSale = !!props.sale_price && props.sale_price !== props.price;
 
   return isOnSale ? (
     <>
@@ -26,7 +26,7 @@ export const ProductPrice = (props: ProductPriceProps) => {
     </>
   ) : (
     <span className="product-card__price">
-      <PriceText price={props.price} />
+      <PriceText price={props.sale_price} />
       <span className="unit">{t('common:vnd')}</span>
     </span>
   );

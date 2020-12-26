@@ -4,6 +4,7 @@ export type Product = {
   id: number;
   name: string;
   price: number;
+  old_price: number;
   list_price: number;
   sale_price: number;
   discount_percentage: number;
@@ -68,6 +69,7 @@ export const GET_PRODUCTS = gql`
         id
         name
         price
+        old_price
         list_price
         sale_price
         discount_percentage

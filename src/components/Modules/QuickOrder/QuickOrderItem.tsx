@@ -14,6 +14,7 @@ type Props = {
   quantity: number;
   _id: number;
   slug: string;
+  discount_percentage: number;
 };
 
 function QuickOrderItem(props: Props): JSX.Element {
