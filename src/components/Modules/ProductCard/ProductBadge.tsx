@@ -13,7 +13,7 @@ interface ProductBadgeProps extends WithTranslation {
 const classMapping: Record<BadgeType, string> = {
   is_quick_invoice: 'invoice_exportable',
   is_vn: 'use_vietnamese',
-  is_exclusive: 'only_thuocsi'
+  is_exclusive: 'only_medofa'
 };
 
 const ProductBadge = (props: ProductBadgeProps): JSX.Element => {

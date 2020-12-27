@@ -81,21 +81,21 @@
 .slick-arrow.slick-hidden {
   display: none;
 }
-.slick-loading .slick-list {
-  background: #fff url(https://assets.thuocsi.vn/packs/media/slick/ajax-loader-c5cd7f53.gif) 50%
-    no-repeat;
-}
-@font-face {
-  font-family: slick;
-  src: url(https://assets.thuocsi.vn/packs/media/assets/fonts/slick-ced611da.eot);
-  src: url(https://assets.thuocsi.vn/packs/media/assets/fonts/slick-ced611da.eot#iefix)
-      format('embedded-opentype'),
-    url(https://assets.thuocsi.vn/packs/media/assets/fonts/slick-b7c9e1e4.woff) format('woff'),
-    url(https://assets.thuocsi.vn/packs/media/assets/fonts/slick-d41f55a7.ttf) format('truetype'),
-    url(https://assets.thuocsi.vn/packs/media/assets/fonts/slick-f97e3bbf.svg#slick) format('svg');
-  font-weight: 400;
-  font-style: normal;
-}
+// .slick-loading .slick-list {
+//   background: #fff url(https://assets.thuocsi.vn/packs/media/slick/ajax-loader-c5cd7f53.gif) 50%
+//     no-repeat;
+// }
+// @font-face {
+//   font-family: slick;
+//   src: url(https://assets.thuocsi.vn/packs/media/assets/fonts/slick-ced611da.eot);
+//   src: url(https://assets.thuocsi.vn/packs/media/assets/fonts/slick-ced611da.eot#iefix)
+//       format('embedded-opentype'),
+//     url(https://assets.thuocsi.vn/packs/media/assets/fonts/slick-b7c9e1e4.woff) format('woff'),
+//     url(https://assets.thuocsi.vn/packs/media/assets/fonts/slick-d41f55a7.ttf) format('truetype'),
+//     url(https://assets.thuocsi.vn/packs/media/assets/fonts/slick-f97e3bbf.svg#slick) format('svg');
+//   font-weight: 400;
+//   font-style: normal;
+// }
 .slick-next,
 .slick-prev {
   position: absolute;
