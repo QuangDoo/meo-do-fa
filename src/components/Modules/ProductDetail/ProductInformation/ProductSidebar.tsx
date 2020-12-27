@@ -4,16 +4,20 @@ import React from 'react';
 
 const links = [
   {
-    itemImgUrl: 'https://hasaki.vn/images/graphics/img_quality_3.png',
-    title: 'Phát hiện hàng giả, bạn trả hàng và nhận thêm 110% giá trị'
+    itemImgUrl: '/assets/images/shopping-cart.png',
+    title: 'Cam kết giao hàng nhanh đúng thời điểm, đúng hàng đã đặt'
   },
   {
-    itemImgUrl: 'https://hasaki.vn/images/graphics/img_quality_4.png',
-    title: 'Phát hiện hàng giả, bạn trả hàng và nhận thêm 110% giá trị'
+    itemImgUrl: '/assets/images/return.png',
+    title: 'Cam kết đổi trả hàng miễn phí'
   },
   {
-    itemImgUrl: 'https://hasaki.vn/images/graphics/img_quality_3.png',
-    title: 'Phát hiện hàng giả, bạn trả hàng và nhận thêm 110% giá trị'
+    itemImgUrl: '/assets/images/refund.png',
+    title: 'Cam kết nguồn gốc sản phẩm chất lượng, uy tín. số hotline 1900232436'
+  },
+  {
+    itemImgUrl: '/assets/images/hotline.png',
+    title: 'Số hotline 1900232436'
   }
 ];
 
@@ -33,12 +37,10 @@ function ProductSidebar(): JSX.Element {
                 return (
                   <>
                     <Link href="/">
-                      <a className="pledge ">
+                      <div className="pledge ">
                         <img className="pledge_item" src={item.itemImgUrl} alt=""></img>
-                        <div className="pledge_content">
-                          <p className="px-1">{item.title}</p>
-                        </div>
-                      </a>
+                        <div className="pledge_content px-1">{item.title}</div>
+                      </div>
                     </Link>
                   </>
                 );
