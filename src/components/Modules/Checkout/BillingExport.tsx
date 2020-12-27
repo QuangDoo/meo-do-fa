@@ -20,7 +20,9 @@ const BillingExport = (props: Props, ref): JSX.Element => {
     setShow((show) => !show);
   }
   return (
-    <div className={clsx('custom-control custom-checkbox', props.containerClass)} role="button">
+    <div
+      className={clsx('custom-control custom-checkbox mb-3', props.containerClass)}
+      role="button">
       <input
         className={clsx('custom-control-input')}
         name={props.name}
