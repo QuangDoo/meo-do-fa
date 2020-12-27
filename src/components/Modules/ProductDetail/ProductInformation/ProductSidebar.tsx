@@ -13,7 +13,7 @@ const links = [
   },
   {
     itemImgUrl: '/assets/images/refund.png',
-    title: 'Cam kết nguồn gốc sản phẩm chất lượng, uy tín. số hotline 1900232436'
+    title: 'Cam kết nguồn gốc sản phẩm chất lượng, uy tín'
   },
   {
     itemImgUrl: '/assets/images/hotline.png',
