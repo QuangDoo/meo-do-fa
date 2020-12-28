@@ -1,6 +1,8 @@
 import 'react-toastify/dist/ReactToastify.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+// import '@fortawesome/fontawesome-free/css/fontawesome.min.css';
+import 'src/assets/css/icoFont.scss';
 import 'src/assets/scss/custom-styles.scss';
 
 import App from 'next/app';

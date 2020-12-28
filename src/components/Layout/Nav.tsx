@@ -70,7 +70,7 @@ const Nav = () => {
                         <div className="dropdown dropdown-nav">
                           <div className="d-flex" data-toggle="dropdown" data-hover="dropdown">
                             <img
-                              src={`/assets/images/category_${priority}.png`}
+                              src={`/assets/images/category_${priority}.svg`}
                               className="dropdown-item-icon"
                               alt={`category-item-${priority}`}
                               width="60"

@@ -1,6 +1,8 @@
+import slugify from '@sindresorhus/slugify';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import React from 'react';
+import PriceText from 'src/components/Form/PriceText';
 import { ReactHookFormRegister } from 'src/types/ReactHookFormRegister';
 
 import BillingExport from '../Checkout/BillingExport';
@@ -10,15 +12,21 @@ type Props = {
 } & ReactHookFormRegister;
 
 type ArrayProducts = {
-  productId: number;
-  productName: string;
+  id: number;
+  name: string;
+  image: string;
+  price: number;
+  total_price?: number;
   quantity: number;
+  dc_amt_product?: number;
+  tax?: number;
+  price_percentage?: number;
 }[];
 
 const ProductInvoice = (props: Props) => {
   const { t } = useTranslation(['checkout']);
-
   return (
+    // <div className="mt-3">
     <BillingExport
       ref={props.register}
       name="isProductInvoice"
@@ -29,15 +37,15 @@ const ProductInvoice = (props: Props) => {
             <div
               className="cart-item__image lozadloaded flex-shrink-0"
               style={{
-                backgroundImage: `url(https://salt.tikicdn.com/cache/w444/ts/product/55/16/72/fed3f507256cbeaacea0521fdecf0eb5.jpg)`
+                backgroundImage: `url(${item.image})`
               }}
             />
             <div className="flex-1 pl-2 pr-2">
               <div className="d-flex align-items-center">
                 <div>
-                  <Link href={'products/' + item.productId}>
-                    <a className="cart-item__name" title={item.productName}>
-                      {item.productName}
+                  <Link href={'products/' + slugify(item.name) + `-pid${item.id}`}>
+                    <a className="cart-item__name" title={item.name}>
+                      {item.name}
                     </a>
                   </Link>
                 </div>
@@ -45,9 +53,11 @@ const ProductInvoice = (props: Props) => {
               <div className="d-flex justify-content-between align-items-center">
                 <div className="flex-1 flex-column">
                   <div className="d-flex justify-content-between align-items-center">
-                    {/* <div>gia</div> */}
+                    <PriceText price={item.price} />
                     <div className="ml-3">
-                      <div className="">{item.quantity}</div>
+                      <div>
+                        {t('checkout:quantity')}: {item.quantity}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -57,6 +67,7 @@ const ProductInvoice = (props: Props) => {
         </div>
       ))}
     </BillingExport>
+    // </div>
   );
 };
 

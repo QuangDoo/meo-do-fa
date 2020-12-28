@@ -73,5 +73,7 @@
   "reward_type_discount": "Giảm giá",
   "reward_type_product": "Quà tặng",
   "coupon_code_required": "Hãy nhập mã giảm giá",
-  "list_products_have_invoice":"Danh sách sản phẩm có hóa đơn"
+  "list_products_have_invoice":"Danh sách sản phẩm có hóa đơn",
+  "quantity":"Số lượng"
+
 }

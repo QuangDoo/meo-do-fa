@@ -12,6 +12,7 @@ import {
   GET_PAYMENT_DELIVERY,
   GetPaymentAndDeliveryData
 } from 'src/graphql/paymentAndDelivery/paymentAndDelivery,query';
+import { GET_INVOICE_COUNSEL } from 'src/graphql/product/getProductInvoice.query';
 import useAddress from 'src/hooks/useAddress';
 import { useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
 import useCart from 'src/hooks/useCart';
@@ -108,13 +109,19 @@ const CheckoutPage = () => {
     fetchPolicy: 'network-only',
     notifyOnNetworkStatusChange: true
   });
+
   // get product list invoice
   const { productsInvoice, errorProductInvoice } = useInvoiceCounse({
-    cartId: counselData?.counsel?.counsels[0].cartId,
-    productId: counselData?.counsel?.counsels[0].productId,
-    quantity: counselData?.counsel?.counsels[0].quantity,
-    productName: counselData?.counsel?.counsels[0].productName
+    orderNo: counselData?.counsel.orderNo
   });
+  // const {
+  //   data: dataInvoiceCounsel,
+  //   loading,
+  //   error,
+  //   refetch: refetchProductInvoice
+  // } = useQueryAuth(GET_INVOICE_COUNSEL, { variables: { orderNo: counselData?.counsel?.orderNo } });
+
+  // console.log('dataInvoiceCounsel', dataInvoiceCounsel);
 
   useEffect(() => {
     refetchCounsel();
