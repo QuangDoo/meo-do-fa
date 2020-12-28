@@ -5,27 +5,23 @@ import React, { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
-import { APPLY_PAYMENT, ApplyPaymentData, ApplyPaymentVars } from 'src/graphql/order/applyPayment';
 import { CREATE_ORDER, CreateOrderData, CreateOrderVars } from 'src/graphql/order/createOrder';
 import { GET_COUNSEL, GetCounselData, OutputCounsel } from 'src/graphql/order/getCounsel';
 import {
   GET_PAYMENT_DELIVERY,
   GetPaymentAndDeliveryData
 } from 'src/graphql/paymentAndDelivery/paymentAndDelivery,query';
-import { GET_INVOICE_COUNSEL } from 'src/graphql/product/getProductInvoice.query';
 import useAddress from 'src/hooks/useAddress';
 import { useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
 import useCart from 'src/hooks/useCart';
-import useDidUpdateEffect from 'src/hooks/useDidUpdate';
-import useInvoiceCounse from 'src/hooks/useInvoiceCounsel';
 import useUser from 'src/hooks/useUser';
 import swal from 'sweetalert';
 
-import ProductInvoice from '../ProductInvoice/productInvoice';
 import Agreement from './Agreement';
 import CustomerNotes from './CustomerNotes';
 import DeliveryInfo from './DeliveryInfo';
 import InvoiceInfo from './InvoiceInfo';
+import InvoiceProducts from './InvoiceProducts';
 import PaymentOption from './PaymentOption';
 import StickySidebar from './StickySidebar';
 
@@ -110,22 +106,11 @@ const CheckoutPage = () => {
     notifyOnNetworkStatusChange: true
   });
 
-  // get product list invoice
-  const { productsInvoice, errorProductInvoice } = useInvoiceCounse({
-    orderNo: counselData?.counsel.orderNo
-  });
-  // const {
-  //   data: dataInvoiceCounsel,
-  //   loading,
-  //   error,
-  //   refetch: refetchProductInvoice
-  // } = useQueryAuth(GET_INVOICE_COUNSEL, { variables: { orderNo: counselData?.counsel?.orderNo } });
-
-  // console.log('dataInvoiceCounsel', dataInvoiceCounsel);
-
   useEffect(() => {
     refetchCounsel();
   }, []);
+
+  const orderNo = counselData?.counsel?.orderNo;
 
   // Form handler with default values
   const { register, handleSubmit, watch, setValue } = useForm<FormInputs>({
@@ -139,27 +124,6 @@ const CheckoutPage = () => {
       agreement: false
     }
   });
-
-  // Update price on payment option change
-  const paymentOption = watch('paymentOption');
-
-  const [applyPayment] = useMutationAuth<ApplyPaymentData, ApplyPaymentVars>(APPLY_PAYMENT, {
-    onCompleted: (data) => {
-      setCounselData(data.applyPayment);
-    },
-    onError: (err) => {
-      toast.error(t(`errors:code_${err.graphQLErrors[0]?.extensions?.code}`));
-    }
-  });
-
-  useDidUpdateEffect(() => {
-    applyPayment({
-      variables: {
-        orderNo: counselData.counsel.orderNo,
-        payment_method: +paymentOption
-      }
-    });
-  }, [paymentOption]);
 
   const { cities: deliveryCities, districts: deliveryDistricts, wards: deliveryWards } = useAddress(
     {
@@ -195,8 +159,13 @@ const CheckoutPage = () => {
         router.push('/');
       });
     },
-    onError: (error) => {
-      toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
+    onError: (err) => {
+      const errorCode = err.graphQLErrors[0]?.extensions?.code;
+      toast.error(t(`errors:code_${errorCode}`));
+
+      if (errorCode === 114) {
+        router.push('/cart');
+      }
     }
   });
 
@@ -204,7 +173,7 @@ const CheckoutPage = () => {
     createOrder({
       variables: {
         inputs: {
-          orderNo: counselData?.counsel.orderNo,
+          orderNo: orderNo,
           customer: {
             fullName: data.deliveryName,
             phone: data.deliveryPhone,
@@ -278,13 +247,14 @@ const CheckoutPage = () => {
               />
             </div>
 
-            {/* <div className="mb-4">
-              <DeliveryOption register={register} deliveryMethods={deliveryMethods} />
-            </div> */}
-
             {/* Payment */}
             <div className="mb-4">
-              <PaymentOption register={register} paymentMethods={paymentMethods} />
+              <PaymentOption
+                register={register}
+                paymentMethods={paymentMethods}
+                orderNo={orderNo}
+                setCounselData={setCounselData}
+              />
             </div>
 
             {/* Notes */}
@@ -294,15 +264,20 @@ const CheckoutPage = () => {
 
             {/* Invoice */}
             {cart?.getCart.carts.some((cart) => cart.product.is_quick_invoice) && (
-              <div className="mb-4">
-                <InvoiceInfo
-                  register={register}
-                  cities={invoiceCities}
-                  districts={invoiceDistricts}
-                  wards={invoiceWards}
-                />
-                <ProductInvoice register={register} arrayProducts={productsInvoice} />
-              </div>
+              <>
+                <div className="mb-4">
+                  <InvoiceInfo
+                    register={register}
+                    cities={invoiceCities}
+                    districts={invoiceDistricts}
+                    wards={invoiceWards}
+                  />
+                </div>
+
+                <div className="mb-4">
+                  <InvoiceProducts orderNo={orderNo} />
+                </div>
+              </>
             )}
 
             {/* Agreement */}
