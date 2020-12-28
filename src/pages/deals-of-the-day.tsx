@@ -6,6 +6,7 @@ import React, { useEffect } from 'react';
 import { animateScroll } from 'react-scroll';
 import Footer from 'src/components/Layout/Footer';
 import Header from 'src/components/Layout/Header';
+import Loading from 'src/components/Layout/Loading';
 import Nav from 'src/components/Layout/Nav';
 import Pagination from 'src/components/Modules/Pagination';
 import ProductCard from 'src/components/Modules/ProductCard';
@@ -88,72 +89,84 @@ const DealOfTheDay = () => {
       <div className="deals deals--mobile py-5">
         <div className="container px-0">
           <h1 className="text-white mb-3">{t('dealsOfTheDay:title')}</h1>
-          {hotDeals.length !== 0 && (
-            <div className="row no-gutters">
-              <div className="col-12 mb-3 px-3 text-white">
-                <h3 className="text-white text-center my-3">{t('dealsOfTheDay:hot_deals')}</h3>
-              </div>
-              <>
-                <div className="col-12">
-                  <div className="products__cards mb-3">
-                    {hotDeals.map((product) => (
-                      <ProductCard key={product.id} {...product} />
-                    ))}
-                  </div>
-                  <Pagination
-                    count={Math.ceil(totalHotDeals / pageSize)}
-                    page={hotDealsPage}
-                    siblingCount={4}
-                    onChange={(page) =>
-                      router.push({
-                        pathname: router.pathname,
-                        query: {
-                          ...router.query,
-                          hotdeals: page
-                        }
-                      })
-                    }
-                  />
-                </div>
-              </>
+          {hotDealLoading ? (
+            <div className="w-100 p-5 text-center">
+              <Loading className="lds-roller-white" />
             </div>
+          ) : (
+            hotDeals.length !== 0 && (
+              <div className="row no-gutters">
+                <div className="col-12 mb-3 px-3 text-white">
+                  <h3 className="text-white text-center my-3">{t('dealsOfTheDay:hot_deals')}</h3>
+                </div>
+                <>
+                  <div className="col-12">
+                    <div className="products__cards mb-3">
+                      {hotDeals.map((product) => (
+                        <ProductCard key={product.id} {...product} />
+                      ))}
+                    </div>
+                    <Pagination
+                      count={Math.ceil(totalHotDeals / pageSize)}
+                      page={hotDealsPage}
+                      siblingCount={4}
+                      onChange={(page) =>
+                        router.push({
+                          pathname: router.pathname,
+                          query: {
+                            ...router.query,
+                            hotdeals: page
+                          }
+                        })
+                      }
+                    />
+                  </div>
+                </>
+              </div>
+            )
           )}
         </div>
       </div>
 
-      {otherDeals.length !== 0 && (
-        <div className="deals--mobile py-5">
-          <div className="container px-0">
-            <div className="row no-gutters">
-              <div className="col-12 mb-3 px-3">
-                <h3 className="text-center">{t('dealsOfTheDay:other_deals')}</h3>
-              </div>
-              <>
-                <div className="col-12">
-                  <div className="products__cards mb-3">
-                    {otherDeals.map((product) => (
-                      <ProductCard key={product.id} {...product} />
-                    ))}
-                  </div>
-                  <Pagination
-                    count={Math.ceil(totalOtherDeals / pageSize)}
-                    page={otherDealsPage}
-                    siblingCount={4}
-                    onChange={(page) =>
-                      router.push({
-                        pathname: router.pathname,
-                        query: {
-                          ...router.query,
-                          otherdeals: page
-                        }
-                      })
-                    }
-                  />
+      {otherDealLoading ? (
+        <div className="w-100 p-5 text-center">
+          <Loading />
+        </div>
+      ) : (
+        otherDeals.length !== 0 && (
+          <div className="deals--mobile py-5">
+            <div className="container px-0">
+              <div className="row no-gutters">
+                <div className="col-12 mb-3 px-3">
+                  <h3 className="text-center">{t('dealsOfTheDay:other_deals')}</h3>
                 </div>
-              </>
+                <>
+                  <div className="col-12">
+                    <div className="products__cards mb-3">
+                      {otherDeals.map((product) => (
+                        <ProductCard key={product.id} {...product} />
+                      ))}
+                    </div>
+                    <Pagination
+                      count={Math.ceil(totalOtherDeals / pageSize)}
+                      page={otherDealsPage}
+                      siblingCount={4}
+                      onChange={(page) =>
+                        router.push({
+                          pathname: router.pathname,
+                          query: {
+                            ...router.query,
+                            otherdeals: page
+                          }
+                        })
+                      }
+                    />
+                  </div>
+                </>
+              </div>
             </div>
           </div>
-        </div>
+        )
       )}
       <Footer />
     </>
