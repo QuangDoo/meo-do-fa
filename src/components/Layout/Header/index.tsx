@@ -1,5 +1,6 @@
 import { withTranslation } from 'i18n';
 import { TFunction } from 'next-i18next';
+import Link from 'next/link';
 import React from 'react';
 import LanguagePicker from 'src/components/Layout/Header/LanguagePicker';
 import ForgotPasswordModal from 'src/components/Modules/ForgotPasswordModal';
@@ -57,14 +58,16 @@ const Header = () => {
         <div className="d-flex flex-column flex-sm-row align-items-stretch align-items-sm-center justify-content-between">
           <div className="mr-sm-3 flex-shrink-0 mb-3 mb-sm-0 mr-0">
             <div className="rockland-logo">
-              <a href="/" title="Medofa.com">
-                <img
-                  alt="Medofa.com"
-                  className="img-fluid logo-header"
-                  title="Medofa.com"
-                  src="/assets/images/logo2.png"
-                />
-              </a>
+              <Link href="/">
+                <a title="Medofa.com">
+                  <img
+                    alt="Medofa.com"
+                    className="img-fluid logo-header"
+                    title="Medofa.com"
+                    src="/assets/images/logo2.png"
+                  />
+                </a>
+              </Link>
             </div>
           </div>
 

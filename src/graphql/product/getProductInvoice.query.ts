@@ -1,5 +1,5 @@
 import { gql } from '@apollo/client';
-import { Product } from 'src/graphql/product/getProducts';
+// import { Product } from 'src/graphql/product/getProducts';
 
 export const GET_INVOICE_COUNSEL = gql`
   query getInvoiceCounsel($orderNo: String!) {

@@ -6,6 +6,7 @@ import Link from 'next/link';
 import React from 'react';
 // import { toast } from 'react-toastify';
 import PriceText from 'src/components/Form/PriceText';
+import Loading from 'src/components/Layout/Loading';
 // import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 // import { CREATE_COUNSEL } from 'src/graphql/order/order.mutation';
 import {
@@ -32,7 +33,7 @@ function QuickOrderPage(): JSX.Element {
     }
   };
 
-  const { data: bestSellingData } = useQuery<
+  const { data: bestSellingData, loading: getBestSellingLoading } = useQuery<
     GetBestSellingProductsData,
     GetBestSellingProductsVars
   >(GET_BEST_SELLING_PRODUCTS, paginationVars);
@@ -48,21 +49,27 @@ function QuickOrderPage(): JSX.Element {
         <div className="row">
           <div className="col-12 col-md-9 col-lg-9">
             <div className="elevated cart__items mb-3">
-              {bestSellingData?.getProductByConditions.Products.map((item, index) => (
-                <QuickOrderItem
-                  key={index}
-                  _id={item.id}
-                  image={item.image_512}
-                  price={item.old_price}
-                  sale_price={item.sale_price}
-                  productId={item.id}
-                  productName={item.name}
-                  quantity={0}
-                  uom_name="Unit"
-                  slug={item.slug}
-                  discount_percentage={item.discount_percentage}
-                />
-              ))}
+              {getBestSellingLoading ? (
+                <div className="w-100 text-center">
+                  <Loading />
+                </div>
+              ) : (
+                bestSellingData?.getProductByConditions.Products.map((item, index) => (
+                  <QuickOrderItem
+                    key={index}
+                    _id={item.id}
+                    image={item.image_512}
+                    price={item.old_price}
+                    sale_price={item.sale_price}
+                    productId={item.id}
+                    productName={item.name}
+                    quantity={0}
+                    uom_name="Unit"
+                    slug={item.slug}
+                    discount_percentage={item.discount_percentage}
+                  />
+                ))
+              )}
             </div>
             <div className="elevated text-muted p-3 mb-4">
               <i className="fas fa-exclamation-circle mr-1" />
