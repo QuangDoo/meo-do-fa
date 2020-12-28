@@ -97,13 +97,13 @@ const LoginForm = (): JSX.Element => {
           type="password"
         />
 
-        <Checkbox
+        {/* <Checkbox
           name="remember_password"
           ref={register}
           label={t('login:remember_password')}
           containerClass="form-group align-self-start"
           labelClass="pt-1"
-        />
+        /> */}
 
         <span className="mb-4 ">
           <Trans
