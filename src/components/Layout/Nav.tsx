@@ -10,6 +10,7 @@ import { GET_CATEGORIES_LEVEL, GetCategoriesLevelData } from 'src/graphql/catego
 import useCart from 'src/hooks/useCart';
 import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
 
+import CategoryMenu from '../Modules/CategoryMenu';
 import LoadingBackdrop from './LoadingBackdrop';
 
 const Nav = () => {
@@ -55,45 +56,7 @@ const Nav = () => {
           <div className="col-12 d-flex align-items-center justify-content-between">
             <ul className="nav text-capitalize">
               {categories.length !== 0 ? (
-                <li className="rockland-nav__item dropdown dropdown-nav">
-                  <div data-toggle="dropdown" data-hover="dropdown">
-                    <Link href="/products">
-                      <a className="rockland-nav__link">
-                        <i className="rockland-nav__icon fas fa-list-ul" />
-                        <span className="rockland-nav__title">{t('navbar:category')}</span>
-                      </a>
-                    </Link>
-                  </div>
-                  <ul className="dropdown-menu">
-                    {categories.map(({ name, id, categorySub, priority }) => (
-                      <li key={id} className="mb-2 dropdown-item text-wrap">
-                        <div className="dropdown dropdown-nav">
-                          <div className="d-flex" data-toggle="dropdown" data-hover="dropdown">
-                            <img
-                              src={`/assets/images/category_${priority}.svg`}
-                              className="dropdown-item-icon"
-                              alt={`category-item-${priority}`}
-                              width="60"
-                              height="30"
-                            />
-                            <Link href={`/products?category=${id}`}>
-                              <a>{name}</a>
-                            </Link>
-                          </div>
-                          <ul className="dropdown-menu dropdown-sub-menu">
-                            {categorySub.map(({ name, id }) => (
-                              <li key={id} className="mb-2 dropdown-item text-wrap">
-                                <Link href={`/products?category=${id}`}>
-                                  <a>{name}</a>
-                                </Link>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
-                </li>
+                <CategoryMenu />
               ) : (
                 <li className="rockland-nav__item">
                   <Link href="/products">
