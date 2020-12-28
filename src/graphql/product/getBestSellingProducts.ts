@@ -14,7 +14,12 @@ export type GetBestSellingProductsVars = {
 
 export const GET_BEST_SELLING_PRODUCTS = gql`
   query getProducts($page: Int!, $pageSize: Int!) {
-    getProductByConditions(page: $page, pageSize: $pageSize, condition: { order_type: "01" }) {
+    getProductByConditions(
+      page: $page
+      pageSize: $pageSize
+      # type: "is_quick_order"
+      condition: { order_type: "01" }
+    ) {
       Products {
         id
         name
@@ -26,7 +31,7 @@ export const GET_BEST_SELLING_PRODUCTS = gql`
         image_128
         image_512
         image_256
-        uom_name
+        packing_unit
         is_new
         is_quick_invoice
         is_vn

@@ -124,7 +124,7 @@ const OrderItem = (props: any) => {
       </div>
 
       <div className="my-orders__invoice">
-        <button className="btn btn-outline-info btn-sm">{t('myOrders:report')}</button>
+        {/* <button className="btn btn-outline-info btn-sm">{t('myOrders:report')}</button> */}
 
         {flag !== 25 ? (
           <button className="btn btn-outline-danger btn-sm" onClick={() => handleOpenClick(flag)}>
@@ -174,7 +174,9 @@ const OrderList = (props: Props) => {
   return (
     <>
       {loading ? (
-        <Loading />
+        <div className="w-100 text-center">
+          <Loading />
+        </div>
       ) : orderList.length !== 0 ? (
         orderList.map((order) => (
           <OrderItem

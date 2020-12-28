@@ -10,8 +10,7 @@ type Props = {
 };
 
 export default function PromoCodeItem(props: Props) {
-  const imgUrl =
-    'https://assets.thuocsi.vn/assets/defaults/qua_tang-d6b9623d40a9924ac56d42815f5ed983f93ef06a88ec91c36261bb3bbb222553.jpg';
+  const imgUrl = '/assets/images/gift.jpg';
   const { rewardType } = props;
 
   const leftPromoCode = (rewardType) => {
