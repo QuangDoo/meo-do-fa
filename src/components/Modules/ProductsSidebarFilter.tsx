@@ -43,13 +43,6 @@ const ProductsSidebarFilter = (props: Props) => {
     event.preventDefault();
   };
 
-  const [value, setValue] = useState('');
-
-  const onValueChange = (e) => {
-    e.preventDefault();
-    setValue(e.target.value);
-  };
-
   return (
     <aside className="text-capitalize w-100">
       <header className="products__filters-header d-flex align-items-center justify-content-between">
@@ -74,9 +67,9 @@ const ProductsSidebarFilter = (props: Props) => {
           {/* <option value="01">Sản phẩm mới</option> */}
           {/* <option value="02">Bán chạy nhất</option> */}
           {/* <option value="03">Phù hợp nhất</option> */}
-          <option value="04">{t('price_high_to_low')}</option>
-          <option value="05">{t('price_low_to_high')}</option>
-          <option value="06">{t('name_z_to_a')}</option>
+          <option value="04">{t('productsSidebar:price_high_to_low')}</option>
+          <option value="05">{t('productsSidebar:price_low_to_high')}</option>
+          <option value="06">{t('productsSidebar:name_z_to_a')}</option>
           <option value="07" selected>
             {t('productsSidebar:name_a_to_z')}
           </option>
