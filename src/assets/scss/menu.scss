@@ -90,3 +90,11 @@
     }   
   }
 }
+
+.dropdown.dropdown-nav:hover > .dropdown-menu {
+  display: block !important;
+  width: auto;
+  padding: 10px;
+  height: auto;
+}
+
