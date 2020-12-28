@@ -50,6 +50,7 @@
   "confirm_checkout_edit": "Sửa",
   "price_provisional_sums": "Tạm tính",
   "price_shipping_fee": "Phí vận chuyển",
+  "price_tax": "Thuế",
   "price_total_discount": "Khuyến mãi",
   "price_total": "Thành tiền",
   "confirm_checkout_doubleCheck": "Vui lòng kiểm tra kỹ thông tin giao hàng, hình thức thanh toán và nhấn nút \"Thanh Toán\" để hoàn tất đặt hàng.",
@@ -72,5 +73,7 @@
   "reward_type_discount": "Giảm giá",
   "reward_type_product": "Quà tặng",
   "coupon_code_required": "Hãy nhập mã giảm giá",
-  "list_products_have_invoice":"Danh sách sản phẩm có hóa đơn"
+  "list_products_have_invoice":"Danh sách sản phẩm có hóa đơn",
+  "quantity":"Số lượng"
+
 }

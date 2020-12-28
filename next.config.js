@@ -12,7 +12,7 @@ module.exports = withPWA({
   },
   serverRuntimeConfig: {
     // Will only be available on the server side
-    GRAPHQL_GATEWAY: process.env.GRAPHQL_GATEWAY, // Pass through env variables
+    GRAPHQL_GATEWAY: process.env.GRAPHQL_GATEWAY // Pass through env variables
   },
   images: {
     domains: ['firebasestorage.googleapis.com', 'googleapis.com']

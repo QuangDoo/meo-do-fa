@@ -5,41 +5,26 @@ import {
   GetProductsWithInvoiceVars
 } from 'src/graphql/product/getProductInvoice.query';
 
-import { useLazyQueryAuth } from './useApolloHookAuth';
+import { useQueryAuth } from './useApolloHookAuth';
 
 type Props = {
-  cartId: string;
-  productId: number;
-  quantity: number;
-  productName: string;
+  orderNo: string;
 };
 
 export default function useInvoiceCounse(props: Props) {
-  const { cartId, productId, quantity, productName } = props;
+  const { orderNo } = props;
 
-  const [
-    getProductInvoice,
-    { data, loading, error, refetch: refetchProductInvoice }
-  ] = useLazyQueryAuth<GetProductsWithInvoiceData, GetProductsWithInvoiceVars>(GET_INVOICE_COUNSEL);
+  const { data: dataInvoiceCounsel, loading, error, refetch: refetchProductInvoice } = useQueryAuth<
+    GetProductsWithInvoiceData,
+    GetProductsWithInvoiceVars
+  >(GET_INVOICE_COUNSEL, { variables: { orderNo: orderNo } });
 
   useEffect(() => {
-    if (!data) return;
+    if (!dataInvoiceCounsel) return;
+  }, [dataInvoiceCounsel]);
 
-    getProductInvoice({
-      variables: {
-        counsels: [
-          {
-            cartId: cartId,
-            productId: productId,
-            quantity: quantity,
-            productName: productName
-          }
-        ]
-      }
-    });
-  }, [data]);
-  const productsInvoice = data?.getInvoiceCounsel || [];
-  console.log('loading', loading);
+  const productsInvoice = dataInvoiceCounsel?.getInvoiceCounsel || [];
+
   return {
     productsInvoice,
     errorProductInvoice: error

@@ -32,7 +32,7 @@ const CategoryMenu = () => {
           <li className="menu-item" key={id}>
             <div className="item-title">
               <img
-                src={`/assets/images/category_${priority}.png`}
+                src={`/assets/images/category_${priority}.svg`}
                 className="menu-icon"
                 alt={`category-item-${priority}`}
                 width="60"

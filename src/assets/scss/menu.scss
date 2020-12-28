@@ -1,14 +1,10 @@
 .category-menu {
-  &:hover .container-menu {
-    display: block !important;
-    z-index: 9000 !important;
-  }
   ul, ol {
     list-style: none;
   }
 
-  .menu-title {
-
+  &:hover .container-menu {
+    display: block !important;
   }
 
   .container-menu {
@@ -55,6 +51,7 @@
         }
         .item-link {
           color: var(--gray);
+          font-size: 14px;
         }
       }
     
@@ -86,6 +83,7 @@
 
           .sub-item-link {
             color: var(--gray);
+            font-size: 14px;
           }
         }
       }

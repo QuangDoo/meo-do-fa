@@ -20,9 +20,7 @@ const Notification = (): JSX.Element => {
 
   const [seenAllNoti] = useMutationAuth(SEEN_ALL_NOTI, {
     onCompleted: (data: any) => {
-      if (data.code === 200) {
-        setIsRead(true);
-      }
+      console.log('data', data);
     },
     onError: (err) => {
       toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
@@ -60,11 +58,11 @@ const Notification = (): JSX.Element => {
           <div className="col-12 d-flex align-items-center justify-content-between flex-wrap mb-3">
             <h1 className="h3">{t('noti:my_noti')}</h1>
 
-            {/* {notificationsData?.length > 0 && (
+            {notificationsData?.length > 0 && (
               <button className="btn btn-secondary btn-sm" onClick={handleReadAll}>
                 {t('noti:mark_as_read')}
               </button>
-            )} */}
+            )}
           </div>
           {notificationsData?.length > 0 ? (
             notificationsReverse?.reverse()?.map((noti, index) => {
