@@ -12,7 +12,7 @@ const HelpDetail = (): JSX.Element => {
   const question = {
     id: 1,
     question: 'Hủy đơn hàng và khóa tài khoản Hủy đơn hàng và khóa tài khoản',
-    author: 'Tam N Nguyen',
+    author: 'Hung Raco',
     postDate: 'Jan 21',
     status: 'Đã cập nhật',
     answer: `
@@ -21,9 +21,9 @@ const HelpDetail = (): JSX.Element => {
     <p><b>Bước 1: </b>Khách hàng thực hiện chuyển khoản đúng số tiền cần thanh toán cho tài khoản:</p>
     <ul style="padding-left: 1.5rem">
       <li>
-        <p>Chủ tài khoản: Công Ty TNHH BuyMed.</p>
-        <p>Số tài khoản: 19134543030020</p>
-        <p>Ngân Hàng:  Techcombank chi nhánh Bắc Hải </p>
+        <p>Chủ tài khoản: Công Ty TNHH ROCKLAND.</p>
+        <p>Số tài khoản: 0371001188838</p>
+        <p>Ngân Hàng:  TMCP Ngoại Thương Việt Nam Chi nhánh Tân Định </p>
         <p>Nội dung chuyển khoản: Tên Nhà Thuốc - Mã đơn hàng</p>
       </li>
     </ul>
