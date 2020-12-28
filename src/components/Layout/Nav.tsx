@@ -226,6 +226,15 @@ const Nav = () => {
                       </a>
                     </Link>
 
+                    <div className="d-block d-sm-none">
+                      <Link href="/change-password">
+                        <a className="dropdown__item dropdown__item-link">
+                          <i className="fa fa-key dropdown__item-icon" />
+                          {t('navbar:change_password')}
+                        </a>
+                      </Link>
+                    </div>
+
                     <Link href="/my-orders">
                       <a className="dropdown__item dropdown__item-link">
                         <i className="icomoon icon-assignment dropdown__item-icon" />

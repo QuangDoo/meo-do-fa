@@ -36,5 +36,13 @@
     "delivery_street_label": "Delivery address",
     "delivery_street_guide": "Enter an address. Then select province/city, district, ward.",
     "update_button": "Save information",
-    "update_success": "Update information success!"
+    "update_success": "Update information success!",
+    "change_password": "Change password",
+    "new_password":"New password",
+    "old_password":"Old password",
+    "btn_change_password":"Change password",
+    "phone_required":"Please provice a phone number",
+    "invalid_phone":"Invalid phone",
+    "newPassword_required":"Please provice a new password",
+    "oldPassword_required":"Please provice a old password"
 }
