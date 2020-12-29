@@ -81,8 +81,7 @@ const CheckoutPage = () => {
   // Form handler with default values
   const methods = useForm<FormInputs>({
     defaultValues: {
-      deliveryMethodId: '2',
-      paymentMethodId: '2',
+      paymentMethodId: '1',
       deliverySaveInfo: true,
       invoiceSaveInfo: true,
       customerNotes: '',
@@ -227,6 +226,7 @@ const CheckoutPage = () => {
             </div>
 
             <div className="col-md-4 mb-3">
+              <div className="elevated p-3 mb-4">Hello</div>
               <StickySidebar counselData={counselData} setCounselData={setCounselData} />
             </div>
           </div>
