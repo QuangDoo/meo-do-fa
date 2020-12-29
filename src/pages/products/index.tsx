@@ -88,7 +88,7 @@ function Products(): JSX.Element {
         manufacturer_id: router.query.manufacturer as string,
         category_id: router.query.category as string,
         order_type: (router.query.sort as string) || defaultSortType,
-        min_price: Number(router.query.priceFrom) || 0,
+        min_price: Number(router.query.priceFrom) || 1,
         max_price: Number(router.query.priceTo) || 10000000
       }
     },

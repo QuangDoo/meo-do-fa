@@ -109,41 +109,42 @@ const ProductsSidebarFilter = (props: Props) => {
             {t('productsSidebar:name_a_to_z')}
           </option>
         </Select>
-      </div>
 
-      <hr className="hr my-3 d-none d-sm-block" />
-      <div className="price-filter">
-        <form onSubmit={handlePriceRangeFilter}>
-          <p>{t('productsSidebar:price_range')}</p>
-          <div className="d-flex align-items-center mb-3">
-            <div>
-              <input
-                name="price_from"
-                type="number"
-                min={0}
-                placeholder={t('productsSidebar:price_from')}
-                size={5}
-                value={priceFrom}
-                onChange={(e) => setPriceFrom(e.target.value)}
-              />
+        <hr className="hr my-3" />
+
+        <div className="price-filter">
+          <form onSubmit={handlePriceRangeFilter}>
+            <p>{t('productsSidebar:price_range')}</p>
+            <div className="d-flex align-items-center mb-3">
+              <div>
+                <input
+                  name="price_from"
+                  type="number"
+                  min={0}
+                  placeholder={t('productsSidebar:price_from')}
+                  size={5}
+                  value={priceFrom}
+                  onChange={(e) => setPriceFrom(e.target.value)}
+                />
+              </div>
+              &nbsp;-&nbsp;
+              <div>
+                <input
+                  name="price_to"
+                  type="number"
+                  min={0}
+                  placeholder={t('productsSidebar:price_to')}
+                  size={5}
+                  value={priceTo}
+                  onChange={(e) => setPriceTo(e.target.value)}
+                />
+              </div>
             </div>
-            &nbsp;-&nbsp;
-            <div>
-              <input
-                name="price_to"
-                type="number"
-                min={0}
-                placeholder={t('productsSidebar:price_to')}
-                size={5}
-                value={priceTo}
-                onChange={(e) => setPriceTo(e.target.value)}
-              />
-            </div>
-          </div>
-          <button className="btn btn-primary" type="submit">
-            {t('productsSidebar:apply')}
-          </button>
-        </form>
+            <button className="btn btn-primary" type="submit">
+              {t('productsSidebar:apply')}
+            </button>
+          </form>
+        </div>
       </div>
 
       <hr className="hr my-3" />
