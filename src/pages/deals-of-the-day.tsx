@@ -29,72 +29,67 @@ const DealOfTheDay = () => {
   const page = +router.query.page || 1;
   const numberProducts = showMore ? 15 : 10;
 
-  // const { data: hotDealData, loading: hotDealLoading } = useQuery<
-  //   GetDealsOfTheDayData,
-  //   GetDealsOfTheDayVars
-  // >(GET_DEALS_OF_THE_DAY, {
-  //   variables: {
-  //     page: 1,
-  //     pageSize: 15,
-  //   }
-  // });
-  // const hotDeals = hotDealData?.getProductDealOfTheDay || [];
-  // const numberHotDeals = hotDealData?.getProductDealOfTheDay?.length || 0;
-
-  const { data: hotDealData, loading: hotDealLoading } = useQuery<GetProductsData, GetProductsVars>(
-    GET_PRODUCTS,
-    {
-      variables: {
-        page: 1,
-        pageSize: 15,
-        condition: {
-          order_type: '05'
-        }
-      }
+  const { data: hotDealData, loading: hotDealLoading } = useQuery<
+    GetDealsOfTheDayData,
+    GetDealsOfTheDayVars
+  >(GET_DEALS_OF_THE_DAY, {
+    variables: {
+      page: 1,
+      pageSize: 15
     }
-  );
-  const hotDeals = hotDealData?.getProductByConditions?.Products || [];
-  const numberHotDeals = hotDealData?.getProductByConditions?.Products?.length || 0;
+  });
+  const hotDeals = hotDealData?.getProductDealOfTheDay || [];
+  const numberHotDeals = hotDealData?.getProductDealOfTheDay?.length || 0;
 
-  // const { data: otherDealData, loading: otherDealLoading } = useQuery<
-  //   GetProductsData,
-  //   GetProductsVars
-  // >(GET_PRODUCTS, {
-  //   variables: {
-  //     page: page,
-  //     pageSize: pageSize,
-  //     type: 'promotion',
-  //     condition: {
-  //       order_type: '01'
+  // const { data: hotDealData, loading: hotDealLoading } = useQuery<GetProductsData, GetProductsVars>(
+  //   GET_PRODUCTS,
+  //   {
+  //     variables: {
+  //       page: 1,
+  //       pageSize: 15,
+  //       condition: {
+  //         order_type: '05'
+  //       }
   //     }
   //   }
-  // });
-  // const otherDeals = otherDealData?.getProductByConditions?.Products || [];
-  // const totalOtherDeals = otherDealData?.getProductByConditions?.total || 0;
+  // );
+  // const hotDeals = hotDealData?.getProductByConditions?.Products || [];
+  // const numberHotDeals = hotDealData?.getProductByConditions?.Products?.length || 0;
 
-  const { data: otherDealData, loading: otherDealLoading } = useQuery<
+  const { data: otherDealData, refetch: refetchProducts, loading: otherDealLoading } = useQuery<
     GetProductsData,
     GetProductsVars
   >(GET_PRODUCTS, {
     variables: {
       page: page,
       pageSize: pageSize,
+      type: 'promotion',
       condition: {
-        order_type: '05'
+        order_type: '01'
       }
     }
   });
   const otherDeals = otherDealData?.getProductByConditions?.Products || [];
   const totalOtherDeals = otherDealData?.getProductByConditions?.total || 0;
 
+  // const { data: otherDealData, refetch: refetchProducts, loading: otherDealLoading } = useQuery<
+  //   GetProductsData,
+  //   GetProductsVars
+  // >(GET_PRODUCTS, {
+  //   variables: {
+  //     page: page,
+  //     pageSize: pageSize,
+  //     condition: {
+  //       order_type: '05'
+  //     }
+  //   }
+  // });
+  // const otherDeals = otherDealData?.getProductByConditions?.Products || [];
+  // const totalOtherDeals = otherDealData?.getProductByConditions?.total || 0;
+
   useEffect(() => {
     if (otherDealLoading) {
-      animateScroll.scrollTo(0, {
-        to: 'other-deals',
-        duration: 1500,
-        smooth: true,
-        containerId: 'other-deals'
-      });
+      animateScroll.scrollToTop();
     }
   }, [otherDealLoading]);
 
@@ -150,7 +145,9 @@ const DealOfTheDay = () => {
       </div>
 
       {otherDealLoading ? (
-        <div className="w-100 p-5 text-center"></div>
+        <div className="w-100 p-5 text-center">
+          <Loading />
+        </div>
       ) : (
         otherDeals.length !== 0 && (
           <div className="deals--mobile py-5">
@@ -170,15 +167,22 @@ const DealOfTheDay = () => {
                       count={Math.ceil(totalOtherDeals / pageSize)}
                       page={page}
                       siblingCount={4}
-                      onChange={(page) =>
+                      onChange={(page) => {
                         router.push({
                           pathname: router.pathname,
                           query: {
                             ...router.query,
                             page: page
                           }
-                        })
-                      }
+                        });
+                        refetchProducts({
+                          page: page,
+                          pageSize: pageSize,
+                          condition: {
+                            order_type: '01'
+                          }
+                        });
+                      }}
                     />
                   </div>
                 </>
