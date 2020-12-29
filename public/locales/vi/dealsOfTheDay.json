@@ -1,5 +1,8 @@
 {
     "title": "Giá sốc hôm nay",
-    "hot_deals": "Ưu đãi tốt nhất",
-    "other_deals": "Ưu đãi khác"
+    "hot_deals": "Ưu đãi hot nhất",
+    "other_deals": "Ưu đãi khác",
+    "no_products": "Không có sản phẩm khuyến mãi nào",
+    "show_more": "Xem thêm",
+    "show_less": "Ẩn bớt"
 }
