@@ -53,7 +53,7 @@ const IngredientDetails = (): JSX.Element => {
     }
   );
 
-  const title = detailsData?.getIngredient.name;
+  const title = detailsData?.getIngredient?.name;
 
   return (
     <>

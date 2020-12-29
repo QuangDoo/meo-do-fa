@@ -123,22 +123,13 @@ const OrderItem = (props: any) => {
         </div>
       </div>
 
-      <div className="my-orders__invoice">
-        {/* <button className="btn btn-outline-info btn-sm">{t('myOrders:report')}</button> */}
-
-        {flag !== 25 ? (
+      {flag !== 25 && (
+        <div className="my-orders__invoice">
           <button className="btn btn-outline-danger btn-sm" onClick={() => handleOpenClick(flag)}>
             {t('myOrders:cancel_order')}
           </button>
-        ) : (
-          <button
-            className="btn btn-outline-danger btn-sm"
-            disabled
-            onClick={() => handleOpenClick(flag)}>
-            {t('myOrders:canceled')}
-          </button>
-        )}
-      </div>
+        </div>
+      )}
 
       <ConfirmCancelOrder
         open={open}

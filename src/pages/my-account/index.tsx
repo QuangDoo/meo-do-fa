@@ -156,7 +156,6 @@ const MyAccount = (): JSX.Element => {
       variables: {
         name: data.name,
         display_name: data.name,
-        email: data.email,
         contact_address: {
           street: data.companyStreet,
           city: {
@@ -212,32 +211,19 @@ const MyAccount = (): JSX.Element => {
 
             {/* Phone number */}
             <InputWithLabel
-              ref={register}
               disabled
               label={t('myAccount:phone_label')}
-              name="phone"
               type="text"
               defaultValue={user?.phone}
             />
 
             {/* Email */}
             <InputWithLabel
-              ref={register}
               disabled
               label={t('myAccount:email_label')}
-              name="email"
               type="text"
               defaultValue={user?.email}
             />
-
-            {/* New password */}
-            {/* <InputWithLabel
-              ref={register}
-              label={t('myAccount:new_password_label')}
-              name="newPassword"
-              type="password"
-              guide={t('myAccount:new_password_rule')}
-            /> */}
           </FormCard>
 
           <FormCard title={t('myAccount:business_info')}>
@@ -247,7 +233,6 @@ const MyAccount = (): JSX.Element => {
                 disabled
                 containerClass="col-md-4"
                 label={t('myAccount:account_type_label')}
-                name="accountType"
                 type="text"
                 defaultValue={
                   user?.account_type ? t(`myAccount:account_type_${user.account_type}`) : ''

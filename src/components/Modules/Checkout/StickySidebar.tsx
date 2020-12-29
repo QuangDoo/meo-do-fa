@@ -172,13 +172,15 @@ const StickySidebar = (props: Props): JSX.Element => {
   return (
     <div className="checkout__sticky">
       <div className="d-flex justify-content-between mb-3">
-        <h4 className="d-flex flex-wrap align-items-center">
+        <h4 className="d-flex flex-wrap align-items-baseline">
           {t('checkout:confirm_checkout_title')}
 
           <small className="ml-1">
+            (
             {t('checkout:confirm_checkout_quantity', {
-              quantity: counselData.totalQty
+              count: counselData.totalQty
             })}
+            )
           </small>
         </h4>
 

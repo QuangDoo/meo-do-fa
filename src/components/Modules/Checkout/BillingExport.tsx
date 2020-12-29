@@ -1,4 +1,3 @@
-import { onError } from '@apollo/client/link/error';
 import clsx from 'clsx';
 import React, { forwardRef, useState } from 'react';
 import { v4 as uuid } from 'uuid';

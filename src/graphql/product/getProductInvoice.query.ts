@@ -1,5 +1,4 @@
 import { gql } from '@apollo/client';
-// import { Product } from 'src/graphql/product/getProducts';
 
 export const GET_INVOICE_COUNSEL = gql`
   query getInvoiceCounsel($orderNo: String!) {
@@ -17,20 +16,20 @@ export const GET_INVOICE_COUNSEL = gql`
   }
 `;
 
-export type GetProductsWithInvoiceVars = {
+export type GetInvoiceCounselVars = {
   orderNo: string;
 };
 
-export type GetProductsWithInvoiceData = {
+export type GetInvoiceCounselData = {
   getInvoiceCounsel: {
     id: number;
     name: string;
     image: string;
     price: number;
-    total_price?: number;
+    total_price: number;
     quantity: number;
-    dc_amt_product?: number;
-    tax?: number;
-    price_percentage?: number;
+    dc_amt_product: number;
+    tax: number;
+    price_percentage: number;
   }[];
 };

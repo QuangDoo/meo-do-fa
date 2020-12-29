@@ -11,6 +11,7 @@ type Props = {
   children?: React.ReactNode;
   options: Option[];
   name: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 const RadioInput = (props: Props, ref): JSX.Element => {
@@ -29,6 +30,7 @@ const RadioInput = (props: Props, ref): JSX.Element => {
               id={id}
               ref={ref}
               disabled={option.disabled}
+              onChange={props.onChange}
             />
 
             <label className="form__label custom-control-label" htmlFor={id}>
