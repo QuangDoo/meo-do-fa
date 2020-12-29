@@ -1,6 +1,6 @@
 import { useMutation } from '@apollo/client';
-import { Trans, withTranslation } from 'i18n';
-import { WithTranslation } from 'next-i18next';
+import { Trans, useTranslation } from 'i18n';
+import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useForm } from 'react-hook-form';
@@ -10,12 +10,11 @@ import { viPhoneNumberRegex } from 'src/assets/regex/viPhoneNumber';
 import Button from 'src/components/Form/Button';
 import Checkbox from 'src/components/Form/Checkbox';
 import Input from 'src/components/Form/Input';
-import LinkText from 'src/components/Form/LinkText';
+import Select from 'src/components/Form/Select';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { useModalControlDispatch } from 'src/contexts/ModalControl';
 import { CREATE_USER, CreateUserData, CreateUserVars } from 'src/graphql/user/createUser';
 import useUser from 'src/hooks/useUser';
-import styled from 'styled-components';
 
 // Form input fields
 type Inputs = {
@@ -24,24 +23,18 @@ type Inputs = {
   email: string;
   password: string;
   phone: number;
-  referPhone: number;
+  referEmail: string;
   acceptTerms: boolean;
 };
 
-const ErrorToast = styled.div`
-  white-space: pre-line;
-`;
-
 const accountTypes = ['PHARMACY', 'CLINIC', 'DRUGSTORE'];
 
-// Initial value for account_type
-const initialAccountType = '';
+const RegisterForm = (): JSX.Element => {
+  const { t } = useTranslation(['register', 'errors']);
 
-const RegisterForm = (props: WithTranslation): JSX.Element => {
-  const { t } = props;
   const router = useRouter();
 
-  const { register, handleSubmit, setValue, watch } = useForm<Inputs>();
+  const { register, handleSubmit } = useForm<Inputs>();
 
   const { openModal, closeModal } = useModalControlDispatch();
 
@@ -54,6 +47,7 @@ const RegisterForm = (props: WithTranslation): JSX.Element => {
     {
       onCompleted: (data) => {
         localStorage.setItem('token', data.createUser.token);
+        Cookies.set('Authorization', data.createUser.token);
         closeModal();
         getUser();
         router.reload();
@@ -64,10 +58,6 @@ const RegisterForm = (props: WithTranslation): JSX.Element => {
     }
   );
 
-  // Watch account_type value, with initial state
-  // This component re-renders when account_type changes
-  const currentAccountType = watch('account_type', initialAccountType);
-
   // On form submit
   const onFormSubmit = (data: Inputs) => {
     createUser({
@@ -77,7 +67,8 @@ const RegisterForm = (props: WithTranslation): JSX.Element => {
           name: data.name,
           email: data.email,
           password: data.password,
-          phone: data.phone.toString()
+          phone: data.phone.toString(),
+          ref_email: data.referEmail
         }
       }
     });
@@ -85,64 +76,21 @@ const RegisterForm = (props: WithTranslation): JSX.Element => {
 
   // On form error
   const onFormError = (errors) => {
-    toast.error(
-      <ErrorToast>
-        {Object.keys(errors)
-          .map((name) => errors[name].message)
-          .join('\n')}
-      </ErrorToast>
-    );
+    toast.error(errors[Object.keys(errors)[0]].message);
   };
 
   return (
     <form className="new_account" onSubmit={handleSubmit(onFormSubmit, onFormError)}>
-      <input name="account_type" hidden type="text" ref={register} />
-
-      {/* Hide ChooseAccountType if account_type is in initial state */}
-      <div hidden={currentAccountType !== initialAccountType} className="business-group">
-        <div className="container text-center">
-          <div className="row">
-            <div className="col-12 mb-3">
-              <h6>{t('register:you_are')}</h6>
-            </div>
-          </div>
-
-          {/* Account type buttons */}
-          <div className="row no-gutters">
+      <div className="account-information">
+        <div className="d-flex align-items-baseline mb-4">
+          <div className="h6 flex-shrink-0 mr-2">{t('register:you_are') + ':'}</div>
+          <Select name="account_type" ref={register}>
             {accountTypes.map((accountType) => (
-              <button
-                key={accountType}
-                type="button"
-                className="col-6 business-group__item p-2"
-                onClick={() => setValue('account_type', accountType)}>
-                <img
-                  alt=""
-                  className="img-fluid"
-                  src={`/assets/images/account-type__${accountType.toLowerCase()}.png`}
-                />
-                <h6 className="business-group__item__text font-weight-bold">
-                  {t(`register:${accountType.toLowerCase()}`)}
-                </h6>
-              </button>
+              <option key={accountType} value={accountType}>
+                {t(`register:${accountType.toLowerCase()}`)}
+              </option>
             ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Hide AccountInformation form if account_type is chosen (not in initial state) */}
-      <div hidden={currentAccountType === initialAccountType} className="account-information">
-        <div className="welcome-account mb-3">
-          {t('register:welcome')}
-          <span className="welcome-account__business">
-            {' '}
-            {t(`register:${currentAccountType.toLowerCase()}`)}!
-          </span>
-          <button
-            onClick={() => setValue('account_type', initialAccountType)}
-            type="button"
-            className="font-weight-bold text-primary ml-2">
-            {t('register:edit')}
-          </button>
+          </Select>
         </div>
 
         <Input
@@ -203,23 +151,21 @@ const RegisterForm = (props: WithTranslation): JSX.Element => {
         />
 
         <Input
-          name="referPhone"
+          name="referEmail"
           ref={register({
             pattern: {
-              value: viPhoneNumberRegex,
-              message: `${t('input_referPhone_error_invalid')}`
-            },
-            validate: () => true // Check with backend if referer phone number exists
+              value: emailRegex,
+              message: `${t('register:input_referEmail_error_invalid')}`
+            }
           })}
           containerClass="mb-4"
           iconClass="fas fa-user-friends"
-          placeholder={t('input_referPhone_placeholder')}
-          type="number"
+          placeholder={t('register:input_referEmail_placeholder')}
         />
 
         <Checkbox
           ref={register({
-            required: `${t('checkbox_acceptTerms_error_required')}`
+            required: `${t('register:checkbox_acceptTerms_error_required')}`
           })}
           name="acceptTerms"
           containerClass="form-group"
@@ -261,6 +207,4 @@ const RegisterForm = (props: WithTranslation): JSX.Element => {
   );
 };
 
-const Translated = withTranslation(['register', 'errors'])(RegisterForm);
-
-export default Translated;
+export default RegisterForm;

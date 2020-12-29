@@ -6,7 +6,7 @@ import FormGroupLabel from './FormGroupLabel';
 
 type Props = {
   label: React.ReactNode;
-  name: string;
+  name?: string;
   type: 'text' | 'number' | 'password' | 'file';
 
   containerClass?: string;

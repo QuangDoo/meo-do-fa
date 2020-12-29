@@ -1,31 +1,85 @@
+import { useQuery } from '@apollo/client';
 import clsx from 'clsx';
 import { Trans, useTranslation } from 'i18n';
+import { useRouter } from 'next/router';
 import React from 'react';
+import { useFormContext } from 'react-hook-form';
+import { toast } from 'react-toastify';
 import LinkText from 'src/components/Form/LinkText';
 import Radio from 'src/components/Form/Radio';
-import { PaymentMethod } from 'src/graphql/paymentAndDelivery/paymentAndDelivery,query';
+import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
+import { APPLY_PAYMENT, ApplyPaymentData, ApplyPaymentVars } from 'src/graphql/order/applyPayment';
+import { OutputCounsel } from 'src/graphql/order/getCounsel';
+import {
+  GET_PAYMENT_DELIVERY,
+  GetPaymentAndDeliveryData
+} from 'src/graphql/paymentAndDelivery/paymentAndDelivery,query';
+import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import { ReactHookFormRegister } from 'src/types/ReactHookFormRegister';
 
 import DescriptionBox from './DescriptionBox';
 import InputCard from './InputCard';
 
 type Props = {
-  paymentMethods: PaymentMethod[];
-} & ReactHookFormRegister;
+  setCounselData: (value: React.SetStateAction<OutputCounsel>) => void;
+  orderNo: string;
+};
 
 const PaymentOption = (props: Props): JSX.Element => {
-  const { paymentMethods, register } = props;
+  const { register } = useFormContext();
 
   const { t } = useTranslation('checkout');
 
-  if (!paymentMethods.length) return null;
+  const router = useRouter();
 
+  // Payment & Delivery options
+  const { data: paymentAndDeliveryData } = useQuery<GetPaymentAndDeliveryData, undefined>(
+    GET_PAYMENT_DELIVERY,
+    {
+      onError: (err) => {
+        toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
+      }
+    }
+  );
+
+  const paymentMethods = paymentAndDeliveryData?.getPaymentAndDeliveryMethod.paymentMethods || [];
   const cashOnDelivery = paymentMethods[0];
   const bankTransfer = paymentMethods[1];
 
+  const [applyPayment, { loading: applyingPayment }] = useMutationAuth<
+    ApplyPaymentData,
+    ApplyPaymentVars
+  >(APPLY_PAYMENT, {
+    onCompleted: (data) => {
+      props.setCounselData(data.applyPayment);
+    },
+    onError: (err) => {
+      const errorCode = err.graphQLErrors[0]?.extensions?.code;
+      toast.error(t(`errors:code_${errorCode}`));
+
+      if (errorCode === 114) {
+        router.push('/cart');
+      }
+    }
+  });
+
+  if (!paymentMethods.length) return null;
+
+  const handleChange = (e) => {
+    applyPayment({
+      variables: {
+        orderNo: props.orderNo,
+        payment_method: +e.target.value
+      }
+    });
+  };
+
   return (
     <InputCard title={t('checkout:paymentOption_title')}>
+      <LoadingBackdrop open={applyingPayment} />
+
       <Radio
+        onChange={handleChange}
         name="paymentMethodId"
         ref={register({
           required: t('checkout:paymentOption_required') + ''
@@ -40,25 +94,22 @@ const PaymentOption = (props: Props): JSX.Element => {
               <Trans
                 i18nKey="checkout:paymentOption_bank"
                 components={{
-                  Link: <LinkText href="/transfer-instructions"> </LinkText>
+                  Link: <LinkText href="/help/huong-dan-chuyen-khoan"> </LinkText>
                 }}
               />
             ),
             value: bankTransfer.id,
             children: (
-              <>
-                <br />
-                <DescriptionBox>
-                  <div className="bank-info">
-                    {['account_name', 'account_no', 'bank_name', 'note'].map((key, index, arr) => (
-                      <div key={key} className={clsx('d-flex', index < arr.length - 1 && 'mb-2')}>
-                        <div className="bank-info__label">{t(`checkout:bank_info__${key}`)}</div>
-                        <div className="bank-info__content">{bankTransfer[key]}</div>
-                      </div>
-                    ))}
-                  </div>
-                </DescriptionBox>
-              </>
+              <DescriptionBox>
+                <div className="bank-info">
+                  {['account_name', 'account_no', 'bank_name', 'note'].map((key, index, arr) => (
+                    <div key={key} className={clsx('d-flex', index < arr.length - 1 && 'mb-2')}>
+                      <div className="bank-info__label">{t(`checkout:bank_info__${key}`)}</div>
+                      <div className="bank-info__content">{bankTransfer[key]}</div>
+                    </div>
+                  ))}
+                </div>
+              </DescriptionBox>
             )
           }
         ]}

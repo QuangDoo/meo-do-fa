@@ -2,27 +2,27 @@ import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import React from 'react';
 
-const links = [
-  {
-    itemImgUrl: '/assets/images/shopping-cart.png',
-    title: 'Cam kết giao hàng nhanh đúng thời điểm, đúng hàng đã đặt'
-  },
-  {
-    itemImgUrl: '/assets/images/return.png',
-    title: 'Cam kết đổi trả hàng miễn phí'
-  },
-  {
-    itemImgUrl: '/assets/images/refund.png',
-    title: 'Cam kết nguồn gốc sản phẩm chất lượng, uy tín'
-  },
-  {
-    itemImgUrl: '/assets/images/hotline.png',
-    title: 'Số hotline 1900232436'
-  }
-];
-
 function ProductSidebar(): JSX.Element {
   const { t } = useTranslation(['productDetail']);
+
+  const links = [
+    {
+      itemImgUrl: '/assets/images/shopping-cart.png',
+      title: t('productDetail:commitment_1')
+    },
+    {
+      itemImgUrl: '/assets/images/return.png',
+      title: t('productDetail:commitment_2')
+    },
+    {
+      itemImgUrl: '/assets/images/refund.png',
+      title: t('productDetail:commitment_3')
+    },
+    {
+      itemImgUrl: '/assets/images/hotline.png',
+      title: t('productDetail:commitment_4')
+    }
+  ];
 
   return (
     <>

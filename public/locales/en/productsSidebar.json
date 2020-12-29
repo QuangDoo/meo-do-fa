@@ -10,5 +10,9 @@
     "manufacturer": "Manufacturer",
     "see_more": "See more",
     "filter": "Filter",
-    "search": "Search"
+    "search": "Search",
+    "price_range": "Price range",
+    "price_from": "From",
+    "price_to": "To",
+    "apply": "Apply"
 }
