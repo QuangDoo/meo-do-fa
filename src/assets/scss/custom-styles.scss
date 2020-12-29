@@ -100,3 +100,11 @@ button {
   -webkit-line-clamp: 2;
   text-transform: initial;
 }
+
+.product-card .ribbon.price_down {
+  width: fit-content;
+
+  .ribbon-percent {
+    white-space: nowrap;
+  }
+}
