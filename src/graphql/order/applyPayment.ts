@@ -28,6 +28,7 @@ export const APPLY_PAYMENT = gql`
       }
       totalQty
       totalPrice
+      totalPriceVat
       totalDcAmt
       totalShippingFee
       totalNetPrice

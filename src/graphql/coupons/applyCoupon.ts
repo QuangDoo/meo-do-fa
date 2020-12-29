@@ -31,6 +31,7 @@ export const APPLY_COUPON = gql`
       }
       totalQty
       totalPrice
+      totalPriceVat
       totalDcAmt
       totalShippingFee
       totalNetPrice

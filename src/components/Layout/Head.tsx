@@ -13,15 +13,15 @@ export default function Head(props) {
       <title>Medofa</title>
       <link href="https://medofa.com/" rel="canonical" />
       <meta
-        content="Medofa là cổng thông tin hàng đầu giúp nhà thuốc, phòng khám, và bác sĩ tra cứu thuốc tây, hoạt chất, công dụng, giá thuốc, đặt thuốc nhanh và tiết kiệm nhất. Đây là chợ sỉ thuốc tây với đa dạng các loại thuốc từ các công ty dược phẩm tên tuổi và uy tín."
+        content="Medofa là giải pháp công nghệ ngành dược kết nối nhà máy, nhà phân phối, nhà thuốc, dược sĩ nhằm hợp tác tạo mối liên kết trực tiếp và gia tăng doanh thu."
         name="description"
       />
       <meta content="index, follow" name="robots" />
       <meta content="website" property="og:type" />
       <meta content="vi_VN" property="og:locale" />
-      <meta content="Tra cứu và đặt thuốc giá sỉ nhanh tại medofa.com" property="og:title" />
+      <meta content="Medofa - Medicine, online, fast" property="og:title" />
       <meta
-        content="Medofa là cổng thông tin hàng đầu giúp nhà thuốc, phòng khám, và bác sĩ tra cứu thuốc tây, hoạt chất, công dụng, giá thuốc, đặt thuốc nhanh và tiết kiệm nhất. Đây là chợ sỉ thuốc tây với đa dạng các loại thuốc từ các công ty dược phẩm tên tuổi và uy tín."
+        content="Medofa là giải pháp công nghệ ngành dược kết nối nhà máy, nhà phân phối, nhà thuốc, dược sĩ nhằm hợp tác tạo mối liên kết trực tiếp và gia tăng doanh thu."
         property="og:description"
       />
 

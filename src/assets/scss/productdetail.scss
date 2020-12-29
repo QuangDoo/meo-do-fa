@@ -1,14 +1,13 @@
-.pledge{
+.pledge {
   display: flex;
   align-items: center;
+  padding: 6px;
 }
 .pledge_item {
-  width: 80px;
-  left: -5px;
-  top: 0;
+  width: 60px;
+  padding: 0 5px;
 }
-.pledge_content{
+.pledge_content {
   color: #343a40;
   font-size: 0.9em;
-
 }

@@ -1,114 +1,94 @@
-.header-menu {
-  .sub-menu-lv1 {
-    width: 100%;
-    background: transparent;
-    box-shadow: none;
-    border-radius: 10px;
-    /* overflow: hidden; */
-    margin: 0 !important;
-    padding: 0;
-    li {
-      position: static;
-    }
-    .container-sub-menu {
-    }
-    .list-sub-menu-lv1 {
-      background: #fff;
-      display: inline-block;
-      width: 25%;
-    }
-    .dropdown-item {
-    }
-    .sub-menu-text {
-    }
-    .dropdown-sub-menu {
-    }
+.category-menu {
+  ul, ol {
+    list-style: none;
   }
-  .sub-menu-lv2 {
-    &.list-sub-menu {
-      top: 0;
-      right: 0;
-      left: auto;
-      width: 75% !important;
-      box-shadow: none;
-      border-radius: 0;
-      height: 100%;
-      margin: 0;
-      border-left: 3px solid #1476fb;
-      z-index: 1;
-      padding: 20px 37px;
-    }
+
+  &:hover .container-menu {
+    display: block !important;
   }
-}
-// .dropdown-menu.sub-menu {
-//   width: 100%;
-//   background: transparent;
-//   box-shadow: none;
-//   border-radius: 10px;
-//   /* overflow: hidden; */
-//   margin: 0 !important;
-//   padding: 0;
-// }
 
-// li.rockland-nav__item.dropdown {
-//   position: static;
-// }
+  .container-menu {
+    width: 300px;
+    position: absolute;
+    top: 51px;
+    left: 0;
+    padding: 10px 0;
+    display: none;
+    z-index: 10;
+    background-color: var(--white);
+    border-radius: 5px;
 
-// ul.dropdown-menu-1 {
-//   background: #fff;
-//   display: inline-block;
-//   width: 25%;
-// }
+    .menu-item{
+      display: flex;
+      padding: 0 10px;
 
-.container-submeu {
-  position: relative;
-}
+      &:hover {
+        background-color: #f4faff;
+      }
 
-.container-submeu .dropdown {
-  position: static;
-}
+      &:hover .sub-menu{
+        display: inline-block !important; 
+      }
+      &:hover .item-link{
+        color: $primary !important;
+      }
+      // &::after {
+      //   content: "\e90e";
+      //   color: var(--gray);
+      //   font-size: 10px;
+      //   position: absolute;
+      //   right: 8px;
+      //   margin: 1px 0 0 0;
+      // }
 
-// li.dropdown-item:hover {
-//   background: #1476fb;
-// }
+      .item-title{
+        display: flex;
+        align-items: center;
+        padding: 5px 0;
+      
+        .menu-icon {
+          padding-right: 5px;
+        }
+        .item-link {
+          color: var(--gray);
+          font-size: 14px;
+        }
+      }
+    
+      .sub-menu {
+        position: absolute;
+        z-index: 11;
+        top: 0;
+        left: 300px;
+        display: none;
+        width: 350px;
+        border-radius: 5px;
+        background-color: var(--white);
+        height: auto;
+        max-height: 450px;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        word-wrap: break-word;
 
-// li.dropdown-item:hover a {
-//   color: #fff;
-// }
+        .sub-menu-item {
+          padding: 5px 10px;
 
-li.mb-2.dropdown-item a {
-  font-size: 14px;
-  padding: 0;
-  color: var(--dark);
-}
+          &:hover {
+            background-color: #f4faff;
+          }
 
-li.mb-2.dropdown-item:hover .sub-menu-text:after {
-  content: '';
-  right: auto;
-  left: 100%;
-  position: absolute;
-  z-index: 9;
-  border: 20px solid transparent;
-  height: 100%;
-  display: block;
-  width: 10px;
-  top: 0;
-  border-left-color: #1476fb;
-  margin-left: 3px;
-}
+          &:hover .sub-item-link{
+            color: $primary !important;
+          }
 
-.sub-menu-text {
-  position: relative;
-  padding: 0.5rem 1.5rem;
-  z-index: 999;
-}
-
-li.mb-2.dropdown-item {
-  padding: 0 !important;
-}
-
-ul li.mb-2.dropdown-item:last-child {
-  margin-bottom: 0 !important;
+          .sub-item-link {
+            color: var(--gray);
+            font-size: 14px;
+          }
+        }
+      }
+    }   
+  }
 }
 
 .dropdown.dropdown-nav:hover > .dropdown-menu {
@@ -118,23 +98,3 @@ ul li.mb-2.dropdown-item:last-child {
   height: auto;
 }
 
-.dropdown-sub-menu {
-  position: absolute;
-  left: 100%;
-  top: -20%;
-  padding: 10px;
-  width: auto;
-  height: auto;
-  max-height: 400px;
-  overflow-y: scroll;
-  overflow-x: hidden;
-}
-
-.dropdown-item-icon {
-  padding-right: 1rem;
-}
-
-.dropdown-item:active {
-  color: $primary;
-  background-color: var(--light);
-}

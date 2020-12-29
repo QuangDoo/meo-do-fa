@@ -37,12 +37,10 @@ function ProductSidebar(): JSX.Element {
                 return (
                   <>
                     <Link href="/">
-                      <a className="pledge ">
+                      <div className="pledge ">
                         <img className="pledge_item" src={item.itemImgUrl} alt=""></img>
-                        <div className="pledge_content">
-                          <p className="px-1">{item.title}</p>
-                        </div>
-                      </a>
+                        <div className="pledge_content px-1">{item.title}</div>
+                      </div>
                     </Link>
                   </>
                 );
