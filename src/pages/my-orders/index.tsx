@@ -165,7 +165,9 @@ const OrderList = (props: Props) => {
   return (
     <>
       {loading ? (
-        <Loading />
+        <div className="w-100 text-center">
+          <Loading />
+        </div>
       ) : orderList.length !== 0 ? (
         orderList.map((order) => (
           <OrderItem

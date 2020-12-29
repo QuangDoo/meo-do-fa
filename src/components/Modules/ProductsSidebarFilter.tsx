@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Category } from 'src/graphql/category/category.query';
 import { Manufacturer } from 'src/graphql/manufacturers/manufacturers.query';
 
@@ -18,6 +18,8 @@ type Props = {
 };
 
 const ProductsSidebarFilter = (props: Props) => {
+  const [categorySubSearch, setCategorySubSearch] = useState([]);
+
   const { categories, manufacturers } = props;
   const { t } = useTranslation(['productsSidebar, searchBar']);
   const router = useRouter();
@@ -42,6 +44,22 @@ const ProductsSidebarFilter = (props: Props) => {
     });
     event.preventDefault();
   };
+
+  const [value, setValue] = useState('');
+
+  const onValueChange = (e) => {
+    e.preventDefault();
+    setValue(e.target.value);
+  };
+
+  const categoriesSearch = [...categories]
+    .slice()
+    .sort((a, b) => a.name.localeCompare(b.name))
+    .filter(({ name, id, categorySub }) => {
+      if (name.toLocaleLowerCase().includes(value.toLocaleLowerCase())) {
+        return [name, id, categorySub];
+      }
+    });
 
   return (
     <aside className="text-capitalize w-100">
@@ -79,7 +97,7 @@ const ProductsSidebarFilter = (props: Props) => {
       <hr className="hr my-3" />
 
       <Dropdown label={t('productsSidebar:category')}>
-        {/* <form autoComplete="off" acceptCharset="UTF-8">
+        <form autoComplete="off" acceptCharset="UTF-8">
           <div className="input-group form__input-group mb-3">
             <i className="fas fa-search form__input-icon" />
             <input
@@ -90,7 +108,7 @@ const ProductsSidebarFilter = (props: Props) => {
               onChange={onValueChange}
             />
           </div>
-        </form> */}
+        </form>
         <div className="mb-2">
           <Link href="/products">
             <a className={clsx('products__filter-category', !router.query.category && 'active')}>
@@ -98,35 +116,65 @@ const ProductsSidebarFilter = (props: Props) => {
             </a>
           </Link>
         </div>
-        {categories
-          .slice()
-          .sort((a, b) => a.name.localeCompare(b.name))
-          .map(({ name, id, categorySub }) => (
-            <div key={id} className="mb-2">
-              <Link href={`/products?category=${id}`}>
-                <Dropdown initialShow={false} label={name}>
-                  <div className="mb-3">
-                    {categorySub
-                      .slice()
-                      .sort((a, b) => a.name.localeCompare(b.name))
-                      .map(({ name, id }) => (
-                        <div key={id} className="ml-2 mb-1">
-                          <Link href={`/products?category=${id}`}>
-                            <a
-                              className={clsx(
-                                'products__filter-category',
-                                router.query.category === id.toString() && 'active'
-                              )}>
-                              {name}
-                            </a>
-                          </Link>
-                        </div>
-                      ))}
-                  </div>
-                </Dropdown>
-              </Link>
-            </div>
-          ))}
+        {value
+          ? categoriesSearch
+              .slice()
+              .sort((a, b) => a.name.localeCompare(b.name))
+              .map(({ name, id, categorySub }) => (
+                <div key={id} className="mb-2">
+                  <Link href={`/products?category=${id}`}>
+                    <Dropdown initialShow={false} label={name}>
+                      <div className="mb-3">
+                        {categorySub
+                          .slice()
+                          .sort((a, b) => a.name.localeCompare(b.name))
+                          .map(({ name, id }) => (
+                            <div key={id} className="ml-2 mb-1">
+                              <Link href={`/products?category=${id}`}>
+                                <a
+                                  className={clsx(
+                                    'products__filter-category',
+                                    router.query.category === id.toString() && 'active'
+                                  )}>
+                                  {name}
+                                </a>
+                              </Link>
+                            </div>
+                          ))}
+                      </div>
+                    </Dropdown>
+                  </Link>
+                </div>
+              ))
+          : categories
+              .slice()
+              .sort((a, b) => a.name.localeCompare(b.name))
+              .map(({ name, id, categorySub }) => (
+                <div key={id} className="mb-2">
+                  <Link href={`/products?category=${id}`}>
+                    <Dropdown initialShow={false} label={name}>
+                      <div className="mb-3">
+                        {categorySub
+                          .slice()
+                          .sort((a, b) => a.name.localeCompare(b.name))
+                          .map(({ name, id }) => (
+                            <div key={id} className="ml-2 mb-1">
+                              <Link href={`/products?category=${id}`}>
+                                <a
+                                  className={clsx(
+                                    'products__filter-category',
+                                    router.query.category === id.toString() && 'active'
+                                  )}>
+                                  {name}
+                                </a>
+                              </Link>
+                            </div>
+                          ))}
+                      </div>
+                    </Dropdown>
+                  </Link>
+                </div>
+              ))}
       </Dropdown>
 
       <hr className="hr my-3" />
@@ -134,7 +182,14 @@ const ProductsSidebarFilter = (props: Props) => {
       <Dropdown label={t('productsSidebar:manufacturer')}>
         <form onSubmit={handleManufacturersSubmit} autoComplete="off" acceptCharset="UTF-8">
           <div className="input-group form__input-group mb-3">
-            <i className="fas fa-search form__input-icon" />
+            <button
+              onClick={() =>
+                router.push({
+                  pathname: '/manufacturers'
+                })
+              }>
+              <i className="fas fa-search form__input-icon" />
+            </button>
 
             <input
               type="search"
