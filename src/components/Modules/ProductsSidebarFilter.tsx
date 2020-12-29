@@ -5,6 +5,7 @@ import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import { Category } from 'src/graphql/category/category.query';
 import { Manufacturer } from 'src/graphql/manufacturers/manufacturers.query';
 
@@ -19,6 +20,9 @@ type Props = {
 
 const ProductsSidebarFilter = (props: Props) => {
   const [categorySubSearch, setCategorySubSearch] = useState([]);
+
+  const [priceFrom, setPriceFrom] = useState('');
+  const [priceTo, setPriceTo] = useState('');
 
   const { categories, manufacturers } = props;
   const { t } = useTranslation(['productsSidebar, searchBar']);
@@ -36,6 +40,19 @@ const ProductsSidebarFilter = (props: Props) => {
       undefined,
       { shallow: true }
     );
+  };
+
+  const handlePriceRangeFilter = (e) => {
+    e.preventDefault();
+
+    router.push({
+      pathname: router.pathname,
+      query: {
+        ...router.query,
+        priceFrom: priceFrom,
+        priceTo: priceTo
+      }
+    });
   };
 
   const handleManufacturersSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -92,6 +109,42 @@ const ProductsSidebarFilter = (props: Props) => {
             {t('productsSidebar:name_a_to_z')}
           </option>
         </Select>
+
+        <hr className="hr my-3" />
+
+        <div className="price-filter">
+          <form onSubmit={handlePriceRangeFilter}>
+            <p>{t('productsSidebar:price_range')}</p>
+            <div className="d-flex align-items-center mb-3">
+              <div>
+                <input
+                  name="price_from"
+                  type="number"
+                  min={0}
+                  placeholder={t('productsSidebar:price_from')}
+                  size={5}
+                  value={priceFrom}
+                  onChange={(e) => setPriceFrom(e.target.value)}
+                />
+              </div>
+              &nbsp;-&nbsp;
+              <div>
+                <input
+                  name="price_to"
+                  type="number"
+                  min={0}
+                  placeholder={t('productsSidebar:price_to')}
+                  size={5}
+                  value={priceTo}
+                  onChange={(e) => setPriceTo(e.target.value)}
+                />
+              </div>
+            </div>
+            <button className="btn btn-primary" type="submit">
+              {t('productsSidebar:apply')}
+            </button>
+          </form>
+        </div>
       </div>
 
       <hr className="hr my-3" />
@@ -125,6 +178,17 @@ const ProductsSidebarFilter = (props: Props) => {
                   <Link href={`/products?category=${id}`}>
                     <Dropdown initialShow={false} label={name}>
                       <div className="mb-3">
+                        <div className="ml-2 mb-1">
+                          <Link href={`/products?category=${id}`}>
+                            <a
+                              className={clsx(
+                                'products__filter-category',
+                                !router.query.category && 'active'
+                              )}>
+                              {t('productsSidebar:all')}
+                            </a>
+                          </Link>
+                        </div>
                         {categorySub
                           .slice()
                           .sort((a, b) => a.name.localeCompare(b.name))
@@ -154,6 +218,17 @@ const ProductsSidebarFilter = (props: Props) => {
                   <Link href={`/products?category=${id}`}>
                     <Dropdown initialShow={false} label={name}>
                       <div className="mb-3">
+                        <div className="ml-2 mb-1">
+                          <Link href={`/products?category=${id}`}>
+                            <a
+                              className={clsx(
+                                'products__filter-category',
+                                !router.query.category && 'active'
+                              )}>
+                              {t('productsSidebar:all')}
+                            </a>
+                          </Link>
+                        </div>
                         {categorySub
                           .slice()
                           .sort((a, b) => a.name.localeCompare(b.name))

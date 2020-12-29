@@ -1,5 +1,8 @@
 {
     "title": "Deals of the day",
-    "hot_deals": "Hot deal",
-    "other_deals": "Other deal"
+    "hot_deals": "Hot deals",
+    "other_deals": "Other deal",
+    "no_products": "No promotional products",
+    "show_more": "Show more",
+    "show_less": "Show less"
 }

@@ -119,6 +119,9 @@ const useStyles = makeStyles((materialTheme) => ({
   },
   textAlignLeft: {
     textAlign: 'left'
+  },
+  stepIconCancel: {
+    background: 'linear-gradient(102.04deg, #c31e1e 0%, #f00 100%)'
   }
 }));
 
@@ -149,6 +152,14 @@ const CustomStepIcon = (props: StepIconProps) => {
       {icon}
     </div>
   );
+};
+
+const CustomStepCancel = (props: StepIconProps) => {
+  const { active, completed, icon } = props;
+
+  const classes = useStyles();
+
+  return <div className={clsx(classes.stepIconRoot, classes.stepIconCancel)}>{icon}</div>;
 };
 
 const CustomStepConnector = (props: StepConnectorProps) => {
@@ -319,7 +330,7 @@ const OrderDetails = () => {
                 connector={<CustomStepConnector />}>
                 {orderDetail?.getOrderDetail?.flag === 25 && (
                   <Step>
-                    <StepLabel icon={<Receipt />} StepIconComponent={CustomStepIcon} error>
+                    <StepLabel icon={<Receipt />} StepIconComponent={CustomStepCancel} error>
                       {t('myOrders:canceled')}
                     </StepLabel>
                   </Step>
