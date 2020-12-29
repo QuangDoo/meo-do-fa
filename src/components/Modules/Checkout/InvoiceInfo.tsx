@@ -1,31 +1,24 @@
 import { useTranslation } from 'i18n';
 import React from 'react';
+import { useFormContext } from 'react-hook-form';
 import { emailRegex } from 'src/assets/regex/email';
 import Checkbox from 'src/components/Form/Checkbox';
 import InputWithLabel from 'src/components/Form/InputWithLabel';
 import SelectWithLabel from 'src/components/Form/SelectWithLabel';
-import { City } from 'src/graphql/address/getCities';
-import { District } from 'src/graphql/address/getDistricts';
-import { Ward } from 'src/graphql/address/getWards';
+import useAddress from 'src/hooks/useAddress';
 import useUser from 'src/hooks/useUser';
-import { ReactHookFormRegister } from 'src/types/ReactHookFormRegister';
 
 import BillingExport from './BillingExport';
 import InputCard from './InputCard';
 
-type DataCityType = {
-  id: number;
-  name: string;
-};
-type Props = {
-  cities: City[];
-  districts: District[];
-  wards: Ward[];
-  required?: boolean;
-} & ReactHookFormRegister;
+const InvoiceInfo = () => {
+  const { register, watch } = useFormContext();
 
-const InvoiceInfo = (props: Props): JSX.Element => {
-  const { cities, districts, wards, register } = props;
+  const { cities, districts, wards } = useAddress({
+    cityId: +watch('invoiceCity')?.split('__')[1],
+    districtId: +watch('invoiceDistrict')?.split('__')[1],
+    wardId: +watch('invoiceWard')?.split('__')[1]
+  });
 
   const { t } = useTranslation(['checkout', 'myAccount']);
 
@@ -110,7 +103,7 @@ const InvoiceInfo = (props: Props): JSX.Element => {
             <option value="">{t('checkout:city_placeholder')}</option>
 
             {/* Map cities from api */}
-            {cities.map((city: DataCityType) => (
+            {cities.map((city) => (
               <option key={city.id} value={city.name + '__' + city.id}>
                 {city.name}
               </option>

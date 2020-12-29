@@ -1,17 +1,11 @@
-import { useQuery } from '@apollo/client';
 import { useTranslation } from 'i18n';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { CREATE_ORDER, CreateOrderData, CreateOrderVars } from 'src/graphql/order/createOrder';
 import { GET_COUNSEL, GetCounselData, OutputCounsel } from 'src/graphql/order/getCounsel';
-import {
-  GET_PAYMENT_DELIVERY,
-  GetPaymentAndDeliveryData
-} from 'src/graphql/paymentAndDelivery/paymentAndDelivery,query';
-import useAddress from 'src/hooks/useAddress';
 import { useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
 import useCart from 'src/hooks/useCart';
 import useUser from 'src/hooks/useUser';
@@ -59,37 +53,9 @@ type FormInputs = {
 const CheckoutPage = () => {
   const { t } = useTranslation(['checkout', 'errors']);
 
-  // User
-  const { user, loading: loadingUser } = useUser();
+  const { loading: loadingUser } = useUser();
 
   const [counselData, setCounselData] = useState<OutputCounsel>();
-
-  // When user data is loaded
-  useEffect(() => {
-    if (!user) return;
-
-    if (user.contact_address) {
-      const { street } = user.contact_address;
-
-      setValue('deliveryStreet', street);
-    }
-
-    setValue('deliveryName', user.name);
-    setValue('deliveryPhone', user.phone);
-    setValue('deliveryEmail', user.email);
-  }, [user]);
-
-  // Payment & Delivery options
-  const { data: paymentAndDeliveryData } = useQuery<GetPaymentAndDeliveryData, undefined>(
-    GET_PAYMENT_DELIVERY,
-    {
-      onError: (err) => {
-        toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
-      }
-    }
-  );
-
-  const paymentMethods = paymentAndDeliveryData?.getPaymentAndDeliveryMethod.paymentMethods || [];
 
   // Counsel
   const { refetch: refetchCounsel, loading: loadingCounsel } = useQueryAuth<
@@ -113,7 +79,7 @@ const CheckoutPage = () => {
   const orderNo = counselData?.counsel?.orderNo;
 
   // Form handler with default values
-  const { register, handleSubmit, watch, setValue } = useForm<FormInputs>({
+  const methods = useForm<FormInputs>({
     defaultValues: {
       deliveryMethodId: '2',
       paymentMethodId: '2',
@@ -125,19 +91,7 @@ const CheckoutPage = () => {
     }
   });
 
-  const { cities: deliveryCities, districts: deliveryDistricts, wards: deliveryWards } = useAddress(
-    {
-      cityId: +watch('deliveryCity')?.split('__')[1],
-      districtId: +watch('deliveryDistrict')?.split('__')[1],
-      wardId: +watch('deliveryWard')?.split('__')[1]
-    }
-  );
-
-  const { cities: invoiceCities, districts: invoiceDistricts, wards: invoiceWards } = useAddress({
-    cityId: +watch('invoiceCity')?.split('__')[1],
-    districtId: +watch('invoiceDistrict')?.split('__')[1],
-    wardId: +watch('invoiceWard')?.split('__')[1]
-  });
+  const { register, handleSubmit } = methods;
 
   const router = useRouter();
 
@@ -230,70 +184,57 @@ const CheckoutPage = () => {
   }
 
   return (
-    <form className="checkout__form" onSubmit={handleSubmit(onSubmit, onError)}>
-      <div className="checkout container py-5">
-        <div className="row">
-          <div className="col-12 mb-3">
-            <h1 className="h3">{t('checkout:title')}</h1>
-          </div>
-
-          <div className="col-md-8">
-            <div className="mb-4">
-              <DeliveryInfo
-                register={register}
-                cities={deliveryCities}
-                districts={deliveryDistricts}
-                wards={deliveryWards}
-              />
+    <FormProvider {...methods}>
+      <form className="checkout__form" onSubmit={handleSubmit(onSubmit, onError)}>
+        <div className="checkout container py-5">
+          <div className="row">
+            <div className="col-12 mb-3">
+              <h1 className="h3">{t('checkout:title')}</h1>
             </div>
 
-            {/* Payment */}
-            <div className="mb-4">
-              <PaymentOption
-                register={register}
-                paymentMethods={paymentMethods}
-                orderNo={orderNo}
-                setCounselData={setCounselData}
-              />
+            <div className="col-md-8">
+              <div className="mb-4">
+                <DeliveryInfo />
+              </div>
+
+              {/* Payment */}
+              <div className="mb-4">
+                <PaymentOption orderNo={orderNo} setCounselData={setCounselData} />
+              </div>
+
+              {/* Notes */}
+              <div className="mb-4">
+                <CustomerNotes />
+              </div>
+
+              {/* Invoice */}
+              {cart?.getCart.carts.some((cart) => cart.product.is_quick_invoice) && (
+                <>
+                  <div className="mb-4">
+                    <InvoiceInfo />
+                  </div>
+
+                  <div className="mb-4">
+                    <InvoiceProducts orderNo={orderNo} />
+                  </div>
+                </>
+              )}
+
+              {/* Agreement */}
+              <div className="form-group">
+                <Agreement register={register} />
+              </div>
             </div>
 
-            {/* Notes */}
-            <div className="mb-4">
-              <CustomerNotes register={register} />
+            <div className="col-md-4 mb-3">
+              <StickySidebar counselData={counselData} setCounselData={setCounselData} />
             </div>
-
-            {/* Invoice */}
-            {cart?.getCart.carts.some((cart) => cart.product.is_quick_invoice) && (
-              <>
-                <div className="mb-4">
-                  <InvoiceInfo
-                    register={register}
-                    cities={invoiceCities}
-                    districts={invoiceDistricts}
-                    wards={invoiceWards}
-                  />
-                </div>
-
-                <div className="mb-4">
-                  <InvoiceProducts orderNo={orderNo} />
-                </div>
-              </>
-            )}
-
-            {/* Agreement */}
-            <div className="form-group">
-              <Agreement register={register} />
-            </div>
-          </div>
-
-          <div className="col-md-4 mb-3">
-            <StickySidebar counselData={counselData} setCounselData={setCounselData} />
           </div>
         </div>
-      </div>
 
-      <LoadingBackdrop open={loadingCounsel || creatingOrder || loadingUser || loadingCart} />
-    </form>
+        <LoadingBackdrop open={creatingOrder || loadingCart || loadingUser} />
+      </form>
+    </FormProvider>
   );
 };
 

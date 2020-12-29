@@ -1,37 +1,30 @@
 import { useTranslation } from 'i18n';
 import React from 'react';
+import { useFormContext } from 'react-hook-form';
 import { emailRegex } from 'src/assets/regex/email';
 import { viPhoneNumberRegex } from 'src/assets/regex/viPhoneNumber';
 import Checkbox from 'src/components/Form/Checkbox';
-import { City } from 'src/graphql/address/getCities';
-import { District } from 'src/graphql/address/getDistricts';
-import { Ward } from 'src/graphql/address/getWards';
+import useAddress from 'src/hooks/useAddress';
 import useUser from 'src/hooks/useUser';
-import { ReactHookFormRegister } from 'src/types/ReactHookFormRegister';
 
 import InputWithLabel from '../../Form/InputWithLabel';
 import SelectWithLabel from '../../Form/SelectWithLabel';
 import InputCard from './InputCard';
 
-type DataCityType = {
-  id: number;
-  name: string;
-};
-
-type Props = {
-  cities: City[];
-  districts: District[];
-  wards: Ward[];
-} & ReactHookFormRegister;
-
-const DeliveryInfo = (props: Props) => {
-  const { cities, districts, wards, register } = props;
+const DeliveryInfo = () => {
+  const { register, watch } = useFormContext();
 
   const { t } = useTranslation('checkout');
 
   const { user } = useUser();
 
   const { name, phone, email, contact_address } = user || {};
+
+  const { cities, districts, wards } = useAddress({
+    cityId: +watch('deliveryCity')?.split('__')[1],
+    districtId: +watch('deliveryDistrict')?.split('__')[1],
+    wardId: +watch('deliveryWard')?.split('__')[1]
+  });
 
   return (
     <InputCard title={t('checkout:deliveryInfo_title')} hasRequired>
@@ -114,7 +107,7 @@ const DeliveryInfo = (props: Props) => {
           <option value="">{t('checkout:city_placeholder')}</option>
 
           {/* Map cities from api */}
-          {cities.map((city: DataCityType) => (
+          {cities.map((city) => (
             <option key={city.id} value={city.name + '__' + city.id}>
               {city.name}
             </option>

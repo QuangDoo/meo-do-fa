@@ -1,14 +1,19 @@
+import { useQuery } from '@apollo/client';
 import clsx from 'clsx';
 import { Trans, useTranslation } from 'i18n';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { useFormContext } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import LinkText from 'src/components/Form/LinkText';
 import Radio from 'src/components/Form/Radio';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { APPLY_PAYMENT, ApplyPaymentData, ApplyPaymentVars } from 'src/graphql/order/applyPayment';
 import { OutputCounsel } from 'src/graphql/order/getCounsel';
-import { PaymentMethod } from 'src/graphql/paymentAndDelivery/paymentAndDelivery,query';
+import {
+  GET_PAYMENT_DELIVERY,
+  GetPaymentAndDeliveryData
+} from 'src/graphql/paymentAndDelivery/paymentAndDelivery,query';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import { ReactHookFormRegister } from 'src/types/ReactHookFormRegister';
 
@@ -16,17 +21,30 @@ import DescriptionBox from './DescriptionBox';
 import InputCard from './InputCard';
 
 type Props = {
-  paymentMethods: PaymentMethod[];
   setCounselData: (value: React.SetStateAction<OutputCounsel>) => void;
   orderNo: string;
-} & ReactHookFormRegister;
+};
 
 const PaymentOption = (props: Props): JSX.Element => {
-  const { paymentMethods, register } = props;
+  const { register } = useFormContext();
 
   const { t } = useTranslation('checkout');
 
   const router = useRouter();
+
+  // Payment & Delivery options
+  const { data: paymentAndDeliveryData } = useQuery<GetPaymentAndDeliveryData, undefined>(
+    GET_PAYMENT_DELIVERY,
+    {
+      onError: (err) => {
+        toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
+      }
+    }
+  );
+
+  const paymentMethods = paymentAndDeliveryData?.getPaymentAndDeliveryMethod.paymentMethods || [];
+  const cashOnDelivery = paymentMethods[0];
+  const bankTransfer = paymentMethods[1];
 
   const [applyPayment, { loading: applyingPayment }] = useMutationAuth<
     ApplyPaymentData,
@@ -46,9 +64,6 @@ const PaymentOption = (props: Props): JSX.Element => {
   });
 
   if (!paymentMethods.length) return null;
-
-  const cashOnDelivery = paymentMethods[0];
-  const bankTransfer = paymentMethods[1];
 
   const handleChange = (e) => {
     applyPayment({

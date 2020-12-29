@@ -1,13 +1,11 @@
 import { useTranslation } from 'i18n';
 import React from 'react';
-import { ReactHookFormRegister } from 'src/types/ReactHookFormRegister';
+import { useFormContext } from 'react-hook-form';
 
 import InputCard from './InputCard';
 
-type Props = ReactHookFormRegister;
-
-const CustomerNotes = (props: Props) => {
-  const { register } = props;
+const CustomerNotes = () => {
+  const { register } = useFormContext();
 
   const { t } = useTranslation('checkout');
 
