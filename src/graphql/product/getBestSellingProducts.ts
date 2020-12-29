@@ -17,7 +17,7 @@ export const GET_BEST_SELLING_PRODUCTS = gql`
     getProductByConditions(
       page: $page
       pageSize: $pageSize
-      # type: "is_quick_order"
+      type: "is_quick_order"
       condition: { order_type: "01" }
     ) {
       Products {

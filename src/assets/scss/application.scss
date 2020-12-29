@@ -10418,8 +10418,8 @@ abbr[title] {
 .deal-card {
   --deal-bar-height: 1em;
   --deal-bar-background-color: #f6cdd1;
-  --deal-bar-background-gradient: linear-gradient(to right, $secondary 0%, #dc3545 70%);
-  border: 1px solid #dc3545;
+  --deal-bar-background-gradient: linear-gradient(to right, $secondary 0%, #f5b700 70%);
+  border: 1px solid #f5b700;
 }
 .deal-card__description {
   line-height: 1rem;
@@ -10469,15 +10469,16 @@ abbr[title] {
   background: none;
 }
 .deal-card .ribbon.price_down {
-  --c-price-down-background: #dc3545;
-  --c-price-down-text: $secondary;
+  --c-price-down-background: #f5b700;
+  --c-price-down-text: white;
   color: var(--c-price-down-text);
   background-color: var(--c-price-down-background);
 }
-.deal-card .ribbon.price_down:after {
-  border-left-color: var(--c-price-down-background);
-  border-right-color: var(--c-price-down-background);
-}
+
+// .deal-card .ribbon.price_down:after {
+//   border-left-color: var(--c-price-down-background);
+//   border-right-color: var(--c-price-down-background);
+// }
 .dropdown {
   cursor: pointer;
 }
@@ -10917,18 +10918,18 @@ abbr[title] {
   min-height: 20em;
 }
 .product-card .ribbon {
-  --c-price-up-background: $secondary;
-  --c-price-down-background: $secondary;
-  --c-price-up-text: #dc3545;
-  --c-price-down-text: $primary;
-  --ribbon-width: 3.4em;
+  --c-price-up-background: #f5b700;
+  --c-price-down-background: #f5b700;
+  --c-price-up-text: #{$white};
+  --c-price-down-text: #{$white};
+  --ribbon-width: 4.4em;
   display: flex;
   flex-direction: column;
   width: var(--ribbon-width);
-  height: 3.5em;
+  height: 2.2em;
   padding: 0.25em;
   position: absolute;
-  top: -9px;
+  top: 0;
   right: 6px;
   text-transform: uppercase;
   text-align: center;
@@ -10943,12 +10944,12 @@ abbr[title] {
   width: 100%;
   left: 0;
   bottom: -15px;
-  border-left: calc(var(--ribbon-width) / 2) solid;
-  border-right: calc(var(--ribbon-width) / 2) solid;
-  border-bottom: 15px solid transparent;
+  // border-left: calc(var(--ribbon-width) / 2) solid;
+  // border-right: calc(var(--ribbon-width) / 2) solid;
+  // border-bottom: 15px solid transparent;
 }
 .product-card .ribbon-percent {
-  font-size: 1.5em;
+  font-size: 1.3em;
   overflow: hidden;
 }
 .product-card .ribbon-percent--small {
@@ -10966,6 +10967,7 @@ abbr[title] {
   border-right-color: var(--c-price-up-background);
 }
 .product-card .ribbon.price_down {
+  border-radius: 0 0 0.7em 0.7em;
   color: var(--c-price-down-text);
   background-color: var(--c-price-down-background);
 }

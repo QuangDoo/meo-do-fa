@@ -21,6 +21,7 @@ export type ProductDetails = {
   id: number;
   name: string;
   list_price: number;
+  old_price: number;
   sale_price: number;
   discount_percentage: number;
   is_primary: boolean;
