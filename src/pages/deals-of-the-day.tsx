@@ -10,11 +10,6 @@ import Loading from 'src/components/Layout/Loading';
 import Nav from 'src/components/Layout/Nav';
 import Pagination from 'src/components/Modules/Pagination';
 import ProductCard from 'src/components/Modules/ProductCard';
-import {
-  GET_PRODUCTS_DEAL_OF_THE_DAY,
-  GetProductDealOfTheDayData,
-  GetProductDealOfTheDayVars
-} from 'src/graphql/product/getProductDealOfTheDay';
 import { GET_PRODUCTS, GetProductsData, GetProductsVars } from 'src/graphql/product/getProducts';
 import withApollo from 'src/utils/withApollo';
 
