@@ -178,6 +178,17 @@ const ProductsSidebarFilter = (props: Props) => {
                   <Link href={`/products?category=${id}`}>
                     <Dropdown initialShow={false} label={name}>
                       <div className="mb-3">
+                        <div className="ml-2 mb-1">
+                          <Link href={`/products?category=${id}`}>
+                            <a
+                              className={clsx(
+                                'products__filter-category',
+                                !router.query.category && 'active'
+                              )}>
+                              {t('productsSidebar:all')}
+                            </a>
+                          </Link>
+                        </div>
                         {categorySub
                           .slice()
                           .sort((a, b) => a.name.localeCompare(b.name))
@@ -207,6 +218,17 @@ const ProductsSidebarFilter = (props: Props) => {
                   <Link href={`/products?category=${id}`}>
                     <Dropdown initialShow={false} label={name}>
                       <div className="mb-3">
+                        <div className="ml-2 mb-1">
+                          <Link href={`/products?category=${id}`}>
+                            <a
+                              className={clsx(
+                                'products__filter-category',
+                                !router.query.category && 'active'
+                              )}>
+                              {t('productsSidebar:all')}
+                            </a>
+                          </Link>
+                        </div>
                         {categorySub
                           .slice()
                           .sort((a, b) => a.name.localeCompare(b.name))
