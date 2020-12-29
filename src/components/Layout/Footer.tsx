@@ -64,14 +64,19 @@ const Footer = (): JSX.Element => {
   };
 
   const onSubmit = (data: Inputs) => {
-    saveMailSubscriber({
-      variables: {
-        inputs: {
-          email: data.email
+    const { email } = data;
+    if (!email) {
+      toast.error(t('register:input_email_error_invalid'));
+    } else {
+      saveMailSubscriber({
+        variables: {
+          inputs: {
+            email: data.email
+          }
         }
-      }
-    }).catch((error) => toast.error(error));
-    reset({ email: '' });
+      }).catch((error) => toast.error(error));
+      reset({ email: '' });
+    }
   };
 
   return (
