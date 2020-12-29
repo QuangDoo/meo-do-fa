@@ -11,3 +11,54 @@
   color: #343a40;
   font-size: 0.9em;
 }
+
+.product__image .ribbon {
+  --c-price-up-background: #f5b700;
+  --c-price-down-background: #f5b700;
+  --c-price-up-text: #{$white};
+  --c-price-down-text: #{$white};
+  --ribbon-width: 4.4em;
+  display: flex;
+  flex-direction: column;
+  width: var(--ribbon-width);
+  height: 2.2em;
+  padding: 0.25em;
+  position: absolute;
+  top: 0;
+  right: 10%;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1.5em;
+  font-size: 0.9rem;
+  font-weight: bold;
+  box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.5);
+} 
+
+.product__image .ribbon-percent {
+  font-size: 1.3em;
+  overflow: hidden;
+}
+.product__image .ribbon-percent--small {
+  font-size: 1em;
+}
+.product__image .ribbon-status {
+  color: white;
+}
+.product__image .ribbon.price_up {
+  color: var(--c-price-up-text);
+  background-color: var(--c-price-up-background);
+}
+.product__image .ribbon.price_up:after {
+  border-left-color: var(--c-price-up-background);
+  border-right-color: var(--c-price-up-background);
+}
+.product__image .ribbon.price_down {
+  border-radius: 0 0 0.7em 0.7em;
+  color: var(--c-price-down-text);
+  background-color: var(--c-price-down-background);
+}
+.product__image .ribbon.price_down:after {
+  border-left-color: var(--c-price-down-background);
+  border-right-color: var(--c-price-down-background);
+}
+

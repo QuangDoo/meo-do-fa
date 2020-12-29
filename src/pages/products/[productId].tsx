@@ -8,6 +8,7 @@ import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import Nav from 'src/components/Layout/Nav';
+import { DiscountRibbon } from 'src/components/Modules/ProductCard/DiscountRibbon';
 import ProductDetailInfor from 'src/components/Modules/ProductDetail/ProductDetaiInfor';
 import ProducerInformation from 'src/components/Modules/ProductDetail/ProductInformation/ProducerInformation';
 import ProductSidebar from 'src/components/Modules/ProductDetail/ProductInformation/ProductSidebar';
@@ -28,6 +29,7 @@ function ProductDetail(): JSX.Element {
   });
 
   const product = dataProduct?.getProduct;
+  console.log('product', product);
 
   useEffect(() => {
     if (!router.query || dataProduct) return;
@@ -63,8 +65,11 @@ function ProductDetail(): JSX.Element {
                     className="lozad product__image"
                     style={{
                       backgroundImage: `url(${product?.image_512})`
-                    }}
-                  />
+                    }}>
+                    {product?.discount_percentage > 0 && (
+                      <DiscountRibbon discountPercent={product?.discount_percentage} />
+                    )}
+                  </div>
                   <small className="text-muted">* {t('productDetail:image_change')}</small>
                 </div>
                 <div className="col-md-6">

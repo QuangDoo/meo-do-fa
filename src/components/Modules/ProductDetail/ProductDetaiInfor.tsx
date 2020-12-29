@@ -30,27 +30,23 @@ const ProductDetailInfor = (props: ProductDetails): JSX.Element => {
         {!isLoggedIn ? (
           <LoginModal />
         ) : (
-          <div className="d-flex align-items-center">
-            <div className="product__price-group">
+          <div className="d-flex flex-column">
+            <div className="product__price-group mb-1">
               <span className="product__price">
                 <PriceText price={props.sale_price} />
                 <span className="unit">{t('common:vnd')}</span>
               </span>
 
               {props.discount_percentage > 0 && (
-                <>
-                  <br />
-
-                  <span className="product__old-price">
-                    <PriceText price={props.list_price} />
-                    <span className="unit">{t('common:vnd')}</span>
-                  </span>
-                </>
+                <span className="product__old-price ml-3">
+                  <PriceText price={props.old_price} />
+                  <span className="unit">{t('common:vnd')}</span>
+                </span>
               )}
             </div>
 
             {props.is_quick_invoice && (
-              <small className="text-muted ml-3"> ({t('productDetail:vat_included')})</small>
+              <small className="text-muted"> ({t('productDetail:vat_included')})</small>
             )}
           </div>
         )}
