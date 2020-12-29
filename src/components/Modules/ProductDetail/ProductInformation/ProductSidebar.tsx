@@ -2,23 +2,27 @@ import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import React from 'react';
 
-const links = [
-  {
-    itemImgUrl: 'https://hasaki.vn/images/graphics/img_quality_3.png',
-    title: 'Phát hiện hàng giả, bạn trả hàng và nhận thêm 110% giá trị'
-  },
-  {
-    itemImgUrl: 'https://hasaki.vn/images/graphics/img_quality_4.png',
-    title: 'Phát hiện hàng giả, bạn trả hàng và nhận thêm 110% giá trị'
-  },
-  {
-    itemImgUrl: 'https://hasaki.vn/images/graphics/img_quality_3.png',
-    title: 'Phát hiện hàng giả, bạn trả hàng và nhận thêm 110% giá trị'
-  }
-];
-
 function ProductSidebar(): JSX.Element {
   const { t } = useTranslation(['productDetail']);
+
+  const links = [
+    {
+      itemImgUrl: '/assets/images/shopping-cart.png',
+      title: t('productDetail:commitment_1')
+    },
+    {
+      itemImgUrl: '/assets/images/return.png',
+      title: t('productDetail:commitment_2')
+    },
+    {
+      itemImgUrl: '/assets/images/refund.png',
+      title: t('productDetail:commitment_3')
+    },
+    {
+      itemImgUrl: '/assets/images/hotline.png',
+      title: t('productDetail:commitment_4')
+    }
+  ];
 
   return (
     <>
