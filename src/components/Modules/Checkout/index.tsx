@@ -197,7 +197,7 @@ const CheckoutPage = () => {
               <h1 className="h3">{t('checkout:title')}</h1>
             </div>
 
-            <div className="col-md-8">
+            <div className="col-lg-8">
               <div className="mb-4">
                 <DeliveryInfo />
               </div>
@@ -231,7 +231,7 @@ const CheckoutPage = () => {
               </div>
             </div>
 
-            <div className="col-md-4 mb-3">
+            <div className="col-lg-4 mb-3">
               <PromoCodes counselData={counselData} setCounselData={setCounselData} />
               <StickySidebar counselData={counselData} />
             </div>

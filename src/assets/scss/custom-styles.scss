@@ -12,6 +12,9 @@
 @import './loading.scss';
 @import './menu.scss';
 @import './static-page.scss';
+@import './product-card.scss';
+@import './checkout.scss';
+@import './my-orders.scss';
 
 button {
   background-color: transparent;
@@ -32,26 +35,10 @@ button {
   }
 }
 
-.product-card__new-arrival {
-  z-index: 1;
-}
-
 .banner__img {
   display: flex;
   justify-content: center;
   position: static;
-}
-
-.product-card__image {
-  position: relative;
-}
-
-.product-card__name {
-  text-transform: none;
-}
-
-.product-card .ribbon {
-  z-index: 1;
 }
 
 @media (min-width: 1200px) {
@@ -64,30 +51,6 @@ button {
   }
 }
 
-.my-orders__item {
-  grid-template-columns: 4fr 1fr;
-
-  .my-orders__invoice {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-  }
-}
-
-.my-orders__filter {
-  padding: 0;
-}
-
-.Mui-error .makeStyles-stepIconRoot-6 {
-  background: linear-gradient(102.04deg, #c31e1e 0%, #f00 100%);
-}
-
-.Mui-error .makeStyles-stepIconRoot-40 {
-  background: linear-gradient(102.04deg, #c31e1e 0%, #f00 100%);
-}
-.Mui-error .MuiStepLabel-alternativeLabel{
-  background: linear-gradient(102.04deg, #c31e1e 0%, #f00 100%);
-}
 .product .product__image {
   background-position: inherit;
 }
@@ -105,12 +68,4 @@ button {
 .cart-item__name {
   -webkit-line-clamp: 2;
   text-transform: initial;
-}
-
-.product-card .ribbon.price_down {
-  width: fit-content;
-
-  .ribbon-percent {
-    white-space: nowrap;
-  }
 }

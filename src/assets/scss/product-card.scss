@@ -1,0 +1,25 @@
+.product-card {
+  &__new-arrival {
+    z-index: 1;
+  }
+
+  &__image {
+    position: relative;
+  }
+
+  &__name {
+    text-transform: none;
+  }
+
+  .ribbon {
+    z-index: 1;
+
+    &.price_down {
+      width: fit-content;
+
+      .ribbon-percent {
+        white-space: nowrap;
+      }
+    }
+  }
+}

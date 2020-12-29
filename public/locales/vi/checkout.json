@@ -64,7 +64,7 @@
   "apply_coupon_popup_title": "Áp dụng mã khuyến mãi",
   "apply_coupon_input_label": "Nhập mã",
   "apply_coupon_confirm_btn": "Áp dụng",
-  "unapply_coupon_btn": "Bỏ áp dụng",
+  "unapply_coupon_btn": "Bỏ chọn",
   "apply_coupon_success": "Cập nhật mã khuyến mãi thành công",
   "days": "ngày",
   "hours": "giờ",
@@ -76,5 +76,6 @@
   "list_products_have_invoice": "Danh sách sản phẩm có hóa đơn",
   "quantity": "Số lượng",
 
-  "promo_codes_title": "Mã khuyến mãi"
+  "promo_codes_title": "Mã khuyến mãi",
+  "choose_or_input_promo_code": "Chọn hoặc nhập mã khuyến mãi"
 }

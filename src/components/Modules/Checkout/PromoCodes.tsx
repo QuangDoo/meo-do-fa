@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { APPLY_COUPON, ApplyCouponData, ApplyCouponVars } from 'src/graphql/coupons/applyCoupon';
 import { GET_USED_COUPONS, GetUsedCouponsData } from 'src/graphql/coupons/getUsedCoupons';
-import { OutputCounsel } from 'src/graphql/order/getCounsel';
+import { OutputCounsel, PromotionType } from 'src/graphql/order/getCounsel';
 import { useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
 
 import ApplyPromoCodesDialog from './ApplyPromoCodesDialog';
@@ -16,6 +16,35 @@ type Props = {
   setCounselData: (data: OutputCounsel) => void;
   counselData: OutputCounsel;
 };
+
+type CouponProps = {
+  promotion: PromotionType;
+  onClick: () => void;
+};
+
+function Coupon(props: CouponProps) {
+  const { t } = useTranslation('checkout');
+
+  const { promotion, onClick } = props;
+
+  return (
+    <>
+      <div
+        key={promotion.coupon_code}
+        className="d-flex mt-3 align-items-center justify-content-between promo-coupon">
+        <div className="px-2 flex-grow-1 promo-coupon__name-container">
+          <div className="promo-coupon__name" title={promotion.program_name}>
+            {promotion.program_name}
+          </div>
+        </div>
+
+        <button type="button" className="px-3 py-4 promo-coupon__unapply-btn" onClick={onClick}>
+          {t('checkout:unapply_coupon_btn')}
+        </button>
+      </div>
+    </>
+  );
+}
 
 export default function PromoCodes(props: Props) {
   const [open, setOpen] = useState(false);
@@ -79,9 +108,11 @@ export default function PromoCodes(props: Props) {
     });
   };
 
+  const promotion = props.counselData?.counsel?.promotion;
+
   return (
     <div className="mb-4">
-      <div className="h3 mb-3">Mã khuyến mãi</div>
+      <div className="h3 mb-3">{t('checkout:promo_codes_title')}</div>
       <div className="elevated p-3">
         <Button
           size="small"
@@ -90,7 +121,7 @@ export default function PromoCodes(props: Props) {
           fullWidth
           startIcon={<LocalOfferIcon />}
           onClick={() => setOpen(true)}>
-          Chọn hoặc nhập mã khuyến mãi
+          {t('checkout:choose_or_input_promo_code')}
         </Button>
 
         <ApplyPromoCodesDialog
@@ -103,13 +134,12 @@ export default function PromoCodes(props: Props) {
           counselData={props.counselData}
         />
 
-        <div>
-          {props.counselData?.counsel?.promotions_coupon?.map((coupon) => (
-            <div className="mt-3" key={coupon.id}>
-              {coupon.name}
-            </div>
-          ))}
-        </div>
+        {promotion?.coupon_code && (
+          <Coupon
+            promotion={promotion}
+            onClick={() => handleUnapplyCoupon(promotion.coupon_code)}
+          />
+        )}
       </div>
 
       <LoadingBackdrop open={gettingUsedCoupons || applyingCoupon} />

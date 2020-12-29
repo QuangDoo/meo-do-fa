@@ -15,7 +15,7 @@ type GiftInfo = {
   giftQty: number;
 };
 
-type PromotionType = {
+export type PromotionType = {
   coupon_code: string;
   dc_coupon_amt: number;
   reward_type: RewardType;
@@ -71,10 +71,13 @@ export type GetCounselData = {
 };
 
 export const OUTPUT_COUNSEL = `
+  totalQty
   totalPrice
-  totalPriceVat
   totalDcAmt
+  totalShippingFee
   totalNetPrice
+  totalDcPayment
+  totalPriceVat
 
   counsel {
     _id

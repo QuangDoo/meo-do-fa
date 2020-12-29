@@ -81,5 +81,6 @@
   "list_products_have_invoice": "Product list with invoice",
   "quantity": "quantity",
 
-  "promo_codes_title": "Promo codes"
+  "promo_codes_title": "Promo codes",
+  "choose_or_input_promo_code": "Choose or input promo code"
 }
