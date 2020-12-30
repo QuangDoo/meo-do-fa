@@ -79,5 +79,8 @@
   "reward_type_product": "Gift",
   "coupon_code_required": "Please provide a coupon code",
   "list_products_have_invoice": "Product list with invoice",
-  "quantity": "quantity"
+  "quantity": "quantity",
+
+  "promo_codes_title": "Promo codes",
+  "choose_or_input_promo_code": "Choose or input promo code"
 }

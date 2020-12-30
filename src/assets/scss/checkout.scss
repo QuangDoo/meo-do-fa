@@ -1,0 +1,64 @@
+.promo-coupon {
+  $circle-size: 20px;
+  $half-circle: $circle-size / 2;
+
+  overflow: hidden;
+
+  &__name-container {
+    border: 1px solid $primary;
+    border-right: none;
+    border-radius: $half-circle 0 0 $half-circle;
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+  }
+
+  &__name {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  &__unapply-btn {
+    border: 1px solid $primary;
+    border-left: 1px dashed $primary;
+    border-radius: 0 $half-circle $half-circle 0;
+    text-transform: uppercase;
+    font-size: 14px;
+    white-space: nowrap;
+    color: $primary;
+    transition: background-color 0.2s;
+    position: relative;
+
+    &:hover {
+      background-color: adjust-color($primary, $alpha: -0.8);
+    }
+
+    &::before {
+      content: '';
+      display: block;
+      width: $circle-size;
+      height: $circle-size;
+      border: 1px solid #2f3b97;
+      border-radius: $half-circle;
+      position: absolute;
+      left: -$half-circle;
+      top: -$half-circle;
+      background: white;
+    }
+
+    &::after {
+      content: '';
+      display: block;
+      width: $circle-size;
+      height: $circle-size;
+      border: 1px solid #2f3b97;
+      border-radius: $half-circle;
+      position: absolute;
+      left: -$half-circle;
+      bottom: -$half-circle;
+      background: white;
+    }
+  }
+}

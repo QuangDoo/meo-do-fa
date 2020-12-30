@@ -1,6 +1,5 @@
 import { gql } from '@apollo/client';
-
-import { RewardType } from '../coupons/getUsedCoupons';
+import { RewardType } from 'src/graphql/order/getCounsel';
 
 export type PromotionInfo = {
   reward_type: RewardType;

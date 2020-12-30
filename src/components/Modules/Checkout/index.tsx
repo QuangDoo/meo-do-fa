@@ -17,6 +17,7 @@ import DeliveryInfo from './DeliveryInfo';
 import InvoiceInfo from './InvoiceInfo';
 import InvoiceProducts from './InvoiceProducts';
 import PaymentOption from './PaymentOption';
+import PromoCodes from './PromoCodes';
 import StickySidebar from './StickySidebar';
 
 // Các city, district, ward đều có dạng "name__id"
@@ -66,7 +67,12 @@ const CheckoutPage = () => {
       setCounselData(data.getCounsel);
     },
     onError: (err) => {
-      toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
+      const errorCode = err.graphQLErrors?.[0]?.extensions?.code;
+      toast.error(t(`errors:code_${errorCode}`));
+
+      if (errorCode === 114) {
+        router.push('/cart');
+      }
     },
     fetchPolicy: 'network-only',
     notifyOnNetworkStatusChange: true
@@ -191,7 +197,7 @@ const CheckoutPage = () => {
               <h1 className="h3">{t('checkout:title')}</h1>
             </div>
 
-            <div className="col-md-8">
+            <div className="col-lg-8">
               <div className="mb-4">
                 <DeliveryInfo />
               </div>
@@ -225,9 +231,9 @@ const CheckoutPage = () => {
               </div>
             </div>
 
-            <div className="col-md-4 mb-3">
-              <div className="elevated p-3 mb-4">Hello</div>
-              <StickySidebar counselData={counselData} setCounselData={setCounselData} />
+            <div className="col-lg-4 mb-3">
+              <PromoCodes counselData={counselData} setCounselData={setCounselData} />
+              <StickySidebar counselData={counselData} />
             </div>
           </div>
         </div>
