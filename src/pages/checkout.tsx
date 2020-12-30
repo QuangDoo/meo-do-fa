@@ -31,7 +31,6 @@ Checkout.getInitialProps = async (ctx) => {
 
   if (typeof window !== 'undefined') {
     token = ClientCookies.get('token');
-    console.log('getInitialProps on client');
   } else {
     token = new ServerCookies(ctx.req, ctx.res).get('token');
   }

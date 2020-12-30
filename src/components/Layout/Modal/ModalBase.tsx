@@ -1,11 +1,5 @@
-import { Dialog, makeStyles } from '@material-ui/core';
+import { Dialog, DialogProps, makeStyles } from '@material-ui/core';
 import React from 'react';
-
-export type ModalBaseProps = {
-  open: boolean;
-  onClose: () => void;
-  children: React.ReactNode;
-};
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -14,19 +8,15 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
+export type ModalBaseProps = DialogProps;
+
 const ModalBase = (props: ModalBaseProps): JSX.Element => {
-  const { open, onClose, children } = props;
+  const { children } = props;
 
   const classes = useStyles();
 
   return (
-    <Dialog
-      open={open}
-      onClose={onClose}
-      scroll="body"
-      maxWidth="xs"
-      fullWidth
-      classes={{ paper: classes.root }}>
+    <Dialog {...props} classes={{ paper: classes.root }}>
       {children}
     </Dialog>
   );

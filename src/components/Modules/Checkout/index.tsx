@@ -1,4 +1,4 @@
-import { useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { useTranslation } from 'i18n';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { CREATE_ORDER, CreateOrderData, CreateOrderVars } from 'src/graphql/order/createOrder';
 import { GET_COUNSEL, GetCounselData, OutputCounsel } from 'src/graphql/order/getCounsel';
-import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
+import { GET_ADDRESS_INFO_USER, GetAddressInfoData } from 'src/graphql/user/getAddressInfoUser';
 import useCart from 'src/hooks/useCart';
 import useUser from 'src/hooks/useUser';
 import swal from 'sweetalert';
@@ -65,32 +65,42 @@ const CheckoutPage = (props: Props) => {
 
   const { cart, refetchCart, loading: loadingCart } = useCart();
 
-  const { data, refetch: refetchCounsel } = useQuery<GetCounselData, undefined>(GET_COUNSEL, {
-    onCompleted: (data) => {
-      setCounselData(data.getCounsel);
-    },
-    onError: (err) => {
-      const errorCode = err.graphQLErrors?.[0]?.extensions?.code;
-      toast.error(t(`errors:code_${errorCode}`));
+  const { data: getCounselData, refetch: refetchCounsel } = useQuery<GetCounselData, undefined>(
+    GET_COUNSEL,
+    {
+      onCompleted: (data) => {
+        setCounselData(data.getCounsel);
+      },
+      onError: (err) => {
+        const errorCode = err.graphQLErrors?.[0]?.extensions?.code;
+        toast.error(t(`errors:code_${errorCode}`));
 
-      if (errorCode === 114) {
-        router.push('/cart');
-      }
-    },
-    fetchPolicy: 'network-only',
-    notifyOnNetworkStatusChange: true,
-    context: {
-      headers: {
-        authorization: props.token
+        if (errorCode === 114) {
+          router.push('/cart');
+        }
+      },
+      fetchPolicy: 'network-only',
+      notifyOnNetworkStatusChange: true,
+      context: {
+        headers: {
+          authorization: props.token
+        }
       }
     }
-  });
+  );
+
+  const orderNo = getCounselData?.getCounsel.counsel.orderNo;
 
   useEffect(() => {
     refetchCounsel();
   }, []);
 
-  const orderNo = data?.getCounsel?.counsel?.orderNo;
+  const { data: getAddressInfoUserData } = useQuery<GetAddressInfoData, undefined>(
+    GET_ADDRESS_INFO_USER
+  );
+
+  const deliveryAddresses = getAddressInfoUserData?.getAddressInfoUser.deliveries;
+  const invoiceAddresses = getAddressInfoUserData?.getAddressInfoUser.invoices;
 
   // Form handler with default values
   const methods = useForm<FormInputs>({
@@ -108,31 +118,36 @@ const CheckoutPage = (props: Props) => {
 
   const router = useRouter();
 
-  const [createOrder, { loading: creatingOrder }] = useMutationAuth<
-    CreateOrderData,
-    CreateOrderVars
-  >(CREATE_ORDER, {
-    onCompleted: (data) => {
-      refetchCart();
+  const [createOrder, { loading: creatingOrder }] = useMutation<CreateOrderData, CreateOrderVars>(
+    CREATE_ORDER,
+    {
+      onCompleted: (data) => {
+        refetchCart();
 
-      swal({
-        title: t('checkout:order_success_message', {
-          orderNo: data.createOrder.orderNo
-        }),
-        icon: 'success'
-      }).then(() => {
-        router.push('/');
-      });
-    },
-    onError: (err) => {
-      const errorCode = err.graphQLErrors[0]?.extensions?.code;
-      toast.error(t(`errors:code_${errorCode}`));
+        swal({
+          title: t('checkout:order_success_message', {
+            orderNo: data.createOrder.orderNo
+          }),
+          icon: 'success'
+        }).then(() => {
+          router.push('/');
+        });
+      },
+      onError: (err) => {
+        const errorCode = err.graphQLErrors[0]?.extensions?.code;
+        toast.error(t(`errors:code_${errorCode}`));
 
-      if (errorCode === 114) {
-        router.push('/cart');
+        if (errorCode === 114) {
+          router.push('/cart');
+        }
+      },
+      context: {
+        headers: {
+          authorization: props.token
+        }
       }
     }
-  });
+  );
 
   const onSubmit: SubmitHandler<FormInputs> = (data) => {
     createOrder({
@@ -180,9 +195,7 @@ const CheckoutPage = (props: Props) => {
   };
 
   const onError = (errors) => {
-    const fields = Object.keys(errors);
-
-    toast.error(errors[fields[0]].message);
+    toast.error(errors[Object.keys(errors)[0]].message);
   };
 
   return (
