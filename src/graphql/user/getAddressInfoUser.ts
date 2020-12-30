@@ -5,6 +5,7 @@ export const GET_ADDRESS_INFO_USER = gql`
     getAddressInfoUser {
       deliveries {
         id
+        use
         name
         phone
         email
@@ -15,6 +16,7 @@ export const GET_ADDRESS_INFO_USER = gql`
       }
       invoices {
         id
+        use
         name
         phone
         email
@@ -27,8 +29,9 @@ export const GET_ADDRESS_INFO_USER = gql`
   }
 `;
 
-type DeliveryInfo = {
+export type DeliveryInfo = {
   id: number;
+  use: boolean;
   name: string;
   phone: string;
   email: string;
@@ -38,8 +41,9 @@ type DeliveryInfo = {
   ward: string;
 };
 
-type InvoiceInfo = {
+export type InvoiceInfo = {
   id: number;
+  use: boolean;
   name: string;
   phone: string;
   email: string;

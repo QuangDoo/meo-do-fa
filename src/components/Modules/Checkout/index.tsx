@@ -209,7 +209,7 @@ const CheckoutPage = (props: Props) => {
 
             <div className="col-lg-8">
               <div className="mb-4">
-                <DeliveryInfo />
+                <DeliveryInfo deliveryAddresses={deliveryAddresses} />
               </div>
 
               {/* Payment */}

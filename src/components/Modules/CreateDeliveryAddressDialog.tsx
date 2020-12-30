@@ -1,5 +1,5 @@
 import { useMutation } from '@apollo/client';
-import { Dialog } from '@material-ui/core';
+import { Box, FormControl, Grid, InputLabel, MenuItem, Select, TextField } from '@material-ui/core';
 import { useTranslation } from 'i18n';
 import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -12,13 +12,11 @@ import {
   CreateDeliveryUserVars
 } from 'src/graphql/user/createDeliveryUser';
 import useAddress from 'src/hooks/useAddress';
-import useUser from 'src/hooks/useUser';
 
-import Button from '../Form/Button';
 import InputWithLabel from '../Form/InputWithLabel';
 import SelectWithLabel from '../Form/SelectWithLabel';
-import ModalWithHeader from '../Layout/Modal/ModalWithHeader';
-import InputCard from './Checkout/InputCard';
+import LoadingBackdrop from '../Layout/LoadingBackdrop';
+import MuiDialog from '../Layout/Modal/MuiDialog';
 
 type FormInputs = {
   fullName: string;
@@ -36,9 +34,7 @@ type Props = {
 };
 
 export default function CreateDeliveryAddressDialog(props: Props) {
-  const { t } = useTranslation('checkout');
-
-  const { user } = useUser();
+  const { t } = useTranslation(['checkout', 'createDeliveryAddress']);
 
   const { register, handleSubmit, watch } = useForm();
 
@@ -48,7 +44,7 @@ export default function CreateDeliveryAddressDialog(props: Props) {
     wardId: +watch('ward')?.split('__')[1]
   });
 
-  const [createDeliveryUser, { loading }] = useMutation<
+  const [createDeliveryUser, { loading: creatingDeliveryUser }] = useMutation<
     CreateDeliveryUserData,
     CreateDeliveryUserVars
   >(CREATE_DELIVERY_USER);
@@ -90,70 +86,104 @@ export default function CreateDeliveryAddressDialog(props: Props) {
   };
 
   return (
-    <ModalWithHeader
+    <MuiDialog
       open={props.open}
       onClose={props.onClose}
-      title="Tạo địa chỉ giao hàng"
-      maxWith="md"
-      fullWith>
+      title={t('createDeliveryAddress:dialog_title')}
+      maxWidth="md"
+      fullWidth
+      cancelButton={{
+        label: t('createDeliveryAddress:cancel_button_label'),
+        onClick: props.onClose
+      }}
+      confirmButton={{
+        label: t('createDeliveryAddress:confirm_button_label'),
+        onClick: handleSubmit(onSubmit, onError)
+      }}>
+      <LoadingBackdrop open={creatingDeliveryUser} />
+
       <form onSubmit={handleSubmit(onSubmit, onError)}>
-        <InputWithLabel
-          name="fullName"
-          ref={register({
-            required: t('checkout:name_required') + ''
-          })}
-          label={t('checkout:name_label')}
-          type="text"
-          placeholder={t('checkout:name_placeholder')}
-          required
-        />
-
-        <div className="row">
-          <InputWithLabel
-            name="phone"
-            ref={register({
-              required: t('checkout:phone_required') + '',
-              pattern: {
-                value: viPhoneNumberRegex,
-                message: t('checkout:phone_invalid')
-              }
+        <Box marginBottom={3}>
+          <TextField
+            inputRef={register({
+              required: t('createDeliveryAddress:input_fullName_required') + ''
             })}
-            type="number"
-            label={t('checkout:phone_label')}
-            containerClass="col-sm-4"
-            placeholder={t('checkout:phone_placeholder')}
+            name="fullName"
             required
+            label={t('createDeliveryAddress:input_fullName_label')}
+            fullWidth
+            variant="outlined"
           />
+        </Box>
 
-          <InputWithLabel
-            name="email"
-            ref={register({
-              pattern: {
-                value: emailRegex,
-                message: t('checkout:email_invalid')
-              }
+        <Box marginBottom={3}>
+          <Grid container spacing={3}>
+            <Grid item md={4} xs={12}>
+              <TextField
+                inputRef={register({
+                  required: t('createDeliveryAddress:input_phone_required') + '',
+                  pattern: {
+                    value: viPhoneNumberRegex,
+                    message: t('createDeliveryAddress:input_phone_invalid')
+                  }
+                })}
+                name="phone"
+                required
+                label={t('createDeliveryAddress:input_phone_label')}
+                fullWidth
+                variant="outlined"
+              />
+            </Grid>
+
+            <Grid item md={8} xs={12}>
+              <TextField
+                inputRef={register({
+                  pattern: {
+                    value: emailRegex,
+                    message: t('createDeliveryAddress:input_email_invalid')
+                  }
+                })}
+                name="email"
+                label={t('createDeliveryAddress:input_email_label')}
+                fullWidth
+                variant="outlined"
+              />
+            </Grid>
+          </Grid>
+        </Box>
+
+        <Box marginBottom={3}>
+          <TextField
+            inputRef={register({
+              required: t('createDeliveryAddress:input_street_required') + ''
             })}
-            type="text"
-            label={t('checkout:email_label')}
-            containerClass="col-sm-8"
-            placeholder={t('checkout:email_placeholder')}
+            name="street"
+            label={t('createDeliveryAddress:input_street_label')}
+            fullWidth
+            variant="outlined"
           />
-        </div>
+        </Box>
 
-        <InputWithLabel
-          name="street"
-          ref={register({
-            required: t('checkout:address_required') + ''
-          })}
-          label={
-            <>
-              {t('checkout:address_label')}{' '}
-              <span className="text-muted">{t('checkout:address_instructions')}</span>
-            </>
-          }
-          type="text"
-          required
-        />
+        <Grid container spacing={3}>
+          <Grid item xs={12} md={4}>
+            <Select
+              displayEmpty
+              fullWidth
+              variant="outlined"
+              inputRef={register({
+                required: t('checkout:city_required') + ''
+              })}
+              label={t('checkout:city_label')}>
+              <MenuItem value="">{t('checkout:city_placeholder')}</MenuItem>
+
+              {cities.map((city) => (
+                <MenuItem key={city.id} value={city.name + '__' + city.id}>
+                  {city.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </Grid>
+        </Grid>
 
         <div className="row">
           <SelectWithLabel
@@ -214,11 +244,7 @@ export default function CreateDeliveryAddressDialog(props: Props) {
             ))}
           </SelectWithLabel>
         </div>
-
-        <Button variant="primary" type="submit">
-          Submit
-        </Button>
       </form>
-    </ModalWithHeader>
+    </MuiDialog>
   );
 }

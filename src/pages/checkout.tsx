@@ -31,16 +31,19 @@ Checkout.getInitialProps = async (ctx) => {
 
   if (typeof window !== 'undefined') {
     token = ClientCookies.get('token');
+    if (!token) {
+      console.log('ctx:', ctx);
+    }
   } else {
     token = new ServerCookies(ctx.req, ctx.res).get('token');
-  }
 
-  if (!token) {
-    ctx.res.writeHead(302, {
-      Location: '/'
-    });
+    if (!token) {
+      ctx.res.writeHead(302, {
+        Location: '/'
+      });
 
-    ctx.res.end();
+      ctx.res.end();
+    }
   }
 
   return {

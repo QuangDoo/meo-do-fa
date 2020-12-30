@@ -1,6 +1,6 @@
 import { DialogContent, DialogTitle, IconButton, makeStyles, Typography } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
-import React, { FC } from 'react';
+import React from 'react';
 import ModalBase, { ModalBaseProps } from 'src/components/Layout/Modal/ModalBase';
 
 type Props = ModalBaseProps & {
@@ -9,6 +9,8 @@ type Props = ModalBaseProps & {
 
   // Additional classname for modal content container
   className?: string;
+
+  onClose: () => void;
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -23,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const ModalWithHeader: FC<Props> = (props) => {
+const ModalWithHeader = (props: Props) => {
   const { children, title, className, onClose } = props;
 
   const classes = useStyles();
@@ -37,7 +39,7 @@ const ModalWithHeader: FC<Props> = (props) => {
         }}>
         <Typography variant="h6">{title}</Typography>
         {onClose ? (
-          <IconButton aria-label="close" onClick={onClose} size="small">
+          <IconButton onClick={onClose} size="small">
             <CloseIcon />
           </IconButton>
         ) : null}
