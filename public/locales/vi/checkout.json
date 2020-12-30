@@ -46,7 +46,7 @@
   "warning_1": "Medofa có thể hủy đơn hàng của bạn nếu chênh lệch hơn 5% giá trị sản phẩm.",
   "warning_2": "Số lượng sản phẩm khi giao có thể không đảm bảo đúng nhu cầu ban đầu tùy thuộc vào nhà cung cấp.",
   "confirm_checkout_title": "Đơn hàng",
-  "confirm_checkout_quantity": "{{quantity}} sản phẩm",
+  "confirm_checkout_quantity": "{{count}} sản phẩm",
   "confirm_checkout_edit": "Sửa",
   "price_provisional_sums": "Tạm tính",
   "price_shipping_fee": "Phí vận chuyển",
@@ -64,7 +64,7 @@
   "apply_coupon_popup_title": "Áp dụng mã khuyến mãi",
   "apply_coupon_input_label": "Nhập mã",
   "apply_coupon_confirm_btn": "Áp dụng",
-  "unapply_coupon_btn": "Bỏ áp dụng",
+  "unapply_coupon_btn": "Bỏ chọn",
   "apply_coupon_success": "Cập nhật mã khuyến mãi thành công",
   "days": "ngày",
   "hours": "giờ",
@@ -73,7 +73,9 @@
   "reward_type_discount": "Giảm giá",
   "reward_type_product": "Quà tặng",
   "coupon_code_required": "Hãy nhập mã giảm giá",
-  "list_products_have_invoice":"Danh sách sản phẩm có hóa đơn",
-  "quantity":"Số lượng"
+  "list_products_have_invoice": "Danh sách sản phẩm có hóa đơn",
+  "quantity": "Số lượng",
 
+  "promo_codes_title": "Mã khuyến mãi",
+  "choose_or_input_promo_code": "Chọn hoặc nhập mã khuyến mãi"
 }

@@ -119,6 +119,9 @@ const useStyles = makeStyles((materialTheme) => ({
   },
   textAlignLeft: {
     textAlign: 'left'
+  },
+  stepIconCancel: {
+    background: 'linear-gradient(102.04deg, #c31e1e 0%, #f00 100%)'
   }
 }));
 
@@ -149,6 +152,14 @@ const CustomStepIcon = (props: StepIconProps) => {
       {icon}
     </div>
   );
+};
+
+const CustomStepCancel = (props: StepIconProps) => {
+  const { active, completed, icon } = props;
+
+  const classes = useStyles();
+
+  return <div className={clsx(classes.stepIconRoot, classes.stepIconCancel)}>{icon}</div>;
 };
 
 const CustomStepConnector = (props: StepConnectorProps) => {
@@ -241,25 +252,6 @@ const OrderDetails = () => {
 
   const [activeStep, setActiveStep] = useState(-1);
 
-  const getActiveStep = (flag) => {
-    switch (flag) {
-      case 10:
-        return setActiveStep(0);
-      case 20:
-        return setActiveStep(1);
-      case 25:
-        return setActiveStep(-1);
-      case 30:
-        return setActiveStep(2);
-      case 40:
-        return setActiveStep(3);
-      case 80:
-        return setActiveStep(4);
-      default:
-        return setActiveStep(-1);
-    }
-  };
-
   const steps = [
     {
       icon: <Receipt />,
@@ -295,13 +287,7 @@ const OrderDetails = () => {
 
     const flagSteps = [10, 20, 30, 40, 80];
 
-    // orderDetail?.getOrderDetail?.flag === 10 && setActiveStep(0);
-    // orderDetail?.getOrderDetail?.flag === 20 && setActiveStep(1);
-    // orderDetail?.getOrderDetail?.flag === 30 && setActiveStep(2);
-    // orderDetail?.getOrderDetail?.flag === 40 && setActiveStep(3);
-    // orderDetail?.getOrderDetail?.flag === 80 && setActiveStep(4);
-
-    setActiveStep(flagSteps.indexOf(orderDetail.getOrderDetail.flag));
+    setActiveStep(flagSteps.indexOf(orderDetail?.getOrderDetail?.flag));
   }, [orderDetail]);
 
   const onCancelClick = () => {
@@ -311,10 +297,6 @@ const OrderDetails = () => {
     }
     setOpen(true);
   };
-
-  useEffect(() => {
-    orderDetail?.getOrderDetail && getActiveStep(orderDetail?.getOrderDetail?.flag);
-  }, [orderDetail]);
 
   const { user } = useUser();
 
@@ -348,7 +330,7 @@ const OrderDetails = () => {
                 connector={<CustomStepConnector />}>
                 {orderDetail?.getOrderDetail?.flag === 25 && (
                   <Step>
-                    <StepLabel icon={<Receipt />} StepIconComponent={CustomStepIcon} error>
+                    <StepLabel icon={<Receipt />} StepIconComponent={CustomStepCancel} error>
                       {t('myOrders:canceled')}
                     </StepLabel>
                   </Step>
@@ -378,47 +360,50 @@ const OrderDetails = () => {
                       )}
                   </strong>
                 </Typography>
-                {activeStep > 2 ? (
-                  <Link
-                    href={{
-                      pathname: '/feedback',
-                      query: {
-                        orderId: orderDetail?.getOrderDetail?.name,
-                        name: user?.name,
-                        phone: user?.phone
-                      }
-                    }}>
-                    <Button size="small" startIcon={<Sms />} variant="outlined" color="primary">
-                      {t('myOrders:report')}
+                {
+                  // activeStep > 2 ? (
+                  //   <Link
+                  //     href={{
+                  //       pathname: '/feedback',
+                  //       query: {
+                  //         orderId: orderDetail?.getOrderDetail?.name,
+                  //         name: user?.name,
+                  //         phone: user?.phone
+                  //       }
+                  //     }}>
+                  //     <Button size="small" startIcon={<Sms />} variant="outlined" color="primary">
+                  //       {t('myOrders:report')}
+                  //     </Button>
+                  //   </Link>
+                  // ) :
+                  orderDetail?.getOrderDetail?.flag === 25 ? (
+                    <Button
+                      style={{
+                        color: 'red',
+                        borderColor: 'red'
+                      }}
+                      size="small"
+                      startIcon={<DeleteForeverIcon />}
+                      variant="outlined"
+                      color="inherit"
+                      disabled>
+                      {t('myOrders:canceled')}
                     </Button>
-                  </Link>
-                ) : orderDetail?.getOrderDetail?.flag === 25 ? (
-                  <Button
-                    style={{
-                      color: 'red',
-                      borderColor: 'red'
-                    }}
-                    size="small"
-                    startIcon={<DeleteForeverIcon />}
-                    variant="outlined"
-                    color="inherit"
-                    disabled>
-                    {t('myOrders:canceled')}
-                  </Button>
-                ) : (
-                  <Button
-                    size="small"
-                    startIcon={<DeleteForeverIcon />}
-                    variant="outlined"
-                    onClick={onCancelClick}
-                    color="secondary">
-                    {t('myOrders:cancel_the_order')}
-                  </Button>
-                )}
+                  ) : (
+                    <Button
+                      size="small"
+                      startIcon={<DeleteForeverIcon />}
+                      variant="outlined"
+                      onClick={onCancelClick}
+                      color="secondary">
+                      {t('myOrders:cancel_the_order')}
+                    </Button>
+                  )
+                }
                 <ConfirmCancelOrder
                   open={open}
                   onClose={() => setOpen(false)}
-                  orderNo={orderDetail?.getOrderDetail.name}
+                  orderNo={orderDetail?.getOrderDetail?.name}
                   callBack={() => refetch()}
                 />
               </Box>
@@ -470,7 +455,7 @@ const OrderDetails = () => {
 
           <Grid item xs={12}>
             <CustomCard>
-              <TextWithLabel label={t('myOrders:note')} text={orderDetail?.getOrderDetail.note} />
+              <TextWithLabel label={t('myOrders:note')} text={orderDetail?.getOrderDetail?.note} />
             </CustomCard>
           </Grid>
 
@@ -487,7 +472,7 @@ const OrderDetails = () => {
                 </TableHead>
 
                 <TableBody>
-                  {orderDetail?.getOrderDetail.order_lines.map((product) => (
+                  {orderDetail?.getOrderDetail?.order_lines?.map((product) => (
                     <TableRow key={product.id}>
                       <CustomBodyCell textAlign="left">
                         <Link href={`/products/${product.product.slug}`}>
@@ -513,7 +498,7 @@ const OrderDetails = () => {
                     <TableCell colSpan={4}>
                       <Typography variant="h5" align="right">
                         {t('myOrders:total')}{' '}
-                        <PriceText price={orderDetail?.getOrderDetail.amount_total} /> đ
+                        <PriceText price={orderDetail?.getOrderDetail?.amount_total} /> đ
                       </Typography>
                     </TableCell>
                   </TableRow>

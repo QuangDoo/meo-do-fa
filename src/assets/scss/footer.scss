@@ -60,7 +60,7 @@
   border-radius: 50%;
   width: 30px;
   height: 30px;
-  display: flex;
+  display: flex !important;
   align-items: center;
   justify-content: center;
 }
@@ -150,3 +150,16 @@
     font-size: 12px;
   }
 }
+.back-to-top {
+  right: 32px;
+}
+
+.back-to-top.show {
+  bottom: 6rem;
+  width: 2.3em;
+  height: 2.3em;
+}
+
+// .theme-background-color {
+//   background-color: $secondary !important;
+// }

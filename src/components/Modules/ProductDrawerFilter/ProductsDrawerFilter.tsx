@@ -16,6 +16,8 @@ type Props = {
 
 const ProductsDrawerFilter = (props: Props) => {
   const { categories, manufacturers } = props;
+  const [priceFrom, setPriceFrom] = useState('');
+  const [priceTo, setPriceTo] = useState('');
 
   const { t } = useTranslation(['productsSidebar']);
 
@@ -35,6 +37,19 @@ const ProductsDrawerFilter = (props: Props) => {
       undefined,
       { shallow: true }
     );
+  };
+
+  const handlePriceRangeFilter = (e) => {
+    e.preventDefault();
+
+    router.push({
+      pathname: router.pathname,
+      query: {
+        ...router.query,
+        priceFrom: priceFrom,
+        priceTo: priceTo
+      }
+    });
   };
 
   return (
@@ -77,6 +92,45 @@ const ProductsDrawerFilter = (props: Props) => {
               />
             </div>
           </Drawer>
+        </div>
+      </div>
+      <div className="row justify-content-between align-items-center my-3">
+        <div className="col-xs price-filter">
+          <form onSubmit={handlePriceRangeFilter}>
+            <div className="row justify-content-between align-items-center">
+              <div>{t('productsSidebar:price_range')}</div>
+              <div className="d-flex align-items-center ml-2">
+                <div>
+                  <input
+                    name="price_from"
+                    type="number"
+                    min={0}
+                    placeholder={t('productsSidebar:price_from')}
+                    size={5}
+                    value={priceFrom}
+                    onChange={(e) => setPriceFrom(e.target.value)}
+                  />
+                </div>
+                &nbsp;-&nbsp;
+                <div>
+                  <input
+                    name="price_to"
+                    type="number"
+                    min={0}
+                    placeholder={t('productsSidebar:price_to')}
+                    size={5}
+                    value={priceTo}
+                    onChange={(e) => setPriceTo(e.target.value)}
+                  />
+                </div>
+              </div>
+              <div className="ml-2">
+                <button className="btn btn-primary" type="submit">
+                  {t('productsSidebar:apply')}
+                </button>
+              </div>
+            </div>
+          </form>
         </div>
       </div>
       <div className="row justify-content-between align-items-center">

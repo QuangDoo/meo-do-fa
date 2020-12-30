@@ -30,25 +30,21 @@ const ConfirmDeleteModal: FC<Props> = (props) => {
       <div className="modal-content">
         <div className="modal-body">
           <div className="swal2-header">
-            <div className="swal2-icon swal2-warning swal2-icon-show" style={{ display: 'flex' }}>
+            <div className="swal2-icon swal2-warning swal2-icon-show d-flex">
               <div className="swal2-icon-content">!</div>
             </div>
-            <div className="swal2-icon swal2-info" style={{ display: 'none' }} />
-            <div className="swal2-icon swal2-success" style={{ display: 'none' }} />
-            <img className="swal2-image" style={{ display: 'none' }} alt="" />
-            <h2 className="swal2-title" id="swal2-title" style={{ display: 'flex' }}>
+            <h2 className="swal2-title d-flex" id="swal2-title">
               {t('cart:remove_title')}
             </h2>
             <button
               type="button"
-              className="swal2-close"
+              className="swal2-close d-flex"
               aria-label="Close this dialog"
-              style={{ display: 'flex' }}
               onClick={onClose}>
               ×
             </button>
           </div>
-          <div className="cart-item-remove-dialog" id="cart-item-remove-dialog-3206540">
+          <div className="cart-item-remove-dialog">
             <div className="container-fluid">
               <div className="swal2-content">{t('cart:remove_confirm')}</div>
               <div className="elevated p-3 d-flex">

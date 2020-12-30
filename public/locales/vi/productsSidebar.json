@@ -10,5 +10,9 @@
     "manufacturer": "Nhà sản xuất",
     "see_more": "Xem thêm",
     "filter": "Lọc",
-    "search": "Tìm kiếm"
+    "search": "Tìm kiếm",
+    "price_range": "Khoảng giá",
+    "price_from": "Từ",
+    "price_to": "Đến",
+    "apply": "Áp dụng"
 }

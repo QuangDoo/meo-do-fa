@@ -1,32 +1,23 @@
-import { useQuery } from '@apollo/client';
 import { useTranslation } from 'i18n';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
-import { APPLY_PAYMENT, ApplyPaymentData, ApplyPaymentVars } from 'src/graphql/order/applyPayment';
 import { CREATE_ORDER, CreateOrderData, CreateOrderVars } from 'src/graphql/order/createOrder';
 import { GET_COUNSEL, GetCounselData, OutputCounsel } from 'src/graphql/order/getCounsel';
-import {
-  GET_PAYMENT_DELIVERY,
-  GetPaymentAndDeliveryData
-} from 'src/graphql/paymentAndDelivery/paymentAndDelivery,query';
-import { GET_INVOICE_COUNSEL } from 'src/graphql/product/getProductInvoice.query';
-import useAddress from 'src/hooks/useAddress';
 import { useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
 import useCart from 'src/hooks/useCart';
-import useDidUpdateEffect from 'src/hooks/useDidUpdate';
-import useInvoiceCounse from 'src/hooks/useInvoiceCounsel';
 import useUser from 'src/hooks/useUser';
 import swal from 'sweetalert';
 
-import ProductInvoice from '../ProductInvoice/productInvoice';
 import Agreement from './Agreement';
 import CustomerNotes from './CustomerNotes';
 import DeliveryInfo from './DeliveryInfo';
 import InvoiceInfo from './InvoiceInfo';
+import InvoiceProducts from './InvoiceProducts';
 import PaymentOption from './PaymentOption';
+import PromoCodes from './PromoCodes';
 import StickySidebar from './StickySidebar';
 
 // Các city, district, ward đều có dạng "name__id"
@@ -63,37 +54,9 @@ type FormInputs = {
 const CheckoutPage = () => {
   const { t } = useTranslation(['checkout', 'errors']);
 
-  // User
-  const { user, loading: loadingUser } = useUser();
+  const { loading: loadingUser } = useUser();
 
   const [counselData, setCounselData] = useState<OutputCounsel>();
-
-  // When user data is loaded
-  useEffect(() => {
-    if (!user) return;
-
-    if (user.contact_address) {
-      const { street } = user.contact_address;
-
-      setValue('deliveryStreet', street);
-    }
-
-    setValue('deliveryName', user.name);
-    setValue('deliveryPhone', user.phone);
-    setValue('deliveryEmail', user.email);
-  }, [user]);
-
-  // Payment & Delivery options
-  const { data: paymentAndDeliveryData } = useQuery<GetPaymentAndDeliveryData, undefined>(
-    GET_PAYMENT_DELIVERY,
-    {
-      onError: (err) => {
-        toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
-      }
-    }
-  );
-
-  const paymentMethods = paymentAndDeliveryData?.getPaymentAndDeliveryMethod.paymentMethods || [];
 
   // Counsel
   const { refetch: refetchCounsel, loading: loadingCounsel } = useQueryAuth<
@@ -104,34 +67,27 @@ const CheckoutPage = () => {
       setCounselData(data.getCounsel);
     },
     onError: (err) => {
-      toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
+      const errorCode = err.graphQLErrors?.[0]?.extensions?.code;
+      toast.error(t(`errors:code_${errorCode}`));
+
+      if (errorCode === 114) {
+        router.push('/cart');
+      }
     },
     fetchPolicy: 'network-only',
     notifyOnNetworkStatusChange: true
   });
 
-  // get product list invoice
-  const { productsInvoice, errorProductInvoice } = useInvoiceCounse({
-    orderNo: counselData?.counsel.orderNo
-  });
-  // const {
-  //   data: dataInvoiceCounsel,
-  //   loading,
-  //   error,
-  //   refetch: refetchProductInvoice
-  // } = useQueryAuth(GET_INVOICE_COUNSEL, { variables: { orderNo: counselData?.counsel?.orderNo } });
-
-  // console.log('dataInvoiceCounsel', dataInvoiceCounsel);
-
   useEffect(() => {
     refetchCounsel();
   }, []);
 
+  const orderNo = counselData?.counsel?.orderNo;
+
   // Form handler with default values
-  const { register, handleSubmit, watch, setValue } = useForm<FormInputs>({
+  const methods = useForm<FormInputs>({
     defaultValues: {
-      deliveryMethodId: '2',
-      paymentMethodId: '2',
+      paymentMethodId: '1',
       deliverySaveInfo: true,
       invoiceSaveInfo: true,
       customerNotes: '',
@@ -140,40 +96,7 @@ const CheckoutPage = () => {
     }
   });
 
-  // Update price on payment option change
-  const paymentOption = watch('paymentOption');
-
-  const [applyPayment] = useMutationAuth<ApplyPaymentData, ApplyPaymentVars>(APPLY_PAYMENT, {
-    onCompleted: (data) => {
-      setCounselData(data.applyPayment);
-    },
-    onError: (err) => {
-      toast.error(t(`errors:code_${err.graphQLErrors[0]?.extensions?.code}`));
-    }
-  });
-
-  useDidUpdateEffect(() => {
-    applyPayment({
-      variables: {
-        orderNo: counselData.counsel.orderNo,
-        payment_method: +paymentOption
-      }
-    });
-  }, [paymentOption]);
-
-  const { cities: deliveryCities, districts: deliveryDistricts, wards: deliveryWards } = useAddress(
-    {
-      cityId: +watch('deliveryCity')?.split('__')[1],
-      districtId: +watch('deliveryDistrict')?.split('__')[1],
-      wardId: +watch('deliveryWard')?.split('__')[1]
-    }
-  );
-
-  const { cities: invoiceCities, districts: invoiceDistricts, wards: invoiceWards } = useAddress({
-    cityId: +watch('invoiceCity')?.split('__')[1],
-    districtId: +watch('invoiceDistrict')?.split('__')[1],
-    wardId: +watch('invoiceWard')?.split('__')[1]
-  });
+  const { register, handleSubmit } = methods;
 
   const router = useRouter();
 
@@ -195,8 +118,13 @@ const CheckoutPage = () => {
         router.push('/');
       });
     },
-    onError: (error) => {
-      toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
+    onError: (err) => {
+      const errorCode = err.graphQLErrors[0]?.extensions?.code;
+      toast.error(t(`errors:code_${errorCode}`));
+
+      if (errorCode === 114) {
+        router.push('/cart');
+      }
     }
   });
 
@@ -204,7 +132,7 @@ const CheckoutPage = () => {
     createOrder({
       variables: {
         inputs: {
-          orderNo: counselData?.counsel.orderNo,
+          orderNo: orderNo,
           customer: {
             fullName: data.deliveryName,
             phone: data.deliveryPhone,
@@ -261,64 +189,58 @@ const CheckoutPage = () => {
   }
 
   return (
-    <form className="checkout__form" onSubmit={handleSubmit(onSubmit, onError)}>
-      <div className="checkout container py-5">
-        <div className="row">
-          <div className="col-12 mb-3">
-            <h1 className="h3">{t('checkout:title')}</h1>
-          </div>
-
-          <div className="col-md-8">
-            <div className="mb-4">
-              <DeliveryInfo
-                register={register}
-                cities={deliveryCities}
-                districts={deliveryDistricts}
-                wards={deliveryWards}
-              />
+    <FormProvider {...methods}>
+      <form className="checkout__form" onSubmit={handleSubmit(onSubmit, onError)}>
+        <div className="checkout container py-5">
+          <div className="row">
+            <div className="col-12 mb-3">
+              <h1 className="h3">{t('checkout:title')}</h1>
             </div>
 
-            {/* <div className="mb-4">
-              <DeliveryOption register={register} deliveryMethods={deliveryMethods} />
-            </div> */}
-
-            {/* Payment */}
-            <div className="mb-4">
-              <PaymentOption register={register} paymentMethods={paymentMethods} />
-            </div>
-
-            {/* Notes */}
-            <div className="mb-4">
-              <CustomerNotes register={register} />
-            </div>
-
-            {/* Invoice */}
-            {cart?.getCart.carts.some((cart) => cart.product.is_quick_invoice) && (
+            <div className="col-lg-8">
               <div className="mb-4">
-                <InvoiceInfo
-                  register={register}
-                  cities={invoiceCities}
-                  districts={invoiceDistricts}
-                  wards={invoiceWards}
-                />
-                <ProductInvoice register={register} arrayProducts={productsInvoice} />
+                <DeliveryInfo />
               </div>
-            )}
 
-            {/* Agreement */}
-            <div className="form-group">
-              <Agreement register={register} />
+              {/* Payment */}
+              <div className="mb-4">
+                <PaymentOption orderNo={orderNo} setCounselData={setCounselData} />
+              </div>
+
+              {/* Notes */}
+              <div className="mb-4">
+                <CustomerNotes />
+              </div>
+
+              {/* Invoice */}
+              {cart?.getCart.carts.some((cart) => cart.product.is_quick_invoice) && (
+                <>
+                  <div className="mb-4">
+                    <InvoiceInfo />
+                  </div>
+
+                  <div className="mb-4">
+                    <InvoiceProducts orderNo={orderNo} />
+                  </div>
+                </>
+              )}
+
+              {/* Agreement */}
+              <div className="form-group">
+                <Agreement register={register} />
+              </div>
             </div>
-          </div>
 
-          <div className="col-md-4 mb-3">
-            <StickySidebar counselData={counselData} setCounselData={setCounselData} />
+            <div className="col-lg-4 mb-3">
+              <PromoCodes counselData={counselData} setCounselData={setCounselData} />
+              <StickySidebar counselData={counselData} />
+            </div>
           </div>
         </div>
-      </div>
 
-      <LoadingBackdrop open={loadingCounsel || creatingOrder || loadingUser || loadingCart} />
-    </form>
+        <LoadingBackdrop open={creatingOrder || loadingCart || loadingUser} />
+      </form>
+    </FormProvider>
   );
 };
 

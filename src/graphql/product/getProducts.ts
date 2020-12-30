@@ -1,5 +1,32 @@
 import { gql } from '@apollo/client';
 
+export const productCardQueryProps = `
+  id
+  name
+  price
+  old_price
+  list_price
+  sale_price
+  discount_percentage
+  image_128
+  image_512
+  image_256
+  packing_unit
+  is_new
+  is_quick_invoice
+  is_vn
+  is_exclusive
+  slug
+  categories {
+    id
+    name
+  }
+  manufacturer {
+    id
+    short_name
+  }
+`;
+
 export type Product = {
   id: number;
   name: string;
@@ -37,7 +64,8 @@ export type ProductTag =
   | 'change-style'
   | 'close-date'
   | 'use-vietnamese'
-  | 'new';
+  | 'new'
+  | 'is_quick_order';
 
 export type GetProductsData = {
   getProductByConditions: {
@@ -66,30 +94,7 @@ export const GET_PRODUCTS = gql`
   query getProducts($page: Int!, $pageSize: Int!, $type: String, $condition: Condition) {
     getProductByConditions(page: $page, pageSize: $pageSize, type: $type, condition: $condition) {
       Products {
-        id
-        name
-        price
-        old_price
-        list_price
-        sale_price
-        discount_percentage
-        image_128
-        image_512
-        image_256
-        packing_unit
-        is_new
-        is_quick_invoice
-        is_vn
-        is_exclusive
-        slug
-        categories {
-          id
-          name
-        }
-        manufacturer {
-          id
-          name
-        }
+        ${productCardQueryProps}
       }
       total
     }

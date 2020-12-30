@@ -4,7 +4,8 @@ import clsx from 'clsx';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import { Category } from 'src/graphql/category/category.query';
 import { Manufacturer } from 'src/graphql/manufacturers/manufacturers.query';
 
@@ -18,6 +19,11 @@ type Props = {
 };
 
 const ProductsSidebarFilter = (props: Props) => {
+  const [categorySubSearch, setCategorySubSearch] = useState([]);
+
+  const [priceFrom, setPriceFrom] = useState('');
+  const [priceTo, setPriceTo] = useState('');
+
   const { categories, manufacturers } = props;
   const { t } = useTranslation(['productsSidebar, searchBar']);
   const router = useRouter();
@@ -36,6 +42,19 @@ const ProductsSidebarFilter = (props: Props) => {
     );
   };
 
+  const handlePriceRangeFilter = (e) => {
+    e.preventDefault();
+
+    router.push({
+      pathname: router.pathname,
+      query: {
+        ...router.query,
+        priceFrom: priceFrom,
+        priceTo: priceTo
+      }
+    });
+  };
+
   const handleManufacturersSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     router.push({
       pathname: '/manufacturers'
@@ -49,6 +68,15 @@ const ProductsSidebarFilter = (props: Props) => {
     e.preventDefault();
     setValue(e.target.value);
   };
+
+  const categoriesSearch = [...categories]
+    .slice()
+    .sort((a, b) => a.name.localeCompare(b.name))
+    .filter(({ name, id, categorySub }) => {
+      if (name.toLocaleLowerCase().includes(value.toLocaleLowerCase())) {
+        return [name, id, categorySub];
+      }
+    });
 
   return (
     <aside className="text-capitalize w-100">
@@ -74,19 +102,55 @@ const ProductsSidebarFilter = (props: Props) => {
           {/* <option value="01">Sản phẩm mới</option> */}
           {/* <option value="02">Bán chạy nhất</option> */}
           {/* <option value="03">Phù hợp nhất</option> */}
-          <option value="04">{t('price_high_to_low')}</option>
-          <option value="05">{t('price_low_to_high')}</option>
-          <option value="06">{t('name_z_to_a')}</option>
+          <option value="04">{t('productsSidebar:price_high_to_low')}</option>
+          <option value="05">{t('productsSidebar:price_low_to_high')}</option>
+          <option value="06">{t('productsSidebar:name_z_to_a')}</option>
           <option value="07" selected>
             {t('productsSidebar:name_a_to_z')}
           </option>
         </Select>
+
+        <hr className="hr my-3" />
+
+        <div className="price-filter">
+          <form onSubmit={handlePriceRangeFilter}>
+            <p>{t('productsSidebar:price_range')}</p>
+            <div className="d-flex align-items-center mb-3">
+              <div>
+                <input
+                  name="price_from"
+                  type="number"
+                  min={0}
+                  placeholder={t('productsSidebar:price_from')}
+                  size={5}
+                  value={priceFrom}
+                  onChange={(e) => setPriceFrom(e.target.value)}
+                />
+              </div>
+              &nbsp;-&nbsp;
+              <div>
+                <input
+                  name="price_to"
+                  type="number"
+                  min={0}
+                  placeholder={t('productsSidebar:price_to')}
+                  size={5}
+                  value={priceTo}
+                  onChange={(e) => setPriceTo(e.target.value)}
+                />
+              </div>
+            </div>
+            <button className="btn btn-primary" type="submit">
+              {t('productsSidebar:apply')}
+            </button>
+          </form>
+        </div>
       </div>
 
       <hr className="hr my-3" />
 
       <Dropdown label={t('productsSidebar:category')}>
-        {/* <form autoComplete="off" acceptCharset="UTF-8">
+        <form autoComplete="off" acceptCharset="UTF-8">
           <div className="input-group form__input-group mb-3">
             <i className="fas fa-search form__input-icon" />
             <input
@@ -97,7 +161,7 @@ const ProductsSidebarFilter = (props: Props) => {
               onChange={onValueChange}
             />
           </div>
-        </form> */}
+        </form>
         <div className="mb-2">
           <Link href="/products">
             <a className={clsx('products__filter-category', !router.query.category && 'active')}>
@@ -105,35 +169,87 @@ const ProductsSidebarFilter = (props: Props) => {
             </a>
           </Link>
         </div>
-        {categories
-          .slice()
-          .sort((a, b) => a.name.localeCompare(b.name))
-          .map(({ name, id, categorySub }) => (
-            <div key={id} className="mb-2">
-              <Link href={`/products?category=${id}`}>
-                <Dropdown initialShow={false} label={name}>
-                  <div className="mb-3">
-                    {categorySub
-                      .slice()
-                      .sort((a, b) => a.name.localeCompare(b.name))
-                      .map(({ name, id }) => (
-                        <div key={id} className="ml-2 mb-1">
+        {value
+          ? categoriesSearch
+              .slice()
+              .sort((a, b) => a.name.localeCompare(b.name))
+              .map(({ name, id, categorySub }) => (
+                <div key={id} className="mb-2">
+                  <Link href={`/products?category=${id}`}>
+                    <Dropdown initialShow={false} label={name}>
+                      <div className="mb-3">
+                        <div className="ml-2 mb-1">
                           <Link href={`/products?category=${id}`}>
                             <a
                               className={clsx(
                                 'products__filter-category',
-                                router.query.category === id.toString() && 'active'
+                                !router.query.category && 'active'
                               )}>
-                              {name}
+                              {t('productsSidebar:all')}
                             </a>
                           </Link>
                         </div>
-                      ))}
-                  </div>
-                </Dropdown>
-              </Link>
-            </div>
-          ))}
+                        {categorySub
+                          .slice()
+                          .sort((a, b) => a.name.localeCompare(b.name))
+                          .map(({ name, id }) => (
+                            <div key={id} className="ml-2 mb-1">
+                              <Link href={`/products?category=${id}`}>
+                                <a
+                                  className={clsx(
+                                    'products__filter-category',
+                                    router.query.category === id.toString() && 'active'
+                                  )}>
+                                  {name}
+                                </a>
+                              </Link>
+                            </div>
+                          ))}
+                      </div>
+                    </Dropdown>
+                  </Link>
+                </div>
+              ))
+          : categories
+              .slice()
+              .sort((a, b) => a.name.localeCompare(b.name))
+              .map(({ name, id, categorySub }) => (
+                <div key={id} className="mb-2">
+                  <Link href={`/products?category=${id}`}>
+                    <Dropdown initialShow={false} label={name}>
+                      <div className="mb-3">
+                        <div className="ml-2 mb-1">
+                          <Link href={`/products?category=${id}`}>
+                            <a
+                              className={clsx(
+                                'products__filter-category',
+                                !router.query.category && 'active'
+                              )}>
+                              {t('productsSidebar:all')}
+                            </a>
+                          </Link>
+                        </div>
+                        {categorySub
+                          .slice()
+                          .sort((a, b) => a.name.localeCompare(b.name))
+                          .map(({ name, id }) => (
+                            <div key={id} className="ml-2 mb-1">
+                              <Link href={`/products?category=${id}`}>
+                                <a
+                                  className={clsx(
+                                    'products__filter-category',
+                                    router.query.category === id.toString() && 'active'
+                                  )}>
+                                  {name}
+                                </a>
+                              </Link>
+                            </div>
+                          ))}
+                      </div>
+                    </Dropdown>
+                  </Link>
+                </div>
+              ))}
       </Dropdown>
 
       <hr className="hr my-3" />
@@ -141,7 +257,14 @@ const ProductsSidebarFilter = (props: Props) => {
       <Dropdown label={t('productsSidebar:manufacturer')}>
         <form onSubmit={handleManufacturersSubmit} autoComplete="off" acceptCharset="UTF-8">
           <div className="input-group form__input-group mb-3">
-            <i className="fas fa-search form__input-icon" />
+            <button
+              onClick={() =>
+                router.push({
+                  pathname: '/manufacturers'
+                })
+              }>
+              <i className="fas fa-search form__input-icon" />
+            </button>
 
             <input
               type="search"

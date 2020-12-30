@@ -14,8 +14,8 @@ import { Strength } from './Strength';
 
 const bannerImages = [
   '/assets/images/drugstore1.jpg',
-  '/assets/images/drugstore2.jpg',
-  '/assets/images/drugstore3.jpg'
+  '/assets/images/drugstore2.jpg'
+  // '/assets/images/drugstore3.jpg'
 ];
 
 const Home = ({ dealsOfTheDayData, bestSellingData, promotionProductsData, newProductsData }) => {

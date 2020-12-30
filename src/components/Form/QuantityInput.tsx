@@ -62,7 +62,13 @@ function QuantityInput(props: Props) {
     }
   );
 
-  const handleUpdate = (prevQuantity: number, newQuantity: number) => {
+  const handleUpdate = (
+    prevQuantity: number,
+    newQuantity: number,
+    price: number = productPrice,
+    id: number = productId,
+    name: string = productName
+  ) => {
     if (newQuantity === prevQuantity) {
       return;
     }
@@ -74,9 +80,9 @@ function QuantityInput(props: Props) {
 
     addToCart({
       variables: {
-        price: productPrice,
-        productId: productId,
-        productName: productName,
+        price: price,
+        productId: id,
+        productName: name,
         quantity: newQuantity
       }
     });
@@ -105,13 +111,13 @@ function QuantityInput(props: Props) {
   const handlePlusClick = () => {
     const newQuantity = quantity + 1;
     setQuantity(newQuantity);
-    debouncedHandleUpdate(quantityInCart, newQuantity);
+    debouncedHandleUpdate(quantityInCart, newQuantity, productPrice, productId, productName);
   };
 
   const handleMinusClick = () => {
     const newQuantity = Math.max(quantity - 1, 0);
     setQuantity(newQuantity);
-    debouncedHandleUpdate(quantityInCart, newQuantity);
+    debouncedHandleUpdate(quantityInCart, newQuantity, productPrice, productId, productName);
   };
 
   const handleCloseModal = () => {
