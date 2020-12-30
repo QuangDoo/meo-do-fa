@@ -1,5 +1,5 @@
 import { useMutation } from '@apollo/client';
-import { Box, FormControl, Grid, InputLabel, MenuItem, Select, TextField } from '@material-ui/core';
+import { Box, Grid, MenuItem, Select, TextField } from '@material-ui/core';
 import { useTranslation } from 'i18n';
 import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -13,7 +13,6 @@ import {
 } from 'src/graphql/user/createDeliveryUser';
 import useAddress from 'src/hooks/useAddress';
 
-import InputWithLabel from '../Form/InputWithLabel';
 import SelectWithLabel from '../Form/SelectWithLabel';
 import LoadingBackdrop from '../Layout/LoadingBackdrop';
 import MuiDialog from '../Layout/Modal/MuiDialog';
@@ -106,7 +105,7 @@ export default function CreateDeliveryAddressDialog(props: Props) {
         <Box marginBottom={3}>
           <TextField
             inputRef={register({
-              required: t('createDeliveryAddress:input_fullName_required') + ''
+              required: t('createDeliveryAddress:input_fullName_required') as string
             })}
             name="fullName"
             required
@@ -121,7 +120,7 @@ export default function CreateDeliveryAddressDialog(props: Props) {
             <Grid item md={4} xs={12}>
               <TextField
                 inputRef={register({
-                  required: t('createDeliveryAddress:input_phone_required') + '',
+                  required: t('createDeliveryAddress:input_phone_required') as string,
                   pattern: {
                     value: viPhoneNumberRegex,
                     message: t('createDeliveryAddress:input_phone_invalid')
