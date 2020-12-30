@@ -43,7 +43,11 @@ function ProductSidebar(): JSX.Element {
                           <Trans
                             i18nKey={item.title}
                             components={{
-                              a: <a href="tel:1900232436">1900232436</a>
+                              a: (
+                                <a href="tel:1900232436" className="text-danger">
+                                  1900232436
+                                </a>
+                              )
                             }}
                           />
                         </div>
