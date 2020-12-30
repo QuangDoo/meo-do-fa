@@ -1,3 +1,4 @@
+import { useQuery } from '@apollo/client';
 import { useTranslation } from 'i18n';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
@@ -6,7 +7,7 @@ import { toast } from 'react-toastify';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { CREATE_ORDER, CreateOrderData, CreateOrderVars } from 'src/graphql/order/createOrder';
 import { GET_COUNSEL, GetCounselData, OutputCounsel } from 'src/graphql/order/getCounsel';
-import { useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
+import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import useCart from 'src/hooks/useCart';
 import useUser from 'src/hooks/useUser';
 import swal from 'sweetalert';
@@ -51,18 +52,20 @@ type FormInputs = {
   id: string;
 };
 
-const CheckoutPage = () => {
+type Props = {
+  token: string;
+};
+
+const CheckoutPage = (props: Props) => {
   const { t } = useTranslation(['checkout', 'errors']);
 
   const { loading: loadingUser } = useUser();
 
   const [counselData, setCounselData] = useState<OutputCounsel>();
 
-  // Counsel
-  const { refetch: refetchCounsel, loading: loadingCounsel } = useQueryAuth<
-    GetCounselData,
-    undefined
-  >(GET_COUNSEL, {
+  const { cart, refetchCart, loading: loadingCart } = useCart();
+
+  const { data, refetch: refetchCounsel } = useQuery<GetCounselData, undefined>(GET_COUNSEL, {
     onCompleted: (data) => {
       setCounselData(data.getCounsel);
     },
@@ -75,14 +78,19 @@ const CheckoutPage = () => {
       }
     },
     fetchPolicy: 'network-only',
-    notifyOnNetworkStatusChange: true
+    notifyOnNetworkStatusChange: true,
+    context: {
+      headers: {
+        authorization: props.token
+      }
+    }
   });
 
   useEffect(() => {
     refetchCounsel();
   }, []);
 
-  const orderNo = counselData?.counsel?.orderNo;
+  const orderNo = data?.getCounsel?.counsel?.orderNo;
 
   // Form handler with default values
   const methods = useForm<FormInputs>({
@@ -99,8 +107,6 @@ const CheckoutPage = () => {
   const { register, handleSubmit } = methods;
 
   const router = useRouter();
-
-  const { cart, refetchCart, loading: loadingCart } = useCart();
 
   const [createOrder, { loading: creatingOrder }] = useMutationAuth<
     CreateOrderData,
@@ -179,15 +185,6 @@ const CheckoutPage = () => {
     toast.error(errors[fields[0]].message);
   };
 
-  if (counselData === null) {
-    router.push('/');
-    return null;
-  }
-
-  if (loadingCounsel) {
-    return <LoadingBackdrop open={true} />;
-  }
-
   return (
     <FormProvider {...methods}>
       <form className="checkout__form" onSubmit={handleSubmit(onSubmit, onError)}>
@@ -232,7 +229,11 @@ const CheckoutPage = () => {
             </div>
 
             <div className="col-lg-4 mb-3">
-              <PromoCodes counselData={counselData} setCounselData={setCounselData} />
+              <PromoCodes
+                counselData={counselData}
+                setCounselData={setCounselData}
+                token={props.token}
+              />
               <StickySidebar counselData={counselData} />
             </div>
           </div>

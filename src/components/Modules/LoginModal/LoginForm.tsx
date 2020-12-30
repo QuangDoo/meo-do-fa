@@ -1,13 +1,12 @@
 import { useMutation } from '@apollo/client';
 import { Trans, useTranslation } from 'i18n';
+import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { DeepMap, FieldError, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { usernameRegex } from 'src/assets/regex/username';
-import { viPhoneNumberRegex } from 'src/assets/regex/viPhoneNumber';
 import Button from 'src/components/Form/Button';
-import Checkbox from 'src/components/Form/Checkbox';
 import Input from 'src/components/Form/Input';
 import { useModalControlDispatch } from 'src/contexts/ModalControl';
 import { LOGIN_USER, LoginData, LoginVars } from 'src/graphql/user/login';
@@ -36,6 +35,7 @@ const LoginForm = (): JSX.Element => {
   const [login] = useMutation<LoginData, LoginVars>(LOGIN_USER, {
     onCompleted: (data) => {
       localStorage.setItem('token', data.login.token);
+      Cookies.set('token', data.login.token);
       closeModal();
       getUser();
 

@@ -47,7 +47,7 @@ const RegisterForm = (): JSX.Element => {
     {
       onCompleted: (data) => {
         localStorage.setItem('token', data.createUser.token);
-        Cookies.set('Authorization', data.createUser.token);
+        Cookies.set('token', data.createUser.token);
         closeModal();
         getUser();
         router.reload();

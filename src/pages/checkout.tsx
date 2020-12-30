@@ -1,4 +1,5 @@
-import Cookies from 'cookies';
+import ServerCookies from 'cookies';
+import ClientCookies from 'js-cookie';
 import React from 'react';
 import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
@@ -8,7 +9,6 @@ import CheckoutPage from 'src/components/Modules/Checkout';
 import withApollo from 'src/utils/withApollo';
 
 const Checkout = (props) => {
-  console.log('token from server:', props.token);
   return (
     <>
       <Head>
@@ -19,7 +19,7 @@ const Checkout = (props) => {
 
       <Nav />
 
-      <CheckoutPage />
+      <CheckoutPage token={props.token} />
 
       <Footer />
     </>
@@ -27,7 +27,14 @@ const Checkout = (props) => {
 };
 
 Checkout.getInitialProps = async (ctx) => {
-  const token = new Cookies(ctx.req, ctx.res).get('token');
+  let token;
+
+  if (typeof window !== 'undefined') {
+    token = ClientCookies.get('token');
+    console.log('getInitialProps on client');
+  } else {
+    token = new ServerCookies(ctx.req, ctx.res).get('token');
+  }
 
   if (!token) {
     ctx.res.writeHead(302, {
@@ -39,7 +46,7 @@ Checkout.getInitialProps = async (ctx) => {
 
   return {
     namespacesRequired: ['checkout', 'errors', 'common', 'myAccount'],
-    token: token
+    token: decodeURIComponent(token)
   };
 };
 
