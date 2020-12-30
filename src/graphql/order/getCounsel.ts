@@ -1,6 +1,8 @@
 import { gql } from '@apollo/client';
 
-import { RewardType } from '../coupons/getUsedCoupons';
+export type DiscountType = 'percentage' | 'fixed_amount';
+
+export type RewardType = 'discount' | 'product' | 'free_shipping';
 
 type CounselDetail = {
   cartId: string;
@@ -24,7 +26,7 @@ export type PromotionType = {
   program_name: string;
 };
 
-type PromotionInfo = {
+export type PromotionInfo = {
   id: number;
   name: string;
   reward_type: RewardType;
@@ -36,10 +38,6 @@ type PromotionInfo = {
   reward_product_name: string;
   reward_product_quantity: number;
 };
-
-export type DiscountType = 'percentage' | 'fixed_amount';
-
-export type RewardType = 'discount' | 'product' | 'free_shipping';
 
 type Counsel = {
   _id: string;
