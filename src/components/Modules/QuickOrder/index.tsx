@@ -60,6 +60,7 @@ function QuickOrderPage(): JSX.Element {
                     _id={item.id}
                     image={item.image_512}
                     price={item.old_price}
+                    list_price={item.list_price}
                     sale_price={item.sale_price}
                     productId={item.id}
                     productName={item.name}
