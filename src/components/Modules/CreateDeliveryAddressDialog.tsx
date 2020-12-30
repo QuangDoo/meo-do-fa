@@ -34,7 +34,7 @@ type Props = {
 };
 
 export default function CreateDeliveryAddressDialog(props: Props) {
-  const { t } = useTranslation(['checkout', 'createDeliveryAddress']);
+  const { t } = useTranslation(['createDeliveryAddress', 'createDeliveryAddress']);
 
   const { register, handleSubmit, watch } = useForm();
 
@@ -171,10 +171,10 @@ export default function CreateDeliveryAddressDialog(props: Props) {
               fullWidth
               variant="outlined"
               inputRef={register({
-                required: t('checkout:city_required') + ''
+                required: t('createDeliveryAddress:select_city_required') + ''
               })}
-              label={t('checkout:city_label')}>
-              <MenuItem value="">{t('checkout:city_placeholder')}</MenuItem>
+              label={t('createDeliveryAddress:select_city_label')}>
+              <MenuItem value="">{t('createDeliveryAddress:select_city_placeholder')}</MenuItem>
 
               {cities.map((city) => (
                 <MenuItem key={city.id} value={city.name + '__' + city.id}>
@@ -189,12 +189,12 @@ export default function CreateDeliveryAddressDialog(props: Props) {
           <SelectWithLabel
             name="city"
             ref={register({
-              required: t('checkout:city_required') + ''
+              required: t('createDeliveryAddress:select_city_required') + ''
             })}
-            label={t('checkout:city_label')}
+            label={t('createDeliveryAddress:select_city_label')}
             containerClass="col-md-4"
             required>
-            <option value="">{t('checkout:city_placeholder')}</option>
+            <option value="">{t('createDeliveryAddress:select_city_placeholder')}</option>
 
             {/* Map cities from api */}
             {cities.map((city) => (
@@ -208,13 +208,13 @@ export default function CreateDeliveryAddressDialog(props: Props) {
           <SelectWithLabel
             name="district"
             ref={register({
-              required: t('checkout:district_required') + ''
+              required: t('createDeliveryAddress:select_district_required') + ''
             })}
-            label={t('checkout:district_label')}
+            label={t('createDeliveryAddress:select_district_label')}
             labelClass="required"
             containerClass="col-md-4"
             disabled={!districts.length}>
-            <option value="">{t('checkout:district_placeholder')}</option>
+            <option value="">{t('createDeliveryAddress:select_district_placeholder')}</option>
 
             {/* Map districts from chosen city */}
             {districts.map((district) => (
@@ -228,13 +228,13 @@ export default function CreateDeliveryAddressDialog(props: Props) {
           <SelectWithLabel
             name="ward"
             ref={register({
-              required: t('checkout:ward_required') + ''
+              required: t('createDeliveryAddress:select_ward_required') + ''
             })}
-            label={t('checkout:ward_label')}
+            label={t('createDeliveryAddress:select_ward_label')}
             labelClass="required"
             containerClass="col-md-4"
             disabled={!wards.length}>
-            <option value="">{t('checkout:ward_placeholder')}</option>
+            <option value="">{t('createDeliveryAddress:select_ward_placeholder')}</option>
 
             {/* Map wards from chosen district */}
             {wards.map((ward) => (

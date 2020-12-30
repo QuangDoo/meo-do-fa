@@ -16,13 +16,13 @@
   "input_street_help": "",
   "input_street_placeholder": "",
   "input_street_required": "",
-  "input_city_label": "",
-  "input_city_placeholder": "",
-  "input_city_required": "",
-  "input_district_label": "",
-  "input_district_placeholder": "",
-  "input_district_required": "",
-  "input_ward_label": "",
-  "input_ward_placeholder": "",
-  "input_ward_required": ""
+  "select_city_label": "",
+  "select_city_placeholder": "",
+  "select_city_required": "",
+  "select_district_label": "",
+  "select_district_placeholder": "",
+  "select_district_required": "",
+  "select_ward_label": "",
+  "select_ward_placeholder": "",
+  "select_ward_required": ""
 }
