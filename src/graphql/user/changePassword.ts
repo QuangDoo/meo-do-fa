@@ -1,11 +1,9 @@
 import { gql } from '@apollo/client';
 
 export type ChangePasswordData = {
-  forgotPassword: {
-    code: number;
-    status: string;
-    message: string;
-  };
+  code: number;
+  status: string;
+  message: string;
 };
 
 export type ChangePasswordInput = {
