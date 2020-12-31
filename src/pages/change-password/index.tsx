@@ -1,8 +1,8 @@
+import Cookies from 'cookies';
 import { useTranslation } from 'i18n';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { usernameRegex } from 'src/assets/regex/username';
 import { viPhoneNumberRegex } from 'src/assets/regex/viPhoneNumber';
 import Button from 'src/components/Form/Button';
 import InputWithLabel from 'src/components/Form/InputWithLabel';
@@ -134,8 +134,22 @@ const ChangePassWord = (): JSX.Element => {
   );
 };
 
-ChangePassWord.getInitialProps = async () => ({
-  namespacesRequired: ['myAccount']
-});
+ChangePassWord.getInitialProps = async (ctx) => {
+  if (typeof window === 'undefined') {
+    const cookies = new Cookies(ctx.req, ctx.res);
+
+    if (!cookies.get('token')) {
+      ctx.res.writeHead(302, {
+        Location: '/'
+      });
+
+      ctx.res.end();
+    }
+  }
+
+  return {
+    namespacesRequired: ['myAccount', 'common', 'login']
+  };
+};
 
 export default withApollo({ ssr: true })(ChangePassWord);

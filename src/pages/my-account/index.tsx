@@ -1,4 +1,5 @@
 import { useLazyQuery, useQuery } from '@apollo/client';
+import Cookies from 'cookies';
 import { useTranslation } from 'i18n';
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -369,8 +370,22 @@ const MyAccount = (): JSX.Element => {
   );
 };
 
-MyAccount.getInitialProps = async () => ({
-  namespacesRequired: ['myAccount']
-});
+MyAccount.getInitialProps = async (ctx) => {
+  if (typeof window === 'undefined') {
+    const cookies = new Cookies(ctx.req, ctx.res);
+
+    if (!cookies.get('token')) {
+      ctx.res.writeHead(302, {
+        Location: '/'
+      });
+
+      ctx.res.end();
+    }
+  }
+
+  return {
+    namespacesRequired: ['myAccount', 'common']
+  };
+};
 
 export default withApollo({ ssr: true })(MyAccount);

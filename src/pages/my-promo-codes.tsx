@@ -1,12 +1,12 @@
 import { CircularProgress, Typography } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
-import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import Cookies from 'cookies';
 import { useTranslation } from 'i18n';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -127,6 +127,24 @@ const MyPromoCodes = () => {
       <Footer />
     </>
   );
+};
+
+MyPromoCodes.getInitialProps = async (ctx) => {
+  if (typeof window === 'undefined') {
+    const cookies = new Cookies(ctx.req, ctx.res);
+
+    if (!cookies.get('token')) {
+      ctx.res.writeHead(302, {
+        Location: '/'
+      });
+
+      ctx.res.end();
+    }
+  }
+
+  return {
+    namespacesRequired: ['myPromoCodes']
+  };
 };
 
 export default withApollo({ ssr: true })(MyPromoCodes);

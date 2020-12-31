@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client';
 import { Menu } from '@material-ui/core';
-import clsx from 'clsx';
 import { useTranslation } from 'i18n';
+import cookies from 'js-cookie';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
@@ -11,7 +11,6 @@ import useCart from 'src/hooks/useCart';
 import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
 
 import CategoryMenu from '../Modules/CategoryMenu';
-import LoadingBackdrop from './LoadingBackdrop';
 
 const Nav = () => {
   const isLoggedIn = useIsLoggedIn();
@@ -26,7 +25,8 @@ const Nav = () => {
 
   const logOut = () => {
     localStorage.removeItem('token');
-    router.reload();
+    cookies.remove('token');
+    router.push('/');
   };
 
   const [anchorEl, setAnchorEl] = useState(null);
