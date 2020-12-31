@@ -19,7 +19,7 @@ type Props = {
 };
 
 const ProductsSidebarFilter = (props: Props) => {
-  const [categorySubSearch, setCategorySubSearch] = useState([]);
+  // const [categorySubSearch, setCategorySubSearch] = useState([]);
 
   const [priceFrom, setPriceFrom] = useState('');
   const [priceTo, setPriceTo] = useState('');
@@ -62,22 +62,37 @@ const ProductsSidebarFilter = (props: Props) => {
     event.preventDefault();
   };
 
-  const [value, setValue] = useState('');
+  const [valueCategoryInput, setValueCategoryInput] = useState('');
+  const [valueManuInput, setValueManuInput] = useState('');
 
-  const onValueChange = (e) => {
+  const onValueCateChange = (e) => {
     e.preventDefault();
-    setValue(e.target.value);
+    setValueCategoryInput(e.target.value);
+  };
+
+  const onValueManuChange = (e) => {
+    e.preventDefault();
+    setValueManuInput(e.target.value);
   };
 
   const categoriesSearch = [...categories]
     .slice()
     .sort((a, b) => a.name.localeCompare(b.name))
     .filter(({ name, id, categorySub }) => {
-      if (name.toLocaleLowerCase().includes(value.toLocaleLowerCase())) {
+      if (name.toLocaleLowerCase().includes(valueCategoryInput.toLocaleLowerCase())) {
         return [name, id, categorySub];
       }
     });
 
+  const manufacturersSearch = [...manufacturers]
+    .slice()
+    .sort((a, b) => a.short_name.localeCompare(b.short_name))
+    .filter(({ short_name, id }) => {
+      if (short_name.toLocaleLowerCase().includes(valueManuInput.toLocaleLowerCase())) {
+        return [short_name, id];
+      }
+    });
+  // console.log('manufacturersSearch', manufacturersSearch);
   return (
     <aside className="text-capitalize w-100">
       <header className="products__filters-header d-flex align-items-center justify-content-between">
@@ -85,7 +100,6 @@ const ProductsSidebarFilter = (props: Props) => {
           <span className="text-muted icomoon icon-tune mr-3" />
           {t('productsSidebar:search_filters')}
         </div>
-
         <div className="d-block d-sm-none">
           <IconButton aria-label="close" onClick={props.onClose}>
             <CloseIcon />
@@ -158,7 +172,7 @@ const ProductsSidebarFilter = (props: Props) => {
               className="form-control form-control-sm search-input"
               placeholder={t('searchBar:enter_name_category')}
               aria-label="search"
-              onChange={onValueChange}
+              onChange={onValueCateChange}
             />
           </div>
         </form>
@@ -169,7 +183,7 @@ const ProductsSidebarFilter = (props: Props) => {
             </a>
           </Link>
         </div>
-        {value
+        {valueCategoryInput
           ? categoriesSearch
               .slice()
               .sort((a, b) => a.name.localeCompare(b.name))
@@ -250,6 +264,14 @@ const ProductsSidebarFilter = (props: Props) => {
                   </Link>
                 </div>
               ))}
+        {valueCategoryInput && categoriesSearch.length === 0 && (
+          <>
+            <div className="search__result--empty">
+              {t('searchBar:no_product')} <b>{valueCategoryInput}</b>
+            </div>
+            <hr />
+          </>
+        )}
       </Dropdown>
 
       <hr className="hr my-3" />
@@ -271,27 +293,52 @@ const ProductsSidebarFilter = (props: Props) => {
               className="form-control form-control-sm search-input"
               placeholder={t('searchBar:enter_name_manufacturers')}
               aria-label="search"
+              onChange={onValueManuChange}
             />
           </div>
         </form>
 
-        {manufacturers
-          .slice()
-          .sort((a, b) => a.short_name.localeCompare(b.short_name))
-          .map(({ short_name, id }) => (
-            <div key={id} className="mb-2">
-              <Link href={`/products?manufacturer=${id}`}>
-                <a
-                  className={clsx(
-                    'products__filter-category',
-                    router.query.manufacturer === id.toString() && 'active'
-                  )}>
-                  {short_name}
-                </a>
-              </Link>
+        {valueManuInput
+          ? manufacturersSearch
+              .slice()
+              .sort((a, b) => a.short_name.localeCompare(b.short_name))
+              .map(({ short_name, id }) => (
+                <div key={id} className="mb-2">
+                  <Link href={`/products?manufacturer=${id}`}>
+                    <a
+                      className={clsx(
+                        'products__filter-category',
+                        router.query.manufacturer === id.toString() && 'active'
+                      )}>
+                      {short_name}
+                    </a>
+                  </Link>
+                </div>
+              ))
+          : manufacturers
+              .slice()
+              .sort((a, b) => a.short_name.localeCompare(b.short_name))
+              .map(({ short_name, id }) => (
+                <div key={id} className="mb-2">
+                  <Link href={`/products?manufacturer=${id}`}>
+                    <a
+                      className={clsx(
+                        'products__filter-category',
+                        router.query.manufacturer === id.toString() && 'active'
+                      )}>
+                      {short_name}
+                    </a>
+                  </Link>
+                </div>
+              ))}
+        {valueManuInput && manufacturersSearch.length === 0 && (
+          <>
+            <div className="search__result--empty">
+              {t('searchBar:no_product')} <b>{valueManuInput}</b>
             </div>
-          ))}
-
+            <hr />
+          </>
+        )}
         <div>
           <Link href="/manufacturers">
             <a className="products__filter-category">{t('productsSidebar:see_more')}</a>
