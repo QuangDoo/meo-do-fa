@@ -1,5 +1,6 @@
 import ServerCookies from 'cookies';
 import ClientCookies from 'js-cookie';
+import Router, { useRouter } from 'next/router';
 import React from 'react';
 import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
@@ -32,7 +33,7 @@ Checkout.getInitialProps = async (ctx) => {
   if (typeof window !== 'undefined') {
     token = ClientCookies.get('token');
     if (!token) {
-      console.log('ctx:', ctx);
+      Router.replace('/');
     }
   } else {
     token = new ServerCookies(ctx.req, ctx.res).get('token');

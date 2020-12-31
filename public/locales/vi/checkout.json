@@ -9,7 +9,7 @@
   "deliveryOption_required": "Xin chọn hình thức giao hàng.",
   "paymentOption_title": "Hình thức thanh toán",
   "paymentOption_required": "Xin chọn hình thức thanh toán.",
-  "paymentOption_COD": "Thanh toán tiền mặt khi nhận hàng",
+  "paymentOption_COD": "Thanh toán tiền mặt khi nhận hàng (COD)",
   "paymentOption_bank": "Chuyển khoản <Link>(Hướng dẫn chuyển khoản)</Link>",
   "bank_info__account_name": "Chủ tài khoản",
   "bank_info__account_no": "Số tài khoản",
@@ -54,5 +54,9 @@
   "quantity": "Số lượng",
 
   "promo_codes_title": "Mã khuyến mãi",
-  "choose_or_input_promo_code": "Chọn hoặc nhập mã khuyến mãi"
+  "choose_or_input_promo_code": "Chọn hoặc nhập mã khuyến mãi",
+
+  "create_address_button": "Tạo địa chỉ mới",
+  "choose_address_button": "Chọn địa chỉ khác",
+  "or": "hoặc"
 }

@@ -2,6 +2,7 @@ import { useQuery } from '@apollo/client';
 import { Menu } from '@material-ui/core';
 import clsx from 'clsx';
 import { useTranslation } from 'i18n';
+import Cookies from 'js-cookie';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
@@ -26,6 +27,7 @@ const Nav = () => {
 
   const logOut = () => {
     localStorage.removeItem('token');
+    Cookies.remove('token');
     router.reload();
   };
 

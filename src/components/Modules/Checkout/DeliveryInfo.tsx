@@ -19,16 +19,25 @@ const DeliveryInfo = (props: Props) => {
   const { user } = useUser();
 
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
+  const openCreateDialog = () => setCreateDialogOpen(true);
+  const closeCreateDialog = () => setCreateDialogOpen(false);
 
   const [changeDialogOpen, setChangeDialogOpen] = useState(false);
+  const openChangeDialog = () => setChangeDialogOpen(true);
+  const closeChangeDialog = () => setChangeDialogOpen(false);
 
   const [chosen, setChosen] = useState(undefined);
+
+  const handleCreateDeliveryAddressCompleted = () => {
+    closeCreateDialog();
+  };
 
   return (
     <div className="elevated p-3 p-md-4">
       <CreateDeliveryAddressDialog
         open={createDialogOpen}
-        onClose={() => setCreateDialogOpen(false)}
+        onClose={closeCreateDialog}
+        onCompleted={handleCreateDeliveryAddressCompleted}
       />
 
       <input hidden type="text" ref={register} name="partnerId" />
@@ -48,22 +57,14 @@ const DeliveryInfo = (props: Props) => {
 
       <div className="d-flex align-items-center">
         <div className="mr-2">
-          <Button
-            type="button"
-            variant="contained"
-            color="primary"
-            onClick={() => setChangeDialogOpen(true)}>
-            Chọn địa chỉ khác
+          <Button type="button" variant="contained" color="primary" onClick={openChangeDialog}>
+            {t('checkout:choose_address_button')}
           </Button>
         </div>
-        hoặc
+        {t('checkout:or')}
         <div className="ml-2">
-          <Button
-            type="button"
-            variant="contained"
-            color="primary"
-            onClick={() => setCreateDialogOpen(true)}>
-            tạo địa chỉ mới
+          <Button type="button" variant="contained" color="primary" onClick={openCreateDialog}>
+            {t('checkout:create_address_button')}
           </Button>
         </div>
       </div>

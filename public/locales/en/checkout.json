@@ -82,5 +82,6 @@
   "quantity": "quantity",
 
   "promo_codes_title": "Promo codes",
-  "choose_or_input_promo_code": "Choose or input promo code"
+  "choose_or_input_promo_code": "Choose or input promo code",
+  "or": "or"
 }

@@ -35,6 +35,7 @@ const LoginForm = (): JSX.Element => {
   const [login] = useMutation<LoginData, LoginVars>(LOGIN_USER, {
     onCompleted: (data) => {
       localStorage.setItem('token', data.login.token);
+      console.log('Token from server:', data.login.token);
       Cookies.set('token', data.login.token);
       closeModal();
       getUser();
