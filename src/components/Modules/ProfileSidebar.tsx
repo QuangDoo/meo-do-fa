@@ -66,6 +66,12 @@ const ProfileSidebar = () => {
         iconClass="fas fa-tags"
       />
 
+      <SidebarLink
+        text={t('navbar:change_password')}
+        href="/change-password"
+        iconClass="fa fa-key"
+      />
+
       {/* <SidebarLink
         text={t('navbar:cumulative_points')}
         href="/users/loyalty_points"
