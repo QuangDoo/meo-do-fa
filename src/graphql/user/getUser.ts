@@ -26,6 +26,7 @@ export type User = {
   vat: string;
   representative: string;
   business_license: string;
+  cust_no: string;
 };
 
 export type GetUserData = {
@@ -65,6 +66,7 @@ export const GET_USER = gql`
       vat
       representative
       business_license
+      cust_no
     }
   }
 `;
