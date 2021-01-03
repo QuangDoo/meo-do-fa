@@ -154,10 +154,6 @@ const Nav = () => {
                     open={!!anchorEl}
                     keepMounted
                     onClose={closeMenu}
-                    anchorOrigin={{
-                      vertical: 'bottom',
-                      horizontal: 'right'
-                    }}
                     transformOrigin={{
                       vertical: 'top',
                       horizontal: 'right'
@@ -226,7 +222,10 @@ const Nav = () => {
                       </a>
                     </Link> */}
 
-                    <button className="dropdown__item dropdown__item-link w-100" onClick={logOut}>
+                    <button
+                      type="button"
+                      className="dropdown__item dropdown__item-link w-100"
+                      onClick={logOut}>
                       <i className="fas fa-sign-out-alt dropdown__item-icon" />
                       {t('navbar:logout')}
                     </button>
