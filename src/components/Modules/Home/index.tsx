@@ -13,8 +13,8 @@ import { Question } from './Question';
 import { Strength } from './Strength';
 
 const bannerImages = [
-  '/assets/images/drugstore1.jpg',
-  '/assets/images/drugstore2.jpg'
+  'https://firebasestorage.googleapis.com/v0/b/medofa-image.appspot.com/o/banner%2FBanner-Freeship.jpg?alt=media',
+  'https://firebasestorage.googleapis.com/v0/b/medofa-image.appspot.com/o/banner%2FBanner-Medofa.jpg?alt=media'
   // '/assets/images/drugstore3.jpg'
 ];
 
