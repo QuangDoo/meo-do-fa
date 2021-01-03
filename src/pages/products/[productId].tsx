@@ -2,7 +2,7 @@ import { useQuery } from '@apollo/client';
 import { useTranslation } from 'i18n';
 import _ from 'lodash';
 import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
@@ -28,14 +28,13 @@ function ProductDetail(): JSX.Element {
     variables: { id: Number(productPid) }
   });
 
-  const product = dataProduct?.getProduct;
-  console.log('product', product);
+  const product = dataProduct?.getProduct || {};
 
   useEffect(() => {
-    if (!router.query || dataProduct) return;
+    if (!productId) return;
 
     refetch();
-  }, [router.query]);
+  }, [productId]);
 
   const getNameById = (array, id) => {
     return _.find(array, { id })?.name;

@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client';
 import { Menu } from '@material-ui/core';
-import clsx from 'clsx';
 import { useTranslation } from 'i18n';
+import cookies from 'js-cookie';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
@@ -11,7 +11,6 @@ import useCart from 'src/hooks/useCart';
 import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
 
 import CategoryMenu from '../Modules/CategoryMenu';
-import LoadingBackdrop from './LoadingBackdrop';
 
 const Nav = () => {
   const isLoggedIn = useIsLoggedIn();
@@ -26,7 +25,8 @@ const Nav = () => {
 
   const logOut = () => {
     localStorage.removeItem('token');
-    router.reload();
+    cookies.remove('token');
+    router.push('/');
   };
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -154,10 +154,6 @@ const Nav = () => {
                     open={!!anchorEl}
                     keepMounted
                     onClose={closeMenu}
-                    anchorOrigin={{
-                      vertical: 'bottom',
-                      horizontal: 'right'
-                    }}
                     transformOrigin={{
                       vertical: 'top',
                       horizontal: 'right'
@@ -189,6 +185,15 @@ const Nav = () => {
                       </a>
                     </Link>
 
+                    <div className="d-block d-sm-none">
+                      <Link href="/change-password">
+                        <a className="dropdown__item dropdown__item-link">
+                          <i className="fa fa-key dropdown__item-icon" />
+                          {t('navbar:change_password')}
+                        </a>
+                      </Link>
+                    </div>
+
                     <Link href="/my-orders">
                       <a className="dropdown__item dropdown__item-link">
                         <i className="icomoon icon-assignment dropdown__item-icon" />
@@ -217,7 +222,10 @@ const Nav = () => {
                       </a>
                     </Link> */}
 
-                    <button className="dropdown__item dropdown__item-link w-100" onClick={logOut}>
+                    <button
+                      type="button"
+                      className="dropdown__item dropdown__item-link w-100"
+                      onClick={logOut}>
                       <i className="fas fa-sign-out-alt dropdown__item-icon" />
                       {t('navbar:logout')}
                     </button>

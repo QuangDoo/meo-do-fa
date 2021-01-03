@@ -1,4 +1,5 @@
 // import { useMutation } from '@apollo/client';
+import Cookies from 'cookies';
 import { useTranslation } from 'i18n';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -119,5 +120,23 @@ function Cart(): JSX.Element {
     </>
   );
 }
+
+Cart.getInitialProps = async (ctx) => {
+  if (typeof window === 'undefined') {
+    const cookies = new Cookies(ctx.req, ctx.res);
+
+    if (!cookies.get('token')) {
+      ctx.res.writeHead(302, {
+        Location: '/'
+      });
+
+      ctx.res.end();
+    }
+  }
+
+  return {
+    namespacesRequired: ['myAccount']
+  };
+};
 
 export default withApollo({ ssr: true })(Cart);

@@ -39,6 +39,7 @@ const ProfileSidebar = () => {
       <div className="mb-3">
         {t('navbar:account_of')}
         <h5>{user?.name}</h5>
+        <h5>{user?.cust_no}</h5>
       </div>
 
       <SidebarLink
@@ -63,6 +64,12 @@ const ProfileSidebar = () => {
         text={t('navbar:my_promo_code')}
         href="/my-promo-codes"
         iconClass="fas fa-tags"
+      />
+
+      <SidebarLink
+        text={t('navbar:change_password')}
+        href="/change-password"
+        iconClass="fa fa-key"
       />
 
       {/* <SidebarLink

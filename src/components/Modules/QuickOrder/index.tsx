@@ -60,6 +60,7 @@ function QuickOrderPage(): JSX.Element {
                     _id={item.id}
                     image={item.image_512}
                     price={item.old_price}
+                    list_price={item.list_price}
                     sale_price={item.sale_price}
                     productId={item.id}
                     productName={item.name}
@@ -71,10 +72,10 @@ function QuickOrderPage(): JSX.Element {
                 ))
               )}
             </div>
-            <div className="elevated text-muted p-3 mb-4">
+            {/* <div className="elevated text-muted p-3 mb-4">
               <i className="fas fa-exclamation-circle mr-1" />
               {t('cart:back_to_products')} <a href="/products">{t('cart:products')}</a>
-            </div>
+            </div> */}
           </div>
           <div className="col-12 col-md-3 col-lg-3">
             {cart && (

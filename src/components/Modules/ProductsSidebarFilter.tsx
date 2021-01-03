@@ -4,8 +4,8 @@ import clsx from 'clsx';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
+import React, { useState } from 'react';
+import NumberFormat from 'react-number-format';
 import { Category } from 'src/graphql/category/category.query';
 import { Manufacturer } from 'src/graphql/manufacturers/manufacturers.query';
 
@@ -18,8 +18,12 @@ type Props = {
   onClose?: () => void;
 };
 
+const toPriceString = (price: number) => {
+  return price.toLocaleString('de-DE');
+};
+
 const ProductsSidebarFilter = (props: Props) => {
-  const [categorySubSearch, setCategorySubSearch] = useState([]);
+  // const [categorySubSearch, setCategorySubSearch] = useState([]);
 
   const [priceFrom, setPriceFrom] = useState('');
   const [priceTo, setPriceTo] = useState('');
@@ -62,22 +66,37 @@ const ProductsSidebarFilter = (props: Props) => {
     event.preventDefault();
   };
 
-  const [value, setValue] = useState('');
+  const [valueCategoryInput, setValueCategoryInput] = useState('');
+  const [valueManuInput, setValueManuInput] = useState('');
 
-  const onValueChange = (e) => {
+  const onValueCateChange = (e) => {
     e.preventDefault();
-    setValue(e.target.value);
+    setValueCategoryInput(e.target.value);
+  };
+
+  const onValueManuChange = (e) => {
+    e.preventDefault();
+    setValueManuInput(e.target.value);
   };
 
   const categoriesSearch = [...categories]
     .slice()
     .sort((a, b) => a.name.localeCompare(b.name))
     .filter(({ name, id, categorySub }) => {
-      if (name.toLocaleLowerCase().includes(value.toLocaleLowerCase())) {
+      if (name.toLocaleLowerCase().includes(valueCategoryInput.toLocaleLowerCase())) {
         return [name, id, categorySub];
       }
     });
 
+  const manufacturersSearch = [...manufacturers]
+    .slice()
+    .sort((a, b) => a.short_name.localeCompare(b.short_name))
+    .filter(({ short_name, id }) => {
+      if (short_name.toLocaleLowerCase().includes(valueManuInput.toLocaleLowerCase())) {
+        return [short_name, id];
+      }
+    });
+  // console.log('manufacturersSearch', manufacturersSearch);
   return (
     <aside className="text-capitalize w-100">
       <header className="products__filters-header d-flex align-items-center justify-content-between">
@@ -85,7 +104,6 @@ const ProductsSidebarFilter = (props: Props) => {
           <span className="text-muted icomoon icon-tune mr-3" />
           {t('productsSidebar:search_filters')}
         </div>
-
         <div className="d-block d-sm-none">
           <IconButton aria-label="close" onClick={props.onClose}>
             <CloseIcon />
@@ -116,29 +134,33 @@ const ProductsSidebarFilter = (props: Props) => {
           <form onSubmit={handlePriceRangeFilter}>
             <p>{t('productsSidebar:price_range')}</p>
             <div className="d-flex align-items-center mb-3">
-              <div>
-                <input
-                  name="price_from"
-                  type="number"
-                  min={0}
-                  placeholder={t('productsSidebar:price_from')}
-                  size={5}
-                  value={priceFrom}
-                  onChange={(e) => setPriceFrom(e.target.value)}
-                />
-              </div>
-              &nbsp;-&nbsp;
-              <div>
-                <input
-                  name="price_to"
-                  type="number"
-                  min={0}
-                  placeholder={t('productsSidebar:price_to')}
-                  size={5}
-                  value={priceTo}
-                  onChange={(e) => setPriceTo(e.target.value)}
-                />
-              </div>
+              <NumberFormat
+                placeholder={t('productsSidebar:price_from')}
+                className="form-control no-spinner"
+                size={5}
+                min={0}
+                value={priceFrom}
+                inputMode="numeric"
+                thousandSeparator="."
+                decimalSeparator=","
+                onValueChange={(values) => setPriceFrom(values.value)}
+                allowNegative={false}
+              />
+
+              <div className="mx-2">&#8212;</div>
+
+              <NumberFormat
+                placeholder={t('productsSidebar:price_to')}
+                className="form-control no-spinner"
+                size={5}
+                min={0}
+                value={priceTo}
+                inputMode="numeric"
+                thousandSeparator="."
+                decimalSeparator=","
+                onValueChange={(values) => setPriceTo(values.value)}
+                allowNegative={false}
+              />
             </div>
             <button className="btn btn-primary" type="submit">
               {t('productsSidebar:apply')}
@@ -158,7 +180,7 @@ const ProductsSidebarFilter = (props: Props) => {
               className="form-control form-control-sm search-input"
               placeholder={t('searchBar:enter_name_category')}
               aria-label="search"
-              onChange={onValueChange}
+              onChange={onValueCateChange}
             />
           </div>
         </form>
@@ -169,7 +191,7 @@ const ProductsSidebarFilter = (props: Props) => {
             </a>
           </Link>
         </div>
-        {value
+        {valueCategoryInput
           ? categoriesSearch
               .slice()
               .sort((a, b) => a.name.localeCompare(b.name))
@@ -250,6 +272,14 @@ const ProductsSidebarFilter = (props: Props) => {
                   </Link>
                 </div>
               ))}
+        {valueCategoryInput && categoriesSearch.length === 0 && (
+          <>
+            <div className="search__result--empty">
+              {t('searchBar:no_product')} <b>{valueCategoryInput}</b>
+            </div>
+            <hr />
+          </>
+        )}
       </Dropdown>
 
       <hr className="hr my-3" />
@@ -271,27 +301,52 @@ const ProductsSidebarFilter = (props: Props) => {
               className="form-control form-control-sm search-input"
               placeholder={t('searchBar:enter_name_manufacturers')}
               aria-label="search"
+              onChange={onValueManuChange}
             />
           </div>
         </form>
 
-        {manufacturers
-          .slice()
-          .sort((a, b) => a.short_name.localeCompare(b.short_name))
-          .map(({ short_name, id }) => (
-            <div key={id} className="mb-2">
-              <Link href={`/products?manufacturer=${id}`}>
-                <a
-                  className={clsx(
-                    'products__filter-category',
-                    router.query.manufacturer === id.toString() && 'active'
-                  )}>
-                  {short_name}
-                </a>
-              </Link>
+        {valueManuInput
+          ? manufacturersSearch
+              .slice()
+              .sort((a, b) => a.short_name.localeCompare(b.short_name))
+              .map(({ short_name, id }) => (
+                <div key={id} className="mb-2">
+                  <Link href={`/products?manufacturer=${id}`}>
+                    <a
+                      className={clsx(
+                        'products__filter-category',
+                        router.query.manufacturer === id.toString() && 'active'
+                      )}>
+                      {short_name}
+                    </a>
+                  </Link>
+                </div>
+              ))
+          : manufacturers
+              .slice()
+              .sort((a, b) => a.short_name.localeCompare(b.short_name))
+              .map(({ short_name, id }) => (
+                <div key={id} className="mb-2">
+                  <Link href={`/products?manufacturer=${id}`}>
+                    <a
+                      className={clsx(
+                        'products__filter-category',
+                        router.query.manufacturer === id.toString() && 'active'
+                      )}>
+                      {short_name}
+                    </a>
+                  </Link>
+                </div>
+              ))}
+        {valueManuInput && manufacturersSearch.length === 0 && (
+          <>
+            <div className="search__result--empty">
+              {t('searchBar:no_product')} <b>{valueManuInput}</b>
             </div>
-          ))}
-
+            <hr />
+          </>
+        )}
         <div>
           <Link href="/manufacturers">
             <a className="products__filter-category">{t('productsSidebar:see_more')}</a>
