@@ -38,7 +38,6 @@ import Nav from 'src/components/Layout/Nav';
 import ProfileLayout from 'src/components/Modules/ProfileLayout';
 import { GET_ORDER, GetOrderDetailData, GetOrderDetailVars } from 'src/graphql/order/getOrder';
 import { useQueryAuth } from 'src/hooks/useApolloHookAuth';
-import useUser from 'src/hooks/useUser';
 import { theme } from 'src/theme';
 import withApollo from 'src/utils/withApollo';
 
@@ -54,7 +53,7 @@ const stepConnectorLineGradient = `linear-gradient(95deg,${theme.colors.blue1} 0
 
 const useStyles = makeStyles((materialTheme) => ({
   primaryText: {
-    color: theme.colors.blue1
+    color: theme.colors.primary
   },
   cardRoot: {
     padding: materialTheme.spacing(2)
@@ -156,7 +155,7 @@ const CustomStepIcon = (props: StepIconProps) => {
 };
 
 const CustomStepCancel = (props: StepIconProps) => {
-  const { active, completed, icon } = props;
+  const { icon } = props;
 
   const classes = useStyles();
 
@@ -474,7 +473,7 @@ const OrderDetails = () => {
 
                 <TableFooter>
                   <TableRow>
-                    <TableCell colSpan={4}>
+                    <TableCell colSpan={5}>
                       <Typography variant="h5" align="right">
                         {t('myOrders:total')}{' '}
                         <PriceText price={orderDetail?.getOrderDetail?.amount_total} />{' '}
