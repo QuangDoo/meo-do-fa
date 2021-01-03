@@ -299,8 +299,6 @@ const OrderDetails = () => {
     setOpen(true);
   };
 
-  const { user } = useUser();
-
   return (
     <>
       <Head>
@@ -346,51 +344,23 @@ const OrderDetails = () => {
                   ))}
               </Stepper>
 
-              <Box my={2}>
-                <Divider />
-              </Box>
+              {orderDetail?.getOrderDetail?.flag !== 25 && (
+                <>
+                  <Box my={2}>
+                    <Divider />
+                  </Box>
 
-              <Box display="flex" justifyContent="space-between" alignItems="center">
-                <Typography>
-                  {t('myOrders:expected_date')}{' '}
-                  <strong>
-                    {orderDetail?.getOrderDetail?.flag !== 25 &&
-                      orderDetail?.getOrderDetail?.expected_date &&
-                      new Date(orderDetail?.getOrderDetail?.expected_date).toLocaleDateString(
-                        'en-GB'
-                      )}
-                  </strong>
-                </Typography>
-                {
-                  // activeStep > 2 ? (
-                  //   <Link
-                  //     href={{
-                  //       pathname: '/feedback',
-                  //       query: {
-                  //         orderId: orderDetail?.getOrderDetail?.name,
-                  //         name: user?.name,
-                  //         phone: user?.phone
-                  //       }
-                  //     }}>
-                  //     <Button size="small" startIcon={<Sms />} variant="outlined" color="primary">
-                  //       {t('myOrders:report')}
-                  //     </Button>
-                  //   </Link>
-                  // ) :
-                  orderDetail?.getOrderDetail?.flag === 25 ? (
-                    <Button
-                      style={{
-                        color: 'red',
-                        borderColor: 'red'
-                      }}
-                      size="small"
-                      startIcon={<DeleteForeverIcon />}
-                      variant="outlined"
-                      color="inherit"
-                      disabled>
-                      {t('myOrders:canceled')}
-                    </Button>
-                  ) : (
+                  <Box display="flex" justifyContent="space-between" alignItems="center">
+                    <Typography>
+                      {t('myOrders:expected_date')}{' '}
+                      <strong>
+                        {orderDetail?.getOrderDetail?.flag !== 25 &&
+                          orderDetail?.getOrderDetail?.expected_date &&
+                          new Date(orderDetail?.getOrderDetail?.expected_date).toLocaleDateString(
+                            'en-GB'
+                          )}
+                      </strong>
+                    </Typography>
                     <Button
                       size="small"
                       startIcon={<DeleteForeverIcon />}
@@ -399,15 +369,15 @@ const OrderDetails = () => {
                       color="secondary">
                       {t('myOrders:cancel_the_order')}
                     </Button>
-                  )
-                }
-                <ConfirmCancelOrder
-                  open={open}
-                  onClose={() => setOpen(false)}
-                  orderNo={orderDetail?.getOrderDetail?.name}
-                  callBack={() => refetch()}
-                />
-              </Box>
+                    <ConfirmCancelOrder
+                      open={open}
+                      onClose={() => setOpen(false)}
+                      orderNo={orderDetail?.getOrderDetail?.name}
+                      callBack={() => refetch()}
+                    />
+                  </Box>
+                </>
+              )}
             </CustomCard>
           </Grid>
 
