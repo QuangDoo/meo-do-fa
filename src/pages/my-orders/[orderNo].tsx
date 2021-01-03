@@ -426,7 +426,10 @@ const OrderDetails = () => {
 
           <Grid item xs={12}>
             <CustomCard>
-              <TextWithLabel label={t('myOrders:note')} text={orderDetail?.getOrderDetail?.note} />
+              <TextWithLabel
+                label={t('myOrders:note')}
+                text={orderDetail?.getOrderDetail?.note || t('myOrders:no_notes')}
+              />
             </CustomCard>
           </Grid>
 
@@ -438,6 +441,7 @@ const OrderDetails = () => {
                     <CustomHeadCell label={t('myOrders:product')} textAlign="left" />
                     <CustomHeadCell label={t('myOrders:unit_price')} />
                     <CustomHeadCell label={t('myOrders:quantity')} />
+                    <CustomHeadCell label={t('myOrders:tax')} />
                     <CustomHeadCell label={t('myOrders:total')} />
                   </TableRow>
                 </TableHead>
@@ -458,6 +462,10 @@ const OrderDetails = () => {
                       <CustomBodyCell>{product.product_uom_qty}</CustomBodyCell>
 
                       <CustomBodyCell>
+                        <PriceText price={product.price_tax} /> {t('common:vnd')}
+                      </CustomBodyCell>
+
+                      <CustomBodyCell>
                         <PriceText price={product.price_total} /> {t('common:vnd')}
                       </CustomBodyCell>
                     </TableRow>
@@ -469,7 +477,8 @@ const OrderDetails = () => {
                     <TableCell colSpan={4}>
                       <Typography variant="h5" align="right">
                         {t('myOrders:total')}{' '}
-                        <PriceText price={orderDetail?.getOrderDetail?.amount_total} /> đ
+                        <PriceText price={orderDetail?.getOrderDetail?.amount_total} />{' '}
+                        {t('common:vnd')}
                       </Typography>
                     </TableCell>
                   </TableRow>

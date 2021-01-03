@@ -24,6 +24,7 @@
   "product": "Sản phẩm",
   "unit_price": "Đơn giá",
   "quantity": "Số lượng",
+  "tax": "Thuế",
   "price_tax": "Thuế",
   "total": "Tổng cộng",
   "time_out_invoice": "Đơn hàng của bạn đã quá thời gian để xuất hóa đơn",
@@ -31,5 +32,6 @@
   "delivering": "Đang vận chuyển",
   "completed": "Đã hoàn thành",
   "cancel_order": "Hủy đơn hàng",
-  "no_orders": "Chưa có đơn hàng"
+  "no_orders": "Chưa có đơn hàng",
+  "no_notes": "Không có ghi chú"
 }
