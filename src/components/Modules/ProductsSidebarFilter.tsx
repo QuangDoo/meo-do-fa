@@ -4,8 +4,8 @@ import clsx from 'clsx';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
+import React, { useState } from 'react';
+import NumberFormat from 'react-number-format';
 import { Category } from 'src/graphql/category/category.query';
 import { Manufacturer } from 'src/graphql/manufacturers/manufacturers.query';
 
@@ -16,6 +16,10 @@ type Props = {
   categories: Category[];
   manufacturers: Manufacturer[];
   onClose?: () => void;
+};
+
+const toPriceString = (price: number) => {
+  return price.toLocaleString('de-DE');
 };
 
 const ProductsSidebarFilter = (props: Props) => {
@@ -130,29 +134,33 @@ const ProductsSidebarFilter = (props: Props) => {
           <form onSubmit={handlePriceRangeFilter}>
             <p>{t('productsSidebar:price_range')}</p>
             <div className="d-flex align-items-center mb-3">
-              <div>
-                <input
-                  name="price_from"
-                  type="number"
-                  min={0}
-                  placeholder={t('productsSidebar:price_from')}
-                  size={5}
-                  value={priceFrom}
-                  onChange={(e) => setPriceFrom(e.target.value)}
-                />
-              </div>
-              &nbsp;-&nbsp;
-              <div>
-                <input
-                  name="price_to"
-                  type="number"
-                  min={0}
-                  placeholder={t('productsSidebar:price_to')}
-                  size={5}
-                  value={priceTo}
-                  onChange={(e) => setPriceTo(e.target.value)}
-                />
-              </div>
+              <NumberFormat
+                placeholder={t('productsSidebar:price_from')}
+                className="form-control no-spinner"
+                size={5}
+                min={0}
+                value={priceFrom}
+                inputMode="numeric"
+                thousandSeparator="."
+                decimalSeparator=","
+                onValueChange={(values) => setPriceFrom(values.value)}
+                allowNegative={false}
+              />
+
+              <div className="mx-2">&#8212;</div>
+
+              <NumberFormat
+                placeholder={t('productsSidebar:price_to')}
+                className="form-control no-spinner"
+                size={5}
+                min={0}
+                value={priceTo}
+                inputMode="numeric"
+                thousandSeparator="."
+                decimalSeparator=","
+                onValueChange={(values) => setPriceTo(values.value)}
+                allowNegative={false}
+              />
             </div>
             <button className="btn btn-primary" type="submit">
               {t('productsSidebar:apply')}
