@@ -49,7 +49,7 @@ const LoginForm = (): JSX.Element => {
       }
     },
     onError: (error) => {
-      toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions.code}`));
+      toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
     }
   });
 

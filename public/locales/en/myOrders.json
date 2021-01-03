@@ -20,16 +20,18 @@
   "delivery_address": "Delivery address",
   "phone_number": "Phone number",
   "email": "Email",
-  "note": "Note",
+  "note": "Notes",
   "product": "Product",
   "unit_price": "Unit price",
   "price_tax": "Taxes",
   "quantity": "Quantity",
+  "tax": "Tax",
   "total": "Total",
   "time_out_invoice": "Your order has timed out to invoice",
   "handling": "Handling",
   "delivering": "Delivering",
   "completed": "Completed",
   "cancel_order": "Cancel Order",
-  "no_orders": "No orders"
+  "no_orders": "No orders",
+  "no_notes": "No notes"
 }

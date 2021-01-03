@@ -18,5 +18,6 @@
   "no": "No",
   "update_success": "Update cart success!",
   "view_cart": "View cart",
-  "quick_invoice_with_tax": "Quick invoice ({{tax}}% tax)"
+  "quick_invoice_with_tax": "Quick invoice ({{tax}}% tax)",
+  "quick_invoice_with_no_tax": "Quick invoice"
 }
