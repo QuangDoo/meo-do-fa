@@ -270,21 +270,21 @@ const OrderDetails = () => {
                 alternativeLabel
                 activeStep={activeStep}
                 connector={<CustomStepConnector />}>
-                {orderDetail?.getOrderDetail?.flag === 25 && (
+                {orderDetail?.getOrderDetail?.flag === 25 ? (
                   <Step>
                     <StepLabel icon={<Receipt />} StepIconComponent={CustomStepCancel} error>
                       {t('myOrders:canceled')}
                     </StepLabel>
                   </Step>
-                )}
-                {orderDetail?.getOrderDetail?.flag !== 25 &&
+                ) : (
                   steps.map((step) => (
                     <Step key={step.text}>
                       <StepLabel icon={step.icon} StepIconComponent={CustomStepIcon}>
                         {step.text}
                       </StepLabel>
                     </Step>
-                  ))}
+                  ))
+                )}
               </Stepper>
 
               {orderDetail?.getOrderDetail?.flag !== 25 && (
@@ -307,7 +307,7 @@ const OrderDetails = () => {
                     <Button
                       size="small"
                       startIcon={<DeleteForeverIcon />}
-                      variant="outlined"
+                      variant="contained"
                       onClick={onCancelClick}
                       color="secondary">
                       {t('myOrders:cancel_the_order')}
