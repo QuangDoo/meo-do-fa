@@ -39,6 +39,7 @@ const ProfileSidebar = () => {
       <div className="mb-3">
         {t('navbar:account_of')}
         <h5>{user?.name}</h5>
+        <h5>{user?.cust_no}</h5>
       </div>
 
       <SidebarLink
