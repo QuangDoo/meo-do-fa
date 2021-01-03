@@ -1,3 +1,4 @@
+import { createMuiTheme } from '@material-ui/core';
 import { DefaultTheme } from 'styled-components';
 
 const theme: DefaultTheme = {
@@ -39,4 +40,18 @@ const theme: DefaultTheme = {
   }
 };
 
-export { theme };
+const muiTheme = createMuiTheme({
+  palette: {
+    primary: {
+      main: theme.colors.primary
+    },
+    secondary: {
+      main: theme.colors.secondary
+    },
+    error: {
+      main: theme.colors.danger
+    }
+  }
+});
+
+export { theme, muiTheme };

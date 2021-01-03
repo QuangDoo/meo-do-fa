@@ -6,6 +6,7 @@ import {
   Divider,
   Grid,
   makeStyles,
+  Paper,
   Step,
   StepConnector,
   StepConnectorProps,
@@ -15,6 +16,7 @@ import {
   Table,
   TableBody,
   TableCell,
+  TableContainer,
   TableFooter,
   TableHead,
   TableRow,
@@ -52,9 +54,6 @@ const stepIconGradient = `linear-gradient(102.04deg, ${theme.colors.blue} 0%, ${
 const stepConnectorLineGradient = `linear-gradient(95deg,${theme.colors.blue1} 0%, ${theme.colors.blue} 100%)`;
 
 const useStyles = makeStyles((materialTheme) => ({
-  primaryText: {
-    color: theme.colors.primary
-  },
   cardRoot: {
     padding: materialTheme.spacing(2)
   },
@@ -106,22 +105,11 @@ const useStyles = makeStyles((materialTheme) => ({
       marginBottom: materialTheme.spacing(2)
     }
   },
-  headCell: {
-    padding: 0,
-    paddingBottom: materialTheme.spacing(1),
-    textAlign: 'right'
-  },
-  bodyCell: {
-    padding: 0,
-    paddingTop: materialTheme.spacing(2),
-    paddingBottom: materialTheme.spacing(2),
-    textAlign: 'right'
-  },
-  textAlignLeft: {
-    textAlign: 'left'
-  },
   stepIconCancel: {
     background: 'linear-gradient(102.04deg, #c31e1e 0%, #f00 100%)'
+  },
+  table: {
+    minWidth: 650
   }
 }));
 
@@ -188,57 +176,11 @@ const TextWithLabel = (props) => {
       display="flex"
       flexDirection={inline ? 'row' : 'column'}
       className={classes.textWithLabelContainer}>
-      <Typography
-        variant="button"
-        classes={{
-          root: classes.primaryText
-        }}>
+      <Typography variant="button" color="primary">
         {label}
       </Typography>
       <Typography>{text}</Typography>
     </Box>
-  );
-};
-
-type CustomHeadCellProps = {
-  label: string;
-  textAlign?: 'left' | 'right';
-};
-
-const CustomHeadCell = ({ label, textAlign }: CustomHeadCellProps) => {
-  const classes = useStyles();
-
-  return (
-    <TableCell
-      classes={{
-        head: clsx(classes.headCell, textAlign === 'left' && classes.textAlignLeft)
-      }}>
-      <Typography
-        variant="button"
-        classes={{
-          root: classes.primaryText
-        }}>
-        {label}
-      </Typography>
-    </TableCell>
-  );
-};
-
-type CustomBodyCellProps = {
-  children: React.ReactNode;
-  textAlign?: 'left' | 'right';
-};
-
-const CustomBodyCell = ({ children, textAlign }: CustomBodyCellProps) => {
-  const classes = useStyles();
-
-  return (
-    <TableCell
-      classes={{
-        root: clsx(classes.bodyCell, textAlign === 'left' && classes.textAlignLeft)
-      }}>
-      {children}
-    </TableCell>
   );
 };
 
@@ -297,6 +239,8 @@ const OrderDetails = () => {
     }
     setOpen(true);
   };
+
+  const classes = useStyles();
 
   return (
     <>
@@ -405,21 +349,6 @@ const OrderDetails = () => {
                   />
                 </CustomCard>
               </Grid>
-
-              {/* <Grid item sm={6} xs={12}>
-                    <CustomCard>
-                      <TextWithLabel label="Đơn vị vận chuyển" text="Giaohangtietkiem.vn" />
-
-                      <TextWithLabel label="Ngày giao" text="06/11/2020" />
-
-                      <TextWithLabel label="Mã vận đơn" text="S616097.MN2.DA.2.974708080" />
-
-                      <TextWithLabel
-                        label="Hình thức thanh toán"
-                        text="Thanh toán tiền mặt khi nhận hàng"
-                      />
-                    </CustomCard>
-                  </Grid> */}
             </Grid>
           </Grid>
 
@@ -433,40 +362,54 @@ const OrderDetails = () => {
           </Grid>
 
           <Grid item xs={12}>
-            <CustomCard>
-              <Table>
+            <TableContainer component={Paper}>
+              <Table className={classes.table} aria-label="simple table">
                 <TableHead>
                   <TableRow>
-                    <CustomHeadCell label={t('myOrders:product')} textAlign="left" />
-                    <CustomHeadCell label={t('myOrders:unit_price')} />
-                    <CustomHeadCell label={t('myOrders:quantity')} />
-                    <CustomHeadCell label={t('myOrders:tax')} />
-                    <CustomHeadCell label={t('myOrders:total')} />
+                    <TableCell>
+                      <Typography variant="button" color="primary">
+                        {t('myOrders:product')}
+                      </Typography>
+                    </TableCell>
+
+                    {['unit_price', 'quantity', 'tax', 'total'].map((key) => (
+                      <TableCell key={key} align="right">
+                        <Typography variant="button" color="primary" noWrap>
+                          {t(`myOrders:${key}`)}
+                        </Typography>
+                      </TableCell>
+                    ))}
                   </TableRow>
                 </TableHead>
 
                 <TableBody>
                   {orderDetail?.getOrderDetail?.order_lines?.map((product) => (
-                    <TableRow key={product.id}>
-                      <CustomBodyCell textAlign="left">
+                    <TableRow key={product.name}>
+                      <TableCell component="th" scope="row">
                         <Link href={`/products/${product.product.slug}`}>
                           <a>{product.name}</a>
                         </Link>
-                      </CustomBodyCell>
+                      </TableCell>
 
-                      <CustomBodyCell>
-                        <PriceText price={product.price_unit} /> {t('common:vnd')}
-                      </CustomBodyCell>
+                      <TableCell align="right">
+                        <Box whiteSpace="nowrap">
+                          <PriceText price={product.price_unit} /> {t('common:vnd')}
+                        </Box>
+                      </TableCell>
 
-                      <CustomBodyCell>{product.product_uom_qty}</CustomBodyCell>
+                      <TableCell align="right">{product.product_uom_qty}</TableCell>
 
-                      <CustomBodyCell>
-                        <PriceText price={product.price_tax} /> {t('common:vnd')}
-                      </CustomBodyCell>
+                      <TableCell align="right">
+                        <Box whiteSpace="nowrap">
+                          <PriceText price={product.price_tax} /> {t('common:vnd')}
+                        </Box>
+                      </TableCell>
 
-                      <CustomBodyCell>
-                        <PriceText price={product.price_total} /> {t('common:vnd')}
-                      </CustomBodyCell>
+                      <TableCell align="right">
+                        <Box whiteSpace="nowrap">
+                          <PriceText price={product.price_total} /> {t('common:vnd')}
+                        </Box>
+                      </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
@@ -474,7 +417,7 @@ const OrderDetails = () => {
                 <TableFooter>
                   <TableRow>
                     <TableCell colSpan={5}>
-                      <Typography variant="h5" align="right">
+                      <Typography color="primary" variant="h5" align="right">
                         {t('myOrders:total')}{' '}
                         <PriceText price={orderDetail?.getOrderDetail?.amount_total} />{' '}
                         {t('common:vnd')}
@@ -483,7 +426,7 @@ const OrderDetails = () => {
                   </TableRow>
                 </TableFooter>
               </Table>
-            </CustomCard>
+            </TableContainer>
           </Grid>
         </Grid>
       </ProfileLayout>
