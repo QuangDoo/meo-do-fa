@@ -14,6 +14,7 @@ type Props = {
   price: number;
   sale_price: number;
   quantity: number;
+  list_price: number;
   _id: number;
   slug: string;
   discount_percentage: number;
@@ -56,7 +57,7 @@ function QuickOrderItem(props: Props): JSX.Element {
                 <div className="cart-item__qty">
                   <QuantityInput
                     productId={props.productId}
-                    productPrice={props.price}
+                    productPrice={props.list_price}
                     productName={props.productName}
                     productImg={props.image}
                   />
