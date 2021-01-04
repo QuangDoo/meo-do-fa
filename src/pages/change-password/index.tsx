@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { viPhoneNumberRegex } from 'src/assets/regex/viPhoneNumber';
 import Button from 'src/components/Form/Button';
 import InputWithLabel from 'src/components/Form/InputWithLabel';
 import Footer from 'src/components/Layout/Footer';
@@ -21,7 +20,6 @@ import {
   ChangePasswordVars
 } from 'src/graphql/user/changePassword';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
-import useUser from 'src/hooks/useUser';
 
 import withApollo from '../../utils/withApollo';
 
@@ -53,7 +51,7 @@ const ChangePassWord = (): JSX.Element => {
     }
   });
 
-  const { register, handleSubmit, watch, setValue } = useForm<Inputs>();
+  const { register, handleSubmit } = useForm<Inputs>();
 
   const onSubmit = async (data: Inputs) => {
     const { retype, oldPassword, newPassword } = data;
@@ -113,7 +111,7 @@ const ChangePassWord = (): JSX.Element => {
               placeholder={t('myAccount:new_password')}
               required={true}
               name="newPassword"
-              type="text"
+              type="password"
             />
 
             {/* Retype */}
@@ -129,7 +127,7 @@ const ChangePassWord = (): JSX.Element => {
               placeholder={t('myAccount:retype_newPassword')}
               required={true}
               name="retype"
-              type="text"
+              type="password"
             />
           </FormCard>
 
