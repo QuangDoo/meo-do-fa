@@ -15,11 +15,13 @@ import {
   GetBestSellingProductsVars
 } from 'src/graphql/product/getBestSellingProducts';
 import useCart from 'src/hooks/useCart';
+import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
 
 // import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import QuickOrderItem from './QuickOrderItem';
 
 function QuickOrderPage(): JSX.Element {
+  const isLoggedIn = useIsLoggedIn();
   const { cart } = useCart();
 
   const { t } = useTranslation(['cart', 'common', 'quickOrder']);
@@ -78,7 +80,7 @@ function QuickOrderPage(): JSX.Element {
             </div> */}
           </div>
           <div className="col-12 col-md-3 col-lg-3">
-            {cart && (
+            {isLoggedIn && cart && (
               <div className="cart__info">
                 <div className="elevated row no-gutters mb-3">
                   <div className="col-md-12 col-lg-4 cart__info-quantity">

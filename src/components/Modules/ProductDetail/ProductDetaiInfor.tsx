@@ -14,7 +14,7 @@ const ProductDetailInfor = (props: ProductDetails): JSX.Element => {
 
   const { t } = useTranslation(['common', 'productDetail']);
 
-  console.log('props.manufacturer', props.manufacturer);
+  // console.log('props.manufacturer', props.manufacturer);
   // useEffect(()=>{
 
   // },[])

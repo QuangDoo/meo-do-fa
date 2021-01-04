@@ -386,9 +386,13 @@ const OrderDetails = () => {
                   {orderDetail?.getOrderDetail?.order_lines?.map((product) => (
                     <TableRow key={product.name}>
                       <TableCell component="th" scope="row">
-                        <Link href={`/products/${product.product.slug}`}>
-                          <a>{product.name}</a>
-                        </Link>
+                        {product.product_type !== 'product' ? (
+                          <p>{product.name}</p>
+                        ) : (
+                          <Link href={`/products/${product.product.slug}`}>
+                            <a>{product.name}</a>
+                          </Link>
+                        )}
                       </TableCell>
 
                       <TableCell align="right">
