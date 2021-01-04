@@ -22,9 +22,8 @@ const RightSideUser = (): JSX.Element => {
   const notificationsData = notifications?.getNotify;
 
   useEffect(() => {
-    if (!notifications) return;
-    refetchNoti();
-  }, [notifications]);
+    refetchNoti?.();
+  }, []);
 
   function toggleShow() {
     setShow((show) => !show);

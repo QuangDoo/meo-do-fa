@@ -18,6 +18,10 @@ const Notification = (): JSX.Element => {
 
   const { notifications, loading: loadingNoti, refetchNoti } = useNoti();
 
+  useEffect(() => {
+    refetchNoti?.();
+  }, []);
+
   const [seenAllNoti] = useMutationAuth(SEEN_ALL_NOTI, {
     onCompleted: (data: any) => {
       console.log('data', data);
@@ -26,11 +30,6 @@ const Notification = (): JSX.Element => {
       toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
     }
   });
-
-  useEffect(() => {
-    if (!notifications) return;
-    refetchNoti();
-  }, [notifications]);
 
   const notificationsData = notifications?.getNotify || [];
 

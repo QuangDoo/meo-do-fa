@@ -1,5 +1,6 @@
 import {
   DocumentNode,
+  getApolloContext,
   LazyQueryHookOptions,
   MutationHookOptions,
   MutationTuple,
@@ -13,9 +14,12 @@ import {
   useQuery
 } from '@apollo/client';
 import Cookies from 'js-cookie';
+import { useContext } from 'react';
 
 function useHookAuth(query, options = {}, hookFunc) {
   const token = typeof window !== 'undefined' && Cookies.get('token');
+  const context = useContext(getApolloContext());
+  console.log('apollo context:', context);
   const newOptions = {
     ...options,
     context: {
