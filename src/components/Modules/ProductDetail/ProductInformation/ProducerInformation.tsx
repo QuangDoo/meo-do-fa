@@ -24,7 +24,7 @@ const ProducerInformation = (props: ProductDetails): JSX.Element => {
                 return (
                   <tr key={index}>
                     <td>
-                      <Link href={`/ingredients/${item.id}/${slugify(item.name)}`}>
+                      <Link href={`/ingredients/${item.ingredient_id}/${slugify(item.name)}`}>
                         <a>{item.name}</a>
                       </Link>
                     </td>

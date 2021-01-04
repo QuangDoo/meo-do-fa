@@ -6,7 +6,7 @@ type Category = {
 };
 
 type Ingredient = {
-  id: number;
+  ingredient_id: number;
   name: string;
   amount: string;
 };
@@ -90,7 +90,7 @@ export const GET_PRODUCT = gql`
         name
       }
       ingredients {
-        id
+        ingredient_id
         name
         amount
       }
