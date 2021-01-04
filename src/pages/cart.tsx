@@ -1,8 +1,6 @@
-// import { useMutation } from '@apollo/client';
-import Cookies from 'cookies';
 import { useTranslation } from 'i18n';
 import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import React, { createContext, useContext, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import PriceText from 'src/components/Form/PriceText';
 import Footer from 'src/components/Layout/Footer';
@@ -16,7 +14,7 @@ import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import useCart from 'src/hooks/useCart';
 import withApollo from 'src/utils/withApollo';
 
-function Cart(): JSX.Element {
+function Cart(props) {
   const { cart, loading: loadingCart, getCart } = useCart();
 
   const { t } = useTranslation(['cart', 'common', 'errors']);
@@ -124,10 +122,10 @@ function Cart(): JSX.Element {
 }
 
 Cart.getInitialProps = async (ctx) => {
-  if (typeof window === 'undefined') {
-    const cookies = new Cookies(ctx.req, ctx.res);
+  const token = ctx.req.cookies.token;
 
-    if (!cookies.get('token')) {
+  if (typeof window === 'undefined') {
+    if (!token) {
       ctx.res.writeHead(302, {
         Location: '/'
       });
@@ -137,7 +135,8 @@ Cart.getInitialProps = async (ctx) => {
   }
 
   return {
-    namespacesRequired: ['myAccount']
+    namespacesRequired: ['cart', 'common', 'errors'],
+    token
   };
 };
 
