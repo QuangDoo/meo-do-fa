@@ -37,6 +37,7 @@ export default function useCart(props: Props = {}) {
   return {
     cart,
     loading,
+    getCart,
     refetchCart: refetch
   };
 }

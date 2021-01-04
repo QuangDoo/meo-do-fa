@@ -143,8 +143,6 @@ const MyAccount = (): JSX.Element => {
 
   const wards = wardsData?.getWards || [];
 
-  const chosenWard = watch('companyWard');
-
   const [updateUser, { loading: loadingUpdateUser }] = useMutationAuth<
     UpdateUserData,
     UpdateUserVars
