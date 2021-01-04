@@ -40,5 +40,6 @@
   "add_to_cart_success": "Add to cart success.",
   "add_to_cart_quantity_0": "Please provide quantity.",
   "add_to_cart_less_than_0": "Quantity must be greater than 0",
-  "send_password_to_email_success": "The new password has been sent to your inbox. Please check your email!"
+  "send_password_to_email_success": "The new password has been sent to your inbox. Please check your email!",
+  "error_retype_pw":"Password do not match"
 }
