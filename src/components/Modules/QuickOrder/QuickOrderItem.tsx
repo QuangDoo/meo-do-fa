@@ -54,14 +54,16 @@ function QuickOrderItem(props: Props): JSX.Element {
                   )}
                 </div>
 
-                <div className="cart-item__qty">
-                  <QuantityInput
-                    productId={props.productId}
-                    productPrice={props.list_price}
-                    productName={props.productName}
-                    productImg={props.image}
-                  />
-                </div>
+                {isLoggedIn && (
+                  <div className="cart-item__qty">
+                    <QuantityInput
+                      productId={props.productId}
+                      productPrice={props.list_price}
+                      productName={props.productName}
+                      productImg={props.image}
+                    />
+                  </div>
+                )}
               </div>
             </div>
           </div>
