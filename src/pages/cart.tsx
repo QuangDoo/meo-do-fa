@@ -2,7 +2,7 @@
 import Cookies from 'cookies';
 import { useTranslation } from 'i18n';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { toast } from 'react-toastify';
 import PriceText from 'src/components/Form/PriceText';
 import Footer from 'src/components/Layout/Footer';
@@ -17,9 +17,13 @@ import useCart from 'src/hooks/useCart';
 import withApollo from 'src/utils/withApollo';
 
 function Cart(): JSX.Element {
-  const { cart, loading: loadingCart } = useCart();
+  const { cart, loading: loadingCart, getCart } = useCart();
 
   const { t } = useTranslation(['cart', 'common', 'errors']);
+
+  useEffect(() => {
+    getCart?.();
+  }, [getCart]);
 
   const router = useRouter();
 
@@ -89,23 +93,21 @@ function Cart(): JSX.Element {
                           <div>{t('cart:total')}</div>
                         </div>
                         <div className="cart__total">
-                          <PriceText price={cart?.getCart.totalPrice} />
+                          <PriceText price={cart?.getCart.totalNetPrice} />
                           <span className="unit">{t('common:vnd')}</span>
                         </div>
                       </div>
                     </div>
 
-                    {cart?.getCart.totalPrice > 0 && (
-                      <div className="col-12">
-                        <div className="cart__info-item">
-                          <button
-                            onClick={handleCheckoutClick}
-                            className="btn btn-secondary btn-block text-small">
-                            {t('continue_payment')}
-                          </button>
-                        </div>
+                    <div className="col-12">
+                      <div className="cart__info-item">
+                        <button
+                          onClick={handleCheckoutClick}
+                          className="btn btn-secondary btn-block text-small">
+                          {t('continue_payment')}
+                        </button>
                       </div>
-                    )}
+                    </div>
                   </div>
                   <a href="/products">&lt;&lt; {t('cart:continue_order')}</a>
                 </div>
@@ -116,7 +118,8 @@ function Cart(): JSX.Element {
       </div>
       <Footer />
 
-      <LoadingBackdrop open={creatingCounsel || loadingCart} />
+      {/* <LoadingBackdrop open={creatingCounsel || loadingCart} /> */}
+      <LoadingBackdrop open />
     </>
   );
 }
