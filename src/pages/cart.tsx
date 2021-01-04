@@ -118,8 +118,7 @@ function Cart(): JSX.Element {
       </div>
       <Footer />
 
-      {/* <LoadingBackdrop open={creatingCounsel || loadingCart} /> */}
-      <LoadingBackdrop open />
+      <LoadingBackdrop open={creatingCounsel || loadingCart} />
     </>
   );
 }
