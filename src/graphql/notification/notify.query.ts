@@ -1,19 +1,21 @@
 import { gql } from '@apollo/client';
 
+type Notifies = {
+  _id: string;
+  content: string;
+  description: string;
+  userId: string;
+  isSeen: boolean;
+  type: string;
+  update_date: string;
+  create_date: string;
+};
+
 export type GetNotiData = {
   getNotify: {
-    Notifies: {
-      _id: string;
-      content: string;
-      description: string;
-      userId: string;
-      isSeen: boolean;
-      type: string;
-      update_date: string;
-      create_date: string;
-    };
+    Notifies: Notifies[];
     total: number;
-  }[];
+  };
 };
 
 export type GetNotiVars = {

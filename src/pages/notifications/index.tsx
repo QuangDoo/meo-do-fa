@@ -33,7 +33,7 @@ const Notification = (): JSX.Element => {
     }
   });
 
-  const notificationsData = notifications?.Notifies || [];
+  const notificationsData = notifications?.Notifies;
 
   const notificationsPagination = notifications?.total || 0;
 
