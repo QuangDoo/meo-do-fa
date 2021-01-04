@@ -1,5 +1,6 @@
 import Cookies from 'cookies';
 import { useTranslation } from 'i18n';
+import { useRouter } from 'next/router';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -13,12 +14,14 @@ import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import Nav from 'src/components/Layout/Nav';
 import FormCard from 'src/components/Modules/MyAccount/FormCard';
 import ProfileLayout from 'src/components/Modules/ProfileLayout';
+import { useUserContext } from 'src/contexts/User';
 import {
   CHANGE_PASSWORD,
   ChangePasswordData,
   ChangePasswordVars
 } from 'src/graphql/user/changePassword';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
+import useUser from 'src/hooks/useUser';
 
 import withApollo from '../../utils/withApollo';
 
@@ -26,11 +29,15 @@ type Inputs = {
   phone: string;
   oldPassword: string;
   newPassword: string;
+  retype: string;
 };
 
 const ChangePassWord = (): JSX.Element => {
   const { t } = useTranslation(['myAccount', 'common', 'login']);
-  const { register, handleSubmit, watch, setValue } = useForm<Inputs>();
+
+  const { user } = useUserContext();
+
+  const rotuer = useRouter();
 
   const [changePassword, { loading: ChangingPassword }] = useMutationAuth<
     ChangePasswordData,
@@ -39,20 +46,27 @@ const ChangePassWord = (): JSX.Element => {
     onCompleted: () => {
       toast.success(t('myAccount:update_success'));
       window.scrollTo(0, 0);
+      rotuer.push('/my-account');
     },
     onError: (error) => {
       toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions.code}`));
     }
   });
 
+  const { register, handleSubmit, watch, setValue } = useForm<Inputs>();
+
   const onSubmit = async (data: Inputs) => {
-    const { phone, oldPassword, newPassword } = data;
+    const { retype, oldPassword, newPassword } = data;
     console.log('data', data);
-    changePassword({
-      variables: {
-        inputs: { phone, oldPassword, newPassword }
-      }
-    });
+    if (retype !== newPassword) {
+      toast.error(t('errors:error_retype_pw'));
+    } else {
+      changePassword({
+        variables: {
+          inputs: { phone: user.phone, oldPassword, newPassword }
+        }
+      });
+    }
   };
   const onError = (error) => {
     toast.error(error[Object.keys(error)[0]].message);
@@ -70,24 +84,6 @@ const ChangePassWord = (): JSX.Element => {
       <ProfileLayout title={t('myAccount:title')}>
         <form onSubmit={handleSubmit(onSubmit, onError)}>
           <FormCard title={t('myAccount:change_password')}>
-            {/* Full name */}
-
-            {/* Phone number */}
-            <InputWithLabel
-              ref={register({
-                required: `${t('register:input_phone_error_required')}`,
-                pattern: {
-                  value: viPhoneNumberRegex,
-                  message: t('myAccount:invalid_phone')
-                }
-              })}
-              required={true}
-              label={t('myAccount:phone_label')}
-              placeholder={t('myAccount:phone_label')}
-              name="phone"
-              type="text"
-            />
-
             {/* old password */}
             <InputWithLabel
               ref={register({
@@ -117,6 +113,22 @@ const ChangePassWord = (): JSX.Element => {
               placeholder={t('myAccount:new_password')}
               required={true}
               name="newPassword"
+              type="text"
+            />
+
+            {/* Retype */}
+            <InputWithLabel
+              ref={register({
+                required: `${t('myAccount:retype_newPassword_required')}`,
+                minLength: {
+                  value: 6,
+                  message: t('login:invalid_password')
+                }
+              })}
+              label={t('myAccount:retype_newPassword')}
+              placeholder={t('myAccount:retype_newPassword')}
+              required={true}
+              name="retype"
               type="text"
             />
           </FormCard>
