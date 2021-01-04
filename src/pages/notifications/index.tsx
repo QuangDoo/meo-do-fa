@@ -35,6 +35,10 @@ const Notification = (): JSX.Element => {
 
   const notificationsData = notifications?.Notifies || [];
 
+  const notificationsPagination = notifications?.total || 0;
+
+  console.log('notificationsPagination', notificationsPagination);
+
   const handleReadAll = () => {
     // read all
     seenAllNoti();
@@ -74,7 +78,7 @@ const Notification = (): JSX.Element => {
       </div>
 
       <Pagination
-        count={Math.ceil(100 / pageSize)}
+        count={Math.ceil(notificationsPagination / pageSize)}
         page={page}
         siblingCount={4}
         onChange={(page) =>

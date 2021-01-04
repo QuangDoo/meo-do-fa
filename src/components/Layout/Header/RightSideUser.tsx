@@ -12,7 +12,7 @@ type NotiItem = {
   notiInfo: string;
 };
 
-const pageSize = 20;
+const pageSize = 5;
 
 const RightSideUser = (): JSX.Element => {
   const { user } = useUser();
@@ -22,9 +22,9 @@ const RightSideUser = (): JSX.Element => {
 
   const router = useRouter();
 
-  const page = +router.query.page || 1;
+  const page = 1;
 
-  const { notifications, refetchNoti } = useNoti({ page, pageSize });
+  const { notifications, refetchNoti } = useNoti({ page: 1, pageSize });
 
   const notificationsData = notifications?.Notifies;
 
@@ -41,14 +41,6 @@ const RightSideUser = (): JSX.Element => {
       return noti;
     }
   });
-
-  const size = notificationsData?.length;
-
-  const filterNotifications = notificationsData
-    ?.slice(notificationsData?.length - 5, size)
-    .map((item) => {
-      return item;
-    });
 
   return (
     <div className="header-right d-none d-lg-block">
@@ -69,9 +61,9 @@ const RightSideUser = (): JSX.Element => {
               'dropdown-menu dropdown-menu-right notification__dropdown p-0 ',
               show && 'show'
             )}>
-            {filterNotifications?.length > 0 && (
+            {notificationsData?.length > 0 && (
               <>
-                {filterNotifications?.reverse()?.map((item, index) => {
+                {notificationsData?.map((item, index) => {
                   return <NotiItem key={index} {...item} />;
                 })}
                 <div className="dropdown__item notification__view-all">

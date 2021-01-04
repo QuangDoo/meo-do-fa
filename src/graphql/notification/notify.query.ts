@@ -12,7 +12,7 @@ export type GetNotiData = {
       update_date: string;
       create_date: string;
     };
-    total;
+    total: number;
   }[];
 };
 
