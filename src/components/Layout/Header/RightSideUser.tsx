@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import NotiItem from 'src/components/Modules/Noti/NotiItem';
 import useNoti from 'src/hooks/useNoti';
@@ -11,20 +12,25 @@ type NotiItem = {
   notiInfo: string;
 };
 
+const pageSize = 20;
+
 const RightSideUser = (): JSX.Element => {
   const { user } = useUser();
   const { t } = useTranslation('noti');
 
   const [show, setShow] = useState(false);
 
-  const { notifications, refetchNoti } = useNoti();
+  const router = useRouter();
 
-  const notificationsData = notifications?.getNotify;
+  const page = +router.query.page || 1;
+
+  const { notifications, refetchNoti } = useNoti({ page, pageSize });
+
+  const notificationsData = notifications?.Notifies;
 
   useEffect(() => {
-    if (!notifications) return;
-    refetchNoti();
-  }, [notifications]);
+    refetchNoti?.();
+  }, []);
 
   function toggleShow() {
     setShow((show) => !show);
