@@ -2,18 +2,8 @@ import { useQuery } from '@apollo/client';
 import { useTranslation } from 'i18n';
 import _ from 'lodash';
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
-import {
-  GlassMagnifier,
-  Magnifier,
-  MagnifierContainer,
-  MagnifierPreview,
-  MagnifierZoom,
-  MOUSE_ACTIVATION,
-  PictureInPictureMagnifier,
-  SideBySideMagnifier,
-  TOUCH_ACTIVATION
-} from 'react-image-magnifiers';
+import React, { useEffect } from 'react';
+import { MagnifierContainer, SideBySideMagnifier } from 'react-image-magnifiers';
 import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
