@@ -41,5 +41,7 @@
   "add_to_cart_quantity_0": "Xin hãy nhập số lượng.",
   "add_to_cart_less_than_0": "Số lượng phải lớn hơn 0",
   "send_password_to_email_success": "Mật khẩu mới đã được gửi đến email của bạn. Vui lòng kiểm tra hộp thư!",
-  "error_retype_pw":"Mật khẩu không trùng khớp"
+  "error_retype_pw":"Mật khẩu không trùng khớp",
+  "error_match_pw":"Mật khẩu hiện tại và mật khẩu cũ không được trùng khớp",
+  "error_wrong_cr_pw":"Mật khẩu hiên tại không đúng"
 }
