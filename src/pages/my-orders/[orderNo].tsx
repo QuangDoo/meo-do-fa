@@ -297,27 +297,31 @@ const OrderDetails = () => {
                     <Typography>
                       {t('myOrders:expected_date')}{' '}
                       <strong>
-                        {orderDetail?.getOrderDetail?.flag !== 25 &&
-                          orderDetail?.getOrderDetail?.expected_date &&
-                          new Date(orderDetail?.getOrderDetail?.expected_date).toLocaleDateString(
+                        {orderDetail?.getOrderDetail?.expected_date &&
+                          new Date(orderDetail.getOrderDetail.expected_date).toLocaleDateString(
                             'en-GB'
                           )}
                       </strong>
                     </Typography>
-                    <Button
-                      size="small"
-                      startIcon={<DeleteForeverIcon />}
-                      variant="contained"
-                      onClick={onCancelClick}
-                      color="secondary">
-                      {t('myOrders:cancel_the_order')}
-                    </Button>
-                    <ConfirmCancelOrder
-                      open={open}
-                      onClose={() => setOpen(false)}
-                      orderNo={orderDetail?.getOrderDetail?.name}
-                      callBack={() => refetch()}
-                    />
+
+                    {orderDetail?.getOrderDetail?.flag !== 80 && (
+                      <>
+                        <Button
+                          size="small"
+                          startIcon={<DeleteForeverIcon />}
+                          variant="contained"
+                          onClick={onCancelClick}
+                          color="secondary">
+                          {t('myOrders:cancel_the_order')}
+                        </Button>
+                        <ConfirmCancelOrder
+                          open={open}
+                          onClose={() => setOpen(false)}
+                          orderNo={orderDetail?.getOrderDetail?.name}
+                          callBack={() => refetch()}
+                        />
+                      </>
+                    )}
                   </Box>
                 </>
               )}
