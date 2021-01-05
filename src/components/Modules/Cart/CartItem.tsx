@@ -79,10 +79,12 @@ function CartItem(props: CartItemProps): JSX.Element {
 
           <div className="product__status">
             <span className="badge badge-light display-status mr-1 mb-1 invoice_exportable">
-              <i className="fas mr-1"></i>
-              {props.tax === -1
-                ? t(`cart:quick_invoice_with_no_tax`)
-                : t(`cart:quick_invoice_with_tax`, { tax: props.tax })}
+              {props.tax !== -1 && (
+                <>
+                  <i className="fas mr-1"></i>
+                  {t(`cart:quick_invoice_with_tax`, { tax: props.tax })}{' '}
+                </>
+              )}
             </span>
           </div>
         </div>

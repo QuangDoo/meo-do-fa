@@ -8,9 +8,8 @@ import { ProductDetails } from 'src/graphql/product/product.query';
 // import Tab from '../../../Tab/Tab';
 
 const ProducerInformation = (props: ProductDetails): JSX.Element => {
-  console.log('props.ingredients', props.ingredients);
   const { t } = useTranslation(['ingredientDetails']);
-  console.log('props.ingredients', props.ingredients);
+
   return (
     <div className="ml-3 mt-3 ">
       <div className="mb-3">
