@@ -3,6 +3,17 @@ import { useTranslation } from 'i18n';
 import _ from 'lodash';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
+import {
+  GlassMagnifier,
+  Magnifier,
+  MagnifierContainer,
+  MagnifierPreview,
+  MagnifierZoom,
+  MOUSE_ACTIVATION,
+  PictureInPictureMagnifier,
+  SideBySideMagnifier,
+  TOUCH_ACTIVATION
+} from 'react-image-magnifiers';
 import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
@@ -60,11 +71,14 @@ function ProductDetail(): JSX.Element {
             <div className="col-md-8">
               <div className="row">
                 <div className="col-md-6">
-                  <div
-                    className="lozad product__image"
-                    style={{
-                      backgroundImage: `url(${product?.image_512})`
-                    }}>
+                  <div className="lozad product__image">
+                    <MagnifierContainer>
+                      <SideBySideMagnifier
+                        alwaysInPlace={true}
+                        // style={{ height: '400px' }}
+                        imageSrc={product?.image_512}
+                      />
+                    </MagnifierContainer>
                     {product?.discount_percentage > 0 && (
                       <DiscountRibbon discountPercent={product?.discount_percentage} />
                     )}
