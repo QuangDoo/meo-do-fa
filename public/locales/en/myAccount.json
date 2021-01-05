@@ -36,12 +36,12 @@
   "update_success": "Update information success!",
   "change_password": "Change password",
   "new_password": "New password",
-  "old_password": "Old password",
+  "old_password": "Current password",
   "btn_change_password": "Change password",
   "phone_required": "Please provice a phone number",
   "invalid_phone": "Invalid phone",
   "newPassword_required": "Please provide a new password",
-  "oldPassword_required": "Please provide a old password",
+  "oldPassword_required": "Please provide a current password",
   "retype_newPassword":"Retype a new password",
   "retype_newPassword_required":"Please retype new password"
 }

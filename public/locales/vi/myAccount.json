@@ -38,8 +38,11 @@
   "new_password": "Mật khẩu mới",
   "btn_change_password": "Đổi mật khẩu",
   "phone_required": "Xin nhập số điện thoại",
-  "old_password": "Mật khẩu cũ",
+  "old_password": "Mật khẩu hiện tại",
   "newPassword_required": "Xin nhập mật khẩu mới",
-  "oldPassword_required": "Xin nhập mật khẩu cũ",
-  "invalid_phone": "Số điện thoại không hợp lệ"
+  "oldPassword_required": "Xin nhập mật khẩu hiện tại",
+  "invalid_phone": "Số điện thoại không hợp lệ",
+  "retype_newPassword":"Nhập lại mật khẩu mới",
+  "retype_newPassword_required":"Xin nhập mật khẩu mới",
+  "error_retype_pw":"Mật khẩu không trùng khớp"
 }

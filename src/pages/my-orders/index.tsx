@@ -1,4 +1,4 @@
-import { AppBar, Box, makeStyles, Tab, Tabs, Theme, Typography } from '@material-ui/core';
+import { AppBar, Box, makeStyles, Tab, Tabs, Typography } from '@material-ui/core';
 import Cookies from 'cookies';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
@@ -10,7 +10,6 @@ import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
 import Loading from 'src/components/Layout/Loading';
 import Nav from 'src/components/Layout/Nav';
-import Pagination from 'src/components/Modules/Pagination';
 import ProfileLayout from 'src/components/Modules/ProfileLayout';
 import {
   GET_ORDER_LIST,
@@ -226,7 +225,6 @@ const MyOrders = () => {
   };
 
   const orderList = data?.getOrderList || [];
-  const total = orderList.length;
   const classes = useStyles();
 
   return (
