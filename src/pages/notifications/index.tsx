@@ -1,7 +1,9 @@
 import { useTranslation } from 'i18n';
-import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import React, { useEffect } from 'react';
 import { toast } from 'react-toastify';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
+import Pagination from 'src/components/Modules/Pagination';
 import { SEEN_ALL_NOTI } from 'src/graphql/notification/seenNoti.mutation';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import useNoti from 'src/hooks/useNoti';
@@ -13,10 +15,14 @@ import Header from '../../components/Layout/Header';
 import Nav from '../../components/Layout/Nav';
 import NotiItem from '../../components/Modules/Noti/NotiItem';
 
-const Notification = (): JSX.Element => {
-  const [isRead, setIsRead] = useState(false);
+const pageSize = 10;
 
-  const { notifications, loading: loadingNoti, refetchNoti } = useNoti();
+const Notification = (): JSX.Element => {
+  const router = useRouter();
+
+  const page = +router.query.page || 1;
+
+  const { notifications, loading: loadingNoti, refetchNoti } = useNoti({ page, pageSize });
 
   useEffect(() => {
     refetchNoti?.();
@@ -31,11 +37,11 @@ const Notification = (): JSX.Element => {
     }
   });
 
-  const notificationsData = notifications?.getNotify || [];
+  const notificationsData = notifications?.Notifies;
 
-  const notificationsReverse = notificationsData?.map((item) => {
-    return item;
-  });
+  const notificationsPagination = notifications?.total || 0;
+
+  console.log('notificationsPagination', notificationsPagination);
 
   const handleReadAll = () => {
     // read all
@@ -64,7 +70,7 @@ const Notification = (): JSX.Element => {
             )}
           </div>
           {notificationsData?.length > 0 ? (
-            notificationsReverse?.reverse()?.map((noti, index) => {
+            notificationsData?.map((noti, index) => {
               return <NotiItem {...noti} key={index} />;
             })
           ) : (
@@ -75,8 +81,8 @@ const Notification = (): JSX.Element => {
         </div>
       </div>
 
-      {/* <Pagination
-        count={Math.ceil(total / pageSize)}
+      <Pagination
+        count={Math.ceil(notificationsPagination / pageSize)}
         page={page}
         siblingCount={4}
         onChange={(page) =>
@@ -88,7 +94,7 @@ const Notification = (): JSX.Element => {
             }
           })
         }
-      /> */}
+      />
       <LoadingBackdrop open={loadingNoti} />
       <Footer />
     </>

@@ -40,6 +40,8 @@
   "btn_change_password": "Change password",
   "phone_required": "Please provice a phone number",
   "invalid_phone": "Invalid phone",
-  "newPassword_required": "Please provice a new password",
-  "oldPassword_required": "Please provice a old password"
+  "newPassword_required": "Please provide a new password",
+  "oldPassword_required": "Please provide a old password",
+  "retype_newPassword":"Retype a new password",
+  "retype_newPassword_required":"Please retype new password"
 }
