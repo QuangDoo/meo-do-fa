@@ -287,40 +287,41 @@ const OrderDetails = () => {
                 )}
               </Stepper>
 
-              {orderDetail?.getOrderDetail?.flag !== 25 && (
-                <>
-                  <Box my={2}>
-                    <Divider />
-                  </Box>
+              {orderDetail?.getOrderDetail?.flag !== 25 &&
+                orderDetail?.getOrderDetail?.flag !== 80 && (
+                  <>
+                    <Box my={2}>
+                      <Divider />
+                    </Box>
 
-                  <Box display="flex" justifyContent="space-between" alignItems="center">
-                    <Typography>
-                      {t('myOrders:expected_date')}{' '}
-                      <strong>
-                        {orderDetail?.getOrderDetail?.flag !== 25 &&
-                          orderDetail?.getOrderDetail?.expected_date &&
-                          new Date(orderDetail?.getOrderDetail?.expected_date).toLocaleDateString(
-                            'en-GB'
-                          )}
-                      </strong>
-                    </Typography>
-                    <Button
-                      size="small"
-                      startIcon={<DeleteForeverIcon />}
-                      variant="contained"
-                      onClick={onCancelClick}
-                      color="secondary">
-                      {t('myOrders:cancel_the_order')}
-                    </Button>
-                    <ConfirmCancelOrder
-                      open={open}
-                      onClose={() => setOpen(false)}
-                      orderNo={orderDetail?.getOrderDetail?.name}
-                      callBack={() => refetch()}
-                    />
-                  </Box>
-                </>
-              )}
+                    <Box display="flex" justifyContent="space-between" alignItems="center">
+                      <Typography>
+                        {t('myOrders:expected_date')}{' '}
+                        <strong>
+                          {orderDetail?.getOrderDetail?.flag !== 25 &&
+                            orderDetail?.getOrderDetail?.expected_date &&
+                            new Date(orderDetail?.getOrderDetail?.expected_date).toLocaleDateString(
+                              'en-GB'
+                            )}
+                        </strong>
+                      </Typography>
+                      <Button
+                        size="small"
+                        startIcon={<DeleteForeverIcon />}
+                        variant="contained"
+                        onClick={onCancelClick}
+                        color="secondary">
+                        {t('myOrders:cancel_the_order')}
+                      </Button>
+                      <ConfirmCancelOrder
+                        open={open}
+                        onClose={() => setOpen(false)}
+                        orderNo={orderDetail?.getOrderDetail?.name}
+                        callBack={() => refetch()}
+                      />
+                    </Box>
+                  </>
+                )}
             </CustomCard>
           </Grid>
 
