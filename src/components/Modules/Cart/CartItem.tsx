@@ -78,14 +78,16 @@ function CartItem(props: CartItemProps): JSX.Element {
           </Link>
 
           <div className="product__status">
-            <span className="badge badge-light display-status mr-1 mb-1 invoice_exportable">
-              {props.tax !== -1 && (
-                <>
-                  <i className="fas mr-1"></i>
-                  {t(`cart:quick_invoice_with_tax`, { tax: props.tax })}{' '}
-                </>
-              )}
-            </span>
+            {props.product.is_quick_invoice && (
+              <span className="badge badge-light display-status mr-1 mb-1 invoice_exportable">
+                {props.tax !== -1 && (
+                  <>
+                    <i className="fas mr-1"></i>
+                    {t(`cart:quick_invoice_with_tax`, { tax: props.tax })}{' '}
+                  </>
+                )}
+              </span>
+            )}
           </div>
         </div>
 
