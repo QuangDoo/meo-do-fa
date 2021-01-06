@@ -52,7 +52,11 @@ const CategoryDropdownMenu = (props: Props) => {
                             className={clsx(
                               'products__filter-category',
                               router.query.category === id.toString() && 'active'
-                            )}>
+                            )}
+                            role="button"
+                            tabIndex={0}
+                            onClick={() => props.onClose()}
+                            onKeyDown={() => props.onClose()}>
                             {name}
                           </a>
                         </Link>
