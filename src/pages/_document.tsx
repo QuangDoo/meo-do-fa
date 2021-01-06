@@ -24,19 +24,17 @@ class MyDocument extends Document {
       ctx.renderPage = () =>
         originalRenderPage({
           enhanceApp: (App) => (props) =>
-            sheet.collectStyles(materialUiSheets.collect(<App {...props} />))
+            materialUiSheets.collect(sheet.collectStyles(<App {...props} />))
         });
 
       const initialProps = await Document.getInitialProps(ctx);
       return {
         ...initialProps,
-        styles: (
-          <>
-            {initialProps.styles}
-            {sheet.getStyleElement()}
-            {materialUiSheets.getStyleElement()}
-          </>
-        )
+        styles: [
+          ...React.Children.toArray(initialProps.styles),
+          sheet.getStyleElement(),
+          materialUiSheets.getStyleElement()
+        ]
       };
     } finally {
       sheet.seal();

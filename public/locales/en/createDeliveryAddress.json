@@ -1,0 +1,22 @@
+{
+  "dialog_title": "Create delivery address",
+  "cancel_button_label": "Cancel",
+  "confirm_button_label": "Save address",
+  "input_fullName_label": "Customer full name",
+  "input_fullName_required": "Please input customer full name",
+  "input_phone_label": "Phone number",
+  "input_phone_required": "Please input a phone number",
+  "input_phone_invalid": "Please input a valid phone number",
+  "input_email_label": "Email",
+  "input_email_invalid": "Please input a valid email",
+  "input_email_noSpecialChars": "Email can't contain special characters",
+  "input_street_label": "Delivery address",
+  "input_street_required": "Please input a delivery address",
+  "select_city_label": "City/Province",
+  "select_city_required": "Please select a city/province",
+  "select_district_label": "District",
+  "select_district_required": "Please select a district",
+  "select_ward_label": "Ward",
+  "select_ward_required": "Please select a ward",
+  "create_delivery_address_success": "Created address successfully"
+}

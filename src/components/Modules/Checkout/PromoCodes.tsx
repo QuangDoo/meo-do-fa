@@ -9,13 +9,13 @@ import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { APPLY_COUPON, ApplyCouponData, ApplyCouponVars } from 'src/graphql/coupons/applyCoupon';
 import { GET_USED_COUPONS, GetUsedCouponsData } from 'src/graphql/coupons/getUsedCoupons';
 import { OutputCounsel, PromotionType } from 'src/graphql/order/getCounsel';
+import { useToken } from 'src/pages/checkout';
 
 import ApplyPromoCodesDialog from './ApplyPromoCodesDialog';
 
 type Props = {
   setCounselData: (data: OutputCounsel) => void;
   counselData: OutputCounsel;
-  token: string;
 };
 
 type CouponProps = {
@@ -50,6 +50,8 @@ function Coupon(props: CouponProps) {
 export default function PromoCodes(props: Props) {
   const [open, setOpen] = useState(false);
 
+  const token = useToken();
+
   const { t } = useTranslation(['checkout', 'errors']);
 
   const router = useRouter();
@@ -70,7 +72,7 @@ export default function PromoCodes(props: Props) {
     fetchPolicy: 'network-only',
     context: {
       headers: {
-        authorization: props.token
+        authorization: token
       }
     }
   });

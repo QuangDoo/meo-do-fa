@@ -245,11 +245,7 @@ const CheckoutPage = (props: Props) => {
             </div>
 
             <div className="col-lg-4 mb-3">
-              <PromoCodes
-                counselData={counselData}
-                setCounselData={setCounselData}
-                token={props.token}
-              />
+              <PromoCodes counselData={counselData} setCounselData={setCounselData} />
               <StickySidebar counselData={counselData} />
             </div>
           </div>

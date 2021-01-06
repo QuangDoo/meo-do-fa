@@ -9,6 +9,7 @@
   "input_phone_invalid": "Xin nhập số điện thoại hợp lệ",
   "input_email_label": "Email",
   "input_email_invalid": "Xin nhập email hợp lệ",
+  "input_email_noSpecialChars": "Email không được chứa kí tự đặc biệt",
   "input_street_label": "Địa chỉ giao hàng",
   "input_street_required": "Xin nhập địa chỉ giao hàng",
   "select_city_label": "Tỉnh/Thành phố",

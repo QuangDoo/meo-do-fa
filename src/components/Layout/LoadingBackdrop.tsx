@@ -16,7 +16,11 @@ const LoadingBackdrop = (props: Props) => {
   const classes = useStyles();
 
   return (
-    <Backdrop className={classes.backdrop} open={props.open}>
+    <Backdrop
+      classes={{
+        root: classes.backdrop
+      }}
+      open={props.open}>
       <CircularProgress color="inherit" />
     </Backdrop>
   );

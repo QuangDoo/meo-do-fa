@@ -4,7 +4,7 @@ import { useTranslation } from 'i18n';
 import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { emailRegex } from 'src/assets/regex/email';
+import { emailRegex, noSpecialChars } from 'src/assets/regex/email';
 import { viPhoneNumberRegex } from 'src/assets/regex/viPhoneNumber';
 import {
   CREATE_DELIVERY_USER,
@@ -121,8 +121,8 @@ export default function CreateDeliveryAddressDialog(props: Props) {
             label={t('createDeliveryAddress:input_fullName_label')}
             fullWidth
             variant="outlined"
-            error={errors?.fullName}
-            helperText={errors?.fullName?.message}
+            error={errors.fullName}
+            helperText={errors.fullName?.message}
           />
         </Box>
 
@@ -142,8 +142,8 @@ export default function CreateDeliveryAddressDialog(props: Props) {
                 label={t('createDeliveryAddress:input_phone_label')}
                 fullWidth
                 variant="outlined"
-                error={errors?.phone}
-                helperText={errors?.phone?.message}
+                error={errors.phone}
+                helperText={errors.phone?.message}
               />
             </Grid>
 
@@ -153,12 +153,19 @@ export default function CreateDeliveryAddressDialog(props: Props) {
                   pattern: {
                     value: emailRegex,
                     message: t('createDeliveryAddress:input_email_invalid')
+                  },
+                  validate: {
+                    noSpecialChars: (value) =>
+                      noSpecialChars.test(value) ||
+                      t('createDeliveryAddress:input_email_noSpecialChars') + ''
                   }
                 })}
                 name="email"
                 label={t('createDeliveryAddress:input_email_label')}
                 fullWidth
                 variant="outlined"
+                error={errors.email}
+                helperText={errors.email?.message}
               />
             </Grid>
           </Grid>
@@ -174,7 +181,7 @@ export default function CreateDeliveryAddressDialog(props: Props) {
             fullWidth
             variant="outlined"
             required
-            error={errors?.street}
+            error={errors.street}
             helperText={errors?.street?.message}
           />
         </Box>
@@ -195,7 +202,7 @@ export default function CreateDeliveryAddressDialog(props: Props) {
                 name: city.name,
                 value: city.name + '__' + city.id
               }))}
-              error={!!errors.city}
+              error={errors.city}
               helperText={errors.city?.message}
             />
           </Grid>
@@ -215,7 +222,7 @@ export default function CreateDeliveryAddressDialog(props: Props) {
                 name: district.name,
                 value: district.name + '__' + district.id
               }))}
-              error={!!errors.district}
+              error={errors.district}
               helperText={errors.district?.message}
             />
           </Grid>
@@ -235,7 +242,7 @@ export default function CreateDeliveryAddressDialog(props: Props) {
                 name: ward.name,
                 value: ward.name + '__' + ward.id
               }))}
-              error={!!errors.ward}
+              error={errors.ward}
               helperText={errors.ward?.message}
             />
           </Grid>
