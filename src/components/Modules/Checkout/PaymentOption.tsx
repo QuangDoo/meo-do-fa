@@ -29,8 +29,6 @@ const PaymentOption = (props: Props): JSX.Element => {
 
   const chosenPaymentOption = watch('paymentMethodId');
 
-  console.log('chosen payment option:', chosenPaymentOption);
-
   const { t } = useTranslation('checkout');
 
   const router = useRouter();
