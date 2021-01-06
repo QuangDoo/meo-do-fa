@@ -6,7 +6,6 @@ type Category = {
 };
 
 type Ingredient = {
-  ingredient_id: number;
   name: string;
   amount: string;
   ingredient_id: number;
