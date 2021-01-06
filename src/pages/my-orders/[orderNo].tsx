@@ -385,7 +385,7 @@ const OrderDetails = () => {
                       </Typography>
                     </TableCell>
 
-                    {['unit_price', 'quantity', 'tax', 'total'].map((key) => (
+                    {['quantity', 'unit_price', 'tax', 'total'].map((key) => (
                       <TableCell key={key} align="right">
                         <Typography variant="button" color="primary" noWrap>
                           {t(`myOrders:${key}`)}
@@ -400,7 +400,7 @@ const OrderDetails = () => {
                     <TableRow key={product.name}>
                       <TableCell component="th" scope="row">
                         {product.product_type !== 'product' ? (
-                          <p>{product.name}</p>
+                          <div>{product.name}</div>
                         ) : (
                           <Link href={`/products/${product.product.slug}`}>
                             <a>{product.name}</a>
@@ -409,24 +409,16 @@ const OrderDetails = () => {
                       </TableCell>
 
                       <TableCell align="right">
-                        <Box whiteSpace="nowrap">
-                          <PriceText price={product.price_unit} /> {t('common:vnd')}
-                        </Box>
+                        <Box whiteSpace="nowrap">{product.product_uom_qty}</Box>
                       </TableCell>
 
-                      <TableCell align="right">{product.product_uom_qty}</TableCell>
-
-                      <TableCell align="right">
-                        <Box whiteSpace="nowrap">
-                          <PriceText price={product.price_tax} /> {t('common:vnd')}
-                        </Box>
-                      </TableCell>
-
-                      <TableCell align="right">
-                        <Box whiteSpace="nowrap">
-                          <PriceText price={product.price_total} /> {t('common:vnd')}
-                        </Box>
-                      </TableCell>
+                      {['price_unit', 'price_tax', 'price_total'].map((item) => (
+                        <TableCell key={item} align="right">
+                          <Box whiteSpace="nowrap">
+                            <PriceText price={product[item]} /> {t('common:vnd')}
+                          </Box>
+                        </TableCell>
+                      ))}
                     </TableRow>
                   ))}
                 </TableBody>
@@ -434,10 +426,12 @@ const OrderDetails = () => {
                 <TableFooter>
                   <TableRow>
                     <TableCell colSpan={5}>
-                      <Typography color="primary" variant="h5" align="right">
+                      <Typography color="initial" variant="h5" align="right">
                         {t('myOrders:total')}{' '}
-                        <PriceText price={orderDetail?.getOrderDetail?.amount_total} />{' '}
-                        {t('common:vnd')}
+                        <Typography color="primary" variant="h4" display="inline">
+                          <PriceText price={orderDetail?.getOrderDetail?.amount_total} />{' '}
+                          {t('common:vnd')}
+                        </Typography>
                       </Typography>
                     </TableCell>
                   </TableRow>

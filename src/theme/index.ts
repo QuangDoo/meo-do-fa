@@ -1,5 +1,14 @@
 import { createMuiTheme } from '@material-ui/core';
 
+declare module '@material-ui/core/styles/createPalette' {
+  interface Palette {
+    white: React.CSSProperties['color'];
+  }
+  interface PaletteOptions {
+    white: React.CSSProperties['color'];
+  }
+}
+
 const muiTheme = createMuiTheme({
   palette: {
     primary: {

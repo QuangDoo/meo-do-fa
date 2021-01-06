@@ -131,7 +131,7 @@ const Nav = () => {
             </ul>
 
             {isLoggedIn && (
-              <div className="header-right">
+              <div className="header-right flex-shrink-0">
                 <ul className="nav align-items-center">
                   <li className="nav-item mr-4">
                     <Link href="/cart">
@@ -144,7 +144,7 @@ const Nav = () => {
 
                   <li className="nav-item">
                     <button className="rockland-nav__link" onClick={openMenu}>
-                      <i className="fas fa-bars rockland-nav__icon" />
+                      <i className="fas fa-bars rockland-nav__icon m-0" />
                     </button>
                   </li>
 
