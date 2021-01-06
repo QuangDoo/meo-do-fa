@@ -288,7 +288,7 @@ const ProductsSidebarFilter = (props: Props) => {
           dataCategorySearch.length === 0 && (
             <>
               <div className="search__result--empty">
-                {t('searchBar:no_product')} <b>{valueCategoryInput}</b>
+                {t('searchBar:no_category')} <b>{valueCategoryInput}</b>
               </div>
               <hr />
             </>
@@ -356,7 +356,7 @@ const ProductsSidebarFilter = (props: Props) => {
         {valueManuInput && manufacturersSearch.length === 0 && (
           <>
             <div className="search__result--empty">
-              {t('searchBar:no_product')} <b>{valueManuInput}</b>
+              {t('searchBar:no_manufacturer')} <b>{valueManuInput}</b>
             </div>
             <hr />
           </>

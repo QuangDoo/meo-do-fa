@@ -3,6 +3,8 @@
   "in": "trong",
   "all_products": "Tất cả sản phẩm",
   "no_product": "Không có sản phẩm với từ khóa",
+  "no_category":"Không có thể loại với từ khóa",
+  "no_manufacturer":"Không có nhà sản xuất với từ khóa",
   "all_manufacturers": "tất cả nhà sản xuất",
   "no_manufacturer": "Không có nhà sản xuất với từ khoá",
   "show": "Hiển thị",
