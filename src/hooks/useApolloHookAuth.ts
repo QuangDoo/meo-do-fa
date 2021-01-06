@@ -15,8 +15,7 @@ import {
 import cookies from 'js-cookie';
 
 function useHookAuth(query, options = {}, hookFunc) {
-  const isClient = typeof window !== 'undefined';
-  const token = isClient && cookies.get('token');
+  const token = typeof window !== 'undefined' && cookies.get('token');
 
   const newOptions = {
     ...options,

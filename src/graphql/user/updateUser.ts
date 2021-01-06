@@ -15,7 +15,6 @@ type ContactAddress = {
 export type UpdateUserVars = {
   name?: string;
   display_name?: string;
-  email?: string;
   contact_address: ContactAddress;
   company_name?: string;
   vat?: string;
@@ -35,7 +34,6 @@ export const UPDATE_USER = gql`
   mutation updateUser(
     $name: String
     $display_name: String
-    $email: String
     $contact_address: ContactAddress
     $company_name: String
     $vat: String
@@ -46,7 +44,6 @@ export const UPDATE_USER = gql`
       inputs: {
         name: $name
         display_name: $display_name
-        email: $email
         contact_address: $contact_address
         company_name: $company_name
         vat: $vat
