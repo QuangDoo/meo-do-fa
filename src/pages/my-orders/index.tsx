@@ -124,7 +124,7 @@ const OrderItem = (props: any) => {
         </div>
       </div>
 
-      {flag !== 25 && (
+      {flag !== 25 && flag !== 80 && (
         <div className="my-orders__invoice">
           <button className="btn btn-outline-danger btn-sm" onClick={() => handleOpenClick(flag)}>
             {t('myOrders:cancel_order')}

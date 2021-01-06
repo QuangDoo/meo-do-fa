@@ -46,8 +46,8 @@ const ChangePassWord = (): JSX.Element => {
       window.scrollTo(0, 0);
       rotuer.push('/my-account');
     },
-    onError: (error) => {
-      toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions.code}`));
+    onError: () => {
+      toast.error(t('errors:error_wrong_cr_pw'));
     }
   });
 
@@ -55,9 +55,10 @@ const ChangePassWord = (): JSX.Element => {
 
   const onSubmit = async (data: Inputs) => {
     const { retype, oldPassword, newPassword } = data;
-    console.log('data', data);
     if (retype !== newPassword) {
       toast.error(t('errors:error_retype_pw'));
+    } else if (oldPassword === newPassword) {
+      toast.error(t('errors:error_match_pw'));
     } else {
       changePassword({
         variables: {
@@ -66,9 +67,11 @@ const ChangePassWord = (): JSX.Element => {
       });
     }
   };
+
   const onError = (error) => {
     toast.error(error[Object.keys(error)[0]].message);
   };
+
   return (
     <>
       <Head>
@@ -95,7 +98,7 @@ const ChangePassWord = (): JSX.Element => {
               label={t('myAccount:old_password')}
               placeholder={t('myAccount:old_password')}
               name="oldPassword"
-              type="text"
+              type="password"
             />
 
             {/* new password */}
