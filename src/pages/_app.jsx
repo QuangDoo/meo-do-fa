@@ -12,8 +12,7 @@ import ToastContainer from 'src/components/Layout/ToastContainer';
 import { CartProvider } from 'src/contexts/Cart';
 import { ModalControlProvider } from 'src/contexts/ModalControl';
 import { UserProvider } from 'src/contexts/User';
-import { muiTheme, theme } from 'src/theme';
-import { ThemeProvider as StyledThemeProvider } from 'styled-components';
+import { muiTheme } from 'src/theme';
 
 import { appWithTranslation } from '../../i18n';
 
@@ -26,18 +25,16 @@ const MyApp = ({ Component, pageProps }) => {
   }, []);
 
   return (
-    <StyledThemeProvider theme={theme}>
-      <MuiThemeProvider theme={muiTheme}>
-        <UserProvider>
-          <CartProvider>
-            <ModalControlProvider>
-              <Component {...pageProps} />
-              <ToastContainer />
-            </ModalControlProvider>
-          </CartProvider>
-        </UserProvider>
-      </MuiThemeProvider>
-    </StyledThemeProvider>
+    <MuiThemeProvider theme={muiTheme}>
+      <UserProvider>
+        <CartProvider>
+          <ModalControlProvider>
+            <Component {...pageProps} />
+            <ToastContainer />
+          </ModalControlProvider>
+        </CartProvider>
+      </UserProvider>
+    </MuiThemeProvider>
   );
 };
 

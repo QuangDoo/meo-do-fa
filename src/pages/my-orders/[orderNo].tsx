@@ -22,7 +22,7 @@ import {
   TableRow,
   Typography
 } from '@material-ui/core';
-import { AssignmentTurnedIn, Done, LocalShipping, Receipt, Sms, Update } from '@material-ui/icons';
+import { AssignmentTurnedIn, Done, LocalShipping, Receipt, Update } from '@material-ui/icons';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import clsx from 'clsx';
 import Cookies from 'cookies';
@@ -40,78 +40,79 @@ import Nav from 'src/components/Layout/Nav';
 import ProfileLayout from 'src/components/Modules/ProfileLayout';
 import { GET_ORDER, GetOrderDetailData, GetOrderDetailVars } from 'src/graphql/order/getOrder';
 import { useQueryAuth } from 'src/hooks/useApolloHookAuth';
-import { theme } from 'src/theme';
 import withApollo from 'src/utils/withApollo';
 
 import ConfirmCancelOrder from '../../components/Modules/My-orders/ConfirmCancelOrder';
 
-const stepIconSize = 75;
+const useStyles = makeStyles((muiTheme) => {
+  const stepIconSize = 75;
 
-const stepConnectorLineHeight = 3;
+  const stepConnectorLineHeight = 3;
 
-const stepIconGradient = `linear-gradient(102.04deg, ${theme.colors.blue} 0%, ${theme.colors.blue1} 100%)`;
+  const stepIconGradient = `linear-gradient(102.04deg, ${muiTheme.palette.primary.dark} 0%, ${muiTheme.palette.primary.main} 100%)`;
 
-const stepConnectorLineGradient = `linear-gradient(95deg,${theme.colors.blue1} 0%, ${theme.colors.blue} 100%)`;
+  const stepConnectorLineGradient = `linear-gradient(95deg,${muiTheme.palette.primary.main} 0%, ${muiTheme.palette.primary.dark} 100%)`;
 
-const useStyles = makeStyles((materialTheme) => ({
-  cardRoot: {
-    padding: materialTheme.spacing(2)
-  },
-  stepIconRoot: {
-    backgroundColor: theme.colors['gray-500'],
-    zIndex: 1,
-    color: theme.colors.white,
-    width: stepIconSize,
-    height: stepIconSize,
-    display: 'flex',
-    borderRadius: '50%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    '& .MuiSvgIcon-root': {
-      fontSize: '2rem'
-    }
-  },
-  stepIconActive: {
-    backgroundImage: stepIconGradient,
-    boxShadow: '0 4px 10px 0 rgba(0, 0, 0, 0.25)',
-    '& .MuiSvgIcon-root': {
-      fontSize: '2rem'
-    }
-  },
-  stepIconCompleted: {
-    backgroundImage: stepIconGradient
-  },
+  return {
+    cardRoot: {
+      padding: muiTheme.spacing(2)
+    },
+    stepIconRoot: {
+      backgroundColor: muiTheme.palette.grey[500],
+      zIndex: 1,
+      color: muiTheme.palette.white,
+      width: stepIconSize,
+      height: stepIconSize,
+      display: 'flex',
+      borderRadius: '50%',
+      justifyContent: 'center',
+      alignItems: 'center',
+      '& .MuiSvgIcon-root': {
+        fontSize: '2rem'
+      }
+    },
+    stepIconActive: {
+      backgroundImage: stepIconGradient,
+      boxShadow: '0 4px 10px 0 rgba(0, 0, 0, 0.25)',
+      '& .MuiSvgIcon-root': {
+        fontSize: '2rem'
+      }
+    },
+    stepIconCompleted: {
+      backgroundImage: stepIconGradient
+    },
 
-  stepConnectorAlternativeLabel: {
-    top: (stepIconSize - stepConnectorLineHeight) / 2
-  },
-  stepConnectorActive: {
-    '& .MuiStepConnector-line': {
-      backgroundImage: stepConnectorLineGradient
+    stepConnectorAlternativeLabel: {
+      top: (stepIconSize - stepConnectorLineHeight) / 2
+    },
+    stepConnectorActive: {
+      '& .MuiStepConnector-line': {
+        backgroundImage: stepConnectorLineGradient
+      }
+    },
+    stepConnectorCompleted: {
+      '& .MuiStepConnector-line': {
+        backgroundImage: stepConnectorLineGradient
+      }
+    },
+    stepConnectorLine: {
+      height: stepConnectorLineHeight,
+      border: 0,
+      backgroundColor: muiTheme.palette.grey[500]
+    },
+    textWithLabelContainer: {
+      '&:not(:last-child)': {
+        marginBottom: muiTheme.spacing(2)
+      }
+    },
+    stepIconCancel: {
+      background: 'linear-gradient(102.04deg, #c31e1e 0%, #f00 100%)'
+    },
+    table: {
+      minWidth: 650
     }
-  },
-  stepConnectorCompleted: {
-    '& .MuiStepConnector-line': {
-      backgroundImage: stepConnectorLineGradient
-    }
-  },
-  stepConnectorLine: {
-    height: stepConnectorLineHeight,
-    border: 0,
-    backgroundColor: theme.colors['gray-500']
-  },
-  textWithLabelContainer: {
-    '&:not(:last-child)': {
-      marginBottom: materialTheme.spacing(2)
-    }
-  },
-  stepIconCancel: {
-    background: 'linear-gradient(102.04deg, #c31e1e 0%, #f00 100%)'
-  },
-  table: {
-    minWidth: 650
-  }
-}));
+  };
+});
 
 const CustomCard = (props: CardProps) => {
   const classes = useStyles();
