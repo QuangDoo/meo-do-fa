@@ -1,6 +1,6 @@
 import { useMutation } from '@apollo/client';
 import { Trans, useTranslation } from 'i18n';
-import Cookies from 'js-cookie';
+import cookies from 'js-cookie';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { DeepMap, FieldError, useForm } from 'react-hook-form';
@@ -35,8 +35,8 @@ const LoginForm = (): JSX.Element => {
   const [login] = useMutation<LoginData, LoginVars>(LOGIN_USER, {
     onCompleted: (data) => {
       localStorage.setItem('token', data.login.token);
-      console.log('Token from server:', data.login.token);
-      Cookies.set('token', data.login.token);
+      cookies.set('token', data.login.token);
+
       closeModal();
       getUser();
 
@@ -47,7 +47,7 @@ const LoginForm = (): JSX.Element => {
       }
     },
     onError: (error) => {
-      toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions.code}`));
+      toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
     }
   });
 

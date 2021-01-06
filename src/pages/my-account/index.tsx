@@ -1,6 +1,7 @@
 import { useLazyQuery, useQuery } from '@apollo/client';
+import Cookies from 'cookies';
 import { useTranslation } from 'i18n';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import Button from 'src/components/Form/Button';
@@ -48,7 +49,7 @@ type Inputs = {
 };
 
 const MyAccount = (): JSX.Element => {
-  const { t } = useTranslation(['myAccount', 'common']);
+  const { t } = useTranslation(['myAccount', 'common', 'errors']);
 
   const { user, refetchUser } = useUser();
 
@@ -56,75 +57,93 @@ const MyAccount = (): JSX.Element => {
 
   const chosenFile: FileList = watch('businessLicense');
 
+  const [firstLoadCities, setFirstLoadCities] = useState(true);
+  const [firstLoadDistricts, setFirstLoadDistricts] = useState(true);
+  const [firstLoadWards, setFirstLoadWards] = useState(true);
+
+  const { data: citiesData } = useQuery<GetCitiesData, undefined>(GET_CITIES);
+
+  const cities = citiesData?.getCities || [];
+
+  const chosenCity = watch('companyCity');
+
   useEffect(() => {
-    if (!user?.contact_address) return;
+    if (!user?.contact_address || !citiesData || !firstLoadCities) return;
 
-    const { city, district } = user.contact_address;
-
-    setValue('name', user.name);
-    setValue('phone', user.phone);
-    setValue('email', user.email);
+    setFirstLoadCities(false);
+    const { city } = user.contact_address;
     setValue('companyCity', city.name + '__' + city.id);
     getDistricts({
       variables: {
         city_id: city.id
       }
     });
-    getWards({
-      variables: {
-        district_id: district.id
-      }
-    });
-  }, [user]);
-
-  const { data: citiesData } = useQuery<GetCitiesData, undefined>(GET_CITIES);
-
-  const cities = citiesData?.getCities || [];
+  }, [citiesData, user]);
 
   const handleCityChange = (event) => {
-    refetchDistricts({
-      city_id: +event.target.value.split('__')[1]
-    });
+    const { value } = event.target;
+
     setValue('companyDistrict', '');
     setValue('companyWard', '');
+
+    if (value) {
+      getDistricts({
+        variables: {
+          city_id: +value.split('__')[1]
+        }
+      });
+    }
   };
 
-  const [
-    getDistricts,
-    { data: districtsData, refetch: refetchDistricts, loading: loadingDistricts }
-  ] = useLazyQuery<GetDistrictsData, GetDistrictsVars>(GET_DISTRICTS, {
-    onCompleted: () => {
-      if (!user?.contact_address) return;
+  const [getDistricts, { data: districtsData }] = useLazyQuery<GetDistrictsData, GetDistrictsVars>(
+    GET_DISTRICTS,
+    {
+      onCompleted: () => {
+        if (!firstLoadDistricts || !user?.contact_address) return;
 
-      const { district } = user.contact_address;
-
-      setValue('companyDistrict', district.name + '__' + district.id);
+        setFirstLoadDistricts(false);
+        const { district } = user.contact_address;
+        setValue('companyDistrict', district.name + '__' + district.id);
+        getWards({
+          variables: {
+            district_id: district.id
+          }
+        });
+      }
     }
-  });
+  );
 
   const handleDistrictChange = (event) => {
-    refetchWards({
-      district_id: +event.target.value.split('__')[1]
-    });
+    const { value } = event.target;
+
     setValue('companyWard', '');
+
+    if (value) {
+      getWards({
+        variables: {
+          district_id: +value.split('__')[1]
+        }
+      });
+    }
   };
 
   const districts = districtsData?.getDistricts || [];
 
-  const [
-    getWards,
-    { data: wardsData, refetch: refetchWards, loading: loadingWards }
-  ] = useLazyQuery<GetWardsData, GetWardsVars>(GET_WARDS, {
+  const chosenDistrict = watch('companyDistrict');
+
+  const [getWards, { data: wardsData }] = useLazyQuery<GetWardsData, GetWardsVars>(GET_WARDS, {
     onCompleted: () => {
-      if (!user?.contact_address) return;
+      if (!firstLoadWards || !user?.contact_address) return;
 
+      setFirstLoadWards(false);
       const { ward } = user.contact_address;
-
       setValue('companyWard', ward.name + '__' + ward.id);
     }
   });
 
   const wards = wardsData?.getWards || [];
+
+  const chosenWard = watch('companyWard');
 
   const [updateUser, { loading: loadingUpdateUser }] = useMutationAuth<
     UpdateUserData,
@@ -134,6 +153,9 @@ const MyAccount = (): JSX.Element => {
       toast.success(t('myAccount:update_success'));
       refetchUser();
       window.scrollTo(0, 0);
+    },
+    onError: (err) => {
+      toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
     }
   });
 
@@ -261,6 +283,15 @@ const MyAccount = (): JSX.Element => {
               placeholder={t('myAccount:representative_placeholder')}
             />
 
+            {/* Tax code */}
+            <InputWithLabel
+              ref={register}
+              label={t('myAccount:tax_code_label')}
+              name="taxCode"
+              type="text"
+              placeholder={t('myAccount:tax_code_placeholder')}
+            />
+
             {/* Business license file */}
             <InputWithLabel
               ref={register}
@@ -273,17 +304,6 @@ const MyAccount = (): JSX.Element => {
                   ? chosenFile[0].name
                   : t('myAccount:business_license_placeholder')
               }
-            />
-          </FormCard>
-
-          <FormCard title={t('myAccount:invoice_info')}>
-            {/* Tax code */}
-            <InputWithLabel
-              ref={register}
-              label={t('myAccount:tax_code_label')}
-              name="taxCode"
-              type="text"
-              placeholder={t('myAccount:tax_code_placeholder')}
             />
 
             <InputWithLabel
@@ -324,7 +344,7 @@ const MyAccount = (): JSX.Element => {
                 containerClass="col-md-4"
                 required
                 label={t('common:district_select_label')}
-                disabled={!districts.length || loadingDistricts}>
+                disabled={!districts.length || !chosenCity}>
                 <option value="">{t('common:district_select_placeholder')}</option>
 
                 {districts.map(({ id, name }) => (
@@ -342,7 +362,7 @@ const MyAccount = (): JSX.Element => {
                 containerClass="col-md-4"
                 required
                 label={t('common:ward_select_label')}
-                disabled={!wards.length || loadingDistricts || loadingWards}>
+                disabled={!wards.length || !chosenCity || !chosenDistrict}>
                 <option value="">{t('common:ward_select_placeholder')}</option>
 
                 {wards.map(({ id, name }) => (
@@ -369,8 +389,22 @@ const MyAccount = (): JSX.Element => {
   );
 };
 
-MyAccount.getInitialProps = async () => ({
-  namespacesRequired: ['myAccount']
-});
+MyAccount.getInitialProps = async (ctx) => {
+  if (typeof window === 'undefined') {
+    const cookies = new Cookies(ctx.req, ctx.res);
+
+    if (!cookies.get('token')) {
+      ctx.res.writeHead(302, {
+        Location: '/'
+      });
+
+      ctx.res.end();
+    }
+  }
+
+  return {
+    namespacesRequired: ['myAccount', 'common', 'errors']
+  };
+};
 
 export default withApollo({ ssr: true })(MyAccount);

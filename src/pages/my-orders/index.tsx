@@ -1,4 +1,5 @@
 import { AppBar, Box, makeStyles, Tab, Tabs, Theme, Typography } from '@material-ui/core';
+import Cookies from 'cookies';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -70,7 +71,7 @@ type Props = {
 const OrderItem = (props: any) => {
   const [open, setOpen] = useState(false);
 
-  const { t } = useTranslation(['myOrders']);
+  const { t } = useTranslation(['myOrders', 'errors']);
 
   const { callBack, flag } = props;
 
@@ -123,7 +124,7 @@ const OrderItem = (props: any) => {
         </div>
       </div>
 
-      {flag !== 25 && (
+      {flag !== 25 && flag !== 80 && (
         <div className="my-orders__invoice">
           <button className="btn btn-outline-danger btn-sm" onClick={() => handleOpenClick(flag)}>
             {t('myOrders:cancel_order')}
@@ -314,6 +315,24 @@ const MyOrders = () => {
       <Footer />
     </>
   );
+};
+
+MyOrders.getInitialProps = async (ctx) => {
+  if (typeof window === 'undefined') {
+    const cookies = new Cookies(ctx.req, ctx.res);
+
+    if (!cookies.get('token')) {
+      ctx.res.writeHead(302, {
+        Location: '/'
+      });
+
+      ctx.res.end();
+    }
+  }
+
+  return {
+    namespacesRequired: ['myOrders', 'common', 'errors']
+  };
 };
 
 export default withApollo({ ssr: true })(MyOrders);

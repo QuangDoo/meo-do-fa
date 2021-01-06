@@ -3,6 +3,7 @@ import { useTranslation } from 'i18n';
 import _ from 'lodash';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
+import { MagnifierContainer, SideBySideMagnifier } from 'react-image-magnifiers';
 import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
@@ -28,14 +29,13 @@ function ProductDetail(): JSX.Element {
     variables: { id: Number(productPid) }
   });
 
-  const product = dataProduct?.getProduct;
-  console.log('product', product);
+  const product = dataProduct?.getProduct || {};
 
   useEffect(() => {
-    if (!router.query || dataProduct) return;
+    if (!productId) return;
 
     refetch();
-  }, [router.query]);
+  }, [productId]);
 
   const getNameById = (array, id) => {
     return _.find(array, { id })?.name;
@@ -61,11 +61,14 @@ function ProductDetail(): JSX.Element {
             <div className="col-md-8">
               <div className="row">
                 <div className="col-md-6">
-                  <div
-                    className="lozad product__image"
-                    style={{
-                      backgroundImage: `url(${product?.image_512})`
-                    }}>
+                  <div className="lozad product__image">
+                    <MagnifierContainer>
+                      <SideBySideMagnifier
+                        alwaysInPlace={true}
+                        // style={{ height: '400px' }}
+                        imageSrc={product?.image_512}
+                      />
+                    </MagnifierContainer>
                     {product?.discount_percentage > 0 && (
                       <DiscountRibbon discountPercent={product?.discount_percentage} />
                     )}

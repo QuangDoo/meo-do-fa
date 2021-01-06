@@ -3,7 +3,7 @@
 
   "account_info": "Thông tin tài khoản",
   "name_label": "Họ tên khách hàng",
-  "name_placeholder": "Trần Thị B",
+  "name_placeholder": "vd Trần Thị B",
   "name_required": "Xin nhập họ tên.",
 
   "phone_label": "Số điện thoại",
@@ -22,10 +22,10 @@
   "account_type_CUSTOMER": "Người tiêu dùng",
 
   "company_name_label": "Tên nhà thuốc/phòng khám",
-  "company_name_placeholder": "Nhà thuốc số 1",
+  "company_name_placeholder": "vd Nhà thuốc số 1",
 
   "representative_label": "Tên người đại diện pháp luật",
-  "representative_placeholder": "Trần Thị B",
+  "representative_placeholder": "vd Trần Thị B",
 
   "business_license_label": "Giấy phép kinh doanh phòng khám/nhà thuốc",
   "business_license_placeholder": "Chọn file",
@@ -33,10 +33,10 @@
   "invoice_info": "Thông tin xuất hoá đơn",
 
   "tax_code_label": "Mã số thuế",
-  "tax_code_placeholder": "8026906145",
+  "tax_code_placeholder": "vd 8026906145",
 
   "company_street_label": "Địa chỉ nhà thuốc/phòng khám",
-  "company_street_placeholder": "11 Ngô Quyền, Tân Lợi, Tp. Buôn Ma Thuột, Đắk Lắk",
+  "company_street_placeholder": "vd 11 Ngô Quyền, Tân Lợi, Tp. Buôn Ma Thuột, Đắk Lắk",
 
   "company_city_required": "Xin chọn tỉnh/thành phố trong Thông tin xuất hóa đơn.",
   "delivery_city_required": "Xin chọn tỉnh/thành phố trong Thông tin giao hàng",
@@ -54,5 +54,17 @@
   "delivery_street_guide": "Nhập địa chỉ, đường phố. Rồi chọn tỉnh/thành phố, quận/huyện, phường/xã",
 
   "update_button": "Cập nhật",
-  "update_success": "Cập nhật thông tin thành công!"
+  "update_success": "Cập nhật thông tin thành công!",
+
+  "change_password": "Đổi mật khẩu",
+  "new_password": "Mật khẩu mới",
+  "btn_change_password": "Đổi mật khẩu",
+  "phone_required": "Xin nhập số điện thoại",
+  "old_password": "Mật khẩu hiện tại",
+  "newPassword_required": "Xin nhập mật khẩu mới",
+  "oldPassword_required": "Xin nhập mật khẩu hiện tại",
+  "invalid_phone": "Số điện thoại không hợp lệ",
+  "retype_newPassword":"Nhập lại mật khẩu mới",
+  "retype_newPassword_required":"Xin nhập mật khẩu mới",
+  "error_retype_pw":"Mật khẩu không trùng khớp"
 }

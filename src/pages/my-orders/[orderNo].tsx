@@ -6,6 +6,7 @@ import {
   Divider,
   Grid,
   makeStyles,
+  Paper,
   Step,
   StepConnector,
   StepConnectorProps,
@@ -15,6 +16,7 @@ import {
   Table,
   TableBody,
   TableCell,
+  TableContainer,
   TableFooter,
   TableHead,
   TableRow,
@@ -23,6 +25,7 @@ import {
 import { AssignmentTurnedIn, Done, LocalShipping, Receipt, Sms, Update } from '@material-ui/icons';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import clsx from 'clsx';
+import Cookies from 'cookies';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -37,7 +40,6 @@ import Nav from 'src/components/Layout/Nav';
 import ProfileLayout from 'src/components/Modules/ProfileLayout';
 import { GET_ORDER, GetOrderDetailData, GetOrderDetailVars } from 'src/graphql/order/getOrder';
 import { useQueryAuth } from 'src/hooks/useApolloHookAuth';
-import useUser from 'src/hooks/useUser';
 import { theme } from 'src/theme';
 import withApollo from 'src/utils/withApollo';
 
@@ -52,9 +54,6 @@ const stepIconGradient = `linear-gradient(102.04deg, ${theme.colors.blue} 0%, ${
 const stepConnectorLineGradient = `linear-gradient(95deg,${theme.colors.blue1} 0%, ${theme.colors.blue} 100%)`;
 
 const useStyles = makeStyles((materialTheme) => ({
-  primaryText: {
-    color: theme.colors.blue1
-  },
   cardRoot: {
     padding: materialTheme.spacing(2)
   },
@@ -106,22 +105,11 @@ const useStyles = makeStyles((materialTheme) => ({
       marginBottom: materialTheme.spacing(2)
     }
   },
-  headCell: {
-    padding: 0,
-    paddingBottom: materialTheme.spacing(1),
-    textAlign: 'right'
-  },
-  bodyCell: {
-    padding: 0,
-    paddingTop: materialTheme.spacing(2),
-    paddingBottom: materialTheme.spacing(2),
-    textAlign: 'right'
-  },
-  textAlignLeft: {
-    textAlign: 'left'
-  },
   stepIconCancel: {
     background: 'linear-gradient(102.04deg, #c31e1e 0%, #f00 100%)'
+  },
+  table: {
+    minWidth: 650
   }
 }));
 
@@ -155,7 +143,7 @@ const CustomStepIcon = (props: StepIconProps) => {
 };
 
 const CustomStepCancel = (props: StepIconProps) => {
-  const { active, completed, icon } = props;
+  const { icon } = props;
 
   const classes = useStyles();
 
@@ -188,57 +176,11 @@ const TextWithLabel = (props) => {
       display="flex"
       flexDirection={inline ? 'row' : 'column'}
       className={classes.textWithLabelContainer}>
-      <Typography
-        variant="button"
-        classes={{
-          root: classes.primaryText
-        }}>
+      <Typography variant="button" color="primary">
         {label}
       </Typography>
       <Typography>{text}</Typography>
     </Box>
-  );
-};
-
-type CustomHeadCellProps = {
-  label: string;
-  textAlign?: 'left' | 'right';
-};
-
-const CustomHeadCell = ({ label, textAlign }: CustomHeadCellProps) => {
-  const classes = useStyles();
-
-  return (
-    <TableCell
-      classes={{
-        head: clsx(classes.headCell, textAlign === 'left' && classes.textAlignLeft)
-      }}>
-      <Typography
-        variant="button"
-        classes={{
-          root: classes.primaryText
-        }}>
-        {label}
-      </Typography>
-    </TableCell>
-  );
-};
-
-type CustomBodyCellProps = {
-  children: React.ReactNode;
-  textAlign?: 'left' | 'right';
-};
-
-const CustomBodyCell = ({ children, textAlign }: CustomBodyCellProps) => {
-  const classes = useStyles();
-
-  return (
-    <TableCell
-      classes={{
-        root: clsx(classes.bodyCell, textAlign === 'left' && classes.textAlignLeft)
-      }}>
-      {children}
-    </TableCell>
   );
 };
 
@@ -298,7 +240,11 @@ const OrderDetails = () => {
     setOpen(true);
   };
 
-  const { user } = useUser();
+  const flag = orderDetail?.getOrderDetail?.flag;
+  const name = orderDetail?.getOrderDetail?.name;
+  const partnerShipping = orderDetail?.getOrderDetail?.partner_shipping;
+
+  const classes = useStyles();
 
   return (
     <>
@@ -316,7 +262,7 @@ const OrderDetails = () => {
             <CustomCard>
               <Typography variant="h5">
                 {t('myOrders:order_detail')}
-                {`: ${orderDetail?.getOrderDetail?.name || ''}`}
+                {`: ${name || ''}`}
               </Typography>
 
               <Box my={2}>
@@ -328,85 +274,71 @@ const OrderDetails = () => {
                 alternativeLabel
                 activeStep={activeStep}
                 connector={<CustomStepConnector />}>
-                {orderDetail?.getOrderDetail?.flag === 25 && (
+                {flag === 25 ? (
                   <Step>
                     <StepLabel icon={<Receipt />} StepIconComponent={CustomStepCancel} error>
                       {t('myOrders:canceled')}
                     </StepLabel>
                   </Step>
-                )}
-                {orderDetail?.getOrderDetail?.flag !== 25 &&
+                ) : (
                   steps.map((step) => (
                     <Step key={step.text}>
                       <StepLabel icon={step.icon} StepIconComponent={CustomStepIcon}>
                         {step.text}
                       </StepLabel>
                     </Step>
-                  ))}
+                  ))
+                )}
               </Stepper>
 
-              <Box my={2}>
-                <Divider />
-              </Box>
+              {flag !== 25 && (
+                <>
+                  <Box my={2}>
+                    <Divider />
+                  </Box>
 
-              <Box display="flex" justifyContent="space-between" alignItems="center">
-                <Typography>
-                  {t('myOrders:expected_date')}{' '}
-                  <strong>
-                    {orderDetail?.getOrderDetail?.flag !== 25 &&
-                      orderDetail?.getOrderDetail?.expected_date &&
-                      new Date(orderDetail?.getOrderDetail?.expected_date).toLocaleDateString(
-                        'en-GB'
-                      )}
-                  </strong>
-                </Typography>
-                {
-                  // activeStep > 2 ? (
-                  //   <Link
-                  //     href={{
-                  //       pathname: '/feedback',
-                  //       query: {
-                  //         orderId: orderDetail?.getOrderDetail?.name,
-                  //         name: user?.name,
-                  //         phone: user?.phone
-                  //       }
-                  //     }}>
-                  //     <Button size="small" startIcon={<Sms />} variant="outlined" color="primary">
-                  //       {t('myOrders:report')}
-                  //     </Button>
-                  //   </Link>
-                  // ) :
-                  orderDetail?.getOrderDetail?.flag === 25 ? (
-                    <Button
-                      style={{
-                        color: 'red',
-                        borderColor: 'red'
-                      }}
-                      size="small"
-                      startIcon={<DeleteForeverIcon />}
-                      variant="outlined"
-                      color="inherit"
-                      disabled>
-                      {t('myOrders:canceled')}
-                    </Button>
-                  ) : (
-                    <Button
-                      size="small"
-                      startIcon={<DeleteForeverIcon />}
-                      variant="outlined"
-                      onClick={onCancelClick}
-                      color="secondary">
-                      {t('myOrders:cancel_the_order')}
-                    </Button>
-                  )
-                }
-                <ConfirmCancelOrder
-                  open={open}
-                  onClose={() => setOpen(false)}
-                  orderNo={orderDetail?.getOrderDetail?.name}
-                  callBack={() => refetch()}
-                />
-              </Box>
+                  <Box display="flex" justifyContent="space-between" alignItems="center">
+                    {flag !== 25 && flag !== 80 && (
+                      <Typography>
+                        {t('myOrders:expected_date')}{' '}
+                        <strong>
+                          {orderDetail?.getOrderDetail?.expected_date &&
+                            new Date(orderDetail?.getOrderDetail?.expected_date).toLocaleDateString(
+                              'en-GB'
+                            )}
+                        </strong>
+                      </Typography>
+                    )}
+                    {flag !== 25 &&
+                      (flag !== 80 ? (
+                        <Button
+                          size="small"
+                          startIcon={<DeleteForeverIcon />}
+                          variant="contained"
+                          onClick={onCancelClick}
+                          color="secondary">
+                          {t('myOrders:cancel_the_order')}
+                        </Button>
+                      ) : (
+                        <a href="tel:1900232436" className="text-right">
+                          <Button
+                            size="small"
+                            startIcon={<Receipt />}
+                            variant="contained"
+                            color="secondary">
+                            {t('myOrders:report')}
+                          </Button>
+                        </a>
+                      ))}
+                    <ConfirmCancelOrder
+                      open={open}
+                      onClose={() => setOpen(false)}
+                      orderNo={name}
+                      callBack={() => refetch()}
+                    />
+                  </Box>
+                </>
+              )}
             </CustomCard>
           </Grid>
 
@@ -416,95 +348,101 @@ const OrderDetails = () => {
                 <CustomCard>
                   <TextWithLabel
                     label={t('myOrders:recipients_name')}
-                    text={orderDetail?.getOrderDetail?.partner_shipping?.name}
+                    text={partnerShipping?.name}
                   />
 
                   <TextWithLabel
                     label={t('myOrders:delivery_address')}
-                    text={orderDetail?.getOrderDetail?.partner_shipping?.street}
+                    text={partnerShipping?.street}
                   />
 
-                  <TextWithLabel
-                    label={t('myOrders:phone_number')}
-                    text={orderDetail?.getOrderDetail?.partner_shipping?.phone}
-                  />
+                  <TextWithLabel label={t('myOrders:phone_number')} text={partnerShipping?.phone} />
 
-                  <TextWithLabel
-                    label={t('myOrders:email')}
-                    text={orderDetail?.getOrderDetail?.partner_shipping?.email}
-                  />
+                  <TextWithLabel label={t('myOrders:email')} text={partnerShipping?.email} />
                 </CustomCard>
               </Grid>
-
-              {/* <Grid item sm={6} xs={12}>
-                    <CustomCard>
-                      <TextWithLabel label="Đơn vị vận chuyển" text="Giaohangtietkiem.vn" />
-
-                      <TextWithLabel label="Ngày giao" text="06/11/2020" />
-
-                      <TextWithLabel label="Mã vận đơn" text="S616097.MN2.DA.2.974708080" />
-
-                      <TextWithLabel
-                        label="Hình thức thanh toán"
-                        text="Thanh toán tiền mặt khi nhận hàng"
-                      />
-                    </CustomCard>
-                  </Grid> */}
             </Grid>
           </Grid>
 
           <Grid item xs={12}>
             <CustomCard>
-              <TextWithLabel label={t('myOrders:note')} text={orderDetail?.getOrderDetail?.note} />
+              <TextWithLabel
+                label={t('myOrders:note')}
+                text={orderDetail?.getOrderDetail?.note || t('myOrders:no_notes')}
+              />
             </CustomCard>
           </Grid>
 
           <Grid item xs={12}>
-            <CustomCard>
-              <Table>
+            <TableContainer component={Paper}>
+              <Table className={classes.table} aria-label="simple table">
                 <TableHead>
                   <TableRow>
-                    <CustomHeadCell label={t('myOrders:product')} textAlign="left" />
-                    <CustomHeadCell label={t('myOrders:unit_price')} />
-                    <CustomHeadCell label={t('myOrders:quantity')} />
-                    <CustomHeadCell label={t('myOrders:total')} />
+                    <TableCell>
+                      <Typography variant="button" color="primary">
+                        {t('myOrders:product')}
+                      </Typography>
+                    </TableCell>
+
+                    {['unit_price', 'quantity', 'tax', 'total'].map((key) => (
+                      <TableCell key={key} align="right">
+                        <Typography variant="button" color="primary" noWrap>
+                          {t(`myOrders:${key}`)}
+                        </Typography>
+                      </TableCell>
+                    ))}
                   </TableRow>
                 </TableHead>
 
                 <TableBody>
                   {orderDetail?.getOrderDetail?.order_lines?.map((product) => (
-                    <TableRow key={product.id}>
-                      <CustomBodyCell textAlign="left">
-                        <Link href={`/products/${product.product.slug}`}>
-                          <a>{product.name}</a>
-                        </Link>
-                      </CustomBodyCell>
+                    <TableRow key={product.name}>
+                      <TableCell component="th" scope="row">
+                        {product.product_type !== 'product' ? (
+                          <p>{product.name}</p>
+                        ) : (
+                          <Link href={`/products/${product.product.slug}`}>
+                            <a>{product.name}</a>
+                          </Link>
+                        )}
+                      </TableCell>
 
-                      <CustomBodyCell>
-                        <PriceText price={product.price_unit} /> {t('common:vnd')}
-                      </CustomBodyCell>
+                      <TableCell align="right">
+                        <Box whiteSpace="nowrap">
+                          <PriceText price={product.price_unit} /> {t('common:vnd')}
+                        </Box>
+                      </TableCell>
 
-                      <CustomBodyCell>{product.product_uom_qty}</CustomBodyCell>
+                      <TableCell align="right">{product.product_uom_qty}</TableCell>
 
-                      <CustomBodyCell>
-                        <PriceText price={product.price_total} /> {t('common:vnd')}
-                      </CustomBodyCell>
+                      <TableCell align="right">
+                        <Box whiteSpace="nowrap">
+                          <PriceText price={product.price_tax} /> {t('common:vnd')}
+                        </Box>
+                      </TableCell>
+
+                      <TableCell align="right">
+                        <Box whiteSpace="nowrap">
+                          <PriceText price={product.price_total} /> {t('common:vnd')}
+                        </Box>
+                      </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
 
                 <TableFooter>
                   <TableRow>
-                    <TableCell colSpan={4}>
-                      <Typography variant="h5" align="right">
+                    <TableCell colSpan={5}>
+                      <Typography color="primary" variant="h5" align="right">
                         {t('myOrders:total')}{' '}
-                        <PriceText price={orderDetail?.getOrderDetail?.amount_total} /> đ
+                        <PriceText price={orderDetail?.getOrderDetail?.amount_total} />{' '}
+                        {t('common:vnd')}
                       </Typography>
                     </TableCell>
                   </TableRow>
                 </TableFooter>
               </Table>
-            </CustomCard>
+            </TableContainer>
           </Grid>
         </Grid>
       </ProfileLayout>
@@ -512,6 +450,24 @@ const OrderDetails = () => {
       <Footer />
     </>
   );
+};
+
+OrderDetails.getInitialProps = async (ctx) => {
+  if (typeof window === 'undefined') {
+    const cookies = new Cookies(ctx.req, ctx.res);
+
+    if (!cookies.get('token')) {
+      ctx.res.writeHead(302, {
+        Location: '/'
+      });
+
+      ctx.res.end();
+    }
+  }
+
+  return {
+    namespacesRequired: ['myOrders', 'common']
+  };
 };
 
 export default withApollo({ ssr: true })(OrderDetails);

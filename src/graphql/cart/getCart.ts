@@ -21,6 +21,8 @@ export type CartItem = {
     slug: string;
     image_512: string;
     is_quick_invoice: boolean;
+    old_price: number;
+    sale_price: number;
   };
   promotions: PromotionInfo[];
 };
@@ -48,6 +50,8 @@ export const GET_CART = gql`
           slug
           image_512
           is_quick_invoice
+          old_price
+          sale_price
         }
         promotions {
           reward_type

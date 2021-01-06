@@ -1,6 +1,6 @@
 import { useMutation } from '@apollo/client';
 import { Trans, useTranslation } from 'i18n';
-import Cookies from 'js-cookie';
+import cookies from 'js-cookie';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useForm } from 'react-hook-form';
@@ -47,7 +47,7 @@ const RegisterForm = (): JSX.Element => {
     {
       onCompleted: (data) => {
         localStorage.setItem('token', data.createUser.token);
-        Cookies.set('token', data.createUser.token);
+        cookies.set('token', data.createUser.token);
         closeModal();
         getUser();
         router.reload();

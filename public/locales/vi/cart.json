@@ -17,5 +17,6 @@
   "yes": "Có",
   "no": "Không",
   "update_success": "Cập nhật giỏ hàng thành công!",
-  "quick_invoice_with_tax": "Hóa đơn nhanh ({{tax}}% thuế)"
+  "quick_invoice_with_tax": "Hóa đơn ({{tax}}% thuế)",
+  "quick_invoice_with_no_tax": "Hóa đơn"
 }

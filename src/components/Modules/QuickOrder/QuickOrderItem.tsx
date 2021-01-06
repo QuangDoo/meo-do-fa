@@ -1,7 +1,9 @@
 import Link from 'next/link';
 import React from 'react';
+import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
 
 import QuantityInput from '../../Form/QuantityInput';
+import LoginToSeePrice from '../ProductCard/LoginToSeePrice';
 import { ProductPrice } from '../ProductCard/ProductPrice';
 
 type Props = {
@@ -12,12 +14,15 @@ type Props = {
   price: number;
   sale_price: number;
   quantity: number;
+  list_price: number;
   _id: number;
   slug: string;
   discount_percentage: number;
 };
 
 function QuickOrderItem(props: Props): JSX.Element {
+  const isLoggedIn = useIsLoggedIn();
+
   return (
     <div className="cart-item">
       <div className="row align-items-center">
@@ -42,17 +47,23 @@ function QuickOrderItem(props: Props): JSX.Element {
             <div className="flex-1 flex-column">
               <div className="d-flex justify-content-between align-items-center">
                 <div>
-                  <ProductPrice price={props.price} sale_price={props.sale_price} />
+                  {isLoggedIn ? (
+                    <ProductPrice price={props.price} sale_price={props.sale_price} />
+                  ) : (
+                    <LoginToSeePrice />
+                  )}
                 </div>
 
-                <div className="cart-item__qty">
-                  <QuantityInput
-                    productId={props.productId}
-                    productPrice={props.price}
-                    productName={props.productName}
-                    productImg={props.image}
-                  />
-                </div>
+                {isLoggedIn && (
+                  <div className="cart-item__qty">
+                    <QuantityInput
+                      productId={props.productId}
+                      productPrice={props.list_price}
+                      productName={props.productName}
+                      productImg={props.image}
+                    />
+                  </div>
+                )}
               </div>
             </div>
           </div>
