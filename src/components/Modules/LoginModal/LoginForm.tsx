@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import { usernameRegex } from 'src/assets/regex/username';
 import Button from 'src/components/Form/Button';
 import Input from 'src/components/Form/Input';
+import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { useModalControlDispatch } from 'src/contexts/ModalControl';
 import { LOGIN_USER, LoginData, LoginVars } from 'src/graphql/user/login';
 import useUser from 'src/hooks/useUser';
@@ -32,9 +33,8 @@ const LoginForm = (): JSX.Element => {
 
   const { register, handleSubmit } = useForm<Inputs>();
 
-  const [login] = useMutation<LoginData, LoginVars>(LOGIN_USER, {
+  const [login, { loading: loggingIn }] = useMutation<LoginData, LoginVars>(LOGIN_USER, {
     onCompleted: (data) => {
-      localStorage.setItem('token', data.login.token);
       cookies.set('token', data.login.token);
 
       closeModal();
@@ -68,6 +68,8 @@ const LoginForm = (): JSX.Element => {
 
   return (
     <div>
+      <LoadingBackdrop open={loggingIn} />
+
       <form className="new_account" onSubmit={handleSubmit(onSubmit, onFormError)}>
         <Input
           name="username"

@@ -12,9 +12,12 @@ import {
   useMutation,
   useQuery
 } from '@apollo/client';
+import cookies from 'js-cookie';
 
 function useHookAuth(query, options = {}, hookFunc) {
-  const token = global?.localStorage?.getItem('token');
+  const isClient = typeof window !== 'undefined';
+  const token = isClient && cookies.get('token');
+
   const newOptions = {
     ...options,
     context: {
@@ -26,7 +29,7 @@ function useHookAuth(query, options = {}, hookFunc) {
   return hookFunc(query, newOptions);
 }
 
-export function useLazyQueryAuth<TData = any, TVariables = OperationVariables>(
+export function useLazyQueryAuth<TData, TVariables = OperationVariables>(
   query: DocumentNode | TypedDocumentNode<TData, TVariables>,
   options?: LazyQueryHookOptions<TData, TVariables>
 ): QueryTuple<TData, TVariables> {

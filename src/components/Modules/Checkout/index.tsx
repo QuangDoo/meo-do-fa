@@ -10,6 +10,7 @@ import { GET_COUNSEL, GetCounselData, OutputCounsel } from 'src/graphql/order/ge
 import { GET_ADDRESS_INFO_USER, GetAddressInfoData } from 'src/graphql/user/getAddressInfoUser';
 import useCart from 'src/hooks/useCart';
 import useUser from 'src/hooks/useUser';
+import { useToken } from 'src/pages/checkout';
 import swal from 'sweetalert';
 
 import Agreement from './Agreement';
@@ -53,11 +54,13 @@ type FormInputs = {
 };
 
 type Props = {
-  token: string;
+  token?: string;
 };
 
 const CheckoutPage = (props: Props) => {
   const { t } = useTranslation(['checkout', 'errors']);
+
+  const token = useToken();
 
   const { loading: loadingUser } = useUser();
 
@@ -83,7 +86,7 @@ const CheckoutPage = (props: Props) => {
       notifyOnNetworkStatusChange: true,
       context: {
         headers: {
-          authorization: props.token
+          authorization: token
         }
       }
     }

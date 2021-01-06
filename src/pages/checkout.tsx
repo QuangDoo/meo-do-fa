@@ -1,7 +1,6 @@
-import ServerCookies from 'cookies';
-import ClientCookies from 'js-cookie';
-import Router, { useRouter } from 'next/router';
-import React from 'react';
+import cookies from 'js-cookie';
+import Router from 'next/router';
+import React, { createContext, useContext } from 'react';
 import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
@@ -9,9 +8,13 @@ import Nav from 'src/components/Layout/Nav';
 import CheckoutPage from 'src/components/Modules/Checkout';
 import withApollo from 'src/utils/withApollo';
 
+const TokenContext = createContext(null);
+
+export const useToken = () => useContext(TokenContext);
+
 const Checkout = (props) => {
   return (
-    <>
+    <TokenContext.Provider value={props.token}>
       <Head>
         <title>Medofa</title>
       </Head>
@@ -20,25 +23,22 @@ const Checkout = (props) => {
 
       <Nav />
 
-      <CheckoutPage token={props.token} />
+      <CheckoutPage />
 
       <Footer />
-    </>
+    </TokenContext.Provider>
   );
 };
 
 Checkout.getInitialProps = async (ctx) => {
-  let token;
+  const isClient = typeof window !== 'undefined';
 
-  if (typeof window !== 'undefined') {
-    token = ClientCookies.get('token');
-    if (!token) {
+  const token = isClient ? cookies.get('token') : ctx.req.cookies.token;
+
+  if (!token) {
+    if (isClient) {
       Router.replace('/');
-    }
-  } else {
-    token = new ServerCookies(ctx.req, ctx.res).get('token');
-
-    if (!token) {
+    } else {
       ctx.res.writeHead(302, {
         Location: '/'
       });
@@ -49,7 +49,7 @@ Checkout.getInitialProps = async (ctx) => {
 
   return {
     namespacesRequired: ['checkout', 'errors', 'common', 'myAccount'],
-    token: decodeURIComponent(token)
+    token: token
   };
 };
 

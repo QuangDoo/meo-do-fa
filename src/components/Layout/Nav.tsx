@@ -15,16 +15,15 @@ import CategoryMenu from '../Modules/CategoryMenu';
 const Nav = () => {
   const isLoggedIn = useIsLoggedIn();
 
-  const router = useRouter();
-
   const { cart } = useCart();
+
+  const router = useRouter();
 
   const totalQty = cart?.getCart.totalQty;
 
   const { t } = useTranslation(['navbar', 'errors', 'common']);
 
   const logOut = () => {
-    localStorage.removeItem('token');
     cookies.remove('token');
     router.push('/');
   };
