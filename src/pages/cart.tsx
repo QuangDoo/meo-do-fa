@@ -1,6 +1,7 @@
 import { useTranslation } from 'i18n';
-import { useRouter } from 'next/router';
-import React, { createContext, useContext, useEffect } from 'react';
+import cookies from 'js-cookie';
+import Router, { useRouter } from 'next/router';
+import React, { useEffect } from 'react';
 import { toast } from 'react-toastify';
 import PriceText from 'src/components/Form/PriceText';
 import Footer from 'src/components/Layout/Footer';
@@ -12,9 +13,10 @@ import CartItem from 'src/components/Modules/Cart/CartItem';
 import { CREATE_COUNSEL } from 'src/graphql/order/order.mutation';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import useCart from 'src/hooks/useCart';
+import redirect from 'src/utils/redirect';
 import withApollo from 'src/utils/withApollo';
 
-function Cart(props) {
+function Cart() {
   const { cart, loading: loadingCart, getCart } = useCart();
 
   const { t } = useTranslation(['cart', 'common', 'errors']);
@@ -122,16 +124,15 @@ function Cart(props) {
 }
 
 Cart.getInitialProps = async (ctx) => {
-  const token = ctx.req.cookies.token;
+  const isServer = typeof window === 'undefined';
 
-  if (typeof window === 'undefined') {
-    if (!token) {
-      ctx.res.writeHead(302, {
-        Location: '/'
-      });
+  const token = isServer ? ctx.req.cookies.token : cookies.get('token');
 
-      ctx.res.end();
-    }
+  if (!token) {
+    redirect({
+      ctx,
+      location: '/'
+    });
   }
 
   return {
