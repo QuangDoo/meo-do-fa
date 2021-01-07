@@ -53,6 +53,7 @@ const ProductsSidebarFilter = (props: Props) => {
       undefined,
       { shallow: true }
     );
+    props.onClose && props.onClose();
   };
 
   const handlePriceRangeFilter = (e) => {
@@ -66,6 +67,7 @@ const ProductsSidebarFilter = (props: Props) => {
         priceTo: priceTo
       }
     });
+    props.onClose && props.onClose();
   };
 
   const handleManufacturersSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -193,12 +195,7 @@ const ProductsSidebarFilter = (props: Props) => {
         </form>
         <div className="mb-2">
           <Link href="/products">
-            <a
-              className={clsx('products__filter-category', !router.query.category && 'active')}
-              role="button"
-              tabIndex={0}
-              onClick={() => props.onClose()}
-              onKeyDown={() => props.onClose()}>
+            <a className={clsx('products__filter-category', !router.query.category && 'active')}>
               {t('productsSidebar:all')}
             </a>
           </Link>
@@ -218,11 +215,7 @@ const ProductsSidebarFilter = (props: Props) => {
                               className={clsx(
                                 'products__filter-category',
                                 !router.query.category && 'active'
-                              )}
-                              role="button"
-                              tabIndex={0}
-                              onClick={() => props.onClose()}
-                              onKeyDown={() => props.onClose()}>
+                              )}>
                               {t('productsSidebar:all')}
                             </a>
                           </Link>
@@ -237,11 +230,7 @@ const ProductsSidebarFilter = (props: Props) => {
                                   className={clsx(
                                     'products__filter-category',
                                     router.query.category === id.toString() && 'active'
-                                  )}
-                                  role="button"
-                                  tabIndex={0}
-                                  onClick={() => props.onClose()}
-                                  onKeyDown={() => props.onClose()}>
+                                  )}>
                                   {name}
                                 </a>
                               </Link>
@@ -266,11 +255,7 @@ const ProductsSidebarFilter = (props: Props) => {
                               className={clsx(
                                 'products__filter-category',
                                 !router.query.category && 'active'
-                              )}
-                              role="button"
-                              tabIndex={0}
-                              onClick={() => props.onClose()}
-                              onKeyDown={() => props.onClose()}>
+                              )}>
                               {t('productsSidebar:all')}
                             </a>
                           </Link>
@@ -285,11 +270,7 @@ const ProductsSidebarFilter = (props: Props) => {
                                   className={clsx(
                                     'products__filter-category',
                                     router.query.category === id.toString() && 'active'
-                                  )}
-                                  role="button"
-                                  tabIndex={0}
-                                  onClick={() => props.onClose()}
-                                  onKeyDown={() => props.onClose()}>
+                                  )}>
                                   {name}
                                 </a>
                               </Link>
@@ -343,11 +324,10 @@ const ProductsSidebarFilter = (props: Props) => {
         <div className="mb-2">
           <Link href="/manufacturers">
             <a
-              className={clsx('products__filter-category', !router.query.manufacturers && 'active')}
-              role="button"
-              tabIndex={0}
-              onClick={() => props.onClose()}
-              onKeyDown={() => props.onClose()}>
+              className={clsx(
+                'products__filter-category',
+                !router.query.manufacturers && 'active'
+              )}>
               {t('productsSidebar:all')}
             </a>
           </Link>
@@ -364,11 +344,7 @@ const ProductsSidebarFilter = (props: Props) => {
                       className={clsx(
                         'products__filter-category',
                         router.query.manufacturer === id.toString() && 'active'
-                      )}
-                      role="button"
-                      tabIndex={0}
-                      onClick={() => props.onClose()}
-                      onKeyDown={() => props.onClose()}>
+                      )}>
                       {short_name}
                     </a>
                   </Link>
@@ -384,11 +360,7 @@ const ProductsSidebarFilter = (props: Props) => {
                       className={clsx(
                         'products__filter-category',
                         router.query.manufacturer === id.toString() && 'active'
-                      )}
-                      role="button"
-                      tabIndex={0}
-                      onClick={() => props.onClose()}
-                      onKeyDown={() => props.onClose()}>
+                      )}>
                       {short_name}
                     </a>
                   </Link>
