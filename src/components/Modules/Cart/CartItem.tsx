@@ -26,7 +26,7 @@ function CartItem(props: CartItemProps): JSX.Element {
   const [open, setOpen] = useState<boolean>(false);
 
   // Refetch cart on update cart complete
-  const { refetchCart, loading: loadingCart } = useCart({
+  const { getCart, loading: loadingCart } = useCart({
     onCompleted: () => {
       toast.success(t('cart:update_success'));
     }
@@ -36,7 +36,7 @@ function CartItem(props: CartItemProps): JSX.Element {
     DELETE_CART,
     {
       onCompleted: () => {
-        refetchCart();
+        getCart();
       },
       onError: (err) => {
         toast.error(t(`errors:code_${err.graphQLErrors?.[0].extensions?.code}`));
@@ -78,14 +78,16 @@ function CartItem(props: CartItemProps): JSX.Element {
           </Link>
 
           <div className="product__status">
-            <span className="badge badge-light display-status mr-1 mb-1 invoice_exportable">
-              {props.tax !== -1 && (
-                <>
-                  <i className="fas mr-1"></i>
-                  {t(`cart:quick_invoice_with_tax`, { tax: props.tax })}{' '}
-                </>
-              )}
-            </span>
+            {props.product.is_quick_invoice && (
+              <span className="badge badge-light display-status mr-1 mb-1 invoice_exportable">
+                {props.tax !== -1 && (
+                  <>
+                    <i className="fas mr-1"></i>
+                    {t(`cart:quick_invoice_with_tax`, { tax: props.tax })}{' '}
+                  </>
+                )}
+              </span>
+            )}
           </div>
         </div>
 

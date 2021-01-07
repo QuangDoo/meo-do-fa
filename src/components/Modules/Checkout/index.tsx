@@ -100,14 +100,14 @@ const CheckoutPage = () => {
 
   const router = useRouter();
 
-  const { cart, refetchCart, loading: loadingCart } = useCart();
+  const { cart, getCart, loading: loadingCart } = useCart();
 
   const [createOrder, { loading: creatingOrder }] = useMutationAuth<
     CreateOrderData,
     CreateOrderVars
   >(CREATE_ORDER, {
     onCompleted: (data) => {
-      refetchCart();
+      getCart();
 
       swal({
         title: t('checkout:order_success_message', {

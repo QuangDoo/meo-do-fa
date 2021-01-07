@@ -1,5 +1,4 @@
 import { withTranslation } from 'i18n';
-import { TFunction } from 'next-i18next';
 import Link from 'next/link';
 import React from 'react';
 import LanguagePicker from 'src/components/Layout/Header/LanguagePicker';

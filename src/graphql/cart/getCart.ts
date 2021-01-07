@@ -31,6 +31,9 @@ export type GetCartData = {
   getCart: {
     carts: CartItem[];
     totalPrice: number;
+    totalNetPrice: number;
+    totalDc: number;
+    totalShippingFee: number;
     totalQty: number;
   };
 };
@@ -62,6 +65,9 @@ export const GET_CART = gql`
         }
       }
       totalPrice
+      totalNetPrice
+      totalDc
+      totalShippingFee
       totalQty
     }
   }

@@ -1,3 +1,4 @@
+import { useLazyQuery, useQuery } from '@apollo/client';
 import { IconButton } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import clsx from 'clsx';
@@ -7,10 +8,16 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import NumberFormat from 'react-number-format';
 import { Category } from 'src/graphql/category/category.query';
+import {
+  SEARCH_CATEGORY,
+  searchCategoriesData,
+  searchCategoriesVars
+} from 'src/graphql/category/searchCategory.query';
 import { Manufacturer } from 'src/graphql/manufacturers/manufacturers.query';
 
 import Dropdown from '../Form/Dropdown';
 import Select from '../Form/Select';
+import Loading from '../Layout/Loading';
 
 type Props = {
   categories: Category[];
@@ -29,7 +36,9 @@ const ProductsSidebarFilter = (props: Props) => {
   const [priceTo, setPriceTo] = useState('');
 
   const { categories, manufacturers } = props;
+
   const { t } = useTranslation(['productsSidebar, searchBar']);
+
   const router = useRouter();
 
   const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -69,6 +78,13 @@ const ProductsSidebarFilter = (props: Props) => {
   const [valueCategoryInput, setValueCategoryInput] = useState('');
   const [valueManuInput, setValueManuInput] = useState('');
 
+  const { data: dataCategory, loading: loadingCategory } = useQuery<
+    searchCategoriesData,
+    searchCategoriesVars
+  >(SEARCH_CATEGORY, { variables: { keyword: valueCategoryInput } });
+
+  const dataCategorySearch = dataCategory?.searchCategories || [];
+
   const onValueCateChange = (e) => {
     e.preventDefault();
     setValueCategoryInput(e.target.value);
@@ -78,15 +94,6 @@ const ProductsSidebarFilter = (props: Props) => {
     e.preventDefault();
     setValueManuInput(e.target.value);
   };
-
-  const categoriesSearch = [...categories]
-    .slice()
-    .sort((a, b) => a.name.localeCompare(b.name))
-    .filter(({ name, id, categorySub }) => {
-      if (name.toLocaleLowerCase().includes(valueCategoryInput.toLocaleLowerCase())) {
-        return [name, id, categorySub];
-      }
-    });
 
   const manufacturersSearch = [...manufacturers]
     .slice()
@@ -197,7 +204,7 @@ const ProductsSidebarFilter = (props: Props) => {
           </Link>
         </div>
         {valueCategoryInput
-          ? categoriesSearch
+          ? dataCategorySearch
               .slice()
               .sort((a, b) => a.name.localeCompare(b.name))
               .map(({ name, id, categorySub }) => (
@@ -293,13 +300,20 @@ const ProductsSidebarFilter = (props: Props) => {
                   </Link>
                 </div>
               ))}
-        {valueCategoryInput && categoriesSearch.length === 0 && (
-          <>
-            <div className="search__result--empty">
-              {t('searchBar:no_product')} <b>{valueCategoryInput}</b>
-            </div>
-            <hr />
-          </>
+        {loadingCategory ? (
+          <div className="search__result--empty text-center">
+            <Loading />
+          </div>
+        ) : (
+          valueCategoryInput &&
+          dataCategorySearch.length === 0 && (
+            <>
+              <div className="search__result--empty">
+                {t('searchBar:no_category')} <b>{valueCategoryInput}</b>
+              </div>
+              <hr />
+            </>
+          )
         )}
       </Dropdown>
 
@@ -383,7 +397,7 @@ const ProductsSidebarFilter = (props: Props) => {
         {valueManuInput && manufacturersSearch.length === 0 && (
           <>
             <div className="search__result--empty">
-              {t('searchBar:no_product')} <b>{valueManuInput}</b>
+              {t('searchBar:no_manufacturer')} <b>{valueManuInput}</b>
             </div>
             <hr />
           </>

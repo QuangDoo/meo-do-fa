@@ -1,7 +1,5 @@
-import useLocalStorage from './useLocalStorage';
+import cookies from 'js-cookie';
 
 export default function useIsLoggedIn(): boolean {
-  const [token] = useLocalStorage('token');
-
-  return !!token;
+  return !!cookies?.get('token');
 }
