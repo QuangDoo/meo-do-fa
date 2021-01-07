@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useState } from 'react';
 
 type Option = {
   value: string | number;
@@ -15,6 +15,13 @@ type Props = {
 };
 
 const RadioInput = (props: Props, ref): JSX.Element => {
+  const [show, setShow] = useState(false);
+
+  const handleChange = () => {
+    setShow(!show);
+    props.onChange;
+  };
+
   return (
     <>
       {props.options.map((option) => {
@@ -30,14 +37,13 @@ const RadioInput = (props: Props, ref): JSX.Element => {
               id={id}
               ref={ref}
               disabled={option.disabled}
-              onChange={props.onChange}
+              onChange={handleChange}
             />
 
             <label className="form__label custom-control-label" htmlFor={id}>
               {option.label}
             </label>
-
-            {option.children}
+            {show && option.children}
           </div>
         );
       })}

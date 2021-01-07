@@ -5,7 +5,6 @@ import React, { useState } from 'react';
 import { Category } from 'src/graphql/category/category.query';
 import { Manufacturer } from 'src/graphql/manufacturers/manufacturers.query';
 
-import Select from '../../Form/Select';
 import FilterTags from '../FilterTags';
 import ProductsSidebarFilter from '../ProductsSidebarFilter';
 

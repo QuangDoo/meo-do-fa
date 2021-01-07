@@ -44,7 +44,6 @@ const ProductsSidebarFilter = (props: Props) => {
       undefined,
       { shallow: true }
     );
-    props.onClose();
   };
 
   const handlePriceRangeFilter = (e) => {
@@ -58,7 +57,6 @@ const ProductsSidebarFilter = (props: Props) => {
         priceTo: priceTo
       }
     });
-    props.onClose();
   };
 
   const handleManufacturersSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -66,7 +64,6 @@ const ProductsSidebarFilter = (props: Props) => {
       pathname: '/manufacturers'
     });
     event.preventDefault();
-    props.onClose();
   };
 
   const [valueCategoryInput, setValueCategoryInput] = useState('');
