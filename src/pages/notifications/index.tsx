@@ -1,6 +1,6 @@
 import { useTranslation } from 'i18n';
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { toast } from 'react-toastify';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import Pagination from 'src/components/Modules/Pagination';
@@ -23,6 +23,10 @@ const Notification = (): JSX.Element => {
   const page = +router.query.page || 1;
 
   const { notifications, loading: loadingNoti, refetchNoti } = useNoti({ page, pageSize });
+
+  useEffect(() => {
+    refetchNoti?.();
+  }, []);
 
   const [seenAllNoti] = useMutationAuth(SEEN_ALL_NOTI, {
     onCompleted: (data: any) => {

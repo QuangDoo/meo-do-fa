@@ -1,6 +1,6 @@
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
-import React, { useEffect } from 'react';
+import React from 'react';
 import PriceText from 'src/components/Form/PriceText';
 import QuantityInput from 'src/components/Form/QuantityInput';
 import { ProductDetails } from 'src/graphql/product/product.query';
@@ -13,11 +13,6 @@ const ProductDetailInfor = (props: ProductDetails): JSX.Element => {
   const isLoggedIn = useIsLoggedIn();
 
   const { t } = useTranslation(['common', 'productDetail']);
-
-  // console.log('props.manufacturer', props.manufacturer);
-  // useEffect(()=>{
-
-  // },[])
 
   return (
     <div className="row">

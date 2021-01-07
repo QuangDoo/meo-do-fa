@@ -22,7 +22,7 @@ function QuantityInput(props: Props) {
 
   const { t } = useTranslation(['errors', 'success']);
 
-  const { cart, refetchCart } = useCart();
+  const { cart, getCart } = useCart();
 
   const thisProductInCart = cart?.getCart.carts.find((product) => product.productId === productId);
 
@@ -41,9 +41,10 @@ function QuantityInput(props: Props) {
     {
       onCompleted: () => {
         toast.success(t(`success:update_cart`));
-        refetchCart();
+        getCart();
       },
       onError: (err) => {
+        console.log('add to cart error:', err);
         toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
       }
     }
@@ -54,7 +55,7 @@ function QuantityInput(props: Props) {
     {
       onCompleted: () => {
         toast.success(t(`success:delete_cart`));
-        refetchCart();
+        getCart();
       },
       onError: (err) => {
         toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));

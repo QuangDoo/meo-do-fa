@@ -66,13 +66,13 @@ const ConfirmDeleteModal: FC<Props> = (props) => {
               type="button"
               className="swal2-cancel btn btn-outline-primary px-4 m-2"
               onClick={onClose}>
-              {t('cart:No')}
+              {t('cart:no')}
             </button>
             <button
               type="button"
               className="swal2-confirm btn btn-primary px-4 m-2"
               onClick={onConfirm}>
-              {t('cart:Yes')}
+              {t('cart:yes')}
             </button>
           </div>
         </div>

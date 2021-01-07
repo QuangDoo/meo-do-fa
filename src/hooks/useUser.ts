@@ -1,9 +1,9 @@
+import Cookies from 'js-cookie';
 import { useEffect } from 'react';
 import { useUserContext } from 'src/contexts/User';
-import { GET_USER, GetUserData, User } from 'src/graphql/user/getUser';
+import { GET_USER, GetUserData } from 'src/graphql/user/getUser';
 
 import { useLazyQueryAuth } from './useApolloHookAuth';
-import useLocalStorage from './useLocalStorage';
 
 type Props = {
   onCompleted?: (data: GetUserData) => void;
@@ -12,7 +12,7 @@ type Props = {
 export default function useUser(props: Props = {}) {
   const { user, setUser } = useUserContext();
 
-  const [token, , removeToken] = useLocalStorage('token');
+  const token = decodeURIComponent(Cookies.get('token') || '');
 
   const [getUser, { data, loading, refetch: refetchUser }] = useLazyQueryAuth<
     GetUserData,
@@ -26,7 +26,7 @@ export default function useUser(props: Props = {}) {
     },
     onError: (error) => {
       if (error?.graphQLErrors?.[0]?.extensions?.code === 500) {
-        removeToken();
+        Cookies.remove('token');
       }
     }
   });
