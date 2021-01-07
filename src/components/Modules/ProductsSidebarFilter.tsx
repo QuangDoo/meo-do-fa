@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import NumberFormat from 'react-number-format';
 import { Category } from 'src/graphql/category/category.query';
 import {
@@ -53,6 +53,7 @@ const ProductsSidebarFilter = (props: Props) => {
       undefined,
       { shallow: true }
     );
+    props.onClose && props.onClose();
   };
 
   const handlePriceRangeFilter = (e) => {
@@ -66,6 +67,7 @@ const ProductsSidebarFilter = (props: Props) => {
         priceTo: priceTo
       }
     });
+    props.onClose && props.onClose();
   };
 
   const handleManufacturersSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -118,9 +120,9 @@ const ProductsSidebarFilter = (props: Props) => {
         </div>
       </header>
 
-      <hr className="hr my-3 d-none d-sm-block" />
+      <hr className="hr my-3" />
 
-      <div className="d-none d-sm-block">
+      <div>
         <div className="products__filter-header mb-2">{t('productsSidebar:sort')}</div>
 
         <Select onChange={handleSortChange}>
@@ -319,6 +321,17 @@ const ProductsSidebarFilter = (props: Props) => {
             />
           </div>
         </form>
+        <div className="mb-2">
+          <Link href="/manufacturers">
+            <a
+              className={clsx(
+                'products__filter-category',
+                !router.query.manufacturers && 'active'
+              )}>
+              {t('productsSidebar:all')}
+            </a>
+          </Link>
+        </div>
 
         {valueManuInput
           ? manufacturersSearch

@@ -95,7 +95,7 @@ const PaymentOption = (props: Props): JSX.Element => {
               <Trans
                 i18nKey="checkout:paymentOption_bank"
                 components={{
-                  Link: <LinkText href="/help/huong-dan-chuyen-khoan"> </LinkText>
+                  Link: <LinkText href="/help/bank_transfer_guide"> </LinkText>
                 }}
               />
             ),
