@@ -15,7 +15,6 @@ import {
   GetPaymentAndDeliveryData
 } from 'src/graphql/paymentAndDelivery/paymentAndDelivery,query';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
-import { ReactHookFormRegister } from 'src/types/ReactHookFormRegister';
 
 import DescriptionBox from './DescriptionBox';
 import InputCard from './InputCard';
@@ -26,7 +25,9 @@ type Props = {
 };
 
 const PaymentOption = (props: Props): JSX.Element => {
-  const { register } = useFormContext();
+  const { register, watch } = useFormContext();
+
+  const chosenPaymentOption = watch('paymentMethodId');
 
   const { t } = useTranslation('checkout');
 
@@ -94,12 +95,12 @@ const PaymentOption = (props: Props): JSX.Element => {
               <Trans
                 i18nKey="checkout:paymentOption_bank"
                 components={{
-                  Link: <LinkText href="/help/huong-dan-chuyen-khoan"> </LinkText>
+                  Link: <LinkText href="/help/bank_transfer_guide"> </LinkText>
                 }}
               />
             ),
             value: bankTransfer.id,
-            children: (
+            children: chosenPaymentOption === '2' && (
               <DescriptionBox>
                 <div className="bank-info">
                   {['account_name', 'account_no', 'bank_name', 'note'].map((key, index, arr) => (
