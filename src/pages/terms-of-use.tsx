@@ -4,20 +4,21 @@ import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
 import Nav from 'src/components/Layout/Nav';
+import MainLayout from 'src/components/Modules/MainLayout';
+import getToken from 'src/utils/getToken';
 import withApollo from 'src/utils/withApollo';
 
-const TermsOfUse = () => {
-  const { t } = useTranslation(['common']);
+TermsOfUse.getInitialProps = async (ctx) => ({
+  namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge'],
+  token: getToken(ctx)
+});
 
+function TermsOfUse(props) {
   return (
-    <>
+    <MainLayout token={props.token}>
       <Head>
         <title>Medofa</title>
       </Head>
-
-      <Header />
-
-      <Nav />
 
       <div className="container my-5">
         <h2 className="text-center my-5">Điều khoản sử dụng</h2>
@@ -146,14 +147,8 @@ const TermsOfUse = () => {
           </li>
         </ul>
       </div>
-
-      <Footer />
-    </>
+    </MainLayout>
   );
-};
-
-TermsOfUse.getInitialProps = async () => ({
-  namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge']
-});
+}
 
 export default withApollo({ ssr: true })(TermsOfUse);

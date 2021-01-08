@@ -1,11 +1,8 @@
 import { useQuery } from '@apollo/client';
 import React from 'react';
-import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
-import Header from 'src/components/Layout/Header';
-import Nav from 'src/components/Layout/Nav';
 import HomePage from 'src/components/Modules/Home';
-import { TokenContext } from 'src/contexts/Token';
+import MainLayout from 'src/components/Modules/MainLayout';
 import {
   GET_BEST_SELLING_PRODUCTS,
   GetBestSellingProductsData,
@@ -63,14 +60,10 @@ function Home(props) {
   >(GET_PROMOTION_PRODUCTS, paginationVars);
 
   return (
-    <TokenContext.Provider value={props.token}>
+    <MainLayout token={props.token}>
       <Head>
         <title>Medofa</title>
       </Head>
-
-      <Header />
-
-      <Nav />
 
       <HomePage
         bestSellingData={bestSellingData}
@@ -78,9 +71,7 @@ function Home(props) {
         promotionProductsData={promotionProductsData}
         dealsOfTheDayData={dealsOfTheDayData}
       />
-
-      <Footer />
-    </TokenContext.Provider>
+    </MainLayout>
   );
 }
 

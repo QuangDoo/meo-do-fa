@@ -4,11 +4,31 @@ import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
 import Nav from 'src/components/Layout/Nav';
 import QuickOrderPage from 'src/components/Modules/QuickOrder/index';
+import { TokenContext } from 'src/contexts/Token';
+import getToken from 'src/utils/getToken';
 import withApollo from 'src/utils/withApollo';
 
-function QuickOrder(): JSX.Element {
+QuickOrder.getInitialProps = async (ctx) => ({
+  namespacesRequired: [
+    'header',
+    'navbar',
+    'footer',
+    'errors',
+    'common',
+    'login',
+    'register',
+    'password',
+    'searchBar',
+    'noti',
+    'cart',
+    'quickOrder'
+  ],
+  token: getToken(ctx)
+});
+
+function QuickOrder(props) {
   return (
-    <>
+    <TokenContext.Provider value={props.token}>
       <Head>
         <title>Medofa</title>
       </Head>
@@ -20,7 +40,7 @@ function QuickOrder(): JSX.Element {
       <QuickOrderPage />
 
       <Footer />
-    </>
+    </TokenContext.Provider>
   );
 }
 

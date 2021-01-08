@@ -1,10 +1,7 @@
 import { useTranslation } from 'i18n';
 import React from 'react';
-import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
-import Header from 'src/components/Layout/Header';
-import Nav from 'src/components/Layout/Nav';
-import { TokenContext } from 'src/contexts/Token';
+import MainLayout from 'src/components/Modules/MainLayout';
 import getToken from 'src/utils/getToken';
 import withApollo from 'src/utils/withApollo';
 
@@ -17,14 +14,10 @@ function PrivacyPolicy(props) {
   const { t } = useTranslation(['common', 'privacyPolicy']);
 
   return (
-    <TokenContext.Provider value={props.token}>
+    <MainLayout token={props.token}>
       <Head>
         <title>Medofa</title>
       </Head>
-
-      <Header />
-
-      <Nav />
 
       <div className="container my-5">
         <h2 className="text-center my-5">{t('privacyPolicy:title')}</h2>
@@ -140,9 +133,7 @@ function PrivacyPolicy(props) {
           </li>
         </ul>
       </div>
-
-      <Footer />
-    </TokenContext.Provider>
+    </MainLayout>
   );
 }
 

@@ -1,18 +1,14 @@
 import { useQuery } from '@apollo/client';
 import { useTranslation } from 'i18n';
-import _ from 'lodash';
 import { useRouter } from 'next/router';
-import React from 'react';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { animateScroll } from 'react-scroll';
 import { toast } from 'react-toastify';
-import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
-import Header from 'src/components/Layout/Header';
 import Loading from 'src/components/Layout/Loading';
-import Nav from 'src/components/Layout/Nav';
 // import SimpleBreadcrumbs from 'src/components/Modules/BreadCrum/BreadCrum';
 import FilterTags from 'src/components/Modules/FilterTags';
+import MainLayout from 'src/components/Modules/MainLayout';
 import Pagination from 'src/components/Modules/Pagination';
 import ProductCard from 'src/components/Modules/ProductCard';
 import ProductsDrawerFilter from 'src/components/Modules/ProductDrawerFilter/ProductsDrawerFilter';
@@ -38,13 +34,19 @@ import {
   GetProductsVars,
   ProductTag
 } from 'src/graphql/product/getProducts';
+import getToken from 'src/utils/getToken';
 import withApollo from 'src/utils/withApollo';
 
 const pageSize = 20;
 
 const defaultSortType = '07'; // Name ascending
 
-function Products(): JSX.Element {
+Products.getInitialProps = async (ctx) => ({
+  namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge', 'products'],
+  token: getToken(ctx)
+});
+
+function Products(props) {
   const { t } = useTranslation(['products']);
 
   const router = useRouter();
@@ -116,14 +118,10 @@ function Products(): JSX.Element {
   }, [productsLoading]);
 
   return (
-    <>
+    <MainLayout token={props.token}>
       <Head>
         <title>Medofa - {title}</title>
       </Head>
-
-      <Header />
-
-      <Nav />
 
       {categoriesLevel.length !== 0 ? (
         <div className="products container mobile-content my-3 my-sm-5">
@@ -205,14 +203,8 @@ function Products(): JSX.Element {
       ) : (
         <div></div>
       )}
-
-      <Footer />
-    </>
+    </MainLayout>
   );
 }
-
-Products.getInitialProps = async () => ({
-  namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge']
-});
 
 export default withApollo({ ssr: true })(Products);

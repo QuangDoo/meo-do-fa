@@ -1,13 +1,10 @@
 import { useTranslation } from 'i18n';
 import React from 'react';
-import { TokenContext } from 'src/contexts/Token';
+import MainLayout from 'src/components/Modules/MainLayout';
 import getToken from 'src/utils/getToken';
 import withApollo from 'src/utils/withApollo';
 
-import Footer from '../components/Layout/Footer';
 import Head from '../components/Layout/Head';
-import Header from '../components/Layout/Header';
-import Nav from '../components/Layout/Nav';
 
 AboutUs.getInitialProps = async (ctx) => ({
   namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge'],
@@ -18,14 +15,10 @@ function AboutUs(props) {
   const { t } = useTranslation(['common', 'aboutUs']);
 
   return (
-    <TokenContext.Provider value={props.token}>
+    <MainLayout token={props.token}>
       <Head>
         <title>Medofa</title>
       </Head>
-
-      <Header />
-
-      <Nav />
 
       <div className="container my-5">
         <h2 className="text-center my-5">{t('aboutUs:title')}</h2>
@@ -74,8 +67,7 @@ function AboutUs(props) {
           Địa chỉ: Lầu 5 – 231 Lý Tự Trọng, Bến Thành, Quận 1, Tp.HCM
         </p>
       </div>
-      <Footer />
-    </TokenContext.Provider>
+    </MainLayout>
   );
 }
 

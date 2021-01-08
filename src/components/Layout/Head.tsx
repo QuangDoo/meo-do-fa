@@ -46,7 +46,7 @@ export default function Head(props) {
       <link
         rel="apple-touch-icon"
         href="/icons/apple-icon-120x120-medofa-manifest-20129.png"></link>
-      <meta name="theme-color" content="#1476fb" />
+      <meta name="theme-color" content="#2f3b97" />
       <script async src="https://www.googletagmanager.com/gtag/js?id=G-95PXEWD1KY"></script>
       {props.children}
     </HeadNext>

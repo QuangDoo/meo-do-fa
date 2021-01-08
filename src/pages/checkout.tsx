@@ -1,10 +1,7 @@
 import React from 'react';
-import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
-import Header from 'src/components/Layout/Header';
-import Nav from 'src/components/Layout/Nav';
 import CheckoutPage from 'src/components/Modules/Checkout';
-import { TokenContext } from 'src/contexts/Token';
+import MainLayout from 'src/components/Modules/MainLayout';
 import getToken from 'src/utils/getToken';
 import protectRoute from 'src/utils/protectRoute';
 import withApollo from 'src/utils/withApollo';
@@ -20,19 +17,13 @@ Checkout.getInitialProps = async (ctx) => {
 
 function Checkout(props) {
   return (
-    <TokenContext.Provider value={props.token}>
+    <MainLayout token={props.token}>
       <Head>
         <title>Medofa</title>
       </Head>
 
-      <Header />
-
-      <Nav />
-
       <CheckoutPage />
-
-      <Footer />
-    </TokenContext.Provider>
+    </MainLayout>
   );
 }
 

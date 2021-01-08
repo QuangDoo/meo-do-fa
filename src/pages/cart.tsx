@@ -3,13 +3,10 @@ import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import { toast } from 'react-toastify';
 import PriceText from 'src/components/Form/PriceText';
-import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
-import Header from 'src/components/Layout/Header';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
-import Nav from 'src/components/Layout/Nav';
 import CartItem from 'src/components/Modules/Cart/CartItem';
-import { TokenContext } from 'src/contexts/Token';
+import MainLayout from 'src/components/Modules/MainLayout';
 import { CREATE_COUNSEL } from 'src/graphql/order/order.mutation';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import useCart from 'src/hooks/useCart';
@@ -59,12 +56,11 @@ function Cart(props) {
   };
 
   return (
-    <TokenContext.Provider value={props.token}>
+    <MainLayout token={props.token}>
       <Head>
         <title>Medofa</title>
       </Head>
-      <Header />
-      <Nav />
+
       <div className="container py-5">
         <div className="cart">
           <div className="row">
@@ -128,10 +124,9 @@ function Cart(props) {
           </div>
         </div>
       </div>
-      <Footer />
 
       <LoadingBackdrop open={creatingCounsel || loadingCart} />
-    </TokenContext.Provider>
+    </MainLayout>
   );
 }
 

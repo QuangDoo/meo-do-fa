@@ -9,13 +9,10 @@ import TableRow from '@material-ui/core/TableRow';
 import { useTranslation } from 'i18n';
 import { useRouter } from 'next/router';
 import React from 'react';
-import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
-import Header from 'src/components/Layout/Header';
-import Nav from 'src/components/Layout/Nav';
+import MainLayout from 'src/components/Modules/MainLayout';
 import Pagination from 'src/components/Modules/Pagination';
 import ProfileLayout from 'src/components/Modules/ProfileLayout';
-import { TokenContext } from 'src/contexts/Token';
 import {
   GET_COUPONS_BY_USER,
   GetCouponsByUserData,
@@ -75,14 +72,10 @@ function MyPromoCodes(props) {
   };
 
   return (
-    <TokenContext.Provider value={props.token}>
+    <MainLayout token={props.token}>
       <Head>
         <title>Medofa</title>
       </Head>
-
-      <Header />
-
-      <Nav />
 
       <ProfileLayout title={t('myPromoCodes:my_promo_codes')}>
         <TableContainer component={Paper}>
@@ -134,9 +127,7 @@ function MyPromoCodes(props) {
 
         <Pagination count={total / pageSize} page={page} onChange={handlePageChange} />
       </ProfileLayout>
-
-      <Footer />
-    </TokenContext.Provider>
+    </MainLayout>
   );
 }
 

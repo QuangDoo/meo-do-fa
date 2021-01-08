@@ -5,13 +5,10 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { animateScroll } from 'react-scroll';
-import Footer from 'src/components/Layout/Footer';
-import Header from 'src/components/Layout/Header';
 import Loading from 'src/components/Layout/Loading';
-import Nav from 'src/components/Layout/Nav';
+import MainLayout from 'src/components/Modules/MainLayout';
 import Pagination from 'src/components/Modules/Pagination';
 import ProductCard from 'src/components/Modules/ProductCard';
-import { TokenContext } from 'src/contexts/Token';
 import {
   GET_DEALS_OF_THE_DAY,
   GetDealsOfTheDayData,
@@ -101,14 +98,10 @@ function DealOfTheDay(props) {
   }, [otherDealLoading]);
 
   return (
-    <TokenContext.Provider value={props.token}>
+    <MainLayout token={props.token}>
       <Head>
         <title>Medofa</title>
       </Head>
-
-      <Header />
-
-      <Nav />
 
       <div className="deals deals--mobile py-5">
         <div className="container px-0">
@@ -198,8 +191,7 @@ function DealOfTheDay(props) {
           </div>
         )
       )}
-      <Footer />
-    </TokenContext.Provider>
+    </MainLayout>
   );
 }
 

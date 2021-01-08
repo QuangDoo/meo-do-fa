@@ -4,20 +4,21 @@ import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
 import Nav from 'src/components/Layout/Nav';
+import MainLayout from 'src/components/Modules/MainLayout';
+import getToken from 'src/utils/getToken';
 import withApollo from 'src/utils/withApollo';
 
-const TermsOfService = () => {
-  const { t } = useTranslation(['common', 'termsOfService']);
+TermsOfService.getInitialProps = async (ctx) => ({
+  namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge'],
+  token: getToken(ctx)
+});
 
+function TermsOfService(props) {
   return (
-    <>
+    <MainLayout token={props.token}>
       <Head>
         <title>Medofa</title>
       </Head>
-
-      <Header />
-
-      <Nav />
 
       <div className="container my-5">
         <h2 className="text-center my-5">Thỏa thuận về Dịch Vụ Thương Mại Điện Tử</h2>
@@ -1040,14 +1041,8 @@ const TermsOfService = () => {
           </li>
         </ol>
       </div>
-
-      <Footer />
-    </>
+    </MainLayout>
   );
-};
-
-TermsOfService.getInitialProps = async () => ({
-  namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge']
-});
+}
 
 export default withApollo({ ssr: true })(TermsOfService);

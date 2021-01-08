@@ -4,6 +4,7 @@ import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
 import Nav from 'src/components/Layout/Nav';
+import MainLayout from 'src/components/Modules/MainLayout';
 import { TokenContext } from 'src/contexts/Token';
 import getToken from 'src/utils/getToken';
 import withApollo from 'src/utils/withApollo';
@@ -17,14 +18,10 @@ function GeneralPolicy(props) {
   const { t } = useTranslation(['common', 'generalPolicy']);
 
   return (
-    <TokenContext.Provider value={props.token}>
+    <MainLayout token={props.token}>
       <Head>
         <title>Medofa</title>
       </Head>
-
-      <Header />
-
-      <Nav />
 
       <div className="container my-5">
         <h2 className="text-center my-5">{t('generalPolicy:title')}</h2>
@@ -33,9 +30,7 @@ function GeneralPolicy(props) {
           {t('common:updating')}
         </div>
       </div>
-
-      <Footer />
-    </TokenContext.Provider>
+    </MainLayout>
   );
 }
 

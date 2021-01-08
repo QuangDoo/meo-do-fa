@@ -2,14 +2,11 @@ import { useQuery } from '@apollo/client';
 import { useTranslation } from 'i18n';
 import { useRouter } from 'next/router';
 import React from 'react';
-import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
-import Header from 'src/components/Layout/Header';
 import Loading from 'src/components/Layout/Loading';
-import Nav from 'src/components/Layout/Nav';
+import MainLayout from 'src/components/Modules/MainLayout';
 import Pagination from 'src/components/Modules/Pagination';
 import ProductCard from 'src/components/Modules/ProductCard';
-import { TokenContext } from 'src/contexts/Token';
 import { GET_PRODUCTS, GetProductsData, GetProductsVars } from 'src/graphql/product/getProducts';
 import getToken from 'src/utils/getToken';
 import withApollo from 'src/utils/withApollo';
@@ -61,14 +58,10 @@ function Deal(props) {
   };
 
   return (
-    <TokenContext.Provider value={props.token}>
+    <MainLayout token={props.token}>
       <Head>
         <title>Medofa</title>
       </Head>
-
-      <Header />
-
-      <Nav />
 
       <section className="deals deals--mobile py-5">
         <div className="container px-0">
@@ -107,9 +100,7 @@ function Deal(props) {
           </div>
         </div>
       </section>
-
-      <Footer />
-    </TokenContext.Provider>
+    </MainLayout>
   );
 }
 
