@@ -67,3 +67,9 @@
   top: 0;
   right: 0;
 }
+
+.bank-info {
+  display: grid;
+  grid-template-columns: max-content auto;
+  row-gap: 4px;
+}

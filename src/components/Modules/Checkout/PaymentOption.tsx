@@ -103,11 +103,13 @@ const PaymentOption = (props: Props): JSX.Element => {
             children: chosenPaymentOption === '2' && (
               <DescriptionBox>
                 <div className="bank-info">
-                  {['account_name', 'account_no', 'bank_name', 'note'].map((key, index, arr) => (
-                    <div key={key} className={clsx('d-flex', index < arr.length - 1 && 'mb-2')}>
-                      <div className="bank-info__label">{t(`checkout:bank_info__${key}`)}</div>
+                  {['account_name', 'account_no', 'bank_name', 'note'].map((key) => (
+                    <>
+                      <div className="text-muted text-right mr-2">
+                        {t(`checkout:bank_info__${key}`)}
+                      </div>
                       <div className="bank-info__content">{bankTransfer[key]}</div>
-                    </div>
+                    </>
                   ))}
                 </div>
               </DescriptionBox>
