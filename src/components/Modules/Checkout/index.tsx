@@ -5,12 +5,12 @@ import React, { useEffect, useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
+import { useToken } from 'src/contexts/Token';
 import { CREATE_ORDER, CreateOrderData, CreateOrderVars } from 'src/graphql/order/createOrder';
 import { GET_COUNSEL, GetCounselData, OutputCounsel } from 'src/graphql/order/getCounsel';
 import { GET_ADDRESS_INFO_USER, GetAddressInfoData } from 'src/graphql/user/getAddressInfoUser';
 import useCart from 'src/hooks/useCart';
 import useUser from 'src/hooks/useUser';
-import { useToken } from 'src/pages/checkout';
 import swal from 'sweetalert';
 
 import Agreement from './Agreement';

@@ -5,7 +5,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import 'src/assets/css/icoFont.scss';
 import 'src/assets/scss/custom-styles.scss';
 
-import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/core/styles';
 import App from 'next/app';
 import { useEffect } from 'react';
 import ToastContainer from 'src/components/Layout/ToastContainer';
@@ -25,7 +25,7 @@ const MyApp = ({ Component, pageProps }) => {
   }, []);
 
   return (
-    <MuiThemeProvider theme={muiTheme}>
+    <ThemeProvider theme={muiTheme}>
       <UserProvider>
         <CartProvider>
           <ModalControlProvider>
@@ -34,7 +34,7 @@ const MyApp = ({ Component, pageProps }) => {
           </ModalControlProvider>
         </CartProvider>
       </UserProvider>
-    </MuiThemeProvider>
+    </ThemeProvider>
   );
 };
 

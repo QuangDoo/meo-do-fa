@@ -6,10 +6,10 @@ import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
+import { useToken } from 'src/contexts/Token';
 import { APPLY_COUPON, ApplyCouponData, ApplyCouponVars } from 'src/graphql/coupons/applyCoupon';
 import { GET_USED_COUPONS, GetUsedCouponsData } from 'src/graphql/coupons/getUsedCoupons';
 import { OutputCounsel, PromotionType } from 'src/graphql/order/getCounsel';
-import { useToken } from 'src/pages/checkout';
 
 import ApplyPromoCodesDialog from './ApplyPromoCodesDialog';
 
