@@ -11,17 +11,24 @@ import Loading from 'src/components/Layout/Loading';
 import Nav from 'src/components/Layout/Nav';
 import Pagination from 'src/components/Modules/Pagination';
 import ProductCard from 'src/components/Modules/ProductCard';
+import { TokenContext } from 'src/contexts/Token';
 import {
   GET_DEALS_OF_THE_DAY,
   GetDealsOfTheDayData,
   GetDealsOfTheDayVars
 } from 'src/graphql/product/getDealsOfTheDay';
 import { GET_PRODUCTS, GetProductsData, GetProductsVars } from 'src/graphql/product/getProducts';
+import getToken from 'src/utils/getToken';
 import withApollo from 'src/utils/withApollo';
 
 const pageSize = 20;
 
-const DealOfTheDay = () => {
+DealOfTheDay.getInitialProps = async (ctx) => ({
+  namespacesRequired: ['dealsOfTheDay'],
+  token: getToken(ctx)
+});
+
+function DealOfTheDay(props) {
   const router = useRouter();
   const { t } = useTranslation(['dealsOfTheDay']);
   const [showMore, setShowMore] = useState(false);
@@ -94,7 +101,7 @@ const DealOfTheDay = () => {
   }, [otherDealLoading]);
 
   return (
-    <>
+    <TokenContext.Provider value={props.token}>
       <Head>
         <title>Medofa</title>
       </Head>
@@ -192,8 +199,8 @@ const DealOfTheDay = () => {
         )
       )}
       <Footer />
-    </>
+    </TokenContext.Provider>
   );
-};
+}
 
 export default withApollo({ ssr: true })(DealOfTheDay);

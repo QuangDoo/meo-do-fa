@@ -12,11 +12,9 @@ import withApollo from 'src/utils/withApollo';
 Checkout.getInitialProps = async (ctx) => {
   protectRoute(ctx);
 
-  const token = getToken(ctx);
-
   return {
     namespacesRequired: ['checkout', 'errors', 'common', 'myAccount'],
-    token
+    token: getToken(ctx)
   };
 };
 

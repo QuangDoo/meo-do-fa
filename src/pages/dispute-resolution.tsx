@@ -4,13 +4,20 @@ import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
 import Nav from 'src/components/Layout/Nav';
+import { TokenContext } from 'src/contexts/Token';
+import getToken from 'src/utils/getToken';
 import withApollo from 'src/utils/withApollo';
 
-const DisputeResolution = () => {
+DisputeResolution.getInitialProps = async (ctx) => ({
+  namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge'],
+  token: getToken(ctx)
+});
+
+function DisputeResolution(props) {
   const { t } = useTranslation(['common', 'disputeResolution']);
 
   return (
-    <>
+    <TokenContext.Provider value={props.token}>
       <Head>
         <title>Medofa</title>
       </Head>
@@ -60,12 +67,8 @@ const DisputeResolution = () => {
       </div>
 
       <Footer />
-    </>
+    </TokenContext.Provider>
   );
-};
-
-DisputeResolution.getInitialProps = async () => ({
-  namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge']
-});
+}
 
 export default withApollo({ ssr: true })(DisputeResolution);

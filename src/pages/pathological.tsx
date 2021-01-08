@@ -4,13 +4,20 @@ import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
 import Nav from 'src/components/Layout/Nav';
+import { TokenContext } from 'src/contexts/Token';
+import getToken from 'src/utils/getToken';
 import withApollo from 'src/utils/withApollo';
 
-function Pathological() {
+Pathological.getInitialProps = async (ctx) => ({
+  namespacesRequired: ['common'],
+  token: getToken(ctx)
+});
+
+function Pathological(props) {
   const { t } = useTranslation('common');
 
   return (
-    <>
+    <TokenContext.Provider value={props.token}>
       <Head>
         <title>Medofa</title>
       </Head>
@@ -24,7 +31,7 @@ function Pathological() {
       </div>
 
       <Footer />
-    </>
+    </TokenContext.Provider>
   );
 }
 

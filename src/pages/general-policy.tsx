@@ -4,13 +4,20 @@ import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
 import Nav from 'src/components/Layout/Nav';
+import { TokenContext } from 'src/contexts/Token';
+import getToken from 'src/utils/getToken';
 import withApollo from 'src/utils/withApollo';
 
-const GeneralPolicy = () => {
+GeneralPolicy.getInitialProps = async (ctx) => ({
+  namespacesRequired: ['common', 'header', 'footer', 'generalPolicy'],
+  token: getToken(ctx)
+});
+
+function GeneralPolicy(props) {
   const { t } = useTranslation(['common', 'generalPolicy']);
 
   return (
-    <>
+    <TokenContext.Provider value={props.token}>
       <Head>
         <title>Medofa</title>
       </Head>
@@ -28,12 +35,8 @@ const GeneralPolicy = () => {
       </div>
 
       <Footer />
-    </>
+    </TokenContext.Provider>
   );
-};
-
-GeneralPolicy.getInitialProps = async () => ({
-  namespacesRequired: ['common', 'header', 'footer', 'generalPolicy']
-});
+}
 
 export default withApollo({ ssr: true })(GeneralPolicy);

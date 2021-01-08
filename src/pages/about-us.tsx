@@ -1,5 +1,7 @@
 import { useTranslation } from 'i18n';
 import React from 'react';
+import { TokenContext } from 'src/contexts/Token';
+import getToken from 'src/utils/getToken';
 import withApollo from 'src/utils/withApollo';
 
 import Footer from '../components/Layout/Footer';
@@ -7,11 +9,16 @@ import Head from '../components/Layout/Head';
 import Header from '../components/Layout/Header';
 import Nav from '../components/Layout/Nav';
 
-const AboutUs = (): JSX.Element => {
+AboutUs.getInitialProps = async (ctx) => ({
+  namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge'],
+  token: getToken(ctx)
+});
+
+function AboutUs(props) {
   const { t } = useTranslation(['common', 'aboutUs']);
 
   return (
-    <>
+    <TokenContext.Provider value={props.token}>
       <Head>
         <title>Medofa</title>
       </Head>
@@ -68,12 +75,8 @@ const AboutUs = (): JSX.Element => {
         </p>
       </div>
       <Footer />
-    </>
+    </TokenContext.Provider>
   );
-};
-
-AboutUs.getInitialProps = async () => ({
-  namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge']
-});
+}
 
 export default withApollo({ ssr: false })(AboutUs);

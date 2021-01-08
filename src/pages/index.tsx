@@ -5,6 +5,7 @@ import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
 import Nav from 'src/components/Layout/Nav';
 import HomePage from 'src/components/Modules/Home';
+import { TokenContext } from 'src/contexts/Token';
 import {
   GET_BEST_SELLING_PRODUCTS,
   GetBestSellingProductsData,
@@ -25,6 +26,7 @@ import {
   GetPromotionProductsData,
   GetPromotionProductsVars
 } from 'src/graphql/product/getPromotionProducts';
+import getToken from 'src/utils/getToken';
 import withApollo from 'src/utils/withApollo';
 
 const paginationVars = {
@@ -34,7 +36,12 @@ const paginationVars = {
   }
 };
 
-const Home = (): JSX.Element => {
+Home.getInitialProps = async (ctx) => ({
+  namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge'],
+  token: getToken(ctx)
+});
+
+function Home(props) {
   const { data: dealsOfTheDayData } = useQuery<GetDealsOfTheDayData, GetDealsOfTheDayVars>(
     GET_DEALS_OF_THE_DAY,
     paginationVars
@@ -56,7 +63,7 @@ const Home = (): JSX.Element => {
   >(GET_PROMOTION_PRODUCTS, paginationVars);
 
   return (
-    <>
+    <TokenContext.Provider value={props.token}>
       <Head>
         <title>Medofa</title>
       </Head>
@@ -73,12 +80,8 @@ const Home = (): JSX.Element => {
       />
 
       <Footer />
-    </>
+    </TokenContext.Provider>
   );
-};
-
-Home.getInitialProps = async () => ({
-  namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge']
-});
+}
 
 export default withApollo({ ssr: true })(Home);

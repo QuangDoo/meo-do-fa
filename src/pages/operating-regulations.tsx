@@ -4,13 +4,20 @@ import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
 import Nav from 'src/components/Layout/Nav';
+import { TokenContext } from 'src/contexts/Token';
+import getToken from 'src/utils/getToken';
 import withApollo from 'src/utils/withApollo';
 
-const OperatingRegulations = () => {
+OperatingRegulations.getInitialProps = async (ctx) => ({
+  namespacesRequired: ['common', 'operatingRegulations'],
+  token: getToken(ctx)
+});
+
+function OperatingRegulations(props) {
   const { t } = useTranslation(['common', 'operatingRegulations']);
 
   return (
-    <>
+    <TokenContext.Provider value={props.token}>
       <Head>
         <title>Medofa</title>
       </Head>
@@ -28,8 +35,8 @@ const OperatingRegulations = () => {
       </div>
 
       <Footer />
-    </>
+    </TokenContext.Provider>
   );
-};
+}
 
 export default withApollo({ ssr: true })(OperatingRegulations);

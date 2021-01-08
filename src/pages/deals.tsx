@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client';
-import { useTranslation, withTranslation } from 'i18n';
+import { useTranslation } from 'i18n';
 import { useRouter } from 'next/router';
 import React from 'react';
 import Footer from 'src/components/Layout/Footer';
@@ -9,12 +9,19 @@ import Loading from 'src/components/Layout/Loading';
 import Nav from 'src/components/Layout/Nav';
 import Pagination from 'src/components/Modules/Pagination';
 import ProductCard from 'src/components/Modules/ProductCard';
+import { TokenContext } from 'src/contexts/Token';
 import { GET_PRODUCTS, GetProductsData, GetProductsVars } from 'src/graphql/product/getProducts';
+import getToken from 'src/utils/getToken';
 import withApollo from 'src/utils/withApollo';
 
 const pageSize = 20;
 
-function Deal() {
+Deal.getInitialProps = async (ctx) => ({
+  namespacesRequired: ['common'],
+  token: getToken(ctx)
+});
+
+function Deal(props) {
   const router = useRouter();
 
   const { t } = useTranslation(['deals']);
@@ -54,10 +61,11 @@ function Deal() {
   };
 
   return (
-    <>
+    <TokenContext.Provider value={props.token}>
       <Head>
         <title>Medofa</title>
       </Head>
+
       <Header />
 
       <Nav />
@@ -101,14 +109,8 @@ function Deal() {
       </section>
 
       <Footer />
-    </>
+    </TokenContext.Provider>
   );
 }
 
-Deal.getInitialProps = async () => ({
-  namespacesRequired: ['common']
-});
-
-const TranslatedPage = withTranslation(['common'])(Deal);
-
-export default withApollo({ ssr: true })(TranslatedPage);
+export default withApollo({ ssr: true })(Deal);

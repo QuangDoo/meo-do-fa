@@ -1,6 +1,5 @@
 import { useTranslation } from 'i18n';
-import cookies from 'js-cookie';
-import Router, { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import { toast } from 'react-toastify';
 import PriceText from 'src/components/Form/PriceText';
@@ -10,13 +9,26 @@ import Header from 'src/components/Layout/Header';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import Nav from 'src/components/Layout/Nav';
 import CartItem from 'src/components/Modules/Cart/CartItem';
+import { TokenContext } from 'src/contexts/Token';
 import { CREATE_COUNSEL } from 'src/graphql/order/order.mutation';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import useCart from 'src/hooks/useCart';
-import redirect from 'src/utils/redirect';
+import getToken from 'src/utils/getToken';
+import protectRoute from 'src/utils/protectRoute';
 import withApollo from 'src/utils/withApollo';
 
-function Cart() {
+Cart.getInitialProps = async (ctx) => {
+  protectRoute(ctx);
+
+  const token = getToken(ctx);
+
+  return {
+    namespacesRequired: ['cart', 'common', 'errors'],
+    token
+  };
+};
+
+function Cart(props) {
   const { cart, loading: loadingCart, getCart } = useCart();
 
   const { t } = useTranslation(['cart', 'common', 'errors']);
@@ -47,7 +59,7 @@ function Cart() {
   };
 
   return (
-    <>
+    <TokenContext.Provider value={props.token}>
       <Head>
         <title>Medofa</title>
       </Head>
@@ -119,26 +131,8 @@ function Cart() {
       <Footer />
 
       <LoadingBackdrop open={creatingCounsel || loadingCart} />
-    </>
+    </TokenContext.Provider>
   );
 }
-
-Cart.getInitialProps = async (ctx) => {
-  const isServer = typeof window === 'undefined';
-
-  const token = isServer ? ctx.req.cookies.token : cookies.get('token');
-
-  if (!token) {
-    redirect({
-      ctx,
-      location: '/'
-    });
-  }
-
-  return {
-    namespacesRequired: ['cart', 'common', 'errors'],
-    token
-  };
-};
 
 export default withApollo({ ssr: true })(Cart);
