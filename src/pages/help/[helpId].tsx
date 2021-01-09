@@ -51,7 +51,7 @@ const HelpDetail = () => {
   );
 };
 
-HelpDetail.getInitialProps = async () => ({
+HelpDetail.getInitialProps = async (ctx) => ({
   namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge']
 });
 

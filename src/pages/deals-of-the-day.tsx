@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { animateScroll } from 'react-scroll';
 import Loading from 'src/components/Layout/Loading';
-import MainLayout from 'src/components/Modules/MainLayout';
+import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import Pagination from 'src/components/Modules/Pagination';
 import ProductCard from 'src/components/Modules/ProductCard';
 import {
@@ -21,7 +21,8 @@ import withApollo from 'src/utils/withApollo';
 const pageSize = 20;
 
 DealOfTheDay.getInitialProps = async (ctx) => ({
-  namespacesRequired: ['dealsOfTheDay']
+  namespacesRequired: [...mainLayoutNamespacesRequired, 'dealsOfTheDay'],
+  token: getToken(ctx)
 });
 
 function DealOfTheDay(props) {
@@ -97,7 +98,7 @@ function DealOfTheDay(props) {
   }, [otherDealLoading]);
 
   return (
-    <MainLayout>
+    <MainLayout token={props.token}>
       <Head>
         <title>Medofa</title>
       </Head>

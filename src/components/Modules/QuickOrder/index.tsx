@@ -7,6 +7,7 @@ import React from 'react';
 // import { toast } from 'react-toastify';
 import PriceText from 'src/components/Form/PriceText';
 import Loading from 'src/components/Layout/Loading';
+import { useToken } from 'src/contexts/Token';
 // import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 // import { CREATE_COUNSEL } from 'src/graphql/order/order.mutation';
 import {
@@ -15,13 +16,13 @@ import {
   GetBestSellingProductsVars
 } from 'src/graphql/product/getBestSellingProducts';
 import useCart from 'src/hooks/useCart';
-import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
 
 // import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import QuickOrderItem from './QuickOrderItem';
 
 function QuickOrderPage() {
-  const isLoggedIn = useIsLoggedIn();
+  const token = useToken();
+
   const { cart } = useCart();
 
   const { t } = useTranslation(['cart', 'common', 'quickOrder']);
@@ -80,7 +81,7 @@ function QuickOrderPage() {
             </div> */}
           </div>
           <div className="col-12 col-md-3 col-lg-3">
-            {isLoggedIn && cart && (
+            {token && cart && (
               <div className="cart__info">
                 <div className="elevated row no-gutters mb-3">
                   <div className="col-md-12 col-lg-4 cart__info-quantity">

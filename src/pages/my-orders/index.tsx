@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import Head from 'src/components/Layout/Head';
 import Loading from 'src/components/Layout/Loading';
-import MainLayout from 'src/components/Modules/MainLayout';
+import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import ProfileLayout from 'src/components/Modules/ProfileLayout';
 import {
   GET_ORDER_LIST,
@@ -15,6 +15,7 @@ import {
   OrderFlag
 } from 'src/graphql/my-orders/getOrderList';
 import { useQueryAuth } from 'src/hooks/useApolloHookAuth';
+import getToken from 'src/utils/getToken';
 import protectRoute from 'src/utils/protectRoute';
 import withApollo from 'src/utils/withApollo';
 
@@ -138,6 +139,7 @@ const OrderItem = (props) => {
     </div>
   );
 };
+
 const OrderList = (props: Props) => {
   const { t } = useTranslation(['myOrders']);
   const { data, refetch, loading } = useQueryAuth<GetOrderListData, GetOrderListVars>(
@@ -195,7 +197,16 @@ const OrderList = (props: Props) => {
   );
 };
 
-const MyOrders = () => {
+MyOrders.getInitialProps = async (ctx) => {
+  protectRoute(ctx);
+
+  return {
+    namespacesRequired: [...mainLayoutNamespacesRequired, 'myOrders'],
+    token: getToken(ctx)
+  };
+};
+
+function MyOrders(props) {
   const [value, setValue] = React.useState(0);
   const { t } = useTranslation(['myOrders', 'errors']);
   const router = useRouter();
@@ -226,7 +237,7 @@ const MyOrders = () => {
   const classes = useStyles();
 
   return (
-    <MainLayout>
+    <MainLayout token={props.token}>
       <Head>
         <title>Medofa</title>
       </Head>
@@ -305,14 +316,6 @@ const MyOrders = () => {
       </ProfileLayout>
     </MainLayout>
   );
-};
-
-MyOrders.getInitialProps = async (ctx) => {
-  protectRoute(ctx);
-
-  return {
-    namespacesRequired: ['myOrders', 'common', 'errors']
-  };
-};
+}
 
 export default withApollo({ ssr: true })(MyOrders);

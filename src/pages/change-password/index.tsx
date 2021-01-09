@@ -1,4 +1,3 @@
-import Cookies from 'cookies';
 import { useTranslation } from 'i18n';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -6,21 +5,19 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import Button from 'src/components/Form/Button';
 import InputWithLabel from 'src/components/Form/InputWithLabel';
-import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
-import Header from 'src/components/Layout/Header';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
-import Nav from 'src/components/Layout/Nav';
-import MainLayout from 'src/components/Modules/MainLayout';
+import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import FormCard from 'src/components/Modules/MyAccount/FormCard';
 import ProfileLayout from 'src/components/Modules/ProfileLayout';
-import { useUserContext } from 'src/contexts/User';
+import { useUser } from 'src/contexts/User';
 import {
   CHANGE_PASSWORD,
   ChangePasswordData,
   ChangePasswordVars
 } from 'src/graphql/user/changePassword';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
+import getToken from 'src/utils/getToken';
 import protectRoute from 'src/utils/protectRoute';
 
 import withApollo from '../../utils/withApollo';
@@ -32,10 +29,19 @@ type Inputs = {
   retype: string;
 };
 
-const ChangePassWord = () => {
+ChangePassWord.getInitialProps = async (ctx) => {
+  protectRoute(ctx);
+
+  return {
+    namespacesRequired: [...mainLayoutNamespacesRequired, 'myAccount'],
+    token: getToken(ctx)
+  };
+};
+
+function ChangePassWord(props) {
   const { t } = useTranslation(['myAccount', 'common', 'login']);
 
-  const { user } = useUserContext();
+  const { data: user } = useUser();
 
   const rotuer = useRouter();
 
@@ -75,7 +81,7 @@ const ChangePassWord = () => {
   };
 
   return (
-    <MainLayout>
+    <MainLayout token={props.token}>
       <Head>
         <title>Medofa</title>
       </Head>
@@ -143,14 +149,6 @@ const ChangePassWord = () => {
       <LoadingBackdrop open={changingPassword} />
     </MainLayout>
   );
-};
-
-ChangePassWord.getInitialProps = async (ctx) => {
-  protectRoute(ctx);
-
-  return {
-    namespacesRequired: ['myAccount', 'common', 'login']
-  };
-};
+}
 
 export default withApollo({ ssr: true })(ChangePassWord);

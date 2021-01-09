@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import { toast } from 'react-toastify';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
-import MainLayout from 'src/components/Modules/MainLayout';
+import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import Pagination from 'src/components/Modules/Pagination';
 import { SEEN_ALL_NOTI } from 'src/graphql/notification/seenNoti.mutation';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
@@ -16,11 +16,12 @@ import NotiItem from '../../components/Modules/Noti/NotiItem';
 
 const pageSize = 10;
 
-Notification.getInitialProps = async () => ({
-  namespacesRequired: ['noti']
+Notification.getInitialProps = async (ctx) => ({
+  namespacesRequired: [...mainLayoutNamespacesRequired],
+  token: getToken(ctx)
 });
 
-function Notification() {
+function Notification(props) {
   const router = useRouter();
 
   const page = +router.query.page || 1;
@@ -32,9 +33,6 @@ function Notification() {
   }, []);
 
   const [seenAllNoti] = useMutationAuth(SEEN_ALL_NOTI, {
-    onCompleted: (data) => {
-      console.log('data', data);
-    },
     onError: (err) => {
       toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
     }
@@ -43,8 +41,6 @@ function Notification() {
   const notificationsData = notifications?.Notifies;
 
   const notificationsPagination = notifications?.total || 0;
-
-  console.log('notificationsPagination', notificationsPagination);
 
   const handleReadAll = () => {
     // read all
@@ -55,7 +51,7 @@ function Notification() {
   const { t } = useTranslation();
 
   return (
-    <MainLayout>
+    <MainLayout token={props.token}>
       <Head>
         <title>Medofa</title>
       </Head>

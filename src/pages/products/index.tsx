@@ -117,7 +117,7 @@ function Products(props) {
   }, [productsLoading]);
 
   return (
-    <MainLayout>
+    <MainLayout token={props.token}>
       <Head>
         <title>Medofa - {title}</title>
       </Head>

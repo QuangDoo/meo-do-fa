@@ -1,10 +1,8 @@
 import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
+import { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
+import getToken from 'src/utils/getToken';
 import withApollo from 'src/utils/withApollo';
-
-import Head from '../../components/Layout/Head';
-import News from '../../components/Modules/News';
-import NewsList from '../../components/Modules/News/NewsList';
 
 const newsdata = [
   {
@@ -90,7 +88,12 @@ const links = [
   { href: '', title: 'Contrary to to populartext Contrary to populartext Contrary to populartext' }
 ];
 
-const NewsPage = () => {
+NewsPage.getInitialProps = async (ctx) => ({
+  namespacesRequired: [...mainLayoutNamespacesRequired],
+  token: getToken(ctx)
+});
+
+function NewsPage(props) {
   const router = useRouter();
 
   useEffect(() => {
@@ -100,7 +103,7 @@ const NewsPage = () => {
   return null;
 
   // return (
-  //   <MainLayout>
+  //   <MainLayout token={props.token}>
   //     <Head>
   //       <title>Medofa</title>
   //     </Head>
@@ -110,10 +113,6 @@ const NewsPage = () => {
   //     </News>
   //   </MainLayout>
   // );
-};
-
-NewsPage.getInitialProps = async () => ({
-  namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge']
-});
+}
 
 export default withApollo({ ssr: true })(NewsPage);

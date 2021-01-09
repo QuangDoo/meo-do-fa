@@ -47,7 +47,7 @@ function ProductDetail(props) {
   const title = Number(productPid) ? getNameById(dataProduct, Number(productPid)) : '';
 
   return (
-    <MainLayout>
+    <MainLayout token={props.token}>
       <Head>
         <title>Medofa - {title}</title>
       </Head>

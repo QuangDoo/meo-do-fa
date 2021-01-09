@@ -1,28 +1,20 @@
 import { useTranslation } from 'i18n';
 import React from 'react';
 import Head from 'src/components/Layout/Head';
-import MainLayout from 'src/components/Modules/MainLayout';
+import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
+import getToken from 'src/utils/getToken';
 import withApollo from 'src/utils/withApollo';
 
-TermsAndConditions.getInitialProps = async () => ({
-  namespacesRequired: [
-    'common',
-    'errors',
-    'header',
-    'navbar',
-    'footer',
-    'cart',
-    'login',
-    'register',
-    'termsAndConditions'
-  ]
+TermsAndConditions.getInitialProps = async (ctx) => ({
+  namespacesRequired: [...mainLayoutNamespacesRequired, 'termsAndConditions'],
+  token: getToken(ctx)
 });
 
-function TermsAndConditions() {
+function TermsAndConditions(props) {
   const { t } = useTranslation(['common', 'termsAndConditions']);
 
   return (
-    <MainLayout>
+    <MainLayout token={props.token}>
       <Head>
         <title>Medofa</title>
       </Head>

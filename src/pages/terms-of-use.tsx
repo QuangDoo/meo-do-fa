@@ -1,15 +1,17 @@
 import React from 'react';
 import Head from 'src/components/Layout/Head';
-import MainLayout from 'src/components/Modules/MainLayout';
+import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
+import getToken from 'src/utils/getToken';
 import withApollo from 'src/utils/withApollo';
 
-TermsOfUse.getInitialProps = async () => ({
-  namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge']
+TermsOfUse.getInitialProps = async (ctx) => ({
+  namespacesRequired: [...mainLayoutNamespacesRequired, 'productCard', 'productBadge'],
+  token: getToken(ctx)
 });
 
-function TermsOfUse() {
+function TermsOfUse(props) {
   return (
-    <MainLayout>
+    <MainLayout token={props.token}>
       <Head>
         <title>Medofa</title>
       </Head>

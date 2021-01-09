@@ -8,6 +8,7 @@ import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
 import Nav from 'src/components/Layout/Nav';
 import { ProductsContainer } from 'src/components/Modules/Home/ProductsContainer';
+import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import { ProductsCarousel } from 'src/components/Modules/ProductsCarousel';
 import ScrollableTabsButtonAuto from 'src/components/Modules/ScrollableTabsButtonAuto/ScrollableTabsButtonAuto';
 import {
@@ -20,9 +21,15 @@ import {
   GetProductsByIngredientData,
   GetProductsByIngredientVars
 } from 'src/graphql/product/getProductsByIngredient.query';
+import getToken from 'src/utils/getToken';
 import withApollo from 'src/utils/withApollo';
 
-const IngredientDetails = () => {
+IngredientDetails.getInitialProps = async (ctx) => ({
+  namespacesRequired: [...mainLayoutNamespacesRequired, 'ingredientDetails'],
+  token: getToken(ctx)
+});
+
+function IngredientDetails(props) {
   const router = useRouter();
   const { t } = useTranslation(['ingredientDetails', 'errors']);
   const ingredientId = router.query.slug[0];
@@ -56,14 +63,10 @@ const IngredientDetails = () => {
   const title = detailsData?.getIngredient?.name;
 
   return (
-    <>
+    <MainLayout token={props.token}>
       <Head>
         <title>Medofa - {title}</title>
       </Head>
-
-      <Header />
-
-      <Nav />
 
       <main className="ingredient container py-3 py-sm-5">
         <div className="row justify-content-center">
@@ -93,10 +96,8 @@ const IngredientDetails = () => {
           <ProductsCarousel products={productsData?.getProductsByIngredient} />
         </ProductsContainer>
       )}
-
-      <Footer />
-    </>
+    </MainLayout>
   );
-};
+}
 
 export default withApollo({ ssr: true })(IngredientDetails);

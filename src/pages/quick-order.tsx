@@ -1,29 +1,18 @@
 import React from 'react';
 import Head from 'src/components/Layout/Head';
-import MainLayout from 'src/components/Modules/MainLayout';
+import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import QuickOrderPage from 'src/components/Modules/QuickOrder/index';
+import getToken from 'src/utils/getToken';
 import withApollo from 'src/utils/withApollo';
 
-QuickOrder.getInitialProps = async () => ({
-  namespacesRequired: [
-    'header',
-    'navbar',
-    'footer',
-    'errors',
-    'common',
-    'login',
-    'register',
-    'password',
-    'searchBar',
-    'noti',
-    'cart',
-    'quickOrder'
-  ]
+QuickOrder.getInitialProps = async (ctx) => ({
+  namespacesRequired: [...mainLayoutNamespacesRequired, 'cart', 'quickOrder'],
+  token: getToken(ctx)
 });
 
-function QuickOrder() {
+function QuickOrder(props) {
   return (
-    <MainLayout>
+    <MainLayout token={props.token}>
       <Head>
         <title>Medofa</title>
       </Head>

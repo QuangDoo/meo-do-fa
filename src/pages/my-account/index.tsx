@@ -8,9 +8,10 @@ import InputWithLabel from 'src/components/Form/InputWithLabel';
 import SelectWithLabel from 'src/components/Form/SelectWithLabel';
 import Head from 'src/components/Layout/Head';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
-import MainLayout from 'src/components/Modules/MainLayout';
+import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import FormCard from 'src/components/Modules/MyAccount/FormCard';
 import ProfileLayout from 'src/components/Modules/ProfileLayout';
+import { useUser } from 'src/contexts/User';
 import { GET_CITIES, GetCitiesData } from 'src/graphql/address/getCities';
 import {
   GET_DISTRICTS,
@@ -20,7 +21,7 @@ import {
 import { GET_WARDS, GetWardsData, GetWardsVars } from 'src/graphql/address/getWards';
 import { UPDATE_USER, UpdateUserData, UpdateUserVars } from 'src/graphql/user/updateUser';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
-import useUser from 'src/hooks/useUser';
+import getToken from 'src/utils/getToken';
 import protectRoute from 'src/utils/protectRoute';
 import toBase64 from 'src/utils/toBase64';
 
@@ -46,10 +47,19 @@ type Inputs = {
   deliveryWard: string;
 };
 
-const MyAccount = () => {
+MyAccount.getInitialProps = async (ctx) => {
+  protectRoute(ctx);
+
+  return {
+    namespacesRequired: [...mainLayoutNamespacesRequired, 'myAccount'],
+    token: getToken(ctx)
+  };
+};
+
+function MyAccount(props) {
   const { t } = useTranslation(['myAccount', 'common', 'errors']);
 
-  const { user, refetchUser } = useUser();
+  const { data: user, refetch: refetchUser } = useUser();
 
   const { register, handleSubmit, watch, setValue } = useForm<Inputs>();
 
@@ -202,7 +212,7 @@ const MyAccount = () => {
   };
 
   return (
-    <MainLayout>
+    <MainLayout token={props.token}>
       <Head>
         <title>Medofa</title>
       </Head>
@@ -377,14 +387,6 @@ const MyAccount = () => {
       <LoadingBackdrop open={loadingUpdateUser} />
     </MainLayout>
   );
-};
-
-MyAccount.getInitialProps = async (ctx) => {
-  protectRoute(ctx);
-
-  return {
-    namespacesRequired: ['myAccount', 'common', 'errors']
-  };
-};
+}
 
 export default withApollo({ ssr: true })(MyAccount);

@@ -1,27 +1,56 @@
-import React, { createContext, useContext, useState } from 'react';
-import { User } from 'src/graphql/user/getUser';
+import { ApolloQueryResult } from '@apollo/client';
+import { useTranslation } from 'i18n';
+import cookies from 'js-cookie';
+import React, { createContext, useContext } from 'react';
+import { toast } from 'react-toastify';
+import { GET_USER, GetUserData, User } from 'src/graphql/user/getUser';
+import { useQueryAuth } from 'src/hooks/useApolloHookAuth';
 
-type Props = {
-  children: React.ReactNode;
+import { useToken } from './Token';
+
+type UserSSRContextValue = {
+  data: User;
+  loading: boolean;
+  refetch: (variables?: undefined) => Promise<ApolloQueryResult<GetUserData>>;
 };
 
-type ContextValue = {
-  user?: User;
-  setUser?: (value: User) => void;
-};
+const UserContext = createContext<UserSSRContextValue>(undefined);
 
-const UserContext = createContext<ContextValue>({});
+const useUser = () => useContext(UserContext);
 
-const UserProvider = ({ children }: Props) => {
-  const [state, setState] = useState<User>();
+function UserProvider(props) {
+  const token = useToken();
+
+  const { t } = useTranslation(['errors']);
+
+  const { data, loading, refetch } = useQueryAuth<GetUserData, undefined>(GET_USER, {
+    fetchPolicy: 'network-only',
+    notifyOnNetworkStatusChange: true,
+    onError: (error) => {
+      const errorCode = error.graphQLErrors?.[0]?.extensions?.code;
+
+      const isClient = typeof window !== 'undefined';
+
+      if (isClient) {
+        if (errorCode === 500) {
+          cookies.remove('token');
+        }
+        toast.error(t(`errors:code_${errorCode}`));
+      }
+    },
+    skip: !token
+  });
 
   return (
-    <UserContext.Provider value={{ user: state, setUser: setState }}>
-      {children}
+    <UserContext.Provider
+      value={{
+        data: data?.getUser,
+        loading,
+        refetch
+      }}>
+      {props.children}
     </UserContext.Provider>
   );
-};
+}
 
-const useUserContext = () => useContext(UserContext);
-
-export { UserProvider, useUserContext };
+export { useUser, UserProvider };

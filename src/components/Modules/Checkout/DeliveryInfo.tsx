@@ -2,8 +2,8 @@ import { Button } from '@material-ui/core';
 import { useTranslation } from 'i18n';
 import React, { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { useUser } from 'src/contexts/User';
 import { DeliveryInfo as DeliveryInfoType } from 'src/graphql/user/getAddressInfoUser';
-import useUser from 'src/hooks/useUser';
 
 import CreateDeliveryAddressDialog from '../CreateDeliveryAddressDialog';
 import ChooseDeliveryAddressDialog from './ChooseDeliveryAddressDialog';
@@ -17,7 +17,7 @@ const DeliveryInfo = (props: Props) => {
 
   const { t } = useTranslation('checkout');
 
-  const { user } = useUser();
+  const { data: user } = useUser();
 
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
   const openCreateDialog = () => setCreateDialogOpen(true);

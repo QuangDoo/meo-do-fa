@@ -33,10 +33,11 @@ import { toast } from 'react-toastify';
 import PriceText from 'src/components/Form/PriceText';
 import Head from 'src/components/Layout/Head';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
-import MainLayout from 'src/components/Modules/MainLayout';
+import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import ProfileLayout from 'src/components/Modules/ProfileLayout';
 import { GET_ORDER, GetOrderDetailData, GetOrderDetailVars } from 'src/graphql/order/getOrder';
 import { useQueryAuth } from 'src/hooks/useApolloHookAuth';
+import getToken from 'src/utils/getToken';
 import protectRoute from 'src/utils/protectRoute';
 import withApollo from 'src/utils/withApollo';
 
@@ -187,11 +188,12 @@ OrderDetails.getInitialProps = async (ctx) => {
   protectRoute(ctx);
 
   return {
-    namespacesRequired: ['myOrders', 'common']
+    namespacesRequired: [...mainLayoutNamespacesRequired, 'myOrders'],
+    token: getToken(ctx)
   };
 };
 
-function OrderDetails() {
+function OrderDetails(props) {
   const { t } = useTranslation(['myOrders', 'common']);
   const router = useRouter();
 
@@ -254,7 +256,7 @@ function OrderDetails() {
   const classes = useStyles();
 
   return (
-    <MainLayout>
+    <MainLayout token={props.token}>
       <Head>
         <title>Medofa</title>
       </Head>

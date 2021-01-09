@@ -33,7 +33,7 @@ const CareerPage = () => {
   // );
 };
 
-// CareerPage.getInitialProps = async () => ({
+// CareerPage.getInitialProps = async (ctx) => ({
 //   namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge']
 // });
 

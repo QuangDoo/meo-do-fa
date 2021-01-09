@@ -3,14 +3,14 @@ import Link from 'next/link';
 import React from 'react';
 import PriceText from 'src/components/Form/PriceText';
 import QuantityInput from 'src/components/Form/QuantityInput';
+import { useToken } from 'src/contexts/Token';
 import { ProductDetails } from 'src/graphql/product/product.query';
-import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
 
 import LoginModal from '../LoginModal';
 import ProductBadge from '../ProductCard/ProductBadge';
 
 const ProductDetailInfor = (props: ProductDetails) => {
-  const isLoggedIn = useIsLoggedIn();
+  const token = useToken();
 
   const { t } = useTranslation(['common', 'productDetail']);
 
@@ -27,7 +27,7 @@ const ProductDetailInfor = (props: ProductDetails) => {
           {props.is_vn && <ProductBadge type="is_vn" />}
         </div>
 
-        {!isLoggedIn ? (
+        {!token ? (
           <LoginModal />
         ) : (
           <div className="d-flex flex-column">
@@ -82,7 +82,7 @@ const ProductDetailInfor = (props: ProductDetails) => {
             })}
         </div>
         <div className="product__status mb-4" />
-        {!isLoggedIn ? null : (
+        {!token ? null : (
           <QuantityInput
             productId={props.id}
             productPrice={props.list_price}

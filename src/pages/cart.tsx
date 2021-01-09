@@ -17,11 +17,9 @@ import withApollo from 'src/utils/withApollo';
 Cart.getInitialProps = async (ctx) => {
   protectRoute(ctx);
 
-  const token = getToken(ctx);
-
   return {
     namespacesRequired: ['cart', 'common', 'errors'],
-    token
+    token: getToken(ctx)
   };
 };
 
@@ -56,7 +54,7 @@ function Cart(props) {
   };
 
   return (
-    <MainLayout>
+    <MainLayout token={props.token}>
       <Head>
         <title>Medofa</title>
       </Head>

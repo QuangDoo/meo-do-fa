@@ -48,7 +48,7 @@ const Help = () => {
   );
 };
 
-Help.getInitialProps = async () => ({
+Help.getInitialProps = async (ctx) => ({
   namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge']
 });
 

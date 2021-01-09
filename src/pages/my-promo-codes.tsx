@@ -10,7 +10,7 @@ import { useTranslation } from 'i18n';
 import { useRouter } from 'next/router';
 import React from 'react';
 import Head from 'src/components/Layout/Head';
-import MainLayout from 'src/components/Modules/MainLayout';
+import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import Pagination from 'src/components/Modules/Pagination';
 import ProfileLayout from 'src/components/Modules/ProfileLayout';
 import {
@@ -37,7 +37,8 @@ MyPromoCodes.getInitialProps = async (ctx) => {
   protectRoute(ctx);
 
   return {
-    namespacesRequired: ['myPromoCodes']
+    namespacesRequired: [...mainLayoutNamespacesRequired, 'myPromoCodes'],
+    token: getToken(ctx)
   };
 };
 
@@ -71,7 +72,7 @@ function MyPromoCodes(props) {
   };
 
   return (
-    <MainLayout>
+    <MainLayout token={props.token}>
       <Head>
         <title>Medofa</title>
       </Head>

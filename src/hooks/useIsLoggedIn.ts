@@ -1,5 +1,7 @@
-import cookies from 'js-cookie';
+import { useToken } from 'src/contexts/Token';
 
 export default function useIsLoggedIn(): boolean {
-  return !!cookies?.get('token');
+  const token = useToken();
+
+  return Boolean(token);
 }

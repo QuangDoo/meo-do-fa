@@ -3,19 +3,21 @@ import { useTranslation } from 'i18n';
 import React from 'react';
 import { toast } from 'react-toastify';
 import Head from 'src/components/Layout/Head';
-import MainLayout from 'src/components/Modules/MainLayout';
+import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import SearchScreen from 'src/components/Modules/SearchScreen';
 import {
   GET_ALL_MANUFACTURERS,
   GetAllManufacturersData
 } from 'src/graphql/manufacturers/manufacturers.query';
+import getToken from 'src/utils/getToken';
 import withApollo from 'src/utils/withApollo';
 
-Manufacturers.getInitialProps = async () => ({
-  namespacesRequired: ['manufacturers']
+Manufacturers.getInitialProps = async (ctx) => ({
+  namespacesRequired: [...mainLayoutNamespacesRequired, 'manufacturers'],
+  token: getToken(ctx)
 });
 
-function Manufacturers() {
+function Manufacturers(props) {
   const { t } = useTranslation(['manufacturers', 'errors']);
 
   const { data } = useQuery<GetAllManufacturersData, undefined>(GET_ALL_MANUFACTURERS, {
@@ -25,7 +27,7 @@ function Manufacturers() {
   });
 
   return (
-    <MainLayout>
+    <MainLayout token={props.token}>
       <Head>
         <title>{t('manufacturers:title')} - Medofa</title>
       </Head>

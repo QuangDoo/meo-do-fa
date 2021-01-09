@@ -4,13 +4,13 @@ import LanguagePicker from 'src/components/Layout/Header/LanguagePicker';
 import ForgotPasswordModal from 'src/components/Modules/ForgotPasswordModal';
 import LoginModal from 'src/components/Modules/LoginModal';
 import RegisterModal from 'src/components/Modules/RegisterModal';
-import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
+import { useToken } from 'src/contexts/Token';
 
 import RightSideUser from './RightSideUser';
 import SearchBar from './SearchBar';
 
 const Header = () => {
-  const isLoggedIn = useIsLoggedIn();
+  const token = useToken();
 
   return (
     <header className="header bg-white">
@@ -44,7 +44,7 @@ const Header = () => {
             </div>
           </div>
 
-          {isLoggedIn ? (
+          {token ? (
             <>
               <SearchBar />
 

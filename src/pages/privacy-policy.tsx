@@ -1,19 +1,20 @@
 import { useTranslation } from 'i18n';
 import React from 'react';
 import Head from 'src/components/Layout/Head';
-import MainLayout from 'src/components/Modules/MainLayout';
+import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import getToken from 'src/utils/getToken';
 import withApollo from 'src/utils/withApollo';
 
 PrivacyPolicy.getInitialProps = async (ctx) => ({
-  namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge']
+  namespacesRequired: [...mainLayoutNamespacesRequired, 'privacyPolicy'],
+  token: getToken(ctx)
 });
 
 function PrivacyPolicy(props) {
   const { t } = useTranslation(['common', 'privacyPolicy']);
 
   return (
-    <MainLayout>
+    <MainLayout token={props.token}>
       <Head>
         <title>Medofa</title>
       </Head>

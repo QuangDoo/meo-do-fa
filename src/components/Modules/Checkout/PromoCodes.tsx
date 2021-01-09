@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import { Button } from '@material-ui/core';
 import LocalOfferIcon from '@material-ui/icons/LocalOffer';
 import { useTranslation } from 'i18n';
@@ -10,6 +10,7 @@ import { useToken } from 'src/contexts/Token';
 import { APPLY_COUPON, ApplyCouponData, ApplyCouponVars } from 'src/graphql/coupons/applyCoupon';
 import { GET_USED_COUPONS, GetUsedCouponsData } from 'src/graphql/coupons/getUsedCoupons';
 import { OutputCounsel, PromotionType } from 'src/graphql/order/getCounsel';
+import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 
 import ApplyPromoCodesDialog from './ApplyPromoCodesDialog';
 
@@ -77,29 +78,24 @@ export default function PromoCodes(props: Props) {
     }
   });
 
-  const [applyCoupon, { loading: applyingCoupon }] = useMutation<ApplyCouponData, ApplyCouponVars>(
-    APPLY_COUPON,
-    {
-      onError: (error) => {
-        const errorCode = error.graphQLErrors?.[0]?.extensions?.code;
-        toast.error(t(`errors:code_${errorCode}`));
+  const [applyCoupon, { loading: applyingCoupon }] = useMutationAuth<
+    ApplyCouponData,
+    ApplyCouponVars
+  >(APPLY_COUPON, {
+    onError: (error) => {
+      const errorCode = error.graphQLErrors?.[0]?.extensions?.code;
+      toast.error(t(`errors:code_${errorCode}`));
 
-        if (errorCode === 114) {
-          router.push('/cart');
-        }
-      },
-      onCompleted: (data) => {
-        toast.success(t('checkout:apply_coupon_success'));
-        props?.setCounselData?.(data.applyCoupon);
-        refetchUsedCoupons();
-      },
-      context: {
-        headers: {
-          authorization: props.token
-        }
+      if (errorCode === 114) {
+        router.push('/cart');
       }
+    },
+    onCompleted: (data) => {
+      toast.success(t('checkout:apply_coupon_success'));
+      props?.setCounselData?.(data.applyCoupon);
+      refetchUsedCoupons();
     }
-  );
+  });
 
   const handleUnapplyCoupon = (code: string) => {
     applyCoupon({

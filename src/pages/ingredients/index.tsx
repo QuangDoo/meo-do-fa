@@ -5,19 +5,21 @@ import React, { useEffect } from 'react';
 import { toast } from 'react-toastify';
 import Head from 'src/components/Layout/Head';
 import Loading from 'src/components/Layout/Loading';
-import MainLayout from 'src/components/Modules/MainLayout';
+import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import SearchScreen from 'src/components/Modules/SearchScreen';
 import {
   GET_ALL_INGREDIENTS,
   GetAllIngredientsData
 } from 'src/graphql/ingredient/ingredient.query';
+import getToken from 'src/utils/getToken';
 import withApollo from 'src/utils/withApollo';
 
-Ingredients.getInitialProps = async () => ({
-  namespacesRequired: ['errors', 'searchBar']
+Ingredients.getInitialProps = async (ctx) => ({
+  namespacesRequired: [...mainLayoutNamespacesRequired],
+  token: getToken(ctx)
 });
 
-function Ingredients() {
+function Ingredients(props) {
   const { t } = useTranslation('errors');
 
   const { data, loading, error } = useQuery<GetAllIngredientsData, undefined>(GET_ALL_INGREDIENTS, {
@@ -32,7 +34,7 @@ function Ingredients() {
   }, [error]);
 
   return (
-    <MainLayout>
+    <MainLayout token={props.token}>
       <Head>
         <title>Medofa</title>
       </Head>

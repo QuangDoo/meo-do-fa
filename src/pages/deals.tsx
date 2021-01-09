@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import Head from 'src/components/Layout/Head';
 import Loading from 'src/components/Layout/Loading';
-import MainLayout from 'src/components/Modules/MainLayout';
+import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import Pagination from 'src/components/Modules/Pagination';
 import ProductCard from 'src/components/Modules/ProductCard';
 import { GET_PRODUCTS, GetProductsData, GetProductsVars } from 'src/graphql/product/getProducts';
@@ -14,7 +14,8 @@ import withApollo from 'src/utils/withApollo';
 const pageSize = 20;
 
 Deal.getInitialProps = async (ctx) => ({
-  namespacesRequired: ['common']
+  namespacesRequired: [...mainLayoutNamespacesRequired],
+  token: getToken(ctx)
 });
 
 function Deal(props) {
@@ -57,7 +58,7 @@ function Deal(props) {
   };
 
   return (
-    <MainLayout>
+    <MainLayout token={props.token}>
       <Head>
         <title>Medofa</title>
       </Head>

@@ -1,19 +1,20 @@
 import { useTranslation } from 'i18n';
 import React from 'react';
 import Head from 'src/components/Layout/Head';
-import MainLayout from 'src/components/Modules/MainLayout';
+import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import getToken from 'src/utils/getToken';
 import withApollo from 'src/utils/withApollo';
 
 OperatingRegulations.getInitialProps = async (ctx) => ({
-  namespacesRequired: ['common', 'operatingRegulations']
+  namespacesRequired: [...mainLayoutNamespacesRequired, 'operatingRegulations'],
+  token: getToken(ctx)
 });
 
 function OperatingRegulations(props) {
   const { t } = useTranslation(['common', 'operatingRegulations']);
 
   return (
-    <MainLayout>
+    <MainLayout token={props.token}>
       <Head>
         <title>Medofa</title>
       </Head>

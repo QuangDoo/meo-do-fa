@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react';
-import { useToken } from 'src/contexts/Token';
+import { TokenContext } from 'src/contexts/Token';
+import { UserProvider } from 'src/contexts/User';
 
 import Footer from '../Layout/Footer';
 import Header from '../Layout/Header';
@@ -7,20 +8,34 @@ import Nav from '../Layout/Nav';
 
 type Props = {
   children: ReactNode;
+  token: string;
 };
 
 export default function MainLayout(props: Props) {
-  const token = useToken();
-
   return (
-    <>
-      <Header />
+    <TokenContext.Provider value={props.token}>
+      <UserProvider>
+        <Header />
 
-      <Nav />
+        <Nav />
 
-      {props.children}
+        {props.children}
 
-      <Footer />
-    </>
+        <Footer />
+      </UserProvider>
+    </TokenContext.Provider>
   );
 }
+
+export const mainLayoutNamespacesRequired = [
+  'searchBar',
+  'noti',
+  'navbar',
+  'header',
+  'footer',
+  'common',
+  'errors',
+  'login',
+  'register',
+  'password'
+];

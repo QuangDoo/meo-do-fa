@@ -1,11 +1,6 @@
 import { Menu, MenuItem } from '@material-ui/core';
-import { i18n, withTranslation } from 'i18n';
-import { TFunction } from 'next-i18next';
+import { i18n, useTranslation } from 'i18n';
 import React, { MouseEvent, useState } from 'react';
-
-type Props = {
-  readonly t: TFunction;
-};
 
 export type LanguageCode = 'vi' | 'en';
 
@@ -14,8 +9,10 @@ export const languageNames: Record<LanguageCode, string> = {
   en: 'English'
 };
 
-const LanguagePicker = ({ t }: Props) => {
+const LanguagePicker = () => {
   const [anchorEl, setAnchorEl] = useState(null);
+
+  const { t } = useTranslation(['header']);
 
   const openMenu = (event: MouseEvent) => setAnchorEl(event.currentTarget);
 
@@ -47,4 +44,4 @@ const LanguagePicker = ({ t }: Props) => {
   );
 };
 
-export default withTranslation('header')(LanguagePicker);
+export default LanguagePicker;

@@ -10,8 +10,8 @@ import Button from 'src/components/Form/Button';
 import Input from 'src/components/Form/Input';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { useModalControlDispatch } from 'src/contexts/ModalControl';
+import { useUser } from 'src/contexts/User';
 import { LOGIN_USER, LoginData, LoginVars } from 'src/graphql/user/login';
-import useUser from 'src/hooks/useUser';
 
 type Inputs = {
   username: string;
@@ -29,7 +29,7 @@ const LoginForm = () => {
 
   const router = useRouter();
 
-  const { getUser } = useUser();
+  const { refetch: refetchUser } = useUser();
 
   const { register, handleSubmit } = useForm<Inputs>();
 
@@ -38,7 +38,7 @@ const LoginForm = () => {
       cookies.set('token', data.login.token);
 
       closeModal();
-      getUser();
+      refetchUser();
 
       if (router.pathname === '/products' || router.pathname === '/products/[productId]') {
         router.reload();

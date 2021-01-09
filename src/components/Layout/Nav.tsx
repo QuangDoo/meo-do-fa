@@ -6,14 +6,14 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
+import { useToken } from 'src/contexts/Token';
 import { GET_CATEGORIES_LEVEL, GetCategoriesLevelData } from 'src/graphql/category/category.query';
 import useCart from 'src/hooks/useCart';
-import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
 
 import CategoryMenu from '../Modules/CategoryMenu';
 
 const Nav = () => {
-  const isLoggedIn = useIsLoggedIn();
+  const token = useToken();
 
   const { cart } = useCart();
 
@@ -130,7 +130,7 @@ const Nav = () => {
               </li>
             </ul>
 
-            {isLoggedIn && (
+            {token && (
               <div className="header-right flex-shrink-0">
                 <ul className="nav align-items-center">
                   <li className="nav-item mr-4">

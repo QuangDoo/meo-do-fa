@@ -2,7 +2,7 @@ import { useQuery } from '@apollo/client';
 import React from 'react';
 import Head from 'src/components/Layout/Head';
 import HomePage from 'src/components/Modules/Home';
-import MainLayout from 'src/components/Modules/MainLayout';
+import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import {
   GET_BEST_SELLING_PRODUCTS,
   GetBestSellingProductsData,
@@ -34,7 +34,8 @@ const paginationVars = {
 };
 
 Home.getInitialProps = async (ctx) => ({
-  namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge']
+  namespacesRequired: [...mainLayoutNamespacesRequired, 'productCard', 'productBadge'],
+  token: getToken(ctx)
 });
 
 function Home(props) {
@@ -59,7 +60,7 @@ function Home(props) {
   >(GET_PROMOTION_PRODUCTS, paginationVars);
 
   return (
-    <MainLayout>
+    <MainLayout token={props.token}>
       <Head>
         <title>Medofa</title>
       </Head>

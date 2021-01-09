@@ -1,16 +1,18 @@
 import React from 'react';
 import Head from 'src/components/Layout/Head';
-import MainLayout from 'src/components/Modules/MainLayout';
+import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import PromoCodes from 'src/components/Modules/PromoCodes';
+import getToken from 'src/utils/getToken';
 import withApollo from 'src/utils/withApollo';
 
-PromotionCode.getInitialProps = async () => ({
-  namespacesRequired: ['promoCodes']
+PromotionCode.getInitialProps = async (ctx) => ({
+  namespacesRequired: [...mainLayoutNamespacesRequired, 'promoCodes'],
+  token: getToken(ctx)
 });
 
-function PromotionCode() {
+function PromotionCode(props) {
   return (
-    <MainLayout>
+    <MainLayout token={props.token}>
       <Head>
         <title>Medofa</title>
       </Head>

@@ -1,20 +1,21 @@
 import { useTranslation } from 'i18n';
 import React from 'react';
-import MainLayout from 'src/components/Modules/MainLayout';
+import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import getToken from 'src/utils/getToken';
 import withApollo from 'src/utils/withApollo';
 
 import Head from '../components/Layout/Head';
 
 AboutUs.getInitialProps = async (ctx) => ({
-  namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge']
+  namespacesRequired: [...mainLayoutNamespacesRequired],
+  token: getToken(ctx)
 });
 
 function AboutUs(props) {
   const { t } = useTranslation(['common', 'aboutUs']);
 
   return (
-    <MainLayout>
+    <MainLayout token={props.token}>
       <Head>
         <title>Medofa</title>
       </Head>
