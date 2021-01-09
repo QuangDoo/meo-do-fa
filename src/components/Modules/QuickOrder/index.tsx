@@ -12,10 +12,10 @@ import { useToken } from 'src/contexts/Token';
 // import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 // import { CREATE_COUNSEL } from 'src/graphql/order/order.mutation';
 import {
-  GET_BEST_SELLING_PRODUCTS,
-  GetBestSellingProductsData,
-  GetBestSellingProductsVars
-} from 'src/graphql/product/getBestSellingProducts';
+  GET_QUICK_ORDER_PRODUCTS,
+  GetQuickOrderProductsData,
+  GetQuickOrderProductsVars
+} from 'src/graphql/product/getQuickOrderProducts';
 
 // import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import QuickOrderItem from './QuickOrderItem';
@@ -36,10 +36,10 @@ function QuickOrderPage() {
     }
   };
 
-  const { data: bestSellingData, loading: getBestSellingLoading } = useQuery<
-    GetBestSellingProductsData,
-    GetBestSellingProductsVars
-  >(GET_BEST_SELLING_PRODUCTS, paginationVars);
+  const { data: quickOrderData, loading: getQuickOrderLoading } = useQuery<
+    GetQuickOrderProductsData,
+    GetQuickOrderProductsVars
+  >(GET_QUICK_ORDER_PRODUCTS, paginationVars);
 
   return (
     <div className="container py-5">
@@ -52,12 +52,12 @@ function QuickOrderPage() {
         <div className="row">
           <div className="col-12 col-md-9 col-lg-9">
             <div className="elevated cart__items mb-3">
-              {getBestSellingLoading ? (
+              {getQuickOrderLoading ? (
                 <div className="w-100 text-center">
                   <Loading />
                 </div>
               ) : (
-                bestSellingData?.getProductByConditions.Products.map((item, index) => (
+                quickOrderData?.getProductByConditions.Products.map((item, index) => (
                   <QuickOrderItem
                     key={index}
                     _id={item.id}
