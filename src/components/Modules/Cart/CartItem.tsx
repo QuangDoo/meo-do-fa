@@ -5,10 +5,10 @@ import { toast } from 'react-toastify';
 import PriceText from 'src/components/Form/PriceText';
 import QuantityInput from 'src/components/Form/QuantityInput';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
+import { useCart } from 'src/contexts/Cart';
 import { DELETE_CART, DeleteCartData, DeleteCartVars } from 'src/graphql/cart/deleteCart.mutation';
 import { CartItem as CartItemProps } from 'src/graphql/cart/getCart';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
-import useCart from 'src/hooks/useCart';
 
 import ConfirmDeleteModal from './ConfirmDeleteModal';
 
@@ -21,25 +21,21 @@ function CartItem(props: CartItemProps) {
       return total + promo.discount_percentage;
     }, 0);
 
-  // const discountedPrice = props.price * ((100 - totalDiscountAmount) / 100);
-
   const [open, setOpen] = useState<boolean>(false);
 
   // Refetch cart on update cart complete
-  const { getCart, loading: loadingCart } = useCart({
-    onCompleted: () => {
-      toast.success(t('cart:update_success'));
-    }
-  });
+  const { refetch: refetchCart } = useCart();
 
   const [deleteCart, { loading: deletingCart }] = useMutationAuth<DeleteCartData, DeleteCartVars>(
     DELETE_CART,
     {
       onCompleted: () => {
-        getCart();
+        refetchCart().then(() => {
+          toast.success(t('cart:delete_success'));
+        });
       },
       onError: (err) => {
-        toast.error(t(`errors:code_${err.graphQLErrors?.[0].extensions?.code}`));
+        toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
       }
     }
   );
@@ -133,7 +129,7 @@ function CartItem(props: CartItemProps) {
         </div>
       </div>
 
-      <LoadingBackdrop open={deletingCart || loadingCart} />
+      <LoadingBackdrop open={deletingCart} />
     </div>
   );
 }

@@ -37,12 +37,13 @@ import {
 import getToken from 'src/utils/getToken';
 import withApollo from 'src/utils/withApollo';
 
-const pageSize = 20;
+const PAGE_SIZE = 20;
 
-const defaultSortType = '07'; // Name ascending
+const DEFAULT_SORT_TYPE = '07'; // Name ascending
 
 Products.getInitialProps = async (ctx) => ({
-  namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge', 'products']
+  namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge', 'products'],
+  token: getToken(ctx)
 });
 
 function Products(props) {
@@ -83,13 +84,13 @@ function Products(props) {
   >(GET_PRODUCTS, {
     variables: {
       page,
-      pageSize,
+      pageSize: PAGE_SIZE,
       type: router.query.tag as ProductTag,
       condition: {
         manufacturer_id: router.query.manufacturer as string,
         category_id: router.query.category as string,
         name: search,
-        order_type: (router.query.sort as string) || defaultSortType,
+        order_type: (router.query.sort as string) || DEFAULT_SORT_TYPE,
         min_price: Number(router.query.priceFrom) || 1,
         max_price: Number(router.query.priceTo) || 10000000
       }
@@ -144,8 +145,8 @@ function Products(props) {
                   <>
                     {t('products:show')}{' '}
                     <b>
-                      {(page - 1) * pageSize + 1}&nbsp;-&nbsp;
-                      {Math.min(page * pageSize, total)}
+                      {(page - 1) * PAGE_SIZE + 1}&nbsp;-&nbsp;
+                      {Math.min(page * PAGE_SIZE, total)}
                     </b>{' '}
                     {t('products:on_of')}
                     <b>{`${total} `}</b>
@@ -182,7 +183,7 @@ function Products(props) {
                 )}
 
                 <Pagination
-                  count={Math.ceil(total / pageSize)}
+                  count={Math.ceil(total / PAGE_SIZE)}
                   page={page}
                   siblingCount={4}
                   onChange={(page) =>

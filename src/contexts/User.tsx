@@ -3,15 +3,15 @@ import { useTranslation } from 'i18n';
 import cookies from 'js-cookie';
 import React, { createContext, useContext } from 'react';
 import { toast } from 'react-toastify';
-import { GET_USER, GetUserData, User } from 'src/graphql/user/getUser';
+import { GET_USER, GetUserData } from 'src/graphql/user/getUser';
 import { useQueryAuth } from 'src/hooks/useApolloHookAuth';
 
 import { useToken } from './Token';
 
 type UserSSRContextValue = {
-  data: User;
+  data: GetUserData['getUser'];
   loading: boolean;
-  refetch: (variables?: undefined) => Promise<ApolloQueryResult<GetUserData>>;
+  refetch: () => Promise<ApolloQueryResult<GetUserData>>;
 };
 
 const UserContext = createContext<UserSSRContextValue>(undefined);

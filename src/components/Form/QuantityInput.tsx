@@ -2,10 +2,10 @@ import { useTranslation } from 'i18n';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
+import { useCart } from 'src/contexts/Cart';
 import { ADD_TO_CART, AddToCartData, AddToCartVars } from 'src/graphql/cart/addToCart';
 import { DELETE_CART, DeleteCartData, DeleteCartVars } from 'src/graphql/cart/deleteCart.mutation';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
-import useCart from 'src/hooks/useCart';
 import useDebounce from 'src/hooks/useDebounce';
 
 import ConfirmDeleteModal from '../Modules/Cart/ConfirmDeleteModal';
@@ -22,9 +22,9 @@ function QuantityInput(props: Props) {
 
   const { t } = useTranslation(['errors', 'success']);
 
-  const { cart, getCart } = useCart();
+  const { data: cart, refetch: refetchCart } = useCart();
 
-  const thisProductInCart = cart?.getCart.carts.find((product) => product.productId === productId);
+  const thisProductInCart = cart?.carts.find((product) => product.productId === productId);
 
   const quantityInCart = thisProductInCart?.quantity || 0;
 
@@ -40,11 +40,11 @@ function QuantityInput(props: Props) {
     ADD_TO_CART,
     {
       onCompleted: () => {
-        toast.success(t(`success:update_cart`));
-        getCart();
+        refetchCart().then(() => {
+          toast.success(t(`success:update_cart`));
+        });
       },
       onError: (err) => {
-        console.log('add to cart error:', err);
         toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
       }
     }
@@ -54,8 +54,9 @@ function QuantityInput(props: Props) {
     DELETE_CART,
     {
       onCompleted: () => {
-        toast.success(t(`success:delete_cart`));
-        getCart();
+        refetchCart().then(() => {
+          toast.success(t(`success:delete_cart`));
+        });
       },
       onError: (err) => {
         toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));

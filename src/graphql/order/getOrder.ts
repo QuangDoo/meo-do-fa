@@ -1,5 +1,4 @@
 import { gql } from '@apollo/client';
-import { StringDecoder } from 'string_decoder';
 
 export type GetOrderDetailData = {
   getOrderDetail: {
@@ -46,26 +45,6 @@ export type GetOrderDetailData = {
 export type GetOrderDetailVars = {
   orderNo: string;
 };
-
-export const GET_CART = gql`
-  query {
-    getCart {
-      carts {
-        _id
-        quantity
-        productId
-        productName
-        price
-        oldPrice
-        product {
-          image_512
-        }
-      }
-      totalPrice
-      totalQty
-    }
-  }
-`;
 
 export const GET_ORDER = gql`
   query getOrderDetail($orderNo: String!) {

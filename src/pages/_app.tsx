@@ -26,13 +26,11 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 
   return (
     <ThemeProvider theme={muiTheme}>
-      <CartProvider>
-        <ModalControlProvider>
-          <Component {...pageProps} />
+      <ModalControlProvider>
+        <Component {...pageProps} />
 
-          <ToastContainer />
-        </ModalControlProvider>
-      </CartProvider>
+        <ToastContainer />
+      </ModalControlProvider>
     </ThemeProvider>
   );
 };

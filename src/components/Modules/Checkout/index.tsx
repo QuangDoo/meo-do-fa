@@ -5,12 +5,12 @@ import React, { useEffect, useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
+import { useCart } from 'src/contexts/Cart';
 import { useToken } from 'src/contexts/Token';
 import { useUser } from 'src/contexts/User';
 import { CREATE_ORDER, CreateOrderData, CreateOrderVars } from 'src/graphql/order/createOrder';
 import { GET_COUNSEL, GetCounselData, OutputCounsel } from 'src/graphql/order/getCounsel';
 import { GET_ADDRESS_INFO_USER, GetAddressInfoData } from 'src/graphql/user/getAddressInfoUser';
-import useCart from 'src/hooks/useCart';
 import swal from 'sweetalert';
 
 import Agreement from './Agreement';
@@ -66,7 +66,7 @@ const CheckoutPage = (props: Props) => {
 
   const [counselData, setCounselData] = useState<OutputCounsel>();
 
-  const { cart, refetchCart, loading: loadingCart } = useCart();
+  const { data: cart, refetch: refetchCart } = useCart();
 
   const { data: getCounselData, refetch: refetchCounsel } = useQuery<GetCounselData, undefined>(
     GET_COUNSEL,
@@ -226,7 +226,7 @@ const CheckoutPage = (props: Props) => {
               </div>
 
               {/* Invoice */}
-              {cart?.getCart.carts.some((cart) => cart.product.is_quick_invoice) && (
+              {cart?.carts.some((cart) => cart.product.is_quick_invoice) && (
                 <>
                   <div className="mb-4">
                     <InvoiceInfo />
@@ -251,7 +251,7 @@ const CheckoutPage = (props: Props) => {
           </div>
         </div>
 
-        <LoadingBackdrop open={creatingOrder || loadingCart || loadingUser} />
+        <LoadingBackdrop open={creatingOrder || loadingUser} />
       </form>
     </FormProvider>
   );

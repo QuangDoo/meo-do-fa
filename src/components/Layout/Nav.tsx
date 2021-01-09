@@ -6,20 +6,20 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
+import { useCart } from 'src/contexts/Cart';
 import { useToken } from 'src/contexts/Token';
 import { GET_CATEGORIES_LEVEL, GetCategoriesLevelData } from 'src/graphql/category/category.query';
-import useCart from 'src/hooks/useCart';
 
 import CategoryMenu from '../Modules/CategoryMenu';
 
 const Nav = () => {
   const token = useToken();
 
-  const { cart } = useCart();
+  const { data: cart } = useCart();
 
   const router = useRouter();
 
-  const totalQty = cart?.getCart.totalQty;
+  const totalQty = cart?.totalQty;
 
   const { t } = useTranslation(['navbar', 'errors', 'common']);
 
