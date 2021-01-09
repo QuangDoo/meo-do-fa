@@ -3,19 +3,18 @@ import { toast } from 'react-toastify';
 import { GET_CART, GetCartData } from 'src/graphql/cart/getCart';
 
 import { useCartContext } from '../contexts/Cart';
-import { useLazyQueryAuth } from './useApolloHookAuth';
+import { useQueryAuth } from './useApolloHookAuth';
 
 type Props = {
   onCompleted?: (data: GetCartData) => void;
 };
 
 export default function useCart(props: Props = {}) {
-  const [getCart, { loading, refetch }] = useLazyQueryAuth<GetCartData, undefined>(GET_CART, {
+  const { data, loading, refetch } = useQueryAuth<GetCartData, undefined>(GET_CART, {
     fetchPolicy: 'network-only',
     notifyOnNetworkStatusChange: true,
-    onCompleted: (data) => {
+    onCompleted: () => {
       setCart(data);
-      props?.onCompleted?.(data);
     },
     onError: (error) => {
       toast.error(error);
@@ -27,7 +26,6 @@ export default function useCart(props: Props = {}) {
   return {
     cart,
     loading,
-    getCart,
     refetchCart: refetch
   };
 }
