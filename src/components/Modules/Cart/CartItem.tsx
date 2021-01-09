@@ -12,7 +12,7 @@ import useCart from 'src/hooks/useCart';
 
 import ConfirmDeleteModal from './ConfirmDeleteModal';
 
-function CartItem(props: CartItemProps): JSX.Element {
+function CartItem(props: CartItemProps) {
   const { t } = useTranslation(['cart', 'errors']);
 
   const totalDiscountAmount = props.promotions

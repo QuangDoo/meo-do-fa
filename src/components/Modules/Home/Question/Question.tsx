@@ -1,7 +1,7 @@
 import { useTranslation } from 'i18n';
 import React from 'react';
 
-const Question = (): JSX.Element => {
+const Question = () => {
   const { t } = useTranslation('question');
   return (
     <section className="container py-5 home__faq">

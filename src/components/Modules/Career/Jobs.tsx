@@ -8,7 +8,7 @@ type Props = {
   jobs?: any;
 };
 
-function Jobs(props: Props): JSX.Element {
+function Jobs(props: Props) {
   const { jobs } = props;
   return (
     <>

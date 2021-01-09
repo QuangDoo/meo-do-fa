@@ -6,7 +6,7 @@ type Props = {
   news: any;
 };
 
-export default function NewsList(props: Props): JSX.Element {
+export default function NewsList(props: Props) {
   return (
     <>
       {props.news.map((item, index) => (

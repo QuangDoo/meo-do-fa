@@ -19,7 +19,7 @@ const ExampleButton = ({
   outline = false,
   size = 'normal',
   ...rest
-}: ExampleButtonProps): JSX.Element => {
+}: ExampleButtonProps) => {
   return <StyledButton size={size} outline={outline} variant={variant} {...rest}></StyledButton>;
 };
 

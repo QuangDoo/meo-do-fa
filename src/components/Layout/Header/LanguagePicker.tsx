@@ -14,7 +14,7 @@ export const languageNames: Record<LanguageCode, string> = {
   en: 'English'
 };
 
-const LanguagePicker = ({ t }: Props): JSX.Element => {
+const LanguagePicker = ({ t }: Props) => {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const openMenu = (event: MouseEvent) => setAnchorEl(event.currentTarget);

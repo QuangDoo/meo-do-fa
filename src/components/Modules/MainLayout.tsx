@@ -1,18 +1,19 @@
 import React, { ReactNode } from 'react';
-import { TokenContext } from 'src/contexts/Token';
+import { useToken } from 'src/contexts/Token';
 
 import Footer from '../Layout/Footer';
 import Header from '../Layout/Header';
 import Nav from '../Layout/Nav';
 
 type Props = {
-  token: string;
   children: ReactNode;
 };
 
 export default function MainLayout(props: Props) {
+  const token = useToken();
+
   return (
-    <TokenContext.Provider value={props.token}>
+    <>
       <Header />
 
       <Nav />
@@ -20,6 +21,6 @@ export default function MainLayout(props: Props) {
       {props.children}
 
       <Footer />
-    </TokenContext.Provider>
+    </>
   );
 }

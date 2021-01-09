@@ -9,7 +9,7 @@ import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
 import LoginModal from '../LoginModal';
 import ProductBadge from '../ProductCard/ProductBadge';
 
-const ProductDetailInfor = (props: ProductDetails): JSX.Element => {
+const ProductDetailInfor = (props: ProductDetails) => {
   const isLoggedIn = useIsLoggedIn();
 
   const { t } = useTranslation(['common', 'productDetail']);

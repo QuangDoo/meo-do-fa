@@ -10,7 +10,7 @@ type Props = {
   description?: string;
 };
 
-const InputCard = (props: Props): JSX.Element => {
+const InputCard = (props: Props) => {
   const { t } = useTranslation('checkout');
   return (
     <div className="elevated p-3 p-md-4">

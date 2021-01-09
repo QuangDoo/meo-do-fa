@@ -13,7 +13,7 @@ type ArrowButtonProps = {
   type?: 'prev' | 'next';
 };
 
-const ArrowButton = ({ onClick, type = 'prev' }: ArrowButtonProps): JSX.Element => {
+const ArrowButton = ({ onClick, type = 'prev' }: ArrowButtonProps) => {
   return (
     <button
       onClick={onClick}
@@ -24,7 +24,7 @@ const ArrowButton = ({ onClick, type = 'prev' }: ArrowButtonProps): JSX.Element 
   );
 };
 
-export const ProductsCarousel = ({ products }: ProductsCarouselProps): JSX.Element => {
+export const ProductsCarousel = ({ products }: ProductsCarouselProps) => {
   return (
     <Slider
       speed={500}

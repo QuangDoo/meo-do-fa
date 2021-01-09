@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const ModalBase = (props: ModalBaseProps): JSX.Element => {
+const ModalBase = (props: ModalBaseProps) => {
   const { open, onClose, children } = props;
 
   const classes = useStyles();

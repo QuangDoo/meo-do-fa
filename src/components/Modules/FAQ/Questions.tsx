@@ -5,7 +5,7 @@ type Props = {
   questions?: any;
 };
 
-function Questions(props: Props): JSX.Element {
+function Questions(props: Props) {
   return (
     <div className="wrapper">
       <div className="list-unstyled mb-3">

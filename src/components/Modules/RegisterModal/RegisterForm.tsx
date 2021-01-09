@@ -29,7 +29,7 @@ type Inputs = {
 
 const accountTypes = ['PHARMACY', 'CLINIC', 'DRUGSTORE'];
 
-const RegisterForm = (): JSX.Element => {
+const RegisterForm = () => {
   const { t } = useTranslation(['register', 'errors']);
 
   const router = useRouter();

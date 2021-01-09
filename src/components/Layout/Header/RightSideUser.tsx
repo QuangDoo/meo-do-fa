@@ -14,7 +14,7 @@ type NotiItem = {
 
 const pageSize = 5;
 
-const RightSideUser = (): JSX.Element => {
+const RightSideUser = () => {
   const { user } = useUser();
   const { t } = useTranslation('noti');
 

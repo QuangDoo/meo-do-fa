@@ -20,7 +20,7 @@ import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
 // import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import QuickOrderItem from './QuickOrderItem';
 
-function QuickOrderPage(): JSX.Element {
+function QuickOrderPage() {
   const isLoggedIn = useIsLoggedIn();
   const { cart } = useCart();
 

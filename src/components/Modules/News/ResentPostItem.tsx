@@ -6,7 +6,7 @@ type Props = {
   title: string;
 };
 
-function ResentPostItem(props: Props): JSX.Element {
+function ResentPostItem(props: Props) {
   return (
     <li className="resent-post-item">
       <Link href={props.href}>

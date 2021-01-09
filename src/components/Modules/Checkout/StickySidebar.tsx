@@ -31,7 +31,7 @@ type Props = {
   counselData?: OutputCounsel;
 };
 
-const StickySidebar = (props: Props): JSX.Element => {
+const StickySidebar = (props: Props) => {
   const { counselData } = props;
 
   const { t } = useTranslation(['checkout', 'common', 'errors']);

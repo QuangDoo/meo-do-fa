@@ -11,7 +11,7 @@ import { useDebouncedEffect } from 'src/hooks/useDebouncedEffect';
 
 import Loading from '../Loading';
 
-const SearchBar = (): JSX.Element => {
+const SearchBar = () => {
   const { t } = useTranslation(['searchBar']);
   const router = useRouter();
 

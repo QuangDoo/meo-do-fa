@@ -24,7 +24,7 @@ type Props = {
   orderNo: string;
 };
 
-const PaymentOption = (props: Props): JSX.Element => {
+const PaymentOption = (props: Props) => {
   const { register, watch } = useFormContext();
 
   const chosenPaymentOption = watch('paymentMethodId');

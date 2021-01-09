@@ -20,7 +20,7 @@ type Props = {
   discount_percentage: number;
 };
 
-function QuickOrderItem(props: Props): JSX.Element {
+function QuickOrderItem(props: Props) {
   const isLoggedIn = useIsLoggedIn();
 
   return (
