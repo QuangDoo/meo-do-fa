@@ -1,7 +1,7 @@
 {
   "promo_codes": "Promotion Codes",
   "user_manual": "User manual",
-  "order": "<b>Order: </b>Go to the <a2>Products</a2> page to place an order",
+  "order": "<b>Order: </b>Go to the <a1>Quick order</a1> or <a2>Products</a2> page to place an order",
   "order_content": "<b>Go to checkout page: </b> Go to the <a1>Checkout page</a1> or <a2>Product page</a2> to place an order",
   "use_promocode": "<b>Use code: </b>In the Checkout page, click the \"Use promo codes\" button, then select a code from the list or enter the code that you want to use, then click the \"Use Now\" button.",
   "just_for_you": "Just for you",
