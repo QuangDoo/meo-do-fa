@@ -100,14 +100,14 @@ const CheckoutPage = () => {
 
   const router = useRouter();
 
-  const { cart, getCart, loading: loadingCart } = useCart();
+  const { cart, refetchCart, loading: loadingCart } = useCart();
 
   const [createOrder, { loading: creatingOrder }] = useMutationAuth<
     CreateOrderData,
     CreateOrderVars
   >(CREATE_ORDER, {
     onCompleted: (data) => {
-      getCart();
+      refetchCart();
 
       swal({
         title: t('checkout:order_success_message', {
@@ -119,7 +119,7 @@ const CheckoutPage = () => {
       });
     },
     onError: (err) => {
-      const errorCode = err.graphQLErrors[0]?.extensions?.code;
+      const errorCode = err?.graphQLErrors[0]?.extensions?.code;
       toast.error(t(`errors:code_${errorCode}`));
 
       if (errorCode === 114) {

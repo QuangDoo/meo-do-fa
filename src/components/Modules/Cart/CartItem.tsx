@@ -26,7 +26,7 @@ function CartItem(props: CartItemProps): JSX.Element {
   const [open, setOpen] = useState<boolean>(false);
 
   // Refetch cart on update cart complete
-  const { getCart, loading: loadingCart } = useCart({
+  const { refetchCart, loading: loadingCart } = useCart({
     onCompleted: () => {
       toast.success(t('cart:update_success'));
     }
@@ -36,7 +36,7 @@ function CartItem(props: CartItemProps): JSX.Element {
     DELETE_CART,
     {
       onCompleted: () => {
-        getCart();
+        refetchCart();
       },
       onError: (err) => {
         toast.error(t(`errors:code_${err.graphQLErrors?.[0].extensions?.code}`));

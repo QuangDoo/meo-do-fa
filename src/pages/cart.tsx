@@ -17,13 +17,9 @@ import redirect from 'src/utils/redirect';
 import withApollo from 'src/utils/withApollo';
 
 function Cart() {
-  const { cart, loading: loadingCart, getCart } = useCart();
+  const { cart, loading: loadingCart } = useCart();
 
   const { t } = useTranslation(['cart', 'common', 'errors']);
-
-  useEffect(() => {
-    getCart?.();
-  }, [getCart]);
 
   const router = useRouter();
 
