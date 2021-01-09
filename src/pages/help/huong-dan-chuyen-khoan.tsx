@@ -8,7 +8,7 @@ import Nav from '../../components/Layout/Nav';
 import FAQ from '../../components/Modules/FAQ';
 import QuestionDetail from '../../components/Modules/FAQ/QuestionDetail';
 
-const HelpDetail = (): JSX.Element => {
+const HelpDetail = () => {
   const question = {
     id: 1,
     question: 'Hủy đơn hàng và khóa tài khoản Hủy đơn hàng và khóa tài khoản',

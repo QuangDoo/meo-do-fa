@@ -9,7 +9,7 @@ import FAQ from '../../components/Modules/FAQ/index';
 import Questions from '../../components/Modules/FAQ/Questions';
 import withApollo from '../../utils/withApollo';
 
-const Help = (): JSX.Element => {
+const Help = () => {
   // const questions = [
   //   { id: 1, href: '/1', title: 'Hủy đơn hàng và khóa tài khoản' },
   //   { id: 2, href: '/1', title: 'Tại sao tôi đăng nhập bị lỗi?' },

@@ -25,21 +25,19 @@ import {
 import { AssignmentTurnedIn, Done, LocalShipping, Receipt, Update } from '@material-ui/icons';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import clsx from 'clsx';
-import Cookies from 'cookies';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import PriceText from 'src/components/Form/PriceText';
-import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
-import Header from 'src/components/Layout/Header';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
-import Nav from 'src/components/Layout/Nav';
+import MainLayout from 'src/components/Modules/MainLayout';
 import ProfileLayout from 'src/components/Modules/ProfileLayout';
 import { GET_ORDER, GetOrderDetailData, GetOrderDetailVars } from 'src/graphql/order/getOrder';
 import { useQueryAuth } from 'src/hooks/useApolloHookAuth';
+import protectRoute from 'src/utils/protectRoute';
 import withApollo from 'src/utils/withApollo';
 
 import ConfirmCancelOrder from '../../components/Modules/My-orders/ConfirmCancelOrder';
@@ -185,7 +183,15 @@ const TextWithLabel = (props) => {
   );
 };
 
-const OrderDetails = () => {
+OrderDetails.getInitialProps = async (ctx) => {
+  protectRoute(ctx);
+
+  return {
+    namespacesRequired: ['myOrders', 'common']
+  };
+};
+
+function OrderDetails() {
   const { t } = useTranslation(['myOrders', 'common']);
   const router = useRouter();
 
@@ -248,14 +254,10 @@ const OrderDetails = () => {
   const classes = useStyles();
 
   return (
-    <>
+    <MainLayout>
       <Head>
         <title>Medofa</title>
       </Head>
-
-      <Header />
-
-      <Nav />
 
       <ProfileLayout>
         <Grid container spacing={2}>
@@ -442,27 +444,8 @@ const OrderDetails = () => {
         </Grid>
       </ProfileLayout>
       <LoadingBackdrop open={loadingOrderDetail} />
-      <Footer />
-    </>
+    </MainLayout>
   );
-};
-
-OrderDetails.getInitialProps = async (ctx) => {
-  if (typeof window === 'undefined') {
-    const cookies = new Cookies(ctx.req, ctx.res);
-
-    if (!cookies.get('token')) {
-      ctx.res.writeHead(302, {
-        Location: '/'
-      });
-
-      ctx.res.end();
-    }
-  }
-
-  return {
-    namespacesRequired: ['myOrders', 'common']
-  };
-};
+}
 
 export default withApollo({ ssr: true })(OrderDetails);

@@ -6,15 +6,14 @@ import getToken from 'src/utils/getToken';
 import withApollo from 'src/utils/withApollo';
 
 OperatingRegulations.getInitialProps = async (ctx) => ({
-  namespacesRequired: ['common', 'operatingRegulations'],
-  token: getToken(ctx)
+  namespacesRequired: ['common', 'operatingRegulations']
 });
 
 function OperatingRegulations(props) {
   const { t } = useTranslation(['common', 'operatingRegulations']);
 
   return (
-    <MainLayout token={props.token}>
+    <MainLayout>
       <Head>
         <title>Medofa</title>
       </Head>

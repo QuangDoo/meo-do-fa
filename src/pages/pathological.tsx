@@ -6,15 +6,14 @@ import getToken from 'src/utils/getToken';
 import withApollo from 'src/utils/withApollo';
 
 Pathological.getInitialProps = async (ctx) => ({
-  namespacesRequired: ['common'],
-  token: getToken(ctx)
+  namespacesRequired: ['common']
 });
 
 function Pathological(props) {
   const { t } = useTranslation('common');
 
   return (
-    <MainLayout token={props.token}>
+    <MainLayout>
       <Head>
         <title>Medofa</title>
       </Head>

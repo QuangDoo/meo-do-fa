@@ -10,14 +10,13 @@ Checkout.getInitialProps = async (ctx) => {
   protectRoute(ctx);
 
   return {
-    namespacesRequired: ['checkout', 'errors', 'common', 'myAccount'],
-    token: getToken(ctx)
+    namespacesRequired: ['checkout', 'errors', 'common', 'myAccount']
   };
 };
 
 function Checkout(props) {
   return (
-    <MainLayout token={props.token}>
+    <MainLayout>
       <Head>
         <title>Medofa</title>
       </Head>

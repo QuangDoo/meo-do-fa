@@ -14,8 +14,7 @@ import withApollo from 'src/utils/withApollo';
 const pageSize = 20;
 
 Deal.getInitialProps = async (ctx) => ({
-  namespacesRequired: ['common'],
-  token: getToken(ctx)
+  namespacesRequired: ['common']
 });
 
 function Deal(props) {
@@ -58,7 +57,7 @@ function Deal(props) {
   };
 
   return (
-    <MainLayout token={props.token}>
+    <MainLayout>
       <Head>
         <title>Medofa</title>
       </Head>

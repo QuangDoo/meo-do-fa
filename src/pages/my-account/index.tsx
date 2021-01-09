@@ -1,5 +1,4 @@
 import { useLazyQuery, useQuery } from '@apollo/client';
-import Cookies from 'cookies';
 import { useTranslation } from 'i18n';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -7,11 +6,9 @@ import { toast } from 'react-toastify';
 import Button from 'src/components/Form/Button';
 import InputWithLabel from 'src/components/Form/InputWithLabel';
 import SelectWithLabel from 'src/components/Form/SelectWithLabel';
-import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
-import Header from 'src/components/Layout/Header';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
-import Nav from 'src/components/Layout/Nav';
+import MainLayout from 'src/components/Modules/MainLayout';
 import FormCard from 'src/components/Modules/MyAccount/FormCard';
 import ProfileLayout from 'src/components/Modules/ProfileLayout';
 import { GET_CITIES, GetCitiesData } from 'src/graphql/address/getCities';
@@ -24,6 +21,7 @@ import { GET_WARDS, GetWardsData, GetWardsVars } from 'src/graphql/address/getWa
 import { UPDATE_USER, UpdateUserData, UpdateUserVars } from 'src/graphql/user/updateUser';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import useUser from 'src/hooks/useUser';
+import protectRoute from 'src/utils/protectRoute';
 import toBase64 from 'src/utils/toBase64';
 
 import withApollo from '../../utils/withApollo';
@@ -48,7 +46,7 @@ type Inputs = {
   deliveryWard: string;
 };
 
-const MyAccount = (): JSX.Element => {
+const MyAccount = () => {
   const { t } = useTranslation(['myAccount', 'common', 'errors']);
 
   const { user, refetchUser } = useUser();
@@ -204,14 +202,10 @@ const MyAccount = (): JSX.Element => {
   };
 
   return (
-    <>
+    <MainLayout>
       <Head>
         <title>Medofa</title>
       </Head>
-
-      <Header />
-
-      <Nav />
 
       <ProfileLayout title={t('myAccount:title')}>
         <form onSubmit={handleSubmit(onSubmit, onError)}>
@@ -381,24 +375,12 @@ const MyAccount = (): JSX.Element => {
       </ProfileLayout>
 
       <LoadingBackdrop open={loadingUpdateUser} />
-
-      <Footer />
-    </>
+    </MainLayout>
   );
 };
 
 MyAccount.getInitialProps = async (ctx) => {
-  if (typeof window === 'undefined') {
-    const cookies = new Cookies(ctx.req, ctx.res);
-
-    if (!cookies.get('token')) {
-      ctx.res.writeHead(302, {
-        Location: '/'
-      });
-
-      ctx.res.end();
-    }
-  }
+  protectRoute(ctx);
 
   return {
     namespacesRequired: ['myAccount', 'common', 'errors']

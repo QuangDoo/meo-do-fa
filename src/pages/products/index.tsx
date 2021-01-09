@@ -42,8 +42,7 @@ const pageSize = 20;
 const defaultSortType = '07'; // Name ascending
 
 Products.getInitialProps = async (ctx) => ({
-  namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge', 'products'],
-  token: getToken(ctx)
+  namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge', 'products']
 });
 
 function Products(props) {
@@ -118,7 +117,7 @@ function Products(props) {
   }, [productsLoading]);
 
   return (
-    <MainLayout token={props.token}>
+    <MainLayout>
       <Head>
         <title>Medofa - {title}</title>
       </Head>

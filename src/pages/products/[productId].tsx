@@ -16,11 +16,10 @@ import getToken from 'src/utils/getToken';
 import withApollo from 'src/utils/withApollo';
 
 ProductDetail.getInitialProps = async (ctx) => ({
-  namespacesRequired: ['common', 'errors', 'productDetail'],
-  token: getToken(ctx)
+  namespacesRequired: ['common', 'errors', 'productDetail']
 });
 
-function ProductDetail(props): JSX.Element {
+function ProductDetail(props) {
   const router = useRouter();
 
   const { t } = useTranslation(['productDetail']);
@@ -48,7 +47,7 @@ function ProductDetail(props): JSX.Element {
   const title = Number(productPid) ? getNameById(dataProduct, Number(productPid)) : '';
 
   return (
-    <MainLayout token={props.token}>
+    <MainLayout>
       <Head>
         <title>Medofa - {title}</title>
       </Head>

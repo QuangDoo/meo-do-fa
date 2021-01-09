@@ -34,8 +34,7 @@ const paginationVars = {
 };
 
 Home.getInitialProps = async (ctx) => ({
-  namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge'],
-  token: getToken(ctx)
+  namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge']
 });
 
 function Home(props) {
@@ -60,7 +59,7 @@ function Home(props) {
   >(GET_PROMOTION_PRODUCTS, paginationVars);
 
   return (
-    <MainLayout token={props.token}>
+    <MainLayout>
       <Head>
         <title>Medofa</title>
       </Head>

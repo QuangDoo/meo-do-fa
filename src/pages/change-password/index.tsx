@@ -11,6 +11,7 @@ import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import Nav from 'src/components/Layout/Nav';
+import MainLayout from 'src/components/Modules/MainLayout';
 import FormCard from 'src/components/Modules/MyAccount/FormCard';
 import ProfileLayout from 'src/components/Modules/ProfileLayout';
 import { useUserContext } from 'src/contexts/User';
@@ -20,6 +21,7 @@ import {
   ChangePasswordVars
 } from 'src/graphql/user/changePassword';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
+import protectRoute from 'src/utils/protectRoute';
 
 import withApollo from '../../utils/withApollo';
 
@@ -30,14 +32,14 @@ type Inputs = {
   retype: string;
 };
 
-const ChangePassWord = (): JSX.Element => {
+const ChangePassWord = () => {
   const { t } = useTranslation(['myAccount', 'common', 'login']);
 
   const { user } = useUserContext();
 
   const rotuer = useRouter();
 
-  const [changePassword, { loading: ChangingPassword }] = useMutationAuth<
+  const [changePassword, { loading: changingPassword }] = useMutationAuth<
     ChangePasswordData,
     ChangePasswordVars
   >(CHANGE_PASSWORD, {
@@ -73,14 +75,10 @@ const ChangePassWord = (): JSX.Element => {
   };
 
   return (
-    <>
+    <MainLayout>
       <Head>
         <title>Medofa</title>
       </Head>
-
-      <Header />
-
-      <Nav />
 
       <ProfileLayout title={t('myAccount:title')}>
         <form onSubmit={handleSubmit(onSubmit, onError)}>
@@ -141,24 +139,14 @@ const ChangePassWord = (): JSX.Element => {
           </div>
         </form>
       </ProfileLayout>
-      <LoadingBackdrop open={ChangingPassword} />
-      <Footer />
-    </>
+
+      <LoadingBackdrop open={changingPassword} />
+    </MainLayout>
   );
 };
 
 ChangePassWord.getInitialProps = async (ctx) => {
-  if (typeof window === 'undefined') {
-    const cookies = new Cookies(ctx.req, ctx.res);
-
-    if (!cookies.get('token')) {
-      ctx.res.writeHead(302, {
-        Location: '/'
-      });
-
-      ctx.res.end();
-    }
-  }
+  protectRoute(ctx);
 
   return {
     namespacesRequired: ['myAccount', 'common', 'login']

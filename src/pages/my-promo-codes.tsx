@@ -37,8 +37,7 @@ MyPromoCodes.getInitialProps = async (ctx) => {
   protectRoute(ctx);
 
   return {
-    namespacesRequired: ['myPromoCodes'],
-    token: getToken(ctx)
+    namespacesRequired: ['myPromoCodes']
   };
 };
 
@@ -72,7 +71,7 @@ function MyPromoCodes(props) {
   };
 
   return (
-    <MainLayout token={props.token}>
+    <MainLayout>
       <Head>
         <title>Medofa</title>
       </Head>

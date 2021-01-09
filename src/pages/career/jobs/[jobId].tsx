@@ -37,7 +37,7 @@ const job = {
   ]
 };
 
-const CareerPage = (): JSX.Element => {
+const CareerPage = () => {
   return (
     <>
       <Head>

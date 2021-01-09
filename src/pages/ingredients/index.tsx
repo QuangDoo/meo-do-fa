@@ -3,11 +3,9 @@ import slugify from '@sindresorhus/slugify';
 import { useTranslation } from 'i18n';
 import React, { useEffect } from 'react';
 import { toast } from 'react-toastify';
-import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
-import Header from 'src/components/Layout/Header';
 import Loading from 'src/components/Layout/Loading';
-import Nav from 'src/components/Layout/Nav';
+import MainLayout from 'src/components/Modules/MainLayout';
 import SearchScreen from 'src/components/Modules/SearchScreen';
 import {
   GET_ALL_INGREDIENTS,
@@ -15,7 +13,11 @@ import {
 } from 'src/graphql/ingredient/ingredient.query';
 import withApollo from 'src/utils/withApollo';
 
-function Ingredients(): JSX.Element {
+Ingredients.getInitialProps = async () => ({
+  namespacesRequired: ['errors', 'searchBar']
+});
+
+function Ingredients() {
   const { t } = useTranslation('errors');
 
   const { data, loading, error } = useQuery<GetAllIngredientsData, undefined>(GET_ALL_INGREDIENTS, {
@@ -30,13 +32,11 @@ function Ingredients(): JSX.Element {
   }, [error]);
 
   return (
-    <>
+    <MainLayout>
       <Head>
         <title>Medofa</title>
       </Head>
-      <Header />
 
-      <Nav />
       {loading ? (
         <div className="w-100 p-5 text-center">
           <Loading />
@@ -49,9 +49,7 @@ function Ingredients(): JSX.Element {
       ) : (
         <div></div>
       )}
-
-      <Footer />
-    </>
+    </MainLayout>
   );
 }
 

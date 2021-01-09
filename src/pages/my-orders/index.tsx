@@ -1,15 +1,12 @@
 import { AppBar, Box, makeStyles, Tab, Tabs, Typography } from '@material-ui/core';
-import Cookies from 'cookies';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
-import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
-import Header from 'src/components/Layout/Header';
 import Loading from 'src/components/Layout/Loading';
-import Nav from 'src/components/Layout/Nav';
+import MainLayout from 'src/components/Modules/MainLayout';
 import ProfileLayout from 'src/components/Modules/ProfileLayout';
 import {
   GET_ORDER_LIST,
@@ -18,6 +15,7 @@ import {
   OrderFlag
 } from 'src/graphql/my-orders/getOrderList';
 import { useQueryAuth } from 'src/hooks/useApolloHookAuth';
+import protectRoute from 'src/utils/protectRoute';
 import withApollo from 'src/utils/withApollo';
 
 import ConfirmCancelOrder from '../../components/Modules/My-orders/ConfirmCancelOrder';
@@ -228,14 +226,10 @@ const MyOrders = () => {
   const classes = useStyles();
 
   return (
-    <>
+    <MainLayout>
       <Head>
         <title>Medofa</title>
       </Head>
-
-      <Header />
-
-      <Nav />
 
       <ProfileLayout title={t('myOrders:my_orders')}>
         {/* <p className="text-muted m-0">
@@ -309,24 +303,12 @@ const MyOrders = () => {
           )}
         </div>
       </ProfileLayout>
-
-      <Footer />
-    </>
+    </MainLayout>
   );
 };
 
 MyOrders.getInitialProps = async (ctx) => {
-  if (typeof window === 'undefined') {
-    const cookies = new Cookies(ctx.req, ctx.res);
-
-    if (!cookies.get('token')) {
-      ctx.res.writeHead(302, {
-        Location: '/'
-      });
-
-      ctx.res.end();
-    }
-  }
+  protectRoute(ctx);
 
   return {
     namespacesRequired: ['myOrders', 'common', 'errors']

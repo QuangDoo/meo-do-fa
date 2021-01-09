@@ -6,15 +6,14 @@ import getToken from 'src/utils/getToken';
 import withApollo from 'src/utils/withApollo';
 
 PrivacyPolicy.getInitialProps = async (ctx) => ({
-  namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge'],
-  token: getToken(ctx)
+  namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge']
 });
 
 function PrivacyPolicy(props) {
   const { t } = useTranslation(['common', 'privacyPolicy']);
 
   return (
-    <MainLayout token={props.token}>
+    <MainLayout>
       <Head>
         <title>Medofa</title>
       </Head>

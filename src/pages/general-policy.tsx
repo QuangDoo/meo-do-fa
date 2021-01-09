@@ -10,15 +10,14 @@ import getToken from 'src/utils/getToken';
 import withApollo from 'src/utils/withApollo';
 
 GeneralPolicy.getInitialProps = async (ctx) => ({
-  namespacesRequired: ['common', 'header', 'footer', 'generalPolicy'],
-  token: getToken(ctx)
+  namespacesRequired: ['common', 'header', 'footer', 'generalPolicy']
 });
 
 function GeneralPolicy(props) {
   const { t } = useTranslation(['common', 'generalPolicy']);
 
   return (
-    <MainLayout token={props.token}>
+    <MainLayout>
       <Head>
         <title>Medofa</title>
       </Head>

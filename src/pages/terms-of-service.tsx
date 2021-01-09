@@ -1,21 +1,15 @@
-import { useTranslation } from 'i18n';
 import React from 'react';
-import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
-import Header from 'src/components/Layout/Header';
-import Nav from 'src/components/Layout/Nav';
 import MainLayout from 'src/components/Modules/MainLayout';
-import getToken from 'src/utils/getToken';
 import withApollo from 'src/utils/withApollo';
 
-TermsOfService.getInitialProps = async (ctx) => ({
-  namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge'],
-  token: getToken(ctx)
+TermsOfService.getInitialProps = async () => ({
+  namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge']
 });
 
-function TermsOfService(props) {
+function TermsOfService() {
   return (
-    <MainLayout token={props.token}>
+    <MainLayout>
       <Head>
         <title>Medofa</title>
       </Head>

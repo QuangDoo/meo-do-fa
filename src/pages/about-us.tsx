@@ -7,15 +7,14 @@ import withApollo from 'src/utils/withApollo';
 import Head from '../components/Layout/Head';
 
 AboutUs.getInitialProps = async (ctx) => ({
-  namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge'],
-  token: getToken(ctx)
+  namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge']
 });
 
 function AboutUs(props) {
   const { t } = useTranslation(['common', 'aboutUs']);
 
   return (
-    <MainLayout token={props.token}>
+    <MainLayout>
       <Head>
         <title>Medofa</title>
       </Head>

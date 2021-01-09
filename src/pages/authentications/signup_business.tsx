@@ -13,7 +13,7 @@ import { UPDATE_USER } from 'src/graphql/user/updateUser';
 import useCity from 'src/hooks/useCity';
 import withApollo from 'src/utils/withApollo';
 
-function SignupBusiness(): JSX.Element {
+function SignupBusiness() {
   const [fileName, setFileName] = useState('');
 
   const [fileBase64, setFileBase64] = useState('');

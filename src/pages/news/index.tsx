@@ -2,10 +2,7 @@ import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import withApollo from 'src/utils/withApollo';
 
-import Footer from '../../components/Layout/Footer';
 import Head from '../../components/Layout/Head';
-import Header from '../../components/Layout/Header';
-import Nav from '../../components/Layout/Nav';
 import News from '../../components/Modules/News';
 import NewsList from '../../components/Modules/News/NewsList';
 
@@ -93,7 +90,7 @@ const links = [
   { href: '', title: 'Contrary to to populartext Contrary to populartext Contrary to populartext' }
 ];
 
-const NewsPage = (): JSX.Element => {
+const NewsPage = () => {
   const router = useRouter();
 
   useEffect(() => {
@@ -103,21 +100,15 @@ const NewsPage = (): JSX.Element => {
   return null;
 
   // return (
-  //   <>
+  //   <MainLayout>
   //     <Head>
   //       <title>Medofa</title>
   //     </Head>
-
-  //     <Header />
-
-  //     <Nav />
-
+  //
   //     <News bannerImgUrl={imgUrl} links={links}>
   //       <NewsList news={newsdata} />
   //     </News>
-
-  //     <Footer />
-  //   </>
+  //   </MainLayout>
   // );
 };
 

@@ -1,14 +1,10 @@
 import { useTranslation } from 'i18n';
 import React from 'react';
-import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
-import Header from 'src/components/Layout/Header';
-import Nav from 'src/components/Layout/Nav';
 import MainLayout from 'src/components/Modules/MainLayout';
-import getToken from 'src/utils/getToken';
 import withApollo from 'src/utils/withApollo';
 
-TermsAndConditions.getInitialProps = async (ctx) => ({
+TermsAndConditions.getInitialProps = async () => ({
   namespacesRequired: [
     'common',
     'errors',
@@ -19,15 +15,14 @@ TermsAndConditions.getInitialProps = async (ctx) => ({
     'login',
     'register',
     'termsAndConditions'
-  ],
-  token: getToken(ctx)
+  ]
 });
 
-function TermsAndConditions(props) {
+function TermsAndConditions() {
   const { t } = useTranslation(['common', 'termsAndConditions']);
 
   return (
-    <MainLayout token={props.token}>
+    <MainLayout>
       <Head>
         <title>Medofa</title>
       </Head>

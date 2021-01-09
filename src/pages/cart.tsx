@@ -56,7 +56,7 @@ function Cart(props) {
   };
 
   return (
-    <MainLayout token={props.token}>
+    <MainLayout>
       <Head>
         <title>Medofa</title>
       </Head>
