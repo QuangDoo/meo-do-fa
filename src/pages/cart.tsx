@@ -2,22 +2,16 @@ import React from 'react';
 import Head from 'src/components/Layout/Head';
 import CartPage from 'src/components/Modules/Cart';
 import MainLayout from 'src/components/Modules/MainLayout';
-import getToken from 'src/utils/getToken';
-import protectRoute from 'src/utils/protectRoute';
 import withApollo from 'src/utils/withApollo';
+import withToken from 'src/utils/withToken';
 
-Cart.getInitialProps = async (ctx) => {
-  protectRoute(ctx);
+Cart.getInitialProps = async () => ({
+  namespacesRequired: ['cart', 'common', 'errors']
+});
 
-  return {
-    namespacesRequired: ['cart', 'common', 'errors'],
-    token: getToken(ctx)
-  };
-};
-
-function Cart(props) {
+function Cart() {
   return (
-    <MainLayout token={props.token}>
+    <MainLayout>
       <Head>
         <title>Medofa</title>
       </Head>
@@ -27,4 +21,6 @@ function Cart(props) {
   );
 }
 
-export default withApollo({ ssr: true })(Cart);
+const WithToken = withToken(Cart, { protected: true });
+
+export default withApollo({ ssr: true })(WithToken);

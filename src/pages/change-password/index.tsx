@@ -17,8 +17,7 @@ import {
   ChangePasswordVars
 } from 'src/graphql/user/changePassword';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
-import getToken from 'src/utils/getToken';
-import protectRoute from 'src/utils/protectRoute';
+import withToken from 'src/utils/withToken';
 
 import withApollo from '../../utils/withApollo';
 
@@ -29,16 +28,11 @@ type Inputs = {
   retype: string;
 };
 
-ChangePassWord.getInitialProps = async (ctx) => {
-  protectRoute(ctx);
+ChangePassWord.getInitialProps = async () => ({
+  namespacesRequired: [...mainLayoutNamespacesRequired, 'myAccount']
+});
 
-  return {
-    namespacesRequired: [...mainLayoutNamespacesRequired, 'myAccount'],
-    token: getToken(ctx)
-  };
-};
-
-function ChangePassWord(props) {
+function ChangePassWord() {
   const { t } = useTranslation(['myAccount', 'common', 'login']);
 
   const { data: user } = useUser();
@@ -81,7 +75,7 @@ function ChangePassWord(props) {
   };
 
   return (
-    <MainLayout token={props.token}>
+    <MainLayout>
       <Head>
         <title>Medofa</title>
       </Head>
@@ -151,4 +145,6 @@ function ChangePassWord(props) {
   );
 }
 
-export default withApollo({ ssr: true })(ChangePassWord);
+const WithToken = withToken(ChangePassWord, { protected: true });
+
+export default withApollo({ ssr: true })(WithToken);

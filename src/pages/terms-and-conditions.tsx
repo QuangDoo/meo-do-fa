@@ -4,17 +4,19 @@ import Head from 'src/components/Layout/Head';
 import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import getToken from 'src/utils/getToken';
 import withApollo from 'src/utils/withApollo';
+import withToken from 'src/utils/withToken';
 
-TermsAndConditions.getInitialProps = async (ctx) => ({
-  namespacesRequired: [...mainLayoutNamespacesRequired, 'termsAndConditions'],
-  token: getToken(ctx)
+TermsAndConditions.getInitialProps = async () => ({
+  namespacesRequired: [...mainLayoutNamespacesRequired, 'termsAndConditions']
 });
+
+const WithToken = withToken(TermsAndConditions);
 
 function TermsAndConditions(props) {
   const { t } = useTranslation(['common', 'termsAndConditions']);
 
   return (
-    <MainLayout token={props.token}>
+    <MainLayout>
       <Head>
         <title>Medofa</title>
       </Head>
@@ -30,4 +32,4 @@ function TermsAndConditions(props) {
   );
 }
 
-export default withApollo({ ssr: true })(TermsAndConditions);
+export default withApollo({ ssr: true })(WithToken);

@@ -13,11 +13,13 @@ import {
 } from 'src/graphql/ingredient/ingredient.query';
 import getToken from 'src/utils/getToken';
 import withApollo from 'src/utils/withApollo';
+import withToken from 'src/utils/withToken';
 
-Ingredients.getInitialProps = async (ctx) => ({
-  namespacesRequired: [...mainLayoutNamespacesRequired],
-  token: getToken(ctx)
+Ingredients.getInitialProps = async () => ({
+  namespacesRequired: [...mainLayoutNamespacesRequired]
 });
+
+const WithToken = withToken(Ingredients);
 
 function Ingredients(props) {
   const { t } = useTranslation('errors');
@@ -34,7 +36,7 @@ function Ingredients(props) {
   }, [error]);
 
   return (
-    <MainLayout token={props.token}>
+    <MainLayout>
       <Head>
         <title>Medofa</title>
       </Head>
@@ -55,4 +57,4 @@ function Ingredients(props) {
   );
 }
 
-export default withApollo({ ssr: true })(Ingredients);
+export default withApollo({ ssr: true })(WithToken);

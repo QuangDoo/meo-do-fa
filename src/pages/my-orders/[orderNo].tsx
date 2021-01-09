@@ -256,7 +256,7 @@ function OrderDetails(props) {
   const classes = useStyles();
 
   return (
-    <MainLayout token={props.token}>
+    <MainLayout>
       <Head>
         <title>Medofa</title>
       </Head>
@@ -450,4 +450,4 @@ function OrderDetails(props) {
   );
 }
 
-export default withApollo({ ssr: true })(OrderDetails);
+export default withApollo({ ssr: true })(WithToken);

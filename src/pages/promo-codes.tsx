@@ -4,15 +4,17 @@ import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules
 import PromoCodes from 'src/components/Modules/PromoCodes';
 import getToken from 'src/utils/getToken';
 import withApollo from 'src/utils/withApollo';
+import withToken from 'src/utils/withToken';
 
-PromotionCode.getInitialProps = async (ctx) => ({
-  namespacesRequired: [...mainLayoutNamespacesRequired, 'promoCodes'],
-  token: getToken(ctx)
+PromotionCode.getInitialProps = async () => ({
+  namespacesRequired: [...mainLayoutNamespacesRequired, 'promoCodes']
 });
+
+const WithToken = withToken(PromotionCode);
 
 function PromotionCode(props) {
   return (
-    <MainLayout token={props.token}>
+    <MainLayout>
       <Head>
         <title>Medofa</title>
       </Head>
@@ -22,4 +24,4 @@ function PromotionCode(props) {
   );
 }
 
-export default withApollo({ ssr: true })(PromotionCode);
+export default withApollo({ ssr: true })(WithToken);

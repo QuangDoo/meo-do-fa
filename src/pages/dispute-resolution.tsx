@@ -4,17 +4,19 @@ import Head from 'src/components/Layout/Head';
 import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import getToken from 'src/utils/getToken';
 import withApollo from 'src/utils/withApollo';
+import withToken from 'src/utils/withToken';
 
-DisputeResolution.getInitialProps = async (ctx) => ({
-  namespacesRequired: [...mainLayoutNamespacesRequired],
-  token: getToken(ctx)
+DisputeResolution.getInitialProps = async () => ({
+  namespacesRequired: [...mainLayoutNamespacesRequired]
 });
+
+const WithToken = withToken(DisputeResolution);
 
 function DisputeResolution(props) {
   const { t } = useTranslation(['common', 'disputeResolution']);
 
   return (
-    <MainLayout token={props.token}>
+    <MainLayout>
       <Head>
         <title>Medofa</title>
       </Head>
@@ -62,4 +64,4 @@ function DisputeResolution(props) {
   );
 }
 
-export default withApollo({ ssr: true })(DisputeResolution);
+export default withApollo({ ssr: true })(WithToken);

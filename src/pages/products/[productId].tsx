@@ -47,7 +47,7 @@ function ProductDetail(props) {
   const title = Number(productPid) ? getNameById(dataProduct, Number(productPid)) : '';
 
   return (
-    <MainLayout token={props.token}>
+    <MainLayout>
       <Head>
         <title>Medofa - {title}</title>
       </Head>
@@ -95,4 +95,4 @@ function ProductDetail(props) {
   );
 }
 
-export default withApollo({ ssr: true })(ProductDetail);
+export default withApollo({ ssr: true })(WithToken);

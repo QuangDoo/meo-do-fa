@@ -15,17 +15,16 @@ import {
   GetDealsOfTheDayVars
 } from 'src/graphql/product/getDealsOfTheDay';
 import { GET_PRODUCTS, GetProductsData, GetProductsVars } from 'src/graphql/product/getProducts';
-import getToken from 'src/utils/getToken';
 import withApollo from 'src/utils/withApollo';
+import withToken from 'src/utils/withToken';
 
 const pageSize = 20;
 
-DealOfTheDay.getInitialProps = async (ctx) => ({
-  namespacesRequired: [...mainLayoutNamespacesRequired, 'dealsOfTheDay'],
-  token: getToken(ctx)
+DealOfTheDay.getInitialProps = async () => ({
+  namespacesRequired: [...mainLayoutNamespacesRequired, 'dealsOfTheDay']
 });
 
-function DealOfTheDay(props) {
+function DealOfTheDay() {
   const router = useRouter();
   const { t } = useTranslation(['dealsOfTheDay']);
   const [showMore, setShowMore] = useState(false);
@@ -98,7 +97,7 @@ function DealOfTheDay(props) {
   }, [otherDealLoading]);
 
   return (
-    <MainLayout token={props.token}>
+    <MainLayout>
       <Head>
         <title>Medofa</title>
       </Head>
@@ -195,4 +194,6 @@ function DealOfTheDay(props) {
   );
 }
 
-export default withApollo({ ssr: true })(DealOfTheDay);
+const WithToken = withToken(DealOfTheDay);
+
+export default withApollo({ ssr: true })(WithToken);

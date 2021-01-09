@@ -72,7 +72,7 @@ function MyPromoCodes(props) {
   };
 
   return (
-    <MainLayout token={props.token}>
+    <MainLayout>
       <Head>
         <title>Medofa</title>
       </Head>
@@ -131,4 +131,4 @@ function MyPromoCodes(props) {
   );
 }
 
-export default withApollo({ ssr: true })(MyPromoCodes);
+export default withApollo({ ssr: true })(WithToken);

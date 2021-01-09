@@ -16,10 +16,13 @@ import NotiItem from '../../components/Modules/Noti/NotiItem';
 
 const pageSize = 10;
 
-Notification.getInitialProps = async (ctx) => ({
-  namespacesRequired: [...mainLayoutNamespacesRequired],
-  token: getToken(ctx)
+import withToken from 'src/utils/withToken';
+
+Notification.getInitialProps = async () => ({
+  namespacesRequired: [...mainLayoutNamespacesRequired]
 });
+
+const WithToken = withToken(Notification);
 
 function Notification(props) {
   const router = useRouter();
@@ -51,7 +54,7 @@ function Notification(props) {
   const { t } = useTranslation();
 
   return (
-    <MainLayout token={props.token}>
+    <MainLayout>
       <Head>
         <title>Medofa</title>
       </Head>
@@ -97,4 +100,4 @@ function Notification(props) {
     </MainLayout>
   );
 }
-export default withApollo({ ssr: true })(Notification);
+export default withApollo({ ssr: true })(WithToken);

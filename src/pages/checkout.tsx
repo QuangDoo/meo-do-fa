@@ -2,22 +2,16 @@ import React from 'react';
 import Head from 'src/components/Layout/Head';
 import CheckoutPage from 'src/components/Modules/Checkout';
 import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
-import getToken from 'src/utils/getToken';
-import protectRoute from 'src/utils/protectRoute';
 import withApollo from 'src/utils/withApollo';
+import withToken from 'src/utils/withToken';
 
-Checkout.getInitialProps = async (ctx) => {
-  protectRoute(ctx);
+Checkout.getInitialProps = async () => ({
+  namespacesRequired: [...mainLayoutNamespacesRequired, 'checkout', 'myAccount']
+});
 
-  return {
-    namespacesRequired: [...mainLayoutNamespacesRequired, 'checkout', 'myAccount'],
-    token: getToken(ctx)
-  };
-};
-
-function Checkout(props) {
+function Checkout() {
   return (
-    <MainLayout token={props.token}>
+    <MainLayout>
       <Head>
         <title>Medofa</title>
       </Head>
@@ -27,4 +21,6 @@ function Checkout(props) {
   );
 }
 
-export default withApollo({ ssr: true })(Checkout);
+const WithToken = withToken(Checkout, { protected: true });
+
+export default withApollo({ ssr: true })(WithToken);

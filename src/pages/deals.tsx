@@ -8,17 +8,19 @@ import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules
 import Pagination from 'src/components/Modules/Pagination';
 import ProductCard from 'src/components/Modules/ProductCard';
 import { GET_PRODUCTS, GetProductsData, GetProductsVars } from 'src/graphql/product/getProducts';
-import getToken from 'src/utils/getToken';
 import withApollo from 'src/utils/withApollo';
 
 const pageSize = 20;
 
-Deal.getInitialProps = async (ctx) => ({
-  namespacesRequired: [...mainLayoutNamespacesRequired],
-  token: getToken(ctx)
+import withToken from 'src/utils/withToken';
+
+Deal.getInitialProps = async () => ({
+  namespacesRequired: [...mainLayoutNamespacesRequired]
 });
 
-function Deal(props) {
+const WithToken = withToken(Deal);
+
+function Deal() {
   const router = useRouter();
 
   const { t } = useTranslation(['deals']);
@@ -58,7 +60,7 @@ function Deal(props) {
   };
 
   return (
-    <MainLayout token={props.token}>
+    <MainLayout>
       <Head>
         <title>Medofa</title>
       </Head>
@@ -104,4 +106,4 @@ function Deal(props) {
   );
 }
 
-export default withApollo({ ssr: true })(Deal);
+export default withApollo({ ssr: true })(WithToken);

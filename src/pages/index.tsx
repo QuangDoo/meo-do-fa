@@ -33,10 +33,13 @@ const paginationVars = {
   }
 };
 
-Home.getInitialProps = async (ctx) => ({
-  namespacesRequired: [...mainLayoutNamespacesRequired, 'productCard', 'productBadge'],
-  token: getToken(ctx)
+import withToken from 'src/utils/withToken';
+
+Home.getInitialProps = async () => ({
+  namespacesRequired: [...mainLayoutNamespacesRequired, 'productCard', 'productBadge']
 });
+
+const WithToken = withToken(Home);
 
 function Home(props) {
   const { data: dealsOfTheDayData } = useQuery<GetDealsOfTheDayData, GetDealsOfTheDayVars>(
@@ -60,7 +63,7 @@ function Home(props) {
   >(GET_PROMOTION_PRODUCTS, paginationVars);
 
   return (
-    <MainLayout token={props.token}>
+    <MainLayout>
       <Head>
         <title>Medofa</title>
       </Head>
@@ -75,4 +78,4 @@ function Home(props) {
   );
 }
 
-export default withApollo({ ssr: true })(Home);
+export default withApollo({ ssr: true })(WithToken);

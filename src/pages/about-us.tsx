@@ -1,21 +1,20 @@
 import { useTranslation } from 'i18n';
 import React from 'react';
 import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
-import getToken from 'src/utils/getToken';
 import withApollo from 'src/utils/withApollo';
+import withToken from 'src/utils/withToken';
 
 import Head from '../components/Layout/Head';
 
-AboutUs.getInitialProps = async (ctx) => ({
-  namespacesRequired: [...mainLayoutNamespacesRequired],
-  token: getToken(ctx)
+AboutUs.getInitialProps = async () => ({
+  namespacesRequired: [...mainLayoutNamespacesRequired]
 });
 
-function AboutUs(props) {
+function AboutUs() {
   const { t } = useTranslation(['common', 'aboutUs']);
 
   return (
-    <MainLayout token={props.token}>
+    <MainLayout>
       <Head>
         <title>Medofa</title>
       </Head>
@@ -71,4 +70,6 @@ function AboutUs(props) {
   );
 }
 
-export default withApollo({ ssr: false })(AboutUs);
+const WithToken = withToken(AboutUs);
+
+export default withApollo({ ssr: false })(WithToken);

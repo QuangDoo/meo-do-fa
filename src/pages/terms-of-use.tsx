@@ -3,15 +3,17 @@ import Head from 'src/components/Layout/Head';
 import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import getToken from 'src/utils/getToken';
 import withApollo from 'src/utils/withApollo';
+import withToken from 'src/utils/withToken';
 
-TermsOfUse.getInitialProps = async (ctx) => ({
-  namespacesRequired: [...mainLayoutNamespacesRequired, 'productCard', 'productBadge'],
-  token: getToken(ctx)
+TermsOfUse.getInitialProps = async () => ({
+  namespacesRequired: [...mainLayoutNamespacesRequired, 'productCard', 'productBadge']
 });
+
+const WithToken = withToken(TermsOfUse);
 
 function TermsOfUse(props) {
   return (
-    <MainLayout token={props.token}>
+    <MainLayout>
       <Head>
         <title>Medofa</title>
       </Head>
@@ -147,4 +149,4 @@ function TermsOfUse(props) {
   );
 }
 
-export default withApollo({ ssr: true })(TermsOfUse);
+export default withApollo({ ssr: true })(WithToken);

@@ -4,15 +4,17 @@ import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules
 import QuickOrderPage from 'src/components/Modules/QuickOrder/index';
 import getToken from 'src/utils/getToken';
 import withApollo from 'src/utils/withApollo';
+import withToken from 'src/utils/withToken';
 
-QuickOrder.getInitialProps = async (ctx) => ({
-  namespacesRequired: [...mainLayoutNamespacesRequired, 'cart', 'quickOrder'],
-  token: getToken(ctx)
+QuickOrder.getInitialProps = async () => ({
+  namespacesRequired: [...mainLayoutNamespacesRequired, 'cart', 'quickOrder']
 });
+
+const WithToken = withToken(QuickOrder);
 
 function QuickOrder(props) {
   return (
-    <MainLayout token={props.token}>
+    <MainLayout>
       <Head>
         <title>Medofa</title>
       </Head>
@@ -22,4 +24,4 @@ function QuickOrder(props) {
   );
 }
 
-export default withApollo({ ssr: true })(QuickOrder);
+export default withApollo({ ssr: true })(WithToken);

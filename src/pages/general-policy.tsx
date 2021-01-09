@@ -4,17 +4,19 @@ import Head from 'src/components/Layout/Head';
 import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import getToken from 'src/utils/getToken';
 import withApollo from 'src/utils/withApollo';
+import withToken from 'src/utils/withToken';
 
-GeneralPolicy.getInitialProps = async (ctx) => ({
-  namespacesRequired: [...mainLayoutNamespacesRequired, 'generalPolicy'],
-  token: getToken(ctx)
+GeneralPolicy.getInitialProps = async () => ({
+  namespacesRequired: [...mainLayoutNamespacesRequired, 'generalPolicy']
 });
+
+const WithToken = withToken(GeneralPolicy);
 
 function GeneralPolicy(props) {
   const { t } = useTranslation(['common', 'generalPolicy']);
 
   return (
-    <MainLayout token={props.token}>
+    <MainLayout>
       <Head>
         <title>Medofa</title>
       </Head>
@@ -30,4 +32,4 @@ function GeneralPolicy(props) {
   );
 }
 
-export default withApollo({ ssr: true })(GeneralPolicy);
+export default withApollo({ ssr: true })(WithToken);

@@ -237,7 +237,7 @@ function MyOrders(props) {
   const classes = useStyles();
 
   return (
-    <MainLayout token={props.token}>
+    <MainLayout>
       <Head>
         <title>Medofa</title>
       </Head>
@@ -318,4 +318,4 @@ function MyOrders(props) {
   );
 }
 
-export default withApollo({ ssr: true })(MyOrders);
+export default withApollo({ ssr: true })(WithToken);

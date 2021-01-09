@@ -1,31 +1,30 @@
 import React from 'react';
 import Head from 'src/components/Layout/Head';
+import GlobalLoadingBackdrop from 'src/components/Modules/GlobalLoadingBackdrop';
 import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import MyAccountPage from 'src/components/Modules/MyAccount';
-import getToken from 'src/utils/getToken';
-import protectRoute from 'src/utils/protectRoute';
+import withToken from 'src/utils/withToken';
 
 import withApollo from '../../utils/withApollo';
 
-MyAccount.getInitialProps = async (ctx) => {
-  protectRoute(ctx);
+MyAccount.getInitialProps = async () => ({
+  namespacesRequired: [...mainLayoutNamespacesRequired, 'myAccount']
+});
 
-  return {
-    namespacesRequired: [...mainLayoutNamespacesRequired, 'myAccount'],
-    token: getToken(ctx)
-  };
-};
-
-function MyAccount(props) {
+function MyAccount() {
   return (
-    <MainLayout token={props.token}>
+    <MainLayout>
       <Head>
         <title>Medofa</title>
       </Head>
+
+      <GlobalLoadingBackdrop />
 
       <MyAccountPage />
     </MainLayout>
   );
 }
 
-export default withApollo({ ssr: true })(MyAccount);
+const WithToken = withToken(MyAccount, { protected: true });
+
+export default withApollo({ ssr: true })(WithToken);

@@ -336,4 +336,4 @@ SignupBusiness.getInitialProps = (ctx) => {
   ctx.res.end();
 };
 
-export default withApollo({ ssr: true })(SignupBusiness);
+export default withApollo({ ssr: true })(WithToken);

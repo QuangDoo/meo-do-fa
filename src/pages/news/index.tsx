@@ -88,10 +88,13 @@ const links = [
   { href: '', title: 'Contrary to to populartext Contrary to populartext Contrary to populartext' }
 ];
 
-NewsPage.getInitialProps = async (ctx) => ({
-  namespacesRequired: [...mainLayoutNamespacesRequired],
-  token: getToken(ctx)
+import withToken from 'src/utils/withToken';
+
+NewsPage.getInitialProps = async () => ({
+  namespacesRequired: [...mainLayoutNamespacesRequired]
 });
+
+const WithToken = withToken(NewsPage);
 
 function NewsPage(props) {
   const router = useRouter();
@@ -103,7 +106,7 @@ function NewsPage(props) {
   return null;
 
   // return (
-  //   <MainLayout token={props.token}>
+  //   <MainLayout>
   //     <Head>
   //       <title>Medofa</title>
   //     </Head>
@@ -115,4 +118,4 @@ function NewsPage(props) {
   // );
 }
 
-export default withApollo({ ssr: true })(NewsPage);
+export default withApollo({ ssr: true })(WithToken);

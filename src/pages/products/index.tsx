@@ -41,10 +41,13 @@ const PAGE_SIZE = 20;
 
 const DEFAULT_SORT_TYPE = '07'; // Name ascending
 
-Products.getInitialProps = async (ctx) => ({
-  namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge', 'products'],
-  token: getToken(ctx)
+import withToken from 'src/utils/withToken';
+
+Products.getInitialProps = async () => ({
+  namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge', 'products']
 });
+
+const WithToken = withToken(Products);
 
 function Products(props) {
   const { t } = useTranslation(['products']);
@@ -118,7 +121,7 @@ function Products(props) {
   }, [productsLoading]);
 
   return (
-    <MainLayout token={props.token}>
+    <MainLayout>
       <Head>
         <title>Medofa - {title}</title>
       </Head>
@@ -207,4 +210,4 @@ function Products(props) {
   );
 }
 
-export default withApollo({ ssr: true })(Products);
+export default withApollo({ ssr: true })(WithToken);
