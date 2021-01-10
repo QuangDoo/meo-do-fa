@@ -7,7 +7,7 @@ type Props = {
 
 const useStyles = makeStyles((theme) => ({
   modal: {
-    color: theme.palette.white,
+    color: theme.palette.common.white,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center'

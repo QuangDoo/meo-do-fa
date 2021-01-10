@@ -1,5 +1,6 @@
-import { Button } from '@material-ui/core';
+import { Box, Button, Typography } from '@material-ui/core';
 import { useTranslation } from 'i18n';
+import { AddressInfo } from 'net';
 import React, { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { DeliveryInfo as DeliveryInfoType } from 'src/graphql/user/getAddressInfoUser';
@@ -12,7 +13,7 @@ type Props = {
 };
 
 const DeliveryInfo = (props: Props) => {
-  const { register } = useFormContext();
+  const { register, setValue } = useFormContext();
 
   const { t } = useTranslation(['checkout']);
 
@@ -24,10 +25,16 @@ const DeliveryInfo = (props: Props) => {
   const openChooseDialog = () => setChooseDialogOpen(true);
   const closeChooseDialog = () => setChooseDialogOpen(false);
 
-  const [chosenAddress, setChosenAddress] = useState(undefined);
+  const [chosenDeliveryAddress, setChosenDeliveryAddress] = useState<DeliveryInfoType>(undefined);
 
   const handleCreateDeliveryAddressCompleted = () => {
     closeCreateDialog();
+  };
+
+  const handleChooseDeliveryAddress = (address: DeliveryInfoType) => {
+    setChosenDeliveryAddress(address);
+    setValue('partnerId', address.id);
+    closeChooseDialog();
   };
 
   return (
@@ -42,6 +49,7 @@ const DeliveryInfo = (props: Props) => {
         open={chooseDialogOpen}
         onClose={closeChooseDialog}
         deliveryAddresses={props.deliveryAddresses}
+        handleDeliveryAddressChoose={handleChooseDeliveryAddress}
       />
 
       <input hidden type="text" ref={register} name="partnerId" />
@@ -50,20 +58,37 @@ const DeliveryInfo = (props: Props) => {
         <h6 className="m-0">{t('checkout:deliveryInfo_title')}</h6>
       </div>
 
-      <div className="mb-4">
-        <div>Name: {chosenAddress?.name}</div>
-        <div>Phone: {chosenAddress?.phone}</div>
-        <div>Email: {chosenAddress?.email}</div>
-        <div>
-          Address:{' '}
-          {`${chosenAddress?.street}, ${chosenAddress?.city}, ${chosenAddress?.district}, ${chosenAddress?.ward}`}
+      {!!chosenDeliveryAddress && (
+        <div className="mb-4">
+          <Typography variant="h5" component="h2">
+            {chosenDeliveryAddress.name}
+          </Typography>
+
+          <Box pt={2}>
+            <h6 className="delivery-address-content">
+              <div>Địa chỉ:</div>
+              <div>{`${chosenDeliveryAddress.street}, ${chosenDeliveryAddress.ward}, ${chosenDeliveryAddress.district}, ${chosenDeliveryAddress.city}`}</div>
+            </h6>
+
+            <h6 className="delivery-address-content">
+              <div>Điện thoại:</div>
+              <div>{chosenDeliveryAddress.phone}</div>
+            </h6>
+
+            <h6 className="delivery-address-content">
+              <div>Email:</div>
+              <div>{chosenDeliveryAddress.email}</div>
+            </h6>
+          </Box>
         </div>
-      </div>
+      )}
 
       <div className="d-flex align-items-center">
         <div className="mr-2">
           <Button type="button" variant="contained" color="primary" onClick={openChooseDialog}>
-            {t('checkout:choose_address_button')}
+            {chosenDeliveryAddress
+              ? t('checkout:choose_another_address')
+              : t('checkout:choose_address')}
           </Button>
         </div>
         {t('checkout:or')}

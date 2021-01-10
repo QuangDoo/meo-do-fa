@@ -57,7 +57,7 @@ const useStyles = makeStyles((muiTheme) => {
     stepIconRoot: {
       backgroundColor: muiTheme.palette.grey[500],
       zIndex: 1,
-      color: muiTheme.palette.white,
+      color: muiTheme.palette.common.white,
       width: stepIconSize,
       height: stepIconSize,
       display: 'flex',
