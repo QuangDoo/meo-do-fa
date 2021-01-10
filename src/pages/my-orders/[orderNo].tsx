@@ -240,6 +240,10 @@ const OrderDetails = () => {
     setOpen(true);
   };
 
+  const flag = orderDetail?.getOrderDetail?.flag;
+  const name = orderDetail?.getOrderDetail?.name;
+  const partnerShipping = orderDetail?.getOrderDetail?.partner_shipping;
+
   const classes = useStyles();
 
   return (
@@ -258,7 +262,7 @@ const OrderDetails = () => {
             <CustomCard>
               <Typography variant="h5">
                 {t('myOrders:order_detail')}
-                {`: ${orderDetail?.getOrderDetail?.name || ''}`}
+                {`: ${name || ''}`}
               </Typography>
 
               <Box my={2}>
@@ -270,7 +274,7 @@ const OrderDetails = () => {
                 alternativeLabel
                 activeStep={activeStep}
                 connector={<CustomStepConnector />}>
-                {orderDetail?.getOrderDetail?.flag === 25 ? (
+                {flag === 25 ? (
                   <Step>
                     <StepLabel icon={<Receipt />} StepIconComponent={CustomStepCancel} error>
                       {t('myOrders:canceled')}
@@ -287,35 +291,49 @@ const OrderDetails = () => {
                 )}
               </Stepper>
 
-              {orderDetail?.getOrderDetail?.flag !== 25 && (
+              {flag !== 25 && (
                 <>
                   <Box my={2}>
                     <Divider />
                   </Box>
 
                   <Box display="flex" justifyContent="space-between" alignItems="center">
-                    <Typography>
-                      {t('myOrders:expected_date')}{' '}
-                      <strong>
-                        {orderDetail?.getOrderDetail?.flag !== 25 &&
-                          orderDetail?.getOrderDetail?.expected_date &&
-                          new Date(orderDetail?.getOrderDetail?.expected_date).toLocaleDateString(
-                            'en-GB'
-                          )}
-                      </strong>
-                    </Typography>
-                    <Button
-                      size="small"
-                      startIcon={<DeleteForeverIcon />}
-                      variant="contained"
-                      onClick={onCancelClick}
-                      color="secondary">
-                      {t('myOrders:cancel_the_order')}
-                    </Button>
+                    {flag !== 25 && flag !== 80 && (
+                      <Typography>
+                        {t('myOrders:expected_date')}{' '}
+                        <strong>
+                          {orderDetail?.getOrderDetail?.expected_date &&
+                            new Date(orderDetail?.getOrderDetail?.expected_date).toLocaleDateString(
+                              'en-GB'
+                            )}
+                        </strong>
+                      </Typography>
+                    )}
+                    {flag !== 25 &&
+                      (flag !== 80 ? (
+                        <Button
+                          size="small"
+                          startIcon={<DeleteForeverIcon />}
+                          variant="contained"
+                          onClick={onCancelClick}
+                          color="secondary">
+                          {t('myOrders:cancel_the_order')}
+                        </Button>
+                      ) : (
+                        <a href="tel:1900232436" className="text-right">
+                          <Button
+                            size="small"
+                            startIcon={<Receipt />}
+                            variant="contained"
+                            color="secondary">
+                            {t('myOrders:report')}
+                          </Button>
+                        </a>
+                      ))}
                     <ConfirmCancelOrder
                       open={open}
                       onClose={() => setOpen(false)}
-                      orderNo={orderDetail?.getOrderDetail?.name}
+                      orderNo={name}
                       callBack={() => refetch()}
                     />
                   </Box>
@@ -330,23 +348,17 @@ const OrderDetails = () => {
                 <CustomCard>
                   <TextWithLabel
                     label={t('myOrders:recipients_name')}
-                    text={orderDetail?.getOrderDetail?.partner_shipping?.name}
+                    text={partnerShipping?.name}
                   />
 
                   <TextWithLabel
                     label={t('myOrders:delivery_address')}
-                    text={orderDetail?.getOrderDetail?.partner_shipping?.street}
+                    text={partnerShipping?.street}
                   />
 
-                  <TextWithLabel
-                    label={t('myOrders:phone_number')}
-                    text={orderDetail?.getOrderDetail?.partner_shipping?.phone}
-                  />
+                  <TextWithLabel label={t('myOrders:phone_number')} text={partnerShipping?.phone} />
 
-                  <TextWithLabel
-                    label={t('myOrders:email')}
-                    text={orderDetail?.getOrderDetail?.partner_shipping?.email}
-                  />
+                  <TextWithLabel label={t('myOrders:email')} text={partnerShipping?.email} />
                 </CustomCard>
               </Grid>
             </Grid>
@@ -386,9 +398,13 @@ const OrderDetails = () => {
                   {orderDetail?.getOrderDetail?.order_lines?.map((product) => (
                     <TableRow key={product.name}>
                       <TableCell component="th" scope="row">
-                        <Link href={`/products/${product.product.slug}`}>
-                          <a>{product.name}</a>
-                        </Link>
+                        {product.product_type !== 'product' ? (
+                          <p>{product.name}</p>
+                        ) : (
+                          <Link href={`/products/${product.product.slug}`}>
+                            <a>{product.name}</a>
+                          </Link>
+                        )}
                       </TableCell>
 
                       <TableCell align="right">

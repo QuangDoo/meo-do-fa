@@ -21,6 +21,8 @@ export type CartItem = {
     slug: string;
     image_512: string;
     is_quick_invoice: boolean;
+    old_price: number;
+    sale_price: number;
   };
   promotions: PromotionInfo[];
 };
@@ -29,6 +31,9 @@ export type GetCartData = {
   getCart: {
     carts: CartItem[];
     totalPrice: number;
+    totalNetPrice: number;
+    totalDc: number;
+    totalShippingFee: number;
     totalQty: number;
   };
 };
@@ -48,6 +53,8 @@ export const GET_CART = gql`
           slug
           image_512
           is_quick_invoice
+          old_price
+          sale_price
         }
         promotions {
           reward_type
@@ -58,6 +65,9 @@ export const GET_CART = gql`
         }
       }
       totalPrice
+      totalNetPrice
+      totalDc
+      totalShippingFee
       totalQty
     }
   }

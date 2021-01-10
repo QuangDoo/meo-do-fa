@@ -1,8 +1,7 @@
-// import { useMutation } from '@apollo/client';
-import Cookies from 'cookies';
 import { useTranslation } from 'i18n';
-import { useRouter } from 'next/router';
-import React from 'react';
+import cookies from 'js-cookie';
+import Router, { useRouter } from 'next/router';
+import React, { useEffect } from 'react';
 import { toast } from 'react-toastify';
 import PriceText from 'src/components/Form/PriceText';
 import Footer from 'src/components/Layout/Footer';
@@ -14,9 +13,10 @@ import CartItem from 'src/components/Modules/Cart/CartItem';
 import { CREATE_COUNSEL } from 'src/graphql/order/order.mutation';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import useCart from 'src/hooks/useCart';
+import redirect from 'src/utils/redirect';
 import withApollo from 'src/utils/withApollo';
 
-function Cart(): JSX.Element {
+function Cart() {
   const { cart, loading: loadingCart } = useCart();
 
   const { t } = useTranslation(['cart', 'common', 'errors']);
@@ -89,23 +89,21 @@ function Cart(): JSX.Element {
                           <div>{t('cart:total')}</div>
                         </div>
                         <div className="cart__total">
-                          <PriceText price={cart?.getCart.totalPrice} />
+                          <PriceText price={cart?.getCart.totalNetPrice} />
                           <span className="unit">{t('common:vnd')}</span>
                         </div>
                       </div>
                     </div>
 
-                    {cart?.getCart.totalPrice > 0 && (
-                      <div className="col-12">
-                        <div className="cart__info-item">
-                          <button
-                            onClick={handleCheckoutClick}
-                            className="btn btn-secondary btn-block text-small">
-                            {t('continue_payment')}
-                          </button>
-                        </div>
+                    <div className="col-12">
+                      <div className="cart__info-item">
+                        <button
+                          onClick={handleCheckoutClick}
+                          className="btn btn-secondary btn-block text-small">
+                          {t('continue_payment')}
+                        </button>
                       </div>
-                    )}
+                    </div>
                   </div>
                   <a href="/products">&lt;&lt; {t('cart:continue_order')}</a>
                 </div>
@@ -122,20 +120,20 @@ function Cart(): JSX.Element {
 }
 
 Cart.getInitialProps = async (ctx) => {
-  if (typeof window === 'undefined') {
-    const cookies = new Cookies(ctx.req, ctx.res);
+  const isServer = typeof window === 'undefined';
 
-    if (!cookies.get('token')) {
-      ctx.res.writeHead(302, {
-        Location: '/'
-      });
+  const token = isServer ? ctx.req.cookies.token : cookies.get('token');
 
-      ctx.res.end();
-    }
+  if (!token) {
+    redirect({
+      ctx,
+      location: '/'
+    });
   }
 
   return {
-    namespacesRequired: ['myAccount']
+    namespacesRequired: ['cart', 'common', 'errors'],
+    token
   };
 };
 

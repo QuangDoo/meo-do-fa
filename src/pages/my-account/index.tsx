@@ -143,8 +143,6 @@ const MyAccount = (): JSX.Element => {
 
   const wards = wardsData?.getWards || [];
 
-  const chosenWard = watch('companyWard');
-
   const [updateUser, { loading: loadingUpdateUser }] = useMutationAuth<
     UpdateUserData,
     UpdateUserVars
@@ -357,7 +355,7 @@ const MyAccount = (): JSX.Element => {
               <SelectWithLabel
                 name="companyWard"
                 ref={register({
-                  required: t('myAccount:company_Ward_required') + ''
+                  required: t('myAccount:company_ward_required') + ''
                 })}
                 containerClass="col-md-4"
                 required

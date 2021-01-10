@@ -10,16 +10,18 @@ import Loading from 'src/components/Layout/Loading';
 // import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 // import { CREATE_COUNSEL } from 'src/graphql/order/order.mutation';
 import {
-  GET_BEST_SELLING_PRODUCTS,
-  GetBestSellingProductsData,
-  GetBestSellingProductsVars
-} from 'src/graphql/product/getBestSellingProducts';
+  GET_QUICK_ORDER_PRODUCTS,
+  GetQuickOrderProductsData,
+  GetQuickOrderProductsVars
+} from 'src/graphql/product/getQuickOrderProducts';
 import useCart from 'src/hooks/useCart';
+import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
 
 // import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import QuickOrderItem from './QuickOrderItem';
 
 function QuickOrderPage(): JSX.Element {
+  const isLoggedIn = useIsLoggedIn();
   const { cart } = useCart();
 
   const { t } = useTranslation(['cart', 'common', 'quickOrder']);
@@ -33,10 +35,10 @@ function QuickOrderPage(): JSX.Element {
     }
   };
 
-  const { data: bestSellingData, loading: getBestSellingLoading } = useQuery<
-    GetBestSellingProductsData,
-    GetBestSellingProductsVars
-  >(GET_BEST_SELLING_PRODUCTS, paginationVars);
+  const { data: quickOrderData, loading: getQuickOrderLoading } = useQuery<
+    GetQuickOrderProductsData,
+    GetQuickOrderProductsVars
+  >(GET_QUICK_ORDER_PRODUCTS, paginationVars);
 
   return (
     <div className="container py-5">
@@ -49,12 +51,12 @@ function QuickOrderPage(): JSX.Element {
         <div className="row">
           <div className="col-12 col-md-9 col-lg-9">
             <div className="elevated cart__items mb-3">
-              {getBestSellingLoading ? (
+              {getQuickOrderLoading ? (
                 <div className="w-100 text-center">
                   <Loading />
                 </div>
               ) : (
-                bestSellingData?.getProductByConditions.Products.map((item, index) => (
+                quickOrderData?.getProductByConditions.Products.map((item, index) => (
                   <QuickOrderItem
                     key={index}
                     _id={item.id}
@@ -78,7 +80,7 @@ function QuickOrderPage(): JSX.Element {
             </div> */}
           </div>
           <div className="col-12 col-md-3 col-lg-3">
-            {cart && (
+            {isLoggedIn && cart && (
               <div className="cart__info">
                 <div className="elevated row no-gutters mb-3">
                   <div className="col-md-12 col-lg-4 cart__info-quantity">

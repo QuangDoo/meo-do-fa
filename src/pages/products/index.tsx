@@ -11,20 +11,20 @@ import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
 import Loading from 'src/components/Layout/Loading';
 import Nav from 'src/components/Layout/Nav';
-import SimpleBreadcrumbs from 'src/components/Modules/BreadCrum/BreadCrum';
+// import SimpleBreadcrumbs from 'src/components/Modules/BreadCrum/BreadCrum';
 import FilterTags from 'src/components/Modules/FilterTags';
 import Pagination from 'src/components/Modules/Pagination';
 import ProductCard from 'src/components/Modules/ProductCard';
 import ProductsDrawerFilter from 'src/components/Modules/ProductDrawerFilter/ProductsDrawerFilter';
 import ProductsSidebarFilter from 'src/components/Modules/ProductsSidebarFilter';
 import {
-  Category,
+  // Category,
   CategoryData,
   CategoryVar,
-  GET_ALL_CATEGORIES,
+  // GET_ALL_CATEGORIES,
   GET_CATEGORIES_LEVEL,
   GET_CATEGORY,
-  GetAllCategoriesData,
+  // GetAllCategoriesData,
   GetCategoriesLevelData
 } from 'src/graphql/category/category.query';
 import {
@@ -87,6 +87,7 @@ function Products(): JSX.Element {
       condition: {
         manufacturer_id: router.query.manufacturer as string,
         category_id: router.query.category as string,
+        name: search,
         order_type: (router.query.sort as string) || defaultSortType,
         min_price: Number(router.query.priceFrom) || 1,
         max_price: Number(router.query.priceTo) || 10000000

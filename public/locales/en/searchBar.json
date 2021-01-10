@@ -3,6 +3,7 @@
   "in": "in",
   "all_products": "All products",
   "no_product": "No products with keywords",
+  "no_category":"No category with keywords",
   "all_manufacturers": "All manufacturers",
   "no_manufacturer": "No manufacturers with keywords",
   "show": "Show",

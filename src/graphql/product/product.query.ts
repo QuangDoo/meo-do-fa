@@ -6,9 +6,9 @@ type Category = {
 };
 
 type Ingredient = {
-  id: number;
   name: string;
   amount: string;
+  ingredient_id: number;
 };
 
 type Manufacturer = {
@@ -90,9 +90,10 @@ export const GET_PRODUCT = gql`
         name
       }
       ingredients {
-        id
+        ingredient_id
         name
         amount
+        ingredient_id
       }
       manufacturer {
         id

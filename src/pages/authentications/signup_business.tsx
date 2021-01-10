@@ -328,4 +328,12 @@ function SignupBusiness(): JSX.Element {
   );
 }
 
+SignupBusiness.getInitialProps = (ctx) => {
+  ctx.end.writeHead(302, {
+    Location: '/'
+  });
+
+  ctx.res.end();
+};
+
 export default withApollo({ ssr: true })(SignupBusiness);

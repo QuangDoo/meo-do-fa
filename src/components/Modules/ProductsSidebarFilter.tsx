@@ -1,16 +1,23 @@
+import { useLazyQuery, useQuery } from '@apollo/client';
 import { IconButton } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import clsx from 'clsx';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import NumberFormat from 'react-number-format';
 import { Category } from 'src/graphql/category/category.query';
+import {
+  SEARCH_CATEGORY,
+  searchCategoriesData,
+  searchCategoriesVars
+} from 'src/graphql/category/searchCategory.query';
 import { Manufacturer } from 'src/graphql/manufacturers/manufacturers.query';
 
 import Dropdown from '../Form/Dropdown';
 import Select from '../Form/Select';
+import Loading from '../Layout/Loading';
 
 type Props = {
   categories: Category[];
@@ -29,7 +36,9 @@ const ProductsSidebarFilter = (props: Props) => {
   const [priceTo, setPriceTo] = useState('');
 
   const { categories, manufacturers } = props;
+
   const { t } = useTranslation(['productsSidebar, searchBar']);
+
   const router = useRouter();
 
   const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -44,6 +53,7 @@ const ProductsSidebarFilter = (props: Props) => {
       undefined,
       { shallow: true }
     );
+    props.onClose && props.onClose();
   };
 
   const handlePriceRangeFilter = (e) => {
@@ -57,6 +67,7 @@ const ProductsSidebarFilter = (props: Props) => {
         priceTo: priceTo
       }
     });
+    props.onClose && props.onClose();
   };
 
   const handleManufacturersSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -69,6 +80,13 @@ const ProductsSidebarFilter = (props: Props) => {
   const [valueCategoryInput, setValueCategoryInput] = useState('');
   const [valueManuInput, setValueManuInput] = useState('');
 
+  const { data: dataCategory, loading: loadingCategory } = useQuery<
+    searchCategoriesData,
+    searchCategoriesVars
+  >(SEARCH_CATEGORY, { variables: { keyword: valueCategoryInput } });
+
+  const dataCategorySearch = dataCategory?.searchCategories || [];
+
   const onValueCateChange = (e) => {
     e.preventDefault();
     setValueCategoryInput(e.target.value);
@@ -78,15 +96,6 @@ const ProductsSidebarFilter = (props: Props) => {
     e.preventDefault();
     setValueManuInput(e.target.value);
   };
-
-  const categoriesSearch = [...categories]
-    .slice()
-    .sort((a, b) => a.name.localeCompare(b.name))
-    .filter(({ name, id, categorySub }) => {
-      if (name.toLocaleLowerCase().includes(valueCategoryInput.toLocaleLowerCase())) {
-        return [name, id, categorySub];
-      }
-    });
 
   const manufacturersSearch = [...manufacturers]
     .slice()
@@ -111,9 +120,9 @@ const ProductsSidebarFilter = (props: Props) => {
         </div>
       </header>
 
-      <hr className="hr my-3 d-none d-sm-block" />
+      <hr className="hr my-3" />
 
-      <div className="d-none d-sm-block">
+      <div>
         <div className="products__filter-header mb-2">{t('productsSidebar:sort')}</div>
 
         <Select onChange={handleSortChange}>
@@ -192,7 +201,7 @@ const ProductsSidebarFilter = (props: Props) => {
           </Link>
         </div>
         {valueCategoryInput
-          ? categoriesSearch
+          ? dataCategorySearch
               .slice()
               .sort((a, b) => a.name.localeCompare(b.name))
               .map(({ name, id, categorySub }) => (
@@ -272,13 +281,20 @@ const ProductsSidebarFilter = (props: Props) => {
                   </Link>
                 </div>
               ))}
-        {valueCategoryInput && categoriesSearch.length === 0 && (
-          <>
-            <div className="search__result--empty">
-              {t('searchBar:no_product')} <b>{valueCategoryInput}</b>
-            </div>
-            <hr />
-          </>
+        {loadingCategory ? (
+          <div className="search__result--empty text-center">
+            <Loading />
+          </div>
+        ) : (
+          valueCategoryInput &&
+          dataCategorySearch.length === 0 && (
+            <>
+              <div className="search__result--empty">
+                {t('searchBar:no_category')} <b>{valueCategoryInput}</b>
+              </div>
+              <hr />
+            </>
+          )
         )}
       </Dropdown>
 
@@ -305,6 +321,17 @@ const ProductsSidebarFilter = (props: Props) => {
             />
           </div>
         </form>
+        <div className="mb-2">
+          <Link href="/manufacturers">
+            <a
+              className={clsx(
+                'products__filter-category',
+                !router.query.manufacturers && 'active'
+              )}>
+              {t('productsSidebar:all')}
+            </a>
+          </Link>
+        </div>
 
         {valueManuInput
           ? manufacturersSearch
@@ -342,7 +369,7 @@ const ProductsSidebarFilter = (props: Props) => {
         {valueManuInput && manufacturersSearch.length === 0 && (
           <>
             <div className="search__result--empty">
-              {t('searchBar:no_product')} <b>{valueManuInput}</b>
+              {t('searchBar:no_manufacturer')} <b>{valueManuInput}</b>
             </div>
             <hr />
           </>

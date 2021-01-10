@@ -20,7 +20,8 @@ export default function FAQ(props: Props): JSX.Element {
     { href: '/help/checkout', title: t('help:question_checkout') },
     { href: '/help/delivery', title: t('help:question_delivery') },
     { href: '/help/refund', title: t('help:question_refund') },
-    { href: '/help/order', title: t('help:question_order') }
+    { href: '/help/order', title: t('help:question_order') },
+    { href: '/help/bank_transfer_guide', title: t('help:question_bank_transfer_guide') }
   ];
 
   return (

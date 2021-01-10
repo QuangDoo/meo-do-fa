@@ -44,6 +44,7 @@ function QuantityInput(props: Props) {
         refetchCart();
       },
       onError: (err) => {
+        console.log('add to cart error:', err);
         toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
       }
     }

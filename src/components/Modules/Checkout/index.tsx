@@ -119,7 +119,7 @@ const CheckoutPage = () => {
       });
     },
     onError: (err) => {
-      const errorCode = err.graphQLErrors[0]?.extensions?.code;
+      const errorCode = err?.graphQLErrors[0]?.extensions?.code;
       toast.error(t(`errors:code_${errorCode}`));
 
       if (errorCode === 114) {

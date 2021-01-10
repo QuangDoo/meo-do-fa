@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client';
 import { Menu } from '@material-ui/core';
 import { useTranslation } from 'i18n';
-import cookies from 'js-cookie';
+import Cookies from 'js-cookie';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
@@ -15,8 +15,6 @@ import CategoryMenu from '../Modules/CategoryMenu';
 const Nav = () => {
   const isLoggedIn = useIsLoggedIn();
 
-  const router = useRouter();
-
   const { cart } = useCart();
 
   const totalQty = cart?.getCart.totalQty;
@@ -24,9 +22,8 @@ const Nav = () => {
   const { t } = useTranslation(['navbar', 'errors', 'common']);
 
   const logOut = () => {
-    localStorage.removeItem('token');
-    cookies.remove('token');
-    router.push('/');
+    Cookies.remove('token');
+    window.location.replace('/');
   };
 
   const [anchorEl, setAnchorEl] = useState(null);

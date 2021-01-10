@@ -45,7 +45,8 @@ module.exports = {
         aspects: ['invalidHref', 'preferButton']
       }
     ],
-    "no-irregular-whitespace": 0
+    "no-irregular-whitespace": 0,
+    "jsx-a11y/anchor-is-valid": 0
   },
   plugins: ['simple-import-sort']
 };

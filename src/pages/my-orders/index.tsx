@@ -1,4 +1,4 @@
-import { AppBar, Box, makeStyles, Tab, Tabs, Theme, Typography } from '@material-ui/core';
+import { AppBar, Box, makeStyles, Tab, Tabs, Typography } from '@material-ui/core';
 import Cookies from 'cookies';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
@@ -10,7 +10,6 @@ import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
 import Loading from 'src/components/Layout/Loading';
 import Nav from 'src/components/Layout/Nav';
-import Pagination from 'src/components/Modules/Pagination';
 import ProfileLayout from 'src/components/Modules/ProfileLayout';
 import {
   GET_ORDER_LIST,
@@ -27,8 +26,8 @@ const pageSize = 20;
 
 interface TabPanelProps {
   children?: React.ReactNode;
-  index: any;
-  value: any;
+  index;
+  value;
 }
 
 function TabPanel(props: TabPanelProps) {
@@ -50,14 +49,14 @@ function TabPanel(props: TabPanelProps) {
   );
 }
 
-function a11yProps(index: any) {
+function a11yProps(index) {
   return {
     id: `scrollable-auto-tab-${index}`,
     'aria-controls': `scrollable-auto-tabpanel-${index}`
   };
 }
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     flexGrow: 1,
     width: '100%'
@@ -68,7 +67,7 @@ type Props = {
   flag: OrderFlag;
 };
 
-const OrderItem = (props: any) => {
+const OrderItem = (props) => {
   const [open, setOpen] = useState(false);
 
   const { t } = useTranslation(['myOrders', 'errors']);
@@ -124,7 +123,7 @@ const OrderItem = (props: any) => {
         </div>
       </div>
 
-      {flag !== 25 && (
+      {![25, 80].includes(flag) && (
         <div className="my-orders__invoice">
           <button className="btn btn-outline-danger btn-sm" onClick={() => handleOpenClick(flag)}>
             {t('myOrders:cancel_order')}
@@ -226,7 +225,6 @@ const MyOrders = () => {
   };
 
   const orderList = data?.getOrderList || [];
-  const total = orderList.length;
   const classes = useStyles();
 
   return (

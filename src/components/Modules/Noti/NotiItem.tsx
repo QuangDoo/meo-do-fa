@@ -1,8 +1,9 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import clsx from 'clsx';
-import { useTranslation } from 'i18n';
+import { Trans, useTranslation } from 'i18n';
 import moment from 'moment';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { SEEN_NOTI } from 'src/graphql/notification/seenNoti.mutation';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
@@ -24,12 +25,22 @@ type Props = {
   type: string;
 };
 
+const pageSize = 10;
+
 const NotiItem = (props: Props): JSX.Element => {
   const [seenNotify] = useMutationAuth(SEEN_NOTI);
 
   const [dataContent, setDataContent] = useState('');
 
+  const router = useRouter();
+
+  const page = +router.query.page || 1;
+
   const { _id, content, create_date, description, type } = props;
+
+  const { refetchNoti } = useNoti({ page, pageSize });
+
+  const { t } = useTranslation('noti');
 
   useEffect(() => {
     content === '10' && setDataContent(`${t('noti:10', { description })}`);
@@ -38,11 +49,7 @@ const NotiItem = (props: Props): JSX.Element => {
     content === '30' && setDataContent(`${t('noti:30', { description })}`);
     content === '40' && setDataContent(`${t('noti:40', { description })}`);
     content === '80' && setDataContent(`${t('noti:80', { description })}`);
-  }, [content]);
-
-  const { refetchNoti } = useNoti();
-
-  const { t } = useTranslation();
+  }, [content, t]);
 
   const handleRead = () => {
     seenNotify({ variables: { _id } });
