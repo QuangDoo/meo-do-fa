@@ -12,15 +12,16 @@ type ContactAddress = {
   street: string;
 };
 
-type UpdateDeliveryUserInput = {
+type CreateDeliveryUserInput = {
   fullName: string;
   email: string;
   shipping_address: ContactAddress;
   phone: string;
+  id: number;
 };
 
 export type CreateDeliveryUserVars = {
-  inputs: UpdateDeliveryUserInput;
+  inputs: CreateDeliveryUserInput;
 };
 
 export type CreateDeliveryUserData = {
@@ -30,7 +31,7 @@ export type CreateDeliveryUserData = {
 };
 
 export const CREATE_DELIVERY_USER = gql`
-  mutation createDeliveryUser($inputs: UpdateDeliveryUserInput!) {
+  mutation createDeliveryUser($inputs: createDeliveryUserInput!) {
     createDeliveryUser(inputs: $inputs) {
       code
       status

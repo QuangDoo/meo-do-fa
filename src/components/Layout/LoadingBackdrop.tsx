@@ -5,9 +5,9 @@ type Props = {
   open: boolean;
 };
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   modal: {
-    color: '#fff',
+    color: theme.palette.white,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center'

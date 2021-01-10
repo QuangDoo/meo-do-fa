@@ -18,5 +18,7 @@
   "select_district_required": "Xin chọn quận/huyện",
   "select_ward_label": "Phường/Xã",
   "select_ward_required": "Xin chọn phường/xã",
-  "create_delivery_address_success": "Tạo địa chỉ mới thành công"
+  "create_delivery_address_success": "Tạo địa chỉ mới thành công",
+  "select_city_first": "Xin chọn tỉnh/thành phố trước",
+  "select_district_first": "Xin chọn quận/huyện trước"
 }

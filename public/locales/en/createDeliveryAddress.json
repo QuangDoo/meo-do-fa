@@ -18,5 +18,7 @@
   "select_district_required": "Please select a district",
   "select_ward_label": "Ward",
   "select_ward_required": "Please select a ward",
-  "create_delivery_address_success": "Created address successfully"
+  "create_delivery_address_success": "Created address successfully",
+  "select_city_first": "Please select a city first",
+  "select_district_first": "Please select a district first"
 }

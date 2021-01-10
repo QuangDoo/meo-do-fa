@@ -1,7 +1,7 @@
 import { useMutation } from '@apollo/client';
-import { Box, Button, Grid, TextField } from '@material-ui/core';
+import { Button, Grid, TextField } from '@material-ui/core';
 import { useTranslation } from 'i18n';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { emailRegex, noSpecialChars } from 'src/assets/regex/email';
@@ -14,6 +14,7 @@ import {
 import useAddress from 'src/hooks/useAddress';
 
 import MuiSelect from '../Form/MuiSelect';
+import MuiTooltip from '../Form/MuiTooltip';
 import LoadingBackdrop from '../Layout/LoadingBackdrop';
 import MuiDialog from '../Layout/Modal/MuiDialog';
 
@@ -36,12 +37,21 @@ type Props = {
 export default function CreateDeliveryAddressDialog(props: Props) {
   const { t } = useTranslation(['createDeliveryAddress']);
 
-  const { register, handleSubmit, watch, control, errors } = useForm();
+  const { register, handleSubmit, watch, control, errors, setValue } = useForm<FormInputs>({
+    defaultValues: {
+      city: '',
+      district: '',
+      ward: ''
+    }
+  });
+
+  const chosenCity = watch('city');
+  const chosenDistrict = watch('district');
 
   const { cities, districts, wards } = useAddress({
-    cityId: +watch('city')?.split('__')[1],
-    districtId: +watch('district')?.split('__')[1],
-    wardId: +watch('ward')?.split('__')[1]
+    cityId: +chosenCity.split('__')[1],
+    districtId: +chosenDistrict.split('__')[1],
+    wardId: +watch('ward').split('__')[1]
   });
 
   const [createDeliveryUser, { loading: creatingDeliveryUser }] = useMutation<
@@ -65,7 +75,6 @@ export default function CreateDeliveryAddressDialog(props: Props) {
         inputs: {
           fullName: data.fullName,
           email: data.email,
-          phone: data.phone,
           shipping_address: {
             street: data.street,
             city: {
@@ -80,7 +89,9 @@ export default function CreateDeliveryAddressDialog(props: Props) {
               id: +wardId,
               name: wardName
             }
-          }
+          },
+          phone: data.phone,
+          id: 1
         }
       }
     });
@@ -111,140 +122,165 @@ export default function CreateDeliveryAddressDialog(props: Props) {
       <LoadingBackdrop open={creatingDeliveryUser} />
 
       <form>
-        <Box marginBottom={3}>
-          <TextField
-            inputRef={register({
-              required: t('createDeliveryAddress:input_fullName_required') as string
-            })}
-            name="fullName"
-            required
-            label={t('createDeliveryAddress:input_fullName_label')}
-            fullWidth
-            variant="outlined"
-            error={errors.fullName}
-            helperText={errors.fullName?.message}
-          />
-        </Box>
+        <Grid container spacing={4}>
+          <Grid item xs={12}>
+            <TextField
+              inputRef={register({
+                required: t('createDeliveryAddress:input_fullName_required') as string
+              })}
+              name="fullName"
+              required
+              label={t('createDeliveryAddress:input_fullName_label')}
+              fullWidth
+              variant="outlined"
+              error={errors.fullName}
+              helperText={errors.fullName?.message}
+            />
+          </Grid>
 
-        <Box marginBottom={3}>
-          <Grid container spacing={3}>
-            <Grid item md={4} xs={12}>
-              <TextField
-                inputRef={register({
-                  required: t('createDeliveryAddress:input_phone_required') as string,
-                  pattern: {
-                    value: viPhoneNumberRegex,
-                    message: t('createDeliveryAddress:input_phone_invalid')
-                  }
-                })}
-                name="phone"
-                required
-                label={t('createDeliveryAddress:input_phone_label')}
-                fullWidth
-                variant="outlined"
-                error={errors.phone}
-                helperText={errors.phone?.message}
-              />
+          <Grid item xs={12}>
+            <Grid container spacing={4}>
+              <Grid item md={4} xs={12}>
+                <TextField
+                  inputRef={register({
+                    required: t('createDeliveryAddress:input_phone_required') as string,
+                    pattern: {
+                      value: viPhoneNumberRegex,
+                      message: t('createDeliveryAddress:input_phone_invalid')
+                    }
+                  })}
+                  name="phone"
+                  required
+                  label={t('createDeliveryAddress:input_phone_label')}
+                  fullWidth
+                  variant="outlined"
+                  error={errors.phone}
+                  helperText={errors.phone?.message}
+                />
+              </Grid>
+
+              <Grid item md={8} xs={12}>
+                <TextField
+                  inputRef={register({
+                    pattern: {
+                      value: emailRegex,
+                      message: t('createDeliveryAddress:input_email_invalid')
+                    },
+                    validate: {
+                      noSpecialChars: (value) =>
+                        noSpecialChars.test(value) ||
+                        t('createDeliveryAddress:input_email_noSpecialChars') + ''
+                    }
+                  })}
+                  name="email"
+                  label={t('createDeliveryAddress:input_email_label')}
+                  fullWidth
+                  variant="outlined"
+                  error={errors.email}
+                  helperText={errors.email?.message}
+                />
+              </Grid>
             </Grid>
+          </Grid>
 
-            <Grid item md={8} xs={12}>
-              <TextField
-                inputRef={register({
-                  pattern: {
-                    value: emailRegex,
-                    message: t('createDeliveryAddress:input_email_invalid')
-                  },
-                  validate: {
-                    noSpecialChars: (value) =>
-                      noSpecialChars.test(value) ||
-                      t('createDeliveryAddress:input_email_noSpecialChars') + ''
-                  }
-                })}
-                name="email"
-                label={t('createDeliveryAddress:input_email_label')}
-                fullWidth
-                variant="outlined"
-                error={errors.email}
-                helperText={errors.email?.message}
-              />
+          <Grid item xs={12}>
+            <TextField
+              inputRef={register({
+                required: t('createDeliveryAddress:input_street_required') + ''
+              })}
+              name="street"
+              label={t('createDeliveryAddress:input_street_label')}
+              fullWidth
+              variant="outlined"
+              required
+              error={!!errors.street}
+              helperText={errors?.street?.message}
+            />
+          </Grid>
+
+          <Grid item xs={12}>
+            <Grid container spacing={4}>
+              <Grid item xs={12} md={4}>
+                <MuiSelect
+                  control={control}
+                  rules={{
+                    required: t('createDeliveryAddress:select_city_required') as string
+                  }}
+                  required
+                  variant="outlined"
+                  name="city"
+                  label={t('createDeliveryAddress:select_city_label')}
+                  options={cities.map((city) => ({
+                    key: city.id,
+                    name: city.name,
+                    value: city.name + '__' + city.id
+                  }))}
+                  error={!!errors.city}
+                  helperText={errors.city?.message}
+                  onChange={() => {
+                    setValue('district', '');
+                    setValue('ward', '');
+                  }}
+                />
+              </Grid>
+
+              <Grid item xs={12} md={4}>
+                <MuiTooltip
+                  arrow
+                  title={chosenCity ? '' : t('createDeliveryAddress:select_city_first')}>
+                  <div>
+                    <MuiSelect
+                      control={control}
+                      rules={{
+                        required: t('createDeliveryAddress:select_district_required') as string
+                      }}
+                      required
+                      variant="outlined"
+                      name="district"
+                      label={t('createDeliveryAddress:select_district_label')}
+                      options={districts.map((district) => ({
+                        key: district.id,
+                        name: district.name,
+                        value: district.name + '__' + district.id
+                      }))}
+                      error={!!chosenCity && !!errors.district}
+                      helperText={chosenCity ? errors.district?.message : ''}
+                      disabled={!chosenCity}
+                      onChange={() => {
+                        setValue('ward', '');
+                      }}
+                    />
+                  </div>
+                </MuiTooltip>
+              </Grid>
+
+              <Grid item xs={12} md={4}>
+                <MuiTooltip
+                  arrow
+                  title={chosenDistrict ? '' : t('createDeliveryAddress:select_district_first')}>
+                  <div>
+                    <MuiSelect
+                      control={control}
+                      rules={{
+                        required: t('createDeliveryAddress:select_ward_required') as string
+                      }}
+                      required
+                      variant="outlined"
+                      name="ward"
+                      label={t('createDeliveryAddress:select_ward_label')}
+                      options={wards.map((ward) => ({
+                        key: ward.id,
+                        name: ward.name,
+                        value: ward.name + '__' + ward.id
+                      }))}
+                      error={!!chosenDistrict && !!errors.ward}
+                      helperText={chosenDistrict ? errors.ward?.message : ''}
+                      disabled={!chosenDistrict}
+                    />
+                  </div>
+                </MuiTooltip>
+              </Grid>
             </Grid>
-          </Grid>
-        </Box>
-
-        <Box marginBottom={3}>
-          <TextField
-            inputRef={register({
-              required: t('createDeliveryAddress:input_street_required') + ''
-            })}
-            name="street"
-            label={t('createDeliveryAddress:input_street_label')}
-            fullWidth
-            variant="outlined"
-            required
-            error={errors.street}
-            helperText={errors?.street?.message}
-          />
-        </Box>
-
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={4}>
-            <MuiSelect
-              control={control}
-              rules={{
-                required: t('createDeliveryAddress:select_city_required') as string
-              }}
-              required
-              variant="outlined"
-              name="city"
-              label={t('createDeliveryAddress:select_city_label')}
-              options={cities.map((city) => ({
-                key: city.id,
-                name: city.name,
-                value: city.name + '__' + city.id
-              }))}
-              error={errors.city}
-              helperText={errors.city?.message}
-            />
-          </Grid>
-
-          <Grid item xs={12} md={4}>
-            <MuiSelect
-              control={control}
-              rules={{
-                required: t('createDeliveryAddress:select_district_required') as string
-              }}
-              required
-              variant="outlined"
-              name="district"
-              label={t('createDeliveryAddress:select_district_label')}
-              options={districts.map((district) => ({
-                key: district.id,
-                name: district.name,
-                value: district.name + '__' + district.id
-              }))}
-              error={errors.district}
-              helperText={errors.district?.message}
-            />
-          </Grid>
-
-          <Grid item xs={12} md={4}>
-            <MuiSelect
-              control={control}
-              rules={{
-                required: t('createDeliveryAddress:select_ward_required') as string
-              }}
-              required
-              variant="outlined"
-              name="ward"
-              label={t('createDeliveryAddress:select_ward_label')}
-              options={wards.map((ward) => ({
-                key: ward.id,
-                name: ward.name,
-                value: ward.name + '__' + ward.id
-              }))}
-              error={errors.ward}
-              helperText={errors.ward?.message}
-            />
           </Grid>
         </Grid>
       </form>
