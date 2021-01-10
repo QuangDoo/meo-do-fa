@@ -17,7 +17,6 @@ type CreateDeliveryUserInput = {
   email: string;
   shipping_address: ContactAddress;
   phone: string;
-  id: number;
 };
 
 export type CreateDeliveryUserVars = {

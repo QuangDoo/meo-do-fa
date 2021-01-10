@@ -67,6 +67,7 @@ const PaymentOption = (props: Props) => {
   if (!paymentMethods.length) return null;
 
   const handleChange = (e) => {
+    console.log('changed payment option');
     applyPayment({
       variables: {
         orderNo: props.orderNo,
@@ -104,12 +105,12 @@ const PaymentOption = (props: Props) => {
               <DescriptionBox>
                 <div className="bank-info">
                   {['account_name', 'account_no', 'bank_name', 'note'].map((key) => (
-                    <>
+                    <React.Fragment key={key}>
                       <div className="text-muted text-right mr-2">
                         {t(`checkout:bank_info__${key}`)}
                       </div>
                       <div className="bank-info__content">{bankTransfer[key]}</div>
-                    </>
+                    </React.Fragment>
                   ))}
                 </div>
               </DescriptionBox>

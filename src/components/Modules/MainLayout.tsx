@@ -1,22 +1,28 @@
 import React, { ReactNode } from 'react';
+import { useCart } from 'src/contexts/Cart';
+import { useUser } from 'src/contexts/User';
 
 import Footer from '../Layout/Footer';
 import Header from '../Layout/Header';
+import LoadingBackdrop from '../Layout/LoadingBackdrop';
 import Nav from '../Layout/Nav';
-import GlobalLoadingBackdrop from './GlobalLoadingBackdrop';
 
 type Props = {
   children: ReactNode;
 };
 
 export default function MainLayout(props: Props) {
+  const { loading: gettingCart } = useCart();
+
+  const { loading: gettingUser } = useUser();
+
   return (
     <>
       <Header />
 
       <Nav />
 
-      <GlobalLoadingBackdrop />
+      <LoadingBackdrop open={gettingCart || gettingUser} />
 
       {props.children}
 

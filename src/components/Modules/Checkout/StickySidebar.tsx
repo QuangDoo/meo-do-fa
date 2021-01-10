@@ -53,13 +53,13 @@ const StickySidebar = (props: Props) => {
           </small>
         </h4>
 
-        <div>
-          <Link href="/cart">
+        <Link href="/cart">
+          <div>
             <Button size="sm" variant="primary">
               {t('checkout:confirm_checkout_edit')}
             </Button>
-          </Link>
-        </div>
+          </div>
+        </Link>
       </div>
 
       <div className="elevated checkout__info row no-gutters mb-3">

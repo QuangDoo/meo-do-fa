@@ -1,7 +1,6 @@
-import { useMutation } from '@apollo/client';
 import { Button, Grid, TextField } from '@material-ui/core';
 import { useTranslation } from 'i18n';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { emailRegex, noSpecialChars } from 'src/assets/regex/email';
@@ -12,6 +11,7 @@ import {
   CreateDeliveryUserVars
 } from 'src/graphql/user/createDeliveryUser';
 import useAddress from 'src/hooks/useAddress';
+import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 
 import MuiSelect from '../Form/MuiSelect';
 import MuiTooltip from '../Form/MuiTooltip';
@@ -46,6 +46,7 @@ export default function CreateDeliveryAddressDialog(props: Props) {
   });
 
   const chosenCity = watch('city');
+
   const chosenDistrict = watch('district');
 
   const { cities, districts, wards } = useAddress({
@@ -54,13 +55,16 @@ export default function CreateDeliveryAddressDialog(props: Props) {
     wardId: +watch('ward').split('__')[1]
   });
 
-  const [createDeliveryUser, { loading: creatingDeliveryUser }] = useMutation<
+  const [createDeliveryUser, { loading: creatingDeliveryUser }] = useMutationAuth<
     CreateDeliveryUserData,
     CreateDeliveryUserVars
   >(CREATE_DELIVERY_USER, {
     onCompleted: () => {
       toast.success(t('createDeliveryAddress:create_delivery_address_success'));
       props.onCompleted?.();
+    },
+    onError: (err) => {
+      toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
     }
   });
 
@@ -90,8 +94,7 @@ export default function CreateDeliveryAddressDialog(props: Props) {
               name: wardName
             }
           },
-          phone: data.phone,
-          id: 1
+          phone: data.phone
         }
       }
     });
@@ -133,7 +136,7 @@ export default function CreateDeliveryAddressDialog(props: Props) {
               label={t('createDeliveryAddress:input_fullName_label')}
               fullWidth
               variant="outlined"
-              error={errors.fullName}
+              error={!!errors.fullName}
               helperText={errors.fullName?.message}
             />
           </Grid>

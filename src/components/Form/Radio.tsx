@@ -17,9 +17,9 @@ type Props = {
 const RadioInput = (props: Props, ref) => {
   const [show, setShow] = useState(false);
 
-  const handleChange = () => {
+  const handleChange = (e) => {
     setShow(!show);
-    props.onChange;
+    props.onChange?.(e);
   };
 
   return (

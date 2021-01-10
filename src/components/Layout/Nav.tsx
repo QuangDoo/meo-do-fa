@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client';
-import { Menu } from '@material-ui/core';
+import { Menu, MenuItem } from '@material-ui/core';
 import { useTranslation } from 'i18n';
 import cookies from 'js-cookie';
 import Link from 'next/link';
@@ -177,12 +177,14 @@ const Nav = () => {
 
                     <hr className="my-2" /> */}
 
-                    <Link href="/my-account">
-                      <a className="dropdown__item dropdown__item-link">
-                        <i className="far fa-user-circle dropdown__item-icon" />
-                        {t('navbar:account_info')}
-                      </a>
-                    </Link>
+                    <div>
+                      <Link href="/my-account">
+                        <a className="dropdown__item dropdown__item-link">
+                          <i className="far fa-user-circle dropdown__item-icon" />
+                          {t('navbar:account_info')}
+                        </a>
+                      </Link>
+                    </div>
 
                     <div className="d-block d-sm-none">
                       <Link href="/change-password">
@@ -193,12 +195,14 @@ const Nav = () => {
                       </Link>
                     </div>
 
-                    <Link href="/my-orders">
-                      <a className="dropdown__item dropdown__item-link">
-                        <i className="icomoon icon-assignment dropdown__item-icon" />
-                        {t('navbar:my_order')}
-                      </a>
-                    </Link>
+                    <div>
+                      <Link href="/my-orders">
+                        <a className="dropdown__item dropdown__item-link">
+                          <i className="icomoon icon-assignment dropdown__item-icon" />
+                          {t('navbar:my_order')}
+                        </a>
+                      </Link>
+                    </div>
 
                     {/* <Link href="/users/referrals">
                       <a className="dropdown__item dropdown__item-link">
@@ -207,12 +211,14 @@ const Nav = () => {
                       </a>
                     </Link> */}
 
-                    <Link href="/my-promo-codes">
-                      <a className="dropdown__item dropdown__item-link">
-                        <i className="fas fa-tags dropdown__item-icon" />
-                        {t('navbar:my_promo_code')}
-                      </a>
-                    </Link>
+                    <div>
+                      <Link href="/my-promo-codes">
+                        <a className="dropdown__item dropdown__item-link">
+                          <i className="fas fa-tags dropdown__item-icon" />
+                          {t('navbar:my_promo_code')}
+                        </a>
+                      </Link>
+                    </div>
 
                     {/* <Link href="/users/loyalty_points">
                       <a className="dropdown__item dropdown__item-link">

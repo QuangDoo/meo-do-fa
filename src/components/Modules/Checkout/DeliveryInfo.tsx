@@ -2,7 +2,6 @@ import { Button } from '@material-ui/core';
 import { useTranslation } from 'i18n';
 import React, { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { useUser } from 'src/contexts/User';
 import { DeliveryInfo as DeliveryInfoType } from 'src/graphql/user/getAddressInfoUser';
 
 import CreateDeliveryAddressDialog from '../CreateDeliveryAddressDialog';
@@ -15,9 +14,7 @@ type Props = {
 const DeliveryInfo = (props: Props) => {
   const { register } = useFormContext();
 
-  const { t } = useTranslation('checkout');
-
-  const { data: user } = useUser();
+  const { t } = useTranslation(['checkout']);
 
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
   const openCreateDialog = () => setCreateDialogOpen(true);
@@ -41,7 +38,11 @@ const DeliveryInfo = (props: Props) => {
         onCompleted={handleCreateDeliveryAddressCompleted}
       />
 
-      <ChooseDeliveryAddressDialog open={chooseDialogOpen} onClose={closeChooseDialog} />
+      <ChooseDeliveryAddressDialog
+        open={chooseDialogOpen}
+        onClose={closeChooseDialog}
+        deliveryAddresses={props.deliveryAddresses}
+      />
 
       <input hidden type="text" ref={register} name="partnerId" />
 
