@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import { useTranslation } from 'i18n';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
@@ -11,6 +11,7 @@ import { useUser } from 'src/contexts/User';
 import { CREATE_ORDER, CreateOrderData, CreateOrderVars } from 'src/graphql/order/createOrder';
 import { GET_COUNSEL, GetCounselData, OutputCounsel } from 'src/graphql/order/getCounsel';
 import { GET_ADDRESS_INFO_USER, GetAddressInfoData } from 'src/graphql/user/getAddressInfoUser';
+import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import swal from 'sweetalert';
 
 import Agreement from './Agreement';
@@ -53,11 +54,7 @@ type FormInputs = {
   id: string;
 };
 
-type Props = {
-  token?: string;
-};
-
-const CheckoutPage = (props: Props) => {
+const CheckoutPage = () => {
   const { t } = useTranslation(['checkout', 'errors']);
 
   const token = useToken();
@@ -121,12 +118,12 @@ const CheckoutPage = (props: Props) => {
 
   const router = useRouter();
 
-  const [createOrder, { loading: creatingOrder }] = useMutation<CreateOrderData, CreateOrderVars>(
-    CREATE_ORDER,
-    {
-      onCompleted: (data) => {
-        refetchCart();
-
+  const [createOrder, { loading: creatingOrder }] = useMutationAuth<
+    CreateOrderData,
+    CreateOrderVars
+  >(CREATE_ORDER, {
+    onCompleted: (data) => {
+      refetchCart().then(() => {
         swal({
           title: t('checkout:order_success_message', {
             orderNo: data.createOrder.orderNo
@@ -135,22 +132,18 @@ const CheckoutPage = (props: Props) => {
         }).then(() => {
           router.push('/');
         });
-      },
-      onError: (err) => {
-        const errorCode = err.graphQLErrors[0]?.extensions?.code;
-        toast.error(t(`errors:code_${errorCode}`));
+      });
+    },
+    onError: (err) => {
+      const errorCode = err.graphQLErrors[0]?.extensions?.code;
 
-        if (errorCode === 114) {
-          router.push('/cart');
-        }
-      },
-      context: {
-        headers: {
-          authorization: props.token
-        }
+      toast.error(t(`errors:code_${errorCode}`));
+
+      if (errorCode === 114) {
+        router.push('/cart');
       }
     }
-  );
+  });
 
   const onSubmit: SubmitHandler<FormInputs> = (data) => {
     createOrder({

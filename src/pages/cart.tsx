@@ -1,11 +1,11 @@
 import React from 'react';
 import Head from 'src/components/Layout/Head';
 import CartPage from 'src/components/Modules/Cart';
-import MainLayout from 'src/components/Modules/MainLayout';
+import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import withToken from 'src/utils/withToken';
 
 Cart.getInitialProps = async () => ({
-  namespacesRequired: ['cart', 'common', 'errors']
+  namespacesRequired: [...mainLayoutNamespacesRequired]
 });
 
 function Cart() {
