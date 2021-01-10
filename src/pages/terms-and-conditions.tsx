@@ -2,17 +2,13 @@ import { useTranslation } from 'i18n';
 import React from 'react';
 import Head from 'src/components/Layout/Head';
 import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
-import getToken from 'src/utils/getToken';
-import withApollo from 'src/utils/withApollo';
 import withToken from 'src/utils/withToken';
 
 TermsAndConditions.getInitialProps = async () => ({
   namespacesRequired: [...mainLayoutNamespacesRequired, 'termsAndConditions']
 });
 
-const WithToken = withToken(TermsAndConditions);
-
-function TermsAndConditions(props) {
+function TermsAndConditions() {
   const { t } = useTranslation(['common', 'termsAndConditions']);
 
   return (
@@ -32,4 +28,4 @@ function TermsAndConditions(props) {
   );
 }
 
-export default withApollo({ ssr: true })(WithToken);
+export default withToken({ ssr: true })(TermsAndConditions);

@@ -11,17 +11,13 @@ import {
   GET_ALL_INGREDIENTS,
   GetAllIngredientsData
 } from 'src/graphql/ingredient/ingredient.query';
-import getToken from 'src/utils/getToken';
-import withApollo from 'src/utils/withApollo';
 import withToken from 'src/utils/withToken';
 
 Ingredients.getInitialProps = async () => ({
   namespacesRequired: [...mainLayoutNamespacesRequired]
 });
 
-const WithToken = withToken(Ingredients);
-
-function Ingredients(props) {
+function Ingredients() {
   const { t } = useTranslation('errors');
 
   const { data, loading, error } = useQuery<GetAllIngredientsData, undefined>(GET_ALL_INGREDIENTS, {
@@ -57,4 +53,4 @@ function Ingredients(props) {
   );
 }
 
-export default withApollo({ ssr: true })(WithToken);
+export default withToken({ ssr: true })(Ingredients);

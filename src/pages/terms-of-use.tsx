@@ -1,17 +1,13 @@
 import React from 'react';
 import Head from 'src/components/Layout/Head';
 import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
-import getToken from 'src/utils/getToken';
-import withApollo from 'src/utils/withApollo';
 import withToken from 'src/utils/withToken';
 
 TermsOfUse.getInitialProps = async () => ({
   namespacesRequired: [...mainLayoutNamespacesRequired, 'productCard', 'productBadge']
 });
 
-const WithToken = withToken(TermsOfUse);
-
-function TermsOfUse(props) {
+function TermsOfUse() {
   return (
     <MainLayout>
       <Head>
@@ -149,4 +145,4 @@ function TermsOfUse(props) {
   );
 }
 
-export default withApollo({ ssr: true })(WithToken);
+export default withToken({ ssr: true })(TermsOfUse);

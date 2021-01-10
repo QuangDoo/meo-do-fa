@@ -1,8 +1,6 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
-import getToken from 'src/utils/getToken';
-import withApollo from 'src/utils/withApollo';
 
 const newsdata = [
   {
@@ -94,9 +92,7 @@ NewsPage.getInitialProps = async () => ({
   namespacesRequired: [...mainLayoutNamespacesRequired]
 });
 
-const WithToken = withToken(NewsPage);
-
-function NewsPage(props) {
+function NewsPage() {
   const router = useRouter();
 
   useEffect(() => {
@@ -118,4 +114,4 @@ function NewsPage(props) {
   // );
 }
 
-export default withApollo({ ssr: true })(WithToken);
+export default withToken({ ssr: true })(NewsPage);

@@ -1,5 +1,7 @@
 import { useTranslation } from 'i18n';
 import React from 'react';
+import { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
+import withToken from 'src/utils/withToken';
 
 import Footer from '../../components/Layout/Footer';
 import Head from '../../components/Layout/Head';
@@ -7,7 +9,6 @@ import Header from '../../components/Layout/Header';
 import Nav from '../../components/Layout/Nav';
 import FAQ from '../../components/Modules/FAQ/index';
 import Questions from '../../components/Modules/FAQ/Questions';
-import withApollo from '../../utils/withApollo';
 
 const Help = () => {
   // const questions = [
@@ -48,8 +49,8 @@ const Help = () => {
   );
 };
 
-Help.getInitialProps = async (ctx) => ({
-  namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge']
+Help.getInitialProps = async () => ({
+  namespacesRequired: [...mainLayoutNamespacesRequired]
 });
 
-export default withApollo({ ssr: false })(Help);
+export default withToken({ ssr: true })(Help);

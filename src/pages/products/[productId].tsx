@@ -12,14 +12,13 @@ import ProductDetailInfor from 'src/components/Modules/ProductDetail/ProductDeta
 import ProducerInformation from 'src/components/Modules/ProductDetail/ProductInformation/ProducerInformation';
 import ProductSidebar from 'src/components/Modules/ProductDetail/ProductInformation/ProductSidebar';
 import { GET_PRODUCT } from 'src/graphql/product/product.query';
-import getToken from 'src/utils/getToken';
-import withApollo from 'src/utils/withApollo';
+import withToken from 'src/utils/withToken';
 
-ProductDetail.getInitialProps = async (ctx) => ({
+ProductDetail.getInitialProps = async () => ({
   namespacesRequired: ['common', 'errors', 'productDetail']
 });
 
-function ProductDetail(props) {
+function ProductDetail() {
   const router = useRouter();
 
   const { t } = useTranslation(['productDetail']);
@@ -95,4 +94,4 @@ function ProductDetail(props) {
   );
 }
 
-export default withApollo({ ssr: true })(WithToken);
+export default withToken({ ssr: true })(ProductDetail);

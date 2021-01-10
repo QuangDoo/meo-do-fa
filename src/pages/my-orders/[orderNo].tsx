@@ -37,9 +37,7 @@ import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules
 import ProfileLayout from 'src/components/Modules/ProfileLayout';
 import { GET_ORDER, GetOrderDetailData, GetOrderDetailVars } from 'src/graphql/order/getOrder';
 import { useQueryAuth } from 'src/hooks/useApolloHookAuth';
-import getToken from 'src/utils/getToken';
-import protectRoute from 'src/utils/protectRoute';
-import withApollo from 'src/utils/withApollo';
+import withToken from 'src/utils/withToken';
 
 import ConfirmCancelOrder from '../../components/Modules/My-orders/ConfirmCancelOrder';
 
@@ -184,14 +182,9 @@ const TextWithLabel = (props) => {
   );
 };
 
-OrderDetails.getInitialProps = async (ctx) => {
-  protectRoute(ctx);
-
-  return {
-    namespacesRequired: [...mainLayoutNamespacesRequired, 'myOrders'],
-    token: getToken(ctx)
-  };
-};
+OrderDetails.getinitialProps = async () => ({
+  namespacesRequired: [...mainLayoutNamespacesRequired, 'myOrders']
+});
 
 function OrderDetails(props) {
   const { t } = useTranslation(['myOrders', 'common']);
@@ -450,4 +443,4 @@ function OrderDetails(props) {
   );
 }
 
-export default withApollo({ ssr: true })(WithToken);
+export default withToken({ ssr: true, isProtected: true })(OrderDetails);

@@ -15,9 +15,7 @@ import {
   OrderFlag
 } from 'src/graphql/my-orders/getOrderList';
 import { useQueryAuth } from 'src/hooks/useApolloHookAuth';
-import getToken from 'src/utils/getToken';
-import protectRoute from 'src/utils/protectRoute';
-import withApollo from 'src/utils/withApollo';
+import withToken from 'src/utils/withToken';
 
 import ConfirmCancelOrder from '../../components/Modules/My-orders/ConfirmCancelOrder';
 
@@ -197,16 +195,11 @@ const OrderList = (props: Props) => {
   );
 };
 
-MyOrders.getInitialProps = async (ctx) => {
-  protectRoute(ctx);
+MyOrders.getinitialProps = async () => ({
+  namespacesRequired: [...mainLayoutNamespacesRequired, 'myOrders']
+});
 
-  return {
-    namespacesRequired: [...mainLayoutNamespacesRequired, 'myOrders'],
-    token: getToken(ctx)
-  };
-};
-
-function MyOrders(props) {
+function MyOrders() {
   const [value, setValue] = React.useState(0);
   const { t } = useTranslation(['myOrders', 'errors']);
   const router = useRouter();
@@ -318,4 +311,4 @@ function MyOrders(props) {
   );
 }
 
-export default withApollo({ ssr: true })(WithToken);
+export default withToken({ ssr: true, isProtected: true })(MyOrders);

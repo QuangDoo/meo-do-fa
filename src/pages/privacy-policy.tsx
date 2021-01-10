@@ -2,17 +2,13 @@ import { useTranslation } from 'i18n';
 import React from 'react';
 import Head from 'src/components/Layout/Head';
 import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
-import getToken from 'src/utils/getToken';
-import withApollo from 'src/utils/withApollo';
 import withToken from 'src/utils/withToken';
 
 PrivacyPolicy.getInitialProps = async () => ({
   namespacesRequired: [...mainLayoutNamespacesRequired, 'privacyPolicy']
 });
 
-const WithToken = withToken(PrivacyPolicy);
-
-function PrivacyPolicy(props) {
+function PrivacyPolicy() {
   const { t } = useTranslation(['common', 'privacyPolicy']);
 
   return (
@@ -139,4 +135,4 @@ function PrivacyPolicy(props) {
   );
 }
 
-export default withApollo({ ssr: true })(WithToken);
+export default withToken({ ssr: true })(PrivacyPolicy);

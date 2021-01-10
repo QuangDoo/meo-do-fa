@@ -19,8 +19,6 @@ import {
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import withToken from 'src/utils/withToken';
 
-import withApollo from '../../utils/withApollo';
-
 type Inputs = {
   phone: string;
   oldPassword: string;
@@ -145,6 +143,4 @@ function ChangePassWord() {
   );
 }
 
-const WithToken = withToken(ChangePassWord, { protected: true });
-
-export default withApollo({ ssr: true })(WithToken);
+export default withToken({ ssr: true, isProtected: true })(ChangePassWord);

@@ -15,7 +15,6 @@ import {
   GetDealsOfTheDayVars
 } from 'src/graphql/product/getDealsOfTheDay';
 import { GET_PRODUCTS, GetProductsData, GetProductsVars } from 'src/graphql/product/getProducts';
-import withApollo from 'src/utils/withApollo';
 import withToken from 'src/utils/withToken';
 
 const pageSize = 20;
@@ -194,6 +193,4 @@ function DealOfTheDay() {
   );
 }
 
-const WithToken = withToken(DealOfTheDay);
-
-export default withApollo({ ssr: true })(WithToken);
+export default withToken({ ssr: true })(DealOfTheDay);

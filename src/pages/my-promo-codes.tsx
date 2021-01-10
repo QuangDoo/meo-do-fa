@@ -19,9 +19,7 @@ import {
   GetCouponsByUserVars
 } from 'src/graphql/user/getCouponsByUser';
 import { useQueryAuth } from 'src/hooks/useApolloHookAuth';
-import getToken from 'src/utils/getToken';
-import protectRoute from 'src/utils/protectRoute';
-import withApollo from 'src/utils/withApollo';
+import withToken from 'src/utils/withToken';
 
 const pageSize = 10;
 
@@ -33,16 +31,11 @@ const TableHeader = ({ children, ...props }) => {
   );
 };
 
-MyPromoCodes.getInitialProps = async (ctx) => {
-  protectRoute(ctx);
+MyPromoCodes.getinitialProps = async () => ({
+  namespacesRequired: [...mainLayoutNamespacesRequired, 'myPromoCodes']
+});
 
-  return {
-    namespacesRequired: [...mainLayoutNamespacesRequired, 'myPromoCodes'],
-    token: getToken(ctx)
-  };
-};
-
-function MyPromoCodes(props) {
+function MyPromoCodes() {
   const { t } = useTranslation('myPromoCodes');
 
   const router = useRouter();
@@ -131,4 +124,4 @@ function MyPromoCodes(props) {
   );
 }
 
-export default withApollo({ ssr: true })(WithToken);
+export default withToken({ ssr: true, isProtected: true })(MyPromoCodes);

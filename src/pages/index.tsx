@@ -23,8 +23,7 @@ import {
   GetPromotionProductsData,
   GetPromotionProductsVars
 } from 'src/graphql/product/getPromotionProducts';
-import getToken from 'src/utils/getToken';
-import withApollo from 'src/utils/withApollo';
+import withToken from 'src/utils/withToken';
 
 const paginationVars = {
   variables: {
@@ -33,15 +32,11 @@ const paginationVars = {
   }
 };
 
-import withToken from 'src/utils/withToken';
-
 Home.getInitialProps = async () => ({
   namespacesRequired: [...mainLayoutNamespacesRequired, 'productCard', 'productBadge']
 });
 
-const WithToken = withToken(Home);
-
-function Home(props) {
+function Home() {
   const { data: dealsOfTheDayData } = useQuery<GetDealsOfTheDayData, GetDealsOfTheDayVars>(
     GET_DEALS_OF_THE_DAY,
     paginationVars
@@ -78,4 +73,4 @@ function Home(props) {
   );
 }
 
-export default withApollo({ ssr: true })(WithToken);
+export default withToken({ ssr: true })(Home);

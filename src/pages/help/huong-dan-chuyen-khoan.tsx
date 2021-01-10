@@ -1,5 +1,6 @@
 import React from 'react';
-import withApollo from 'src/utils/withApollo';
+import { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
+import withToken from 'src/utils/withToken';
 
 import Footer from '../../components/Layout/Footer';
 import Head from '../../components/Layout/Head';
@@ -57,8 +58,8 @@ const HelpDetail = () => {
   );
 };
 
-HelpDetail.getInitialProps = async (ctx) => ({
-  namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge']
+HelpDetail.getInitialProps = async () => ({
+  namespacesRequired: [...mainLayoutNamespacesRequired]
 });
 
-export default withApollo({ ssr: false })(HelpDetail);
+export default withToken({ ssr: true })(HelpDetail);

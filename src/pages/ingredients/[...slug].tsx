@@ -1,12 +1,9 @@
 import { useQuery } from '@apollo/client';
-import { useTranslation, withTranslation } from 'i18n';
+import { useTranslation } from 'i18n';
 import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { toast } from 'react-toastify';
-import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
-import Header from 'src/components/Layout/Header';
-import Nav from 'src/components/Layout/Nav';
 import { ProductsContainer } from 'src/components/Modules/Home/ProductsContainer';
 import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import { ProductsCarousel } from 'src/components/Modules/ProductsCarousel';
@@ -21,17 +18,13 @@ import {
   GetProductsByIngredientData,
   GetProductsByIngredientVars
 } from 'src/graphql/product/getProductsByIngredient.query';
-import getToken from 'src/utils/getToken';
-import withApollo from 'src/utils/withApollo';
 import withToken from 'src/utils/withToken';
 
 IngredientDetails.getInitialProps = async () => ({
   namespacesRequired: [...mainLayoutNamespacesRequired, 'ingredientDetails']
 });
 
-const WithToken = withToken(IngredientDetails);
-
-function IngredientDetails(props) {
+function IngredientDetails() {
   const router = useRouter();
   const { t } = useTranslation(['ingredientDetails', 'errors']);
   const ingredientId = router.query.slug[0];
@@ -102,4 +95,4 @@ function IngredientDetails(props) {
   );
 }
 
-export default withApollo({ ssr: true })(WithToken);
+export default withToken({ ssr: true })(IngredientDetails);

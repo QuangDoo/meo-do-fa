@@ -8,8 +8,6 @@ import Pagination from 'src/components/Modules/Pagination';
 import { SEEN_ALL_NOTI } from 'src/graphql/notification/seenNoti.mutation';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import useNoti from 'src/hooks/useNoti';
-import getToken from 'src/utils/getToken';
-import withApollo from 'src/utils/withApollo';
 
 import Head from '../../components/Layout/Head';
 import NotiItem from '../../components/Modules/Noti/NotiItem';
@@ -22,9 +20,7 @@ Notification.getInitialProps = async () => ({
   namespacesRequired: [...mainLayoutNamespacesRequired]
 });
 
-const WithToken = withToken(Notification);
-
-function Notification(props) {
+function Notification() {
   const router = useRouter();
 
   const page = +router.query.page || 1;
@@ -100,4 +96,4 @@ function Notification(props) {
     </MainLayout>
   );
 }
-export default withApollo({ ssr: true })(WithToken);
+export default withToken({ ssr: true, isProtected: true })(Notification);

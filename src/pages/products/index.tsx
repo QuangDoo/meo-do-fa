@@ -34,8 +34,6 @@ import {
   GetProductsVars,
   ProductTag
 } from 'src/graphql/product/getProducts';
-import getToken from 'src/utils/getToken';
-import withApollo from 'src/utils/withApollo';
 
 const PAGE_SIZE = 20;
 
@@ -47,9 +45,7 @@ Products.getInitialProps = async () => ({
   namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge', 'products']
 });
 
-const WithToken = withToken(Products);
-
-function Products(props) {
+function Products() {
   const { t } = useTranslation(['products']);
 
   const router = useRouter();
@@ -210,4 +206,4 @@ function Products(props) {
   );
 }
 
-export default withApollo({ ssr: true })(WithToken);
+export default withToken({ ssr: true })(Products);

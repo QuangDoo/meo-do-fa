@@ -25,6 +25,4 @@ function MyAccount() {
   );
 }
 
-const WithToken = withToken(MyAccount, { protected: true });
-
-export default withApollo({ ssr: true })(WithToken);
+export default withToken({ ssr: true, isProtected: true })(MyAccount);

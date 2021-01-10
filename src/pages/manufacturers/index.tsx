@@ -9,17 +9,13 @@ import {
   GET_ALL_MANUFACTURERS,
   GetAllManufacturersData
 } from 'src/graphql/manufacturers/manufacturers.query';
-import getToken from 'src/utils/getToken';
-import withApollo from 'src/utils/withApollo';
 import withToken from 'src/utils/withToken';
 
 Manufacturers.getInitialProps = async () => ({
   namespacesRequired: [...mainLayoutNamespacesRequired, 'manufacturers']
 });
 
-const WithToken = withToken(Manufacturers);
-
-function Manufacturers(props) {
+function Manufacturers() {
   const { t } = useTranslation(['manufacturers', 'errors']);
 
   const { data } = useQuery<GetAllManufacturersData, undefined>(GET_ALL_MANUFACTURERS, {
@@ -42,4 +38,4 @@ function Manufacturers(props) {
   );
 }
 
-export default withApollo({ ssr: true })(WithToken);
+export default withToken({ ssr: true })(Manufacturers);

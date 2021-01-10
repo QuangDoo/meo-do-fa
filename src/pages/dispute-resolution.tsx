@@ -2,17 +2,13 @@ import { useTranslation } from 'i18n';
 import React from 'react';
 import Head from 'src/components/Layout/Head';
 import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
-import getToken from 'src/utils/getToken';
-import withApollo from 'src/utils/withApollo';
 import withToken from 'src/utils/withToken';
 
 DisputeResolution.getInitialProps = async () => ({
   namespacesRequired: [...mainLayoutNamespacesRequired]
 });
 
-const WithToken = withToken(DisputeResolution);
-
-function DisputeResolution(props) {
+function DisputeResolution() {
   const { t } = useTranslation(['common', 'disputeResolution']);
 
   return (
@@ -64,4 +60,4 @@ function DisputeResolution(props) {
   );
 }
 
-export default withApollo({ ssr: true })(WithToken);
+export default withToken({ ssr: true })(DisputeResolution);

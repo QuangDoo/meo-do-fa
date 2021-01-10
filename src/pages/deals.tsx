@@ -8,7 +8,6 @@ import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules
 import Pagination from 'src/components/Modules/Pagination';
 import ProductCard from 'src/components/Modules/ProductCard';
 import { GET_PRODUCTS, GetProductsData, GetProductsVars } from 'src/graphql/product/getProducts';
-import withApollo from 'src/utils/withApollo';
 
 const pageSize = 20;
 
@@ -17,8 +16,6 @@ import withToken from 'src/utils/withToken';
 Deal.getInitialProps = async () => ({
   namespacesRequired: [...mainLayoutNamespacesRequired]
 });
-
-const WithToken = withToken(Deal);
 
 function Deal() {
   const router = useRouter();
@@ -106,4 +103,4 @@ function Deal() {
   );
 }
 
-export default withApollo({ ssr: true })(WithToken);
+export default withToken({ ssr: true })(Deal);

@@ -1,14 +1,9 @@
 import { useTranslation } from 'i18n';
 import React from 'react';
 import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
-import withApollo from 'src/utils/withApollo';
 import withToken from 'src/utils/withToken';
 
 import Head from '../components/Layout/Head';
-
-AboutUs.getInitialProps = async () => ({
-  namespacesRequired: [...mainLayoutNamespacesRequired]
-});
 
 function AboutUs() {
   const { t } = useTranslation(['common', 'aboutUs']);
@@ -70,6 +65,8 @@ function AboutUs() {
   );
 }
 
-const WithToken = withToken(AboutUs);
+AboutUs.getInitialProps = async () => ({
+  namespacesRequired: [...mainLayoutNamespacesRequired]
+});
 
-export default withApollo({ ssr: false })(WithToken);
+export default withToken({ ssr: true })(AboutUs);

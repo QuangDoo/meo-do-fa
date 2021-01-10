@@ -5,13 +5,15 @@ import { useForm } from 'react-hook-form';
 import SelectWithLabel from 'src/components/Form/SelectWithLabel';
 import Head from 'src/components/Layout/Head';
 import PageLayout from 'src/components/Layout/PageLayout';
+import { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import { City } from 'src/graphql/address/getCities';
 import { GET_DISTRICTS } from 'src/graphql/address/getDistricts';
 import { GET_WARD_DETAILS } from 'src/graphql/address/getWardDetails';
 import { GET_WARDS } from 'src/graphql/address/getWards';
 import { UPDATE_USER } from 'src/graphql/user/updateUser';
 import useCity from 'src/hooks/useCity';
-import withApollo from 'src/utils/withApollo';
+import redirect from 'src/utils/redirect';
+import withToken from 'src/utils/withToken';
 
 function SignupBusiness() {
   const [fileName, setFileName] = useState('');
@@ -329,11 +331,14 @@ function SignupBusiness() {
 }
 
 SignupBusiness.getInitialProps = (ctx) => {
-  ctx.end.writeHead(302, {
-    Location: '/'
+  redirect({
+    ctx,
+    location: '/'
   });
 
-  ctx.res.end();
+  return {
+    namespacesRequired: [...mainLayoutNamespacesRequired]
+  };
 };
 
-export default withApollo({ ssr: true })(WithToken);
+export default withToken({ ssr: true })(SignupBusiness);
