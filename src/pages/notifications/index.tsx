@@ -25,7 +25,7 @@ function Notification() {
 
   const page = +router.query.page || 1;
 
-  const { notifications, loading: loadingNoti, refetchNoti } = useNoti({ page, pageSize });
+  const { notifications, refetchNoti } = useNoti({ page, pageSize });
 
   useEffect(() => {
     refetchNoti?.();
@@ -67,9 +67,7 @@ function Notification() {
             )}
           </div>
           {notificationsData?.length > 0 ? (
-            notificationsData?.map((noti, index) => {
-              return <NotiItem {...noti} key={index} />;
-            })
+            notificationsData?.map((noti, index) => <NotiItem {...noti} key={index} />)
           ) : (
             <div className="col-12 d-flex align-items-center justify-content-between flex-wrap mb-3">
               {t('noti:is_noty')}
@@ -92,7 +90,6 @@ function Notification() {
           })
         }
       />
-      <LoadingBackdrop open={loadingNoti} />
     </MainLayout>
   );
 }

@@ -4,12 +4,28 @@ import clsx from 'clsx';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React, { ReactNode, useState } from 'react';
 import { SEARCH_MANUFACTURERS_BY_NAME } from 'src/graphql/search/search.manufacturer.query';
 import { SEARCH_PRODUCTS_BY_NAME } from 'src/graphql/search/search.products.query';
 import { useDebouncedEffect } from 'src/hooks/useDebouncedEffect';
 
 import Loading from '../Loading';
+
+type LinkItemProps = {
+  href: string;
+  children: ReactNode;
+  onClick?: () => void;
+};
+
+const LinkItem = (props: LinkItemProps) => {
+  return (
+    <button className="w-100 text-left border-bottom p-3" onClick={props.onClick}>
+      <Link href={props.href}>
+        <a>{props.children}</a>
+      </Link>
+    </button>
+  );
+};
 
 const SearchBar = () => {
   const { t } = useTranslation(['searchBar']);
@@ -111,21 +127,25 @@ const SearchBar = () => {
     switch (type) {
       case 'products':
         return (
-          <Link href={`/products?sort=best_match&search=${value}`}>
-            <a className="search__result">
+          <LinkItem
+            href={`/products?sort=best_match&search=${value}`}
+            onClick={() => setIsFocused(false)}>
+            <>
               <em>{value}</em> {t('searchBar:in')}{' '}
               <b className="text-primary">{t('searchBar:all_products')}</b>
-            </a>
-          </Link>
+            </>
+          </LinkItem>
         );
       case 'manufacturers':
         return (
-          <Link href={`/manufacturers?sort=best_match&search=${value}`}>
-            <a className="search__result pt-0">
+          <LinkItem
+            href={`/manufacturers?sort=best_match&search=${value}`}
+            onClick={() => setIsFocused(false)}>
+            <>
               <em>{value}</em> {t('searchBar:in')}{' '}
               <b className="text-primary">{t('searchBar:all_manufacturers')}</b>
-            </a>
-          </Link>
+            </>
+          </LinkItem>
         );
     }
   };
