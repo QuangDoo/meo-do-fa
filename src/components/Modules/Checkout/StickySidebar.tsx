@@ -31,7 +31,7 @@ type Props = {
   counselData?: OutputCounsel;
 };
 
-const StickySidebar = (props: Props) => {
+const StickySidebar = (props: Props): JSX.Element => {
   const { counselData } = props;
 
   const { t } = useTranslation(['checkout', 'common', 'errors']);
@@ -53,13 +53,13 @@ const StickySidebar = (props: Props) => {
           </small>
         </h4>
 
-        <Link href="/cart">
-          <div>
+        <div>
+          <Link href="/cart">
             <Button size="sm" variant="primary">
               {t('checkout:confirm_checkout_edit')}
             </Button>
-          </div>
-        </Link>
+          </Link>
+        </div>
       </div>
 
       <div className="elevated checkout__info row no-gutters mb-3">

@@ -24,10 +24,8 @@ type Props = {
   orderNo: string;
 };
 
-const PaymentOption = (props: Props) => {
-  const { register, watch } = useFormContext();
-
-  const chosenPaymentOption = watch('paymentMethodId');
+const PaymentOption = (props: Props): JSX.Element => {
+  const { register } = useFormContext();
 
   const { t } = useTranslation('checkout');
 
@@ -67,7 +65,6 @@ const PaymentOption = (props: Props) => {
   if (!paymentMethods.length) return null;
 
   const handleChange = (e) => {
-    console.log('changed payment option');
     applyPayment({
       variables: {
         orderNo: props.orderNo,
@@ -96,21 +93,17 @@ const PaymentOption = (props: Props) => {
               <Trans
                 i18nKey="checkout:paymentOption_bank"
                 components={{
-                  Link: (
-                    <a href="/help/bank_transfer_guide" target="_blank">
-                      {' '}
-                    </a>
-                  )
+                  Link: <LinkText href="/help/huong-dan-chuyen-khoan"> </LinkText>
                 }}
               />
             ),
             value: bankTransfer.id,
-            children: chosenPaymentOption === '2' && (
+            children: (
               <DescriptionBox>
                 <div className="bank-info">
                   {['account_name', 'account_no', 'bank_name', 'note'].map((key) => (
                     <React.Fragment key={key}>
-                      <div className="text-muted text-right mr-2">
+                      <div className="bank-info__label text-right mr-3">
                         {t(`checkout:bank_info__${key}`)}
                       </div>
                       <div className="bank-info__content">{bankTransfer[key]}</div>

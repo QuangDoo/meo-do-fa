@@ -11,7 +11,7 @@ type Props = {
   register?: React.ReactNode;
 };
 
-const BillingExport = (props: Props, ref) => {
+const BillingExport = (props: Props, ref): JSX.Element => {
   const [id] = useState(uuid());
   const [show, setShow] = useState(false);
 

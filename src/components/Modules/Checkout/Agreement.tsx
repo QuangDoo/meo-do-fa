@@ -7,7 +7,7 @@ import DescriptionBox from './DescriptionBox';
 
 type Props = ReactHookFormRegister;
 
-const Agreement = (props: Props) => {
+const Agreement = (props: Props): JSX.Element => {
   const { register } = props;
 
   const { t } = useTranslation('checkout');

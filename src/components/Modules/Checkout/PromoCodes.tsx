@@ -1,4 +1,3 @@
-import { useQuery } from '@apollo/client';
 import { Button } from '@material-ui/core';
 import LocalOfferIcon from '@material-ui/icons/LocalOffer';
 import { useTranslation } from 'i18n';
@@ -6,11 +5,10 @@ import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
-import { useToken } from 'src/contexts/Token';
 import { APPLY_COUPON, ApplyCouponData, ApplyCouponVars } from 'src/graphql/coupons/applyCoupon';
 import { GET_USED_COUPONS, GetUsedCouponsData } from 'src/graphql/coupons/getUsedCoupons';
 import { OutputCounsel, PromotionType } from 'src/graphql/order/getCounsel';
-import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
+import { useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
 
 import ApplyPromoCodesDialog from './ApplyPromoCodesDialog';
 
@@ -51,8 +49,6 @@ function Coupon(props: CouponProps) {
 export default function PromoCodes(props: Props) {
   const [open, setOpen] = useState(false);
 
-  const token = useToken();
-
   const { t } = useTranslation(['checkout', 'errors']);
 
   const router = useRouter();
@@ -61,7 +57,7 @@ export default function PromoCodes(props: Props) {
     data: getUsedCouponsData,
     loading: gettingUsedCoupons,
     refetch: refetchUsedCoupons
-  } = useQuery<GetUsedCouponsData, undefined>(GET_USED_COUPONS, {
+  } = useQueryAuth<GetUsedCouponsData, undefined>(GET_USED_COUPONS, {
     onError: (error) => {
       const errorCode = error.graphQLErrors[0]?.extensions?.code;
       toast.error(t(`errors:code_${errorCode}`));
@@ -70,12 +66,7 @@ export default function PromoCodes(props: Props) {
         router.push('/cart');
       }
     },
-    fetchPolicy: 'network-only',
-    context: {
-      headers: {
-        authorization: token
-      }
-    }
+    fetchPolicy: 'network-only'
   });
 
   const [applyCoupon, { loading: applyingCoupon }] = useMutationAuth<
