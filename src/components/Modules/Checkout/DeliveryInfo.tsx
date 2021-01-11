@@ -32,7 +32,7 @@ const DeliveryInfo = (props: Props) => {
 
   const handleChooseDeliveryAddress = (address: DeliveryInfoType) => {
     setChosenDeliveryAddress(address);
-    setValue('partnerId', address.id);
+    setValue('deliveryPartnerId', address.id);
     closeChooseDialog();
   };
 
@@ -51,7 +51,7 @@ const DeliveryInfo = (props: Props) => {
         handleDeliveryAddressChoose={handleChooseDeliveryAddress}
       />
 
-      <input hidden type="text" ref={register} name="partnerId" />
+      <input hidden type="text" ref={register} name="deliveryPartnerId" />
 
       <div className="d-flex align-items-center mb-4">
         <h6 className="m-0">{t('checkout:deliveryInfo_title')}</h6>

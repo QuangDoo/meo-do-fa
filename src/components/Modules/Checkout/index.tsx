@@ -24,14 +24,7 @@ import StickySidebar from './StickySidebar';
 // Các city, district, ward đều có dạng "name__id"
 
 type FormInputs = {
-  deliveryName: string;
-  deliveryPhone: string;
-  deliveryEmail: string;
-  deliveryStreet: string;
-  deliveryCity: string;
-  deliveryDistrict: string;
-  deliveryWard: string;
-  deliverySaveInfo: boolean;
+  deliveryPartnerId: string;
 
   deliveryMethodId: string;
   paymentMethodId: string;
@@ -45,6 +38,7 @@ type FormInputs = {
   invoiceWard: string;
   invoiceTaxCode: string;
   invoiceSaveInfo: boolean;
+  invoicePartnerId: string;
 
   customerNotes: string;
   agreement: boolean;
@@ -58,6 +52,8 @@ const CheckoutPage = () => {
   const [counselData, setCounselData] = useState<OutputCounsel>();
 
   const { data: cart, refetch: refetchCart } = useCart();
+
+  const { data: user } = useUser();
 
   const { data: getCounselData, refetch: refetchCounsel, loading: gettingCounsel } = useQueryAuth<
     GetCounselData,
@@ -100,7 +96,6 @@ const CheckoutPage = () => {
   const methods = useForm<FormInputs>({
     defaultValues: {
       paymentMethodId: '1',
-      deliverySaveInfo: true,
       invoiceSaveInfo: true,
       customerNotes: '',
       isInvoice: false,
@@ -145,20 +140,19 @@ const CheckoutPage = () => {
         inputs: {
           orderNo: orderNo,
           customer: {
-            fullName: data.deliveryName,
-            phone: data.deliveryPhone,
-            email: data.deliveryEmail,
+            fullName: user.name,
+            phone: user.phone,
+            email: user.email,
             shipping_address: {
-              fullName: data.deliveryName,
-              phone: data.deliveryPhone,
-              email: data.deliveryEmail,
-              partnerId: '',
-              isNew: true,
-              zipCode: +data.deliveryWard.split('__')[1],
-              city: data.deliveryCity.split('__')[0],
-              district: data.deliveryDistrict.split('__')[0],
-              ward: data.deliveryWard.split('__')[0],
-              street: data.deliveryStreet
+              // partnerId: '',
+              // isNew: true,
+              partnerId: data.deliveryPartnerId,
+              isNew: false,
+              zipCode: 0,
+              city: 'asd',
+              district: 'asd',
+              ward: 'asd',
+              street: 'asd'
             },
             billing_address: data.isInvoice
               ? {
