@@ -264,7 +264,7 @@ const ProductsSidebarFilter = (props: Props) => {
                           </Link>
                         </div>
                         {categorySub
-                          .slice()
+                          ?.slice()
                           .sort((a, b) => a.name.localeCompare(b.name))
                           .map(({ name, id }) => (
                             <div key={id} className="ml-2 mb-1">

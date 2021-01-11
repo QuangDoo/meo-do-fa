@@ -9,6 +9,7 @@ import Head from 'src/components/Layout/Head';
 import Header from 'src/components/Layout/Header';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import Nav from 'src/components/Layout/Nav';
+import SimpleBreadcrumbs from 'src/components/Modules/BreadCrum/BreadCrum';
 import { DiscountRibbon } from 'src/components/Modules/ProductCard/DiscountRibbon';
 import ProductDetailInfor from 'src/components/Modules/ProductDetail/ProductDetaiInfor';
 import ProducerInformation from 'src/components/Modules/ProductDetail/ProductInformation/ProducerInformation';
@@ -54,6 +55,9 @@ function ProductDetail(): JSX.Element {
       <Nav />
 
       <LoadingBackdrop open={loading} />
+      <div className="product container py-2">
+        <SimpleBreadcrumbs categories={product?.categories} />
+      </div>
 
       <div className="product container py-5" hidden={loading}>
         <div className="elevated">
