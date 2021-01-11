@@ -6,20 +6,19 @@ import React from 'react';
 import { DeepMap, FieldError, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { usernameRegex } from 'src/assets/regex/username';
-import { viPhoneNumberRegex } from 'src/assets/regex/viPhoneNumber';
 import Button from 'src/components/Form/Button';
-import Checkbox from 'src/components/Form/Checkbox';
 import Input from 'src/components/Form/Input';
+import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { useModalControlDispatch } from 'src/contexts/ModalControl';
+import { useUser } from 'src/contexts/User';
 import { LOGIN_USER, LoginData, LoginVars } from 'src/graphql/user/login';
-import useUser from 'src/hooks/useUser';
 
 type Inputs = {
   username: string;
   password: string;
 };
 
-const LoginForm = (): JSX.Element => {
+const LoginForm = () => {
   const { t } = useTranslation(['login', 'errors']);
 
   const { openModal, closeModal } = useModalControlDispatch();
@@ -30,16 +29,16 @@ const LoginForm = (): JSX.Element => {
 
   const router = useRouter();
 
-  const { getUser } = useUser();
+  const { refetch: refetchUser } = useUser();
 
   const { register, handleSubmit } = useForm<Inputs>();
 
-  const [login] = useMutation<LoginData, LoginVars>(LOGIN_USER, {
+  const [login, { loading: loggingIn }] = useMutation<LoginData, LoginVars>(LOGIN_USER, {
     onCompleted: (data) => {
       cookies.set('token', data.login.token);
 
       closeModal();
-      getUser();
+      refetchUser();
 
       if (router.pathname === '/products' || router.pathname === '/products/[productId]') {
         router.reload();
@@ -69,6 +68,8 @@ const LoginForm = (): JSX.Element => {
 
   return (
     <div>
+      <LoadingBackdrop open={loggingIn} />
+
       <form className="new_account" onSubmit={handleSubmit(onSubmit, onFormError)}>
         <Input
           name="username"

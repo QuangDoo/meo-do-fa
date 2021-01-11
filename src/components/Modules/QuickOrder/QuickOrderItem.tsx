@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import React from 'react';
-import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
+import { useToken } from 'src/contexts/Token';
 
 import QuantityInput from '../../Form/QuantityInput';
 import LoginToSeePrice from '../ProductCard/LoginToSeePrice';
@@ -20,8 +20,8 @@ type Props = {
   discount_percentage: number;
 };
 
-function QuickOrderItem(props: Props): JSX.Element {
-  const isLoggedIn = useIsLoggedIn();
+function QuickOrderItem(props: Props) {
+  const token = useToken();
 
   return (
     <div className="cart-item">
@@ -47,14 +47,14 @@ function QuickOrderItem(props: Props): JSX.Element {
             <div className="flex-1 flex-column">
               <div className="d-flex justify-content-between align-items-center">
                 <div>
-                  {isLoggedIn ? (
+                  {token ? (
                     <ProductPrice price={props.price} sale_price={props.sale_price} />
                   ) : (
                     <LoginToSeePrice />
                   )}
                 </div>
 
-                {isLoggedIn && (
+                {token && (
                   <div className="cart-item__qty">
                     <QuantityInput
                       productId={props.productId}

@@ -62,3 +62,21 @@
     }
   }
 }
+
+.change-delivery-info-btn {
+  top: 0;
+  right: 0;
+}
+
+.bank-info {
+  display: grid;
+  grid-template-columns: max-content auto;
+  row-gap: 4px;
+}
+
+.delivery-address-content {
+  display: grid;
+  grid-template-columns: max-content auto;
+  column-gap: 14px;
+  row-gap: 16px;
+}

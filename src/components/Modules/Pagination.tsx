@@ -32,7 +32,7 @@ const PageButton = (props: PageButtonProps) => (
   </button>
 );
 
-const Pagination = (props: PaginationProps): JSX.Element => {
+const Pagination = (props: PaginationProps) => {
   const { page, count, siblingCount = 4, onChange } = props;
 
   const maxPagesBeforeShowingGap = siblingCount + 2;

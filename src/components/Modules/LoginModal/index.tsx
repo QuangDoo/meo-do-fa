@@ -11,7 +11,7 @@ type LoginModalProps = {
   readonly t?: TFunction;
 };
 
-const Login = ({ t }: LoginModalProps): JSX.Element => {
+const Login = ({ t }: LoginModalProps) => {
   // Modal is open or not
   const { loginIsOpen } = useModalControlState();
 

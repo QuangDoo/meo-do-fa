@@ -3,21 +3,24 @@ import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import { toast } from 'react-toastify';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
+import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import Pagination from 'src/components/Modules/Pagination';
 import { SEEN_ALL_NOTI } from 'src/graphql/notification/seenNoti.mutation';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import useNoti from 'src/hooks/useNoti';
-import withApollo from 'src/utils/withApollo';
 
-import Footer from '../../components/Layout/Footer';
 import Head from '../../components/Layout/Head';
-import Header from '../../components/Layout/Header';
-import Nav from '../../components/Layout/Nav';
 import NotiItem from '../../components/Modules/Noti/NotiItem';
 
 const pageSize = 10;
 
-const Notification = (): JSX.Element => {
+import withToken from 'src/utils/withToken';
+
+Notification.getInitialProps = async () => ({
+  namespacesRequired: [...mainLayoutNamespacesRequired]
+});
+
+function Notification() {
   const router = useRouter();
 
   const page = +router.query.page || 1;
@@ -29,9 +32,6 @@ const Notification = (): JSX.Element => {
   }, []);
 
   const [seenAllNoti] = useMutationAuth(SEEN_ALL_NOTI, {
-    onCompleted: (data: any) => {
-      console.log('data', data);
-    },
     onError: (err) => {
       toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
     }
@@ -40,8 +40,6 @@ const Notification = (): JSX.Element => {
   const notificationsData = notifications?.Notifies;
 
   const notificationsPagination = notifications?.total || 0;
-
-  console.log('notificationsPagination', notificationsPagination);
 
   const handleReadAll = () => {
     // read all
@@ -52,12 +50,11 @@ const Notification = (): JSX.Element => {
   const { t } = useTranslation();
 
   return (
-    <>
+    <MainLayout>
       <Head>
         <title>Medofa</title>
       </Head>
-      <Header />
-      <Nav />
+
       <div className="container py-5" data-controller="notification">
         <div className="row">
           <div className="col-12 d-flex align-items-center justify-content-between flex-wrap mb-3">
@@ -96,8 +93,7 @@ const Notification = (): JSX.Element => {
         }
       />
       <LoadingBackdrop open={loadingNoti} />
-      <Footer />
-    </>
+    </MainLayout>
   );
-};
-export default withApollo({ ssr: true })(Notification);
+}
+export default withToken({ ssr: true, isProtected: true })(Notification);

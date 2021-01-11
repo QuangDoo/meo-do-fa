@@ -2,14 +2,12 @@ import { useTranslation } from 'i18n';
 import Image from 'next/image';
 import React from 'react';
 import SlickSlider from 'react-slick';
-import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
+import { useToken } from 'src/contexts/Token';
 
 import ProductCard from '../ProductCard';
 import { ProductsCarousel } from '../ProductsCarousel';
 import { Login } from './Login';
-import { Partner } from './Partner';
 import { ProductsContainer } from './ProductsContainer';
-import { Question } from './Question';
 import { Strength } from './Strength';
 
 const bannerImages = [
@@ -20,7 +18,8 @@ const bannerImages = [
 
 const Home = ({ dealsOfTheDayData, bestSellingData, promotionProductsData, newProductsData }) => {
   const { t } = useTranslation(['carousels']);
-  const isLoggedIn = useIsLoggedIn();
+
+  const token = useToken();
 
   const carousels = [
     {
@@ -81,7 +80,7 @@ const Home = ({ dealsOfTheDayData, bestSellingData, promotionProductsData, newPr
 
       <Strength />
 
-      {isLoggedIn ? null : (
+      {token ? null : (
         <>
           <Login />
         </>

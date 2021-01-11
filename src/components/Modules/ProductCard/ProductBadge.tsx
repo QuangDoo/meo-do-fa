@@ -16,7 +16,7 @@ const classMapping: Record<BadgeType, string> = {
   is_exclusive: 'only_medofa'
 };
 
-const ProductBadge = (props: ProductBadgeProps): JSX.Element => {
+const ProductBadge = (props: ProductBadgeProps) => {
   const { t } = props;
 
   return (

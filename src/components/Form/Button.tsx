@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import React, { FC } from 'react';
+import React, { forwardRef, ReactNode } from 'react';
 
 type ButtonProps = {
   onClick?: () => void;
@@ -8,13 +8,15 @@ type ButtonProps = {
   block?: boolean;
   className?: string;
   type?: 'button' | 'submit';
+  children: ReactNode;
 };
 
-const Button: FC<ButtonProps> = (props) => {
+const Button = (props: ButtonProps, ref) => {
   const { variant = 'primary', size = 'md', className = '', block, type = 'button' } = props;
 
   return (
     <button
+      ref={ref}
       onClick={props.onClick}
       className={clsx('btn', `btn-${variant}`, `btn-${size}`, block && 'btn-block', className)}
       type={type}>
@@ -23,4 +25,4 @@ const Button: FC<ButtonProps> = (props) => {
   );
 };
 
-export default Button;
+export default forwardRef(Button);

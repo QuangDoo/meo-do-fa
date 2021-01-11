@@ -1,18 +1,14 @@
 import { useQuery } from '@apollo/client';
 import { useTranslation } from 'i18n';
-import _ from 'lodash';
 import { useRouter } from 'next/router';
-import React from 'react';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { animateScroll } from 'react-scroll';
 import { toast } from 'react-toastify';
-import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
-import Header from 'src/components/Layout/Header';
 import Loading from 'src/components/Layout/Loading';
-import Nav from 'src/components/Layout/Nav';
 // import SimpleBreadcrumbs from 'src/components/Modules/BreadCrum/BreadCrum';
 import FilterTags from 'src/components/Modules/FilterTags';
+import MainLayout from 'src/components/Modules/MainLayout';
 import Pagination from 'src/components/Modules/Pagination';
 import ProductCard from 'src/components/Modules/ProductCard';
 import ProductsDrawerFilter from 'src/components/Modules/ProductDrawerFilter/ProductsDrawerFilter';
@@ -38,13 +34,18 @@ import {
   GetProductsVars,
   ProductTag
 } from 'src/graphql/product/getProducts';
-import withApollo from 'src/utils/withApollo';
 
-const pageSize = 20;
+const PAGE_SIZE = 20;
 
-const defaultSortType = '07'; // Name ascending
+const DEFAULT_SORT_TYPE = '07'; // Name ascending
 
-function Products(): JSX.Element {
+import withToken from 'src/utils/withToken';
+
+Products.getInitialProps = async () => ({
+  namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge', 'products']
+});
+
+function Products() {
   const { t } = useTranslation(['products']);
 
   const router = useRouter();
@@ -82,13 +83,13 @@ function Products(): JSX.Element {
   >(GET_PRODUCTS, {
     variables: {
       page,
-      pageSize,
+      pageSize: PAGE_SIZE,
       type: router.query.tag as ProductTag,
       condition: {
         manufacturer_id: router.query.manufacturer as string,
         category_id: router.query.category as string,
         name: search,
-        order_type: (router.query.sort as string) || defaultSortType,
+        order_type: (router.query.sort as string) || DEFAULT_SORT_TYPE,
         min_price: Number(router.query.priceFrom) || 1,
         max_price: Number(router.query.priceTo) || 10000000
       }
@@ -116,14 +117,10 @@ function Products(): JSX.Element {
   }, [productsLoading]);
 
   return (
-    <>
+    <MainLayout>
       <Head>
         <title>Medofa - {title}</title>
       </Head>
-
-      <Header />
-
-      <Nav />
 
       {categoriesLevel.length !== 0 ? (
         <div className="products container mobile-content my-3 my-sm-5">
@@ -147,8 +144,8 @@ function Products(): JSX.Element {
                   <>
                     {t('products:show')}{' '}
                     <b>
-                      {(page - 1) * pageSize + 1}&nbsp;-&nbsp;
-                      {Math.min(page * pageSize, total)}
+                      {(page - 1) * PAGE_SIZE + 1}&nbsp;-&nbsp;
+                      {Math.min(page * PAGE_SIZE, total)}
                     </b>{' '}
                     {t('products:on_of')}
                     <b>{`${total} `}</b>
@@ -185,7 +182,7 @@ function Products(): JSX.Element {
                 )}
 
                 <Pagination
-                  count={Math.ceil(total / pageSize)}
+                  count={Math.ceil(total / PAGE_SIZE)}
                   page={page}
                   siblingCount={4}
                   onChange={(page) =>
@@ -205,14 +202,8 @@ function Products(): JSX.Element {
       ) : (
         <div></div>
       )}
-
-      <Footer />
-    </>
+    </MainLayout>
   );
 }
 
-Products.getInitialProps = async () => ({
-  namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge']
-});
-
-export default withApollo({ ssr: true })(Products);
+export default withToken({ ssr: true })(Products);

@@ -1,27 +1,23 @@
 import React from 'react';
-import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
-import Header from 'src/components/Layout/Header';
-import Nav from 'src/components/Layout/Nav';
+import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import QuickOrderPage from 'src/components/Modules/QuickOrder/index';
-import withApollo from 'src/utils/withApollo';
+import withToken from 'src/utils/withToken';
 
-function QuickOrder(): JSX.Element {
+QuickOrder.getInitialProps = async () => ({
+  namespacesRequired: [...mainLayoutNamespacesRequired, 'cart', 'quickOrder']
+});
+
+function QuickOrder() {
   return (
-    <>
+    <MainLayout>
       <Head>
         <title>Medofa</title>
       </Head>
 
-      <Header />
-
-      <Nav />
-
       <QuickOrderPage />
-
-      <Footer />
-    </>
+    </MainLayout>
   );
 }
 
-export default withApollo({ ssr: true })(QuickOrder);
+export default withToken({ ssr: true })(QuickOrder);

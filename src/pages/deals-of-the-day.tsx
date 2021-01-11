@@ -5,10 +5,8 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { animateScroll } from 'react-scroll';
-import Footer from 'src/components/Layout/Footer';
-import Header from 'src/components/Layout/Header';
 import Loading from 'src/components/Layout/Loading';
-import Nav from 'src/components/Layout/Nav';
+import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import Pagination from 'src/components/Modules/Pagination';
 import ProductCard from 'src/components/Modules/ProductCard';
 import {
@@ -17,11 +15,15 @@ import {
   GetDealsOfTheDayVars
 } from 'src/graphql/product/getDealsOfTheDay';
 import { GET_PRODUCTS, GetProductsData, GetProductsVars } from 'src/graphql/product/getProducts';
-import withApollo from 'src/utils/withApollo';
+import withToken from 'src/utils/withToken';
 
 const pageSize = 20;
 
-const DealOfTheDay = () => {
+DealOfTheDay.getInitialProps = async () => ({
+  namespacesRequired: [...mainLayoutNamespacesRequired, 'dealsOfTheDay']
+});
+
+function DealOfTheDay() {
   const router = useRouter();
   const { t } = useTranslation(['dealsOfTheDay']);
   const [showMore, setShowMore] = useState(false);
@@ -94,14 +96,10 @@ const DealOfTheDay = () => {
   }, [otherDealLoading]);
 
   return (
-    <>
+    <MainLayout>
       <Head>
         <title>Medofa</title>
       </Head>
-
-      <Header />
-
-      <Nav />
 
       <div className="deals deals--mobile py-5">
         <div className="container px-0">
@@ -191,9 +189,8 @@ const DealOfTheDay = () => {
           </div>
         )
       )}
-      <Footer />
-    </>
+    </MainLayout>
   );
-};
+}
 
-export default withApollo({ ssr: true })(DealOfTheDay);
+export default withToken({ ssr: true })(DealOfTheDay);

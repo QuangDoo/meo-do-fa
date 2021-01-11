@@ -1,31 +1,23 @@
 import React from 'react';
-import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
-import Header from 'src/components/Layout/Header';
-import Nav from 'src/components/Layout/Nav';
+import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import PromoCodes from 'src/components/Modules/PromoCodes';
-import withApollo from 'src/utils/withApollo';
+import withToken from 'src/utils/withToken';
 
-function PromotionCode(): JSX.Element {
+PromotionCode.getInitialProps = async () => ({
+  namespacesRequired: [...mainLayoutNamespacesRequired, 'promoCodes']
+});
+
+function PromotionCode() {
   return (
-    <>
+    <MainLayout>
       <Head>
         <title>Medofa</title>
       </Head>
 
-      <Header />
-
-      <Nav />
-
       <PromoCodes />
-
-      <Footer />
-    </>
+    </MainLayout>
   );
 }
 
-PromotionCode.getInitialProps = async () => ({
-  namespacesRequired: ['promoCodes']
-});
-
-export default withApollo({ ssr: true })(PromotionCode);
+export default withToken({ ssr: true })(PromotionCode);

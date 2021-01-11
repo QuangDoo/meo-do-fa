@@ -1,29 +1,31 @@
 import { useQuery } from '@apollo/client';
-import { Menu } from '@material-ui/core';
+import { Menu, MenuItem } from '@material-ui/core';
 import { useTranslation } from 'i18n';
-import Cookies from 'js-cookie';
+import cookies from 'js-cookie';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
+import { useCart } from 'src/contexts/Cart';
+import { useToken } from 'src/contexts/Token';
 import { GET_CATEGORIES_LEVEL, GetCategoriesLevelData } from 'src/graphql/category/category.query';
-import useCart from 'src/hooks/useCart';
-import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
 
 import CategoryMenu from '../Modules/CategoryMenu';
 
 const Nav = () => {
-  const isLoggedIn = useIsLoggedIn();
+  const token = useToken();
 
-  const { cart } = useCart();
+  const { data: cart } = useCart();
 
-  const totalQty = cart?.getCart.totalQty;
+  const router = useRouter();
+
+  const totalQty = cart?.totalQty;
 
   const { t } = useTranslation(['navbar', 'errors', 'common']);
 
   const logOut = () => {
-    Cookies.remove('token');
-    window.location.replace('/');
+    cookies.remove('token');
+    router.push('/');
   };
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -128,8 +130,8 @@ const Nav = () => {
               </li>
             </ul>
 
-            {isLoggedIn && (
-              <div className="header-right">
+            {token && (
+              <div className="header-right flex-shrink-0">
                 <ul className="nav align-items-center">
                   <li className="nav-item mr-4">
                     <Link href="/cart">
@@ -142,7 +144,7 @@ const Nav = () => {
 
                   <li className="nav-item">
                     <button className="rockland-nav__link" onClick={openMenu}>
-                      <i className="fas fa-bars rockland-nav__icon" />
+                      <i className="fas fa-bars rockland-nav__icon m-0" />
                     </button>
                   </li>
 
@@ -175,12 +177,14 @@ const Nav = () => {
 
                     <hr className="my-2" /> */}
 
-                    <Link href="/my-account">
-                      <a className="dropdown__item dropdown__item-link">
-                        <i className="far fa-user-circle dropdown__item-icon" />
-                        {t('navbar:account_info')}
-                      </a>
-                    </Link>
+                    <div>
+                      <Link href="/my-account">
+                        <a className="dropdown__item dropdown__item-link">
+                          <i className="far fa-user-circle dropdown__item-icon" />
+                          {t('navbar:account_info')}
+                        </a>
+                      </Link>
+                    </div>
 
                     <div className="d-block d-sm-none">
                       <Link href="/change-password">
@@ -191,12 +195,14 @@ const Nav = () => {
                       </Link>
                     </div>
 
-                    <Link href="/my-orders">
-                      <a className="dropdown__item dropdown__item-link">
-                        <i className="icomoon icon-assignment dropdown__item-icon" />
-                        {t('navbar:my_order')}
-                      </a>
-                    </Link>
+                    <div>
+                      <Link href="/my-orders">
+                        <a className="dropdown__item dropdown__item-link">
+                          <i className="icomoon icon-assignment dropdown__item-icon" />
+                          {t('navbar:my_order')}
+                        </a>
+                      </Link>
+                    </div>
 
                     {/* <Link href="/users/referrals">
                       <a className="dropdown__item dropdown__item-link">
@@ -205,12 +211,14 @@ const Nav = () => {
                       </a>
                     </Link> */}
 
-                    <Link href="/my-promo-codes">
-                      <a className="dropdown__item dropdown__item-link">
-                        <i className="fas fa-tags dropdown__item-icon" />
-                        {t('navbar:my_promo_code')}
-                      </a>
-                    </Link>
+                    <div>
+                      <Link href="/my-promo-codes">
+                        <a className="dropdown__item dropdown__item-link">
+                          <i className="fas fa-tags dropdown__item-icon" />
+                          {t('navbar:my_promo_code')}
+                        </a>
+                      </Link>
+                    </div>
 
                     {/* <Link href="/users/loyalty_points">
                       <a className="dropdown__item dropdown__item-link">

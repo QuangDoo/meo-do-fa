@@ -12,10 +12,10 @@ import {
   useMutation,
   useQuery
 } from '@apollo/client';
-import Cookies from 'js-cookie';
+import { useToken } from 'src/contexts/Token';
 
 function useHookAuth(query, options = {}, hookFunc) {
-  const token = typeof window !== 'undefined' && Cookies.get('token');
+  const token = useToken();
 
   const newOptions = {
     ...options,

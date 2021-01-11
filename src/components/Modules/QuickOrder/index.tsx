@@ -7,6 +7,8 @@ import React from 'react';
 // import { toast } from 'react-toastify';
 import PriceText from 'src/components/Form/PriceText';
 import Loading from 'src/components/Layout/Loading';
+import { useCart } from 'src/contexts/Cart';
+import { useToken } from 'src/contexts/Token';
 // import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 // import { CREATE_COUNSEL } from 'src/graphql/order/order.mutation';
 import {
@@ -14,15 +16,14 @@ import {
   GetQuickOrderProductsData,
   GetQuickOrderProductsVars
 } from 'src/graphql/product/getQuickOrderProducts';
-import useCart from 'src/hooks/useCart';
-import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
 
 // import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import QuickOrderItem from './QuickOrderItem';
 
-function QuickOrderPage(): JSX.Element {
-  const isLoggedIn = useIsLoggedIn();
-  const { cart } = useCart();
+function QuickOrderPage() {
+  const token = useToken();
+
+  const { data: cart } = useCart();
 
   const { t } = useTranslation(['cart', 'common', 'quickOrder']);
 
@@ -80,7 +81,7 @@ function QuickOrderPage(): JSX.Element {
             </div> */}
           </div>
           <div className="col-12 col-md-3 col-lg-3">
-            {isLoggedIn && cart && (
+            {token && cart && (
               <div className="cart__info">
                 <div className="elevated row no-gutters mb-3">
                   <div className="col-md-12 col-lg-4 cart__info-quantity">
@@ -89,7 +90,7 @@ function QuickOrderPage(): JSX.Element {
                         <div>{t('cart:quantity')}</div>
                       </div>
                       <div className="cart__quantity text-secondary">
-                        <b>{cart?.getCart.totalQty}</b>
+                        <b>{cart?.totalQty}</b>
                       </div>
                     </div>
                   </div>
@@ -99,12 +100,12 @@ function QuickOrderPage(): JSX.Element {
                         <div>{t('cart:total')}</div>
                       </div>
                       <div className="cart__total">
-                        <PriceText price={cart?.getCart.totalPrice} />
+                        <PriceText price={cart?.totalPrice} />
                         <span className="unit">{t('common:vnd')}</span>
                       </div>
                     </div>
                   </div>
-                  {cart?.getCart.totalPrice > 0 && (
+                  {cart?.totalPrice > 0 && (
                     <div className="col-12">
                       <div className="cart__info-item">
                         <Link href="/cart">

@@ -6,7 +6,7 @@ type Props = {
   className?: string;
 };
 
-const FormGroup = (props: Props): JSX.Element => {
+const FormGroup = (props: Props) => {
   return <div className={clsx('form-group', props.className)}>{props.children}</div>;
 };
 

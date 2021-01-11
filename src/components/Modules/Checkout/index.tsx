@@ -4,11 +4,10 @@ import React, { useEffect, useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
+import { useCart } from 'src/contexts/Cart';
 import { CREATE_ORDER, CreateOrderData, CreateOrderVars } from 'src/graphql/order/createOrder';
 import { GET_COUNSEL, GetCounselData, OutputCounsel } from 'src/graphql/order/getCounsel';
 import { useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
-import useCart from 'src/hooks/useCart';
-import useUser from 'src/hooks/useUser';
 import swal from 'sweetalert';
 
 import Agreement from './Agreement';
@@ -54,8 +53,6 @@ type FormInputs = {
 const CheckoutPage = () => {
   const { t } = useTranslation(['checkout', 'errors']);
 
-  const { loading: loadingUser } = useUser();
-
   const [counselData, setCounselData] = useState<OutputCounsel>();
 
   // Counsel
@@ -100,7 +97,7 @@ const CheckoutPage = () => {
 
   const router = useRouter();
 
-  const { cart, refetchCart, loading: loadingCart } = useCart();
+  const { data: cart, refetch: refetchCart } = useCart();
 
   const [createOrder, { loading: creatingOrder }] = useMutationAuth<
     CreateOrderData,
@@ -119,7 +116,7 @@ const CheckoutPage = () => {
       });
     },
     onError: (err) => {
-      const errorCode = err?.graphQLErrors[0]?.extensions?.code;
+      const errorCode = err.graphQLErrors[0]?.extensions?.code;
       toast.error(t(`errors:code_${errorCode}`));
 
       if (errorCode === 114) {
@@ -213,7 +210,7 @@ const CheckoutPage = () => {
               </div>
 
               {/* Invoice */}
-              {cart?.getCart.carts.some((cart) => cart.product.is_quick_invoice) && (
+              {cart?.carts.some((cart) => cart.product.is_quick_invoice) && (
                 <>
                   <div className="mb-4">
                     <InvoiceInfo />
@@ -238,7 +235,7 @@ const CheckoutPage = () => {
           </div>
         </div>
 
-        <LoadingBackdrop open={creatingOrder || loadingCart || loadingUser} />
+        <LoadingBackdrop open={creatingOrder} />
       </form>
     </FormProvider>
   );

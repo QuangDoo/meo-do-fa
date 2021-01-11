@@ -13,8 +13,8 @@ import Input from 'src/components/Form/Input';
 import Select from 'src/components/Form/Select';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { useModalControlDispatch } from 'src/contexts/ModalControl';
+import { useUser } from 'src/contexts/User';
 import { CREATE_USER, CreateUserData, CreateUserVars } from 'src/graphql/user/createUser';
-import useUser from 'src/hooks/useUser';
 
 // Form input fields
 type Inputs = {
@@ -29,7 +29,7 @@ type Inputs = {
 
 const accountTypes = ['PHARMACY', 'CLINIC', 'DRUGSTORE'];
 
-const RegisterForm = (): JSX.Element => {
+const RegisterForm = () => {
   const { t } = useTranslation(['register', 'errors']);
 
   const router = useRouter();
@@ -40,7 +40,7 @@ const RegisterForm = (): JSX.Element => {
 
   const openLoginModal = () => openModal('LOGIN');
 
-  const { getUser } = useUser();
+  const { refetch: refetchUser } = useUser();
 
   const [createUser, { loading: creatingUser }] = useMutation<CreateUserData, CreateUserVars>(
     CREATE_USER,
@@ -48,7 +48,7 @@ const RegisterForm = (): JSX.Element => {
       onCompleted: (data) => {
         cookies.set('token', data.createUser.token);
         closeModal();
-        getUser();
+        refetchUser();
         router.reload();
       },
       onError: (error) => {

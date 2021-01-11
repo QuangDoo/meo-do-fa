@@ -16,7 +16,7 @@ const examplePartners = [
   'assets/images/partner3.jpg'
 ];
 
-const Parner = (): JSX.Element => {
+const Parner = () => {
   const { t } = useTranslation(['partner']);
   return (
     <section className="bg-white py-5 home__partner">
