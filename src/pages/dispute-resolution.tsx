@@ -1,23 +1,21 @@
 import { useTranslation } from 'i18n';
 import React from 'react';
-import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
-import Header from 'src/components/Layout/Header';
-import Nav from 'src/components/Layout/Nav';
-import withApollo from 'src/utils/withApollo';
+import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
+import withToken from 'src/utils/withToken';
 
-const DisputeResolution = () => {
+DisputeResolution.getInitialProps = async () => ({
+  namespacesRequired: [...mainLayoutNamespacesRequired]
+});
+
+function DisputeResolution() {
   const { t } = useTranslation(['common', 'disputeResolution']);
 
   return (
-    <>
+    <MainLayout>
       <Head>
         <title>Medofa</title>
       </Head>
-
-      <Header />
-
-      <Nav />
 
       <div className="container my-5">
         <h2 className="text-center my-5">{t('disputeResolution:title')}</h2>
@@ -51,14 +49,8 @@ const DisputeResolution = () => {
           quyền yêu cầu cơ quan nhà nước có thẩm quyền giải quyết.
         </p>
       </div>
-
-      <Footer />
-    </>
+    </MainLayout>
   );
-};
+}
 
-DisputeResolution.getInitialProps = async () => ({
-  namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge']
-});
-
-export default withApollo({ ssr: true })(DisputeResolution);
+export default withToken({ ssr: true })(DisputeResolution);

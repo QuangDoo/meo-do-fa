@@ -1,23 +1,21 @@
 import { useTranslation } from 'i18n';
 import React from 'react';
-import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
-import Header from 'src/components/Layout/Header';
-import Nav from 'src/components/Layout/Nav';
-import withApollo from 'src/utils/withApollo';
+import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
+import withToken from 'src/utils/withToken';
 
-const OperatingRegulations = () => {
+OperatingRegulations.getInitialProps = async () => ({
+  namespacesRequired: [...mainLayoutNamespacesRequired, 'operatingRegulations']
+});
+
+function OperatingRegulations() {
   const { t } = useTranslation(['common', 'operatingRegulations']);
 
   return (
-    <>
+    <MainLayout>
       <Head>
         <title>Medofa</title>
       </Head>
-
-      <Header />
-
-      <Nav />
 
       <div className="container my-5">
         <h2 className="text-center my-5">{t('operatingRegulations:title')}</h2>
@@ -26,10 +24,8 @@ const OperatingRegulations = () => {
           {t('common:updating')}
         </div>
       </div>
-
-      <Footer />
-    </>
+    </MainLayout>
   );
-};
+}
 
-export default withApollo({ ssr: true })(OperatingRegulations);
+export default withToken({ ssr: true })(OperatingRegulations);

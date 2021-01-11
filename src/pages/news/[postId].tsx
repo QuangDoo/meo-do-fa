@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
+import { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import News from 'src/components/Modules/News';
-import withApollo from 'src/utils/withApollo';
 
 import Footer from '../../components/Layout/Footer';
 import Head from '../../components/Layout/Head';
@@ -79,7 +79,13 @@ const links = [
   { href: '', title: 'Contrary to to populartext Contrary to populartext Contrary to populartext' }
 ];
 
-const NewsPage = () => {
+import withToken from 'src/utils/withToken';
+
+NewsPage.getInitialProps = async () => ({
+  namespacesRequired: [...mainLayoutNamespacesRequired]
+});
+
+function NewsPage() {
   const router = useRouter();
 
   useEffect(() => {
@@ -109,10 +115,6 @@ const NewsPage = () => {
   //     <Footer />
   //   </>
   // );
-};
+}
 
-NewsPage.getInitialProps = async () => ({
-  namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge']
-});
-
-export default withApollo({ ssr: true })(NewsPage);
+export default withToken({ ssr: true })(NewsPage);

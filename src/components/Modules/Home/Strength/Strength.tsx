@@ -1,7 +1,7 @@
 import { useTranslation } from 'i18n';
 import React from 'react';
 
-const Strength = (): JSX.Element => {
+const Strength = () => {
   const { t } = useTranslation(['strength']);
 
   return (

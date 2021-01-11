@@ -10,7 +10,7 @@ type CheckboxProps = {
   children?: React.ReactNode;
 };
 
-const Checkbox = (props: CheckboxProps, ref): JSX.Element => {
+const Checkbox = (props: CheckboxProps, ref) => {
   const [id] = useState(uuid());
 
   return (

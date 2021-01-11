@@ -1,23 +1,21 @@
 import { useTranslation } from 'i18n';
 import React from 'react';
-import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
-import Header from 'src/components/Layout/Header';
-import Nav from 'src/components/Layout/Nav';
-import withApollo from 'src/utils/withApollo';
+import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
+import withToken from 'src/utils/withToken';
 
-const PrivacyPolicy = () => {
+PrivacyPolicy.getInitialProps = async () => ({
+  namespacesRequired: [...mainLayoutNamespacesRequired, 'privacyPolicy']
+});
+
+function PrivacyPolicy() {
   const { t } = useTranslation(['common', 'privacyPolicy']);
 
   return (
-    <>
+    <MainLayout>
       <Head>
         <title>Medofa</title>
       </Head>
-
-      <Header />
-
-      <Nav />
 
       <div className="container my-5">
         <h2 className="text-center my-5">{t('privacyPolicy:title')}</h2>
@@ -211,14 +209,8 @@ const PrivacyPolicy = () => {
           </li>
         </ol>
       </div>
-
-      <Footer />
-    </>
+    </MainLayout>
   );
-};
+}
 
-PrivacyPolicy.getInitialProps = async () => ({
-  namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge']
-});
-
-export default withApollo({ ssr: true })(PrivacyPolicy);
+export default withToken({ ssr: true })(PrivacyPolicy);

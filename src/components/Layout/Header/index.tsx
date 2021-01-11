@@ -1,17 +1,16 @@
-import { withTranslation } from 'i18n';
 import Link from 'next/link';
 import React from 'react';
 import LanguagePicker from 'src/components/Layout/Header/LanguagePicker';
 import ForgotPasswordModal from 'src/components/Modules/ForgotPasswordModal';
 import LoginModal from 'src/components/Modules/LoginModal';
 import RegisterModal from 'src/components/Modules/RegisterModal';
-import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
+import { useToken } from 'src/contexts/Token';
 
 import RightSideUser from './RightSideUser';
 import SearchBar from './SearchBar';
 
 const Header = () => {
-  const isLoggedIn = useIsLoggedIn();
+  const token = useToken();
 
   return (
     <header className="header bg-white">
@@ -20,31 +19,6 @@ const Header = () => {
           <div className="row">
             <div className="col-12 d-flex align-items-center justify-content-end">
               <ul className="nav">
-                {/* <li className="promotion-nav__item">
-                  <a className="promotion-nav__link" href="/news" title={t('header:news')}>
-                    <i className="promotion-nav__icon icomoon icon-news" />
-                    <span>{t('header:news')}</span>
-                  </a>
-                </li> */}
-                {/* <li className="promotion-nav__item">
-                  <a
-                    className="promotion-nav__link"
-                    href="https://career.medofa.com/"
-                    title={t('common:recruitment')}>
-                    <i className="promotion-nav__icon fas fa-briefcase" />
-                    <span>{t('common:recruitment')}</span>
-                  </a>
-                </li> */}
-                {/* <li className="promotion-nav__item">
-                  <a
-                    className="promotion-nav__link"
-                    href="https://supplier.medofa.com/"
-                    title={t('common:supply')}>
-                    <i className="promotion-nav__icon fas fa-store-alt" />
-                    <span>{t('common:supply')}</span>
-                  </a>
-                </li> */}
-
                 <li className="promotion-nav__item">
                   <LanguagePicker />
                 </li>
@@ -70,7 +44,7 @@ const Header = () => {
             </div>
           </div>
 
-          {isLoggedIn ? (
+          {token ? (
             <>
               <SearchBar />
 
@@ -91,4 +65,4 @@ const Header = () => {
   );
 };
 
-export default withTranslation(['header', 'common'])(Header);
+export default Header;

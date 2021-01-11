@@ -1,18 +1,21 @@
 import { useQuery } from '@apollo/client';
-import { useTranslation, withTranslation } from 'i18n';
+import { useTranslation } from 'i18n';
 import { useRouter } from 'next/router';
 import React from 'react';
-import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
-import Header from 'src/components/Layout/Header';
 import Loading from 'src/components/Layout/Loading';
-import Nav from 'src/components/Layout/Nav';
+import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import Pagination from 'src/components/Modules/Pagination';
 import ProductCard from 'src/components/Modules/ProductCard';
 import { GET_PRODUCTS, GetProductsData, GetProductsVars } from 'src/graphql/product/getProducts';
-import withApollo from 'src/utils/withApollo';
 
 const pageSize = 20;
+
+import withToken from 'src/utils/withToken';
+
+Deal.getInitialProps = async () => ({
+  namespacesRequired: [...mainLayoutNamespacesRequired]
+});
 
 function Deal() {
   const router = useRouter();
@@ -54,13 +57,10 @@ function Deal() {
   };
 
   return (
-    <>
+    <MainLayout>
       <Head>
         <title>Medofa</title>
       </Head>
-      <Header />
-
-      <Nav />
 
       <section className="deals deals--mobile py-5">
         <div className="container px-0">
@@ -99,16 +99,8 @@ function Deal() {
           </div>
         </div>
       </section>
-
-      <Footer />
-    </>
+    </MainLayout>
   );
 }
 
-Deal.getInitialProps = async () => ({
-  namespacesRequired: ['common']
-});
-
-const TranslatedPage = withTranslation(['common'])(Deal);
-
-export default withApollo({ ssr: true })(TranslatedPage);
+export default withToken({ ssr: true })(Deal);

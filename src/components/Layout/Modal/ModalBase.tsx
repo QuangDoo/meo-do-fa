@@ -7,14 +7,14 @@ export type ModalBaseProps = {
   children: React.ReactNode;
 };
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     background: '#f4f7fc',
     borderRadius: '1.25em'
   }
 }));
 
-const ModalBase = (props: ModalBaseProps): JSX.Element => {
+const ModalBase = (props: ModalBaseProps) => {
   const { open, onClose, children } = props;
 
   const classes = useStyles();

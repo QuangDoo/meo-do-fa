@@ -3,8 +3,8 @@ import { useTranslation } from 'i18n';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
+import { useToken } from 'src/contexts/Token';
 import { Product } from 'src/graphql/product/getProducts';
-import useIsLoggedIn from 'src/hooks/useIsLoggedIn';
 
 import QuantityInput from '../../Form/QuantityInput';
 import { DiscountRibbon } from './DiscountRibbon';
@@ -15,7 +15,7 @@ import { ProductPrice } from './ProductPrice';
 type Props = Product;
 
 const ProductCard = (props: Props) => {
-  const isLoggedIn = useIsLoggedIn();
+  const token = useToken();
 
   const { t } = useTranslation('productCard');
 
@@ -50,7 +50,7 @@ const ProductCard = (props: Props) => {
               </Link>
 
               <div className="product__status mb-2">
-                {isLoggedIn && (
+                {token && (
                   <>
                     {props.is_quick_invoice && <ProductBadge type="is_quick_invoice" />}
 
@@ -80,7 +80,7 @@ const ProductCard = (props: Props) => {
           </div>
 
           <div className="product-card__buy">
-            {isLoggedIn ? (
+            {token ? (
               <>
                 <div className="mb-2">
                   <ProductPrice price={props.old_price} sale_price={props.sale_price} />

@@ -10,7 +10,7 @@ type Props = {
   description?: string;
 };
 
-const InputCard = (props: Props): JSX.Element => {
+const InputCard = (props: Props) => {
   const { t } = useTranslation('checkout');
   return (
     <div className="elevated p-3 p-md-4">
@@ -26,7 +26,7 @@ const InputCard = (props: Props): JSX.Element => {
         )}
 
         {props.description && (
-          <small className="text-muted mb-2 d-inline-block">{t('can_not_find')}</small>
+          <small className="text-muted mb-2 d-inline-block">{props.description}</small>
         )}
       </div>
 

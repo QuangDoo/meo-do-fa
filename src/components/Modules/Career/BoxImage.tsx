@@ -27,7 +27,7 @@ type Props = {
   images?: Image[];
 };
 
-export default function BoxImage(props: Props): JSX.Element {
+export default function BoxImage(props: Props) {
   const classes = useStyles();
   const { images } = props;
 

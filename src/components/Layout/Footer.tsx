@@ -42,20 +42,20 @@ type Inputs = {
   email: string;
 };
 
-const Footer = (): JSX.Element => {
+const Footer = () => {
   const { t } = useTranslation(['footer', 'common']);
+
   const { register, handleSubmit, reset } = useForm<Inputs>();
+
   const [saveMailSubscriber, { loading: loadingSubcribe }] = useMutation<
     SubscriberData,
     SubscriberVar
   >(SAVE_MAIL_SUBSCRIBE, {
-    onCompleted: (data) => {
+    onCompleted: () => {
       toast.success(t('footer:success_subscribe'));
     },
     onError: (error) => {
-      toast.error(error);
-      // error.graphQLErrors.length > 0 &&
-      //   toast.error(t(`errors:code_${error.graphQLErrors[0].extensions.code}`));
+      toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
     }
   });
   // On form error

@@ -1,24 +1,18 @@
 import { useTranslation } from 'i18n';
 import React from 'react';
-import withApollo from 'src/utils/withApollo';
+import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
+import withToken from 'src/utils/withToken';
 
-import Footer from '../components/Layout/Footer';
 import Head from '../components/Layout/Head';
-import Header from '../components/Layout/Header';
-import Nav from '../components/Layout/Nav';
 
-const AboutUs = (): JSX.Element => {
+function AboutUs() {
   const { t } = useTranslation(['common', 'aboutUs']);
 
   return (
-    <>
+    <MainLayout>
       <Head>
         <title>Medofa</title>
       </Head>
-
-      <Header />
-
-      <Nav />
 
       <div className="container my-5">
         <h2 className="text-center my-5">{t('aboutUs:title')}</h2>
@@ -88,13 +82,12 @@ const AboutUs = (): JSX.Element => {
           Địa chỉ: Lầu 5 – 231 Lý Tự Trọng, Bến Thành, Quận 1, Tp.HCM
         </p>
       </div>
-      <Footer />
-    </>
+    </MainLayout>
   );
-};
+}
 
 AboutUs.getInitialProps = async () => ({
-  namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge']
+  namespacesRequired: [...mainLayoutNamespacesRequired]
 });
 
-export default withApollo({ ssr: false })(AboutUs);
+export default withToken({ ssr: true })(AboutUs);

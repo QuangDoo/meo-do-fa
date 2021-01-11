@@ -1,19 +1,21 @@
 import { useQuery } from '@apollo/client';
 import { useTranslation } from 'i18n';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { toast } from 'react-toastify';
-import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
-import Header from 'src/components/Layout/Header';
-import Nav from 'src/components/Layout/Nav';
+import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import SearchScreen from 'src/components/Modules/SearchScreen';
 import {
   GET_ALL_MANUFACTURERS,
   GetAllManufacturersData
 } from 'src/graphql/manufacturers/manufacturers.query';
-import withApollo from 'src/utils/withApollo';
+import withToken from 'src/utils/withToken';
 
-function Manufacturers(): JSX.Element {
+Manufacturers.getInitialProps = async () => ({
+  namespacesRequired: [...mainLayoutNamespacesRequired, 'manufacturers']
+});
+
+function Manufacturers() {
   const { t } = useTranslation(['manufacturers', 'errors']);
 
   const { data } = useQuery<GetAllManufacturersData, undefined>(GET_ALL_MANUFACTURERS, {
@@ -23,23 +25,17 @@ function Manufacturers(): JSX.Element {
   });
 
   return (
-    <>
+    <MainLayout>
       <Head>
         <title>{t('manufacturers:title')} - Medofa</title>
       </Head>
-
-      <Header />
-
-      <Nav />
 
       <SearchScreen
         data={data?.getManufactoriesAll.map((i) => ({ id: i.id, name: i.short_name })) || []}
         getItemHref={(id) => `/products?manufacturer=${id}`}
       />
-
-      <Footer />
-    </>
+    </MainLayout>
   );
 }
 
-export default withApollo({ ssr: true })(Manufacturers);
+export default withToken({ ssr: true })(Manufacturers);

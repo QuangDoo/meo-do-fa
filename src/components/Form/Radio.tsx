@@ -14,12 +14,12 @@ type Props = {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-const RadioInput = (props: Props, ref): JSX.Element => {
+const RadioInput = (props: Props, ref) => {
   const [show, setShow] = useState(false);
 
-  const handleChange = () => {
+  const handleChange = (e) => {
     setShow(!show);
-    props.onChange;
+    props.onChange?.(e);
   };
 
   return (

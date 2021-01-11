@@ -3,7 +3,7 @@ import React from 'react';
 
 import ContactCardView from '../../Layout/Card/ContactCardView';
 
-function Contact(): JSX.Element {
+function Contact() {
   return (
     <div className="container mt-3">
       <div className="row">

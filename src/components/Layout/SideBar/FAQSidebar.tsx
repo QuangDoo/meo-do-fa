@@ -8,7 +8,7 @@ type category = {
 type Props = {
   categories: category[];
 };
-function Sidebar(props: Props): JSX.Element {
+function Sidebar(props: Props) {
   return (
     <>
       <h3 className="news__title">{`Danh mục`}</h3>

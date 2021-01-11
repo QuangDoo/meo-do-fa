@@ -1,23 +1,18 @@
-import { useTranslation } from 'i18n';
 import React from 'react';
-import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
-import Header from 'src/components/Layout/Header';
-import Nav from 'src/components/Layout/Nav';
-import withApollo from 'src/utils/withApollo';
+import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
+import withToken from 'src/utils/withToken';
 
-const TermsOfUse = () => {
-  const { t } = useTranslation(['common']);
+TermsOfUse.getInitialProps = async () => ({
+  namespacesRequired: [...mainLayoutNamespacesRequired, 'productCard', 'productBadge']
+});
 
+function TermsOfUse() {
   return (
-    <>
+    <MainLayout>
       <Head>
         <title>Medofa</title>
       </Head>
-
-      <Header />
-
-      <Nav />
 
       <div className="container my-5">
         <h2 className="text-center my-5">Điều khoản sử dụng</h2>
@@ -158,14 +153,8 @@ const TermsOfUse = () => {
           </li>
         </ol>
       </div>
-
-      <Footer />
-    </>
+    </MainLayout>
   );
-};
+}
 
-TermsOfUse.getInitialProps = async () => ({
-  namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge']
-});
-
-export default withApollo({ ssr: true })(TermsOfUse);
+export default withToken({ ssr: true })(TermsOfUse);

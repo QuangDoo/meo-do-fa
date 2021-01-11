@@ -33,7 +33,7 @@ const initialState: State = {
   resetPassIsOpen: false
 };
 
-const ModalControlProvider = ({ children }: Props): JSX.Element => {
+const ModalControlProvider = ({ children }: Props) => {
   const [state, setState] = useState<State>(initialState);
 
   const openModal = useCallback((modal: Modal) => {

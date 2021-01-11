@@ -13,7 +13,7 @@ type Props = {
   level?: string;
 };
 
-export default function JobDetail(props: Props): JSX.Element {
+export default function JobDetail(props: Props) {
   const [open, setOpen] = useState(false);
   const { t } = useTranslation('jobDetail');
 
