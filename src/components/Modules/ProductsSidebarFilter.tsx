@@ -105,7 +105,7 @@ const ProductsSidebarFilter = (props: Props) => {
         return [short_name, id];
       }
     });
-  // console.log('manufacturersSearch', manufacturersSearch);
+
   return (
     <aside className="text-capitalize w-100">
       <header className="products__filters-header d-flex align-items-center justify-content-between">
@@ -190,6 +190,9 @@ const ProductsSidebarFilter = (props: Props) => {
               placeholder={t('searchBar:enter_name_category')}
               aria-label="search"
               onChange={onValueCateChange}
+              onKeyPress={(e) => {
+                e.key === 'Enter' && e.preventDefault();
+              }}
             />
           </div>
         </form>
@@ -207,7 +210,7 @@ const ProductsSidebarFilter = (props: Props) => {
               .map(({ name, id, categorySub }) => (
                 <div key={id} className="mb-2">
                   <Link href={`/products?category=${id}`}>
-                    <Dropdown initialShow={false} label={name}>
+                    <Dropdown initialShow={true} label={name}>
                       <div className="mb-3">
                         <div className="ml-2 mb-1">
                           <Link href={`/products?category=${id}`}>
@@ -303,12 +306,7 @@ const ProductsSidebarFilter = (props: Props) => {
       <Dropdown label={t('productsSidebar:manufacturer')}>
         <form onSubmit={handleManufacturersSubmit} autoComplete="off" acceptCharset="UTF-8">
           <div className="input-group form__input-group mb-3">
-            <button
-              onClick={() =>
-                router.push({
-                  pathname: '/manufacturers'
-                })
-              }>
+            <button>
               <i className="fas fa-search form__input-icon" />
             </button>
 
@@ -318,6 +316,9 @@ const ProductsSidebarFilter = (props: Props) => {
               placeholder={t('searchBar:enter_name_manufacturers')}
               aria-label="search"
               onChange={onValueManuChange}
+              onKeyPress={(e) => {
+                e.key === 'Enter' && e.preventDefault();
+              }}
             />
           </div>
         </form>
