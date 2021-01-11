@@ -1,6 +1,5 @@
 import { Box, Button, Typography } from '@material-ui/core';
 import { useTranslation } from 'i18n';
-import { AddressInfo } from 'net';
 import React, { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { DeliveryInfo as DeliveryInfoType } from 'src/graphql/user/getAddressInfoUser';

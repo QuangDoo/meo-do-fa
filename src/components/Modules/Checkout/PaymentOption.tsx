@@ -96,7 +96,11 @@ const PaymentOption = (props: Props) => {
               <Trans
                 i18nKey="checkout:paymentOption_bank"
                 components={{
-                  Link: <LinkText href="/help/bank_transfer_guide"> </LinkText>
+                  Link: (
+                    <a href="/help/bank_transfer_guide" target="_blank">
+                      {' '}
+                    </a>
+                  )
                 }}
               />
             ),

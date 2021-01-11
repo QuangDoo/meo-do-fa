@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react';
 import { useCart } from 'src/contexts/Cart';
+import { useToken } from 'src/contexts/Token';
 import { useUser } from 'src/contexts/User';
 
 import Footer from '../Layout/Footer';
@@ -16,13 +17,15 @@ export default function MainLayout(props: Props) {
 
   const { loading: gettingUser } = useUser();
 
+  const token = useToken();
+
   return (
     <>
       <Header />
 
       <Nav />
 
-      <LoadingBackdrop open={gettingCart || gettingUser} />
+      {token && <LoadingBackdrop open={gettingCart || gettingUser} />}
 
       {props.children}
 

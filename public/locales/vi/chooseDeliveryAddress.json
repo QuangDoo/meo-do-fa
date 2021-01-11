@@ -1,3 +1,7 @@
 {
-  "dialog_title": "Chọn địa chỉ giao hàng"
+  "dialog_title": "Chọn địa chỉ giao hàng",
+  "address": "Địa chỉ",
+  "phone": "Điện thoại",
+  "email": "Email",
+  "choose_this_address": "Chọn địa chỉ này"
 }

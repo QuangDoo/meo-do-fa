@@ -26,7 +26,7 @@ const InputCard = (props: Props) => {
         )}
 
         {props.description && (
-          <small className="text-muted mb-2 d-inline-block">{t('can_not_find')}</small>
+          <small className="text-muted mb-2 d-inline-block">{props.description}</small>
         )}
       </div>
 

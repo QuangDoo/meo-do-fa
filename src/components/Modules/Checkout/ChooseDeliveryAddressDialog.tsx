@@ -41,19 +41,19 @@ export default function ChooseDeliveryAddressDialog(props: Props) {
 
                 <Box pt={2}>
                   <h6 className="delivery-address-content">
-                    <div>Địa chỉ:</div>
+                    <div>{t('chooseDeliveryAddress:address')}:</div>
                     <div>
                       {`${address.street}, ${address.ward}, ${address.district}, ${address.city}`}
                     </div>
                   </h6>
 
                   <h6 className="delivery-address-content">
-                    <div>Điện thoại:</div>
+                    <div>{t('chooseDeliveryAddress:phone')}:</div>
                     <div>{address.phone}</div>
                   </h6>
 
                   <h6 className="delivery-address-content">
-                    <div>Email:</div>
+                    <div>{t('chooseDeliveryAddress:email')}:</div>
                     <div>{address.email}</div>
                   </h6>
                 </Box>
@@ -64,7 +64,7 @@ export default function ChooseDeliveryAddressDialog(props: Props) {
                   variant="contained"
                   color="primary"
                   onClick={() => props.handleDeliveryAddressChoose?.(address)}>
-                  Chọn địa chỉ này
+                  {t('chooseDeliveryAddress:choose_this_address')}
                 </Button>
               </CardActions>
             </Card>
