@@ -10,5 +10,6 @@
   "duplicate_order": "Trùng đơn hàng",
   "change_delivery_address": "Thay đổi địa điểm nhận",
   "button_title": "Xác nhận",
-  "is_check" : "Xin vui lòng xác thực điều khoản"
+  "is_check" : "Xin vui lòng xác thực điều khoản",
+  "help": "Ho tro"
 }
