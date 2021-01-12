@@ -246,7 +246,7 @@ const ProductsSidebarFilter = (props: Props) => {
               ))
           : categories
               .slice()
-              .sort((a, b) => a.name.localeCompare(b.name))
+              .sort((a, b) => a.name?.localeCompare(b.name))
               .map(({ name, id, categorySub }) => (
                 <div key={id} className="mb-2">
                   <Link href={`/products?category=${id}`}>
