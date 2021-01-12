@@ -5,6 +5,7 @@ import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { useCart } from 'src/contexts/Cart';
+import { useUser } from 'src/contexts/User';
 import { CREATE_ORDER, CreateOrderData, CreateOrderVars } from 'src/graphql/order/createOrder';
 import { GET_COUNSEL, GetCounselData, OutputCounsel } from 'src/graphql/order/getCounsel';
 import { useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
@@ -36,6 +37,7 @@ export type CheckoutFormInputs = {
   paymentMethodId: string;
 
   isInvoice: boolean;
+  showInvoiceProducts: boolean;
   invoiceName: string;
   invoiceEmail: string;
   invoiceStreet: string;
@@ -64,6 +66,7 @@ const checkoutFormDefaultValues: CheckoutFormInputs = {
   paymentMethodId: '1',
 
   isInvoice: false,
+  showInvoiceProducts: false,
   invoiceName: '',
   invoiceEmail: '',
   invoiceStreet: '',
@@ -79,6 +82,8 @@ const checkoutFormDefaultValues: CheckoutFormInputs = {
 
 const CheckoutPage = () => {
   const { t } = useTranslation(['checkout', 'errors']);
+
+  const { data: user } = useUser();
 
   const [counselData, setCounselData] = useState<OutputCounsel>();
 
@@ -148,47 +153,48 @@ const CheckoutPage = () => {
   const onSubmit: SubmitHandler<CheckoutFormInputs> = (data) => {
     console.log('create order submit data:', data);
 
-    return;
+    const [deliveryWard, deliveryZipCode] = data.deliveryWard?.split('__') || [];
+    const [invoiceWard, invoiceZipCode] = data.invoiceWard?.split('__') || [];
 
     createOrder({
       variables: {
         inputs: {
           orderNo: orderNo,
           customer: {
-            fullName: data.deliveryName,
-            phone: data.deliveryPhone,
-            email: data.deliveryEmail,
+            fullName: user.name || '',
+            phone: user.phone || '',
+            email: user.email || '',
             shipping_address: {
-              fullName: data.deliveryName,
-              phone: data.deliveryPhone,
-              email: data.deliveryEmail,
-              partnerId: data.deliveryPartnerId,
-              isNew: !!data.deliveryPartnerId,
-              zipCode: +data.deliveryWard.split('__')[1],
-              city: data.deliveryCity.split('__')[0],
-              district: data.deliveryDistrict.split('__')[0],
-              ward: data.deliveryWard.split('__')[0],
-              street: data.deliveryStreet
+              fullName: data.deliveryName || '',
+              phone: data.deliveryPhone || '',
+              email: data.deliveryEmail || '',
+              partnerId: data.deliveryPartnerId || '',
+              isNew: !data.deliveryPartnerId,
+              zipCode: +deliveryZipCode || 0,
+              city: data.deliveryCity?.split('__')[0] || '',
+              district: data.deliveryDistrict?.split('__')[0] || '',
+              ward: deliveryWard || '',
+              street: data.deliveryStreet || ''
             },
             billing_address: data.isInvoice
               ? {
-                  fullName: data.invoiceName,
-                  email: data.invoiceEmail,
-                  tax: data.invoiceTaxCode,
+                  fullName: data.invoiceName || '',
+                  email: data.invoiceEmail || '',
+                  tax: data.invoiceTaxCode || '',
                   partnerId: '',
                   isNew: true,
-                  zipCode: +data.invoiceWard.split('__')[1],
-                  city: data.invoiceCity.split('__')[0],
-                  district: data.invoiceDistrict.split('__')[0],
-                  ward: data.invoiceWard.split('__')[0],
-                  street: data.invoiceStreet
+                  zipCode: +invoiceZipCode || 0,
+                  city: data.invoiceCity?.split('__')[0] || '',
+                  district: data.invoiceDistrict?.split('__')[0] || '',
+                  ward: invoiceWard || '',
+                  street: data.invoiceStreet || ''
                 }
               : undefined
           },
           paymentMethodId: +data.paymentMethodId,
-          deliveryMethodId: +data.deliveryMethodId,
+          deliveryMethodId: +data.deliveryMethodId || 0,
           note: data.customerNotes,
-          isInvoice: !!data.isInvoice
+          isInvoice: data.isInvoice
         }
       }
     });
