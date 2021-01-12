@@ -120,7 +120,7 @@ const OrderItem = (props) => {
         </div>
       </div>
 
-      {[10].includes(flag) && (
+      {flag && [10].includes(flag) && (
         <div className="my-orders__invoice">
           <button className="btn btn-outline-danger btn-sm" onClick={() => handleOpenClick(flag)}>
             {t('myOrders:cancel_order')}
@@ -128,7 +128,7 @@ const OrderItem = (props) => {
         </div>
       )}
 
-      {[20, 40, 80, 30].includes(flag) && (
+      {flag && [20, 40, 80, 30].includes(flag) && (
         <div className="my-orders__invoice">
           <a href="tel:1900232436" className="btn btn-outline-primary btn-sm">
             {t('myOrders:help')}
