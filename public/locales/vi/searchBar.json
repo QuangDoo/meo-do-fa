@@ -8,8 +8,8 @@
   "in": "trong",
   "input": "Nhập tên thuốc, hoạt chất cần tìm ...",
   "no_category": "Không có thể loại với từ khóa",
-  "no_manufacturer": "Không có nhà sản xuất với từ khóa",
-  "no_product": "Không có sản phẩm với từ khóa",
+  "no_manufacturers": "Không có nhà sản xuất với từ khóa",
+  "no_products": "Không có sản phẩm với từ khóa",
   "result": "kết quả tìm kiếm cho",
   "show": "Hiển thị"
 }

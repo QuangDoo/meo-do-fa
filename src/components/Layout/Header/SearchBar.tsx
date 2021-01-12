@@ -4,26 +4,63 @@ import clsx from 'clsx';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { ReactNode, useState } from 'react';
-import { SEARCH_MANUFACTURERS_BY_NAME } from 'src/graphql/search/search.manufacturer.query';
-import { SEARCH_PRODUCTS_BY_NAME } from 'src/graphql/search/search.products.query';
+import React, { useState } from 'react';
+import {
+  SEARCH_MANUFACTURER,
+  SearchManufacturerData,
+  SearchManufacturerVars
+} from 'src/graphql/search/search.manufacturer.query';
+import {
+  SEARCH_PRODUCT,
+  SearchProductData,
+  SearchProductVars,
+  SearchResult
+} from 'src/graphql/search/search.products.query';
 import { useDebouncedEffect } from 'src/hooks/useDebouncedEffect';
 
 import Loading from '../Loading';
 
-type LinkItemProps = {
-  href: string;
-  children: ReactNode;
-  onClick?: () => void;
-};
+const SearchResults = (props: {
+  array: SearchResult[];
+  value: string;
+  type: 'products' | 'manufacturers';
+  onTitleClick: (value: string) => void;
+  onItemClick: (item: SearchResult) => void;
+  generateHref: (item: SearchResult) => string;
+}) => {
+  const { t } = useTranslation(['searchBar']);
 
-const LinkItem = (props: LinkItemProps) => {
-  return (
-    <button className="w-100 text-left border-bottom p-3" onClick={props.onClick}>
-      <Link href={props.href}>
-        <a>{props.children}</a>
-      </Link>
-    </button>
+  return props.array.length > 0 ? (
+    <>
+      <button
+        className="w-100 text-left border-bottom p-3"
+        onClick={() => props.onTitleClick(props.value)}>
+        <Link href={`/${props.type}?sort=best_match&search=${props.value}`}>
+          <a>
+            <em>{props.value}</em> {t('searchBar:in')}{' '}
+            <b className="text-primary">{t(`searchBar:all_${props.type}`)}</b>
+          </a>
+        </Link>
+      </button>
+
+      {props.array.map((item) => (
+        <button
+          className="w-100 text-left border-bottom"
+          key={item.id}
+          onClick={() => props.onItemClick(item)}>
+          <Link href={props.generateHref(item)}>
+            <a className="search__result">{item.name}</a>
+          </Link>
+        </button>
+      ))}
+    </>
+  ) : (
+    <>
+      <div className="search__result--empty">
+        {t(`searchBar:no_${props.type}`)} <b>{props.value}</b>
+      </div>
+      <hr />
+    </>
   );
 };
 
@@ -31,21 +68,21 @@ const SearchBar = () => {
   const { t } = useTranslation(['searchBar']);
   const router = useRouter();
 
-  const [searchProducts, { data: pData, loading: pLoading }] = useLazyQuery(
-    SEARCH_PRODUCTS_BY_NAME,
-    {
-      onCompleted: () => setShowProducts(true)
-    }
-  );
+  const [searchProducts, { data: pData, loading: pLoading }] = useLazyQuery<
+    SearchProductData,
+    SearchProductVars
+  >(SEARCH_PRODUCT, {
+    onCompleted: () => setShowProducts(true)
+  });
 
   const products = pData?.searchProduct || [];
 
-  const [searchManufacturers, { data: mData, loading: mLoading }] = useLazyQuery(
-    SEARCH_MANUFACTURERS_BY_NAME,
-    {
-      onCompleted: () => setShowManufacturers(true)
-    }
-  );
+  const [searchManufacturers, { data: mData, loading: mLoading }] = useLazyQuery<
+    SearchManufacturerData,
+    SearchManufacturerVars
+  >(SEARCH_MANUFACTURER, {
+    onCompleted: () => setShowManufacturers(true)
+  });
 
   const manufacturers = mData?.searchManufactory || [];
 
@@ -107,49 +144,6 @@ const SearchBar = () => {
     setShowResults(true);
   };
 
-  const renderProducts = (products) => {
-    return products.map((product) => (
-      <Link key={product.id} href={`/products/${product.slug}`}>
-        <a className="search__result">{product.name}</a>
-      </Link>
-    ));
-  };
-
-  const renderManufacturers = (manufacturers) => {
-    return manufacturers.map((manufacturer) => (
-      <Link key={manufacturer.id} href={`/products?manufacturer=${manufacturer.id}`}>
-        <a className="search__result">{manufacturer.name}</a>
-      </Link>
-    ));
-  };
-
-  const renderSearchTitle = (type) => {
-    switch (type) {
-      case 'products':
-        return (
-          <LinkItem
-            href={`/products?sort=best_match&search=${value}`}
-            onClick={() => setIsFocused(false)}>
-            <>
-              <em>{value}</em> {t('searchBar:in')}{' '}
-              <b className="text-primary">{t('searchBar:all_products')}</b>
-            </>
-          </LinkItem>
-        );
-      case 'manufacturers':
-        return (
-          <LinkItem
-            href={`/manufacturers?sort=best_match&search=${value}`}
-            onClick={() => setIsFocused(false)}>
-            <>
-              <em>{value}</em> {t('searchBar:in')}{' '}
-              <b className="text-primary">{t('searchBar:all_manufacturers')}</b>
-            </>
-          </LinkItem>
-        );
-    }
-  };
-
   return (
     <div className="d-flex justify-content-sm-center justify-content-start flex-grow-1 mr-sm-3">
       <ClickAwayListener onClickAway={() => setIsFocused(false)}>
@@ -171,31 +165,28 @@ const SearchBar = () => {
           </form>
           {/* && showResults === 2 */}
           <div className={clsx('elevated search__results', isFocused && showResults && 'show')}>
-            {showProducts &&
-              (products.length > 0 ? (
-                <>
-                  {renderSearchTitle('products')}
-                  {renderProducts(products)}
-                </>
-              ) : (
-                <>
-                  <div className="search__result--empty">
-                    {t('searchBar:no_product')} <b>{value}</b>
-                  </div>
-                  <hr />
-                </>
-              ))}
-            {showManufacturers &&
-              (manufacturers.length > 0 ? (
-                <>
-                  {renderSearchTitle('manufacturers')}
-                  {renderManufacturers(manufacturers)}
-                </>
-              ) : (
-                <div className="search__result--empty">
-                  {t('searchBar:no_manufacturer')} <b>{value}</b>
-                </div>
-              ))}
+            {showProducts && (
+              <SearchResults
+                type="products"
+                array={products}
+                value={value}
+                onTitleClick={() => setIsFocused(false)}
+                generateHref={(item) => `/products/${item.slug}`}
+                onItemClick={() => setIsFocused(false)}
+              />
+            )}
+
+            {showManufacturers && (
+              <SearchResults
+                type="manufacturers"
+                array={manufacturers}
+                value={value}
+                onTitleClick={() => setIsFocused(false)}
+                generateHref={(item) => `/products?manufacturer=${item.id}`}
+                onItemClick={() => setIsFocused(false)}
+              />
+            )}
+
             {(pLoading || mLoading) && (
               <div className="search__result--empty text-center">
                 <Loading />
