@@ -17,19 +17,21 @@ function TermsOfService() {
       <div className="container my-5">
         <h2 className="text-center my-5">Thỏa thuận về Dịch Vụ Thương Mại Điện Tử</h2>
         <p>
-          Bằng cách hoàn tất thủ tục đăng ký xử lý dữ liệu trên Medofa, Công ty TNHH Dược phẩm
-          Dayton tại đây xác nhận rằng, Công ty TNHH Dược phẩm Dayton là pháp nhân hợp pháp, có giấy
-          phép phân phối dược phẩm để giao kết thỏa thuận dịch vụ thương mại điện tử với Medofa (“
-          <b>Thỏa Thuận</b>”) cũng như thực hiện các nghĩa vụ tương ứng với các Thỏa Thuận đó. Bằng
-          cách đăng ký và sử dụng dịch vụ của Medofa, và kế từ ngày Công ty TNHH Dược phẩm Dayton
-          hoàn tất thủ tục mở gian hàng trên sàn giao dịch của Medofa (“ <b>ngày hiệu lực</b> ”),
-          Công ty TNHH Dược phẩm Dayton đồng ý chịu sự ràng buộc với mọi và tất cả điều khoản dịch
-          vụ và điều kiện được quy định tại thỏa thuận này, và tất cả các chính sách của sàn giao
-          dịch được công bố đến Công ty TNHH Dược phẩm Dayton theo từng thời điếm nhất định, bao gồm
-          tất cả diều khoản dịch vụ, điều kiện sửa đổi, bổ sung (nếu có) trong tương lai.
+          Medofa hoặc sàn thương mại điên tử Medofa.com là Website trực tuyến kinh doanh các sản
+          phẩm chăm sóc sức khỏe con người.Medofa được xây dựng nhằm đem lại tiện ích cho khách hàng
+          mua hàng trực tuyến tin cậy, tiết kiệm thời gian và qua đó khách hàng có thể tìm hiểu
+          thông tin trực tuyến về sản phẩm hàng hóa, giá cả mua sắm .Công ty TNHH Dược phẩm Dayton
+          làm pháp nhân, có giấy phép phân phối dược phẩm để giao kết thỏa thuận dịch vụ thương mại
+          điện tử với Medofa (“Thỏa Thuận”) cũng như thực hiện các nghĩa vụ tương ứng với các Thỏa
+          Thuận đó. Bằng cách đăng ký và sử dụng dịch vụ của Medofa, và kế từ ngày Công ty TNHH Dược
+          phẩm Dayton hoàn tất thủ tục mở gian hàng trên sàn giao dịch của Medofa (“ ngày hiệu lực
+          ”), Công ty TNHH Dược phẩm Dayton đồng ý chịu sự ràng buộc với mọi và tất cả điều khoản
+          dịch vụ và điều kiện được quy định tại thỏa thuận này, và tất cả các chính sách của sàn
+          giao dịch được công bố đến Công ty TNHH Dược phẩm Dayton theo từng thời điểm nhất định,
+          bao gồm tất cả điều khoản dịch vụ, điều kiện sửa đổi, bổ sung (nếu có) trong tương lai.
         </p>
         <h3 className="mt-3 text-uppercase">Điều khoản tổng quát</h3>
-        <ul className="list-group upper-roman-list">
+        <ol className="list-group">
           <li>
             <p className="font-weight-bold"> Dịch vụ của medofa </p>
             Medofa cung cấp dịch vụ xử lý dữ liệu (“<b>Dịch Vụ</b>”) trên cơ sở tính phí, bao gồm
@@ -56,9 +58,9 @@ function TermsOfService() {
           </li>
           <li>
             <p className="font-weight-bold">Phí</p>
-            Công ty TNHH Dược phẩm Dayton sẽ được sử dụng Dịch Vụ của Medofa trên cơ sở không thu
+            Medofa sẽ cho Công ty TNHH Dược phẩm Dayton sử dụng dịch vụ của trên cơ sở không thu
             phí, trừ một số phí dịch vụ vận hành cụ thể, tùy thuộc vào phương thức thực hiện mà Công
-            ty TNHH Dược phẩm Dayton lựa chọn (ví dụ như phí sử dụng Phương thức Xử Lý Bởi Medofa).
+            ty TNHH Dược phẩm Dayton lựa chọn (ví dụ như phí sử dụng phương thức xử lý bởi Medofa).
             <br /> Tuy nhiên, tùy vào quyết định của mình, Medofa có thể tiến hành thu các phí khác
             bằng một thông báo gửi đến Công ty TNHH Dược phẩm Dayton phù hợp với quy định của Điều
             Khoản Dịch Vụ này.
@@ -86,22 +88,25 @@ function TermsOfService() {
           </li>
           <li>
             <p className="font-weight-bold">Tranh Chấp hoặc Khiếu Nại</p>
-            Thỏa Thuận Về Dịch Vụ Thương Mại Điện Tử và Điều Khoản Dịch Vụ tương ứng được điều chỉnh
-            bởi pháp luật của nước Cộng hòa Xã hội Chủ nghĩa Việt Nam.
+            Bất kỳ tranh cãi, khiếu nại hoặc tranh chấp phát sinh từ hoặc liên quan đến giao dịch
+            tại Website hoặc các quy định và điều kiện này đều sẽ được giải quyết bằng hình thức
+            thương lượng, hòa giải, trọng tài và/hoặc tòa án .
             <br />
-            Khi phát sinh tranh chấp hoặc khiếu nại, Các Bên có nghĩa vụ giải quyết trên tinh thần
-            thương lượng và hòa giải. Nếu vẫn không giải quyết được, một trong Các Bên có quyền yêu
-            cầu cơ quan trọng tài thương mại giải quyết.
+            Thỏa thuận về dịch vụ thương mại điện tử và điều khoản dịch vụ tương ứng được điều chỉnh
+            bởi pháp luật của nước Cộng hòa Xã hội Chủ nghĩa Việt Nam. Khi phát sinh tranh chấp hoặc
+            khiếu nại. Các bên có nghĩa vụ giải quyết trên tinh thần thương lượng và hòa giải. Nếu
+            vẫn không giải quyết được, một trong các bên có quyền yêu cầu cơ quan trọng tài thương
+            mại giải quyết.
             <br /> Chi tiết vui lòng xem thêm <a>Điều 17</a> của Điều Khoản Dịch Vụ.
           </li>
           <li>
             <p className="font-weight-bold">Định Nghĩa</p>
             Vui lòng xem chi tiết tại <a href="#form-1">Biểu 1</a> đính kèm Điều Khoản Dịch Vụ.
           </li>
-        </ul>
+        </ol>
 
         <h3 className="mt-3 text-uppercase">Điều khoản dịch vụ và điều kiện chung về dịch vụ</h3>
-        <ul className="list-group decimal-list">
+        <ul className="list-group">
           <li>
             <p className="font-weight-bold">Chấp thuận</p>
             <ul className="ml-3 list-group decimal-list">
@@ -124,32 +129,30 @@ function TermsOfService() {
                         Công ty TNHH Dược phẩm Dayton đã có, đang và sẽ luôn duy trì, các giấy phép
                         kinh doanh cần thiết để hoạt động dưới hình thức pháp nhân, được tồn tại và
                         hoạt động hợp pháp phù hợp với pháp luật hiện hành nơi mà pháp nhân đặt trụ
-                        sở chính;
+                        sở chính.
                       </li>
                       <li>
                         Công ty TNHH Dược phẩm Dayton đã đạt được tất cả các quyền lợi, năng lực và
                         thẩm quyền tiên quyết để giao kết thỏa thuận với Medofa cũng như thực hiện
-                        các nghĩa vụ tương ứng với Thỏa thuận đó; và
+                        các nghĩa vụ tương ứng với thỏa thuận đó.
                       </li>
                       <li>
-                        mọi thông tin Công ty TNHH Dược phẩm Dayton tự cung cấp hoặc tạo ra, hoặc do
+                        Mọi thông tin Công ty TNHH Dược phẩm Dayton tự cung cấp hoặc tạo ra, hoặc do
                         các bên liên kết của Công ty TNHH Dược phẩm Dayton cung cấp hoặc tạo ra,
                         luôn chính xác và đầy đủ. Công ty TNHH Dược phẩm Dayton cũng tuyên bố và
                         khẳng định thêm rằng, Công ty TNHH Dược phẩm Dayton và bất kỳ cá nhân hoặc
                         pháp nhân nào có quyền lợi tài chính liên quan đến hoạt động kinh doanh của
                         chính Công ty TNHH Dược phẩm Dayton, hoặc các cá nhân hoặc pháp nhân nào
-                        đang hoạt động dưới sự ủy quyền của Công ty TNHH Dược phẩm Dayton, sẽ:
+                        đang hoạt động dưới sự ủy quyền của Công ty TNHH Dược phẩm Dayton sẽ
                         <ul className="list-group lower-alpha-list">
                           <li>
-                            không có quan hệ liên kết với nhân viên của Medofa hoặc Các Bên Liên Kết
-                            của Medofa;
+                            Không có quan hệ liên kết với nhân viên của Medofa hoặc các bên liên kết
+                            của Medofa.
                           </li>
+                          <li>Chưa bị Medofa cấm bán sản phẩm trên sàn giao dịch của Medofa.</li>
                           <li>
-                            chưa bị Medofa cấm bán Sản Phẩm trên Sàn Giao Dịch của Medofa; hoặc
-                          </li>
-                          <li>
-                            chưa từng bị dính líu đến bất kỳ vụ kiện tụng hoặc khiếu nại nào liên
-                            quan đến Thỏa Thuận của Medofa.
+                            Chưa từng bị dính líu đến bất kỳ vụ kiện tụng hoặc khiếu nại nào liên
+                            quan đến thỏa thuận của Medofa
                           </li>
                         </ul>
                       </li>
@@ -159,19 +162,19 @@ function TermsOfService() {
               </li>
               <li>
                 Vào bất kỳ lúc nào, Medofa bảo lưu quyền và có toàn quyền quyết định việc thay đổi
-                bất kỳ điều khoản và điều kiện nào tại Điều Khoản Dịch Vụ này, hoặc bất kỳ khoản
-                phí, quy trình, chính sách nào điều chỉnh các Dịch Vụ xử lý dữ liệu (bao gồm tất cả
-                các Phụ Lục đính kèm). Mọi thay đổi sẽ được công bố trên Sàn Giao Dịch và và sẽ có
+                bất kỳ điều khoản và điều kiện nào tại điều khoản dịch vụ này, hoặc bất kỳ khoản
+                phí, quy trình, chính sách nào điều chỉnh các dịch vụ xử lý dữ liệu (bao gồm tất cả
+                các phụ lục đính kèm). Mọi thay đổi sẽ được công bố trên sàn giao dịch và và sẽ có
                 hiệu lực sau 7 (bảy) ngày kể từ ngày công bố nói trên. Công ty TNHH Dược phẩm Dayton
                 tại đây đồng ý và xác nhận rằng Công ty TNHH Dược phẩm Dayton chịu trách nhiệm trong
                 việc truy cập, xem xét và phê duyệt tất cả các nội dung điều chỉnh đó. Việc Công ty
-                TNHH Dược phẩm Dayton tiếp tục sử dụng các Dịch Vụ do Medofa cung cấp sau khi có các
+                TNHH Dược phẩm Dayton tiếp tục sử dụng các dịch vụ do Medofa cung cấp sau khi có các
                 nội dung điều chỉnh đó sẽ được xem là sự xác nhận và chấp thuận của Công ty TNHH
-                Dược phẩm Dayton về Điều Khoản Dịch Vụ đã được điều chỉnh và rằng Điều Khoản Dịch Vụ
-                điều chỉnh đó sẽ ràng buộc đối với Nhà Cung Cấp. Trường hợp Công ty TNHH Dược phẩm
+                Dược phẩm Dayton về điều khoản dịch vụ đã được điều chỉnh và rằng điều khoản dịch vụ
+                điều chỉnh đó sẽ ràng buộc đối với nhà cung cấp.Trường hợp Công ty TNHH Dược phẩm
                 Dayton không đồng ý với các nội dung được điều chỉnh, Công ty TNHH Dược phẩm Dayton
-                có quyền chấm dứt Điều Khoản Dịch Vụ xử lý dữ liệu theo quy định tại Điều 13 của
-                Điều Khoản Dịch Vụ xử lý dữ liệu, và ngay lập tức ngừng việc sử dụng Dịch Vụ xử lý
+                có quyền chấm dứt điều khoản dịch vụ xử lý dữ liệu theo quy định tại Điều 13 của
+                điều khoản dịch vụ xử lý dữ liệu, và ngay lập tức ngừng việc sử dụng dịch vụ xử lý
                 dữ liệu do Medofa cung cấp. Để tránh nhầm lẫn, phiên bản điều chỉnh mới sẽ thay thế
                 và/hoặc hủy bỏ các nội dung tương ứng ở phiên bản cũ.
               </li>
@@ -180,8 +183,8 @@ function TermsOfService() {
 
           <li>
             <p className="font-weight-bold">Dịch vụ xử lỹ dữ liệu</p>
-            Medofa sẽ cung cấp các Dịch vụ xử lý dữ liệu sau đây và Công ty TNHH Dược phẩm Dayton
-            đồng ý chi trả Phí Dịch Vụ xử lý dữ liệu cho Medofa liên quan đến các Dịch Vụ xử lý dữ
+            Medofa sẽ cung cấp các dịch vụ xử lý dữ liệu sau đây và Công ty TNHH Dược phẩm Dayton
+            đồng ý chi trả phí dịch vụ xử lý dữ liệu cho Medofa liên quan đến các dịch vụ xử lý dữ
             liệu đã được cung cấp đó.
             <br />
             Các Dịch Vụ xử lý dữ liệu bao gồm:
@@ -195,9 +198,9 @@ function TermsOfService() {
 
           <li>
             <p className="font-weight-bold">Quy trình thanh toán</p>
-            Công ty TNHH Dược phẩm Dayton có trách nhiệm thanh toán Phí Dịch Vụ Vận Hành như được
-            quy định tại Điều 3 của Điều Khoản Dịch Vụ này và tất cả các Phí Dịch Vụ khác được quy
-            định tại Điều Khoản Dịch Vụ, tùy vào từng thời điểm nhất định.
+            Công ty TNHH Dược phẩm Dayton có trách nhiệm thanh toán phí dịch vụ vận hành như được
+            quy định tại Điều 3 của điều khoản dịch vụ này và tất cả các phí dịch vụ khác được quy
+            định tại điều khoản dịch vụ, tùy vào từng thời điểm nhất định.
           </li>
 
           <li>
@@ -210,81 +213,81 @@ function TermsOfService() {
                 <ul className="list-group ml-3 decimal-list">
                   <li>
                     Công ty TNHH Dược phẩm Dayton đã hoặc sẽ xin được tất cả các giấy phép, cho phép
-                    hoặc phê duyệt cần thiết theo quy định để bán Sản Phẩm thông qua Sàn Giao Dịch
-                    trước khi niêm yết Sản Phẩm trên Sàn Giao Dịch (bao gồm nhưng không giới hạn Sản
-                    Phẩm được xem là “có điều kiện” theo Quy Định Pháp Luật) và sẽ được trình cho
+                    hoặc phê duyệt cần thiết theo quy định để bán sản phẩm thông qua sàn giao dịch
+                    trước khi niêm yết sản phẩm trên sàn giao dịch (bao gồm nhưng không giới hạn sản
+                    phẩm được xem là “có điều kiện” theo quy định pháp luật) và sẽ được trình cho
                     Medofa vào bất kỳ thời điểm nào khi Medofa yêu cầu.
                   </li>
                   <li>
                     Công ty TNHH Dược phẩm Dayton sẽ tuân thủ các quy định về quản lý thuế, bao gồm
                     cả quy định về kê khai và nộp các loại thuế liên quan, bao gồm nhưng không giới
                     hạn, thuế thu nhập cá nhân, thuế giá trị gia tăng và thuế thu nhập doanh nghiệp.
-                    Đồng thời cam kết giữ cho Medofa và Các Bên Liên Kết của Medofa khỏi những trách
+                    Đồng thời cam kết giữ cho Medofa và các bên liên kết của Medofa khỏi những trách
                     nhiệm, khiếu nại, yêu cầu bồi hoàn, quyết định xử phạt hành chính, liên quan đến
-                    hoặc xuất phát từ hành vi vi phạm nghĩa vụ về quản lý thuế của Nhà Cung Cấp.
+                    hoặc xuất phát từ hành vi vi phạm nghĩa vụ về quản lý thuế của nhà cung cấp.
                   </li>
                   <li>
-                    Công ty TNHH Dược phẩm Dayton cam kết sẽ phát hành hóa đơn tài chính đối với Sản
-                    Phẩm, trừ khi pháp luật có quy định khác đi. Công ty TNHH Dược phẩm Dayton đồng
-                    ý chịu toàn bộ trách nhiệm đối với tiền phạt hoặc sự tịch thu Sản Phẩm bởi cơ
+                    Công ty TNHH Dược phẩm Dayton cam kết sẽ phát hành hóa đơn tài chính đối với sản
+                    phẩm, trừ khi pháp luật có quy định khác đi. Công ty TNHH Dược phẩm Dayton đồng
+                    ý chịu toàn bộ trách nhiệm đối với tiền phạt hoặc sự tịch thu sản phẩm bởi cơ
                     quan nhà nước có thẩm quyền vì vận chuyển hàng hóa thương mại mà không có tài
                     liệu phù hợp. Trong trường hợp Công ty TNHH Dược phẩm Dayton không phát hành hóa
-                    đơn tài chính theo yêu cầu của pháp luật Việt Nam, Medofa có toàn quyền chấm dứt
-                    Dịch Vụ xử lý dữ liệu với hiệu lực ngay lập tức.
+                    đơn tài chính theo yêu cầu của Pháp Luật Việt Nam, Medofa có toàn quyền chấm dứt
+                    dịch vụ xử lý dữ liệu với hiệu lực ngay lập tức.
                   </li>
                   <li>
                     Công ty TNHH Dược phẩm Dayton là chủ sở hữu hoặc có quyền hợp pháp đối với các
-                    bằng sáng chế, bản quyền, bí mật thương mại, nhãn hiệu Sản Phẩm, tên thương mại,
-                    hoặc các quyền sở hữu trí tuệ khác liên quan đến Sản Phẩm và Thông Tin Nội Dung
-                    và Công ty TNHH Dược phẩm Dayton không được biết bất kỳ khiếu nại nào được thực
+                    bằng sáng chế, bản quyền, bí mật thương mại, nhãn hiệu sản phẩm, tên thương mại,
+                    hoặc các quyền sở hữu trí tuệ khác liên quan đến sản phẩm và thông tin nội dung
+                    và công ty TNHH Dược phẩm Dayton không được biết bất kỳ khiếu nại nào được thực
                     hiện bởi bất kỳ bên thứ ba nào liên quan đến bất kỳ việc xâm phạm thực tế hoặc
-                    bị cáo buộc đối với bằng sáng chế, bản quyền, bí mật thương mại, nhãn hiệu Sản
-                    Phẩm, tên thương mại, hoặc các quyền sở hữu trí tuệ khác hoặc khiếu nại, yêu cầu
-                    hoặc hành động nào khác xảy ra từ Thông Tin Nội Dung, việc quảng cáo, công bố,
-                    quảng bá, sản xuất, bán, phân phối hoặc sử dụng Sản Phẩm và bằng tuyên bố này sẽ
+                    bị cáo buộc đối với bằng sáng chế, bản quyền, bí mật thương mại, nhãn hiệu sản
+                    phẩm, tên thương mại, hoặc các quyền sở hữu trí tuệ khác hoặc khiếu nại, yêu cầu
+                    hoặc hành động nào khác xảy ra từ thông tin nội dung, việc quảng cáo, công bố,
+                    quảng bá, sản xuất, bán, phân phối hoặc sử dụng sản phẩm và bằng tuyên bố này sẽ
                     không xâm phạm các quyền nói trên một cách trực tiếp hoặc gián tiếp.
                   </li>
                   <li>
                     Công ty TNHH Dược phẩm Dayton cam kết cung cấp các thông tin sau liên quan đến
-                    Sản Phẩm của Công ty TNHH Dược phẩm Dayton niêm yết trên Sàn Giao Dịch:
+                    sản phẩm của Công ty TNHH Dược phẩm Dayton niêm yết trên sàn giao dịch.
                     <ul className="list-group ml-3 decimal-list">
                       <li>
-                        Ký tự, hình ảnh và bất kỳ thông tin nào khác liên quan đến Sản Phẩm được
-                        đăng tải chính xác, cập nhật và đầy đủ;
+                        Ký tự, hình ảnh và bất kỳ thông tin nào khác liên quan đến sản phẩm được
+                        đăng tải chính xác, cập nhật và đầy đủ.
                       </li>
                       <li>
-                        Thông Tin Nội Dung phải được cung cấp bằng tiếng Việt, tuân thủ Quy Định
+                        Thông tin nội dung phải được cung cấp bằng tiếng Việt, tuân thủ quy định
                         Pháp Luật áp dụng và không chứa đựng bất kỳ tài liệu về giới tính, mang tính
-                        chất bôi nhọ hoặc khiêu dâm;
+                        chất bôi nhọ hoặc khiêu dâm.
                       </li>
                       <li>
-                        Công ty TNHH Dược phẩm Dayton phải thêm văn bản, Điều Khoản Dịch Vụ miễn
-                        trừ, cảnh báo, thông báo, nhãn hiệu hoặc Thông Tin Nội Dung khác theo quy
-                        định của Quy Định Pháp Luật áp dụng liên quan đến hoạt động giới thiệu, giao
-                        dịch, quảng cáo và bán Sản Phẩm;
+                        Công ty TNHH Dược phẩm Dayton phải thêm văn bản, điều khoản dịch vụ miễn
+                        trừ, cảnh báo, thông báo, nhãn hiệu hoặc thông tin nội dung khác theo quy
+                        định của quy định pháp luật áp dụng liên quan đến hoạt động giới thiệu, giao
+                        dịch, quảng cáo và bán sản phẩm.
                       </li>
                       <li>
-                        Công ty TNHH Dược phẩm Dayton có trách nhiệm phân loại Sản Phẩm. Mỗi Sản
-                        Phẩm phải được phân loại vào tiểu mục Sản Phẩm ở mức chi tiết nhất có thể.
-                        Medofa có quyền thay đổi cách phân loại Sản Phẩm của Công ty TNHH Dược phẩm
+                        Công ty TNHH Dược phẩm Dayton có trách nhiệm phân loại sản phẩm. Mỗi Sản
+                        Phẩm phải được phân loại vào tiểu mục sản phẩm ở mức chi tiết nhất có thể.
+                        Medofa có quyền thay đổi cách phân loại sản phẩm của Công ty TNHH Dược phẩm
                         Dayton bất cứ khi nào cần thiết và Medofa sẽ không chịu trách nhiệm đối với
-                        việc Công ty TNHH Dược phẩm Dayton phân loại nhầm Sản Phẩm. Nếu sự nhầm lẫn
-                        trong việc phân loại Sản Phẩm dẫn đến sự khác biệt đối với Phí Dịch Vụ Vận
-                        Hành (nếu có) của Công ty TNHH Dược phẩm Dayton (như thể hiện tại Điều Khoản
+                        việc Công ty TNHH Dược phẩm Dayton phân loại nhầm sản phẩm. Nếu sự nhầm lẫn
+                        trong việc phân loại sản phẩm dẫn đến sự khác biệt đối với phí dịch vụ vận
+                        hành (nếu có) của Công ty TNHH Dược phẩm Dayton (như thể hiện tại Điều Khoản
                         Dịch Vụ), Medofa sẽ không thanh toán cho Công ty TNHH Dược phẩm Dayton phần
-                        chênh lệch này. Bất cứ sự nhầm lẫn nào đối với việc phân loại Sản Phẩm theo
-                        hạng mục Sản Phẩm cấp 1 sẽ dẫn đến việc xóa bỏ Sản Phẩm và tạo nên Sản Phẩm
-                        mới; Medofa có thể thông báo cho Công ty TNHH Dược phẩm Dayton khi có bất kỳ
-                        thay đổi nào về hạng mục Sản Phẩm ít nhất 7 (bảy) ngày trước khi chính thức
-                        áp dụng;{' '}
+                        chênh lệch này. Bất cứ sự nhầm lẫn nào đối với việc phân loại sản phẩm theo
+                        hạng mục sản phẩm cấp 1 sẽ dẫn đến việc xóa bỏ sản phẩm và tạo nên sản phẩm
+                        mới, Medofa có thể thông báo cho Công ty TNHH Dược phẩm Dayton khi có bất kỳ
+                        thay đổi nào về hạng mục sản phẩm ít nhất 7 (bảy) ngày trước khi chính thức
+                        áp dụng.
                       </li>
                       <li>
-                        Công ty TNHH Dược phẩm Dayton không được phép cung cấp bất kỳ Thông Tin Nội
-                        Dung nào, hoặc tìm cách niêm yết để bán trên Sàn Giao Dịch bất kỳ Sản Phẩm
+                        Công ty TNHH Dược phẩm Dayton không được phép cung cấp bất kỳ thông tin nội
+                        dung nào, hoặc tìm cách niêm yết để bán trên sàn giao dịch bất kỳ sản phẩm
                         nào, hoặc chèn bất kỳ đường dẫn nào vào bất kỳ dấu hiệu định vị tài nguyên
-                        thống nhất nào (URL) để sử dụng trên Sàn Giao Dịch, trừ khi Công ty TNHH
-                        Dược phẩm Dayton có quyền đăng Thông Tin Nội Dung và được cấp phép bán loại
-                        Sản Phẩm đó theo Luật áp dụng.
+                        thống nhất nào (URL) để sử dụng trên sàn giao dịch, trừ khi Công ty TNHH
+                        Dược phẩm Dayton có quyền đăng thông tin nội dung và được cấp phép bán loại
+                        sản phẩm đó theo Luật áp dụng.
                       </li>
                     </ul>
                   </li>
@@ -333,36 +336,34 @@ function TermsOfService() {
                 thực hiện các hành vi sau đây:
                 <ul className="list-group ml-3 decimal-list">
                   <li>
-                    Đăng tải Thông Tin Nội Dung của các Sản Phẩm chứa đựng bất kỳ yếu tố nào của các
-                    tài sản sở hữu trí tuệ thuộc quyền sở hữu của bên thứ ba bất kỳ;
+                    Đăng tải thông tin nội dung của các sản phẩm chứa đựng bất kỳ yếu tố nào của các
+                    tài sản sở hữu trí tuệ thuộc quyền sở hữu của bên thứ ba bất kỳ.
                   </li>
                   <li>
-                    Bán Sản Phẩm nằm trong số các sản phẩm bị cấm nhập khẩu, cấm bán và/hoặc cấm vận
-                    chuyển theo Quy Đnh Pháp Luật hiện hành, và/hoặc bởi Các Chính Sách Của Medofa;
-                    hoặc theo nhận định của Medofa, các Sản Phẩm đó là vi phạm hoặc có khả năng vi
-                    phạm pháp luật hiện hành và/hoặc điều kiện về Thông Tin Nội Dung như được quy
-                    định tại Điều Khoản Dịch Vụ;
+                    Bán sản phẩm nằm trong số các sản phẩm bị cấm nhập khẩu, cấm bán và/hoặc cấm vận
+                    chuyển theo quy định Pháp Luật hiện hành, và/hoặc bởi các chính sách của Medofa;
+                    hoặc theo nhận định của Medofa, các sản phẩm đó là vi phạm hoặc có khả năng vi
+                    phạm pháp luật hiện hành và/hoặc điều kiện về thông tin nội dung như được quy
+                    định tại điều khoản dịch vụ.Không cung cấp được các giấy phép, chấp thuận hoặc
+                    phê chuẩn cần thiết liên quan đến việc bán các sản phẩm đó khi Medofa hoặc cơ
+                    quan nhà nước yêu cầu.
                   </li>
                   <li>
-                    Không cung cấp được các giấy phép, chấp thuận hoặc phê chuẩn cần thiết liên quan
-                    đến việc bán các Sản Phẩm đó khi Medofa hoặc cơ quan nhà nước yêu cầu;
-                  </li>
-                  <li>
-                    Sử dụng bất kỳ sở hữu trí tuệ nào thuộc về Medofa hoặc Bên Liên Kết Của Medofa
-                    nếu không có sự chấp thuận trước bằng văn bản của Medofa.
+                    Sử dụng bất kỳ sở hữu trí tuệ nào thuộc về Medofa hoặc bên liên liên kết của
+                    Medofa nếu không có sự chấp thuận trước bằng văn bản của Medofa.
                   </li>
                 </ul>
               </li>
 
               <li>
                 <p className="font-weight-bold">
-                  Cam kết riêng liên quan đến Sản Phẩm: đối với Sản Phẩm được đăng bán, Công ty TNHH
-                  Dược phẩm Dayton bảo đảm, tuyên bố và xác nhận thêm rằng:
+                  Cam kết riêng liên quan đến sản phẩm : đối với sản phẩm được đăng bán, Công ty
+                  TNHH Dược phẩm Dayton bảo đảm, tuyên bố và xác nhận thêm rằng:
                 </p>
                 <ul className="list-group ml-3 decimal-list">
                   <li>
-                    Các Sản Phẩm là hàng chính hãng, mới, chưa qua sử dụng, còn hạn sử dụng, không
-                    được tân trang lại;
+                    Các sản phẩm là hàng chính hãng, mới, chưa qua sử dụng, còn hạn sử dụng, không
+                    được tân trang lại.
                   </li>
                   <li>
                     Các Sản Phẩm đảm bảo phù hợp với tất cả các quy chuẩn và tiêu chuẩn về chất
@@ -410,22 +411,34 @@ function TermsOfService() {
 
               <li>
                 <p className="font-weight-bold">Quyền Và Trách Nhiệm Của Medofa</p>
-                <ul className="list-group ml-3 decimal-list">
+                <ul className="list-group ml-3 lower-roman-list">
                   <li>
-                    Không phụ thuộc vào bất kỳ nội dung nào của Điều Khoản Dịch Vụ, Medofa có thể,
+                    Không phụ thuộc vào bất kỳ nội dung nào của điều khoản dịch vụ, Medofa có thể,
                     tùy vào quyết định của mình, trì hoãn hoặc tạm ngừng việc niêm yết, hoặc từ chối
                     niêm yết, hoặc xóa niêm yết hoặc yêu cầu Công ty TNHH Dược phẩm Dayton không
-                    niêm yết, bất cứ hoặc tất cả Sản Phẩm nào mà Công ty TNHH Dược phẩm Dayton thực
-                    hiện việc niêm yết để bán hàng thông qua Sàn Giao Dịch của Medofa.
+                    niêm yết, bất cứ hoặc tất cả sản phẩm nào mà Công ty TNHH Dược phẩm Dayton thực
+                    hiện việc niêm yết để bán hàng thông qua sàn giao dịch của Medofa.
+                  </li>
+                  <li>
+                    Thực hiện các biện pháp an ninh để bảo vệ và chống các truy cập trái phép hoặc
+                    sửa đổi trái phép, tiết lộ hoặc phá hủy thông tin trên Website. Các thông tin cá
+                    nhân như địa chỉ, email, số điện thoại... của người sử dụng(do người sử dụng tự
+                    nguyện cung cấp bằng các hình thức khác nhau trên Website) có thể được sử dụng
+                    nội bộ cho mục đích nâng cấp các sản phẩm, dịch vụ của của sàn thương mại điện
+                    tử Medofa. Medofa cam kết không chủ động tiết lộ bất kỳ thông tin nào của người
+                    sử dụng cho bên thứ ba (trừ các trường hợp nằm ngoài phạm vi hiểu biết hoặc khả
+                    năng kỹ thuật cho phép), hoặc khi có yêu cầu bằng văn bản của các cơ quan chức
+                    năng theo quy định của pháp luật. Khi đó, sàn thương mại điện tử Medofa sẽ thông
+                    báo tới người sử dụng.
                   </li>
                   <li>
                     Công ty TNHH Dược phẩm Dayton đồng ý, và/hoặc trao cho Medofa (trong bất cứ
-                    trường hợp nào) các quyền sau đây liên quan đến Thông Tin Nội Dung của Sản Phẩm
-                    niêm yết trên Sàn Giao Dịch: quyền không hủy ngang được miễn phí bản quyền,
+                    trường hợp nào) các quyền sau đây liên quan đến thông tin nội dung của sản phẩm
+                    niêm yết trên sàn giao dịch, quyền không hủy ngang được miễn phí bản quyền,
                     không độc quyền, có giá trị toàn cầu và liên tục để sử dụng, sao chép, thực
                     hiện, trưng bày, phân phối, điều chỉnh, sửa đổi, căn chỉnh lại, tạo ra các sản
                     phẩm phái sinh của, và bằng cách khác khai thác thương mại hoặc phi thương mại
-                    dưới bất kỳ hình thức nào, bất kỳ và tất cả Thông Tin Nội Dung do Công ty TNHH
+                    dưới bất kỳ hình thức nào, bất kỳ và tất cả thông tin nội dung do Công ty TNHH
                     Dược phẩm Dayton cung cấp, và cấp phép lại các quyền nêu trên cho các bên liên
                     kết và các bên điều hành của Medofa; tuy nhiên, với điều kiện là Medofa không
                     được thay đổi bất kỳ nhãn hiệu thương mại nào theo mẫu được Công ty TNHH Dược
@@ -433,63 +446,63 @@ function TermsOfService() {
                     mại trong mức độ cần thiết cho mục đích giới thiệu, miễn là vẫn giữ nguyên các
                     tỷ lệ tương ứng của nhãn hiệu thương mại) và phải tuân thủ các yêu cầu gỡ bỏ của
                     Công ty TNHH Dược phẩm Dayton đối với từng mục đích cụ thể khi sử dụng nhãn hiệu
-                    thương mại; tuy nhiên, cũng với điều kiện là, không có quy định nào trong Điều
-                    Khoản Dịch Vụ ngăn không cho Medofa sử dụng Thông Tin Nội Dung khi chưa có chấp
+                    thương mại; tuy nhiên, cũng với điều kiện là, không có quy định nào trong điều
+                    khoản dịch vụ ngăn không cho Medofa sử dụng thông tin nội dung khi chưa có chấp
                     thuận của Công ty TNHH Dược phẩm Dayton trong phạm vi việc sử dụng đó được chấp
                     nhận nhưng không có giấy phép của Công ty TNHH Dược phẩm Dayton hoặc các bên
-                    liên kết của Công ty TNHH Dược phẩm Dayton theo Quy Định Pháp Luật áp dụng.
+                    liên kết của Công ty TNHH Dược phẩm Dayton theo quy định Pháp Luật áp dụng.
                   </li>
                   <li>
-                    vn có quyền sử dụng các cơ chế đánh giá, hoặc cho phép Khách Hàng đánh giá hoặc
-                    xem xét Sản Phẩm của Công ty TNHH Dược phẩm Dayton và/hoặc hoạt động của Công ty
-                    TNHH Dược phẩm Dayton với tư cách là bên bán hàng và Medofa có quyền công khai
-                    các đánh giá và nhận xét như vậy.
+                    Medofa có quyền sử dụng các cơ chế đánh giá, hoặc cho phép khách hàng đánh giá
+                    hoặc xem xét sản phẩm của Công ty TNHH Dược phẩm Dayton và/hoặc hoạt động của
+                    Công ty TNHH Dược phẩm Dayton với tư cách là bên bán hàng và Medofa có quyền
+                    công khai các đánh giá và nhận xét như vậy.
                   </li>
                   <li>
-                    vn có quyền quyết định Thông Tin Nội Dung, cơ cấu, giao diện, thiết kế, chức
-                    năng và tất cả các phương diện khác của Sàn Giao Dịch, bao gồm quyền thiết kế
-                    lại, sửa đổi, gỡ bỏ hoặc thay đổi nội dung, giao diện, thiết kế, thẻ meta
+                    Medofa có quyền quyết định thông tin nội dung , cơ cấu, giao diện, thiết kế,
+                    chức năng và tất cả các phương diện khác của sàn giao dịch, bao gồm quyền thiết
+                    kế lại, sửa đổi, gỡ bỏ hoặc thay đổi nội dung, giao diện, thiết kế, thẻ meta
                     (meta-tags), tên gọi, ghi chú, tờ mẫu, mô tả, ứng dụng, các liên kết bên trong
-                    và bên ngoài và các phương diện khác của, và ngăn hoặc hạn chế việc truy cập Sàn
-                    Giao Dịch và bất kỳ yếu tố, phương diện, tỷ lệ hoặc đặc điểm nào của Sàn Giao
-                    Dịch (kể cả các hoạt động niêm yết sản phẩm), tùy từng thời điểm.
+                    và bên ngoài và các phương diện khác của, và ngăn hoặc hạn chế việc truy cập sàn
+                    giao dịch và bất kỳ yếu tố, phương diện, tỷ lệ hoặc đặc điểm nào của sàn giao
+                    dịch (kể cả các hoạt động niêm yết sản phẩm), tùy từng thời điểm.
                   </li>
                   <li>
-                    vn có quyền, không hủy ngang và liên tục, sử dụng, niêm yết, thiết kế căn chỉnh
-                    lại và khai thác (multi-source) bất kỳ và tất cả Thông Tin Nội Dung mà Công ty
-                    TNHH Dược phẩm Dayton đã đăng tải thành công trên Sàn Giao Dịch. Quy định này
-                    vẫn còn hiệu lực ngay cả khi chấm dứt Điều Khoản Dịch Vụ.
+                    Medofa có quyền, không hủy ngang và liên tục, sử dụng, niêm yết, thiết kế căn
+                    chỉnh lại và khai thác (multi-source) bất kỳ và tất cả thông tin nội dung mà
+                    Công ty TNHH Dược phẩm Dayton đã đăng tải thành công trên sàn giao dịch. Quy
+                    định này vẫn còn hiệu lực ngay cả khi chấm dứt điều điều khoản dịch vụ.
                   </li>
                   <li>
-                    vn theo toàn quyền quyết định của mình có quyền ngưng để điều tra và/hoặc từ
-                    chối tiến hành bất kỳ việc xử lý dữ liệu Đơn Hàng hoặc Giao Dịch nào.
+                    Medofa theo toàn quyền quyết định của mình có quyền dừng để điều tra và/hoặc từ
+                    chối tiến hành bất kỳ việc xử lý dữ liệu đơn hàng hoặc giao dịch nào.
                   </li>
                   <li>
-                    Vào bất kỳ thời điểm nào, Sản Phẩm phải được trả về địa điểm chỉ định của Công
+                    Vào bất kỳ thời điểm nào, sản phẩm phải được trả về địa điểm chỉ định của Công
                     ty TNHH Dược phẩm Dayton.Công ty TNHH Dược phẩm Dayton sẽ chịu trách nhiệm thu
-                    hồi những Sản Phẩm hoàn trả lại từ Nơi Chỉ Định Của Medofa trong vòng 15 (mười
-                    lăm) Ngày Làm Việc kể từ khi nhận được thông báo bằng văn bản của Medofa. Trong
-                    trường hợp Công ty TNHH Dược phẩm Dayton không thu hồi Sản Phẩm hoàn trả lại
+                    hồi những sản phẩm hoàn trả lại từ nơi chỉ định của Medofa trong vòng 15 (mười
+                    lăm) ngày làm việc kể từ khi nhận được thông báo bằng văn bản của Medofa. Trong
+                    trường hợp Công ty TNHH Dược phẩm Dayton không thu hồi sản phẩm hoàn trả lại
                     trong thời hạn nêu trên, Medofa sẽ, theo toàn quyền quyết định của mình, gửi trả
-                    Sản Phẩm cho Công ty TNHH Dược phẩm Dayton và Công ty TNHH Dược phẩm Dayton sẽ
-                    phải chịu mức phí vận chuyển tương ứng. Sản Phẩm hoàn trả sẽ được gửi đến địa
+                    sản phẩm cho Công ty TNHH Dược phẩm Dayton và Công ty TNHH Dược phẩm Dayton sẽ
+                    phải chịu mức phí vận chuyển tương ứng. Sản phẩm hoàn trả sẽ được gửi đến địa
                     chỉ giao hàng đã chỉ định của Công ty TNHH Dược phẩm Dayton tại cùng quốc gia
-                    nơi Sản Phẩm đó được vận chuyển bởi Medofa. Nếu Công ty TNHH Dược phẩm Dayton
+                    nơi sản phẩm đó được vận chuyển bởi Medofa. Nếu Công ty TNHH Dược phẩm Dayton
                     cung cấp địa chỉ cũ, không chính xác hoặc là địa chỉ quốc tế, hoặc nếu Công ty
                     TNHH Dược phẩm Dayton không thể thanh toán chi phí vận chuyển hoàn trả đó, thì
-                    xem như Công ty TNHH Dược phẩm Dayton đã từ bỏ Sản Phẩm đó và Medofa có quyền
-                    tiêu hủy số Sản Phẩm nêu trên bằng bất cứ hình thức nào được xem là phù hợp.
+                    xem như Công ty TNHH Dược phẩm Dayton đã từ bỏ sản phẩm đó và Medofa có quyền
+                    tiêu hủy số sản phẩm nêu trên bằng bất cứ hình thức nào được xem là phù hợp.
                     Công ty TNHH Dược phẩm Dayton cam kết sẽ chịu hoàn toàn trách nhiệm pháp lý phát
-                    sinh từ hoặc liên quan đến Sản Phẩm hoàn trả đang được giữ bởi Medofa.
+                    sinh từ hoặc liên quan đến sản phẩm hoàn trả đang được giữ bởi Medofa.
                   </li>
                   <li>
                     Công ty TNHH Dược phẩm Dayton hiểu rằng, Công ty TNHH Dược phẩm Dayton chịu
-                    trách nhiệm chính khi thực hiện Đơn Hàng với Khách Hàng của họ. Medofa có quyền,
+                    trách nhiệm chính khi thực hiện đơn hàng với khách hàng của họ. Medofa có quyền,
                     theo toàn quyền quyết định của mình, có quyền cấm hoặc tạm ngừng việc đăng tải
-                    Sản Phẩm của Công ty TNHH Dược phẩm Dayton trên Sàn Giao Dịch, hoặc chấm dứt
+                    sản phẩm của Công ty TNHH Dược phẩm Dayton trên sàn giao dịch , hoặc chấm dứt
                     thỏa thuận dịch vụ ngay lập tức nếu Medofa xác định rằng Công ty TNHH Dược phẩm
                     Dayton vi phạm bất kỳ tuyên bố, cam kết hoặc bảo đảm nào được quy định tại Điều
-                    7 của Điều Khoản Dịch Vụ này.
+                    7 của điều điều khoản dịch vụ này.
                   </li>
                 </ul>
               </li>
@@ -498,24 +511,24 @@ function TermsOfService() {
                 <p className="font-weight-bold">
                   Sự Độc Lập của Công ty TNHH Dược phẩm Dayton &#38; Bồi Hoàn
                 </p>
-                <ul className="list-group ml-3 decimal-list">
+                <ul className="list-group ml-3 lower-roman-list">
                   <li>
-                    vn không phải là một bên tham gia các giao dịch giữa Khách Hàng và Công ty TNHH
-                    Dược phẩm Dayton, và Công ty TNHH Dược phẩm Dayton tại đây giải trừ Medofa (và
-                    các bên liên kết, đại lý và nhân viên của Medofa) khỏi các Khiếu Nại (như được
-                    định nghĩa tại Điều 12.3 dưới đây), các yêu cầu và các thiệt hại (thực tế và
-                    mang tính hệ quả) thuộc bất kỳ loại nào và có bất kỳ tính chất nào, được biết và
-                    không được biết, có nghi ngờ và không có nghi ngờ, được tiết lộ và không được
+                    Medofa không phải là một bên tham gia các giao dịch giữa khách hàng và Công ty
+                    TNHH Dược phẩm Dayton, và Công ty TNHH Dược phẩm Dayton tại đây giải trừ Medofa
+                    (và các bên liên kết, đại lý và nhân viên của Medofa) khỏi các khiếu nại (như
+                    được định nghĩa tại Điều 12.3 dưới đây), các yêu cầu và các thiệt hại (thực tế
+                    và mang tính hệ quả) thuộc bất kỳ loại nào và có bất kỳ tính chất nào, được biết
+                    và không được biết, có nghi ngờ và không có nghi ngờ, được tiết lộ và không được
                     tiết lộ, phát sinh từ hoặc bằng bất kỳ cách nào liên quan đến các giao dịch đó.
                   </li>
                   <li>
                     Công ty TNHH Dược phẩm Dayton và Medofa là các nhà thầu độc lập, và không có quy
-                    định nào trong Điều Khoản Dịch Vụ sẽ tạo thành bất kỳ quan hệ hợp danh, liên
-                    doanh, đại lý, nhượng quyền hoặc đại diện bán hàng nào giữa Các Bên. Các Bên xác
-                    nhận với nhau rằng Điều Khoản Dịch Vụ sẽ không gây ra việc thiết lập bất kỳ quan
-                    hệ lao động trực tiếp nào giữa Medofa và những chủ thể cung cấp dịch vụ cho Nhà
-                    Cung Cấp, bao gồm nhưng không giới hạn đối với Nhà Vận Chuyển hoặc Bưu Cục Chỉ
-                    Định. Công ty TNHH Dược phẩm Dayton sẽ không có thẩm quyền thực hiện hoặc chấp
+                    định nào trong điều khoản dịch vụ sẽ tạo thành bất kỳ quan hệ hợp danh, liên
+                    doanh, đại lý, nhượng quyền hoặc đại diện bán hàng nào giữa các bên. Các bên xác
+                    nhận với nhau rằng điều khoản dịch vụ sẽ không gây ra việc thiết lập bất kỳ quan
+                    hệ lao động trực tiếp nào giữa Medofa và những chủ thể cung cấp dịch vụ cho nhà
+                    cung cấp, bao gồm nhưng không giới hạn đối với nhà vận chuyển hoặc bưu cục chỉ
+                    định. Công ty TNHH Dược phẩm Dayton sẽ không có thẩm quyền thực hiện hoặc chấp
                     nhận bất kỳ đề nghị hoặc tuyên bố nào nhân danh Medofa.
                   </li>
                   <li>
@@ -525,59 +538,59 @@ function TermsOfService() {
                     nại, tổn thất, thiệt hại, khoản thanh toán, chi phí, phí tổn, phí phạt hành
                     chính, phí phạt, hoặc trách nhiệm khác (bao gồm, không giới hạn, phí luật sư)
                     (mỗi khoản như vậy gọi là <b>“Khiếu Nại”</b> ) phát sinh từ hoặc liên quan đến:
-                    <ul className="list-group ml-3 decimal-list">
+                    <ul className="list-group ml-3 lower-alpha-list">
                       <li>
                         Vi phạm thực tế hoặc hành vi không tuân thủ của Công ty TNHH Dược phẩm
-                        Dayton hoặc nhân viên, đại lý hoặc nhà thầu của Nhà Cung Cấp, đối với bất kỳ
-                        nghĩa vụ nào trong Điều Khoản Dịch Vụ hoặc Thỏa Thuận Với Khách Hàng;
+                        Dayton hoặc nhân viên, đại lý hoặc nhà thầu của nhà cung cấp, đối với bất kỳ
+                        nghĩa vụ nào trong điều khoản dịch vụ hoặc thỏa thuận với khách hàng
                       </li>
                       <li>
-                        Bất kỳ kênh bán hàng nào của Sản Phẩm được sở hữu hoặc vận hành bởi Công ty
+                        Bất kỳ kênh bán hàng nào của sản phẩm được sở hữu hoặc vận hành bởi Công ty
                         TNHH Dược phẩm Dayton (bao gồm việc chào bán, bán hàng, thực hiện, trả lại
-                        tiền, hoàn trả hoặc các điều chỉnh), Thông Tin Nội Dung của Nhà Cung Cấp,
-                        bất kỳ sự xâm phạm thực tế hoặc bị cáo buộc đối với bất kỳ Quyền Sở Hữu Trí
-                        Tuệ nào bởi bất kỳ người nào nói trên, và bất kỳ sự tổn thương cá nhân, cái
-                        chết hoặc thiệt hại tài sản liên quan đến những người đó;
+                        tiền, hoàn trả hoặc các điều chỉnh), thông tin nội dung của nhà cung cấp,
+                        bất kỳ sự xâm phạm thực tế hoặc bị cáo buộc đối với bất kỳ quyền sở hữu trí
+                        tuệ nào bởi bất kỳ người nào nói trên, và bất kỳ sự tổn thương cá nhân, cái
+                        chết hoặc thiệt hại tài sản liên quan đến những người đó.
                       </li>
-                      <li>Các khoản thuế của Nhà Cung Cấp;</li>
+                      <li>Các khoản thuế của Nhà Cung Cấp.</li>
                       <li>
-                        bất kỳ việc xâm phạm thực tế hoặc bị cáo buộc đối với bằng sáng chế, bản
-                        quyền, bí mật thương mại, nhãn hiệu Sản Phẩm, tên thương mại, hoặc các quyền
+                        Bất kỳ việc xâm phạm thực tế hoặc bị cáo buộc đối với bằng sáng chế, bản
+                        quyền, bí mật thương mại, nhãn hiệu sản phẩm, tên thương mại, hoặc các quyền
                         sở hữu trí tuệ khác hoặc khiếu nại, yêu cầu hoặc hành động nào khác xảy ra
-                        từ Thông Tin Nội Dung, việc quảng cáo, công bố, quảng bá, sản xuất, bán,
-                        phân phối hoặc sử dụng Sản Phẩm;{' '}
+                        từ thông tin nội dung , việc quảng cáo, công bố, quảng bá, sản xuất, bán,
+                        phân phối hoặc sử dụng sản phẩm.
                       </li>
                       <li>
-                        Một hoặc nhiều Bên Vận Hành thực hiện hành động pháp lý đối với Medofa hoặc
-                        Các Bên Liên Kết của Medofa phát sinh từ hoặc liên quan đến Điều Khoản Dịch
-                        Vụ.
+                        Một hoặc nhiều bên vận hành thực hiện hành động pháp lý đối với Medofa hoặc
+                        các bên liên kết của Medofa phát sinh từ hoặc liên quan đến điều khoản dịch
+                        vụ.
                       </li>
                     </ul>
                   </li>
                   <li>
-                    Mọi Khiếu Nại của Công ty TNHH Dược phẩm Dayton về Dịch Vụ và/hoặc Điều Khoản
-                    Dịch Vụ của Medofa phải được thông báo cho Medofa trong vòng 90 (chín mươi) ngày
-                    kể từ ngày Đơn Hàng được xác lập và/hoặc Dịch Vụ được cung cấp. Cho mục đích rõ
-                    nghĩa, Medofa không có nghĩa vụ phải giải quyết các Khiếu Nại của Công ty TNHH
+                    Mọi khiếu nại của Công ty TNHH Dược phẩm Dayton về dịch vụ và/hoặc điều khoản
+                    dịch vụ của Medofa phải được thông báo cho Medofa trong vòng 90 (chín mươi) ngày
+                    kể từ ngày đơn hàng được xác lập và/hoặc dịch vụ được cung cấp cho mục đích rõ
+                    nghĩa, Medofa không có nghĩa vụ phải giải quyết các khiếu nại của Công ty TNHH
                     Dược phẩm Dayton về Medofa nếu vượt quá thời hạn nêu trên.
                   </li>
                   <li>
                     Công ty TNHH Dược phẩm Dayton cho phép Medofa có thể kiểm soát việc bồi thường
-                    với chi phí của Nhà Cung Cấp, nếu bất cứ lúc nào Medofa hợp lý xác định rằng bất
-                    kỳ yêu cầu bồi thường nào có thể ảnh hưởng tiêu cực đến Medofa hoặc Bên Liên Kết
-                    Của Medofa. Công ty TNHH Dược phẩm Dayton có thể không đồng ý với việc chấp nhận
-                    bất kỳ phán quyết nào hoặc tham gia vào bất kỳ buổi hòa giải nào của một Khiếu
+                    với chi phí của nhà cung cấp, nếu bất cứ lúc nào Medofa hợp lý xác định rằng bất
+                    kỳ yêu cầu bồi thường nào có thể ảnh hưởng tiêu cực đến Medofa hoặc bên liên kết
+                    của Medofa. Công ty TNHH Dược phẩm Dayton có thể không đồng ý với việc chấp nhận
+                    bất kỳ phán quyết nào hoặc tham gia vào bất kỳ buổi hòa giải nào của một khiếu
                     nại mà không có sự đồng ý trước bằng văn bản bởi Medofa, mà sự đồng ý này có thể
-                    được rút lại vì bất cứ lý do gì.
+                    được rút lại vì bất cứ lý do gì
                   </li>
                   <li>
-                    vn bảo lưu quyền giao hoặc ký thầu phụ việc để thực hiện bất kỳ chức năng nào
-                    của Medofa liên quan đến việc thực hiện các nghĩa vụ của Medofa theo Điều Khoản
-                    Dịch Vụ mà Medofa cho là phù hợp.
+                    Medofa bảo lưu quyền giao hoặc ký thầu phụ việc để thực hiện bất kỳ chức năng
+                    nào của Medofa liên quan đến việc thực hiện các nghĩa vụ của Medofa theo điều
+                    điều khoản dịch vụ mà Medofa cho là phù hợp.
                   </li>
                   <li>
                     Công ty TNHH Dược phẩm Dayton sẽ không ký hợp đồng phụ cho bất kỳ quyền hoặc
-                    nghĩa vụ nào của mình theo Điều Khoản Dịch Vụ mà không có sự chấp thuận trước
+                    nghĩa vụ nào của mình theo điều khoản dịch vụ mà không có sự chấp thuận trước
                     bằng văn bản của Medofa.
                   </li>
                 </ul>
@@ -585,76 +598,76 @@ function TermsOfService() {
 
               <li>
                 <p className="font-weight-bold">Chấm Dứt</p>
-                <ul className="list-group ml-3 decimal-list">
+                <ul className="list-group ml-3 lower-roman-list">
                   <li>
-                    Bảo lưu quyền đơn phương và ngay lập tức chấm dứt Các Điều Khoản khi xảy ra bất
+                    Bảo lưu quyền đơn phương và ngay lập tức chấm dứt các điều khoản khi xảy ra bất
                     kỳ sự kiện nào sau đây:
-                    <ul className="list-group ml-3 decimal-list">
+                    <ul className="list-group ml-3 lower-alpha-list">
                       <li>
                         Chậm thanh toán trong hơn 30 (ba mươi) ngày mà không có lý do hợp lệ theo
-                        Các Điều Khoản và Chính Sách Của Medofa;
+                        các điều khoản và chính sách của Medofa.
                       </li>
                       <li>
-                        Chậm hoàn trả trong hơn 60 (sáu mươi) ngày mà không có lý do hợp lệ theo Các
-                        Điều Khoản và Chính Sách Của Medofa;
+                        Chậm hoàn trả trong hơn 60 (sáu mươi) ngày mà không có lý do hợp lệ theo các
+                        điều khoản và chính sách của Medofa.
                       </li>
                       <li>
                         Việc đưa ra quyết định hành chính quan đến Medofa hoặc việc chỉ định một bên
-                        quản lý tài sản đối với tài sản của Medofa;
+                        quản lý tài sản đối với tài sản của Medofa.
                       </li>
                       <li>
                         Dàn xếp hoặc thỏa hiệp với các chủ nợ của mình nói chung hoặc nộp đơn lên
-                        Tòa Án của vùng tài phán có thẩm quyền xin bảo hộ khỏi các chủ nợ của mình;
+                        Tòa Án của vùng tài phán có thẩm quyền xin bảo hộ khỏi các chủ nợ của mình.
                       </li>
-                      <li>vn ngừng hoặc đe dọa ngừng thực hiện hoạt động kinh doanh.</li>
+                      <li>Medofa ngừng hoặc đe dọa ngừng thực hiện hoạt động kinh doanh.</li>
                     </ul>
                   </li>
                   <li>
                     Công ty TNHH Dược phẩm Dayton có quyền đơn phương chấm dứt Các Điều Khoản trong
                     vòng 14 (mười bốn) ngày sau khi xảy ra bất kỳ sự kiện nào sau đây:
-                    <ul className="list-group ml-3 decimal-list">
+                    <ul className="list-group ml-3 lower-alpha-list">
                       <li>
                         Chậm thanh toán trong hơn 30 (ba mươi) ngày mà không có lý do hợp lệ theo
-                        Các Điều Khoản và Chính Sách Của Medofa;
+                        các điều khoản và chính sách của Medofa
                       </li>
                       <li>
-                        Chậm hoàn trả trong hơn 60 (sáu mươi) ngày mà không có lý do hợp lệ theo Các
-                        Điều Khoản và Chính Sách Của Medofa;
+                        Chậm hoàn trả trong hơn 60 (sáu mươi) ngày mà không có lý do hợp lệ theo các
+                        điều khoản và chính sách của Medofa
                       </li>
                       <li>
                         Việc đưa ra quyết định hành chính quan đến Medofa hoặc việc chỉ định một bên
-                        quản lý tài sản đối với tài sản của Medofa;
+                        quản lý tài sản đối với tài sản của Medofa.
                       </li>
                       <li>
                         Dàn xếp hoặc thỏa hiệp với các chủ nợ của mình nói chung hoặc nộp đơn lên
-                        Tòa Án của vùng tài phán có thẩm quyền xin bảo hộ khỏi các chủ nợ của mình;
+                        Tòa Án của vùng tài phán có thẩm quyền xin bảo hộ khỏi các chủ nợ của mình.
                       </li>
-                      <li>vn ngừng hoặc đe dọa ngừng thực hiện hoạt động kinh doanh.</li>
+                      <li>Medofa ngừng hoặc đe dọa ngừng thực hiện hoạt động kinh doanh.</li>
                     </ul>
                   </li>
                   <li>
                     Không phụ thuộc vào các quy định trên, Công ty TNHH Dược phẩm Dayton sẽ có quyền
-                    đơn phương chấm dứt Các Điều Khoản mà không cần có nguyên nhân, bằng toàn quyền
-                    quyết định của Nhà Cung Cấp, trong vòng 14 (mười bốn) ngày kể từ ngày Công ty
+                    đơn phương chấm dứt các điều khoản mà không cần có nguyên nhân, bằng toàn quyền
+                    quyết định của nhà cung cấp, trong vòng 14 (mười bốn) ngày kể từ ngày Công ty
                     TNHH Dược phẩm Dayton gửi văn bản thông báo về việc chấm dứt đó.
                   </li>
                   <li>
-                    Trước khi chấm dứt Điều Khoản Dịch Vụ,
-                    <ul className="list-group ml-3 decimal-list">
+                    Trước khi chấm dứt điều khoản dịch vụ.
+                    <ul className="list-group ml-3 lower-alpha-list">
                       <li>
                         Công ty TNHH Dược phẩm Dayton sẽ thông báo với Medofa về tất cả các thỏa
-                        thuận được ký kết với Khách Hàng, mà phải được thực hiện. Để tránh hiểu
-                        nhầm, Công ty TNHH Dược phẩm Dayton sẽ có trách nhiệm thực hiện các Đơn Hàng
+                        thuận được ký kết với khách hàng, mà phải được thực hiện. Để tránh hiểu
+                        nhầm, Công ty TNHH Dược phẩm Dayton sẽ có trách nhiệm thực hiện các đơn hàng
                         theo mô hình thực hiện cụ thể đã thỏa thuận với Medofa. Nếu Công ty TNHH
-                        Dược phẩm Dayton không làm như vậy, Medofa có thể hủy bỏ các Đơn Hàng và có
-                        thể tính cho Công ty TNHH Dược phẩm Dayton Phí Dịch Vụ áp dụng cho các Đơn
-                        Hàng cộng với các khoản phí khác (nếu có), khoản này sẽ được trừ vào bất kỳ
-                        Khoản Thanh Toán nào mà Medofa sẽ phải trả cho Nhà Cung Cấp.
+                        Dược phẩm Dayton không làm như vậy, Medofa có thể hủy bỏ các đơn hàng và có
+                        thể tính cho Công ty TNHH Dược phẩm Dayton phí dịch vụ áp dụng cho các đơn
+                        hàng cộng với các khoản phí khác (nếu có), khoản này sẽ được trừ vào bất kỳ
+                        khoản thanh toán nào mà Medofa sẽ phải trả cho nhà cung cấp.
                       </li>
                       <li>
-                        vn sẽ thanh toán tất cả các khoản công nợ còn tồn đọng cho Công ty TNHH Dược
-                        phẩm Dayton với điều kiện là Công ty TNHH Dược phẩm Dayton phải dừng các
-                        hoạt động bán hàng trên Sàn Giao Dịch của Medofa tối thiểu 14 (mười bốn)
+                        Medofa sẽ thanh toán tất cả các khoản công nợ còn tồn đọng cho Công ty TNHH
+                        Dược phẩm Dayton với điều kiện là Công ty TNHH Dược phẩm Dayton phải dừng
+                        các hoạt động bán hàng trên sàn giao dịch của Medofa tối thiểu 14 (mười bốn)
                         ngày kể từ ngày Medofa hoặc Công ty TNHH Dược phẩm Dayton gửi thông báo yêu
                         cầu chấm dứt.
                       </li>
@@ -662,11 +675,11 @@ function TermsOfService() {
                   </li>
                   <li>
                     Bảo Vệ Dữ Liệu Cá Nhân
-                    <ul className="list-group ml-3 decimal-list">
+                    <ul className="list-group ml-3 lower-alpha-list">
                       <li>
-                        Công ty TNHH Dược phẩm Dayton cam kết, tuyên bố và bảo đảm rằng Công ty TNHH
+                        Công ty TNHH Dược phẩm Dayton cam kết, tuyên bố và đảm bảo rằng Công ty TNHH
                         Dược phẩm Dayton sẽ chỉ sử dụng và xử lý Dữ Liệu Cá Nhân: i) cho mục đích
-                        thực hiện Thỏa Thuận Với Medofa hoặc Thỏa Thuận Mua Bán với Khách Hàng và sẽ
+                        thực hiện thỏa thuận với Medofa hoặc thỏa thuận mua bán với khách hàng và sẽ
                         không tiết lộ cho bên thứ ba bất kỳ nào; ii) tuân thủ theo các yêu cầu và
                         quy định của pháp luật về bảo vệ dữ liệu cá nhân; và iii) theo cách thức mà
                         đảm bảo Medofa vẫn duy trì tính tuân thủ theo quy định của pháp luật về bảo
@@ -674,87 +687,87 @@ function TermsOfService() {
                       </li>
                       <li>
                         Công ty TNHH Dược phẩm Dayton cam kết thêm rằng, Công ty TNHH Dược phẩm
-                        Dayton sẽ áp dụng các biện pháp bảo mật cần thiết để đảm bảo Dữ Liệu Cá Nhân
-                        được lưu giữ an toàn và bảo quản phù hợp với pháp luật về bảo vệ dự liệu cá
+                        Dayton sẽ áp dụng các biện pháp bảo mật cần thiết để đảm bảo dữ liệu cá nhân
+                        được lưu giữ an toàn và bảo quản phù hợp với pháp luật về bảo vệ dữ liệu cá
                         nhân, và chấp thuận cho phép Medofa tiến hành các đợt kiểm tra cần thiết để
-                        đảm bảo tính tuân thủ của Nhà Cung Cấp.
+                        đảm bảo tính tuân thủ của nhà cung cấp.
                       </li>
                       <li>
-                        Công ty TNHH Dược phẩm Dayton giải trừ Medofa và Các Bên Liên Kết của Medofa
-                        và đồng ý bồi hoàn, bảo vệ và không để Medofa (và Các Bên Liên Kết của
+                        Công ty TNHH Dược phẩm Dayton giải trừ Medofa và các bên liên kết của Medofa
+                        và đồng ý bồi hoàn, bảo vệ và không để Medofa (và các bên liên kết của
                         Medofa, các viên chức, giám đốc, nhân viên và đại lý) chịu thiệt hại đối với
-                        bất kỳ Khiếu Nại phát sinh từ hoặc liên quan đến Dữ Liệu Cá Nhân.
+                        bất kỳ khiếu nại phát sinh từ hoặc liên quan đến dữ liệu cá
                       </li>
                     </ul>
                   </li>
                   <li>
                     Bảo Mật
-                    <ul className="list-group ml-3 decimal-list">
+                    <ul className="list-group ml-3 lower-alpha-list">
                       <li>
                         Vì các mục đích của Điều Khoản Dịch Vụ, <b>“Thông Tin Mật”</b> nghĩa là bất
                         kỳ dữ liệu hoặc thông tin nào thuộc quyền sở hữu của bên tiết lộ và các Bên
                         Liên Kết (<b>“Bên Tiết Lộ”</b>) và không được phổ biến ra công chúng, dù ở
                         dạng hữu hình hay vô hình, được tiết lộ bất kỳ lúc nào và bằng cách nào, bao
                         gồm, nhưng không giới hạn:
-                        <ul className="list-group lower-roman-list">
+                        <ul className="list-group lower-alpha-list">
                           <li>
-                            chiến lược marketing, kế hoạch, thông tin tài chính, hoặc các dự án,
+                            Chiến lược marketing, kế hoạch, thông tin tài chính, hoặc các dự án,
                             hoạt động, ước tính doanh số và kế hoạch kinh doanh liên quan đến các
                             hoạt động kinh doanh trong quá khứ, ở hiện tại hoặc trong tương lai của
-                            bên đó;
+                            bên đó.
                           </li>
                           <li>
-                            kết quả thực hiện trong quá khứ hoặc ở hiện tại, bao gồm các Đơn Hàng và
-                            khối lượng;
+                            Kết quả thực hiện trong quá khứ hoặc ở hiện tại, bao gồm các đơn hàng và
+                            khối lượng.
                           </li>
-                          <li>kế hoạch và chiến lược mở rộng nào;</li>
+                          <li>Kế hoạch và chiến lược mở rộng nào.</li>
                           <li>
-                            bất kỳ sản phẩm hoặc dịch vụ nào, và danh sách khách hàng và các nhà
-                            cung cấp;
-                          </li>
-                          <li>
-                            thông tin kỹ thuật hoặc khoa học, phát minh, thiết kế, quy trình, thủ
-                            tục, công thức, cải tiến, công nghệ hoặc phương pháp;
+                            Bất kỳ sản phẩm hoặc dịch vụ nào, và danh sách khách hàng và các nhà
+                            cung cấp.
                           </li>
                           <li>
-                            khái niệm, báo cáo, dữ liệu, bí quyết, công việc đang thực hiện, thiết
+                            Thông tin kỹ thuật hoặc khoa học, phát minh, thiết kế, quy trình, thủ
+                            tục, công thức, cải tiến, công nghệ hoặc phương pháp.
+                          </li>
+                          <li>
+                            Khái niệm, báo cáo, dữ liệu, bí quyết, công việc đang thực hiện, thiết
                             kế, công cụ phát triển, thông số kỹ thuật, phần mềm máy tính, mã nguồn,
                             mã đối tượng, biểu đồ, cơ sở dữ liệu, phát minh, thông tin và bí mật
-                            thương mại; và
+                            thương mại.
                           </li>
                           <li>
-                            bất kỳ thông tin nào khác mà sẽ được công nhận hợp lý là thông tin mật
-                            của Bên Tiết Lộ. Thông Tin Mật không nhất thiết phải mới lạ, độc nhất,
+                            Bất kỳ thông tin nào khác mà sẽ được công nhận hợp lý là thông tin mật
+                            của bên tiết lộ. Thông tin mật không nhất thiết phải mới lạ, độc nhất,
                             thuộc bằng sáng chế, thuộc bản quyền hoặc cấu thành bí mật thương mại để
-                            được chỉ định là Thông Tin Mật.
+                            được chỉ định là thông tin mật.
                           </li>
                         </ul>
                       </li>
                       <li>
-                        Bên nhận Thông Tin Mật (“Bên Nhận”) sẽ không tiết lộ Thông Tin Mật, ngoại
-                        trừ với sự chấp thuận trước bằng văn bản của Bên Tiết Lộ. Bên Nhận chỉ có
-                        thể sử dụng Thông Tin Mật cho mục đích thực hiện Điều Khoản Dịch Vụ, và
-                        không cho bất kỳ mục đích nào khác. Không phụ thuộc vào các quy định trên,
-                        Bên Nhận có thể tiết lộ Thông Tin Mật vì bất kỳ lý do nào sau đây:
-                        <ul className="list-group ml-3 decimal-list">
+                        Bên nhận thông tin mật (“bên nhận”) sẽ không tiết lộ thông tin mật, ngoại
+                        trừ với sự chấp thuận trước bằng văn bản của bên tiết lộ. Bên nhận chỉ có
+                        thể sử dụng hông tin mật cho mục đích thực hiện điều khoản dịch vụ, và không
+                        cho bất kỳ mục đích nào khác. Không phụ thuộc vào các quy định trên, bên
+                        nhận có thể tiết lộ thông tin mật vì bất kỳ lý do nào sau đây:
+                        <ul className="list-group ml-3 lower-alpha-list">
                           <li>
-                            tuân thủ các quy định bắt buộc của Luật áp dụng hoặc các quy tắc của bất
-                            kỳ vùng tài phán được công nhận nào;
+                            Tuân thủ các quy định bắt buộc của Luật áp dụng hoặc các quy tắc của bất
+                            kỳ vùng tài phán được công nhận nào.
                           </li>
                           <li>
-                            thông tin được tiết lộ hợp lệ cho các cố vấn chuyên môn, các bên kiểm
-                            toán hoặc ngân hàng của Bên Nhận, với điều kiện là bên nhận thông tin
-                            trước tiên đồng ý không tiết lộ thông tin đó;
+                            Thông tin được tiết lộ hợp lệ cho các cố vấn chuyên môn, các bên kiểm
+                            toán hoặc ngân hàng của bên nhận, với điều kiện là bên nhận thông tin
+                            trước tiên đồng ý không tiết lộ thông tin đó.
                           </li>
                           <li>
-                            thông tin được phổ biến trên các nguồn công cộng, không phải do vi phạm
-                            điều này;
+                            Thông tin được phổ biến trên các nguồn công cộng, không phải do vi phạm
+                            điều này.
                           </li>
                           <li>
-                            vì các mục đích của bất kỳ thủ tục phân xử trọng tài hoặc thủ tục tố
-                            tụng nào phát sinh từ Điều Khoản Dịch Vụ; và
+                            Vì các mục đích của bất kỳ thủ tục phân xử trọng tài hoặc thủ tục tố
+                            tụng nào phát sinh từ điều khoản dịch vụ,cho bất kỳ cơ quan nhà nước nào
+                            theo yêu cầu của họ.
                           </li>
-                          <li>cho bất kỳ cơ quan nhà nước nào theo yêu cầu của họ.</li>
                         </ul>
                       </li>
                       <li>
@@ -763,7 +776,7 @@ function TermsOfService() {
                       </li>
                       <li>
                         Trả lại Thông Tin Mật:
-                        <ul className="list-group ml-3 decimal-list">
+                        <ul className="list-group ml-3 lower-alpha-list">
                           <li>
                             Bên Nhận sẽ trả lại và giao lại cho Bên Tiết Lộ mọi tài liệu hữu hình
                             bao gồm Thông Tin Mật được cung cấp theo Điều Khoản Dịch Vụ và mọi biên
@@ -777,7 +790,7 @@ function TermsOfService() {
                             bất kỳ dạng lưu trữ hay phục hồi, sau thời điểm nào xảy ra sớm hơn trong
                             các thời điểm sau đây:
                             <ul className="list-group ml-3 decimal-list">
-                              <li>Chấm dứt Điều Khoản Dịch Vụ;</li>
+                              <li>Chấm dứt Điều Khoản Dịch Vụ.</li>
                               <li>Vào thời điểm mà Bên Tiết Lộ yêu cầu như vậy.</li>
                             </ul>
                             <br />
@@ -815,39 +828,39 @@ function TermsOfService() {
                 tính tổng quát của các quy định trên đây, các sự kiện sau đây sẽ được xem là là các
                 sự kiện Bất Khả Kháng:
                 <ul className="list-group ml-3 decimal-list">
-                  <li>Thiên tai, nổ, lũ lụt, giông, cháy hoặc tai nạn;</li>
+                  <li>Thiên tai, nổ, lũ lụt, giông, cháy hoặc tai nạn.</li>
                   <li>
                     Chiến tranh hoặc đe dọa chiến tranh, sự phá hoại, sự nổi dậy, bạo loạn dân sự
-                    hoặc sự trưng thu, hành động khủng bố hoặc sự náo động dân sự;
+                    hoặc sự trưng thu, hành động khủng bố hoặc sự náo động dân sự.
                   </li>
                   <li>
                     Các hành động, hạn chế, quy định, quy chế, lệnh cấm hoặc biện pháp thuộc bất kỳ
-                    loại nào về phía cơ quan nhà nước, quốc hội hoặc địa phương;
+                    loại nào về phía cơ quan nhà nước, quốc hội hoặc địa phương.
                   </li>
                   <li>Các quy định hoặc lệnh cấm nhập khẩu hoặc xuất khẩu;</li>
                   <li>
                     Sự gián đoạn giao thông, đình công, bãi công hoặc hành động công nghiệp khác
                     hoặc tranh chấp thương mại (bất kể là liên quan đến nhân viên của bên đó hoặc
-                    một bên thứ ba);
+                    một bên thứ ba).
                   </li>
                   <li>
                     Dịch bệnh do được công bố bởi Tổ Chức Y Tế Thế Giới hoặc Cơ quan Nhà Nước Việt
-                    Nam;
+                    Nam.
                   </li>
                   <li>
                     Sự gián đoạn sản xuất hoặc hoạt động, các khó khăn trong việc có được nguyên
-                    liệu thô, lao động, nhiên liệu hoặc máy móc; và
+                    liệu thô, lao động, nhiên liệu hoặc máy móc; và sự mất điện hoặc hư hỏng máy
+                    móc.
                   </li>
-                  <li>Sự mất điện hoặc hư hỏng máy móc.</li>
                 </ul>
               </li>
               <li>
                 Sau khi xảy ra bất kỳ sự kiện nào nêu tại Điều 16.1, Bên bị ảnh hưởng có thể, theo
                 quyền chọn của mình, tạm ngưng hoàn toàn một một phần việc giao hàng hoặc thực hiện
-                nghĩa vụ của mình theo quy định của Điều Khoản Dịch Vụ trong khi sự kiện hoặc tình
+                nghĩa vụ của mình theo quy định của điều khoản dịch vụ trong khi sự kiện hoặc tình
                 huống đó tiếp diễn. Nếu bất kỳ sự kiện nào được nêu tại Điều 16.1 sẽ xảy ra trong
                 khoảng thời gian hơn một tháng, Bên không bị ảnh hưởng có thể ngay lập tức chấm dứt
-                Điều Khoản Dịch Vụ sau khi gửi thông báo bằng văn bản cho Bên bị ảnh hưởng.
+                điều khoản dịch sau khi gửi thông báo bằng văn bản cho Bên bị ảnh hưởng.
               </li>
             </ul>
           </li>
@@ -918,7 +931,7 @@ function TermsOfService() {
           <li>
             <b>Bằng Văn Bản:</b> (i) Thư xác nhận việc nhận được; (ii) Thư được gửi trực tiếp hoặc
             gửi fax hoặc báo cáo trả lời từ máy fax; hoặc (iii) Thư điện tử có xác nhận được gửi đến
-            địa chỉ email cụ thể (nếu có)
+            địa chỉ email cụ thể (nếu có).
           </li>
           <li>
             <b>Bên Liên Kết Của Medofa:</b> một người, bất kỳ người nào trực tiếp hoặc gián tiếp
@@ -930,7 +943,7 @@ function TermsOfService() {
             qua quyền sở hữu chứng khoán, vốn cổ phần, vốn điều lệ, như một đối tác hoặc người được
             ủy thác, thông qua hợp đồng hay không; và chủ thế bao gồm cá nhân, một đơn vị công ty,
             đơn vị hợp danh, bất kỳ đơn vị không phải doanh nghiệp hay hiệp hội và bất kỳ cơ quan
-            nhà nước có liên quan;
+            nhà nước có liên quan.
           </li>
           <li>
             <b>Các Giao Dịch:</b> Các khoản thanh toán bởi Khách Hàng, Phí Dịch Vụ, khoản giải ngân,
@@ -945,10 +958,10 @@ function TermsOfService() {
             định của Medofa. Công ty TNHH Dược phẩm Dayton phải đọc và sẽ được xem như đã đọc và
             chấp thuận tất cả Chính Sách Của Medofa đã được gửi cho Công ty TNHH Dược phẩm Dayton
             hoặc được đăng tải trên đường dẫn nêu trên hoặc đăng tải thông qua Trung Tâm Nhà Cung
-            Cấp
+            Cấp.
           </li>
           <li>
-            <b>O.D:</b> Phương thức thanh toán bằng tiền mặt khi nhận hàng.
+            <b>CO.D:</b> Phương thức thanh toán bằng tiền mặt khi nhận hàng.
           </li>
           <li>
             <b>Dịch Vụ:</b> Dịch vụ cung cấp bởi Medofa cho Nhà Cung Cấp, bao gồm nhưng không giới
