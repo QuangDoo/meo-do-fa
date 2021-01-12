@@ -3,6 +3,7 @@ import { gql } from '@apollo/client';
 type Category = {
   id: number;
   name: string;
+  parent_id: string[];
 };
 
 type Ingredient = {
@@ -88,6 +89,7 @@ export const GET_PRODUCT = gql`
       categories {
         id
         name
+        parent_id
       }
       ingredients {
         ingredient_id
