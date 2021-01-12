@@ -1,5 +1,6 @@
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import Typography from '@material-ui/core/Typography';
+import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import { useRouter, withRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
@@ -17,6 +18,8 @@ type Props = {
 const SimpleBreadcrumbs = (props: Props) => {
   const router = useRouter();
 
+  const { t } = useTranslation(['breadcrumb']);
+
   const [parentCategory, setParentCategory] = useState([]);
 
   const { categories } = props;
@@ -30,12 +33,10 @@ const SimpleBreadcrumbs = (props: Props) => {
 
   const productPid = (productId as string).split('-');
 
-  console.log('productPid', productPid);
-
   return (
     <Breadcrumbs aria-label="breadcrumb">
       <Link href="/">
-        <a>Trang chủ</a>
+        <a>{t('breadcrumb:home_page')}</a>
       </Link>
 
       <Link href={`/products?category=${parentCategory[0]}`}>

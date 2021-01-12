@@ -2,7 +2,7 @@ import { useQuery } from '@apollo/client';
 import { useTranslation } from 'i18n';
 import _ from 'lodash';
 import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MagnifierContainer, SideBySideMagnifier } from 'react-image-magnifiers';
 import Head from 'src/components/Layout/Head';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
@@ -23,6 +23,8 @@ ProductDetail.getInitialProps = async () => ({
 function ProductDetail() {
   const router = useRouter();
 
+  const [image, setImage] = useState('');
+
   const { t } = useTranslation(['productDetail']);
 
   const { productId } = router.query;
@@ -40,6 +42,14 @@ function ProductDetail() {
 
     refetch();
   }, [productId]);
+
+  useEffect(() => {
+    if (!product?.image_512) return;
+
+    setImage(product?.image_512);
+  }, [product?.image_512]);
+
+  console.log('image', image);
 
   const getNameById = (array, id) => {
     return _.find(array, { id })?.name;
@@ -65,13 +75,16 @@ function ProductDetail() {
               <div className="row">
                 <div className="col-md-6">
                   <div className="lozad product__image">
-                    <MagnifierContainer>
-                      <SideBySideMagnifier
-                        alwaysInPlace={true}
-                        // style={{ height: '400px' }}
-                        imageSrc={product?.image_512}
-                      />
-                    </MagnifierContainer>
+                    {image && (
+                      <MagnifierContainer>
+                        <SideBySideMagnifier
+                          alwaysInPlace={true}
+                          // style={{ height: '400px' }}
+                          imageSrc={image}
+                        />
+                      </MagnifierContainer>
+                    )}
+
                     {product?.discount_percentage > 0 && (
                       <DiscountRibbon discountPercent={product?.discount_percentage} />
                     )}
