@@ -18,7 +18,7 @@ type Props = {
   onClose: () => void;
   onCompleted?: () => void;
   deliveryAddresses: DeliveryInfo[];
-  handleDeliveryAddressChoose: (address: DeliveryInfo) => void;
+  onChoose: (address: DeliveryInfo) => void;
 };
 
 export default function ChooseDeliveryAddressDialog(props: Props) {
@@ -63,7 +63,7 @@ export default function ChooseDeliveryAddressDialog(props: Props) {
                 <Button
                   variant="contained"
                   color="primary"
-                  onClick={() => props.handleDeliveryAddressChoose?.(address)}>
+                  onClick={() => props.onChoose?.(address)}>
                   {t('chooseDeliveryAddress:choose_this_address')}
                 </Button>
               </CardActions>

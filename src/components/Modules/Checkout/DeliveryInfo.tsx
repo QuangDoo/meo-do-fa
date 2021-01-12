@@ -1,167 +1,50 @@
+import { Box, Button } from '@material-ui/core';
 import { useTranslation } from 'i18n';
-import React from 'react';
-import { useFormContext } from 'react-hook-form';
-import { emailRegex } from 'src/assets/regex/email';
-import { viPhoneNumberRegex } from 'src/assets/regex/viPhoneNumber';
-import Checkbox from 'src/components/Form/Checkbox';
-import { useUser } from 'src/contexts/User';
-import useAddress from 'src/hooks/useAddress';
+import React, { useState } from 'react';
+import { DeliveryInfo as DeliveryAddress } from 'src/graphql/user/getAddressInfoUser';
 
-import InputWithLabel from '../../Form/InputWithLabel';
-import SelectWithLabel from '../../Form/SelectWithLabel';
+import ChooseDeliveryAddressDialog from './ChooseDeliveryAddressDialog';
+import CreateDeliveryAddressForm from './CreateDeliveryAddressForm';
 import InputCard from './InputCard';
 
+type State = 'chosen' | 'create' | undefined;
+
 const DeliveryInfo = () => {
-  const { register, watch } = useFormContext();
+  const { t } = useTranslation(['checkout']);
 
-  const { t } = useTranslation('checkout');
+  const [state, setState] = useState<State>();
 
-  const { data: user } = useUser();
+  const [open, setOpen] = useState(false);
 
-  const { name, phone, email, contact_address } = user || {};
-
-  const { cities, districts, wards } = useAddress({
-    cityId: +watch('deliveryCity')?.split('__')[1],
-    districtId: +watch('deliveryDistrict')?.split('__')[1],
-    wardId: +watch('deliveryWard')?.split('__')[1]
-  });
+  const handleAddressChoose = (address: DeliveryAddress) => {
+    setOpen(false);
+    setState('chosen');
+    console.log('chosen address:', address);
+  };
 
   return (
     <InputCard title={t('checkout:deliveryInfo_title')} hasRequired>
-      {/* Name input */}
-      <InputWithLabel
-        name="deliveryName"
-        ref={register({
-          required: t('checkout:name_required') + ''
-        })}
-        label={t('checkout:name_label')}
-        type="text"
-        defaultValue={name || ''}
-        placeholder={t('checkout:name_placeholder')}
-        required
-      />
+      {state === undefined && (
+        <Box alignItems="baseline" display="flex">
+          <Button variant="contained" color="primary" onClick={() => setOpen(true)}>
+            Chọn địa chỉ
+          </Button>
+          <div className="text-uppercase mx-2">hoặc</div>
+          <Button variant="contained" color="primary">
+            Tạo địa chỉ mới
+          </Button>
+        </Box>
+      )}
 
-      <div className="row">
-        {/* Phone input */}
-        <InputWithLabel
-          name="deliveryPhone"
-          ref={register({
-            required: t('checkout:phone_required') + '',
-            pattern: {
-              value: viPhoneNumberRegex,
-              message: t('checkout:phone_invalid')
-            }
-          })}
-          type="number"
-          label={t('checkout:phone_label')}
-          containerClass="col-sm-4"
-          defaultValue={phone || ''}
-          placeholder={t('checkout:phone_placeholder')}
-          required
-        />
+      {state === 'create' && <CreateDeliveryAddressForm />}
 
-        {/* Email input */}
-        <InputWithLabel
-          name="deliveryEmail"
-          ref={register({
-            pattern: {
-              value: emailRegex,
-              message: t('checkout:email_invalid')
-            }
-          })}
-          type="text"
-          label={t('checkout:email_label')}
-          containerClass="col-sm-8"
-          defaultValue={email || ''}
-          placeholder={t('checkout:email_placeholder')}
-        />
-      </div>
+      {state === 'chosen' && <div>Chosen address here</div>}
 
-      {/* Street input */}
-      <InputWithLabel
-        name="deliveryStreet"
-        defaultValue={contact_address?.street}
-        ref={register({
-          required: t('checkout:address_required') + ''
-        })}
-        label={
-          <>
-            {t('checkout:address_label')}{' '}
-            <span className="text-muted">{t('checkout:address_instructions')}</span>
-          </>
-        }
-        type="text"
-        required
-      />
-
-      <div className="row">
-        {/* Select city */}
-        <SelectWithLabel
-          name="deliveryCity"
-          ref={register({
-            required: t('checkout:city_required') + ''
-          })}
-          label={t('checkout:city_label')}
-          containerClass="col-md-4"
-          required>
-          <option value="">{t('checkout:city_placeholder')}</option>
-
-          {/* Map cities from api */}
-          {cities.map((city) => (
-            <option key={city.id} value={city.name + '__' + city.id}>
-              {city.name}
-            </option>
-          ))}
-        </SelectWithLabel>
-
-        {/* Select district */}
-        <SelectWithLabel
-          name="deliveryDistrict"
-          ref={register({
-            required: t('checkout:district_required') + ''
-          })}
-          label={t('checkout:district_label')}
-          labelClass="required"
-          containerClass="col-md-4"
-          disabled={!districts.length}>
-          <option value="">{t('checkout:district_placeholder')}</option>
-
-          {/* Map districts from chosen city */}
-          {districts.map((district) => (
-            <option key={district.id} value={district.name + '__' + district.id}>
-              {district.name}
-            </option>
-          ))}
-        </SelectWithLabel>
-
-        {/* Select ward */}
-        <SelectWithLabel
-          name="deliveryWard"
-          ref={register({
-            required: t('checkout:ward_required') + ''
-          })}
-          label={t('checkout:ward_label')}
-          labelClass="required"
-          containerClass="col-md-4"
-          disabled={!wards.length}>
-          <option value="">{t('checkout:ward_placeholder')}</option>
-
-          {/* Map wards from chosen district */}
-          {wards.map((ward) => (
-            <option key={ward.id} value={ward.name + '__' + ward.id}>
-              {ward.name}
-            </option>
-          ))}
-        </SelectWithLabel>
-      </div>
-
-      {/* Save info for next time */}
-      <Checkbox
-        ref={register}
-        name="deliverySaveInfo"
-        containerClass="mt-2"
-        label={t('checkout:saveInfo_label')}
-        labelClass="form__label"
+      <ChooseDeliveryAddressDialog
+        open={open}
+        onClose={() => setOpen(false)}
+        onChoose={handleAddressChoose}
+        deliveryAddresses={[]}
       />
     </InputCard>
   );
