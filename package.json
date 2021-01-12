@@ -28,6 +28,7 @@
     "react-dom": "^16.12.0",
     "react-hook-form": "^6.11.5",
     "react-image-magnifiers": "^1.4.0",
+    "react-image-magnify": "^2.7.4",
     "react-number-format": "^4.4.1",
     "react-scroll": "^1.8.1",
     "react-slick": "^0.27.13",

@@ -7,7 +7,7 @@ import {
   SelectProps
 } from '@material-ui/core';
 import React, { ReactText, useState } from 'react';
-import { Control, Controller, RegisterOptions } from 'react-hook-form';
+import { Control, Controller } from 'react-hook-form';
 import { v4 as uuid } from 'uuid';
 
 type SelectOption = {
@@ -20,7 +20,7 @@ type Props = SelectProps & {
   options: SelectOption[];
   variant?: 'standard' | 'filled' | 'outlined';
   control?: Control;
-  rules?: RegisterOptions;
+  rules?: any;
   error?: boolean;
   helperText?: React.ReactNode;
   onChange?: (
