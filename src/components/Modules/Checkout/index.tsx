@@ -21,7 +21,7 @@ import StickySidebar from './StickySidebar';
 
 // Các city, district, ward đều có dạng "name__id"
 
-type FormInputs = {
+export type CheckoutFormInputs = {
   deliveryName: string;
   deliveryPhone: string;
   deliveryEmail: string;
@@ -30,6 +30,7 @@ type FormInputs = {
   deliveryDistrict: string;
   deliveryWard: string;
   deliverySaveInfo: boolean;
+  deliveryPartnerId: string;
 
   deliveryMethodId: string;
   paymentMethodId: string;
@@ -46,8 +47,6 @@ type FormInputs = {
 
   customerNotes: string;
   agreement: boolean;
-
-  id: string;
 };
 
 const CheckoutPage = () => {
@@ -82,13 +81,32 @@ const CheckoutPage = () => {
   const orderNo = counselData?.counsel?.orderNo;
 
   // Form handler with default values
-  const methods = useForm<FormInputs>({
+  const methods = useForm<CheckoutFormInputs>({
     defaultValues: {
-      paymentMethodId: '1',
+      deliveryName: '',
+      deliveryPhone: '',
+      deliveryEmail: '',
+      deliveryStreet: '',
+      deliveryCity: '',
+      deliveryDistrict: '',
+      deliveryWard: '',
       deliverySaveInfo: true,
-      invoiceSaveInfo: true,
-      customerNotes: '',
+      deliveryPartnerId: '',
+
+      deliveryMethodId: '0',
+      paymentMethodId: '1',
+
       isInvoice: false,
+      invoiceName: '',
+      invoiceEmail: '',
+      invoiceStreet: '',
+      invoiceCity: '',
+      invoiceDistrict: '',
+      invoiceWard: '',
+      invoiceTaxCode: '',
+      invoiceSaveInfo: true,
+
+      customerNotes: '',
       agreement: false
     }
   });
@@ -125,7 +143,9 @@ const CheckoutPage = () => {
     }
   });
 
-  const onSubmit: SubmitHandler<FormInputs> = (data) => {
+  const onSubmit: SubmitHandler<CheckoutFormInputs> = (data) => {
+    console.log('create order submit data:', data);
+
     createOrder({
       variables: {
         inputs: {
@@ -138,8 +158,8 @@ const CheckoutPage = () => {
               fullName: data.deliveryName,
               phone: data.deliveryPhone,
               email: data.deliveryEmail,
-              partnerId: '',
-              isNew: true,
+              partnerId: data.deliveryPartnerId,
+              isNew: !!data.deliveryPartnerId,
               zipCode: +data.deliveryWard.split('__')[1],
               city: data.deliveryCity.split('__')[0],
               district: data.deliveryDistrict.split('__')[0],
@@ -162,7 +182,7 @@ const CheckoutPage = () => {
               : undefined
           },
           paymentMethodId: +data.paymentMethodId,
-          deliveryMethodId: 0,
+          deliveryMethodId: +data.deliveryMethodId,
           note: data.customerNotes,
           isInvoice: !!data.isInvoice
         }
@@ -188,6 +208,8 @@ const CheckoutPage = () => {
   return (
     <FormProvider {...methods}>
       <form className="checkout__form" onSubmit={handleSubmit(onSubmit, onError)}>
+        <input hidden ref={register} name="deliveryPartnerId" />
+
         <div className="checkout container py-5">
           <div className="row">
             <div className="col-12 mb-3">
