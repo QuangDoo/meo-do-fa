@@ -79,7 +79,6 @@ export default function CartPage() {
                         </div>
                         <div className="cart__total">
                           <PriceText price={cart?.totalNetPrice} />
-                          <span className="unit">{t('common:vnd')}</span>
                         </div>
                       </div>
                     </div>

@@ -49,6 +49,34 @@ export type CheckoutFormInputs = {
   agreement: boolean;
 };
 
+const checkoutFormDefaultValues: CheckoutFormInputs = {
+  deliveryName: '',
+  deliveryPhone: '',
+  deliveryEmail: '',
+  deliveryStreet: '',
+  deliveryCity: '',
+  deliveryDistrict: '',
+  deliveryWard: '',
+  deliverySaveInfo: true,
+  deliveryPartnerId: '',
+
+  deliveryMethodId: '0',
+  paymentMethodId: '1',
+
+  isInvoice: false,
+  invoiceName: '',
+  invoiceEmail: '',
+  invoiceStreet: '',
+  invoiceCity: '',
+  invoiceDistrict: '',
+  invoiceWard: '',
+  invoiceTaxCode: '',
+  invoiceSaveInfo: true,
+
+  customerNotes: '',
+  agreement: false
+};
+
 const CheckoutPage = () => {
   const { t } = useTranslation(['checkout', 'errors']);
 
@@ -82,33 +110,7 @@ const CheckoutPage = () => {
 
   // Form handler with default values
   const methods = useForm<CheckoutFormInputs>({
-    defaultValues: {
-      deliveryName: '',
-      deliveryPhone: '',
-      deliveryEmail: '',
-      deliveryStreet: '',
-      deliveryCity: '',
-      deliveryDistrict: '',
-      deliveryWard: '',
-      deliverySaveInfo: true,
-      deliveryPartnerId: '',
-
-      deliveryMethodId: '0',
-      paymentMethodId: '1',
-
-      isInvoice: false,
-      invoiceName: '',
-      invoiceEmail: '',
-      invoiceStreet: '',
-      invoiceCity: '',
-      invoiceDistrict: '',
-      invoiceWard: '',
-      invoiceTaxCode: '',
-      invoiceSaveInfo: true,
-
-      customerNotes: '',
-      agreement: false
-    }
+    defaultValues: checkoutFormDefaultValues
   });
 
   const { register, handleSubmit } = methods;
@@ -145,6 +147,8 @@ const CheckoutPage = () => {
 
   const onSubmit: SubmitHandler<CheckoutFormInputs> = (data) => {
     console.log('create order submit data:', data);
+
+    return;
 
     createOrder({
       variables: {

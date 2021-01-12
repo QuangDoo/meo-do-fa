@@ -412,7 +412,7 @@ function OrderDetails(props) {
                       {['price_unit', 'price_tax', 'price_total'].map((item) => (
                         <TableCell key={item} align="right">
                           <Box whiteSpace="nowrap">
-                            <PriceText price={product[item]} /> {t('common:vnd')}
+                            <PriceText price={product[item]} />
                           </Box>
                         </TableCell>
                       ))}
@@ -426,8 +426,7 @@ function OrderDetails(props) {
                       <Typography color="initial" variant="h5" align="right">
                         {t('myOrders:total')}{' '}
                         <Typography color="primary" variant="h4" display="inline">
-                          <PriceText price={orderDetail?.getOrderDetail?.amount_total} />{' '}
-                          {t('common:vnd')}
+                          <PriceText price={orderDetail?.getOrderDetail?.amount_total} />
                         </Typography>
                       </Typography>
                     </TableCell>
