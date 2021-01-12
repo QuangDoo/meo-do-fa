@@ -12,7 +12,7 @@ type Props = {
   onChange?: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
 };
 
-const Textarea = (props: Props, ref): JSX.Element => {
+const Textarea = (props: Props, ref) => {
   const { containerClass = '' } = props;
 
   return (

@@ -19,7 +19,7 @@ type Props = {
   accept?: string;
 };
 
-const InputWithLabel = (props: Props, ref): JSX.Element => {
+const InputWithLabel = (props: Props, ref) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const toggleShowPassword = () => {

@@ -1,5 +1,6 @@
 import React from 'react';
-import withApollo from 'src/utils/withApollo';
+import { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
+import withToken from 'src/utils/withToken';
 
 import Footer from '../../components/Layout/Footer';
 import Head from '../../components/Layout/Head';
@@ -8,7 +9,7 @@ import Nav from '../../components/Layout/Nav';
 import FAQ from '../../components/Modules/FAQ';
 import QuestionDetail from '../../components/Modules/FAQ/QuestionDetail';
 
-const HelpDetail = (): JSX.Element => {
+const HelpDetail = () => {
   const question = {
     id: 1,
     question: 'Hủy đơn hàng và khóa tài khoản Hủy đơn hàng và khóa tài khoản',
@@ -58,7 +59,7 @@ const HelpDetail = (): JSX.Element => {
 };
 
 HelpDetail.getInitialProps = async () => ({
-  namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge']
+  namespacesRequired: [...mainLayoutNamespacesRequired]
 });
 
-export default withApollo({ ssr: false })(HelpDetail);
+export default withToken({ ssr: true })(HelpDetail);

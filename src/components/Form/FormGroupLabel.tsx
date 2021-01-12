@@ -7,7 +7,7 @@ type Props = {
   className?: string;
 };
 
-const FormGroupLabel = (props: Props): JSX.Element => {
+const FormGroupLabel = (props: Props) => {
   return (
     <label className={clsx('form__label', props.required && 'required', props.className)}>
       {props.children}

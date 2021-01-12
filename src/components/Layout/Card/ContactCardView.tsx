@@ -7,7 +7,7 @@ type Props = {
   text?: string;
 };
 
-function ContactCardView(props: Props): JSX.Element {
+function ContactCardView(props: Props) {
   return (
     <div className="help-contact">
       <i className={props.iconClass}></i>

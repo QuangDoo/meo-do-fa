@@ -9,7 +9,7 @@ type Props = {
   createAt?: string;
 };
 
-export default function CardView(props: Props): JSX.Element {
+export default function CardView(props: Props) {
   return (
     <Link href={`/news/${props?.id}`}>
       <div className="post-item">

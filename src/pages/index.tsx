@@ -1,10 +1,8 @@
 import { useQuery } from '@apollo/client';
 import React from 'react';
-import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
-import Header from 'src/components/Layout/Header';
-import Nav from 'src/components/Layout/Nav';
 import HomePage from 'src/components/Modules/Home';
+import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import {
   GET_BEST_SELLING_PRODUCTS,
   GetBestSellingProductsData,
@@ -25,7 +23,7 @@ import {
   GetPromotionProductsData,
   GetPromotionProductsVars
 } from 'src/graphql/product/getPromotionProducts';
-import withApollo from 'src/utils/withApollo';
+import withToken from 'src/utils/withToken';
 
 const paginationVars = {
   variables: {
@@ -34,7 +32,11 @@ const paginationVars = {
   }
 };
 
-const Home = (): JSX.Element => {
+Home.getInitialProps = async () => ({
+  namespacesRequired: [...mainLayoutNamespacesRequired, 'productCard', 'productBadge']
+});
+
+function Home() {
   const { data: dealsOfTheDayData } = useQuery<GetDealsOfTheDayData, GetDealsOfTheDayVars>(
     GET_DEALS_OF_THE_DAY,
     paginationVars
@@ -56,14 +58,10 @@ const Home = (): JSX.Element => {
   >(GET_PROMOTION_PRODUCTS, paginationVars);
 
   return (
-    <>
+    <MainLayout>
       <Head>
         <title>Medofa</title>
       </Head>
-
-      <Header />
-
-      <Nav />
 
       <HomePage
         bestSellingData={bestSellingData}
@@ -71,14 +69,8 @@ const Home = (): JSX.Element => {
         promotionProductsData={promotionProductsData}
         dealsOfTheDayData={dealsOfTheDayData}
       />
-
-      <Footer />
-    </>
+    </MainLayout>
   );
-};
+}
 
-Home.getInitialProps = async () => ({
-  namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge']
-});
-
-export default withApollo({ ssr: true })(Home);
+export default withToken({ ssr: true })(Home);

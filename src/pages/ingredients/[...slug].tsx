@@ -1,13 +1,11 @@
 import { useQuery } from '@apollo/client';
-import { useTranslation, withTranslation } from 'i18n';
+import { useTranslation } from 'i18n';
 import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { toast } from 'react-toastify';
-import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
-import Header from 'src/components/Layout/Header';
-import Nav from 'src/components/Layout/Nav';
 import { ProductsContainer } from 'src/components/Modules/Home/ProductsContainer';
+import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import { ProductsCarousel } from 'src/components/Modules/ProductsCarousel';
 import ScrollableTabsButtonAuto from 'src/components/Modules/ScrollableTabsButtonAuto/ScrollableTabsButtonAuto';
 import {
@@ -20,9 +18,13 @@ import {
   GetProductsByIngredientData,
   GetProductsByIngredientVars
 } from 'src/graphql/product/getProductsByIngredient.query';
-import withApollo from 'src/utils/withApollo';
+import withToken from 'src/utils/withToken';
 
-const IngredientDetails = (): JSX.Element => {
+IngredientDetails.getInitialProps = async () => ({
+  namespacesRequired: [...mainLayoutNamespacesRequired, 'ingredientDetails']
+});
+
+function IngredientDetails() {
   const router = useRouter();
   const { t } = useTranslation(['ingredientDetails', 'errors']);
   const ingredientId = router.query.slug[0];
@@ -56,14 +58,10 @@ const IngredientDetails = (): JSX.Element => {
   const title = detailsData?.getIngredient?.name;
 
   return (
-    <>
+    <MainLayout>
       <Head>
         <title>Medofa - {title}</title>
       </Head>
-
-      <Header />
-
-      <Nav />
 
       <main className="ingredient container py-3 py-sm-5">
         <div className="row justify-content-center">
@@ -93,10 +91,8 @@ const IngredientDetails = (): JSX.Element => {
           <ProductsCarousel products={productsData?.getProductsByIngredient} />
         </ProductsContainer>
       )}
-
-      <Footer />
-    </>
+    </MainLayout>
   );
-};
+}
 
-export default withApollo({ ssr: true })(IngredientDetails);
+export default withToken({ ssr: true })(IngredientDetails);

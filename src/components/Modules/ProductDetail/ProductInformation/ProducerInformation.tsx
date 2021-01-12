@@ -7,7 +7,7 @@ import { ProductDetails } from 'src/graphql/product/product.query';
 
 // import Tab from '../../../Tab/Tab';
 
-const ProducerInformation = (props: ProductDetails): JSX.Element => {
+const ProducerInformation = (props: ProductDetails) => {
   const { t } = useTranslation(['ingredientDetails']);
 
   return (

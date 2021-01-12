@@ -11,7 +11,7 @@ type InputsSearch = {
   key: string;
 };
 
-function InputSearch(props: PropsType): JSX.Element {
+function InputSearch(props: PropsType) {
   const { register, watch } = useForm<InputsSearch>();
 
   const value = watch('search', '');

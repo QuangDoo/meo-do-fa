@@ -1,31 +1,23 @@
 import React from 'react';
-import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
-import Header from 'src/components/Layout/Header';
-import Nav from 'src/components/Layout/Nav';
 import CheckoutPage from 'src/components/Modules/Checkout';
-import withApollo from 'src/utils/withApollo';
+import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
+import withToken from 'src/utils/withToken';
 
-const Checkout = (): JSX.Element => {
+Checkout.getInitialProps = async () => ({
+  namespacesRequired: [...mainLayoutNamespacesRequired, 'checkout', 'myAccount']
+});
+
+function Checkout() {
   return (
-    <>
+    <MainLayout>
       <Head>
         <title>Medofa</title>
       </Head>
 
-      <Header />
-
-      <Nav />
-
       <CheckoutPage />
-
-      <Footer />
-    </>
+    </MainLayout>
   );
-};
+}
 
-Checkout.getInitialProps = async () => ({
-  namespacesRequired: ['checkout', 'errors', 'common', 'myAccount']
-});
-
-export default withApollo({ ssr: true })(Checkout);
+export default withToken({ ssr: true, isProtected: true })(Checkout);

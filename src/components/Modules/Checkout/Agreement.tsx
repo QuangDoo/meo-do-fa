@@ -1,7 +1,6 @@
 import { Trans, useTranslation } from 'i18n';
 import React from 'react';
 import Checkbox from 'src/components/Form/Checkbox';
-import LinkText from 'src/components/Form/LinkText';
 import { ReactHookFormRegister } from 'src/types/ReactHookFormRegister';
 
 import DescriptionBox from './DescriptionBox';

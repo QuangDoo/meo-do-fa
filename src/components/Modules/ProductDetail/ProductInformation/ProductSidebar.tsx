@@ -2,7 +2,7 @@ import { Trans, useTranslation } from 'i18n';
 import Link from 'next/link';
 import React from 'react';
 
-function ProductSidebar(): JSX.Element {
+function ProductSidebar() {
   const { t } = useTranslation(['productDetail']);
 
   const links = [

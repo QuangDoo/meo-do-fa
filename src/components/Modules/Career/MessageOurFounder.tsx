@@ -1,6 +1,6 @@
 import React from 'react';
 
-function MessageOurFounder(props): JSX.Element {
+function MessageOurFounder(props) {
   return (
     <>
       <div className="message-founder">

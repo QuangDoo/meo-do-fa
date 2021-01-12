@@ -22,96 +22,94 @@ import {
   TableRow,
   Typography
 } from '@material-ui/core';
-import { AssignmentTurnedIn, Done, LocalShipping, Receipt, Sms, Update } from '@material-ui/icons';
+import { AssignmentTurnedIn, Done, LocalShipping, Receipt, Update } from '@material-ui/icons';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import clsx from 'clsx';
-import Cookies from 'cookies';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import PriceText from 'src/components/Form/PriceText';
-import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
-import Header from 'src/components/Layout/Header';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
-import Nav from 'src/components/Layout/Nav';
+import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import ProfileLayout from 'src/components/Modules/ProfileLayout';
 import { GET_ORDER, GetOrderDetailData, GetOrderDetailVars } from 'src/graphql/order/getOrder';
 import { useQueryAuth } from 'src/hooks/useApolloHookAuth';
-import { theme } from 'src/theme';
-import withApollo from 'src/utils/withApollo';
+import withToken from 'src/utils/withToken';
 
 import ConfirmCancelOrder from '../../components/Modules/My-orders/ConfirmCancelOrder';
 
-const stepIconSize = 75;
+const useStyles = makeStyles((muiTheme) => {
+  const stepIconSize = 75;
 
-const stepConnectorLineHeight = 3;
+  const stepConnectorLineHeight = 3;
 
-const stepIconGradient = `linear-gradient(102.04deg, ${theme.colors.blue} 0%, ${theme.colors.blue1} 100%)`;
+  const stepIconGradient = `linear-gradient(102.04deg, ${muiTheme.palette.primary.dark} 0%, ${muiTheme.palette.primary.main} 100%)`;
 
-const stepConnectorLineGradient = `linear-gradient(95deg,${theme.colors.blue1} 0%, ${theme.colors.blue} 100%)`;
+  const stepConnectorLineGradient = `linear-gradient(95deg,${muiTheme.palette.primary.main} 0%, ${muiTheme.palette.primary.dark} 100%)`;
 
-const useStyles = makeStyles((materialTheme) => ({
-  cardRoot: {
-    padding: materialTheme.spacing(2)
-  },
-  stepIconRoot: {
-    backgroundColor: theme.colors['gray-500'],
-    zIndex: 1,
-    color: theme.colors.white,
-    width: stepIconSize,
-    height: stepIconSize,
-    display: 'flex',
-    borderRadius: '50%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    '& .MuiSvgIcon-root': {
-      fontSize: '2rem'
-    }
-  },
-  stepIconActive: {
-    backgroundImage: stepIconGradient,
-    boxShadow: '0 4px 10px 0 rgba(0, 0, 0, 0.25)',
-    '& .MuiSvgIcon-root': {
-      fontSize: '2rem'
-    }
-  },
-  stepIconCompleted: {
-    backgroundImage: stepIconGradient
-  },
+  return {
+    cardRoot: {
+      padding: muiTheme.spacing(2)
+    },
+    stepIconRoot: {
+      backgroundColor: muiTheme.palette.grey[500],
+      zIndex: 1,
+      color: muiTheme.palette.common.white,
+      width: stepIconSize,
+      height: stepIconSize,
+      display: 'flex',
+      borderRadius: '50%',
+      justifyContent: 'center',
+      alignItems: 'center',
+      '& .MuiSvgIcon-root': {
+        fontSize: '2rem'
+      }
+    },
+    stepIconActive: {
+      backgroundImage: stepIconGradient,
+      boxShadow: '0 4px 10px 0 rgba(0, 0, 0, 0.25)',
+      '& .MuiSvgIcon-root': {
+        fontSize: '2rem'
+      }
+    },
+    stepIconCompleted: {
+      backgroundImage: stepIconGradient
+    },
 
-  stepConnectorAlternativeLabel: {
-    top: (stepIconSize - stepConnectorLineHeight) / 2
-  },
-  stepConnectorActive: {
-    '& .MuiStepConnector-line': {
-      backgroundImage: stepConnectorLineGradient
+    stepConnectorAlternativeLabel: {
+      top: (stepIconSize - stepConnectorLineHeight) / 2
+    },
+    stepConnectorActive: {
+      '& .MuiStepConnector-line': {
+        backgroundImage: stepConnectorLineGradient
+      }
+    },
+    stepConnectorCompleted: {
+      '& .MuiStepConnector-line': {
+        backgroundImage: stepConnectorLineGradient
+      }
+    },
+    stepConnectorLine: {
+      height: stepConnectorLineHeight,
+      border: 0,
+      backgroundColor: muiTheme.palette.grey[500]
+    },
+    textWithLabelContainer: {
+      '&:not(:last-child)': {
+        marginBottom: muiTheme.spacing(2)
+      }
+    },
+    stepIconCancel: {
+      background: 'linear-gradient(102.04deg, #c31e1e 0%, #f00 100%)'
+    },
+    table: {
+      minWidth: 650
     }
-  },
-  stepConnectorCompleted: {
-    '& .MuiStepConnector-line': {
-      backgroundImage: stepConnectorLineGradient
-    }
-  },
-  stepConnectorLine: {
-    height: stepConnectorLineHeight,
-    border: 0,
-    backgroundColor: theme.colors['gray-500']
-  },
-  textWithLabelContainer: {
-    '&:not(:last-child)': {
-      marginBottom: materialTheme.spacing(2)
-    }
-  },
-  stepIconCancel: {
-    background: 'linear-gradient(102.04deg, #c31e1e 0%, #f00 100%)'
-  },
-  table: {
-    minWidth: 650
-  }
-}));
+  };
+});
 
 const CustomCard = (props: CardProps) => {
   const classes = useStyles();
@@ -184,7 +182,11 @@ const TextWithLabel = (props) => {
   );
 };
 
-const OrderDetails = () => {
+OrderDetails.getinitialProps = async () => ({
+  namespacesRequired: [...mainLayoutNamespacesRequired, 'myOrders']
+});
+
+function OrderDetails(props) {
   const { t } = useTranslation(['myOrders', 'common']);
   const router = useRouter();
 
@@ -247,14 +249,10 @@ const OrderDetails = () => {
   const classes = useStyles();
 
   return (
-    <>
+    <MainLayout>
       <Head>
         <title>Medofa</title>
       </Head>
-
-      <Header />
-
-      <Nav />
 
       <ProfileLayout>
         <Grid container spacing={2}>
@@ -384,7 +382,7 @@ const OrderDetails = () => {
                       </Typography>
                     </TableCell>
 
-                    {['unit_price', 'quantity', 'tax', 'total'].map((key) => (
+                    {['quantity', 'unit_price', 'tax', 'total'].map((key) => (
                       <TableCell key={key} align="right">
                         <Typography variant="button" color="primary" noWrap>
                           {t(`myOrders:${key}`)}
@@ -399,7 +397,7 @@ const OrderDetails = () => {
                     <TableRow key={product.name}>
                       <TableCell component="th" scope="row">
                         {product.product_type !== 'product' ? (
-                          <p>{product.name}</p>
+                          <div>{product.name}</div>
                         ) : (
                           <Link href={`/products/${product.product.slug}`}>
                             <a>{product.name}</a>
@@ -408,24 +406,16 @@ const OrderDetails = () => {
                       </TableCell>
 
                       <TableCell align="right">
-                        <Box whiteSpace="nowrap">
-                          <PriceText price={product.price_unit} /> {t('common:vnd')}
-                        </Box>
+                        <Box whiteSpace="nowrap">{product.product_uom_qty}</Box>
                       </TableCell>
 
-                      <TableCell align="right">{product.product_uom_qty}</TableCell>
-
-                      <TableCell align="right">
-                        <Box whiteSpace="nowrap">
-                          <PriceText price={product.price_tax} /> {t('common:vnd')}
-                        </Box>
-                      </TableCell>
-
-                      <TableCell align="right">
-                        <Box whiteSpace="nowrap">
-                          <PriceText price={product.price_total} /> {t('common:vnd')}
-                        </Box>
-                      </TableCell>
+                      {['price_unit', 'price_tax', 'price_total'].map((item) => (
+                        <TableCell key={item} align="right">
+                          <Box whiteSpace="nowrap">
+                            <PriceText price={product[item]} /> {t('common:vnd')}
+                          </Box>
+                        </TableCell>
+                      ))}
                     </TableRow>
                   ))}
                 </TableBody>
@@ -433,10 +423,12 @@ const OrderDetails = () => {
                 <TableFooter>
                   <TableRow>
                     <TableCell colSpan={5}>
-                      <Typography color="primary" variant="h5" align="right">
+                      <Typography color="initial" variant="h5" align="right">
                         {t('myOrders:total')}{' '}
-                        <PriceText price={orderDetail?.getOrderDetail?.amount_total} />{' '}
-                        {t('common:vnd')}
+                        <Typography color="primary" variant="h4" display="inline">
+                          <PriceText price={orderDetail?.getOrderDetail?.amount_total} />{' '}
+                          {t('common:vnd')}
+                        </Typography>
                       </Typography>
                     </TableCell>
                   </TableRow>
@@ -447,27 +439,8 @@ const OrderDetails = () => {
         </Grid>
       </ProfileLayout>
       <LoadingBackdrop open={loadingOrderDetail} />
-      <Footer />
-    </>
+    </MainLayout>
   );
-};
+}
 
-OrderDetails.getInitialProps = async (ctx) => {
-  if (typeof window === 'undefined') {
-    const cookies = new Cookies(ctx.req, ctx.res);
-
-    if (!cookies.get('token')) {
-      ctx.res.writeHead(302, {
-        Location: '/'
-      });
-
-      ctx.res.end();
-    }
-  }
-
-  return {
-    namespacesRequired: ['myOrders', 'common']
-  };
-};
-
-export default withApollo({ ssr: true })(OrderDetails);
+export default withToken({ ssr: true, isProtected: true })(OrderDetails);

@@ -27,7 +27,7 @@ type Props = {
 
 const pageSize = 10;
 
-const NotiItem = (props: Props): JSX.Element => {
+const NotiItem = (props: Props) => {
   const [seenNotify] = useMutationAuth(SEEN_NOTI);
 
   const [dataContent, setDataContent] = useState('');
