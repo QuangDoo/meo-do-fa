@@ -6,17 +6,12 @@ import { viPhoneNumberRegex } from 'src/assets/regex/viPhoneNumber';
 import Checkbox from 'src/components/Form/Checkbox';
 import InputWithLabel from 'src/components/Form/InputWithLabel';
 import SelectWithLabel from 'src/components/Form/SelectWithLabel';
-import { useUser } from 'src/contexts/User';
 import useAddress from 'src/hooks/useAddress';
 
 export default function CreateDeliveryAddressForm() {
   const { register, watch } = useFormContext();
 
   const { t } = useTranslation(['checkout']);
-
-  const { data: user } = useUser();
-
-  const { name, phone, email, contact_address } = user || {};
 
   const { cities, districts, wards } = useAddress({
     cityId: +watch('deliveryCity')?.split('__')[1],
@@ -34,8 +29,6 @@ export default function CreateDeliveryAddressForm() {
         })}
         label={t('checkout:name_label')}
         type="text"
-        defaultValue={name || ''}
-        placeholder={t('checkout:name_placeholder')}
         required
       />
 
@@ -53,8 +46,6 @@ export default function CreateDeliveryAddressForm() {
           type="number"
           label={t('checkout:phone_label')}
           containerClass="col-sm-4"
-          defaultValue={phone || ''}
-          placeholder={t('checkout:phone_placeholder')}
           required
         />
 
@@ -70,15 +61,12 @@ export default function CreateDeliveryAddressForm() {
           type="text"
           label={t('checkout:email_label')}
           containerClass="col-sm-8"
-          defaultValue={email || ''}
-          placeholder={t('checkout:email_placeholder')}
         />
       </div>
 
       {/* Street input */}
       <InputWithLabel
         name="deliveryStreet"
-        defaultValue={contact_address?.street}
         ref={register({
           required: t('checkout:address_required') + ''
         })}

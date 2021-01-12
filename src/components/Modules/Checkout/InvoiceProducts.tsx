@@ -34,7 +34,8 @@ const InvoiceProducts = (props: Props) => {
       if (errorCode === 114) {
         router.push('/cart');
       }
-    }
+    },
+    skip: !props.orderNo
   });
 
   const products = data?.getInvoiceCounsel || [];

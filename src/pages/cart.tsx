@@ -5,7 +5,7 @@ import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules
 import withToken from 'src/utils/withToken';
 
 Cart.getInitialProps = async () => ({
-  namespacesRequired: [...mainLayoutNamespacesRequired]
+  namespacesRequired: [...mainLayoutNamespacesRequired, 'cart']
 });
 
 function Cart() {

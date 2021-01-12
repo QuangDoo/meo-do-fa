@@ -89,7 +89,7 @@ export default function CartPage() {
                         <button
                           onClick={handleCheckoutClick}
                           className="btn btn-secondary btn-block text-small">
-                          {t('continue_payment')}
+                          {t('cart:continue_payment')}
                         </button>
                       </div>
                     </div>

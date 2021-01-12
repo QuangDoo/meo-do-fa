@@ -1,28 +1,30 @@
-import {
-  Box,
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  CardHeader,
-  Grid,
-  Typography
-} from '@material-ui/core';
+import { Box, Button, Card, CardActions, CardContent, Grid, Typography } from '@material-ui/core';
 import { useTranslation } from 'i18n';
 import React from 'react';
+import { toast } from 'react-toastify';
 import MuiDialog from 'src/components/Layout/Modal/MuiDialog';
-import { DeliveryInfo } from 'src/graphql/user/getAddressInfoUser';
+import {
+  AddressInfo,
+  GET_ADDRESS_INFO_USER,
+  GetAddressInfoUserData
+} from 'src/graphql/user/getAddressInfoUser';
+import { useQueryAuth } from 'src/hooks/useApolloHookAuth';
 
 type Props = {
   open: boolean;
   onClose: () => void;
   onCompleted?: () => void;
-  deliveryAddresses: DeliveryInfo[];
-  onChoose: (address: DeliveryInfo) => void;
+  onChoose: (address: AddressInfo) => void;
 };
 
 export default function ChooseDeliveryAddressDialog(props: Props) {
-  const { t } = useTranslation(['chooseDeliveryAddress']);
+  const { t } = useTranslation(['chooseDeliveryAddress', 'errors']);
+
+  const { data } = useQueryAuth<GetAddressInfoUserData, undefined>(GET_ADDRESS_INFO_USER, {
+    onError: (err) => {
+      toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions.code}`));
+    }
+  });
 
   return (
     <MuiDialog
@@ -31,7 +33,7 @@ export default function ChooseDeliveryAddressDialog(props: Props) {
       title={t('chooseDeliveryAddress:dialog_title')}
       fullWidth>
       <Grid container spacing={3}>
-        {props.deliveryAddresses.map((address) => (
+        {data?.getAddressInfoUser?.deliveries.map((address) => (
           <Grid key={address.id} item xs={12}>
             <Card>
               <CardContent>
@@ -45,16 +47,12 @@ export default function ChooseDeliveryAddressDialog(props: Props) {
                     <div>
                       {`${address.street}, ${address.ward}, ${address.district}, ${address.city}`}
                     </div>
-                  </h6>
 
-                  <h6 className="delivery-address-content">
                     <div>{t('chooseDeliveryAddress:phone')}:</div>
                     <div>{address.phone}</div>
-                  </h6>
 
-                  <h6 className="delivery-address-content">
                     <div>{t('chooseDeliveryAddress:email')}:</div>
-                    <div>{address.email}</div>
+                    <div>{address.email || t('chooseDeliveryAddress:email_not_provided')}</div>
                   </h6>
                 </Box>
               </CardContent>

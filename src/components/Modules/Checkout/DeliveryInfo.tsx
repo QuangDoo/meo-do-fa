@@ -1,6 +1,8 @@
 import { Box, Button } from '@material-ui/core';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { useTranslation } from 'i18n';
 import React, { useState } from 'react';
+import { useFormContext } from 'react-hook-form';
 import { DeliveryInfo as DeliveryAddress } from 'src/graphql/user/getAddressInfoUser';
 
 import ChooseDeliveryAddressDialog from './ChooseDeliveryAddressDialog';
@@ -12,7 +14,7 @@ type State = 'chosen' | 'create' | undefined;
 const DeliveryInfo = () => {
   const { t } = useTranslation(['checkout']);
 
-  const [state, setState] = useState<State>();
+  const [state, setState] = useState<State>(undefined);
 
   const [open, setOpen] = useState(false);
 
@@ -23,17 +25,27 @@ const DeliveryInfo = () => {
   };
 
   return (
-    <InputCard title={t('checkout:deliveryInfo_title')} hasRequired>
-      {state === undefined && (
+    <InputCard title={t('checkout:deliveryInfo_title')} hasRequired={state === 'create'}>
+      {state === undefined ? (
         <Box alignItems="baseline" display="flex">
           <Button variant="contained" color="primary" onClick={() => setOpen(true)}>
             Chọn địa chỉ
           </Button>
           <div className="text-uppercase mx-2">hoặc</div>
-          <Button variant="contained" color="primary">
+          <Button variant="contained" color="primary" onClick={() => setState('create')}>
             Tạo địa chỉ mới
           </Button>
         </Box>
+      ) : (
+        <div className="mb-3">
+          <Button
+            variant="contained"
+            color="default"
+            onClick={() => setState(undefined)}
+            startIcon={<ArrowBackIcon />}>
+            Trở về
+          </Button>
+        </div>
       )}
 
       {state === 'create' && <CreateDeliveryAddressForm />}
@@ -44,7 +56,6 @@ const DeliveryInfo = () => {
         open={open}
         onClose={() => setOpen(false)}
         onChoose={handleAddressChoose}
-        deliveryAddresses={[]}
       />
     </InputCard>
   );

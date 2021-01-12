@@ -34,14 +34,14 @@ export default function MuiDialog(props: Props) {
 
   return (
     <Dialog open={open} onClose={onClose} {...restDialogProps}>
-      <DialogTitle className={classes.padding}>
+      <DialogTitle className={classes.dialogTitle}>
         {title}
         <IconButton className={classes.closeButton} onClick={onClose}>
           <CloseIcon />
         </IconButton>
       </DialogTitle>
 
-      <DialogContent dividers className={classes.padding}>
+      <DialogContent dividers className={classes.dialogContent}>
         {props.children}
       </DialogContent>
 
@@ -53,16 +53,19 @@ export default function MuiDialog(props: Props) {
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
-  padding: {
-    padding: theme.spacing(2)
-  },
   closeButton: {
     position: 'absolute',
     right: theme.spacing(1),
     top: theme.spacing(1),
     color: theme.palette.grey[500]
   },
+  dialogTitle: {
+    padding: theme.spacing(2)
+  },
   dialogActions: {
+    padding: theme.spacing(2)
+  },
+  dialogContent: {
     padding: theme.spacing(2)
   }
 }));
