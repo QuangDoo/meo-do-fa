@@ -1,3 +1,4 @@
+import { useTranslation } from 'i18n';
 import React from 'react';
 
 type Props = {
@@ -7,11 +8,15 @@ type Props = {
   couponDescription?: string;
   discount?: string;
   couponDateFrom?: string;
+  discountType: string;
+  discountFixedAmount: number;
 };
 
 export default function PromoCodeItem(props: Props) {
+  const { t } = useTranslation(['promoCodes', 'common']);
   const imgUrl = '/assets/images/gift.jpg';
   const { rewardType } = props;
+  const discountFixedAmount = props.discountFixedAmount.toLocaleString('de-DE');
 
   const leftPromoCode = (rewardType) => {
     switch (rewardType) {
@@ -21,17 +26,19 @@ export default function PromoCodeItem(props: Props) {
             <div className="discount">
               <img src={imgUrl} alt="coupon gift" className="img-fluid" width={60} height={60} />
             </div>
-            <div className="suffix">Quà Tặng</div>
+            <div className="suffix">{t('promoCodes:present')}</div>
           </div>
         );
       case 'discount':
         return (
           <div className="mb-1 benefit">
             <div className="discount">
-              {`discount ${props.discount}%`}
+              {props.discountType === 'percentage' && `- ${props.discount}%`}
+              {props.discountType === 'fixed_amount' &&
+                `- ${discountFixedAmount} ${t('common:vnd')}`}
               {/* <span className="unit">đ</span> */}
             </div>
-            <div className="suffix">Giảm Giá</div>
+            <div className="suffix">{t('promoCodes:discount')}</div>
           </div>
         );
       default:
@@ -58,7 +65,7 @@ export default function PromoCodeItem(props: Props) {
 
         <div className="coupon__button">
           <a href="/products" className="btn btn-primary btn-sm btn-block">
-            Đặt hàng ngay
+            {t('promoCodes:order_now')}
           </a>
         </div>
       </div>
