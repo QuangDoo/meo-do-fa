@@ -36,7 +36,7 @@ const CategoryDropdownMenu = (props: Props) => {
       </div>
       {categories
         .slice()
-        .sort((a, b) => a.name.localeCompare(b.name))
+        .sort((a, b) => a.name?.localeCompare(b.name))
         .map(({ name, id, categorySub }) => (
           <div key={id} className="mb-2">
             <Link href={`/products?category=${id}`}>
@@ -44,7 +44,7 @@ const CategoryDropdownMenu = (props: Props) => {
                 <div className="mb-3">
                   {categorySub
                     .slice()
-                    .sort((a, b) => a.name.localeCompare(b.name))
+                    .sort((a, b) => a.name?.localeCompare(b.name))
                     .map(({ name, id }) => (
                       <div key={id} className="ml-2 mb-1">
                         <Link href={`/products?category=${id}`}>
