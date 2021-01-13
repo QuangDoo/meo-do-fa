@@ -11,7 +11,7 @@ type RegisterModalProps = {
   readonly t: TFunction;
 };
 
-const Register = ({ t }: RegisterModalProps): JSX.Element => {
+const Register = ({ t }: RegisterModalProps) => {
   // Modal is open or not
   const { registerIsOpen } = useModalControlState();
 

@@ -1,4 +1,4 @@
-import { Backdrop, CircularProgress, makeStyles } from '@material-ui/core';
+import { Backdrop, CircularProgress, Fade, makeStyles, Modal } from '@material-ui/core';
 import React from 'react';
 
 type Props = {
@@ -6,9 +6,11 @@ type Props = {
 };
 
 const useStyles = makeStyles((theme) => ({
-  backdrop: {
-    zIndex: theme.zIndex.drawer + 1,
-    color: '#fff'
+  modal: {
+    color: theme.palette.common.white,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 }));
 
@@ -16,9 +18,17 @@ const LoadingBackdrop = (props: Props) => {
   const classes = useStyles();
 
   return (
-    <Backdrop className={classes.backdrop} open={props.open}>
-      <CircularProgress color="inherit" />
-    </Backdrop>
+    <Modal
+      open={props.open}
+      className={classes.modal}
+      BackdropComponent={Backdrop}
+      BackdropProps={{
+        timeout: 250
+      }}>
+      <Fade in={props.open}>
+        <CircularProgress color="inherit" />
+      </Fade>
+    </Modal>
   );
 };
 

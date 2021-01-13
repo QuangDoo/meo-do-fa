@@ -12,7 +12,7 @@ type Props = {
   categories?: any;
 };
 
-export default function FAQ(props: Props): JSX.Element {
+export default function FAQ(props: Props) {
   const { t } = useTranslation('help');
 
   const categories = [

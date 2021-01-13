@@ -27,7 +27,7 @@ type Props = {
 
 const pageSize = 10;
 
-const NotiItem = (props: Props): JSX.Element => {
+const NotiItem = (props: Props) => {
   const [seenNotify] = useMutationAuth(SEEN_NOTI);
 
   const [dataContent, setDataContent] = useState('');
@@ -58,7 +58,7 @@ const NotiItem = (props: Props): JSX.Element => {
 
   return (
     // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-    <div className="col-12 mb-3" onClick={handleRead}>
+    <div className="col-12 p-0" onClick={handleRead}>
       {type === 'order' && (
         <Link href={`/my-orders/${description}`}>
           <a

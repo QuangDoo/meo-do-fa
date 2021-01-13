@@ -2,22 +2,28 @@ import { useQuery } from '@apollo/client';
 import { useTranslation } from 'i18n';
 import _ from 'lodash';
 import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MagnifierContainer, SideBySideMagnifier } from 'react-image-magnifiers';
-import Footer from 'src/components/Layout/Footer';
 import Head from 'src/components/Layout/Head';
-import Header from 'src/components/Layout/Header';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import Nav from 'src/components/Layout/Nav';
+import SimpleBreadcrumbs from 'src/components/Modules/BreadCrum/BreadCrum';
+import MainLayout from 'src/components/Modules/MainLayout';
 import { DiscountRibbon } from 'src/components/Modules/ProductCard/DiscountRibbon';
 import ProductDetailInfor from 'src/components/Modules/ProductDetail/ProductDetaiInfor';
 import ProducerInformation from 'src/components/Modules/ProductDetail/ProductInformation/ProducerInformation';
 import ProductSidebar from 'src/components/Modules/ProductDetail/ProductInformation/ProductSidebar';
 import { GET_PRODUCT } from 'src/graphql/product/product.query';
-import withApollo from 'src/utils/withApollo';
+import withToken from 'src/utils/withToken';
 
-function ProductDetail(): JSX.Element {
+ProductDetail.getInitialProps = async () => ({
+  namespacesRequired: ['common', 'errors', 'productDetail']
+});
+
+function ProductDetail() {
   const router = useRouter();
+
+  const [image, setImage] = useState('');
 
   const { t } = useTranslation(['productDetail']);
 
@@ -37,6 +43,14 @@ function ProductDetail(): JSX.Element {
     refetch();
   }, [productId]);
 
+  useEffect(() => {
+    if (!product?.image_512) return;
+
+    setImage(product?.image_512);
+  }, [product?.image_512]);
+
+  console.log('image', image);
+
   const getNameById = (array, id) => {
     return _.find(array, { id })?.name;
   };
@@ -44,16 +58,15 @@ function ProductDetail(): JSX.Element {
   const title = Number(productPid) ? getNameById(dataProduct, Number(productPid)) : '';
 
   return (
-    <>
+    <MainLayout>
       <Head>
         <title>Medofa - {title}</title>
       </Head>
 
-      <Header />
-
-      <Nav />
-
       <LoadingBackdrop open={loading} />
+      <div className="product container py-2">
+        <SimpleBreadcrumbs categories={product?.categories} />
+      </div>
 
       <div className="product container py-5" hidden={loading}>
         <div className="elevated">
@@ -62,13 +75,16 @@ function ProductDetail(): JSX.Element {
               <div className="row">
                 <div className="col-md-6">
                   <div className="lozad product__image">
-                    <MagnifierContainer>
-                      <SideBySideMagnifier
-                        alwaysInPlace={true}
-                        // style={{ height: '400px' }}
-                        imageSrc={product?.image_512}
-                      />
-                    </MagnifierContainer>
+                    {image && (
+                      <MagnifierContainer>
+                        <SideBySideMagnifier
+                          alwaysInPlace={true}
+                          // style={{ height: '400px' }}
+                          imageSrc={image}
+                        />
+                      </MagnifierContainer>
+                    )}
+
                     {product?.discount_percentage > 0 && (
                       <DiscountRibbon discountPercent={product?.discount_percentage} />
                     )}
@@ -92,9 +108,8 @@ function ProductDetail(): JSX.Element {
         </div>
         {/* <RelativeProducts /> */}
       </div>
-      <Footer />
-    </>
+    </MainLayout>
   );
 }
 
-export default withApollo({ ssr: true })(ProductDetail);
+export default withToken({ ssr: true })(ProductDetail);

@@ -10,7 +10,7 @@ type Props = {
   itemRight?: React.ReactNode;
 };
 
-const Input = (props: Props, ref): JSX.Element => {
+const Input = (props: Props, ref) => {
   const { containerClass = '', type = 'text', itemRight } = props;
 
   const [showPassword, setShowPassword] = useState(false);

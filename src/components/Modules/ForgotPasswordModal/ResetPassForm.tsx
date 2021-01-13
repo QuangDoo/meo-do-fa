@@ -18,7 +18,7 @@ type Inputs = {
   email: string;
 };
 
-const ResetPassForm = (): JSX.Element => {
+const ResetPassForm = () => {
   const { register, handleSubmit } = useForm<Inputs>();
 
   const { t } = useTranslation(['password', 'errors', 'register']);

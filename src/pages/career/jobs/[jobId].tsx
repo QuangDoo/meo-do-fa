@@ -1,10 +1,9 @@
 import React from 'react';
-import withApollo from 'src/utils/withApollo';
+import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
+import redirect from 'src/utils/redirect';
+import withToken from 'src/utils/withToken';
 
-import Footer from '../../../components/Layout/Footer';
 import Head from '../../../components/Layout/Head';
-import Header from '../../../components/Layout/Header';
-import Nav from '../../../components/Layout/Nav';
 import JobDetail from '../../../components/Modules/Career/JobDetail';
 
 const job = {
@@ -37,16 +36,12 @@ const job = {
   ]
 };
 
-const CareerPage = (): JSX.Element => {
+const CareerPage = () => {
   return (
-    <>
+    <MainLayout>
       <Head>
         <title>Medofa</title>
       </Head>
-
-      <Header />
-
-      <Nav />
 
       <JobDetail
         name={job.name}
@@ -57,14 +52,19 @@ const CareerPage = (): JSX.Element => {
         department={job.department}
         location={job.location}
       />
-
-      <Footer />
-    </>
+    </MainLayout>
   );
 };
 
-CareerPage.getInitialProps = async () => ({
-  namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge']
-});
+CareerPage.getInitialProps = async (ctx) => {
+  redirect({
+    ctx,
+    location: '/'
+  });
 
-export default withApollo({ ssr: false })(CareerPage);
+  return {
+    namespacesRequired: [...mainLayoutNamespacesRequired]
+  };
+};
+
+export default withToken({ ssr: true })(CareerPage);

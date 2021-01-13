@@ -9,7 +9,7 @@ import {
 import { ProductsContainer } from '../Home/ProductsContainer';
 import { ProductsCarousel } from '../ProductsCarousel';
 
-const RelativeProducts = (): JSX.Element => {
+const RelativeProducts = () => {
   const { data } = useQuery<GetRelatedProductsData, GetRelatedProductsVars>(GET_RELATED_PRODUCTS, {
     variables: {
       page: 1,

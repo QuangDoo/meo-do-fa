@@ -11,7 +11,7 @@ type Props = {
   status?: string;
 };
 
-function QuestionDetail(props: Props): JSX.Element {
+function QuestionDetail(props: Props) {
   function createMarkup() {
     return { __html: props.answer };
   }

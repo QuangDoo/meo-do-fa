@@ -7,7 +7,7 @@ type Props = {
   containerClass?: string;
 };
 
-const InputFile = (props: Props, ref): JSX.Element => {
+const InputFile = (props: Props, ref) => {
   const { containerClass = '' } = props;
 
   return (

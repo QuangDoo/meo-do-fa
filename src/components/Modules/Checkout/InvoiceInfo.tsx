@@ -5,8 +5,8 @@ import { emailRegex } from 'src/assets/regex/email';
 import Checkbox from 'src/components/Form/Checkbox';
 import InputWithLabel from 'src/components/Form/InputWithLabel';
 import SelectWithLabel from 'src/components/Form/SelectWithLabel';
+import { useUser } from 'src/contexts/User';
 import useAddress from 'src/hooks/useAddress';
-import useUser from 'src/hooks/useUser';
 
 import BillingExport from './BillingExport';
 import InputCard from './InputCard';
@@ -22,7 +22,7 @@ const InvoiceInfo = () => {
 
   const { t } = useTranslation(['checkout', 'myAccount']);
 
-  const { user } = useUser();
+  const { data: user } = useUser();
 
   return (
     <BillingExport ref={register} name="isInvoice" label={t('checkout:billing_export')}>

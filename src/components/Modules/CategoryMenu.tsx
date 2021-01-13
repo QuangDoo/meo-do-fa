@@ -109,7 +109,7 @@ const CategoryMenu = () => {
               </div>
               <div className="sub-menu">
                 <ul>
-                  {categorySub.map(({ id, name }) => (
+                  {categorySub?.map(({ id, name }) => (
                     <li className="sub-menu-item" key={id}>
                       <Link href={`/products?category=${id}`}>
                         <a className="sub-item-link">{name}</a>

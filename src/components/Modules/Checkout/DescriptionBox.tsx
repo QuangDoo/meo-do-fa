@@ -6,7 +6,7 @@ type Props = {
   white?: boolean;
 };
 
-const DescriptionBox = (props: Props): JSX.Element => {
+const DescriptionBox = (props: Props) => {
   return (
     <div
       className={clsx('checkout__description mt-2', props.white && 'checkout__description--white')}>

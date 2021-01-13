@@ -4,7 +4,7 @@ type Props = {
   bannerImgUrl: string;
 };
 
-function NewsBanner(props: Props): JSX.Element {
+function NewsBanner(props: Props) {
   return (
     <div className="news-banner mb-4">
       <div className="news__title">{props.title}</div>

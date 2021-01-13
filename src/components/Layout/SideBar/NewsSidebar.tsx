@@ -9,7 +9,7 @@ type Props = {
   links?: any;
 };
 
-function FAQSidebar(props: Props): JSX.Element {
+function FAQSidebar(props: Props) {
   function renderPost(links): JSX.IntrinsicElements {
     return links.map((item, index) => (
       <ResentPostItem key={index} href={item.href} title={item.title} />

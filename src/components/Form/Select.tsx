@@ -10,7 +10,7 @@ type Props = {
   disabled?: boolean;
 };
 
-const Select = (props: Props, ref): JSX.Element => {
+const Select = (props: Props, ref) => {
   return (
     <select
       onChange={props.onChange}

@@ -7,7 +7,7 @@ interface Props {
   initialShow?: boolean;
 }
 
-const Dropdown = (props: Props): JSX.Element => {
+const Dropdown = (props: Props) => {
   const { label: header } = props;
   const { initialShow = true } = props;
   const [show, setShow] = useState(initialShow);

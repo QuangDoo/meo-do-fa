@@ -2,7 +2,7 @@ import { useTranslation } from 'i18n';
 import React from 'react';
 import { useModalControlDispatch } from 'src/contexts/ModalControl';
 
-const Login = (): JSX.Element => {
+const Login = () => {
   const { openModal } = useModalControlDispatch();
 
   const { t } = useTranslation(['header']);

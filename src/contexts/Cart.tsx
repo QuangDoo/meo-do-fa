@@ -1,27 +1,43 @@
-import React, { createContext, useContext, useState } from 'react';
-import { GetCartData } from 'src/graphql/cart/getCart';
+import { ApolloQueryResult } from '@apollo/client';
+import { useTranslation } from 'i18n';
+import React, { createContext, useContext } from 'react';
+import { toast } from 'react-toastify';
+import { GET_CART, GetCartData } from 'src/graphql/cart/getCart';
+import { useQueryAuth } from 'src/hooks/useApolloHookAuth';
 
-type Props = {
-  children: React.ReactNode;
-};
+import { useToken } from './Token';
 
 type ContextValue = {
-  cart?: GetCartData;
-  setCart?: (value: GetCartData) => void;
+  data: GetCartData['getCart'];
+  loading: boolean;
+  refetch: () => Promise<ApolloQueryResult<GetCartData>>;
 };
 
-const CartContext = createContext<ContextValue>({});
+const CartContext = createContext<ContextValue>(undefined);
 
-const CartProvider = ({ children }: Props) => {
-  const [state, setState] = useState<GetCartData>();
+const useCart = () => useContext(CartContext);
+
+const CartProvider = (props) => {
+  const token = useToken();
+
+  const { t } = useTranslation(['errors']);
+
+  const { data, loading, refetch } = useQueryAuth<GetCartData, undefined>(GET_CART, {
+    fetchPolicy: 'network-only',
+    notifyOnNetworkStatusChange: true,
+    onError: (error) => {
+      const errorCode = error.graphQLErrors?.[0]?.extensions?.code;
+
+      toast.error(t(`errors:code_${errorCode}`));
+    },
+    skip: !token
+  });
 
   return (
-    <CartContext.Provider value={{ cart: state, setCart: setState }}>
-      {children}
+    <CartContext.Provider value={{ data: data?.getCart, loading, refetch }}>
+      {props.children}
     </CartContext.Provider>
   );
 };
 
-const useCartContext = () => useContext(CartContext);
-
-export { CartProvider, useCartContext };
+export { CartProvider, useCart };

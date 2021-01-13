@@ -15,7 +15,7 @@ export default function useNoti(props: Notify) {
     onCompleted: () => {
       setTimeout(() => {
         refetch();
-      }, [5000]);
+      }, [600000]);
     }
   });
 

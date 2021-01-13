@@ -4,8 +4,8 @@ import { useFormContext } from 'react-hook-form';
 import { emailRegex } from 'src/assets/regex/email';
 import { viPhoneNumberRegex } from 'src/assets/regex/viPhoneNumber';
 import Checkbox from 'src/components/Form/Checkbox';
+import { useUser } from 'src/contexts/User';
 import useAddress from 'src/hooks/useAddress';
-import useUser from 'src/hooks/useUser';
 
 import InputWithLabel from '../../Form/InputWithLabel';
 import SelectWithLabel from '../../Form/SelectWithLabel';
@@ -16,7 +16,7 @@ const DeliveryInfo = () => {
 
   const { t } = useTranslation('checkout');
 
-  const { user } = useUser();
+  const { data: user } = useUser();
 
   const { name, phone, email, contact_address } = user || {};
 
@@ -36,7 +36,7 @@ const DeliveryInfo = () => {
         })}
         label={t('checkout:name_label')}
         type="text"
-        defaultValue={name}
+        defaultValue={name || ''}
         placeholder={t('checkout:name_placeholder')}
         required
       />
@@ -55,7 +55,7 @@ const DeliveryInfo = () => {
           type="number"
           label={t('checkout:phone_label')}
           containerClass="col-sm-4"
-          defaultValue={phone}
+          defaultValue={phone || ''}
           placeholder={t('checkout:phone_placeholder')}
           required
         />
@@ -72,7 +72,7 @@ const DeliveryInfo = () => {
           type="text"
           label={t('checkout:email_label')}
           containerClass="col-sm-8"
-          defaultValue={email}
+          defaultValue={email || ''}
           placeholder={t('checkout:email_placeholder')}
         />
       </div>

@@ -17,7 +17,7 @@ type Props = {
   onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 };
 
-const SelectWithLabel = (props: Props, ref): JSX.Element => {
+const SelectWithLabel = (props: Props, ref) => {
   return (
     <FormGroup className={props.containerClass}>
       <FormGroupLabel required={props.required} className={props.labelClass}>
