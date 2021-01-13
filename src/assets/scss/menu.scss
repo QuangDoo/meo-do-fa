@@ -50,7 +50,7 @@
           padding-right: 5px;
         }
         .item-link {
-          color: var(--gray);
+          color: $gray-900;
           font-size: 14px;
         }
       }
@@ -82,7 +82,7 @@
           }
 
           .sub-item-link {
-            color: var(--gray);
+            color: $gray-900;
             font-size: 14px;
           }
         }
