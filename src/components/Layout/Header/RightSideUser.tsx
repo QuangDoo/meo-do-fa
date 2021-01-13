@@ -56,7 +56,7 @@ const RightSideUser = () => {
 
           <div
             className={clsx(
-              'dropdown-menu dropdown-menu-right notification__dropdown p-0 ',
+              'dropdown-menu dropdown-menu-right notification__dropdown p-0',
               show && 'show'
             )}>
             {notificationsData?.length > 0 && (
