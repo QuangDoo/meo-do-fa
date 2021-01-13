@@ -8,7 +8,7 @@ import PromoCodeItem from './PromoCodeItem';
 import SpecialPromoCodeItem from './SpecialPromoCodeItem';
 
 export default function PromoCodes() {
-  const { data: couponsData, error } = useQuery(GET_COUPON_PROGRAMS);
+  const { data: couponsData } = useQuery(GET_COUPON_PROGRAMS);
 
   const { t } = useTranslation('promoCodes');
 
