@@ -26,6 +26,16 @@
         margin: 0;
     }
 }
+.decimal-list-bold{
+    .decimal-list-item {
+        font-weight: bold;
+
+        .list-content {
+            font-weight: normal;
+        }
+    }
+
+}
 .lower-alpha-list {
     list-style-type: lower-alpha;
 }

@@ -95,7 +95,7 @@ const Nav = () => {
                 <ul className="dropdown-menu">
                   <li className="dropdown-item">
                     <Link href="/promo-codes">
-                      <a>
+                      <a className="dropdown-item-text p-0">
                         <i className="rockland-nav__icon fas fa-tag" />
                         <span>{t('navbar:promo_code')}</span>
                       </a>
@@ -103,7 +103,7 @@ const Nav = () => {
                   </li>
                   <li className="dropdown-item">
                     <Link href="/deals">
-                      <a>
+                      <a className="dropdown-item-text p-0">
                         <i className="rockland-nav__icon fas fa-gifts" />
                         <span>{t('navbar:promo_products')}</span>
                       </a>

@@ -24,6 +24,7 @@
   "invoice_info": "Thông tin xuất hoá đơn",
   "tax_code_label": "Mã số thuế",
   "tax_code_placeholder": "vd 8026906145",
+  "street_required":"Xin nhập địa chỉ",
   "company_street_label": "Địa chỉ nhà thuốc/phòng khám",
   "company_street_placeholder": "vd 11 Ngô Quyền, Tân Lợi, Tp. Buôn Ma Thuột, Đắk Lắk",
   "company_city_required": "Xin chọn tỉnh/thành phố.",

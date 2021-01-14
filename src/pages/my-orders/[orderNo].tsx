@@ -307,8 +307,9 @@ function OrderDetails(props) {
                         </strong>
                       </Typography>
                     )}
-                    {flag !== 25 &&
-                      (flag !== 80 ? (
+                    {flag &&
+                      flag !== 25 &&
+                      (flag === 10 ? (
                         <Button
                           size="small"
                           startIcon={<DeleteForeverIcon />}
@@ -323,8 +324,8 @@ function OrderDetails(props) {
                             size="small"
                             startIcon={<Receipt />}
                             variant="contained"
-                            color="secondary">
-                            {t('myOrders:report')}
+                            color="primary">
+                            {t('myOrders:help')}
                           </Button>
                         </a>
                       ))}

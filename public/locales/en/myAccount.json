@@ -26,6 +26,7 @@
   "tax_code_placeholder": "ex. 8026906145",
   "company_street_label": "Pharmacy/Clinic address",
   "company_street_placeholder": "ex. 9 Mayfair St. Bronx, NY 10465",
+  "street_required":"Please enter a address",
   "company_city_required": "Please choose a city/province.",
   "company_district_required": "Please choose a district.",
   "company_ward_required": "Please choose a ward.",

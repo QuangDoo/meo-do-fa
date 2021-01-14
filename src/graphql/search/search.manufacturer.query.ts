@@ -1,10 +1,21 @@
 import { gql } from '@apollo/client';
 
-export const SEARCH_MANUFACTURERS_BY_NAME = gql`
+import { SEARCH_QUERY_ATTRIBUTES, SearchResult } from './search.products.query';
+
+export type SearchManufacturerData = {
+  searchManufactory: SearchResult[];
+};
+
+export type SearchManufacturerVars = {
+  page: number;
+  pageSize: number;
+  name: string;
+};
+
+export const SEARCH_MANUFACTURER = gql`
   query($page: Int!, $pageSize: Int!, $name: String!) {
     searchManufactory(page: $page, pageSize: $pageSize, name: $name) {
-      id
-      name
+      ${SEARCH_QUERY_ATTRIBUTES}
     }
   }
 `;
