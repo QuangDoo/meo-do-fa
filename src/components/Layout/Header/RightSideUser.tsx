@@ -3,6 +3,7 @@ import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import NotiItem from 'src/components/Modules/Noti/NotiItem';
+import { useNotify } from 'src/contexts/useNotifyProvider';
 import { useUser } from 'src/contexts/User';
 import useNoti from 'src/hooks/useNoti';
 
@@ -20,13 +21,19 @@ const RightSideUser = () => {
 
   const [show, setShow] = useState(false);
 
-  const { notifications, refetchNoti } = useNoti({ page: 1, pageSize });
+  const { data, getNotify, refetch, loading } = useNotify();
 
-  const notificationsData = notifications?.Notifies;
+  const notificationsData = data || [];
 
   useEffect(() => {
-    refetchNoti?.();
+    getNotify({ variables: { page: 1, pageSize: pageSize } });
   }, []);
+
+  useEffect(() => {
+    if (!data) return;
+
+    refetch();
+  }, [data]);
 
   function toggleShow() {
     setShow((show) => !show);
@@ -62,7 +69,7 @@ const RightSideUser = () => {
             {notificationsData?.length > 0 && (
               <>
                 {notificationsData?.map((item, index) => (
-                  <NotiItem key={index} {...item} />
+                  <NotiItem key={index} {...item} loading={loading} />
                 ))}
 
                 <div className="dropdown__item notification__view-all">
