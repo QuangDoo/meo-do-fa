@@ -66,14 +66,12 @@ const StickySidebar = (props: Props): JSX.Element => {
         <SidebarItem label={t('checkout:price_provisional_sums')}>
           <span>
             <PriceText price={counselData.totalPrice} />
-            <span className="unit">{t('common:vnd')}</span>
           </span>
         </SidebarItem>
 
         <SidebarItem label={t('checkout:price_shipping_fee')}>
           <span>
             <PriceText price={counselData.totalShippingFee} />
-            <span className="unit">{t('common:vnd')}</span>
           </span>
         </SidebarItem>
 
@@ -86,13 +84,11 @@ const StickySidebar = (props: Props): JSX.Element => {
             ) : (
               0
             )}
-            <span className="unit">{t('common:vnd')}</span>
           </span>
         </SidebarItem>
         <SidebarItem label={t('checkout:price_tax')}>
           <span>
             <PriceText price={counselData.totalPriceVat} />
-            <span className="unit">{t('common:vnd')}</span>
           </span>
         </SidebarItem>
         <SidebarItem containerClass="checkout__info-promo"></SidebarItem>
@@ -100,7 +96,6 @@ const StickySidebar = (props: Props): JSX.Element => {
         <SidebarItem label={t('checkout:price_total')} containerClass="checkout__info-total">
           <span className="checkout__total">
             <PriceText price={counselData.totalNetPrice} />
-            <span className="unit">{t('common:vnd')}</span>
           </span>
         </SidebarItem>
       </div>

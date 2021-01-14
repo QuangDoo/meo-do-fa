@@ -79,7 +79,6 @@ export default function CartPage() {
                         </div>
                         <div className="cart__total">
                           <PriceText price={cart?.totalNetPrice} />
-                          <span className="unit">{t('common:vnd')}</span>
                         </div>
                       </div>
                     </div>
@@ -89,7 +88,7 @@ export default function CartPage() {
                         <button
                           onClick={handleCheckoutClick}
                           className="btn btn-secondary btn-block text-small">
-                          {t('continue_payment')}
+                          {t('cart:continue_payment')}
                         </button>
                       </div>
                     </div>

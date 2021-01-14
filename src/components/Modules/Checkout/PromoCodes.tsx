@@ -84,6 +84,7 @@ export default function PromoCodes(props: Props) {
     onCompleted: (data) => {
       toast.success(t('checkout:apply_coupon_success'));
       props?.setCounselData?.(data.applyCoupon);
+      setOpen(false);
       refetchUsedCoupons();
     }
   });

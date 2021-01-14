@@ -3,5 +3,6 @@
   "choose_this_address": "Choose this address",
   "dialog_title": "Choose delivery address",
   "email": "Email",
+  "email_not_provided": "Not provided",
   "phone": "Phone"
 }
