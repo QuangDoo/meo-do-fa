@@ -74,10 +74,12 @@ function PathologyMenu() {
       </li>
       <li className="main-menu rockland-nav__item d-block d-sm-none">
         <div className="menu-title">
-          <a className="rockland-nav__link">
-            <i className="rockland-nav__icon fas fa-laptop-medical" />
-            <span className="rockland-nav__title">{t('navbar:category')}</span>
-          </a>
+          <button onClick={() => setOpen(true)}>
+            <a className="rockland-nav__link">
+              <i className="rockland-nav__icon fas fa-laptop-medical" />
+              <span className="rockland-nav__title">{t('navbar:category')}</span>
+            </a>
+          </button>
         </div>
         <Drawer anchor="top" open={open} onClose={() => setOpen(false)}>
           <div className="p-3 min-vh-100">
