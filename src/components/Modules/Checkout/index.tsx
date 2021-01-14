@@ -172,12 +172,12 @@ const CheckoutPage = () => {
           customer: {
             fullName: user.name || '',
             phone: user.phone || '',
-            email: user.email || '',
+            email: user.email || undefined,
             shipping_address: {
-              fullName: data.deliveryName || '',
-              phone: data.deliveryPhone || '',
-              email: data.deliveryEmail || '',
-              partnerId: +data.deliveryPartnerId || 0,
+              fullName: data.deliveryName,
+              phone: data.deliveryPhone,
+              email: data.deliveryEmail,
+              partnerId: +data.deliveryPartnerId || undefined,
               isNew: !data.deliveryPartnerId,
               zipCode: +deliveryZipCode || 0,
               city: data.deliveryCity?.split('__')[0] || '',
@@ -187,9 +187,9 @@ const CheckoutPage = () => {
             },
             billing_address: data.isInvoice
               ? {
-                  fullName: data.invoiceName || '',
-                  email: data.invoiceEmail || '',
-                  tax: data.invoiceTaxCode || '',
+                  fullName: data.invoiceName,
+                  email: data.invoiceEmail,
+                  tax: data.invoiceTaxCode,
                   partnerId: 0,
                   isNew: true,
                   zipCode: +invoiceZipCode || 0,
@@ -203,7 +203,7 @@ const CheckoutPage = () => {
           paymentMethodId: +data.paymentMethodId,
           deliveryMethodId: +data.deliveryMethodId || 0,
           note: data.customerNotes,
-          isInvoice: data.isInvoice
+          isInvoice: data.isInvoice || false
         }
       }
     });
