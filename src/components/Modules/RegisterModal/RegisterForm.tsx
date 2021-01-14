@@ -52,9 +52,7 @@ const RegisterForm = () => {
         router.reload();
       },
       onError: (error) => {
-        toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`), {
-          autoClose: 1500
-        });
+        toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
       }
     }
   );
@@ -77,9 +75,7 @@ const RegisterForm = () => {
 
   // On form error
   const onFormError = (errors) => {
-    toast.error(errors[Object.keys(errors)[0]].message, {
-      autoClose: 1500
-    });
+    toast.error(errors[Object.keys(errors)[0]].message);
   };
 
   return (

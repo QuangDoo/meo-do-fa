@@ -60,17 +60,13 @@ const Footer = () => {
   });
   // On form error
   const onError = (errors: DeepMap<Inputs, FieldError>) => {
-    Object.keys(errors).forEach((field) => toast.error(errors[field].message), {
-      autoClose: 1500
-    });
+    Object.keys(errors).forEach((field) => toast.error(errors[field].message));
   };
 
   const onSubmit = (data: Inputs) => {
     const { email } = data;
     if (!email) {
-      toast.error(t('register:input_email_error_invalid'), {
-        autoClose: 1500
-      });
+      toast.error(t('register:input_email_error_invalid'));
     } else {
       saveMailSubscriber({
         variables: {
@@ -78,11 +74,7 @@ const Footer = () => {
             email: data.email
           }
         }
-      }).catch((error) =>
-        toast.error(error, {
-          autoClose: 1500
-        })
-      );
+      }).catch((error) => toast.error(error));
       reset({ email: '' });
     }
   };

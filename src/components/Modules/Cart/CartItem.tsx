@@ -35,9 +35,7 @@ function CartItem(props: CartItemProps) {
         });
       },
       onError: (err) => {
-        toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`), {
-          autoClose: 1500
-        });
+        toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
       }
     }
   );

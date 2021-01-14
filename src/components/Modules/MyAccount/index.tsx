@@ -147,9 +147,7 @@ export default function MyAccountPage() {
         window.scrollTo(0, 0);
       },
       onError: (err) => {
-        toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`), {
-          autoClose: 1500
-        });
+        toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
       }
     }
   );
@@ -197,9 +195,7 @@ export default function MyAccountPage() {
   };
 
   const onError = (error) => {
-    toast.error(error[Object.keys(error)[0]].message, {
-      autoClose: 1500
-    });
+    toast.error(error[Object.keys(error)[0]].message);
   };
 
   return (

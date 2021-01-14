@@ -28,9 +28,7 @@ const CartProvider = (props) => {
     onError: (error) => {
       const errorCode = error.graphQLErrors?.[0]?.extensions?.code;
 
-      toast.error(t(`errors:code_${errorCode}`), {
-        autoClose: 1500
-      });
+      toast.error(t(`errors:code_${errorCode}`));
     },
     skip: !token
   });

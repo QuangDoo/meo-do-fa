@@ -60,9 +60,7 @@ export default function PromoCodes(props: Props) {
   } = useQueryAuth<GetUsedCouponsData, undefined>(GET_USED_COUPONS, {
     onError: (error) => {
       const errorCode = error.graphQLErrors[0]?.extensions?.code;
-      toast.error(t(`errors:code_${errorCode}`), {
-        autoClose: 1500
-      });
+      toast.error(t(`errors:code_${errorCode}`));
 
       if (errorCode === 114) {
         router.push('/cart');
@@ -77,9 +75,7 @@ export default function PromoCodes(props: Props) {
   >(APPLY_COUPON, {
     onError: (error) => {
       const errorCode = error.graphQLErrors?.[0]?.extensions?.code;
-      toast.error(t(`errors:code_${errorCode}`), {
-        autoClose: 1500
-      });
+      toast.error(t(`errors:code_${errorCode}`));
 
       if (errorCode === 114) {
         router.push('/cart');

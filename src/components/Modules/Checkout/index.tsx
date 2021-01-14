@@ -65,9 +65,7 @@ const CheckoutPage = () => {
     },
     onError: (err) => {
       const errorCode = err.graphQLErrors?.[0]?.extensions?.code;
-      toast.error(t(`errors:code_${errorCode}`), {
-        autoClose: 1500
-      });
+      toast.error(t(`errors:code_${errorCode}`));
 
       if (errorCode === 114) {
         router.push('/cart');
@@ -119,9 +117,7 @@ const CheckoutPage = () => {
     },
     onError: (err) => {
       const errorCode = err.graphQLErrors[0]?.extensions?.code;
-      toast.error(t(`errors:code_${errorCode}`), {
-        autoClose: 1500
-      });
+      toast.error(t(`errors:code_${errorCode}`));
 
       if (errorCode === 114) {
         router.push('/cart');
@@ -177,9 +173,7 @@ const CheckoutPage = () => {
   const onError = (errors) => {
     const fields = Object.keys(errors);
 
-    toast.error(errors[fields[0]].message, {
-      autoClose: 1500
-    });
+    toast.error(errors[fields[0]].message);
   };
 
   if (counselData === null) {

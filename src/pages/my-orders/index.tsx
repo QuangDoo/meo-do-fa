@@ -82,9 +82,7 @@ const OrderItem = (props) => {
 
   const handleOpenClick = (flag) => {
     if (flag === 40 || flag === 80) {
-      toast.error(t('myOrders:report'), {
-        autoClose: 1500
-      });
+      toast.error(t('myOrders:report'));
       return;
     }
     setOpen(true);
@@ -163,10 +161,7 @@ const OrderList = (props: Props) => {
       onError: (error) => {
         const errorCode = error.graphQLErrors?.[0]?.extensions?.code;
 
-        if (errorCode)
-          toast.error(t(`errors:code_${errorCode}`), {
-            autoClose: 1500
-          });
+        if (errorCode) toast.error(t(`errors:code_${errorCode}`));
       }
     }
   );
@@ -226,10 +221,7 @@ function MyOrders() {
     onError: (error) => {
       const errorCode = error.graphQLErrors?.[0]?.extensions?.code;
 
-      if (errorCode)
-        toast.error(t(`errors:code_${errorCode}`), {
-          autoClose: 1500
-        });
+      if (errorCode) toast.error(t(`errors:code_${errorCode}`));
     }
   });
 

@@ -236,9 +236,7 @@ function OrderDetails(props) {
 
   const onCancelClick = () => {
     if (activeStep >= 3) {
-      toast.error('cant cancel order', {
-        autoClose: 1500
-      });
+      toast.error('cant cancel order');
       return;
     }
     setOpen(true);

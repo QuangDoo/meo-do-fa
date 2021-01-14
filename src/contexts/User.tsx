@@ -35,9 +35,7 @@ function UserProvider(props) {
         if (errorCode === 500) {
           cookies.remove('token');
         }
-        toast.error(t(`errors:code_${errorCode}`), {
-          autoClose: 1500
-        });
+        toast.error(t(`errors:code_${errorCode}`));
       }
     },
     skip: !token

@@ -22,9 +22,7 @@ export default function CartPage() {
       router.push('/checkout');
     },
     onError: (error) => {
-      toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`), {
-        autoClose: 1500
-      });
+      toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
     }
   });
 

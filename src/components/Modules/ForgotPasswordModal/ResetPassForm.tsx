@@ -26,9 +26,7 @@ const ResetPassForm = () => {
   const { closeModal } = useModalControlDispatch();
 
   const onFormError = (errors: DeepMap<Inputs, FieldError>) => {
-    Object.keys(errors).forEach((field) => toast.error(errors[field].message), {
-      autoClose: 1500
-    });
+    Object.keys(errors).forEach((field) => toast.error(errors[field].message));
   };
 
   const [resetPassword, { loading: loadingResetPassword }] = useMutation(RESET_PASSWORD);
@@ -45,9 +43,7 @@ const ResetPassForm = () => {
         closeModal();
       })
       .catch((error) => {
-        toast.error(t(`errors:code_${error.graphQLErrors[0]?.extensions.code}`), {
-          autoClose: 1500
-        });
+        toast.error(t(`errors:code_${error.graphQLErrors[0]?.extensions.code}`));
       });
   };
 
