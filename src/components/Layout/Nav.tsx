@@ -11,7 +11,7 @@ import { useToken } from 'src/contexts/Token';
 import { GET_CATEGORIES_LEVEL, GetCategoriesLevelData } from 'src/graphql/category/category.query';
 
 import CategoryMenu from '../Modules/CategoryMenu';
-import Pathology from '../Modules/Pathology';
+import PathologyMenu from '../Modules/PathologyMenu';
 
 const Nav = () => {
   const token = useToken();
@@ -113,7 +113,7 @@ const Nav = () => {
                 </ul>
               </li>
 
-              <Pathology />
+              <PathologyMenu />
 
               <li className="rockland-nav__item">
                 <Link href="/ingredients">

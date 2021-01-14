@@ -17,7 +17,7 @@ function DisputeResolution() {
         <title>Medofa</title>
       </Head>
 
-      <div className="container my-5">
+      <div className="container text-justify my-5">
         <h2 className="text-center my-5">{t('disputeResolution:title')}</h2>
         <p>
           Khi phát sinh tranh chấp, Medofa và Công ty TNHH Dược phẩm Dayton có trách nhiệm tiếp nhận
