@@ -291,7 +291,9 @@ export default function MyAccountPage() {
           />
 
           <InputWithLabel
-            ref={register}
+            ref={register({
+              required: t('myAccount:street_required') + ''
+            })}
             label={t('myAccount:company_street_label')}
             name="companyStreet"
             type="text"

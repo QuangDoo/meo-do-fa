@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-type Notifies = {
+export type Notifies = {
   _id: string;
   content: string;
   description: string;

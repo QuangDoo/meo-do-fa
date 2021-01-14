@@ -5,16 +5,15 @@ import { toast } from 'react-toastify';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import Pagination from 'src/components/Modules/Pagination';
+import { useNotify } from 'src/contexts/useNotifyProvider';
 import { SEEN_ALL_NOTI } from 'src/graphql/notification/seenNoti.mutation';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
-import useNoti from 'src/hooks/useNoti';
+import withToken from 'src/utils/withToken';
 
 import Head from '../../components/Layout/Head';
 import NotiItem from '../../components/Modules/Noti/NotiItem';
 
 const pageSize = 10;
-
-import withToken from 'src/utils/withToken';
 
 Notification.getInitialProps = async () => ({
   namespacesRequired: [...mainLayoutNamespacesRequired]
@@ -25,10 +24,10 @@ function Notification() {
 
   const page = +router.query.page || 1;
 
-  const { notifications, refetchNoti } = useNoti({ page, pageSize });
+  const { data, total, getNotify, refetch, loading } = useNotify();
 
   useEffect(() => {
-    refetchNoti?.();
+    getNotify({ variables: { page: page, pageSize: pageSize } });
   }, []);
 
   const [seenAllNoti] = useMutationAuth(SEEN_ALL_NOTI, {
@@ -37,14 +36,14 @@ function Notification() {
     }
   });
 
-  const notificationsData = notifications?.Notifies;
+  const notificationsData = data || [];
 
-  const notificationsPagination = notifications?.total || 0;
+  const notificationsPagination = total || 0;
 
   const handleReadAll = () => {
     // read all
     seenAllNoti();
-    refetchNoti();
+    refetch();
   };
 
   const { t } = useTranslation();
@@ -90,6 +89,7 @@ function Notification() {
           })
         }
       />
+      <LoadingBackdrop open={loading} />
     </MainLayout>
   );
 }

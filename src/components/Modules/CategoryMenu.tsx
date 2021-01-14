@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import router from 'next/router';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { GET_CATEGORIES_LEVEL, GetCategoriesLevelData } from 'src/graphql/category/category.query';
 import { Category } from 'src/graphql/category/category.query';
@@ -36,7 +36,7 @@ const CategoryDropdownMenu = (props: Props) => {
       </div>
       {categories
         .slice()
-        .sort((a, b) => a.name.localeCompare(b.name))
+        .sort((a, b) => a.name?.localeCompare(b.name))
         .map(({ name, id, categorySub }) => (
           <div key={id} className="mb-2">
             <Link href={`/products?category=${id}`}>
@@ -44,7 +44,7 @@ const CategoryDropdownMenu = (props: Props) => {
                 <div className="mb-3">
                   {categorySub
                     .slice()
-                    .sort((a, b) => a.name.localeCompare(b.name))
+                    .sort((a, b) => a.name?.localeCompare(b.name))
                     .map(({ name, id }) => (
                       <div key={id} className="ml-2 mb-1">
                         <Link href={`/products?category=${id}`}>
@@ -71,15 +71,18 @@ const CategoryMenu = () => {
   const { t } = useTranslation(['navbar']);
   const [open, setOpen] = useState(false);
 
-  const { data: categoriesData } = useQuery<GetCategoriesLevelData, undefined>(
-    GET_CATEGORIES_LEVEL,
-    {
-      onError: (error) => {
-        toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
-      }
+  const { data: categoriesData, refetch } = useQuery(GET_CATEGORIES_LEVEL, {
+    onError: (error) => {
+      toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
     }
-  );
+  });
   const categories = categoriesData?.getCategoriesLevel || [];
+
+  useEffect(() => {
+    if (categories[1].name === null && categories[2].name === null) {
+      refetch();
+    }
+  }, [categoriesData]);
 
   return (
     <>

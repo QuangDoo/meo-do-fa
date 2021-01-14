@@ -128,6 +128,8 @@ export default function PromoCodes() {
                     couponDescription={coupon.reward_id[1]}
                     discount={coupon.discount_percentage}
                     couponDateFrom={coupon.rule_date_from}
+                    discountType={coupon.discount_type}
+                    discountFixedAmount={coupon.discount_fixed_amount}
                   />
                 ))}
             </div>
