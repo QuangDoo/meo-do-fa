@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-type Address = {
+export type Address = {
   id: number;
   use: boolean;
   name: string;
