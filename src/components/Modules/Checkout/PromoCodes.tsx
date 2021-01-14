@@ -120,7 +120,8 @@ export default function PromoCodes(props: Props) {
           color="primary"
           fullWidth
           startIcon={<LocalOfferIcon />}
-          onClick={() => setOpen(true)}>
+          onClick={() => setOpen(true)}
+          disabled={promotion?.program_name && true}>
           {t('checkout:choose_or_input_promo_code')}
         </Button>
 

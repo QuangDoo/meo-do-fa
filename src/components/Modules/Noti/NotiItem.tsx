@@ -49,7 +49,7 @@ const NotiItem = (props: Props) => {
     content === '30' && setDataContent(`${t('noti:30', { description })}`);
     content === '40' && setDataContent(`${t('noti:40', { description })}`);
     content === '80' && setDataContent(`${t('noti:80', { description })}`);
-  }, [content, t]);
+  }, [content]);
 
   const handleRead = () => {
     seenNotify({ variables: { _id } });

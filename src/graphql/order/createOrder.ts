@@ -5,7 +5,7 @@ type Info = {
   phone?: string;
   email?: string;
   tax?: string;
-  partnerId: string;
+  partnerId: number;
   isNew: boolean;
   use?: boolean;
   zipCode: number;
