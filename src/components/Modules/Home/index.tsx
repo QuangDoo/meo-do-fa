@@ -8,7 +8,6 @@ import ProductCard from '../ProductCard';
 import { ProductsCarousel } from '../ProductsCarousel';
 import { Login } from './Login';
 import { ProductsContainer } from './ProductsContainer';
-import { Strength } from './Strength';
 
 const bannerImages = [
   'https://firebasestorage.googleapis.com/v0/b/medofa-image.appspot.com/o/banner%2FBanner-Freeship.jpg?alt=media',
@@ -78,7 +77,7 @@ const Home = ({ dealsOfTheDayData, bestSellingData, promotionProductsData, newPr
         </ProductsContainer>
       </div>
 
-      <Strength />
+      {/* <Strength /> */}
 
       {token ? null : (
         <>

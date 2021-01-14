@@ -1,0 +1,22 @@
+.Toastify {
+  &__toast-container {
+  }
+
+  &__toast {
+    &-body {
+    }
+
+    &--error {
+    }
+
+    &--warning {
+    }
+
+    &--success {
+      background: #2196f3;
+    }
+  }
+
+  &__progress-bar {
+  }
+}
