@@ -83,7 +83,7 @@ const CategoryMenu = () => {
 
   return (
     <>
-      <li className="category-menu rockland-nav__item d-none d-sm-block">
+      <li className="main-menu rockland-nav__item d-none d-sm-block">
         <div className="menu-title">
           <Link href="/products">
             <a className="rockland-nav__link">
@@ -95,18 +95,20 @@ const CategoryMenu = () => {
         <ul className="container-menu">
           {categories.map(({ id, name, categorySub, priority }) => (
             <li className="menu-item" key={id}>
-              <div className="item-title">
-                <img
-                  src={`/assets/images/category_${priority}.svg`}
-                  className="menu-icon"
-                  alt={`category-item-${priority}`}
-                  width="60"
-                  height="30"
-                />
-                <Link href={`/products?category=${id}`}>
+              <Link href={`/products?category=${id}`}>
+                <div className="item-title">
+                  <img
+                    src={`/assets/images/category_${priority}.svg`}
+                    className="menu-icon"
+                    alt={`category-item-${priority}`}
+                    width="60"
+                    height="30"
+                  />
+                  {/* <Link href={`/products?category=${id}`}> */}
                   <a className="item-link">{name}</a>
-                </Link>
-              </div>
+                  {/* </Link> */}
+                </div>
+              </Link>
               <div className="sub-menu">
                 <ul>
                   {categorySub?.map(({ id, name }) => (

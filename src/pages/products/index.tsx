@@ -14,8 +14,8 @@ import ProductCard from 'src/components/Modules/ProductCard';
 import ProductsDrawerFilter from 'src/components/Modules/ProductDrawerFilter/ProductsDrawerFilter';
 import ProductsSidebarFilter from 'src/components/Modules/ProductsSidebarFilter';
 import {
+  CategorySubData,
   // Category,
-  CategoryData,
   CategoryVar,
   // GET_ALL_CATEGORIES,
   GET_CATEGORIES_LEVEL,
@@ -28,6 +28,11 @@ import {
   GetManufacturersData,
   GetManufacturersVars
 } from 'src/graphql/manufacturers/manufacturers.query';
+import {
+  GET_PATHOLOGY,
+  GetPathologyData,
+  GetPathologyVars
+} from 'src/graphql/pathology/getPathology';
 import {
   GET_PRODUCTS,
   GetProductsData,
@@ -62,7 +67,7 @@ function Products() {
       }
     }
   );
-  const categoriesLevel = categoriesLevelData?.getCategoriesLevel || [];
+  const categoriesLevel = categoriesLevelData?.getCategoriesLevel;
 
   const { data: manufacturersData } = useQuery<GetManufacturersData, GetManufacturersVars>(
     GET_MANUFACTURERS,
@@ -91,7 +96,8 @@ function Products() {
         name: search,
         order_type: (router.query.sort as string) || DEFAULT_SORT_TYPE,
         min_price: Number(router.query.priceFrom) || 1,
-        max_price: Number(router.query.priceTo) || 10000000
+        max_price: Number(router.query.priceTo) || 10000000,
+        pathology_id: router.query.pathology as string
       }
     },
     onError: () => null
@@ -101,14 +107,30 @@ function Products() {
 
   const total = productsData?.getProductByConditions?.total || 0;
 
-  const { data: categoryData } = useQuery<CategoryData, CategoryVar>(GET_CATEGORY, {
+  const { data: categoryData } = useQuery<CategorySubData, CategoryVar>(GET_CATEGORY, {
     variables: {
       id: Number(router.query.category)
     },
     onError: () => null
   });
+  const category = categoryData?.getCategory;
 
-  const title = categoryData?.getCategory ? categoryData.getCategory.name : t('products:title');
+  const { data: pathologyData } = useQuery<GetPathologyData, GetPathologyVars>(GET_PATHOLOGY, {
+    variables: {
+      id: Number(router.query.pathology)
+    }
+  });
+  const pathology = pathologyData?.getPathology;
+
+  const categoryParent = categoriesLevel
+    ?.filter((category) => category.id === Number(router.query.category))
+    ?.shift();
+
+  const categoryTitle = category ? category?.name : categoryParent?.name;
+
+  const pathologyTitle = categoryTitle ? categoryTitle : pathology?.name;
+
+  const title = pathologyTitle ? pathologyTitle : t('products:title');
 
   useEffect(() => {
     if (productsLoading) {
@@ -122,7 +144,7 @@ function Products() {
         <title>Medofa - {title}</title>
       </Head>
 
-      {categoriesLevel.length !== 0 ? (
+      {categoriesLevel ? (
         <div className="products container mobile-content my-3 my-sm-5">
           <div className="d-flex flex-nowrap justify-content-between">
             <div className="products__sidebar pr-4 d-none d-sm-block">
