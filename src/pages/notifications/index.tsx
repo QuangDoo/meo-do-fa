@@ -8,11 +8,11 @@ import Pagination from 'src/components/Modules/Pagination';
 import { useNotify } from 'src/contexts/useNotifyProvider';
 import { SEEN_ALL_NOTI } from 'src/graphql/notification/seenNoti.mutation';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
-import useNoti from 'src/hooks/useNoti';
 import withToken from 'src/utils/withToken';
 
 import Head from '../../components/Layout/Head';
 import NotiItem from '../../components/Modules/Noti/NotiItem';
+
 const pageSize = 10;
 
 Notification.getInitialProps = async () => ({
@@ -66,9 +66,7 @@ function Notification() {
             )}
           </div>
           {notificationsData?.length > 0 ? (
-            notificationsData?.map((noti, index) => {
-              return <NotiItem {...noti} key={index} />;
-            })
+            notificationsData?.map((noti, index) => <NotiItem {...noti} key={index} />)
           ) : (
             <div className="col-12 d-flex align-items-center justify-content-between flex-wrap mb-3">
               {t('noti:is_noty')}

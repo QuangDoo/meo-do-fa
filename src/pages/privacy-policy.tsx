@@ -19,9 +19,9 @@ function PrivacyPolicy() {
 
       <div className="container my-5">
         <h2 className="text-center my-5">{t('privacyPolicy:title')}</h2>
-        <ol className="list-group decimal-list">
+        <ol className="list-group pl-0 decimal-list decimal-list-bold">
           <li className="decimal-list-item">
-            <span className="h5 font-weight-bold font-weight-bold">Mục đích áp dụng</span>
+            Mục đích áp dụng
             <div className="list-content">
               <p>
                 Khi sử dụng dịch vụ của Medofa, bạn đã tin tưởng cung cấp thông tin của bạn cho
@@ -46,12 +46,10 @@ function PrivacyPolicy() {
             </div>
           </li>
           <li className="decimal-list-item">
-            <span className="h5 font-weight-bold">
-              Quy định cụ thể về thu thập, sử dụng, lưu giữ và bảo mật thông tin khách hàng.
-            </span>
+            Quy định cụ thể về thu thập, sử dụng, lưu giữ và bảo mật thông tin khách hàng.
             <ol className="list-group decimal-list mt-2">
               <li className="decimal-list-item">
-                <span className="h6 font-weight-bold">Thu thập thông tin</span>
+                Thu thập thông tin
                 <div className="list-content">
                   <p>
                     Khi Khách Hàng thực hiện giao dịch và/hoặc đăng ký mở tài khoản tại Website,
@@ -98,7 +96,7 @@ function PrivacyPolicy() {
                 </div>
               </li>
               <li className="decimal-list-item">
-                <span className="h6 font-weight-bold">Lưu giữ và bảo mật thông tin</span>
+                Lưu giữ và bảo mật thông tin
                 <div className="list-content">
                   <p>
                     Chúng tôi sử dụng thông tin để giúp cải thiện độ an toàn và tin cậy cho các dịch
@@ -124,7 +122,7 @@ function PrivacyPolicy() {
                 </div>
               </li>
               <li className="decimal-list-item">
-                <span className="h6 font-weight-bold">Sử dụng thông tin khách hàng</span>
+                Sử dụng thông tin khách hàng
                 <div className="list-content">
                   <p>Xác minh bạn đúng là đối tượng được phép sử dụng dịch vụ:</p>
                   <p>
@@ -168,7 +166,7 @@ function PrivacyPolicy() {
                 </div>
               </li>
               <li className="decimal-list-item">
-                <span className="h6 font-weight-bold">Về việc chia sẻ thông tin khách hàng</span>
+                Về việc chia sẻ thông tin khách hàng
                 <div className="list-content">
                   <p>
                     Chúng tôi cam kết bảo mật thông tin của khách hàng không cho bất kỳ bên thứ ba
@@ -184,7 +182,7 @@ function PrivacyPolicy() {
             </ol>
           </li>
           <li className="decimal-list-item">
-            <span className="h5 font-weight-bold">An toàn bảo mật</span>
+            An toàn bảo mật
             <div className="list-content">
               <p>Luôn luôn đăng xuất khi Khách Hàng hoàn thành một giao dịch trực tuyến.</p>
               <p>

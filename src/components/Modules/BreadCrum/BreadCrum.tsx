@@ -8,7 +8,8 @@ import React, { useEffect, useState } from 'react';
 type Category = {
   id: string;
   name: string;
-  parent_id: string[];
+  parent_id: number;
+  parent_name: string;
 };
 
 type Props = {
@@ -26,7 +27,7 @@ const SimpleBreadcrumbs = (props: Props) => {
 
   useEffect(() => {
     if (!categories) return;
-    categories.map((child) => setParentCategory(child.parent_id));
+    categories.map((child) => setParentCategory([child.parent_id, child.parent_name]));
   }, [categories]);
 
   const { productId } = router.query;

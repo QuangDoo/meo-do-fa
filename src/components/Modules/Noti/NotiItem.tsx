@@ -58,7 +58,7 @@ const NotiItem = (props: Props) => {
 
   return (
     // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-    <div className="col-12 mb-3" onClick={handleRead}>
+    <div className="col-12 p-0" onClick={handleRead}>
       {type === 'order' && (
         <Link href={`/my-orders/${description}`}>
           <a

@@ -99,7 +99,7 @@ const ProductsSidebarFilter = (props: Props) => {
 
   const manufacturersSearch = [...manufacturers]
     .slice()
-    .sort((a, b) => a.short_name.localeCompare(b.short_name))
+    .sort((a, b) => a.short_name?.localeCompare(b.short_name))
     .filter(({ short_name, id }) => {
       if (short_name.toLocaleLowerCase().includes(valueManuInput.toLocaleLowerCase())) {
         return [short_name, id];
@@ -206,7 +206,7 @@ const ProductsSidebarFilter = (props: Props) => {
         {valueCategoryInput
           ? dataCategorySearch
               .slice()
-              .sort((a, b) => a.name.localeCompare(b.name))
+              .sort((a, b) => a.name?.localeCompare(b.name))
               .map(({ name, id, categorySub }) => (
                 <div key={id} className="mb-2">
                   <Link href={`/products?category=${id}`}>
@@ -225,7 +225,7 @@ const ProductsSidebarFilter = (props: Props) => {
                         </div>
                         {categorySub
                           .slice()
-                          .sort((a, b) => a.name.localeCompare(b.name))
+                          .sort((a, b) => a.name?.localeCompare(b.name))
                           .map(({ name, id }) => (
                             <div key={id} className="ml-2 mb-1">
                               <Link href={`/products?category=${id}`}>
@@ -246,7 +246,7 @@ const ProductsSidebarFilter = (props: Props) => {
               ))
           : categories
               .slice()
-              .sort((a, b) => a.name.localeCompare(b.name))
+              .sort((a, b) => a.name?.localeCompare(b.name))
               .map(({ name, id, categorySub }) => (
                 <div key={id} className="mb-2">
                   <Link href={`/products?category=${id}`}>
@@ -265,7 +265,7 @@ const ProductsSidebarFilter = (props: Props) => {
                         </div>
                         {categorySub
                           ?.slice()
-                          .sort((a, b) => a.name.localeCompare(b.name))
+                          .sort((a, b) => a.name?.localeCompare(b.name))
                           .map(({ name, id }) => (
                             <div key={id} className="ml-2 mb-1">
                               <Link href={`/products?category=${id}`}>
@@ -337,7 +337,7 @@ const ProductsSidebarFilter = (props: Props) => {
         {valueManuInput
           ? manufacturersSearch
               .slice()
-              .sort((a, b) => a.short_name.localeCompare(b.short_name))
+              .sort((a, b) => a.short_name?.localeCompare(b.short_name))
               .map(({ short_name, id }) => (
                 <div key={id} className="mb-2">
                   <Link href={`/products?manufacturer=${id}`}>
@@ -353,7 +353,7 @@ const ProductsSidebarFilter = (props: Props) => {
               ))
           : manufacturers
               .slice()
-              .sort((a, b) => a.short_name.localeCompare(b.short_name))
+              .sort((a, b) => a.short_name?.localeCompare(b.short_name))
               .map(({ short_name, id }) => (
                 <div key={id} className="mb-2">
                   <Link href={`/products?manufacturer=${id}`}>
