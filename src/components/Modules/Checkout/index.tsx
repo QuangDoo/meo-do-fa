@@ -129,7 +129,16 @@ const CheckoutPage = () => {
     CreateOrderVars
   >(CREATE_ORDER, {
     onCompleted: (data) => {
-      refetchCart();
+      refetchCart().then(() => {
+        swal({
+          title: t('checkout:order_success_message', {
+            orderNo: data.createOrder.orderNo
+          }),
+          icon: 'success'
+        }).then(() => {
+          router.push('/');
+        });
+      });
 
       swal({
         title: t('checkout:order_success_message', {

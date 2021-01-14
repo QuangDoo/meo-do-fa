@@ -28,7 +28,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
       <ModalControlProvider>
         <Component {...pageProps} />
 
-        <ToastContainer />
+        <ToastContainer autoClose={1500} />
       </ModalControlProvider>
     </ThemeProvider>
   );
