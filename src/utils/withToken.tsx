@@ -1,6 +1,7 @@
 import React from 'react';
 import { CartProvider } from 'src/contexts/Cart';
 import { TokenContext } from 'src/contexts/Token';
+import { NotifyProvider } from 'src/contexts/useNotifyProvider';
 import { UserProvider } from 'src/contexts/User';
 
 import getToken from './getToken';
@@ -42,11 +43,13 @@ export default function withToken({ ssr = false, isProtected = false }: Options)
     const withToken = (props) => {
       return (
         <TokenContext.Provider value={props.token}>
-          <UserProvider>
-            <CartProvider>
-              <Component {...props} />
-            </CartProvider>
-          </UserProvider>
+          <NotifyProvider>
+            <UserProvider>
+              <CartProvider>
+                <Component {...props} />
+              </CartProvider>
+            </UserProvider>
+          </NotifyProvider>
         </TokenContext.Provider>
       );
     };
