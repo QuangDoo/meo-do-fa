@@ -34,7 +34,9 @@ const ConfirmCancelOrder = (props) => {
       onClose();
     },
     onError: () => {
-      toast.error(t('cancelOrder:cancel_order_unsuccessful'));
+      toast.error(t('cancelOrder:cancel_order_unsuccessful'), {
+        autoClose: 1500
+      });
       onClose();
     }
   });
@@ -45,7 +47,9 @@ const ConfirmCancelOrder = (props) => {
 
   const onSubmit = (data: Inputs) => {
     if (!data.check) {
-      toast.error(t('cancelOrder:is_check'));
+      toast.error(t('cancelOrder:is_check'), {
+        autoClose: 1500
+      });
       return;
     }
     cancelOrder({

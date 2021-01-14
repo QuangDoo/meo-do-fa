@@ -44,7 +44,9 @@ function NotifyProvider(props) {
           if (errorCode === 500) {
             cookies.remove('token');
           }
-          toast.error(t(`errors:code_${errorCode}`));
+          toast.error(t(`errors:code_${errorCode}`), {
+            autoClose: 1500
+          });
         }
       }
     }

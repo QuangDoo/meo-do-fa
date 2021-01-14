@@ -22,7 +22,9 @@ function Ingredients() {
 
   const { data, loading, error } = useQuery<GetAllIngredientsData, undefined>(GET_ALL_INGREDIENTS, {
     onError: (error) => {
-      toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
+      toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`), {
+        autoClose: 1500
+      });
     }
   });
 

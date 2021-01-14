@@ -36,7 +36,9 @@ const PaymentOption = (props: Props): JSX.Element => {
     GET_PAYMENT_DELIVERY,
     {
       onError: (err) => {
-        toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
+        toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`), {
+          autoClose: 1500
+        });
       }
     }
   );
@@ -54,7 +56,9 @@ const PaymentOption = (props: Props): JSX.Element => {
     },
     onError: (err) => {
       const errorCode = err.graphQLErrors[0]?.extensions?.code;
-      toast.error(t(`errors:code_${errorCode}`));
+      toast.error(t(`errors:code_${errorCode}`), {
+        autoClose: 1500
+      });
 
       if (errorCode === 114) {
         router.push('/cart');

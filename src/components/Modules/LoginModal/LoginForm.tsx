@@ -47,12 +47,16 @@ const LoginForm = () => {
       }
     },
     onError: (error) => {
-      toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
+      toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`), {
+        autoClose: 1500
+      });
     }
   });
 
   const onFormError = (errors: DeepMap<Inputs, FieldError>) => {
-    Object.keys(errors).forEach((field) => toast.error(errors[field].message));
+    Object.keys(errors).forEach((field) => toast.error(errors[field].message), {
+      autoClose: 1500
+    });
   };
 
   const onSubmit = (data: Inputs) => {

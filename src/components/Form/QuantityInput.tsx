@@ -45,7 +45,9 @@ function QuantityInput(props: Props) {
         });
       },
       onError: (err) => {
-        toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
+        toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`), {
+          autoClose: 1500
+        });
       }
     }
   );
@@ -59,7 +61,9 @@ function QuantityInput(props: Props) {
         });
       },
       onError: (err) => {
-        toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
+        toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`), {
+          autoClose: 1500
+        });
       }
     }
   );

@@ -36,7 +36,9 @@ function IngredientDetails() {
         id: +ingredientId
       },
       onError: (error) => {
-        toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
+        toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`), {
+          autoClose: 1500
+        });
       }
     }
   );
@@ -50,7 +52,9 @@ function IngredientDetails() {
         ingredientId: ingredientId
       },
       onError: (error) => {
-        toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
+        toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`), {
+          autoClose: 1500
+        });
       }
     }
   );

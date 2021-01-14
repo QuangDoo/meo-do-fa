@@ -29,7 +29,9 @@ const InvoiceProducts = (props: Props) => {
     },
     onError: (err) => {
       const errorCode = err.graphQLErrors[0]?.extensions?.code;
-      toast.error(t(`errors:code_${errorCode}`));
+      toast.error(t(`errors:code_${errorCode}`), {
+        autoClose: 1500
+      });
 
       if (errorCode === 114) {
         router.push('/cart');

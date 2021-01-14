@@ -47,7 +47,9 @@ function ChangePassWord() {
       rotuer.push('/my-account');
     },
     onError: () => {
-      toast.error(t('errors:error_wrong_cr_pw'));
+      toast.error(t('errors:error_wrong_cr_pw'), {
+        autoClose: 1500
+      });
     }
   });
 
@@ -56,9 +58,13 @@ function ChangePassWord() {
   const onSubmit = async (data: Inputs) => {
     const { retype, oldPassword, newPassword } = data;
     if (retype !== newPassword) {
-      toast.error(t('errors:error_retype_pw'));
+      toast.error(t('errors:error_retype_pw'), {
+        autoClose: 1500
+      });
     } else if (oldPassword === newPassword) {
-      toast.error(t('errors:error_match_pw'));
+      toast.error(t('errors:error_match_pw'), {
+        autoClose: 1500
+      });
     } else {
       changePassword({
         variables: {
@@ -69,7 +75,9 @@ function ChangePassWord() {
   };
 
   const onError = (error) => {
-    toast.error(error[Object.keys(error)[0]].message);
+    toast.error(error[Object.keys(error)[0]].message, {
+      autoClose: 1500
+    });
   };
 
   return (
