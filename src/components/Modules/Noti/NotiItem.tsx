@@ -5,6 +5,7 @@ import moment from 'moment';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
+import Loading from 'src/components/Layout/Loading';
 import { SEEN_NOTI } from 'src/graphql/notification/seenNoti.mutation';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import useNoti from 'src/hooks/useNoti';
@@ -23,6 +24,8 @@ type Props = {
   isRead?: boolean;
 
   type: string;
+
+  loading?: boolean;
 };
 
 const pageSize = 10;
@@ -36,7 +39,7 @@ const NotiItem = (props: Props) => {
 
   const page = +router.query.page || 1;
 
-  const { _id, content, create_date, description, type } = props;
+  const { _id, content, create_date, description, type, loading } = props;
 
   const { refetchNoti } = useNoti({ page, pageSize });
 
@@ -83,6 +86,11 @@ const NotiItem = (props: Props) => {
           </a>
         </Link>
       )}
+      {/* {loading && (
+        <div className="search__result--empty text-center">
+          <Loading />
+        </div>
+      )} */}
     </div>
   );
 };
