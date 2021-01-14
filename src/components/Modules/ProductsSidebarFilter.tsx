@@ -14,6 +14,7 @@ import {
   searchCategoriesVars
 } from 'src/graphql/category/searchCategory.query';
 import { Manufacturer } from 'src/graphql/manufacturers/manufacturers.query';
+import { useDebouncedEffect } from 'src/hooks/useDebouncedEffect';
 
 import Dropdown from '../Form/Dropdown';
 import Select from '../Form/Select';
@@ -80,10 +81,10 @@ const ProductsSidebarFilter = (props: Props) => {
   const [valueCategoryInput, setValueCategoryInput] = useState('');
   const [valueManuInput, setValueManuInput] = useState('');
 
-  const { data: dataCategory, loading: loadingCategory } = useQuery<
+  const [searchCategory, { data: dataCategory, loading: loadingCategory }] = useLazyQuery<
     searchCategoriesData,
     searchCategoriesVars
-  >(SEARCH_CATEGORY, { variables: { keyword: valueCategoryInput } });
+  >(SEARCH_CATEGORY);
 
   const dataCategorySearch = dataCategory?.searchCategories || [];
 
@@ -91,6 +92,14 @@ const ProductsSidebarFilter = (props: Props) => {
     e.preventDefault();
     setValueCategoryInput(e.target.value);
   };
+  // Search with debounce
+  useDebouncedEffect(
+    () => {
+      searchCategory({ variables: { keyword: valueCategoryInput } });
+    },
+    200,
+    [valueCategoryInput]
+  );
 
   const onValueManuChange = (e) => {
     e.preventDefault();
