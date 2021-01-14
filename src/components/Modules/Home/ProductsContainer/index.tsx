@@ -1,6 +1,7 @@
+import clsx from 'clsx';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
-import React, { FC } from 'react';
+import React, { ReactNode } from 'react';
 import Button from 'src/components/Form/Button';
 
 type ProductsContainerProps = {
@@ -8,15 +9,16 @@ type ProductsContainerProps = {
   className?: string;
   seeMoreUrl?: string;
   title: string;
+  children: ReactNode;
 };
 
-export const ProductsContainer: FC<ProductsContainerProps> = (props) => {
-  const dealsClass = props.deals ? 'deals' : '';
+export const ProductsContainer = (props: ProductsContainerProps) => {
   const { t } = useTranslation(['common']);
+
   return (
-    <section className={`py-5 ${dealsClass} ${props.className}`}>
+    <section className={clsx('py-5', props.className, props.deals && 'deals')}>
       <div className="container">
-        <div className="text-center mb-4">
+        <div className="mb-4">
           <h2 className={props.deals && 'text-white'}>{props.title}</h2>
         </div>
 
