@@ -1,18 +1,10 @@
 import {
   Box,
   Button,
-  Card,
-  CardProps,
   Divider,
   Grid,
   makeStyles,
   Paper,
-  Step,
-  StepConnector,
-  StepConnectorProps,
-  StepIconProps,
-  StepLabel,
-  Stepper,
   Table,
   TableBody,
   TableCell,
@@ -20,11 +12,11 @@ import {
   TableFooter,
   TableHead,
   TableRow,
-  Typography
+  Typography,
+  useMediaQuery
 } from '@material-ui/core';
-import { AssignmentTurnedIn, Done, LocalShipping, Receipt, Update } from '@material-ui/icons';
+import { Receipt } from '@material-ui/icons';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-import clsx from 'clsx';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -34,6 +26,8 @@ import PriceText from 'src/components/Form/PriceText';
 import Head from 'src/components/Layout/Head';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
+import CustomCard from 'src/components/Modules/OrderDetails/CustomCard';
+import CustomStepper from 'src/components/Modules/OrderDetails/CustomStepper';
 import ProfileLayout from 'src/components/Modules/ProfileLayout';
 import { GET_ORDER, GetOrderDetailData, GetOrderDetailVars } from 'src/graphql/order/getOrder';
 import { useQueryAuth } from 'src/hooks/useApolloHookAuth';
@@ -41,128 +35,16 @@ import withToken from 'src/utils/withToken';
 
 import ConfirmCancelOrder from '../../components/Modules/My-orders/ConfirmCancelOrder';
 
-const useStyles = makeStyles((muiTheme) => {
-  const stepIconSize = 75;
-
-  const stepConnectorLineHeight = 3;
-
-  const stepIconGradient = `linear-gradient(102.04deg, ${muiTheme.palette.primary.dark} 0%, ${muiTheme.palette.primary.main} 100%)`;
-
-  const stepConnectorLineGradient = `linear-gradient(95deg,${muiTheme.palette.primary.main} 0%, ${muiTheme.palette.primary.dark} 100%)`;
-
-  return {
-    cardRoot: {
-      padding: muiTheme.spacing(2)
-    },
-    stepIconRoot: {
-      backgroundColor: muiTheme.palette.grey[500],
-      zIndex: 1,
-      color: muiTheme.palette.common.white,
-      width: stepIconSize,
-      height: stepIconSize,
-      display: 'flex',
-      borderRadius: '50%',
-      justifyContent: 'center',
-      alignItems: 'center',
-      '& .MuiSvgIcon-root': {
-        fontSize: '2rem'
-      }
-    },
-    stepIconActive: {
-      backgroundImage: stepIconGradient,
-      boxShadow: '0 4px 10px 0 rgba(0, 0, 0, 0.25)',
-      '& .MuiSvgIcon-root': {
-        fontSize: '2rem'
-      }
-    },
-    stepIconCompleted: {
-      backgroundImage: stepIconGradient
-    },
-
-    stepConnectorAlternativeLabel: {
-      top: (stepIconSize - stepConnectorLineHeight) / 2
-    },
-    stepConnectorActive: {
-      '& .MuiStepConnector-line': {
-        backgroundImage: stepConnectorLineGradient
-      }
-    },
-    stepConnectorCompleted: {
-      '& .MuiStepConnector-line': {
-        backgroundImage: stepConnectorLineGradient
-      }
-    },
-    stepConnectorLine: {
-      height: stepConnectorLineHeight,
-      border: 0,
-      backgroundColor: muiTheme.palette.grey[500]
-    },
-    textWithLabelContainer: {
-      '&:not(:last-child)': {
-        marginBottom: muiTheme.spacing(2)
-      }
-    },
-    stepIconCancel: {
-      background: 'linear-gradient(102.04deg, #c31e1e 0%, #f00 100%)'
-    },
-    table: {
-      minWidth: 650
+const useStyles = makeStyles((muiTheme) => ({
+  textWithLabelContainer: {
+    '&:not(:last-child)': {
+      marginBottom: muiTheme.spacing(2)
     }
-  };
-});
-
-const CustomCard = (props: CardProps) => {
-  const classes = useStyles();
-
-  return (
-    <Card
-      classes={{
-        root: classes.cardRoot
-      }}
-      {...props}
-    />
-  );
-};
-
-const CustomStepIcon = (props: StepIconProps) => {
-  const { active, completed, icon } = props;
-
-  const classes = useStyles();
-
-  return (
-    <div
-      className={clsx(classes.stepIconRoot, {
-        [classes.stepIconActive]: active,
-        [classes.stepIconCompleted]: completed
-      })}>
-      {icon}
-    </div>
-  );
-};
-
-const CustomStepCancel = (props: StepIconProps) => {
-  const { icon } = props;
-
-  const classes = useStyles();
-
-  return <div className={clsx(classes.stepIconRoot, classes.stepIconCancel)}>{icon}</div>;
-};
-
-const CustomStepConnector = (props: StepConnectorProps) => {
-  const classes = useStyles();
-
-  return (
-    <StepConnector
-      {...props}
-      classes={{
-        alternativeLabel: classes.stepConnectorAlternativeLabel,
-        active: classes.stepConnectorActive,
-        completed: classes.stepConnectorCompleted,
-        line: classes.stepConnectorLine
-      }}
-    />
-  );
-};
+  },
+  table: {
+    minWidth: 650
+  }
+}));
 
 const TextWithLabel = (props) => {
   const { label, text, inline } = props;
@@ -186,8 +68,11 @@ OrderDetails.getinitialProps = async () => ({
   namespacesRequired: [...mainLayoutNamespacesRequired, 'myOrders']
 });
 
-function OrderDetails(props) {
+const flagSteps = [10, 20, 30, 40, 80];
+
+function OrderDetails() {
   const { t } = useTranslation(['myOrders', 'common']);
+
   const router = useRouter();
 
   const [open, setOpen] = useState(false);
@@ -195,29 +80,6 @@ function OrderDetails(props) {
   const { orderNo } = router.query;
 
   const [activeStep, setActiveStep] = useState(-1);
-
-  const steps = [
-    {
-      icon: <Receipt />,
-      text: t('myOrders:wait_for_confirm')
-    },
-    {
-      icon: <AssignmentTurnedIn />,
-      text: t('myOrders:confirmed')
-    },
-    {
-      icon: <Update />,
-      text: t('myOrders:in_proceed')
-    },
-    {
-      icon: <LocalShipping />,
-      text: t('myOrders:in_delivery')
-    },
-    {
-      icon: <Done />,
-      text: t('myOrders:complete')
-    }
-  ];
 
   const { data: orderDetail, refetch, loading: loadingOrderDetail } = useQueryAuth<
     GetOrderDetailData,
@@ -228,8 +90,6 @@ function OrderDetails(props) {
 
   useEffect(() => {
     if (!orderDetail) return;
-
-    const flagSteps = [10, 20, 30, 40, 80];
 
     setActiveStep(flagSteps.indexOf(orderDetail?.getOrderDetail?.flag));
   }, [orderDetail]);
@@ -267,27 +127,7 @@ function OrderDetails(props) {
                 <Divider />
               </Box>
 
-              <Stepper
-                className="cancel"
-                alternativeLabel
-                activeStep={activeStep}
-                connector={<CustomStepConnector />}>
-                {flag === 25 ? (
-                  <Step>
-                    <StepLabel icon={<Receipt />} StepIconComponent={CustomStepCancel} error>
-                      {t('myOrders:canceled')}
-                    </StepLabel>
-                  </Step>
-                ) : (
-                  steps.map((step) => (
-                    <Step key={step.text}>
-                      <StepLabel icon={step.icon} StepIconComponent={CustomStepIcon}>
-                        {step.text}
-                      </StepLabel>
-                    </Step>
-                  ))
-                )}
-              </Stepper>
+              <CustomStepper flag={flag} activeStep={activeStep} />
 
               {flag !== 25 && (
                 <>
@@ -413,7 +253,7 @@ function OrderDetails(props) {
                       {['price_unit', 'price_tax', 'price_total'].map((item) => (
                         <TableCell key={item} align="right">
                           <Box whiteSpace="nowrap">
-                            <PriceText price={product[item]} /> {t('common:vnd')}
+                            <PriceText price={product[item]} />
                           </Box>
                         </TableCell>
                       ))}
@@ -427,8 +267,7 @@ function OrderDetails(props) {
                       <Typography color="initial" variant="h5" align="right">
                         {t('myOrders:total')}{' '}
                         <Typography color="primary" variant="h4" display="inline">
-                          <PriceText price={orderDetail?.getOrderDetail?.amount_total} />{' '}
-                          {t('common:vnd')}
+                          <PriceText price={orderDetail?.getOrderDetail?.amount_total} />
                         </Typography>
                       </Typography>
                     </TableCell>

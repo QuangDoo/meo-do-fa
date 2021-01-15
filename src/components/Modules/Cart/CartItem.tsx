@@ -90,14 +90,12 @@ function CartItem(props: CartItemProps) {
         <div className="mt-3 d-flex flex-shrink-0 flex-column align-items-start align-items-md-end mt-md-0">
           <div>
             <PriceText price={props.product.sale_price} />
-            {' ' + t('common:vnd')}
           </div>
 
           {totalDiscountAmount > 0 && (
             <small className="d-flex align-items-center">
               <del className="text-muted">
                 <PriceText price={props.product.old_price} />
-                {' ' + t('common:vnd')}
               </del>
               <div className="mx-2">I</div>-{totalDiscountAmount}%
             </small>

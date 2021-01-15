@@ -103,7 +103,7 @@ const PaymentOption = (props: Props): JSX.Element => {
                 <div className="bank-info">
                   {['account_name', 'account_no', 'bank_name', 'note'].map((key) => (
                     <React.Fragment key={key}>
-                      <div className="bank-info__label text-right mr-3">
+                      <div className="text-muted text-right mr-3">
                         {t(`checkout:bank_info__${key}`)}
                       </div>
                       <div className="bank-info__content">{bankTransfer[key]}</div>

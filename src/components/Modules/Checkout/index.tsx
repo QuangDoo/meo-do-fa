@@ -5,6 +5,7 @@ import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { useCart } from 'src/contexts/Cart';
+import { useUser } from 'src/contexts/User';
 import { CREATE_ORDER, CreateOrderData, CreateOrderVars } from 'src/graphql/order/createOrder';
 import { GET_COUNSEL, GetCounselData, OutputCounsel } from 'src/graphql/order/getCounsel';
 import { useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
@@ -21,7 +22,7 @@ import StickySidebar from './StickySidebar';
 
 // Các city, district, ward đều có dạng "name__id"
 
-type FormInputs = {
+export type CheckoutFormInputs = {
   deliveryName: string;
   deliveryPhone: string;
   deliveryEmail: string;
@@ -30,11 +31,13 @@ type FormInputs = {
   deliveryDistrict: string;
   deliveryWard: string;
   deliverySaveInfo: boolean;
+  deliveryPartnerId: string;
 
   deliveryMethodId: string;
   paymentMethodId: string;
 
   isInvoice: boolean;
+  showInvoiceProducts: boolean;
   invoiceName: string;
   invoiceEmail: string;
   invoiceStreet: string;
@@ -46,12 +49,41 @@ type FormInputs = {
 
   customerNotes: string;
   agreement: boolean;
+};
 
-  id: string;
+const checkoutFormDefaultValues: CheckoutFormInputs = {
+  deliveryName: '',
+  deliveryPhone: '',
+  deliveryEmail: '',
+  deliveryStreet: '',
+  deliveryCity: '',
+  deliveryDistrict: '',
+  deliveryWard: '',
+  deliverySaveInfo: true,
+  deliveryPartnerId: '',
+
+  deliveryMethodId: '0',
+  paymentMethodId: '1',
+
+  isInvoice: false,
+  showInvoiceProducts: false,
+  invoiceName: '',
+  invoiceEmail: '',
+  invoiceStreet: '',
+  invoiceCity: '',
+  invoiceDistrict: '',
+  invoiceWard: '',
+  invoiceTaxCode: '',
+  invoiceSaveInfo: true,
+
+  customerNotes: '',
+  agreement: false
 };
 
 const CheckoutPage = () => {
   const { t } = useTranslation(['checkout', 'errors']);
+
+  const { data: user } = useUser();
 
   const [counselData, setCounselData] = useState<OutputCounsel>();
 
@@ -82,15 +114,8 @@ const CheckoutPage = () => {
   const orderNo = counselData?.counsel?.orderNo;
 
   // Form handler with default values
-  const methods = useForm<FormInputs>({
-    defaultValues: {
-      paymentMethodId: '1',
-      deliverySaveInfo: true,
-      invoiceSaveInfo: true,
-      customerNotes: '',
-      isInvoice: false,
-      agreement: false
-    }
+  const methods = useForm<CheckoutFormInputs>({
+    defaultValues: checkoutFormDefaultValues
   });
 
   const { register, handleSubmit } = methods;
@@ -104,7 +129,16 @@ const CheckoutPage = () => {
     CreateOrderVars
   >(CREATE_ORDER, {
     onCompleted: (data) => {
-      refetchCart();
+      refetchCart().then(() => {
+        swal({
+          title: t('checkout:order_success_message', {
+            orderNo: data.createOrder.orderNo
+          }),
+          icon: 'success'
+        }).then(() => {
+          router.push('/');
+        });
+      });
 
       swal({
         title: t('checkout:order_success_message', {
@@ -125,26 +159,31 @@ const CheckoutPage = () => {
     }
   });
 
-  const onSubmit: SubmitHandler<FormInputs> = (data) => {
+  const onSubmit: SubmitHandler<CheckoutFormInputs> = (data) => {
+    console.log('create order submit data:', data);
+
+    const [deliveryWard, deliveryZipCode] = data.deliveryWard?.split('__') || [];
+    const [invoiceWard, invoiceZipCode] = data.invoiceWard?.split('__') || [];
+
     createOrder({
       variables: {
         inputs: {
           orderNo: orderNo,
           customer: {
-            fullName: data.deliveryName,
-            phone: data.deliveryPhone,
-            email: data.deliveryEmail,
+            fullName: user.name || '',
+            phone: user.phone || '',
+            email: user.email || undefined,
             shipping_address: {
               fullName: data.deliveryName,
               phone: data.deliveryPhone,
               email: data.deliveryEmail,
-              partnerId: 0,
-              isNew: true,
-              zipCode: +data.deliveryWard.split('__')[1],
-              city: data.deliveryCity.split('__')[0],
-              district: data.deliveryDistrict.split('__')[0],
-              ward: data.deliveryWard.split('__')[0],
-              street: data.deliveryStreet
+              partnerId: +data.deliveryPartnerId || undefined,
+              isNew: !data.deliveryPartnerId,
+              zipCode: +deliveryZipCode || 0,
+              city: data.deliveryCity?.split('__')[0] || '',
+              district: data.deliveryDistrict?.split('__')[0] || '',
+              ward: deliveryWard || '',
+              street: data.deliveryStreet || ''
             },
             billing_address: data.isInvoice
               ? {
@@ -153,18 +192,18 @@ const CheckoutPage = () => {
                   tax: data.invoiceTaxCode,
                   partnerId: 0,
                   isNew: true,
-                  zipCode: +data.invoiceWard.split('__')[1],
-                  city: data.invoiceCity.split('__')[0],
-                  district: data.invoiceDistrict.split('__')[0],
-                  ward: data.invoiceWard.split('__')[0],
-                  street: data.invoiceStreet
+                  zipCode: +invoiceZipCode || 0,
+                  city: data.invoiceCity?.split('__')[0] || '',
+                  district: data.invoiceDistrict?.split('__')[0] || '',
+                  ward: invoiceWard || '',
+                  street: data.invoiceStreet || ''
                 }
               : undefined
           },
           paymentMethodId: +data.paymentMethodId,
-          deliveryMethodId: 0,
+          deliveryMethodId: +data.deliveryMethodId || 0,
           note: data.customerNotes,
-          isInvoice: !!data.isInvoice
+          isInvoice: data.isInvoice || false
         }
       }
     });
@@ -188,6 +227,8 @@ const CheckoutPage = () => {
   return (
     <FormProvider {...methods}>
       <form className="checkout__form" onSubmit={handleSubmit(onSubmit, onError)}>
+        <input hidden ref={register} name="deliveryPartnerId" />
+
         <div className="checkout container py-5">
           <div className="row">
             <div className="col-12 mb-3">

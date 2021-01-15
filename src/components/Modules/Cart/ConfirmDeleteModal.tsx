@@ -55,7 +55,6 @@ const ConfirmDeleteModal: FC<Props> = (props) => {
                   <div className="cart-item__name mb-2">{productName}</div>
                   <div className="cart-item__price">
                     <PriceText price={price} />
-                    <span className="unit">đ</span>
                   </div>
                 </div>
               </div>

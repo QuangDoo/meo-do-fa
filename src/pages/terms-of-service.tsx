@@ -14,7 +14,7 @@ function TermsOfService() {
         <title>Medofa</title>
       </Head>
 
-      <div className="container my-5">
+      <div className="container text-justify my-5">
         <h2 className="text-center my-5">Thỏa thuận về Dịch Vụ Thương Mại Điện Tử</h2>
         <p>
           Medofa hoặc sàn thương mại điên tử Medofa.com là Website trực tuyến kinh doanh các sản

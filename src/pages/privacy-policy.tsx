@@ -17,7 +17,7 @@ function PrivacyPolicy() {
         <title>Medofa</title>
       </Head>
 
-      <div className="container my-5">
+      <div className="container text-justify my-5">
         <h2 className="text-center my-5">{t('privacyPolicy:title')}</h2>
         <ol className="list-group pl-0 decimal-list decimal-list-bold">
           <li className="decimal-list-item">

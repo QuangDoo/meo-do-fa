@@ -34,13 +34,11 @@ const ProductDetailInfor = (props: ProductDetails) => {
             <div className="product__price-group mb-1">
               <span className="product__price">
                 <PriceText price={props.sale_price} />
-                <span className="unit">{t('common:vnd')}</span>
               </span>
 
               {props.discount_percentage > 0 && (
                 <span className="product__old-price ml-3">
                   <PriceText price={props.old_price} />
-                  <span className="unit">{t('common:vnd')}</span>
                 </span>
               )}
             </div>

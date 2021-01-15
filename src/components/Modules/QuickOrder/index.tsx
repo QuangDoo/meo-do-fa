@@ -101,7 +101,6 @@ function QuickOrderPage() {
                       </div>
                       <div className="cart__total">
                         <PriceText price={cart?.totalPrice} />
-                        <span className="unit">{t('common:vnd')}</span>
                       </div>
                     </div>
                   </div>

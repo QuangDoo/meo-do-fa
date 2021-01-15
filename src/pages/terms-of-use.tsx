@@ -14,11 +14,11 @@ function TermsOfUse() {
         <title>Medofa</title>
       </Head>
 
-      <div className="container my-5">
+      <div className="container text-justify my-5">
         <h2 className="text-center my-5">Điều khoản sử dụng</h2>
-        <ol className="list-group">
+        <ol className="list-group p-0">
           <li>
-            <h5 className="font-weight-bold mt-2">Giới thiệu</h5>
+            <h5 className="font-weight-bold mt-2 p-0">Giới thiệu</h5>
             <div className="list-item">
               Chào mừng quý khách đã truy cập Website trực tuyến Medofa. Medofa.com là cổng thông
               tin giúp tra cứu các sản phẩm chăm sóc sức khỏe được phân phối bởi Công ty TNHH Dược
