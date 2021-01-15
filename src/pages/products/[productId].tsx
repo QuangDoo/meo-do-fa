@@ -49,8 +49,6 @@ function ProductDetail() {
     setImage(product?.image_512);
   }, [product?.image_512]);
 
-  console.log('image', image);
-
   const getNameById = (array, id) => {
     return _.find(array, { id })?.name;
   };
