@@ -54,6 +54,8 @@
   "name_required": "Please provide a name.",
   "notes_description": "If you can't find your desired product, please fill out a request below. We will contact our suppliers and respond to you as soon as possible.",
   "notes_placeholder": "Customer notes",
+  "name_label_invoice": "Company name",
+  "address_label_invoice":"Company address",
   "notes_title": "Notes",
   "or": "or",
   "order_fail_message": "Order failed",
