@@ -242,13 +242,13 @@ const Footer = () => {
                   </a> */}
                 </p>
                 <p />
-                <div className="d-flex align-items-center">
+                <div className="d-flex flex-wrap align-items-center">
                   <i className="fa fa-phone footer__icon footer__icon--email" />
                   <a className="text-white pl-2 mr-2" href="tel:1900232436">
                     1900232436
                   </a>
                   <span className="pb-1">|</span>
-                  <a className="text-white px-2 mr-2" href="tel:0914956936">
+                  <a className="text-white px-lg-2 mr-2 pl-md-5 pl-sm-5" href="tel:0914956936">
                     0914956936
                   </a>
                 </div>
