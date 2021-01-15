@@ -38,8 +38,6 @@ const ProductsSidebarFilter = (props: Props) => {
 
   const { categories, manufacturers } = props;
 
-  console.log('categories', categories);
-
   const { t } = useTranslation(['productsSidebar, searchBar']);
 
   const router = useRouter();
