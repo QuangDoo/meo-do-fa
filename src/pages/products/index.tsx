@@ -40,7 +40,7 @@ import {
   ProductTag
 } from 'src/graphql/product/getProducts';
 
-const PAGE_SIZE = 20;
+const PAGE_SIZE = 12;
 
 const DEFAULT_SORT_TYPE = '07'; // Name ascending
 

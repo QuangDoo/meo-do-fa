@@ -51,6 +51,8 @@
   "notes_description": "Trường hợp không tìm được thuốc mong muốn, Quý khách vui lòng điền yêu cầu bên dưới. Chúng tôi sẽ liên hệ mua thuốc và báo giá sớm nhất có thể.",
   "notes_placeholder": "Ghi chú của khách hàng",
   "notes_title": "Ghi chú khác",
+  "name_label_invoice": "Tên công ty",
+  "address_label_invoice":"Địa chỉ công ty",
   "or": "hoặc",
   "order_fail_message": "Đặt hàng thất bại",
   "order_success_message": "Đơn hàng {{orderNo}} đã được đặt thành công!",
