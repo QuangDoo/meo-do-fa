@@ -37,7 +37,7 @@ const InvoiceInfo = () => {
               ref={register({
                 required: t('checkout:name_required') + ''
               })}
-              label={t('checkout:name_label')}
+              label={t('checkout:name_label_invoice')}
               type="text"
               placeholder={t('checkout:name_placeholder')}
               defaultValue={user?.name}
@@ -85,7 +85,7 @@ const InvoiceInfo = () => {
               })}
               label={
                 <>
-                  {t('checkout:address_label')}{' '}
+                  {t('checkout:address_label_invoice')}{' '}
                   <span className="text-muted">{t('checkout:address_instructions')}</span>
                 </>
               }
