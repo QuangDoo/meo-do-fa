@@ -15,7 +15,7 @@ module.exports = withPWA({
     GRAPHQL_GATEWAY: process.env.GRAPHQL_GATEWAY // Pass through env variables
   },
   images: {
-    domains: ['firebasestorage.googleapis.com', 'googleapis.com']
+    domains: ['firebasestorage.googleapis.com', 'googleapis.com','files.medofa.com','files.medofa.bedigital.vn']
   },
   pwa: {
     disable: process.env.NODE_ENV === 'development',
