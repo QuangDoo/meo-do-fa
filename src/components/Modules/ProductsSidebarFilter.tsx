@@ -6,6 +6,7 @@ import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import NumberFormat from 'react-number-format';
 import { Category } from 'src/graphql/category/category.query';
 import {
@@ -27,9 +28,7 @@ type Props = {
 };
 
 const ProductsSidebarFilter = (props: Props) => {
-  const [priceFrom, setPriceFrom] = useState('');
-
-  const [priceTo, setPriceTo] = useState('');
+  const { handleSubmit: handlePriceRangeSubmit, control: priceRangeControl } = useForm();
 
   const { categories, manufacturers } = props;
 
@@ -53,21 +52,15 @@ const ProductsSidebarFilter = (props: Props) => {
     props.onClose?.();
   };
 
-  const handlePriceRangeFilter = (e) => {
-    e.preventDefault();
-
-    router.push(
-      {
-        pathname: router.pathname,
-        query: {
-          ...router.query,
-          priceFrom: priceFrom,
-          priceTo: priceTo
-        }
-      },
-      undefined,
-      { shallow: true }
-    );
+  const onPriceRangeSubmit = (data) => {
+    router.push({
+      pathname: router.pathname,
+      query: {
+        ...router.query,
+        priceFrom: data.priceFrom,
+        priceTo: data.priceTo
+      }
+    });
 
     props.onClose?.();
   };
@@ -150,37 +143,50 @@ const ProductsSidebarFilter = (props: Props) => {
         <hr className="hr my-3" />
 
         <div className="price-filter">
-          <form onSubmit={handlePriceRangeFilter}>
+          <form onSubmit={handlePriceRangeSubmit(onPriceRangeSubmit)}>
             <p>{t('productsSidebar:price_range')}</p>
             <div className="d-flex align-items-center mb-3">
-              <NumberFormat
-                placeholder={t('productsSidebar:price_from')}
-                className="form-control no-spinner"
-                size={5}
-                min={0}
-                value={priceFrom}
-                inputMode="numeric"
-                thousandSeparator="."
-                decimalSeparator=","
-                onValueChange={(values) => setPriceFrom(values.value)}
-                allowNegative={false}
+              <Controller
+                name="priceFrom"
+                control={priceRangeControl}
+                render={({ onChange, value }) => (
+                  <NumberFormat
+                    placeholder={t('productsSidebar:price_from')}
+                    className="form-control no-spinner"
+                    size={5}
+                    min={0}
+                    inputMode="numeric"
+                    thousandSeparator="."
+                    decimalSeparator=","
+                    onValueChange={(values) => onChange(values.floatValue)}
+                    value={value}
+                    allowNegative={false}
+                  />
+                )}
               />
 
               <div className="mx-2">&#8212;</div>
 
-              <NumberFormat
-                placeholder={t('productsSidebar:price_to')}
-                className="form-control no-spinner"
-                size={5}
-                min={0}
-                value={priceTo}
-                inputMode="numeric"
-                thousandSeparator="."
-                decimalSeparator=","
-                onValueChange={(values) => setPriceTo(values.value)}
-                allowNegative={false}
+              <Controller
+                name="priceTo"
+                control={priceRangeControl}
+                render={({ onChange, value }) => (
+                  <NumberFormat
+                    placeholder={t('productsSidebar:price_to')}
+                    className="form-control no-spinner"
+                    size={5}
+                    min={0}
+                    inputMode="numeric"
+                    thousandSeparator="."
+                    decimalSeparator=","
+                    onValueChange={(values) => onChange(values.floatValue)}
+                    value={value}
+                    allowNegative={false}
+                  />
+                )}
               />
             </div>
+
             <button className="btn btn-primary" type="submit">
               {t('productsSidebar:apply')}
             </button>

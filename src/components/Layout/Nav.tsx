@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client';
-import { Menu, MenuItem } from '@material-ui/core';
+import { Menu } from '@material-ui/core';
 import { useTranslation } from 'i18n';
 import cookies from 'js-cookie';
 import Link from 'next/link';
@@ -8,7 +8,7 @@ import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useCart } from 'src/contexts/Cart';
 import { useToken } from 'src/contexts/Token';
-import { GET_CATEGORIES_LEVEL, GetCategoriesLevelData } from 'src/graphql/category/category.query';
+import { GET_CATEGORIES_LEVEL } from 'src/graphql/category/category.query';
 
 import CategoryMenu from '../Modules/CategoryMenu';
 import PathologyMenu from '../Modules/PathologyMenu';
@@ -39,18 +39,13 @@ const Nav = () => {
     setAnchorEl(null);
   };
 
-  const { data: categoriesData, refetch } = useQuery(GET_CATEGORIES_LEVEL, {
+  const { data: categoriesData } = useQuery(GET_CATEGORIES_LEVEL, {
     onError: (error) => {
       toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
     }
   });
-  const categories = categoriesData?.getCategoriesLevel || [];
 
-  useEffect(() => {
-    if (categories[1].name === null && categories[2].name === null) {
-      refetch();
-    }
-  }, [categoriesData]);
+  const categories = categoriesData?.getCategoriesLevel || [];
 
   return (
     <nav className="rockland-nav shrink header-menu">

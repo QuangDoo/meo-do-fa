@@ -109,9 +109,10 @@ function Products() {
 
   const { data: categoryData } = useQuery<CategorySubData, CategoryVar>(GET_CATEGORY, {
     variables: {
-      id: Number(router.query.category)
+      id: +router.query.category
     },
-    onError: () => null
+    onError: () => null,
+    skip: !router.query.category
   });
   const category = categoryData?.getCategory;
 
