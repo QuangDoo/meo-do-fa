@@ -4,7 +4,7 @@ import { useTranslation } from 'i18n';
 import cookies from 'js-cookie';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useCart } from 'src/contexts/Cart';
 import { useToken } from 'src/contexts/Token';
@@ -39,15 +39,18 @@ const Nav = () => {
     setAnchorEl(null);
   };
 
-  const { data: categoriesData } = useQuery<GetCategoriesLevelData, undefined>(
-    GET_CATEGORIES_LEVEL,
-    {
-      onError: (error) => {
-        toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
-      }
+  const { data: categoriesData, refetch } = useQuery(GET_CATEGORIES_LEVEL, {
+    onError: (error) => {
+      toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
     }
-  );
+  });
   const categories = categoriesData?.getCategoriesLevel || [];
+
+  useEffect(() => {
+    if (categories[1].name === null && categories[2].name === null) {
+      refetch();
+    }
+  }, [categoriesData]);
 
   return (
     <nav className="rockland-nav shrink header-menu">
