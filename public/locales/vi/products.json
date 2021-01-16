@@ -1,9 +1,9 @@
 {
-    "title": "Tất cả sản phẩm",
-    "show": "Hiển thị",
-    "on_of": "trên tổng số ",
-    "products": "sản phẩm",
-    "no_products_matching_key": "Không có sản phẩm phù hợp với từ khoá: ",
-    "no_products": "Không có sản phẩm",
-    "key": "kết quả tìm kiếm cho: "
+  "key": "kết quả tìm kiếm cho: ",
+  "no_products": "Không có sản phẩm",
+  "no_products_matching_key": "Không có sản phẩm phù hợp với từ khoá: ",
+  "on_of": "trên tổng số ",
+  "products": "sản phẩm",
+  "show": "Hiển thị",
+  "title": "Tất cả sản phẩm"
 }

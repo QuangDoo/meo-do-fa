@@ -2,19 +2,11 @@ import { Button, Drawer } from '@material-ui/core';
 import { useTranslation } from 'i18n';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
-import { Category } from 'src/graphql/category/getCategoriesLevel';
-import { Manufacturer } from 'src/graphql/manufacturers/manufacturers.query';
 
 import FilterTags from '../FilterTags';
 import ProductsSidebarFilter from '../ProductsSidebarFilter';
 
-type Props = {
-  manufacturers: Manufacturer[];
-};
-
-const ProductsDrawerFilter = (props: Props) => {
-  const { manufacturers } = props;
-
+const ProductsDrawerFilter = () => {
   const { t } = useTranslation(['productsSidebar']);
 
   const [open, setOpen] = useState(false);
@@ -40,7 +32,7 @@ const ProductsDrawerFilter = (props: Props) => {
 
           <Drawer anchor="top" open={open}>
             <div className="p-3 min-vh-100">
-              <ProductsSidebarFilter manufacturers={manufacturers} onClose={() => setOpen(false)} />
+              <ProductsSidebarFilter onClose={() => setOpen(false)} />
             </div>
           </Drawer>
         </div>

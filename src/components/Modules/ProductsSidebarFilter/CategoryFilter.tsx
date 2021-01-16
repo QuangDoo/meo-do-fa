@@ -15,7 +15,7 @@ import { useDebouncedEffect } from 'src/hooks/useDebouncedEffect';
 import removeAccents from 'src/utils/removeAccents';
 
 export default function CategoryFilter() {
-  const { t } = useTranslation(['productsSidebar']);
+  const { t } = useTranslation(['productsSidebar', 'searchBar']);
 
   const router = useRouter();
 
@@ -53,6 +53,17 @@ export default function CategoryFilter() {
     [inputValue]
   );
 
+  const getAllHref = () => {
+    const newQuery = { ...router.query };
+
+    delete newQuery.category;
+
+    return {
+      pathname: router.pathname,
+      query: newQuery
+    };
+  };
+
   return (
     <Dropdown label={t('productsSidebar:category')}>
       <div className="input-group form__input-group mb-3">
@@ -62,13 +73,14 @@ export default function CategoryFilter() {
           type="search"
           className="form-control form-control-sm search-input"
           placeholder={t('searchBar:enter_name_category')}
+          aria-label="search"
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
         />
       </div>
 
       <div className="mb-2">
-        <Link href="/products">
+        <Link href={getAllHref()}>
           <a className={clsx('products__filter-category', !router.query.category && 'active')}>
             {t('productsSidebar:all')}
           </a>
@@ -76,37 +88,55 @@ export default function CategoryFilter() {
       </div>
 
       {filterValue &&
-        !original.some((parent) => {
-          return (
+        !original.some(
+          (parent) =>
             removeAccents(parent.name).includes(filterValue) ||
             parent.categorySub.some((child) => removeAccents(child.name).includes(filterValue))
-          );
-        }) && (
+        ) && (
           <React.Fragment>
             <div className="search__result--empty">
               {t('searchBar:no_category')} <b>{filterValue}</b>
             </div>
+
             <hr />
           </React.Fragment>
         )}
 
       {original.map((parent) => {
-        const matchParentName = removeAccents(parent.name).includes(filterValue);
+        const parentNameMatchesInput = removeAccents(parent.name).includes(filterValue);
 
-        const childrenNames = parent.categorySub
+        const parentIdMatchesQuery = +router.query.category === parent.id;
+
+        const childrenNamesMatchInput = parent.categorySub
           .map((child) => child.name)
           .filter((name) => removeAccents(name).includes(filterValue));
 
         return (
-          <div hidden={!matchParentName && !childrenNames.length} key={parent.id} className="mb-2">
-            <Dropdown label={parent.name} show={!!filterValue}>
+          <div
+            hidden={!parentNameMatchesInput && !childrenNamesMatchInput.length}
+            key={parent.id}
+            className="mb-2">
+            <Dropdown
+              label={parent.name}
+              show={
+                !!filterValue ||
+                parentIdMatchesQuery ||
+                parent.categorySub.some((child) => child.id === +router.query.category)
+              }>
               <div className="pl-3 mb-3">
                 <div className="mb-1">
-                  <Link href={`/products?category=${parent.id}`}>
+                  <Link
+                    href={{
+                      pathname: router.pathname,
+                      query: {
+                        ...router.query,
+                        category: parent.id
+                      }
+                    }}>
                     <a
                       className={clsx(
                         'products__filter-category',
-                        !router.query.category && 'active'
+                        parentIdMatchesQuery && 'active'
                       )}>
                       {t('productsSidebar:all')}
                     </a>
@@ -115,10 +145,17 @@ export default function CategoryFilter() {
 
                 {parent.categorySub.map(({ name, id }) => (
                   <div
-                    hidden={!matchParentName && !childrenNames.includes(name)}
+                    hidden={!parentNameMatchesInput && !childrenNamesMatchInput.includes(name)}
                     key={id}
                     className="mb-1">
-                    <Link href={`/products?category=${id}`}>
+                    <Link
+                      href={{
+                        pathname: router.pathname,
+                        query: {
+                          ...router.query,
+                          category: id
+                        }
+                      }}>
                       <a
                         className={clsx(
                           'products__filter-category',

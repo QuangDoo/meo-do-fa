@@ -18,11 +18,6 @@ import {
 } from 'src/graphql/category/getCategoriesLevel';
 import { CategorySubData, CategoryVar, GET_CATEGORY } from 'src/graphql/category/getCategory';
 import {
-  GET_MANUFACTURERS,
-  GetManufacturersData,
-  GetManufacturersVars
-} from 'src/graphql/manufacturers/manufacturers.query';
-import {
   GET_PATHOLOGY,
   GetPathologyData,
   GetPathologyVars
@@ -43,15 +38,15 @@ import withToken from 'src/utils/withToken';
 Products.getInitialProps = async () => ({
   namespacesRequired: [
     ...mainLayoutNamespacesRequired,
+    'products',
     'productCard',
     'productBadge',
-    'products',
     'productsSidebar'
   ]
 });
 
 function Products() {
-  const { t } = useTranslation(['products']);
+  const { t } = useTranslation(['products', 'errors']);
 
   const router = useRouter();
 
@@ -68,19 +63,6 @@ function Products() {
     }
   );
   const categoriesLevel = categoriesLevelData?.getCategoriesLevel;
-
-  const { data: manufacturersData } = useQuery<GetManufacturersData, GetManufacturersVars>(
-    GET_MANUFACTURERS,
-    {
-      variables: {
-        page: 1,
-        pageSize: 20
-      },
-      onError: () => null
-    }
-  );
-
-  const manufacturers = manufacturersData?.getManufactories || [];
 
   const { data: productsData, loading: productsLoading } = useQuery<
     GetProductsData,
@@ -154,13 +136,13 @@ function Products() {
         <div className="products container mobile-content my-3 my-sm-5">
           <div className="d-flex flex-nowrap justify-content-between">
             <div className="products__sidebar pr-4 d-none d-sm-block">
-              <ProductsSidebarFilter manufacturers={manufacturers} />
+              <ProductsSidebarFilter />
             </div>
 
             <div className="flex-grow-1">
               <div className="px-2 px-sm-0 mb-2">
                 <div className="d-block d-sm-none mb-3">
-                  <ProductsDrawerFilter manufacturers={manufacturers} />
+                  <ProductsDrawerFilter />
                 </div>
                 <h1 className="products__header text-capitalize mb-3">{title}</h1>
                 {productsLoading ? (
@@ -215,7 +197,7 @@ function Products() {
                       pathname: router.pathname,
                       query: {
                         ...router.query,
-                        page: page
+                        page
                       }
                     })
                   }
