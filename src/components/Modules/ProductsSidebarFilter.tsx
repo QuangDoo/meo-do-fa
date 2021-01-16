@@ -1,11 +1,11 @@
-import { useLazyQuery, useQuery } from '@apollo/client';
+import { useLazyQuery } from '@apollo/client';
 import { IconButton } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import clsx from 'clsx';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import NumberFormat from 'react-number-format';
 import { Category } from 'src/graphql/category/category.query';
 import {
@@ -26,14 +26,9 @@ type Props = {
   onClose?: () => void;
 };
 
-const toPriceString = (price: number) => {
-  return price.toLocaleString('de-DE');
-};
-
 const ProductsSidebarFilter = (props: Props) => {
-  // const [categorySubSearch, setCategorySubSearch] = useState([]);
-
   const [priceFrom, setPriceFrom] = useState('');
+
   const [priceTo, setPriceTo] = useState('');
 
   const { categories, manufacturers } = props;
@@ -54,21 +49,27 @@ const ProductsSidebarFilter = (props: Props) => {
       undefined,
       { shallow: true }
     );
-    props.onClose && props.onClose();
+
+    props.onClose?.();
   };
 
   const handlePriceRangeFilter = (e) => {
     e.preventDefault();
 
-    router.push({
-      pathname: router.pathname,
-      query: {
-        ...router.query,
-        priceFrom: priceFrom,
-        priceTo: priceTo
-      }
-    });
-    props.onClose && props.onClose();
+    router.push(
+      {
+        pathname: router.pathname,
+        query: {
+          ...router.query,
+          priceFrom: priceFrom,
+          priceTo: priceTo
+        }
+      },
+      undefined,
+      { shallow: true }
+    );
+
+    props.onClose?.();
   };
 
   const handleManufacturersSubmit = (event: React.FormEvent<HTMLFormElement>) => {
