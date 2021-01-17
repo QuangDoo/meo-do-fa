@@ -129,25 +129,16 @@ const CheckoutPage = () => {
     CreateOrderVars
   >(CREATE_ORDER, {
     onCompleted: (data) => {
-      refetchCart().then(() => {
-        swal({
-          title: t('checkout:order_success_message', {
-            orderNo: data.createOrder.orderNo
-          }),
-          icon: 'success'
-        }).then(() => {
-          router.push('/');
-        });
-      });
-
-      swal({
-        title: t('checkout:order_success_message', {
-          orderNo: data.createOrder.orderNo
-        }),
-        icon: 'success'
-      }).then(() => {
-        router.push('/');
-      });
+      refetchCart()
+        .then(() =>
+          swal({
+            title: t('checkout:order_success_message', {
+              orderNo: data.createOrder.orderNo
+            }),
+            icon: 'success'
+          })
+        )
+        .then(() => router.push('/'));
     },
     onError: (err) => {
       const errorCode = err.graphQLErrors[0]?.extensions?.code;
