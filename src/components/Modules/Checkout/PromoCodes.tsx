@@ -111,12 +111,12 @@ export default function PromoCodes(props: Props) {
 
   return (
     <div className="mb-4">
-      <div className="h3 mb-3">{t('checkout:promo_codes_title')}</div>
+      <div className="h4 mb-3">{t('checkout:promo_codes_title')}</div>
 
       {promotion?.coupon_code ? (
         <Coupon promotion={promotion} onClick={() => handleUnapplyCoupon(promotion.coupon_code)} />
       ) : (
-        <div className="elevated">
+        <div className="elevated overflow-hidden">
           <Button
             size="small"
             variant="text"

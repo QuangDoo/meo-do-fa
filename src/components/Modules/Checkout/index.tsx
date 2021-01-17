@@ -218,10 +218,6 @@ const CheckoutPage = () => {
 
         <div className="checkout container py-5">
           <div className="row">
-            <div className="col-12 mb-3">
-              <h1 className="h3">{t('checkout:title')}</h1>
-            </div>
-
             <div className="col-lg-8">
               <div className="mb-4">
                 <DeliveryInfo />
