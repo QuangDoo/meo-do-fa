@@ -1,16 +1,18 @@
 .promo-coupon {
   $circle-size: 20px;
-  $half-circle: $circle-size / 2;
+  $half-circle-size: $circle-size / 2;
+  $half-circle-bg: #f4f7fc;
 
   overflow: hidden;
 
   &__name-container {
     border: 1px solid $primary;
     border-right: none;
-    border-radius: $half-circle 0 0 $half-circle;
+    border-radius: $half-circle-size 0 0 $half-circle-size;
     align-self: stretch;
     display: flex;
     align-items: center;
+    background: white;
   }
 
   &__name {
@@ -23,11 +25,12 @@
   &__unapply-btn {
     border: 1px solid $primary;
     border-left: 1px dashed $primary;
-    border-radius: 0 $half-circle $half-circle 0;
+    border-radius: 0 $half-circle-size $half-circle-size 0;
     text-transform: uppercase;
     font-size: 14px;
     white-space: nowrap;
     color: $primary;
+    background: white;
     transition: background-color 0.2s;
     position: relative;
 
@@ -41,11 +44,11 @@
       width: $circle-size;
       height: $circle-size;
       border: 1px solid #2f3b97;
-      border-radius: $half-circle;
+      border-radius: $half-circle-size;
       position: absolute;
-      left: -$half-circle;
-      top: -$half-circle;
-      background: white;
+      left: -$half-circle-size;
+      top: -$half-circle-size;
+      background: $half-circle-bg;
     }
 
     &::after {
@@ -54,11 +57,11 @@
       width: $circle-size;
       height: $circle-size;
       border: 1px solid #2f3b97;
-      border-radius: $half-circle;
+      border-radius: $half-circle-size;
       position: absolute;
-      left: -$half-circle;
-      bottom: -$half-circle;
-      background: white;
+      left: -$half-circle-size;
+      bottom: -$half-circle-size;
+      background: $half-circle-bg;
     }
   }
 }

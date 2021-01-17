@@ -83,14 +83,16 @@ const DeliveryInfo = () => {
               {t('checkout:create_address')}
             </button>
           </Fragment>
-        ) : data?.getAddressInfoUser.deliveries.length > 0 ? (
-          <Fragment>
-            {t('checkout:use_previous_address') + ' '}
-            <button type="button" className="btn-link" onClick={() => setOpen(true)}>
-              {t('checkout:choose_address')}
-            </button>
-          </Fragment>
-        ) : null}
+        ) : (
+          data?.getAddressInfoUser.deliveries.length > 0 && (
+            <Fragment>
+              {t('checkout:use_previous_address') + ' '}
+              <button type="button" className="btn-link" onClick={() => setOpen(true)}>
+                {t('checkout:choose_address')}
+              </button>
+            </Fragment>
+          )
+        )}
       </Box>
 
       <ChooseDeliveryAddressDialog
