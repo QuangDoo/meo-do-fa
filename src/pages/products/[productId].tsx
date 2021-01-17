@@ -6,7 +6,6 @@ import React, { useEffect, useState } from 'react';
 import { MagnifierContainer, SideBySideMagnifier } from 'react-image-magnifiers';
 import Head from 'src/components/Layout/Head';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
-import Nav from 'src/components/Layout/Nav';
 import SimpleBreadcrumbs from 'src/components/Modules/BreadCrum/BreadCrum';
 import MainLayout from 'src/components/Modules/MainLayout';
 import { DiscountRibbon } from 'src/components/Modules/ProductCard/DiscountRibbon';
@@ -23,7 +22,7 @@ ProductDetail.getInitialProps = async () => ({
 function ProductDetail() {
   const router = useRouter();
 
-  const [image, setImage] = useState('');
+  const [image, setImage] = useState('/assets/images/no_images.jpg');
 
   const { t } = useTranslation(['productDetail']);
 
@@ -62,6 +61,7 @@ function ProductDetail() {
       </Head>
 
       <LoadingBackdrop open={loading} />
+
       <div className="product container py-2">
         <SimpleBreadcrumbs categories={product?.categories} />
       </div>
@@ -104,6 +104,7 @@ function ProductDetail() {
             </div>
           </div>
         </div>
+
         {/* <RelativeProducts /> */}
       </div>
     </MainLayout>

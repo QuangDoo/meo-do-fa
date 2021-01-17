@@ -26,11 +26,9 @@ const NotifyContext = createContext<NotifySSRContextValue>(undefined);
 const useNotify = () => useContext(NotifyContext);
 
 function NotifyProvider(props) {
-  const token = useToken();
-
   const { t } = useTranslation(['errors']);
 
-  const [getNotify, { data, error, loading, refetch }] = useLazyQueryAuth<GetNotiData, GetNotiVars>(
+  const [getNotify, { data, loading, refetch }] = useLazyQueryAuth<GetNotiData, GetNotiVars>(
     GET_NOTI,
     {
       fetchPolicy: 'network-only',
@@ -38,14 +36,7 @@ function NotifyProvider(props) {
       onError: (error) => {
         const errorCode = error.graphQLErrors?.[0]?.extensions?.code;
 
-        const isClient = typeof window !== 'undefined';
-
-        if (isClient) {
-          if (errorCode === 500) {
-            cookies.remove('token');
-          }
-          toast.error(t(`errors:code_${errorCode}`));
-        }
+        toast.error(t(`errors:code_${errorCode}`));
       }
     }
   );
@@ -54,8 +45,8 @@ function NotifyProvider(props) {
     <NotifyContext.Provider
       value={{
         getNotify,
-        data: data?.getNotify.Notifies,
-        total: data?.getNotify.total,
+        data: data?.getNotify?.Notifies,
+        total: data?.getNotify?.total,
         loading,
         refetch
       }}>
