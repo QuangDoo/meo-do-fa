@@ -6,28 +6,17 @@ import { animateScroll } from 'react-scroll';
 import { toast } from 'react-toastify';
 import Head from 'src/components/Layout/Head';
 import Loading from 'src/components/Layout/Loading';
-// import SimpleBreadcrumbs from 'src/components/Modules/BreadCrum/BreadCrum';
 import FilterTags from 'src/components/Modules/FilterTags';
-import MainLayout from 'src/components/Modules/MainLayout';
+import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import Pagination from 'src/components/Modules/Pagination';
 import ProductCard from 'src/components/Modules/ProductCard';
 import ProductsDrawerFilter from 'src/components/Modules/ProductDrawerFilter/ProductsDrawerFilter';
 import ProductsSidebarFilter from 'src/components/Modules/ProductsSidebarFilter';
 import {
-  CategorySubData,
-  // Category,
-  CategoryVar,
-  // GET_ALL_CATEGORIES,
   GET_CATEGORIES_LEVEL,
-  GET_CATEGORY,
-  // GetAllCategoriesData,
   GetCategoriesLevelData
-} from 'src/graphql/category/category.query';
-import {
-  GET_MANUFACTURERS,
-  GetManufacturersData,
-  GetManufacturersVars
-} from 'src/graphql/manufacturers/manufacturers.query';
+} from 'src/graphql/category/getCategoriesLevel';
+import { CategorySubData, CategoryVar, GET_CATEGORY } from 'src/graphql/category/getCategory';
 import {
   GET_PATHOLOGY,
   GetPathologyData,
@@ -42,16 +31,22 @@ import {
 
 const PAGE_SIZE = 12;
 
-const DEFAULT_SORT_TYPE = '07'; // Name ascending
+const NAME_ASCENDING = '07'; // Name ascending
 
 import withToken from 'src/utils/withToken';
 
 Products.getInitialProps = async () => ({
-  namespacesRequired: ['common', 'header', 'footer', 'productCard', 'productBadge', 'products']
+  namespacesRequired: [
+    ...mainLayoutNamespacesRequired,
+    'products',
+    'productCard',
+    'productBadge',
+    'productsSidebar'
+  ]
 });
 
 function Products() {
-  const { t } = useTranslation(['products']);
+  const { t } = useTranslation(['products', 'errors']);
 
   const router = useRouter();
 
@@ -69,19 +64,6 @@ function Products() {
   );
   const categoriesLevel = categoriesLevelData?.getCategoriesLevel;
 
-  const { data: manufacturersData } = useQuery<GetManufacturersData, GetManufacturersVars>(
-    GET_MANUFACTURERS,
-    {
-      variables: {
-        page: 1,
-        pageSize: 20
-      },
-      onError: () => null
-    }
-  );
-
-  const manufacturers = manufacturersData?.getManufactories || [];
-
   const { data: productsData, loading: productsLoading } = useQuery<
     GetProductsData,
     GetProductsVars
@@ -94,13 +76,17 @@ function Products() {
         manufacturer_id: router.query.manufacturer as string,
         category_id: router.query.category as string,
         name: search,
-        order_type: (router.query.sort as string) || DEFAULT_SORT_TYPE,
+        order_type: (router.query.sort as string) || NAME_ASCENDING,
         min_price: Number(router.query.priceFrom) || 1,
         max_price: Number(router.query.priceTo) || 10000000,
         pathology_id: router.query.pathology as string
       }
     },
-    onError: () => null
+    fetchPolicy: 'network-only',
+    notifyOnNetworkStatusChange: true,
+    onError: (err) => {
+      toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
+    }
   });
 
   const products = productsData?.getProductByConditions?.Products || [];
@@ -109,16 +95,18 @@ function Products() {
 
   const { data: categoryData } = useQuery<CategorySubData, CategoryVar>(GET_CATEGORY, {
     variables: {
-      id: Number(router.query.category)
+      id: +router.query.category
     },
-    onError: () => null
+    onError: () => null,
+    skip: !router.query.category
   });
   const category = categoryData?.getCategory;
 
   const { data: pathologyData } = useQuery<GetPathologyData, GetPathologyVars>(GET_PATHOLOGY, {
     variables: {
       id: Number(router.query.pathology)
-    }
+    },
+    skip: !router.query.pathology
   });
   const pathology = pathologyData?.getPathology;
 
@@ -126,11 +114,11 @@ function Products() {
     ?.filter((category) => category.id === Number(router.query.category))
     ?.shift();
 
-  const categoryTitle = category ? category?.name : categoryParent?.name;
+  const categoryTitle = category?.name || categoryParent?.name;
 
-  const pathologyTitle = categoryTitle ? categoryTitle : pathology?.name;
+  const pathologyTitle = categoryTitle || pathology?.name;
 
-  const title = pathologyTitle ? pathologyTitle : t('products:title');
+  const title = pathologyTitle || t('products:title');
 
   useEffect(() => {
     if (productsLoading) {
@@ -148,16 +136,13 @@ function Products() {
         <div className="products container mobile-content my-3 my-sm-5">
           <div className="d-flex flex-nowrap justify-content-between">
             <div className="products__sidebar pr-4 d-none d-sm-block">
-              <ProductsSidebarFilter categories={categoriesLevel} manufacturers={manufacturers} />
+              <ProductsSidebarFilter />
             </div>
 
             <div className="flex-grow-1">
               <div className="px-2 px-sm-0 mb-2">
                 <div className="d-block d-sm-none mb-3">
-                  <ProductsDrawerFilter
-                    categories={categoriesLevel}
-                    manufacturers={manufacturers}
-                  />
+                  <ProductsDrawerFilter />
                 </div>
                 <h1 className="products__header text-capitalize mb-3">{title}</h1>
                 {productsLoading ? (
@@ -212,7 +197,7 @@ function Products() {
                       pathname: router.pathname,
                       query: {
                         ...router.query,
-                        page: page
+                        page
                       }
                     })
                   }

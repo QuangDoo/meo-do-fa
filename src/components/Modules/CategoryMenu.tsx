@@ -7,8 +7,11 @@ import Link from 'next/link';
 import router from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { GET_CATEGORIES_LEVEL, GetCategoriesLevelData } from 'src/graphql/category/category.query';
-import { Category } from 'src/graphql/category/category.query';
+import {
+  Category,
+  GET_CATEGORIES_LEVEL,
+  GetCategoriesLevelData
+} from 'src/graphql/category/getCategoriesLevel';
 
 import Dropdown from '../Form/Dropdown';
 
@@ -71,11 +74,14 @@ const CategoryMenu = () => {
   const { t } = useTranslation(['navbar']);
   const [open, setOpen] = useState(false);
 
-  const { data: categoriesData, refetch } = useQuery(GET_CATEGORIES_LEVEL, {
-    onError: (error) => {
-      toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
+  const { data: categoriesData, refetch } = useQuery<GetCategoriesLevelData, undefined>(
+    GET_CATEGORIES_LEVEL,
+    {
+      onError: (error) => {
+        toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
+      }
     }
-  });
+  );
   const categories = categoriesData?.getCategoriesLevel || [];
 
   useEffect(() => {

@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-import { Category } from './category.query';
+import { Category } from './getCategoriesLevel';
 
 export type searchCategoriesData = {
   searchCategories: Category[];
