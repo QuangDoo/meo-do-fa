@@ -49,7 +49,7 @@ export default function MyAccountPage() {
 
   const { register, handleSubmit, watch, setValue } = useForm<Inputs>();
 
-  const chosenFile: FileList = watch('businessLicense');
+  const businessLicense: FileList = watch('businessLicense');
 
   const [firstLoadCities, setFirstLoadCities] = useState(true);
   const [firstLoadDistricts, setFirstLoadDistricts] = useState(true);
@@ -151,6 +151,17 @@ export default function MyAccountPage() {
       }
     }
   );
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.currentTarget.files[0];
+
+    const isImage = file.type.startsWith('image');
+
+    if (!isImage) {
+      setValue('businessLicense', undefined);
+      toast.error(t('cart:file_is_not_image'));
+    }
+  };
 
   const onSubmit = async (data: Inputs) => {
     let businessLicenseBase64 = '';
@@ -284,10 +295,13 @@ export default function MyAccountPage() {
             label={t('myAccount:business_license_label')}
             name="businessLicense"
             type="file"
-            accept="image/*, .pdf, .doc, .docx"
+            accept="image/*"
             placeholder={
-              chosenFile?.length ? chosenFile[0].name : t('myAccount:business_license_placeholder')
+              businessLicense?.length
+                ? businessLicense[0].name
+                : t('myAccount:business_license_placeholder')
             }
+            onChange={handleFileChange}
           />
 
           <InputWithLabel

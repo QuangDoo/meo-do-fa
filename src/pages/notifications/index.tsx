@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import Pagination from 'src/components/Modules/Pagination';
-import { useNotify } from 'src/contexts/useNotifyProvider';
+import { useNotify } from 'src/contexts/Notify';
 import { SEEN_ALL_NOTI } from 'src/graphql/notification/seenNoti.mutation';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import withToken from 'src/utils/withToken';
@@ -29,12 +29,6 @@ function Notification() {
   useEffect(() => {
     getNotify({ variables: { page: page, pageSize: pageSize } });
   }, []);
-
-  useEffect(() => {
-    if (!data) return;
-
-    refetch();
-  }, [data]);
 
   const [seenAllNoti] = useMutationAuth(SEEN_ALL_NOTI, {
     onError: (err) => {

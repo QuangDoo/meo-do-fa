@@ -5,17 +5,11 @@ import { District } from '../address/getDistricts';
 import { Ward } from '../address/getWards';
 
 export type User = {
-  _id: string;
   id: number;
   name: string;
-  display_name: string;
   email: string;
   phone: string;
   account_type: string;
-  customer_rank: number;
-  roles: string[];
-  create_date: Date;
-  update_date: Date;
   contact_address: null | {
     city: City;
     district: District;
@@ -36,17 +30,11 @@ export type GetUserData = {
 export const GET_USER = gql`
   query {
     getUser {
-      _id
       id
       name
-      display_name
       email
       phone
       account_type
-      customer_rank
-      roles
-      create_date
-      update_date
       contact_address {
         city {
           id
