@@ -1,10 +1,11 @@
 import clsx from 'clsx';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 interface Props {
   label: string;
   children: React.ReactNode;
   initialShow?: boolean;
+  show?: boolean;
 }
 
 const Dropdown = (props: Props) => {
@@ -15,6 +16,12 @@ const Dropdown = (props: Props) => {
   function toggleShow() {
     setShow((show) => !show);
   }
+
+  useEffect(() => {
+    if (props.show === undefined) return;
+
+    setShow(props.show);
+  }, [props.show]);
 
   return (
     <>

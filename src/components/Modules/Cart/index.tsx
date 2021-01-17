@@ -10,6 +10,8 @@ import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 
 import CartItem from './CartItem';
 
+const minPrice = 1000000;
+
 export default function CartPage() {
   const { data: cart } = useCart();
 
@@ -35,6 +37,8 @@ export default function CartPage() {
       }
     });
   };
+
+  const checkoutDisabled = cart?.totalNetPrice < 500000;
 
   return (
     <>
@@ -86,10 +90,16 @@ export default function CartPage() {
                     <div className="col-12">
                       <div className="cart__info-item">
                         <button
+                          disabled={checkoutDisabled}
                           onClick={handleCheckoutClick}
                           className="btn btn-secondary btn-block text-small">
                           {t('cart:continue_payment')}
                         </button>
+
+                        <div hidden={!checkoutDisabled} className="text-center mt-1">
+                          {t('cart:minimum_price') + ' '}
+                          <PriceText price={minPrice} />
+                        </div>
                       </div>
                     </div>
                   </div>

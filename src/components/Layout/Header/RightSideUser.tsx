@@ -3,9 +3,8 @@ import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import NotiItem from 'src/components/Modules/Noti/NotiItem';
-import { useNotify } from 'src/contexts/useNotifyProvider';
+import { useNotify } from 'src/contexts/Notify';
 import { useUser } from 'src/contexts/User';
-import useNoti from 'src/hooks/useNoti';
 
 type NotiItem = {
   time: string;

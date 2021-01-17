@@ -1,11 +1,10 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import clsx from 'clsx';
-import { Trans, useTranslation } from 'i18n';
+import { useTranslation } from 'i18n';
 import moment from 'moment';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
-import Loading from 'src/components/Layout/Loading';
 import { SEEN_NOTI } from 'src/graphql/notification/seenNoti.mutation';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import useNoti from 'src/hooks/useNoti';

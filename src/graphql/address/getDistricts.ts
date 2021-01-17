@@ -18,7 +18,6 @@ export const GET_DISTRICTS = gql`
     getDistricts(city_id: $city_id) {
       id
       name
-      display_name
     }
   }
 `;

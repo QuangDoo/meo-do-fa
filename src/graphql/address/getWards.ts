@@ -18,7 +18,6 @@ export const GET_WARDS = gql`
     getWards(district_id: $district_id) {
       id
       name
-      display_name
     }
   }
 `;

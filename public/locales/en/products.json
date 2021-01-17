@@ -1,9 +1,9 @@
 {
-    "title": "All products",
-    "show": "Show",
-    "on_of": "on of ",
-    "products": "products",
-    "no_products_matching_key": "No products matching the keyword: ",
-    "no_products": "No products",
-    "key": "search results for: "
+  "key": "search results for: ",
+  "no_products": "No products",
+  "no_products_matching_key": "No products matching the keyword: ",
+  "on_of": "on of ",
+  "products": "products",
+  "show": "Show",
+  "title": "All products"
 }

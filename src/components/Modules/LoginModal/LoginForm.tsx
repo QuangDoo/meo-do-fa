@@ -29,8 +29,6 @@ const LoginForm = () => {
 
   const router = useRouter();
 
-  const { refetch: refetchUser } = useUser();
-
   const { register, handleSubmit } = useForm<Inputs>();
 
   const [login, { loading: loggingIn }] = useMutation<LoginData, LoginVars>(LOGIN_USER, {
@@ -38,7 +36,6 @@ const LoginForm = () => {
       cookies.set('token', data.login.token);
 
       closeModal();
-      refetchUser();
 
       if (router.pathname === '/products' || router.pathname === '/products/[productId]') {
         router.reload();
