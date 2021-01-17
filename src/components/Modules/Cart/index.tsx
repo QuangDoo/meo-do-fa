@@ -10,7 +10,7 @@ import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 
 import CartItem from './CartItem';
 
-const minPrice = 500000;
+const minPrice = 1000000;
 
 export default function CartPage() {
   const { data: cart } = useCart();

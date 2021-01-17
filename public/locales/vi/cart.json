@@ -19,5 +19,6 @@
   "update_note": "Cập nhật ghi chú",
   "update_success": "Cập nhật giỏ hàng thành công!",
   "yes": "Có",
-  "minimum_price": "Đơn hàng tối thiểu"
+  "minimum_price": "Đơn hàng tối thiểu",
+  "file_is_not_image": "Chỉ chấp nhận file ảnh."
 }

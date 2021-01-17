@@ -17,6 +17,7 @@ type Props = {
   disabled?: boolean;
   guide?: string;
   accept?: string;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 const InputWithLabel = (props: Props, ref) => {
@@ -63,6 +64,7 @@ const InputWithLabel = (props: Props, ref) => {
             type="file"
             className="custom-file-input"
             accept={props.accept}
+            onChange={props.onChange}
           />
           <div className="custom-file-label">{props.placeholder}</div>
         </div>
