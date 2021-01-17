@@ -30,7 +30,6 @@ export type CheckoutFormInputs = {
   deliveryCity: string;
   deliveryDistrict: string;
   deliveryWard: string;
-  deliverySaveInfo: boolean;
   deliveryPartnerId: string;
 
   deliveryMethodId: string;
@@ -45,7 +44,6 @@ export type CheckoutFormInputs = {
   invoiceDistrict: string;
   invoiceWard: string;
   invoiceTaxCode: string;
-  invoiceSaveInfo: boolean;
 
   customerNotes: string;
   agreement: boolean;
@@ -59,7 +57,6 @@ const checkoutFormDefaultValues: CheckoutFormInputs = {
   deliveryCity: '',
   deliveryDistrict: '',
   deliveryWard: '',
-  deliverySaveInfo: true,
   deliveryPartnerId: '',
 
   deliveryMethodId: '0',
@@ -74,7 +71,6 @@ const checkoutFormDefaultValues: CheckoutFormInputs = {
   invoiceDistrict: '',
   invoiceWard: '',
   invoiceTaxCode: '',
-  invoiceSaveInfo: true,
 
   customerNotes: '',
   agreement: false

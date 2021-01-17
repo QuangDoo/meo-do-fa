@@ -1,4 +1,5 @@
 {
+  "use_previous_address": "Muốn dùng lại một địa chỉ cũ?",
   "not_this_address": "Không phải địa chỉ bạn muốn?",
   "address_instructions": "(Nhập địa chỉ, tên đường. Rồi chọn tỉnh/thành phố, phường/xã, quận/huyện)",
   "address_label": "Địa chỉ giao hàng",

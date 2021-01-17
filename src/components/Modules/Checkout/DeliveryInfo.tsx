@@ -48,43 +48,50 @@ const DeliveryInfo = () => {
   return (
     <InputCard title={t('checkout:deliveryInfo_title')} hasRequired={!chosenAddress}>
       {chosenAddress ? (
-        <Fragment>
-          <h6 className="delivery-address-content">
-            <div className="font-weight-bold">{t('chooseDeliveryAddress:name')}:</div>
-            <div className="font-weight-bold">{chosenAddress.name}</div>
+        <h6 className="delivery-address-content">
+          <div className="font-weight-bold">{t('chooseDeliveryAddress:name')}:</div>
+          <div className="font-weight-bold">{chosenAddress.name}</div>
 
-            <div>{t('chooseDeliveryAddress:address')}:</div>
-            <div>{`${chosenAddress.street}, ${chosenAddress.ward}, ${chosenAddress.district}, ${chosenAddress.city}`}</div>
+          <div>{t('chooseDeliveryAddress:address')}:</div>
+          <div>{`${chosenAddress.street}, ${chosenAddress.ward}, ${chosenAddress.district}, ${chosenAddress.city}`}</div>
 
-            <div>{t('chooseDeliveryAddress:phone')}:</div>
-            <div>{chosenAddress.phone}</div>
+          <div>{t('chooseDeliveryAddress:phone')}:</div>
+          <div>{chosenAddress.phone}</div>
 
-            <div>{t('chooseDeliveryAddress:email')}:</div>
-            <div>{chosenAddress.email || t('chooseDeliveryAddress:email_not_provided')}</div>
-          </h6>
+          <div>{t('chooseDeliveryAddress:email')}:</div>
+          <div>{chosenAddress.email || t('chooseDeliveryAddress:email_not_provided')}</div>
+        </h6>
+      ) : (
+        <CreateDeliveryAddressForm />
+      )}
 
-          <Box alignItems="baseline" display="flex" mt={2} whiteSpace="break-spaces" fontSize={14}>
+      <Box alignItems="baseline" display="flex" mt={2} whiteSpace="break-spaces" fontSize={14}>
+        {chosenAddress ? (
+          <Fragment>
             {t('checkout:not_this_address') + ' '}
-            <button type="button" className="btn-link" onClick={() => setOpen(true)}>
-              {t('checkout:choose_another_address')}
-            </button>
-            {' ' + t('checkout:or') + ' '}
+
+            {data?.getAddressInfoUser.deliveries.length > 1 && (
+              <Fragment>
+                <button type="button" className="btn-link" onClick={() => setOpen(true)}>
+                  {t('checkout:choose_another_address')}
+                </button>
+                {' ' + t('checkout:or') + ' '}
+              </Fragment>
+            )}
+
             <button type="button" className="btn-link" onClick={() => setChosenAddress(undefined)}>
               {t('checkout:create_address')}
             </button>
-          </Box>
-        </Fragment>
-      ) : (
-        <Fragment>
-          <Box alignItems="baseline" display="flex" mb={2}>
-            <Button variant="contained" color="primary" onClick={() => setOpen(true)}>
+          </Fragment>
+        ) : data?.getAddressInfoUser.deliveries.length > 0 ? (
+          <Fragment>
+            {t('checkout:use_previous_address') + ' '}
+            <button type="button" className="btn-link" onClick={() => setOpen(true)}>
               {t('checkout:choose_address')}
-            </Button>
-          </Box>
-
-          <CreateDeliveryAddressForm />
-        </Fragment>
-      )}
+            </button>
+          </Fragment>
+        ) : null}
+      </Box>
 
       <ChooseDeliveryAddressDialog
         open={open}
