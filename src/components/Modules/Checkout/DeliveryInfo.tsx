@@ -64,6 +64,7 @@ const DeliveryInfo = () => {
           </h6>
 
           <Box alignItems="baseline" display="flex" mt={2} whiteSpace="break-spaces" fontSize={14}>
+            {t('checkout:not_this_address') + ' '}
             <button type="button" className="btn-link" onClick={() => setOpen(true)}>
               {t('checkout:choose_another_address')}
             </button>
