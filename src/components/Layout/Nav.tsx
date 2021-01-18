@@ -21,15 +21,13 @@ const Nav = () => {
 
   const { data: cart } = useCart();
 
-  const router = useRouter();
-
   const totalQty = cart?.totalQty;
 
   const { t } = useTranslation(['navbar', 'errors', 'common']);
 
   const logOut = () => {
     cookies.remove('token');
-    router.push('/');
+    window.location.href = '/';
   };
 
   const [anchorEl, setAnchorEl] = useState(null);
