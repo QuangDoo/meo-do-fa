@@ -45,7 +45,20 @@ function QuantityInput(props: Props) {
         });
       },
       onError: (err) => {
-        toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
+        const errorCode = err.graphQLErrors?.[0]?.extensions?.code;
+
+        if (errorCode === 121) {
+          toast.error(
+            t(`errors:code_${errorCode}`, {
+              name: err.graphQLErrors[0].message.replace(
+                'Sales price changed. Please remove product on cart. Product: ',
+                ''
+              )
+            })
+          );
+        } else {
+          toast.error(t(`errors:code_${errorCode}`));
+        }
       }
     }
   );
