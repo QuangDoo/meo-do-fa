@@ -15,13 +15,6 @@ type Props = {
 };
 
 const RadioInput = (props: Props, ref) => {
-  const [show, setShow] = useState(false);
-
-  const handleChange = (e) => {
-    setShow(!show);
-    props.onChange?.(e);
-  };
-
   return (
     <>
       {props.options.map((option) => {
@@ -37,13 +30,14 @@ const RadioInput = (props: Props, ref) => {
               id={id}
               ref={ref}
               disabled={option.disabled}
-              onChange={handleChange}
+              onChange={props.onChange}
             />
 
             <label className="form__label custom-control-label" htmlFor={id}>
               {option.label}
             </label>
-            {show && option.children}
+
+            {option.children}
           </div>
         );
       })}
