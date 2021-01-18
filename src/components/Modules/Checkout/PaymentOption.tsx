@@ -1,5 +1,4 @@
 import { useQuery } from '@apollo/client';
-import clsx from 'clsx';
 import { Trans, useTranslation } from 'i18n';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -16,6 +15,7 @@ import {
 } from 'src/graphql/paymentAndDelivery/paymentAndDelivery,query';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 
+import { CheckoutFormInputs } from '.';
 import DescriptionBox from './DescriptionBox';
 import InputCard from './InputCard';
 
@@ -24,10 +24,12 @@ type Props = {
   orderNo: string;
 };
 
-const PaymentOption = (props: Props): JSX.Element => {
-  const { register } = useFormContext();
+const PaymentOption = (props: Props) => {
+  const { register, watch } = useFormContext<CheckoutFormInputs>();
 
   const { t } = useTranslation('checkout');
+
+  const paymentMethodId = watch('paymentMethodId');
 
   const router = useRouter();
 
@@ -51,6 +53,7 @@ const PaymentOption = (props: Props): JSX.Element => {
   >(APPLY_PAYMENT, {
     onCompleted: (data) => {
       props.setCounselData(data.applyPayment);
+      console.log('applied payment option');
     },
     onError: (err) => {
       const errorCode = err.graphQLErrors[0]?.extensions?.code;
@@ -98,7 +101,7 @@ const PaymentOption = (props: Props): JSX.Element => {
               />
             ),
             value: bankTransfer.id,
-            children: (
+            children: paymentMethodId === '2' && (
               <DescriptionBox>
                 <div className="bank-info">
                   {['account_name', 'account_no', 'bank_name', 'note'].map((key) => (

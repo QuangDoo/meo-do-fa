@@ -1,4 +1,5 @@
 {
+  "price_total_dc_payment": "Bank transfer discount",
   "use_previous_address": "Want to use a previous address?",
   "not_this_address": "Not the address you want?",
   "address_instructions": "(Provide an address, street. Then choose a city, a district and a ward)",

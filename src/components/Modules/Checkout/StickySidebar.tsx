@@ -2,7 +2,7 @@ import slugify from '@sindresorhus/slugify';
 import clsx from 'clsx';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
-import React, { Fragment } from 'react';
+import React from 'react';
 import Button from 'src/components/Form/Button';
 import PriceText from 'src/components/Form/PriceText';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
@@ -101,6 +101,12 @@ const StickySidebar = (props: Props): JSX.Element => {
             <PriceText price={counselData.totalDcAmt} />
           </span>
         </SidebarItem>
+
+        {counselData?.totalDcPayment > 0 && (
+          <SidebarItem label={t('checkout:price_total_dc_payment')}>
+            -<PriceText price={counselData.totalDcPayment} />
+          </SidebarItem>
+        )}
 
         <SidebarItem label={t('checkout:price_tax')}>
           <span>
