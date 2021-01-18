@@ -15,6 +15,12 @@ const bannerImages = [
   // '/assets/images/drugstore3.jpg'
 ];
 
+const bannerMobiles = [
+  '/assets/images/banner_mobile.jpg',
+  '/assets/images/banner_mobile.jpg',
+  '/assets/images/banner_mobile.jpg'
+];
+
 const Home = ({ dealsOfTheDayData, bestSellingData, promotionProductsData, newProductsData }) => {
   const { t } = useTranslation(['carousels']);
 
@@ -44,10 +50,25 @@ const Home = ({ dealsOfTheDayData, bestSellingData, promotionProductsData, newPr
         autoplay
         dots
         dotsClass="slick__dots bullet slick-dots"
-        className="align-items-center mb-0 slick-dotted">
+        className="align-items-center mb-0 slick-dotted d-none d-sm-block">
         {bannerImages.map((img) => (
           <div className="banner__slide" key={img}>
             <div className="banner__img">
+              <Image src={img} layout="fill" objectFit="cover" />
+            </div>
+          </div>
+        ))}
+      </SlickSlider>
+
+      <SlickSlider
+        arrows={false}
+        autoplay
+        dots
+        dotsClass="slick__dots bullet slick-dots"
+        className="align-items-center mb-0 slick-dotted d-block d-sm-none">
+        {bannerMobiles.map((img) => (
+          <div className="banner__slide" key={img}>
+            <div className="banner__img banner__img--mobile">
               <Image src={img} layout="fill" objectFit="cover" />
             </div>
           </div>

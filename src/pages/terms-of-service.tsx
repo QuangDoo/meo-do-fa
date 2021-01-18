@@ -20,7 +20,7 @@ function TermsOfService() {
           Medofa hoặc sàn thương mại điên tử Medofa.com là Website trực tuyến kinh doanh các sản
           phẩm chăm sóc sức khỏe con người.Medofa được xây dựng nhằm đem lại tiện ích cho khách hàng
           mua hàng trực tuyến tin cậy, tiết kiệm thời gian và qua đó khách hàng có thể tìm hiểu
-          thông tin trực tuyến về sản phẩm hàng hóa, giá cả mua sắm .Công ty TNHH Dược phẩm Dayton
+          thông tin trực tuyến về sản phẩm hàng hóa, giá cả mua sắm. Công ty TNHH Dược phẩm Dayton
           làm pháp nhân, có giấy phép phân phối dược phẩm để giao kết thỏa thuận dịch vụ thương mại
           điện tử với Medofa (“Thỏa Thuận”) cũng như thực hiện các nghĩa vụ tương ứng với các Thỏa
           Thuận đó. Bằng cách đăng ký và sử dụng dịch vụ của Medofa, và kế từ ngày Công ty TNHH Dược
