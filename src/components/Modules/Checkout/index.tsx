@@ -30,7 +30,6 @@ export type CheckoutFormInputs = {
   deliveryCity: string;
   deliveryDistrict: string;
   deliveryWard: string;
-  deliverySaveInfo: boolean;
   deliveryPartnerId: string;
 
   deliveryMethodId: string;
@@ -45,7 +44,6 @@ export type CheckoutFormInputs = {
   invoiceDistrict: string;
   invoiceWard: string;
   invoiceTaxCode: string;
-  invoiceSaveInfo: boolean;
 
   customerNotes: string;
   agreement: boolean;
@@ -59,7 +57,6 @@ const checkoutFormDefaultValues: CheckoutFormInputs = {
   deliveryCity: '',
   deliveryDistrict: '',
   deliveryWard: '',
-  deliverySaveInfo: true,
   deliveryPartnerId: '',
 
   deliveryMethodId: '0',
@@ -74,7 +71,6 @@ const checkoutFormDefaultValues: CheckoutFormInputs = {
   invoiceDistrict: '',
   invoiceWard: '',
   invoiceTaxCode: '',
-  invoiceSaveInfo: true,
 
   customerNotes: '',
   agreement: false
@@ -129,25 +125,16 @@ const CheckoutPage = () => {
     CreateOrderVars
   >(CREATE_ORDER, {
     onCompleted: (data) => {
-      refetchCart().then(() => {
-        swal({
-          title: t('checkout:order_success_message', {
-            orderNo: data.createOrder.orderNo
-          }),
-          icon: 'success'
-        }).then(() => {
-          router.push('/');
-        });
-      });
-
-      swal({
-        title: t('checkout:order_success_message', {
-          orderNo: data.createOrder.orderNo
-        }),
-        icon: 'success'
-      }).then(() => {
-        router.push('/');
-      });
+      refetchCart()
+        .then(() =>
+          swal({
+            title: t('checkout:order_success_message', {
+              orderNo: data.createOrder.orderNo
+            }),
+            icon: 'success'
+          })
+        )
+        .then(() => router.push('/'));
     },
     onError: (err) => {
       const errorCode = err.graphQLErrors[0]?.extensions?.code;
@@ -231,10 +218,6 @@ const CheckoutPage = () => {
 
         <div className="checkout container py-5">
           <div className="row">
-            <div className="col-12 mb-3">
-              <h1 className="h3">{t('checkout:title')}</h1>
-            </div>
-
             <div className="col-lg-8">
               <div className="mb-4">
                 <DeliveryInfo />
@@ -271,6 +254,7 @@ const CheckoutPage = () => {
 
             <div className="col-lg-4 mb-3">
               <PromoCodes counselData={counselData} setCounselData={setCounselData} />
+
               <StickySidebar counselData={counselData} />
             </div>
           </div>

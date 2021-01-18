@@ -1,7 +1,6 @@
 import { Box, Button, Typography } from '@material-ui/core';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { useTranslation } from 'i18n';
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import {
@@ -16,12 +15,8 @@ import ChooseDeliveryAddressDialog from './ChooseDeliveryAddressDialog';
 import CreateDeliveryAddressForm from './CreateDeliveryAddressForm';
 import InputCard from './InputCard';
 
-type State = 'chosen' | 'create' | undefined;
-
 const DeliveryInfo = () => {
   const { t } = useTranslation(['checkout']);
-
-  const [state, setState] = useState<State>(undefined);
 
   const [open, setOpen] = useState(false);
 
@@ -41,78 +36,64 @@ const DeliveryInfo = () => {
       const latest = deliveryAddresses[deliveryAddresses.length - 1];
       setValue('deliveryPartnerId', latest.id);
       setChosenAddress(latest);
-      setState('chosen');
     }
   });
 
   const handleAddressChoose = (address: Address) => {
     setOpen(false);
-    setState('chosen');
     setChosenAddress(address);
     setValue('deliveryPartnerId', address.id);
   };
 
-  const reset = () => {
-    setState(undefined);
-    setValue('deliveryPartnerId', '');
-  };
-
   return (
-    <InputCard title={t('checkout:deliveryInfo_title')} hasRequired={state === 'create'}>
-      {state === undefined && (
-        <Box alignItems="baseline" display="flex">
-          <Button variant="contained" color="primary" onClick={() => setOpen(true)}>
-            {t('checkout:choose_address')}
-          </Button>
-          <div className="text-uppercase mx-2">{t('checkout:or')}</div>
-          <Button variant="contained" color="primary" onClick={() => setState('create')}>
-            {t('checkout:create_address')}
-          </Button>
-        </Box>
+    <InputCard title={t('checkout:deliveryInfo_title')} hasRequired={!chosenAddress}>
+      {chosenAddress ? (
+        <h6 className="delivery-address-content">
+          <div className="font-weight-bold">{t('chooseDeliveryAddress:name')}:</div>
+          <div className="font-weight-bold">{chosenAddress.name}</div>
+
+          <div>{t('chooseDeliveryAddress:address')}:</div>
+          <div>{`${chosenAddress.street}, ${chosenAddress.ward}, ${chosenAddress.district}, ${chosenAddress.city}`}</div>
+
+          <div>{t('chooseDeliveryAddress:phone')}:</div>
+          <div>{chosenAddress.phone}</div>
+
+          <div>{t('chooseDeliveryAddress:email')}:</div>
+          <div>{chosenAddress.email || t('chooseDeliveryAddress:email_not_provided')}</div>
+        </h6>
+      ) : (
+        <CreateDeliveryAddressForm />
       )}
 
-      {state === 'create' && (
-        <React.Fragment>
-          <Box alignItems="baseline" display="flex" mb={2}>
-            <Button variant="contained" color="primary" onClick={() => setOpen(true)}>
-              {t('checkout:choose_address')}
-            </Button>
-          </Box>
+      <Box alignItems="baseline" display="flex" mt={2} whiteSpace="break-spaces" fontSize={14}>
+        {chosenAddress ? (
+          <Fragment>
+            {t('checkout:not_this_address') + ' '}
 
-          <CreateDeliveryAddressForm />
-        </React.Fragment>
-      )}
+            {data?.getAddressInfoUser.deliveries.length > 1 && (
+              <Fragment>
+                <button type="button" className="btn-link" onClick={() => setOpen(true)}>
+                  {t('checkout:choose_another_address')}
+                </button>
+                {' ' + t('checkout:or') + ' '}
+              </Fragment>
+            )}
 
-      {state === 'chosen' && (
-        <React.Fragment>
-          <Box alignItems="baseline" display="flex" mb={2}>
-            <Button variant="contained" color="primary" onClick={() => setOpen(true)}>
-              {t('checkout:choose_another_address')}
-            </Button>
-            <div className="text-uppercase mx-2">{t('checkout:or')}</div>
-            <Button variant="contained" color="primary" onClick={() => setState('create')}>
+            <button type="button" className="btn-link" onClick={() => setChosenAddress(undefined)}>
               {t('checkout:create_address')}
-            </Button>
-          </Box>
-
-          <Typography variant="h5" component="h2">
-            {chosenAddress.name}
-          </Typography>
-
-          <Box pt={2}>
-            <h6 className="delivery-address-content">
-              <div>{t('chooseDeliveryAddress:address')}:</div>
-              <div>{`${chosenAddress.street}, ${chosenAddress.ward}, ${chosenAddress.district}, ${chosenAddress.city}`}</div>
-
-              <div>{t('chooseDeliveryAddress:phone')}:</div>
-              <div>{chosenAddress.phone}</div>
-
-              <div>{t('chooseDeliveryAddress:email')}:</div>
-              <div>{chosenAddress.email || t('chooseDeliveryAddress:email_not_provided')}</div>
-            </h6>
-          </Box>
-        </React.Fragment>
-      )}
+            </button>
+          </Fragment>
+        ) : (
+          data?.getAddressInfoUser.deliveries.length > 0 && (
+            <Fragment>
+              {t('checkout:use_previous_address') + ' '}
+              <button type="button" className="btn-link" onClick={() => setOpen(true)}>
+                {t('checkout:choose_address')}
+              </button>
+            </Fragment>
+          )
+        )}
+      </Box>
 
       <ChooseDeliveryAddressDialog
         open={open}

@@ -38,7 +38,7 @@ export default function CartPage() {
     });
   };
 
-  const checkoutDisabled = cart?.totalNetPrice < 500000;
+  const checkoutDisabled = cart?.totalNetPrice < minPrice;
 
   return (
     <>
