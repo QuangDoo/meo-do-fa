@@ -261,7 +261,7 @@ const CheckoutPage = () => {
           </div>
         </div>
 
-        <LoadingBackdrop open={creatingOrder} />
+        <LoadingBackdrop open={creatingOrder || loadingCounsel} />
       </form>
     </FormProvider>
   );

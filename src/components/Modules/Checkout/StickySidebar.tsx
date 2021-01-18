@@ -5,7 +5,6 @@ import Link from 'next/link';
 import React from 'react';
 import Button from 'src/components/Form/Button';
 import PriceText from 'src/components/Form/PriceText';
-import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { OutputCounsel } from 'src/graphql/order/getCounsel';
 
 type SidebarItemProps = {
@@ -37,7 +36,7 @@ const StickySidebar = (props: Props): JSX.Element => {
 
   const { t } = useTranslation(['checkout', 'common', 'errors']);
 
-  if (!counselData) return <LoadingBackdrop open />;
+  if (!counselData) return null;
 
   return (
     <div className="checkout__sticky">

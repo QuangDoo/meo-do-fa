@@ -53,7 +53,6 @@ const PaymentOption = (props: Props) => {
   >(APPLY_PAYMENT, {
     onCompleted: (data) => {
       props.setCounselData(data.applyPayment);
-      console.log('applied payment option');
     },
     onError: (err) => {
       const errorCode = err.graphQLErrors[0]?.extensions?.code;
