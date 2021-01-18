@@ -58,7 +58,7 @@ export const ProductsCarousel = ({ products }: ProductsCarouselProps) => {
         {
           breakpoint: 460,
           settings: {
-            slidesToShow: 1,
+            slidesToShow: Math.min(2, products.length),
             slidesToScroll: 1
           }
         }
