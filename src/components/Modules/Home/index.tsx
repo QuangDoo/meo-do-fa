@@ -44,8 +44,6 @@ const Home = ({ dealsOfTheDayData, bestSellingData, promotionProductsData, newPr
     }
   ];
 
-  console.log('bestSellingData', bestSellingData?.getProductByConditions.Products);
-
   const promotionProducts = promotionProductsData?.getPrmotionProducts.products || [];
 
   return (

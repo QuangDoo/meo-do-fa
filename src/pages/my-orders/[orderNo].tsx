@@ -12,15 +12,14 @@ import {
   TableFooter,
   TableHead,
   TableRow,
-  Typography,
-  useMediaQuery
+  Typography
 } from '@material-ui/core';
 import { Receipt } from '@material-ui/icons';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { toast } from 'react-toastify';
 import PriceText from 'src/components/Form/PriceText';
 import Head from 'src/components/Layout/Head';
@@ -64,9 +63,11 @@ const TextWithLabel = (props) => {
   );
 };
 
-OrderDetails.getinitialProps = async () => ({
-  namespacesRequired: [...mainLayoutNamespacesRequired, 'myOrders']
-});
+OrderDetails.getInitialProps = async () => {
+  return {
+    namespacesRequired: [...mainLayoutNamespacesRequired, 'myOrders']
+  };
+};
 
 const flagSteps = [10, 20, 30, 40, 80];
 
@@ -77,30 +78,22 @@ function OrderDetails() {
 
   const [open, setOpen] = useState(false);
 
-  const { orderNo } = router.query;
-
   const [activeStep, setActiveStep] = useState(-1);
 
   const { data: orderDetail, refetch, loading: loadingOrderDetail } = useQueryAuth<
     GetOrderDetailData,
     GetOrderDetailVars
   >(GET_ORDER, {
-    variables: { orderNo: orderNo as string }
-  });
-
-  useEffect(() => {
-    if (!orderDetail) return;
-
-    setActiveStep(flagSteps.indexOf(orderDetail?.getOrderDetail?.flag));
-  }, [orderDetail]);
-
-  const onCancelClick = () => {
-    if (activeStep >= 3) {
-      toast.error('cant cancel order');
-      return;
+    fetchPolicy: 'network-only',
+    notifyOnNetworkStatusChange: true,
+    variables: { orderNo: router.query.orderNo as string },
+    onCompleted: (data) => {
+      setActiveStep(flagSteps.indexOf(data.getOrderDetail.flag));
+    },
+    onError: (err) => {
+      toast.error(t(`errors:code_${err.graphQLErrors?.[0].extensions?.code}`));
     }
-    setOpen(true);
-  };
+  });
 
   const flag = orderDetail?.getOrderDetail?.flag;
   const name = orderDetail?.getOrderDetail?.name;
@@ -147,27 +140,29 @@ function OrderDetails() {
                         </strong>
                       </Typography>
                     )}
+
                     {flag &&
-                      flag !== 25 &&
                       (flag === 10 ? (
                         <Button
                           size="small"
                           startIcon={<DeleteForeverIcon />}
                           variant="contained"
-                          onClick={onCancelClick}
+                          onClick={() => setOpen(true)}
                           color="secondary">
                           {t('myOrders:cancel_the_order')}
                         </Button>
                       ) : (
-                        <a href="tel:1900232436" className="text-right">
-                          <Button
-                            size="small"
-                            startIcon={<Receipt />}
-                            variant="contained"
-                            color="primary">
-                            {t('myOrders:help')}
-                          </Button>
-                        </a>
+                        flag !== 25 && (
+                          <a href="tel:1900232436" className="text-right">
+                            <Button
+                              size="small"
+                              startIcon={<Receipt />}
+                              variant="contained"
+                              color="primary">
+                              {t('myOrders:help')}
+                            </Button>
+                          </a>
+                        )
                       ))}
                     <ConfirmCancelOrder
                       open={open}
