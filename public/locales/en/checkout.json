@@ -1,4 +1,7 @@
 {
+  "price_total_dc_payment": "Bank transfer discount",
+  "use_previous_address": "Want to use a previous address?",
+  "not_this_address": "Not the address you want?",
   "address_instructions": "(Provide an address, street. Then choose a city, a district and a ward)",
   "address_label": "Delivery address",
   "address_required": "Please provide a delivery address.",
@@ -55,7 +58,7 @@
   "notes_description": "If you can't find your desired product, please fill out a request below. We will contact our suppliers and respond to you as soon as possible.",
   "notes_placeholder": "Customer notes",
   "name_label_invoice": "Company name",
-  "address_label_invoice":"Company address",
+  "address_label_invoice": "Company address",
   "notes_title": "Notes",
   "or": "or",
   "order_fail_message": "Order failed",

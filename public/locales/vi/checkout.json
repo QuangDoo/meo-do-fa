@@ -1,4 +1,7 @@
 {
+  "price_total_dc_payment": "Giảm giá chuyển khoản",
+  "use_previous_address": "Muốn dùng lại một địa chỉ cũ?",
+  "not_this_address": "Không phải địa chỉ bạn muốn?",
   "address_instructions": "(Nhập địa chỉ, tên đường. Rồi chọn tỉnh/thành phố, phường/xã, quận/huyện)",
   "address_label": "Địa chỉ giao hàng",
   "address_required": "Xin nhập địa chỉ giao hàng.",
@@ -52,7 +55,7 @@
   "notes_placeholder": "Ghi chú của khách hàng",
   "notes_title": "Ghi chú khác",
   "name_label_invoice": "Tên công ty",
-  "address_label_invoice":"Địa chỉ công ty",
+  "address_label_invoice": "Địa chỉ công ty",
   "or": "hoặc",
   "order_fail_message": "Đặt hàng thất bại",
   "order_success_message": "Đơn hàng {{orderNo}} đã được đặt thành công!",

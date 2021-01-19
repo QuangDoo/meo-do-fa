@@ -8,7 +8,7 @@ import { useCart } from 'src/contexts/Cart';
 import { useUser } from 'src/contexts/User';
 import { CREATE_ORDER, CreateOrderData, CreateOrderVars } from 'src/graphql/order/createOrder';
 import { GET_COUNSEL, GetCounselData, OutputCounsel } from 'src/graphql/order/getCounsel';
-import { useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
+import { useLazyQueryAuth, useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import swal from 'sweetalert';
 
 import Agreement from './Agreement';
@@ -30,7 +30,6 @@ export type CheckoutFormInputs = {
   deliveryCity: string;
   deliveryDistrict: string;
   deliveryWard: string;
-  deliverySaveInfo: boolean;
   deliveryPartnerId: string;
 
   deliveryMethodId: string;
@@ -45,7 +44,6 @@ export type CheckoutFormInputs = {
   invoiceDistrict: string;
   invoiceWard: string;
   invoiceTaxCode: string;
-  invoiceSaveInfo: boolean;
 
   customerNotes: string;
   agreement: boolean;
@@ -59,7 +57,6 @@ const checkoutFormDefaultValues: CheckoutFormInputs = {
   deliveryCity: '',
   deliveryDistrict: '',
   deliveryWard: '',
-  deliverySaveInfo: true,
   deliveryPartnerId: '',
 
   deliveryMethodId: '0',
@@ -74,7 +71,6 @@ const checkoutFormDefaultValues: CheckoutFormInputs = {
   invoiceDistrict: '',
   invoiceWard: '',
   invoiceTaxCode: '',
-  invoiceSaveInfo: true,
 
   customerNotes: '',
   agreement: false
@@ -85,40 +81,43 @@ const CheckoutPage = () => {
 
   const { data: user } = useUser();
 
-  const [counselData, setCounselData] = useState<OutputCounsel>();
-
-  // Counsel
-  const { refetch: refetchCounsel, loading: loadingCounsel } = useQueryAuth<
-    GetCounselData,
-    undefined
-  >(GET_COUNSEL, {
-    onCompleted: (data) => {
-      setCounselData(data.getCounsel);
-    },
-    onError: (err) => {
-      const errorCode = err.graphQLErrors?.[0]?.extensions?.code;
-      toast.error(t(`errors:code_${errorCode}`));
-
-      if (errorCode === 114) {
-        router.push('/cart');
-      }
-    },
-    fetchPolicy: 'network-only',
-    notifyOnNetworkStatusChange: true
-  });
-
-  useEffect(() => {
-    refetchCounsel();
-  }, []);
-
-  const orderNo = counselData?.counsel?.orderNo;
-
   // Form handler with default values
   const methods = useForm<CheckoutFormInputs>({
     defaultValues: checkoutFormDefaultValues
   });
 
-  const { register, handleSubmit } = methods;
+  const { register, handleSubmit, setValue } = methods;
+
+  const [counselData, setCounselData] = useState<OutputCounsel>();
+
+  // Counsel
+  const [getCounsel, { loading: loadingCounsel }] = useLazyQueryAuth<GetCounselData, undefined>(
+    GET_COUNSEL,
+    {
+      onCompleted: (data) => {
+        setCounselData(data.getCounsel);
+        if (data.getCounsel.totalDcPayment > 0) {
+          setValue('paymentMethodId', '2');
+        }
+      },
+      onError: (err) => {
+        const errorCode = err.graphQLErrors?.[0]?.extensions?.code;
+        toast.error(t(`errors:code_${errorCode}`));
+
+        if (errorCode === 114) {
+          router.push('/cart');
+        }
+      },
+      fetchPolicy: 'network-only',
+      notifyOnNetworkStatusChange: true
+    }
+  );
+
+  useEffect(() => {
+    getCounsel();
+  }, []);
+
+  const orderNo = counselData?.counsel?.orderNo;
 
   const router = useRouter();
 
@@ -129,25 +128,16 @@ const CheckoutPage = () => {
     CreateOrderVars
   >(CREATE_ORDER, {
     onCompleted: (data) => {
-      refetchCart().then(() => {
-        swal({
-          title: t('checkout:order_success_message', {
-            orderNo: data.createOrder.orderNo
-          }),
-          icon: 'success'
-        }).then(() => {
-          router.push('/');
-        });
-      });
-
-      swal({
-        title: t('checkout:order_success_message', {
-          orderNo: data.createOrder.orderNo
-        }),
-        icon: 'success'
-      }).then(() => {
-        router.push('/');
-      });
+      refetchCart()
+        .then(() =>
+          swal({
+            title: t('checkout:order_success_message', {
+              orderNo: data.createOrder.orderNo
+            }),
+            icon: 'success'
+          })
+        )
+        .then(() => router.push('/'));
     },
     onError: (err) => {
       const errorCode = err.graphQLErrors[0]?.extensions?.code;
@@ -160,8 +150,6 @@ const CheckoutPage = () => {
   });
 
   const onSubmit: SubmitHandler<CheckoutFormInputs> = (data) => {
-    console.log('create order submit data:', data);
-
     const [deliveryWard, deliveryZipCode] = data.deliveryWard?.split('__') || [];
     const [invoiceWard, invoiceZipCode] = data.invoiceWard?.split('__') || [];
 
@@ -231,10 +219,6 @@ const CheckoutPage = () => {
 
         <div className="checkout container py-5">
           <div className="row">
-            <div className="col-12 mb-3">
-              <h1 className="h3">{t('checkout:title')}</h1>
-            </div>
-
             <div className="col-lg-8">
               <div className="mb-4">
                 <DeliveryInfo />
@@ -271,12 +255,13 @@ const CheckoutPage = () => {
 
             <div className="col-lg-4 mb-3">
               <PromoCodes counselData={counselData} setCounselData={setCounselData} />
+
               <StickySidebar counselData={counselData} />
             </div>
           </div>
         </div>
 
-        <LoadingBackdrop open={creatingOrder} />
+        <LoadingBackdrop open={creatingOrder || loadingCounsel} />
       </form>
     </FormProvider>
   );

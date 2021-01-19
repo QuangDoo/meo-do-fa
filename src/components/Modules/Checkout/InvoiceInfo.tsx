@@ -154,14 +154,6 @@ const InvoiceInfo = () => {
                 ))}
               </SelectWithLabel>
             </div>
-
-            <Checkbox
-              ref={register}
-              name="invoiceSaveInfo"
-              containerClass="mt-2"
-              label={t('checkout:saveInfo_label')}
-              labelClass="form__label"
-            />
           </InputCard>
         </div>
       )}

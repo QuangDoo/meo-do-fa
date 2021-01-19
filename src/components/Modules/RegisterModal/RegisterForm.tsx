@@ -120,6 +120,7 @@ const RegisterForm = () => {
         <Input
           name="email"
           ref={register({
+            required: `${t('register:input_email_error_required')}`,
             pattern: {
               value: emailRegex,
               message: `${t('register:input_email_error_invalid')}`
