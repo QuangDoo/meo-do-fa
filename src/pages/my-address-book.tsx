@@ -1,11 +1,13 @@
-import { Button, Card, Grid, makeStyles } from '@material-ui/core';
+import { Button, Card, Grid, makeStyles, Typography } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
+import clsx from 'clsx';
 import { useTranslation } from 'i18n';
-import React from 'react';
+import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import Head from 'src/components/Layout/Head';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
+import CreateDeliveryAddressDialog from 'src/components/Modules/MyAddressBook/CreateDeliveryAddressDialog';
 import ProfileLayout from 'src/components/Modules/ProfileLayout';
 import { GET_ADDRESS_INFO_USER, GetAddressInfoUserData } from 'src/graphql/user/getAddressInfoUser';
 import { useQueryAuth } from 'src/hooks/useApolloHookAuth';
@@ -20,7 +22,14 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2)
   },
   addButton: {
-    padding: theme.spacing(2)
+    padding: theme.spacing(2),
+    fontSize: 16
+  },
+  normalText: {
+    textTransform: 'unset'
+  },
+  deleteButton: {
+    color: theme.palette.error.main
   }
 }));
 
@@ -37,11 +46,15 @@ function MyAddresses() {
     }
   });
 
+  const [openCreate, setOpenCreate] = useState<boolean>(false);
+
   return (
     <MainLayout>
       <Head>
         <title>Medofa</title>
       </Head>
+
+      <CreateDeliveryAddressDialog open={openCreate} onClose={() => setOpenCreate(false)} />
 
       <ProfileLayout title={t('myAddressBook:title')}>
         <LoadingBackdrop open={loading} />
@@ -53,8 +66,9 @@ function MyAddresses() {
                 color="primary"
                 fullWidth
                 startIcon={<AddIcon />}
-                className={classes.addButton}>
-                Thêm địa chỉ mới
+                className={clsx(classes.addButton, classes.normalText)}
+                onClick={() => setOpenCreate(true)}>
+                {t('myAddressBook:create')}
               </Button>
             </Card>
           </Grid>
@@ -62,20 +76,34 @@ function MyAddresses() {
           {data?.getAddressInfoUser?.deliveries?.map((address) => (
             <Grid item key={address.id} xs={12}>
               <Card className={classes.card}>
-                <div className="text-uppercase mb-2">{address.name}</div>
+                <Grid container>
+                  <Grid item xs>
+                    <Typography variant="h6">{address.name}</Typography>
+                  </Grid>
 
-                <div className="delivery-address-content">
-                  <div>Địa chỉ:</div>
+                  <Grid item>
+                    <Button color="primary" size="small" className={classes.normalText}>
+                      {t('myAddressBook:edit')}
+                    </Button>
+
+                    <Button size="small" className={clsx(classes.normalText, classes.deleteButton)}>
+                      {t('myAddressBook:delete')}
+                    </Button>
+                  </Grid>
+                </Grid>
+
+                <h6 className="delivery-address-content mt-2">
+                  <div>{t('myAddressBook:address')}:</div>
                   <div>
                     {`${address.street}, ${address.ward}, ${address.district}, ${address.city}`}
                   </div>
 
-                  <div>Điện thoại:</div>
+                  <div>{t('myAddressBook:phone')}:</div>
                   <div>{address.phone}</div>
 
-                  <div>Email:</div>
-                  <div>{address.email}</div>
-                </div>
+                  <div>{t('myAddressBook:email')}:</div>
+                  <div>{address.email || t('myAddressBook:email_not_provided')}</div>
+                </h6>
               </Card>
             </Grid>
           ))}

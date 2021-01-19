@@ -1,3 +1,11 @@
 {
-  "title": "Address book"
+  "title": "Address book",
+  "address": "Address",
+  "name": "Name",
+  "email": "Email",
+  "email_not_provided": "Not provided",
+  "phone": "Phone",
+  "create": "Add a new address",
+  "edit": "Edit",
+  "delete": "Delete"
 }

@@ -65,35 +65,33 @@ const DeliveryInfo = () => {
         <CreateDeliveryAddressForm />
       )}
 
-      <Box alignItems="baseline" display="flex" mt={2} whiteSpace="break-spaces" fontSize={14}>
-        {chosenAddress ? (
-          <Fragment>
-            {t('checkout:not_this_address') + ' '}
+      {chosenAddress ? (
+        <Box alignItems="baseline" display="flex" mt={2} whiteSpace="break-spaces" fontSize={14}>
+          {t('checkout:not_this_address') + ' '}
 
-            {data?.getAddressInfoUser.deliveries.length > 1 && (
-              <Fragment>
-                <button type="button" className="btn-link" onClick={() => setOpen(true)}>
-                  {t('checkout:choose_another_address')}
-                </button>
-                {' ' + t('checkout:or') + ' '}
-              </Fragment>
-            )}
-
-            <button type="button" className="btn-link" onClick={() => setChosenAddress(undefined)}>
-              {t('checkout:create_address')}
-            </button>
-          </Fragment>
-        ) : (
-          data?.getAddressInfoUser.deliveries.length > 0 && (
+          {data?.getAddressInfoUser.deliveries.length > 1 && (
             <Fragment>
-              {t('checkout:use_previous_address') + ' '}
               <button type="button" className="btn-link" onClick={() => setOpen(true)}>
-                {t('checkout:choose_address')}
+                {t('checkout:choose_another_address')}
               </button>
+              {' ' + t('checkout:or') + ' '}
             </Fragment>
-          )
-        )}
-      </Box>
+          )}
+
+          <button type="button" className="btn-link" onClick={() => setChosenAddress(undefined)}>
+            {t('checkout:create_address')}
+          </button>
+        </Box>
+      ) : (
+        data?.getAddressInfoUser.deliveries.length > 0 && (
+          <Box alignItems="baseline" display="flex" mt={2} whiteSpace="break-spaces" fontSize={14}>
+            {t('checkout:use_previous_address') + ' '}
+            <button type="button" className="btn-link" onClick={() => setOpen(true)}>
+              {t('checkout:choose_address')}
+            </button>
+          </Box>
+        )
+      )}
 
       <ChooseDeliveryAddressDialog
         open={open}

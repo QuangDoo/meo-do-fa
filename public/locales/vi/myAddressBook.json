@@ -1,3 +1,11 @@
 {
-  "title": "Sổ địa chỉ"
+  "title": "Sổ địa chỉ",
+  "address": "Địa chỉ",
+  "name": "Họ tên",
+  "email": "Email",
+  "email_not_provided": "Không có",
+  "phone": "Điện thoại",
+  "create": "Thêm địa chỉ mới",
+  "edit": "Sửa",
+  "delete": "Xóa"
 }
