@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from '@material-ui/core';
+import { Box } from '@material-ui/core';
 import { useTranslation } from 'i18n';
 import React, { Fragment, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
@@ -16,7 +16,7 @@ import CreateDeliveryAddressForm from './CreateDeliveryAddressForm';
 import InputCard from './InputCard';
 
 const DeliveryInfo = () => {
-  const { t } = useTranslation(['checkout']);
+  const { t } = useTranslation(['checkout', 'errors']);
 
   const [open, setOpen] = useState(false);
 

@@ -1,6 +1,6 @@
 import { useTranslation } from 'i18n';
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
@@ -8,7 +8,7 @@ import { useCart } from 'src/contexts/Cart';
 import { useUser } from 'src/contexts/User';
 import { CREATE_ORDER, CreateOrderData, CreateOrderVars } from 'src/graphql/order/createOrder';
 import { GET_COUNSEL, GetCounselData, OutputCounsel } from 'src/graphql/order/getCounsel';
-import { useLazyQueryAuth, useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
+import { useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
 import swal from 'sweetalert';
 
 import Agreement from './Agreement';
@@ -91,27 +91,24 @@ const CheckoutPage = () => {
   const [counselData, setCounselData] = useState<OutputCounsel>();
 
   // Counsel
-  const { data: dataCounsel, loading: loadingCounsel } = useQueryAuth<GetCounselData, undefined>(
-    GET_COUNSEL,
-    {
-      onCompleted: (data) => {
-        setCounselData(data.getCounsel);
-        if (data.getCounsel.totalDcPayment > 0) {
-          setValue('paymentMethodId', '2');
-        }
-      },
-      onError: (err) => {
-        const errorCode = err.graphQLErrors?.[0]?.extensions?.code;
-        toast.error(t(`errors:code_${errorCode}`));
+  const { loading: loadingCounsel } = useQueryAuth<GetCounselData, undefined>(GET_COUNSEL, {
+    fetchPolicy: 'network-only',
+    notifyOnNetworkStatusChange: true,
+    onCompleted: (data) => {
+      setCounselData(data.getCounsel);
+      if (data.getCounsel.totalDcPayment > 0) {
+        setValue('paymentMethodId', '2');
+      }
+    },
+    onError: (err) => {
+      const errorCode = err.graphQLErrors?.[0]?.extensions?.code;
+      toast.error(t(`errors:code_${errorCode}`));
 
-        if (errorCode === 114) {
-          router.push('/cart');
-        }
-      },
-      fetchPolicy: 'network-only',
-      notifyOnNetworkStatusChange: true
+      if (errorCode === 114) {
+        router.push('/cart');
+      }
     }
-  );
+  });
 
   const orderNo = counselData?.counsel?.orderNo;
 
