@@ -54,6 +54,12 @@ const ProfileSidebar = () => {
         iconClass="icomoon icon-assignment"
       />
 
+      <SidebarLink
+        text={t('navbar:address_book')}
+        href="/my-address-book"
+        iconClass="fas fa-map-marker-alt"
+      />
+
       {/* <SidebarLink
         text={t('navbar:introduce_friends')}
         href="/users/referrals"
