@@ -100,8 +100,8 @@ const CategoryMenu = () => {
         </div>
         <ul className="container-menu">
           {categories.map(({ id, name, categorySub, priority }) => (
-            <li className="menu-item" key={id}>
-              <Link href={`/products?category=${id}`}>
+            <Link href={`/products?category=${id}`} key={id}>
+              <li className="menu-item">
                 <div className="item-title">
                   <img
                     src={`/assets/images/category_${priority}.svg`}
@@ -114,19 +114,19 @@ const CategoryMenu = () => {
                   <a className="item-link">{name}</a>
                   {/* </Link> */}
                 </div>
-              </Link>
-              <div className="sub-menu">
-                <ul>
-                  {categorySub?.map(({ id, name }) => (
-                    <li className="sub-menu-item" key={id}>
-                      <Link href={`/products?category=${id}`}>
-                        <a className="sub-item-link">{name}</a>
+                <div className="sub-menu">
+                  <ul>
+                    {categorySub?.map(({ id, name }) => (
+                      <Link href={`/products?category=${id}`} key={id}>
+                        <li className="sub-menu-item">
+                          <a className="sub-item-link">{name}</a>
+                        </li>
                       </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </li>
+                    ))}
+                  </ul>
+                </div>
+              </li>
+            </Link>
           ))}
         </ul>
       </li>
