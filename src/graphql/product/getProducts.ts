@@ -65,7 +65,8 @@ export type ProductTag =
   | 'close-date'
   | 'use-vietnamese'
   | 'new'
-  | 'is_quick_order';
+  | 'is_quick_order'
+  | 'best-seller';
 
 export type GetProductsData = {
   getProductByConditions: {

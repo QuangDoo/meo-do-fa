@@ -2,6 +2,7 @@
 import { useQuery } from '@apollo/client';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 // import { useRouter } from 'next/router';
 import React from 'react';
 // import { toast } from 'react-toastify';
@@ -17,17 +18,18 @@ import {
   GetQuickOrderProductsVars
 } from 'src/graphql/product/getQuickOrderProducts';
 
+import Pagination from '../Pagination';
 // import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import QuickOrderItem from './QuickOrderItem';
 
 function QuickOrderPage() {
   const token = useToken();
 
+  const router = useRouter();
+
   const { data: cart } = useCart();
 
   const { t } = useTranslation(['cart', 'common', 'quickOrder']);
-
-  // const router = useRouter();
 
   const paginationVars = {
     variables: {
@@ -36,10 +38,14 @@ function QuickOrderPage() {
     }
   };
 
+  const page = +router.query.page || 1;
+
   const { data: quickOrderData, loading: getQuickOrderLoading } = useQuery<
     GetQuickOrderProductsData,
     GetQuickOrderProductsVars
   >(GET_QUICK_ORDER_PRODUCTS, paginationVars);
+
+  const totalPagination = quickOrderData?.getProductByConditions.total;
 
   return (
     <div className="container py-5">
@@ -75,10 +81,6 @@ function QuickOrderPage() {
                 ))
               )}
             </div>
-            {/* <div className="elevated text-muted p-3 mb-4">
-              <i className="fas fa-exclamation-circle mr-1" />
-              {t('cart:back_to_products')} <a href="/products">{t('cart:products')}</a>
-            </div> */}
           </div>
           <div className="col-12 col-md-3 col-lg-3">
             {token && cart && (
@@ -120,6 +122,20 @@ function QuickOrderPage() {
             )}
           </div>
         </div>
+        <Pagination
+          count={Math.ceil(totalPagination / 12)}
+          page={page}
+          siblingCount={4}
+          onChange={(page) => {
+            router.push({
+              pathname: router.pathname,
+              query: {
+                ...router.query,
+                page: page
+              }
+            });
+          }}
+        />
       </div>
     </div>
   );
