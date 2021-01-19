@@ -1,4 +1,7 @@
 {
+  "create_success": "Tạo địa chỉ thành công",
+  "create_dialog_title": "Tạo địa chỉ mới",
+  "submit_create": "Lưu địa chỉ",
   "title": "Sổ địa chỉ",
   "address": "Địa chỉ",
   "name": "Họ tên",

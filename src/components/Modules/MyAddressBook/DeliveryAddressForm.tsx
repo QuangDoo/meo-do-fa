@@ -16,7 +16,7 @@ import {
 } from 'src/graphql/address/getDistricts';
 import { GET_WARDS, GetWardsData, GetWardsVars, Ward } from 'src/graphql/address/getWards';
 
-type Inputs = {
+export type DeliveryAddressInputs = {
   name: string;
   phone: string;
   email: string;
@@ -27,8 +27,8 @@ type Inputs = {
 };
 
 type Props = {
-  names: Inputs;
-  defaultValues?: Partial<Inputs>;
+  names: DeliveryAddressInputs;
+  defaultValues?: Partial<DeliveryAddressInputs>;
 };
 
 export default function DeliveryAddressForm(props: Props) {

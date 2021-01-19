@@ -10,12 +10,9 @@ import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules
 import CreateDeliveryAddressDialog from 'src/components/Modules/MyAddressBook/CreateDeliveryAddressDialog';
 import ProfileLayout from 'src/components/Modules/ProfileLayout';
 import { GET_ADDRESS_INFO_USER, GetAddressInfoUserData } from 'src/graphql/user/getAddressInfoUser';
-import { useQueryAuth } from 'src/hooks/useApolloHookAuth';
+import { useLazyQueryAuth } from 'src/hooks/useApolloHookAuth';
+import getToken from 'src/utils/getToken';
 import withToken from 'src/utils/withToken';
-
-MyAddresses.getInitialProps = async () => ({
-  namespacesRequired: [...mainLayoutNamespacesRequired, 'myAddressBook']
-});
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -33,20 +30,57 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function MyAddresses() {
+MyAddresses.getInitialProps = async (ctx) => {
+  const token = getToken(ctx);
+
+  const addressInfoUser = await ctx.apolloClient.query({
+    query: GET_ADDRESS_INFO_USER,
+    fetchPolicy: 'network-only',
+    notifyOnNetworkStatusChange: true,
+    context: {
+      headers: {
+        Authorization: token
+      }
+    }
+  });
+
+  return {
+    namespacesRequired: [...mainLayoutNamespacesRequired, 'myAddressBook'],
+    addressBook: addressInfoUser.data.getAddressInfoUser.deliveries
+  };
+};
+
+type Props = {
+  addressBook: GetAddressInfoUserData['getAddressInfoUser']['deliveries'];
+};
+
+function MyAddresses(props: Props) {
   const classes = useStyles();
 
   const { t } = useTranslation(['myAddressBook', 'errors']);
 
-  const { data, loading } = useQueryAuth<GetAddressInfoUserData, undefined>(GET_ADDRESS_INFO_USER, {
+  const [addressBook, setAddressBook] = useState<typeof props['addressBook']>(props.addressBook);
+
+  const [openCreate, setOpenCreate] = useState<boolean>(false);
+
+  const [getAddressInfoUser, { loading: gettingAddressInfoUser }] = useLazyQueryAuth<
+    GetAddressInfoUserData,
+    undefined
+  >(GET_ADDRESS_INFO_USER, {
     fetchPolicy: 'network-only',
     notifyOnNetworkStatusChange: true,
+    onCompleted: (data) => {
+      setAddressBook(data.getAddressInfoUser.deliveries);
+    },
     onError: (err) => {
       toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
     }
   });
 
-  const [openCreate, setOpenCreate] = useState<boolean>(false);
+  const onCreateCompleted = () => {
+    setOpenCreate(false);
+    getAddressInfoUser();
+  };
 
   return (
     <MainLayout>
@@ -54,11 +88,15 @@ function MyAddresses() {
         <title>Medofa</title>
       </Head>
 
-      <CreateDeliveryAddressDialog open={openCreate} onClose={() => setOpenCreate(false)} />
+      <LoadingBackdrop open={gettingAddressInfoUser} />
+
+      <CreateDeliveryAddressDialog
+        onCompleted={onCreateCompleted}
+        open={openCreate}
+        onClose={() => setOpenCreate(false)}
+      />
 
       <ProfileLayout title={t('myAddressBook:title')}>
-        <LoadingBackdrop open={loading} />
-
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <Card variant="outlined">
@@ -73,9 +111,9 @@ function MyAddresses() {
             </Card>
           </Grid>
 
-          {data?.getAddressInfoUser?.deliveries?.map((address) => (
+          {addressBook.map((address) => (
             <Grid item key={address.id} xs={12}>
-              <Card className={classes.card}>
+              <Card variant="outlined" className={classes.card}>
                 <Grid container>
                   <Grid item xs>
                     <Typography variant="h6">{address.name}</Typography>

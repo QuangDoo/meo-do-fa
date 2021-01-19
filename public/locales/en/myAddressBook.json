@@ -1,4 +1,7 @@
 {
+  "create_success": "Created address successfully",
+  "create_dialog_title": "Create a new address",
+  "submit_create": "Save address",
   "title": "Address book",
   "address": "Address",
   "name": "Name",
