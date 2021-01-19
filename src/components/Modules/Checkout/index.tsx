@@ -8,7 +8,7 @@ import { useCart } from 'src/contexts/Cart';
 import { useUser } from 'src/contexts/User';
 import { CREATE_ORDER, CreateOrderData, CreateOrderVars } from 'src/graphql/order/createOrder';
 import { GET_COUNSEL, GetCounselData, OutputCounsel } from 'src/graphql/order/getCounsel';
-import { useLazyQueryAuth, useMutationAuth } from 'src/hooks/useApolloHookAuth';
+import { useLazyQueryAuth, useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
 import swal from 'sweetalert';
 
 import Agreement from './Agreement';
@@ -91,7 +91,7 @@ const CheckoutPage = () => {
   const [counselData, setCounselData] = useState<OutputCounsel>();
 
   // Counsel
-  const [getCounsel, { loading: loadingCounsel }] = useLazyQueryAuth<GetCounselData, undefined>(
+  const { data: dataCounsel, loading: loadingCounsel } = useQueryAuth<GetCounselData, undefined>(
     GET_COUNSEL,
     {
       onCompleted: (data) => {
@@ -112,10 +112,6 @@ const CheckoutPage = () => {
       notifyOnNetworkStatusChange: true
     }
   );
-
-  useEffect(() => {
-    getCounsel();
-  }, []);
 
   const orderNo = counselData?.counsel?.orderNo;
 

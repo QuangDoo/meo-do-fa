@@ -271,11 +271,11 @@ const Footer = () => {
                     alt="logo-logistics-pharma"
                   />
 
-                  <img
+                  {/* <img
                     className="img-fluid footer__delivery"
                     src="/assets/images/ghn-logo.png"
                     alt="logo-ghn"
-                  />
+                  /> */}
 
                   {/* <img
                   className="img-fluid footer__delivery"
