@@ -61,6 +61,10 @@ export default function CreateDeliveryAddressDialog(props: Props) {
   });
 
   const onSubmit = (data) => {
+    const [cityName, cityId] = data.city.split('__');
+    const [districtName, districtId] = data.district.split('__');
+    const [wardName, wardId] = data.ward.split('__');
+
     createDeliveryUser({
       variables: {
         inputs: {
@@ -69,9 +73,18 @@ export default function CreateDeliveryAddressDialog(props: Props) {
           email: data.email,
           shipping_address: {
             street: data.street,
-            city: data.city,
-            district: data.district,
-            ward: data.ward
+            city: {
+              id: +cityId,
+              name: cityName
+            },
+            district: {
+              id: +districtId,
+              name: districtName
+            },
+            ward: {
+              id: +wardId,
+              name: wardName
+            }
           }
         }
       }
@@ -79,9 +92,7 @@ export default function CreateDeliveryAddressDialog(props: Props) {
   };
 
   const onError = (errors) => {
-    const fields = Object.keys(errors);
-
-    toast.error(errors[fields[0]].message);
+    toast.error(errors[Object.keys(errors)[0]].message);
   };
 
   return (

@@ -10,7 +10,7 @@ import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules
 import CreateDeliveryAddressDialog from 'src/components/Modules/MyAddressBook/CreateDeliveryAddressDialog';
 import ProfileLayout from 'src/components/Modules/ProfileLayout';
 import { GET_ADDRESS_INFO_USER, GetAddressInfoUserData } from 'src/graphql/user/getAddressInfoUser';
-import { useLazyQueryAuth } from 'src/hooks/useApolloHookAuth';
+import { useQueryAuth } from 'src/hooks/useApolloHookAuth';
 import getToken from 'src/utils/getToken';
 import withToken from 'src/utils/withToken';
 
@@ -63,7 +63,7 @@ function MyAddresses(props: Props) {
 
   const [openCreate, setOpenCreate] = useState<boolean>(false);
 
-  const [getAddressInfoUser, { loading: gettingAddressInfoUser }] = useLazyQueryAuth<
+  const { refetch: refetchAddressInfoUser, loading } = useQueryAuth<
     GetAddressInfoUserData,
     undefined
   >(GET_ADDRESS_INFO_USER, {
@@ -79,7 +79,7 @@ function MyAddresses(props: Props) {
 
   const onCreateCompleted = () => {
     setOpenCreate(false);
-    getAddressInfoUser();
+    refetchAddressInfoUser();
   };
 
   return (
@@ -88,7 +88,7 @@ function MyAddresses(props: Props) {
         <title>Medofa</title>
       </Head>
 
-      <LoadingBackdrop open={gettingAddressInfoUser} />
+      <LoadingBackdrop open={loading} />
 
       <CreateDeliveryAddressDialog
         onCompleted={onCreateCompleted}
