@@ -1,4 +1,10 @@
 {
+  "delete_dialog_title": "Xóa địa chỉ này?",
+  "delete_dialog_content": "Bạn có chắc là muốn xóa địa chỉ này?",
+  "delete_no": "Không",
+  "delete_yes": "Có",
+  "edit_dialog_title": "Sửa địa chỉ",
+  "submit_edit": "Lưu thay đổi",
   "create_success": "Tạo địa chỉ thành công",
   "create_dialog_title": "Tạo địa chỉ mới",
   "submit_create": "Lưu địa chỉ",

@@ -1,4 +1,4 @@
-import { Button, Card, Grid, makeStyles, Typography } from '@material-ui/core';
+import { Button, Card, Grid, makeStyles } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import clsx from 'clsx';
 import { useTranslation } from 'i18n';
@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import Head from 'src/components/Layout/Head';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
+import AddressItem from 'src/components/Modules/MyAddressBook/AddressItem';
 import CreateDeliveryAddressDialog from 'src/components/Modules/MyAddressBook/CreateDeliveryAddressDialog';
 import ProfileLayout from 'src/components/Modules/ProfileLayout';
 import { GET_ADDRESS_INFO_USER, GetAddressInfoUserData } from 'src/graphql/user/getAddressInfoUser';
@@ -15,38 +16,38 @@ import getToken from 'src/utils/getToken';
 import withToken from 'src/utils/withToken';
 
 const useStyles = makeStyles((theme) => ({
-  card: {
-    padding: theme.spacing(2)
-  },
   addButton: {
     padding: theme.spacing(2),
     fontSize: 16
   },
   normalText: {
     textTransform: 'unset'
-  },
-  deleteButton: {
-    color: theme.palette.error.main
   }
 }));
 
 MyAddresses.getInitialProps = async (ctx) => {
   const token = getToken(ctx);
 
-  const addressInfoUser = await ctx.apolloClient.query({
-    query: GET_ADDRESS_INFO_USER,
-    fetchPolicy: 'network-only',
-    notifyOnNetworkStatusChange: true,
-    context: {
-      headers: {
-        Authorization: token
+  let addressInfoUser;
+
+  try {
+    addressInfoUser = await ctx.apolloClient.query({
+      query: GET_ADDRESS_INFO_USER,
+      fetchPolicy: 'no-cache',
+      notifyOnNetworkStatusChange: true,
+      context: {
+        headers: {
+          Authorization: token
+        }
       }
-    }
-  });
+    });
+  } catch (error) {
+    console.log('Error:', error);
+  }
 
   return {
     namespacesRequired: [...mainLayoutNamespacesRequired, 'myAddressBook'],
-    addressBook: addressInfoUser.data.getAddressInfoUser.deliveries
+    addressBook: addressInfoUser?.data.getAddressInfoUser.deliveries
   };
 };
 
@@ -59,7 +60,9 @@ function MyAddresses(props: Props) {
 
   const { t } = useTranslation(['myAddressBook', 'errors']);
 
-  const [addressBook, setAddressBook] = useState<typeof props['addressBook']>(props.addressBook);
+  const [addressBook, setAddressBook] = useState<typeof props['addressBook']>(
+    props.addressBook || []
+  );
 
   const [openCreate, setOpenCreate] = useState<boolean>(false);
 
@@ -67,7 +70,7 @@ function MyAddresses(props: Props) {
     GetAddressInfoUserData,
     undefined
   >(GET_ADDRESS_INFO_USER, {
-    fetchPolicy: 'network-only',
+    fetchPolicy: 'no-cache',
     notifyOnNetworkStatusChange: true,
     onCompleted: (data) => {
       setAddressBook(data.getAddressInfoUser.deliveries);
@@ -112,38 +115,11 @@ function MyAddresses(props: Props) {
           </Grid>
 
           {addressBook.map((address) => (
-            <Grid item key={address.id} xs={12}>
-              <Card variant="outlined" className={classes.card}>
-                <Grid container>
-                  <Grid item xs>
-                    <Typography variant="h6">{address.name}</Typography>
-                  </Grid>
-
-                  <Grid item>
-                    <Button color="primary" size="small" className={classes.normalText}>
-                      {t('myAddressBook:edit')}
-                    </Button>
-
-                    <Button size="small" className={clsx(classes.normalText, classes.deleteButton)}>
-                      {t('myAddressBook:delete')}
-                    </Button>
-                  </Grid>
-                </Grid>
-
-                <h6 className="delivery-address-content mt-2">
-                  <div>{t('myAddressBook:address')}:</div>
-                  <div>
-                    {`${address.street}, ${address.ward}, ${address.district}, ${address.city}`}
-                  </div>
-
-                  <div>{t('myAddressBook:phone')}:</div>
-                  <div>{address.phone}</div>
-
-                  <div>{t('myAddressBook:email')}:</div>
-                  <div>{address.email || t('myAddressBook:email_not_provided')}</div>
-                </h6>
-              </Card>
-            </Grid>
+            <AddressItem
+              address={address}
+              key={address.id}
+              onDeleteCompleted={() => refetchAddressInfoUser()}
+            />
           ))}
         </Grid>
       </ProfileLayout>
