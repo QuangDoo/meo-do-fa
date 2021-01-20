@@ -179,7 +179,18 @@ const CheckoutPage = () => {
                   ward: invoiceWard || '',
                   street: data.invoiceStreet || ''
                 }
-              : undefined
+              : {
+                  fullName: user.name,
+                  email: user.email || '',
+                  tax: user.vat,
+                  partnerId: user.id,
+                  isNew: false,
+                  zipCode: +user.contact_address.ward.id,
+                  city: user.contact_address.city.name,
+                  district: user.contact_address.district.name,
+                  ward: user.contact_address.ward.name,
+                  street: user.contact_address.street
+                }
           },
           paymentMethodId: +data.paymentMethodId,
           deliveryMethodId: +data.deliveryMethodId || 0,
