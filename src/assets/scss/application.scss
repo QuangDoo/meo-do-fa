@@ -12964,9 +12964,11 @@ abbr[title] {
 }
 .business-group__item__text {
   position: absolute;
-  top: 35%;
-  left: 25%;
-  right: 25%;
+  font-size: 0.9rem;
+  top: 40%;
+  left: 5%;
+  right: 5%;
+  text-align: center;
 }
 .welcome-account u {
   cursor: pointer;

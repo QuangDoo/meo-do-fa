@@ -25,22 +25,28 @@ type Inputs = {
   phone: number;
   referEmail: string;
   acceptTerms: boolean;
+  businessLicense: FileList;
 };
 
-const accountTypes = ['PHARMACY', 'CLINIC', 'DRUGSTORE'];
+const accountTypes = ['PHARMACY', 'DRUGSTORE', 'CLINIC', 'HOSPITAL'];
 
 const RegisterForm = () => {
   const { t } = useTranslation(['register', 'errors']);
 
   const router = useRouter();
 
-  const { register, handleSubmit } = useForm<Inputs>();
+  const { register, handleSubmit, watch, setValue } = useForm<Inputs>();
+
+  const businessLicense: FileList = watch('businessLicense');
 
   const { openModal, closeModal } = useModalControlDispatch();
 
   const openLoginModal = () => openModal('LOGIN');
 
   const { refetch: refetchUser } = useUser();
+
+  const initialAccountType = '';
+  const currentAccountType = watch('account_type', initialAccountType);
 
   const [createUser, { loading: creatingUser }] = useMutation<CreateUserData, CreateUserVars>(
     CREATE_USER,
@@ -57,6 +63,16 @@ const RegisterForm = () => {
     }
   );
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.currentTarget.files[0];
+
+    const isImage = file.type.startsWith('image');
+
+    if (!isImage) {
+      setValue('businessLicense', undefined);
+      toast.error(t('cart:file_is_not_image'));
+    }
+  };
   // On form submit
   const onFormSubmit = (data: Inputs) => {
     createUser({
@@ -81,126 +97,183 @@ const RegisterForm = () => {
   return (
     <form className="new_account" onSubmit={handleSubmit(onFormSubmit, onFormError)}>
       <div className="account-information">
-        <div className="d-flex align-items-baseline mb-4">
-          <div className="h6 flex-shrink-0 mr-2">{t('register:you_are') + ':'}</div>
-          <Select name="account_type" ref={register}>
-            {accountTypes.map((accountType) => (
-              <option key={accountType} value={accountType}>
-                {t(`register:${accountType.toLowerCase()}`)}
-              </option>
-            ))}
-          </Select>
+        <input name="account_type" hidden type="text" ref={register} />
+
+        {/* Hide ChooseAccountType if account_type is in initial state */}
+        <div hidden={currentAccountType !== initialAccountType} className="business-group">
+          <div className="container text-center">
+            <div className="row">
+              <div className="col-12 mb-3">
+                <h6>{t('register:you_are')}</h6>
+              </div>
+            </div>
+
+            {/* Account type buttons */}
+            <div className="row no-gutters">
+              {accountTypes.map((accountType) => (
+                <button
+                  key={accountType}
+                  type="button"
+                  className="col-6 business-group__item p-2"
+                  onClick={() => setValue('account_type', accountType)}>
+                  <img
+                    alt=""
+                    className="img-fluid"
+                    src={`/assets/images/account-type__${accountType.toLowerCase()}.png`}
+                  />
+                  <h6 className="business-group__item__text font-weight-bold">
+                    {t(`register:${accountType.toLowerCase()}`)}
+                  </h6>
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
 
-        <Input
-          name="name"
-          ref={register({
-            required: `${t('input_name_error_required')}`
-          })}
-          containerClass="mb-4"
-          iconClass="icomoon icon-user"
-          placeholder={t('register:input_name_placeholder')}
-        />
-
-        <Input
-          name="phone"
-          type="number"
-          ref={register({
-            required: `${t('register:input_phone_error_required')}`,
-            pattern: {
-              value: viPhoneNumberRegex,
-              message: `${t('register:input_phone_error_invalid')}`
-            }
-          })}
-          containerClass="mb-4"
-          iconClass="icomoon icon-phone"
-          placeholder={t('register:input_phone_placeholder')}
-        />
-
-        <Input
-          name="email"
-          ref={register({
-            pattern: {
-              value: emailRegex,
-              message: `${t('register:input_email_error_invalid')}`
-            },
-            validate: {
-              noSpecialChars: (value) =>
-                noSpecialChars.test(value) || `${t('register:input_email_error_noSpecialChars')}`
-            }
-          })}
-          containerClass="mb-4"
-          iconClass="icomoon icon-mail"
-          placeholder={t('register:input_email_placeholder')}
-        />
-
-        <Input
-          name="password"
-          ref={register({
-            required: `${t('register:input_password_error_required')}`,
-            minLength: {
-              value: 6,
-              message: `${t('register:input_password_error_minLength')}`
-            }
-          })}
-          containerClass="mb-4"
-          iconClass="icomoon icon-lock"
-          placeholder={t('register:input_password_placeholder')}
-          type="password"
-        />
-
-        <Input
-          name="referEmail"
-          ref={register({
-            pattern: {
-              value: emailRegex,
-              message: `${t('register:input_referEmail_error_invalid')}`
-            }
-          })}
-          containerClass="mb-4"
-          iconClass="fas fa-user-friends"
-          placeholder={t('register:input_referEmail_placeholder')}
-        />
-
-        <Checkbox
-          ref={register({
-            required: `${t('register:checkbox_acceptTerms_error_required')}`
-          })}
-          name="acceptTerms"
-          containerClass="form-group"
-          labelClass="pt-1"
-          label={
-            <>
-              <Trans
-                i18nKey="register:checkbox_acceptTerms_label"
-                components={{
-                  Link: (
-                    <a href="/terms-of-use" target="_blank">
-                      {' '}
-                    </a>
-                  )
-                }}
-              />
-              <span className="text-danger"> *</span>
-            </>
-          }
-        />
-
-        <div className="mb-4">
-          <Trans
-            i18nKey="register:go_to_login"
-            components={{
-              button: <button type="button" className="text-primary" onClick={openLoginModal} />,
-              b: <b />
-            }}
+        {/* Hide AccountInformation form if account_type is chosen (not in initial state) */}
+        <div hidden={currentAccountType === initialAccountType} className="account-information">
+          <div className="welcome-account mb-3">
+            {t('register:welcome')}
+            <span className="welcome-account__business">
+              {' '}
+              {t(`register:${currentAccountType.toLowerCase()}`)}!
+            </span>
+            <button
+              onClick={() => setValue('account_type', initialAccountType)}
+              type="button"
+              className="font-weight-bold text-primary ml-2">
+              {t('register:edit')}
+            </button>
+          </div>
+          <Input
+            name="name"
+            ref={register({
+              required: `${t('input_name_error_required')}`
+            })}
+            containerClass="mb-4"
+            iconClass="icomoon icon-user"
+            placeholder={t('register:input_name_placeholder')}
           />
+
+          <Input
+            name="phone"
+            type="number"
+            ref={register({
+              required: `${t('register:input_phone_error_required')}`,
+              pattern: {
+                value: viPhoneNumberRegex,
+                message: `${t('register:input_phone_error_invalid')}`
+              }
+            })}
+            containerClass="mb-4"
+            iconClass="icomoon icon-phone"
+            placeholder={t('register:input_phone_placeholder')}
+          />
+
+          <Input
+            name="address"
+            containerClass="mb-4"
+            iconClass="icomoon icon-home"
+            placeholder={t('register:input_address_placeholder')}
+          />
+
+          <Input
+            name="email"
+            ref={register({
+              pattern: {
+                value: emailRegex,
+                message: `${t('register:input_email_error_invalid')}`
+              },
+              validate: {
+                noSpecialChars: (value) =>
+                  noSpecialChars.test(value) || `${t('register:input_email_error_noSpecialChars')}`
+              }
+            })}
+            containerClass="mb-4"
+            iconClass="icomoon icon-mail"
+            placeholder={t('register:input_email_placeholder')}
+          />
+
+          <Input
+            name="tax"
+            type="number"
+            ref={register({
+              required: `${t('register:input_tax_error_required')}`
+            })}
+            containerClass="mb-4"
+            iconClass="fas fa-file-invoice-dollar"
+            placeholder={t('register:input_tax_placeholder')}
+          />
+
+          <Input
+            ref={register}
+            name="businessLicense"
+            type="file"
+            accept="image/*"
+            containerClass="mb-4"
+            iconClass="fas fa-file-invoice-dollar"
+            placeholder={
+              businessLicense?.length
+                ? businessLicense[0].name
+                : t('register:input_business_license_placeholder')
+            }
+            onChange={handleFileChange}
+          />
+
+          <Input
+            name="password"
+            ref={register({
+              required: `${t('register:input_password_error_required')}`,
+              minLength: {
+                value: 6,
+                message: `${t('register:input_password_error_minLength')}`
+              }
+            })}
+            containerClass="mb-4"
+            iconClass="icomoon icon-lock"
+            placeholder={t('register:input_password_placeholder')}
+            type="password"
+          />
+
+          <Checkbox
+            ref={register({
+              required: `${t('register:checkbox_acceptTerms_error_required')}`
+            })}
+            name="acceptTerms"
+            containerClass="form-group"
+            labelClass="pt-1"
+            label={
+              <>
+                <Trans
+                  i18nKey="register:checkbox_acceptTerms_label"
+                  components={{
+                    Link: (
+                      <a href="/terms-of-use" target="_blank">
+                        {' '}
+                      </a>
+                    )
+                  }}
+                />
+                <span className="text-danger"> *</span>
+              </>
+            }
+          />
+
+          <div className="mb-4">
+            <Trans
+              i18nKey="register:go_to_login"
+              components={{
+                button: <button type="button" className="text-primary" onClick={openLoginModal} />,
+                b: <b />
+              }}
+            />
+          </div>
+
+          <Button type="submit" variant="gradient" block>
+            {t('register:submit_button_text')}
+          </Button>
         </div>
-
-        <Button type="submit" variant="gradient" block>
-          {t('register:submit_button_text')}
-        </Button>
       </div>
-
       <LoadingBackdrop open={creatingUser} />
     </form>
   );

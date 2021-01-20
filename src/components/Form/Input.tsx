@@ -5,9 +5,12 @@ type Props = {
   iconClass: string;
   placeholder?: string;
   required?: boolean;
-  type?: 'text' | 'number' | 'password' | 'email';
+  type?: 'text' | 'number' | 'password' | 'email' | 'file';
   containerClass?: string;
   itemRight?: React.ReactNode;
+  disabled?: boolean;
+  accept?: string;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 const Input = (props: Props, ref) => {
@@ -20,16 +23,34 @@ const Input = (props: Props, ref) => {
   }
 
   return (
-    <div className={`input-group form__input-group ${containerClass}`}>
+    <div className={`input-group form__input-group ${containerClass} `}>
       <i className={`${props.iconClass} form__input-icon`}></i>
-      <input
-        name={props.name}
-        ref={ref}
-        className="form-control no-spinner"
-        placeholder={props.placeholder}
-        required={props.required}
-        type={type === 'password' ? (showPassword ? 'text' : 'password') : type}
-      />
+      {type === 'file' ? (
+        <div className="custom-file">
+          <input
+            ref={ref}
+            name={props.name}
+            disabled={props.disabled}
+            type="file"
+            className="form-control no-spinner custom-file-input"
+            accept={props.accept}
+            onChange={props.onChange}
+          />
+          <div className="custom-file-label overflow-hidden">
+            <span className="pl-4">{props.placeholder}</span>
+          </div>
+        </div>
+      ) : (
+        <input
+          name={props.name}
+          ref={ref}
+          className="form-control no-spinner"
+          placeholder={props.placeholder}
+          required={props.required}
+          type={type === 'password' ? (showPassword ? 'text' : 'password') : type}
+        />
+      )}
+
       {/* Show password checkbox */}
       {type === 'password' && (
         <div
