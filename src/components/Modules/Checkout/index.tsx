@@ -91,27 +91,31 @@ const CheckoutPage = () => {
   const [counselData, setCounselData] = useState<OutputCounsel>();
 
   // Counsel
-  const { data: dataCounsel, loading: loadingCounsel } = useQueryAuth<GetCounselData, undefined>(
-    GET_COUNSEL,
-    {
-      onCompleted: (data) => {
-        setCounselData(data.getCounsel);
-        if (data.getCounsel.totalDcPayment > 0) {
-          setValue('paymentMethodId', '2');
-        }
-      },
-      onError: (err) => {
-        const errorCode = err.graphQLErrors?.[0]?.extensions?.code;
-        toast.error(t(`errors:code_${errorCode}`));
+  const { loading: loadingCounsel, refetch: refetchCounsel } = useQueryAuth<
+    GetCounselData,
+    undefined
+  >(GET_COUNSEL, {
+    fetchPolicy: 'network-only',
+    notifyOnNetworkStatusChange: true,
+    onCompleted: (data) => {
+      setCounselData(data.getCounsel);
+      if (data.getCounsel.totalDcPayment > 0) {
+        setValue('paymentMethodId', '2');
+      }
+    },
+    onError: (err) => {
+      const errorCode = err.graphQLErrors?.[0]?.extensions?.code;
+      toast.error(t(`errors:code_${errorCode}`));
 
-        if (errorCode === 114) {
-          router.push('/cart');
-        }
-      },
-      fetchPolicy: 'network-only',
-      notifyOnNetworkStatusChange: true
+      if (errorCode === 114) {
+        router.push('/cart');
+      }
     }
-  );
+  });
+
+  useEffect(() => {
+    refetchCounsel?.();
+  }, []);
 
   const orderNo = counselData?.counsel?.orderNo;
 
