@@ -2,7 +2,6 @@ import { Button, Card, Grid, makeStyles, Typography } from '@material-ui/core';
 import clsx from 'clsx';
 import { useTranslation } from 'i18n';
 import React, { useState } from 'react';
-import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { GetAddressInfoUserData } from 'src/graphql/user/getAddressInfoUser';
 
 import DeleteDeliveryAddressDialog from './DeleteDeliveryAddressDialog';
@@ -32,12 +31,12 @@ export default function AddressItem(props: Props) {
 
   const classes = useStyles();
 
-  const [editIsOpen, setEditIsOpen] = useState<boolean>(false);
+  const [editDialogIsOpen, setEditDialogIsOpen] = useState<boolean>(false);
 
-  const [deleteIsOpen, setDeleteIsOpen] = useState<boolean>(false);
+  const [deleteDialogIsOpen, setDeleteDialogIsOpen] = useState<boolean>(false);
 
   const onDeleteCompleted = () => {
-    setDeleteIsOpen(false);
+    setDeleteDialogIsOpen(false);
 
     props.onDeleteCompleted();
   };
@@ -45,14 +44,14 @@ export default function AddressItem(props: Props) {
   return (
     <Grid item key={address.id} xs={12}>
       <EditDeliveryAddressDialog
-        open={editIsOpen}
-        onClose={() => setEditIsOpen(false)}
+        open={editDialogIsOpen}
+        onClose={() => setEditDialogIsOpen(false)}
         address={address}
       />
 
       <DeleteDeliveryAddressDialog
-        open={deleteIsOpen}
-        onClose={() => setDeleteIsOpen(false)}
+        open={deleteDialogIsOpen}
+        onClose={() => setDeleteDialogIsOpen(false)}
         id={address.id}
         onDeleteCompleted={onDeleteCompleted}
       />
@@ -68,14 +67,14 @@ export default function AddressItem(props: Props) {
               color="primary"
               size="small"
               className={classes.normalText}
-              onClick={() => setEditIsOpen(true)}>
+              onClick={() => setEditDialogIsOpen(true)}>
               {t('myAddressBook:edit')}
             </Button>
 
             <Button
               size="small"
               className={clsx(classes.normalText, classes.deleteButton)}
-              onClick={() => setDeleteIsOpen(true)}>
+              onClick={() => setDeleteDialogIsOpen(true)}>
               {t('myAddressBook:delete')}
             </Button>
           </Grid>

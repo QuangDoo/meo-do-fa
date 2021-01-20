@@ -50,7 +50,8 @@ export default function DeliveryAddressForm(props: Props) {
       setCities(data.getCities);
 
       // If this is first load, and city has default value
-      // => Use city name to find city id to set default value and get districts
+      // => Use city name to find city id too
+      // => Set city value and get districts with city id
       if (isFirstAddressLoad.current && props.defaultValues.city) {
         const defaultCity = data.getCities.find((city) => city.name === props.defaultValues.city);
 
