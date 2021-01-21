@@ -14,6 +14,7 @@
   "account_type_PHARMACY": "Pharmacy",
   "account_type_CLINIC": "Clinic",
   "account_type_DRUGSTORE": "Drugstore",
+  "account_type_HOSPITAL": "Hospital/Pharmaceutical company",
   "account_type_CUSTOMER": "Customer",
   "company_name_label": "Pharmacy/Clinic name",
   "company_name_placeholder": "ex. Pharmacy A",
@@ -26,7 +27,7 @@
   "tax_code_placeholder": "ex. 8026906145",
   "company_street_label": "Pharmacy/Clinic address",
   "company_street_placeholder": "ex. 9 Mayfair St. Bronx, NY 10465",
-  "street_required":"Please enter a address",
+  "street_required": "Please enter a address",
   "company_city_required": "Please choose a city/province.",
   "company_district_required": "Please choose a district.",
   "company_ward_required": "Please choose a ward.",
@@ -43,6 +44,6 @@
   "invalid_phone": "Invalid phone",
   "newPassword_required": "Please provide a new password",
   "oldPassword_required": "Please provide a current password",
-  "retype_newPassword":"Retype a new password",
-  "retype_newPassword_required":"Please retype new password"
+  "retype_newPassword": "Retype a new password",
+  "retype_newPassword_required": "Please retype new password"
 }
