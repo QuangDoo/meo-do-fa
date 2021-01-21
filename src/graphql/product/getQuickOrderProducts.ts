@@ -4,6 +4,7 @@ import { Product, productCardQueryProps } from 'src/graphql/product/getProducts'
 export type GetQuickOrderProductsData = {
   getProductByConditions: {
     Products: Product[];
+    total: number;
   };
 };
 
@@ -23,6 +24,7 @@ export const GET_QUICK_ORDER_PRODUCTS = gql`
       Products {
         ${productCardQueryProps}
       }
+      total
     }
   }
 `;

@@ -140,15 +140,6 @@ export default function CreateDeliveryAddressForm() {
           ))}
         </SelectWithLabel>
       </div>
-
-      {/* Save info for next time */}
-      <Checkbox
-        ref={register}
-        name="deliverySaveInfo"
-        containerClass="mt-2"
-        label={t('checkout:saveInfo_label')}
-        labelClass="form__label"
-      />
     </React.Fragment>
   );
 }

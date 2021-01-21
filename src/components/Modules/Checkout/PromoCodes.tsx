@@ -28,21 +28,19 @@ function Coupon(props: CouponProps) {
   const { promotion, onClick } = props;
 
   return (
-    <>
-      <div
-        key={promotion.coupon_code}
-        className="d-flex mt-3 align-items-center justify-content-between promo-coupon">
-        <div className="px-2 flex-grow-1 promo-coupon__name-container">
-          <div className="promo-coupon__name" title={promotion.program_name}>
-            {promotion.program_name}
-          </div>
+    <div
+      key={promotion.coupon_code}
+      className="d-flex mt-3 align-items-center justify-content-between promo-coupon">
+      <div className="px-2 flex-grow-1 promo-coupon__name-container">
+        <div className="promo-coupon__name" title={promotion.program_name}>
+          {promotion.program_name}
         </div>
-
-        <button type="button" className="px-3 py-4 promo-coupon__unapply-btn" onClick={onClick}>
-          {t('checkout:unapply_coupon_btn')}
-        </button>
       </div>
-    </>
+
+      <button type="button" className="px-3 py-4 promo-coupon__unapply-btn" onClick={onClick}>
+        {t('checkout:unapply_coupon_btn')}
+      </button>
+    </div>
   );
 }
 
@@ -113,36 +111,38 @@ export default function PromoCodes(props: Props) {
 
   return (
     <div className="mb-4">
-      <div className="h3 mb-3">{t('checkout:promo_codes_title')}</div>
-      <div className="elevated p-3">
-        <Button
-          size="small"
-          variant="text"
-          color="primary"
-          fullWidth
-          startIcon={<LocalOfferIcon />}
-          onClick={() => setOpen(true)}
-          disabled={promotion?.program_name && true}>
-          {t('checkout:choose_or_input_promo_code')}
-        </Button>
+      <div className="h4 mb-3">{t('checkout:promo_codes_title')}</div>
 
-        <ApplyPromoCodesDialog
-          open={open}
-          onClose={() => setOpen(false)}
-          handleApplyCoupon={handleApplyCoupon}
-          handleUnapplyCoupon={handleUnapplyCoupon}
-          usableCoupons={getUsedCouponsData?.getUsedCoupon || []}
-          loading={gettingUsedCoupons || applyingCoupon}
-          counselData={props.counselData}
-        />
+      {promotion?.coupon_code ? (
+        <Coupon promotion={promotion} onClick={() => handleUnapplyCoupon(promotion.coupon_code)} />
+      ) : (
+        <div className="elevated overflow-hidden">
+          <Button
+            size="small"
+            variant="text"
+            color="primary"
+            fullWidth
+            startIcon={<LocalOfferIcon />}
+            onClick={() => setOpen(true)}
+            disabled={promotion?.program_name && true}
+            classes={{
+              root: 'p-3',
+              label: 'justify-content-start'
+            }}>
+            {t('checkout:choose_or_input_promo_code')}
+          </Button>
 
-        {promotion?.coupon_code && (
-          <Coupon
-            promotion={promotion}
-            onClick={() => handleUnapplyCoupon(promotion.coupon_code)}
+          <ApplyPromoCodesDialog
+            open={open}
+            onClose={() => setOpen(false)}
+            handleApplyCoupon={handleApplyCoupon}
+            handleUnapplyCoupon={handleUnapplyCoupon}
+            usableCoupons={getUsedCouponsData?.getUsedCoupon || []}
+            loading={gettingUsedCoupons || applyingCoupon}
+            counselData={props.counselData}
           />
-        )}
-      </div>
+        </div>
+      )}
 
       <LoadingBackdrop open={gettingUsedCoupons || applyingCoupon} />
     </div>

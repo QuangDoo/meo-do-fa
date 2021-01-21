@@ -23,8 +23,21 @@ export default function CartPage() {
     onCompleted: () => {
       router.push('/checkout');
     },
-    onError: (error) => {
-      toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
+    onError: (err) => {
+      const errorCode = err.graphQLErrors?.[0]?.extensions?.code;
+
+      if (errorCode === 121) {
+        toast.error(
+          t(`errors:code_${errorCode}`, {
+            name: err.graphQLErrors[0].message.replace(
+              'Sales price changed. Please remove product on cart. Product: ',
+              ''
+            )
+          })
+        );
+      } else {
+        toast.error(t(`errors:code_${errorCode}`));
+      }
     }
   });
 
@@ -38,7 +51,7 @@ export default function CartPage() {
     });
   };
 
-  const checkoutDisabled = cart?.totalNetPrice < 500000;
+  const checkoutDisabled = cart?.totalNetPrice < minPrice;
 
   return (
     <>

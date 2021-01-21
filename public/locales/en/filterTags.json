@@ -1,7 +1,8 @@
 {
   "all": "All",
   "new": "New",
-  "invoice-exportable": "Quick invoice",
+  "invoice-exportable": "Invoice",
   "only-medofa": "Only available at Medofa",
-  "use-vietnamese": "Made in Vietnam"
+  "use-vietnamese": "Made in Vietnam",
+  "best-seller":"Best seller"
 }

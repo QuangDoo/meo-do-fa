@@ -61,7 +61,11 @@ function CartItem(props: CartItemProps) {
     <div className="d-flex p-3">
       <Link href={productLink}>
         <a>
-          <img className="cart-item-img" src={props.product.image_512} alt="" />
+          <img
+            className="cart-item-img"
+            src={props.product.image_512 || '/assets/images/no_images.jpg'}
+            alt={props.product.image_512}
+          />
         </a>
       </Link>
 
