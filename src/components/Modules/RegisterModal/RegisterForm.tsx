@@ -211,7 +211,7 @@ const RegisterForm = () => {
             type="file"
             accept="image/*"
             containerClass="mb-4"
-            iconClass="fas fa-file-invoice-dollar"
+            iconClass="fas fa-print"
             placeholder={
               businessLicense?.length
                 ? businessLicense[0].name

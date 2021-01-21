@@ -32,12 +32,12 @@ const Input = (props: Props, ref) => {
             name={props.name}
             disabled={props.disabled}
             type="file"
-            className="form-control no-spinner custom-file-input"
+            className="custom-file-input form-control no-spinner"
             accept={props.accept}
             onChange={props.onChange}
           />
           <div className="custom-file-label overflow-hidden">
-            <span className="pl-4">{props.placeholder}</span>
+            <span className="pl-4 ml-2">{props.placeholder}</span>
           </div>
         </div>
       ) : (
