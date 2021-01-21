@@ -7,7 +7,6 @@ import { toast } from 'react-toastify';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import MuiDialog from 'src/components/Layout/Modal/MuiDialog';
 import { GetAddressInfoUserData } from 'src/graphql/user/getAddressInfoUser';
-import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 
 import DeliveryAddressForm from './DeliveryAddressForm';
 
@@ -30,9 +29,7 @@ type Props = {
 export default function EditDeliveryAddressDialog({ address, open, onClose }: Props) {
   const { t } = useTranslation(['myAddressBook']);
 
-  const methods = useForm<Inputs>({
-    defaultValues: _.pick(address, ['name', 'phone', 'email', 'street', 'city', 'district', 'ward'])
-  });
+  const methods = useForm<Inputs>();
 
   // const { loading } = useMutationAuth();
   const loading = false;

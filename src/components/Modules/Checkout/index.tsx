@@ -202,9 +202,7 @@ const CheckoutPage = () => {
   };
 
   const onError = (errors) => {
-    const fields = Object.keys(errors);
-
-    toast.error(errors[fields[0]].message);
+    toast.error(errors[Object.keys(errors)[0]].message);
   };
 
   if (counselData === null) {

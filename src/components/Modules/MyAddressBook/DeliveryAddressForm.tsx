@@ -1,20 +1,19 @@
-import { useLazyQuery, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import { useTranslation } from 'i18n';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { emailRegex } from 'src/assets/regex/email';
 import { viPhoneNumberRegex } from 'src/assets/regex/viPhoneNumber';
 import InputWithLabel from 'src/components/Form/InputWithLabel';
 import SelectWithLabel from 'src/components/Form/SelectWithLabel';
-import { City, GET_CITIES, GetCitiesData } from 'src/graphql/address/getCities';
+import { GET_CITIES, GetCitiesData } from 'src/graphql/address/getCities';
 import {
-  District,
   GET_DISTRICTS,
   GetDistrictsData,
   GetDistrictsVars
 } from 'src/graphql/address/getDistricts';
-import { GET_WARDS, GetWardsData, GetWardsVars, Ward } from 'src/graphql/address/getWards';
+import { GET_WARDS, GetWardsData, GetWardsVars } from 'src/graphql/address/getWards';
 
 export type DeliveryAddressInputs = {
   name: string;
@@ -32,61 +31,49 @@ type Props = {
 };
 
 export default function DeliveryAddressForm(props: Props) {
-  const { register, setValue } = useFormContext();
+  const { register, setValue, watch } = useFormContext();
+
+  useEffect(() => {
+    if (!props.defaultValues) return;
+
+    ['name', 'phone', 'email', 'street'].forEach((field) => {
+      setValue(props.names[field], props.defaultValues[field]);
+    });
+  }, []);
 
   const { t } = useTranslation(['checkout', 'errors']);
 
   const isFirstAddressLoad = useRef(true);
 
-  const [cities, setCities] = useState<City[]>([]);
+  const chosenCity = watch(props.names.city, '');
+  const chosenDistrict = watch(props.names.district, '');
 
-  const [districts, setDistricts] = useState<District[]>([]);
-
-  const [wards, setWards] = useState<Ward[]>([]);
-
-  useQuery<GetCitiesData, undefined>(GET_CITIES, {
+  const { data: getCitiesData } = useQuery<GetCitiesData, undefined>(GET_CITIES, {
+    notifyOnNetworkStatusChange: true,
     onCompleted: (data) => {
-      // Set city options
-      setCities(data.getCities);
+      if (!data.getCities?.length) return;
 
-      // If this is first load, and city has default value
-      // => Use city name to find city id too
-      // => Set city value and get districts with city id
-      if (isFirstAddressLoad.current && props.defaultValues.city) {
-        const defaultCity = data.getCities.find((city) => city.name === props.defaultValues.city);
+      const { id, name } = data.getCities.find((city) => city.name === props.defaultValues.city);
 
-        setValue(props.names.city, defaultCity.name + '__' + defaultCity.id);
-
-        getDistricts({
-          variables: {
-            city_id: defaultCity.id
-          }
-        });
-      }
+      setValue(props.names.city, name + '__' + id);
     },
     onError: (err) => {
       toast.error(t(`errors:code_${err.graphQLErrors[0]?.extensions?.code}`));
     }
   });
 
-  const [getDistricts] = useLazyQuery<GetDistrictsData, GetDistrictsVars>(GET_DISTRICTS, {
+  const { data: getDistrictsData } = useQuery<GetDistrictsData, GetDistrictsVars>(GET_DISTRICTS, {
+    skip: !chosenCity,
+    variables: {
+      city_id: +chosenCity.split('__')[1]
+    },
     onCompleted: (data) => {
-      setDistricts(data.getDistricts);
-
-      if (!data.getDistricts.length) return;
-
-      if (isFirstAddressLoad.current && props.defaultValues.district) {
-        const defaultDistrict = data.getDistricts.find(
+      if (isFirstAddressLoad.current && props.defaultValues?.district) {
+        const { id, name } = data.getDistricts.find(
           (district) => district.name === props.defaultValues.district
         );
 
-        setValue(props.names.district, defaultDistrict.name + '__' + defaultDistrict.id);
-
-        getWards({
-          variables: {
-            district_id: defaultDistrict.id
-          }
-        });
+        setValue(props.names.district, name + '__' + id);
       }
     },
     onError: (err) => {
@@ -94,42 +81,25 @@ export default function DeliveryAddressForm(props: Props) {
     }
   });
 
-  const [getWards] = useLazyQuery<GetWardsData, GetWardsVars>(GET_WARDS, {
+  const { data: getWardsData } = useQuery<GetWardsData, GetWardsVars>(GET_WARDS, {
+    skip: !chosenDistrict,
+    variables: {
+      district_id: +chosenDistrict.split('__')[1]
+    },
     onCompleted: (data) => {
-      setWards(data.getWards);
-
-      if (isFirstAddressLoad.current && props.defaultValues.ward) {
-        const defaultWard = data.getWards.find((ward) => ward.name === props.defaultValues.ward);
-
-        setValue(props.names.ward, defaultWard.name + '__' + defaultWard.id);
-
+      if (isFirstAddressLoad.current && props.defaultValues?.ward) {
         // Finish setting default address value
         isFirstAddressLoad.current = false;
+
+        const { id, name } = data.getWards.find((ward) => ward.name === props.defaultValues.ward);
+
+        setValue(props.names.ward, name + '__' + id);
       }
     },
     onError: (err) => {
       toast.error(t(`errors:code_${err.graphQLErrors[0]?.extensions?.code}`));
     }
   });
-
-  const handleCityChange = (e) => {
-    setDistricts([]);
-    setWards([]);
-    getDistricts({
-      variables: {
-        city_id: +e.target.value.split('__')[1]
-      }
-    });
-  };
-
-  const handleDistrictChange = (e) => {
-    setWards([]);
-    getWards({
-      variables: {
-        district_id: +e.target.value.split('__')[1]
-      }
-    });
-  };
 
   return (
     <React.Fragment>
@@ -201,11 +171,10 @@ export default function DeliveryAddressForm(props: Props) {
           })}
           label={t('checkout:city_label')}
           containerClass="col-md-4"
-          required
-          onChange={handleCityChange}>
+          required>
           <option value="">{t('checkout:city_placeholder')}</option>
 
-          {cities.map((city) => (
+          {getCitiesData?.getCities.map((city) => (
             <option key={city.id} value={city.name + '__' + city.id}>
               {city.name}
             </option>
@@ -221,12 +190,11 @@ export default function DeliveryAddressForm(props: Props) {
           label={t('checkout:district_label')}
           labelClass="required"
           containerClass="col-md-4"
-          disabled={!districts.length}
-          onChange={handleDistrictChange}>
+          disabled={!getDistrictsData?.getDistricts.length}>
           <option value="">{t('checkout:district_placeholder')}</option>
 
           {/* Map districts from chosen city */}
-          {districts.map((district) => (
+          {getDistrictsData?.getDistricts.map((district) => (
             <option key={district.id} value={district.name + '__' + district.id}>
               {district.name}
             </option>
@@ -242,11 +210,11 @@ export default function DeliveryAddressForm(props: Props) {
           label={t('checkout:ward_label')}
           labelClass="required"
           containerClass="col-md-4"
-          disabled={!wards.length}>
+          disabled={!getWardsData?.getWards.length}>
           <option value="">{t('checkout:ward_placeholder')}</option>
 
           {/* Map wards from chosen district */}
-          {wards.map((ward) => (
+          {getWardsData?.getWards.map((ward) => (
             <option key={ward.id} value={ward.name + '__' + ward.id}>
               {ward.name}
             </option>
