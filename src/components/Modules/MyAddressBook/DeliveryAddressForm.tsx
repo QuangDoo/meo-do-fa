@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/client';
 import { useTranslation } from 'i18n';
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { emailRegex } from 'src/assets/regex/email';
@@ -32,14 +32,6 @@ type Props = {
 
 export default function DeliveryAddressForm(props: Props) {
   const { register, setValue, watch } = useFormContext();
-
-  useEffect(() => {
-    if (!props.defaultValues) return;
-
-    ['name', 'phone', 'email', 'street'].forEach((field) => {
-      setValue(props.names[field], props.defaultValues[field]);
-    });
-  }, []);
 
   const { t } = useTranslation(['checkout', 'errors']);
 
@@ -112,6 +104,7 @@ export default function DeliveryAddressForm(props: Props) {
         label={t('checkout:name_label')}
         type="text"
         required
+        defaultValue={props.defaultValues?.name || ''}
       />
 
       <div className="row">
@@ -129,6 +122,7 @@ export default function DeliveryAddressForm(props: Props) {
           label={t('checkout:phone_label')}
           containerClass="col-sm-4"
           required
+          defaultValue={props.defaultValues?.phone || ''}
         />
 
         {/* Email input */}
@@ -143,6 +137,7 @@ export default function DeliveryAddressForm(props: Props) {
           type="text"
           label={t('checkout:email_label')}
           containerClass="col-sm-8"
+          defaultValue={props.defaultValues?.email || ''}
         />
       </div>
 
@@ -160,6 +155,7 @@ export default function DeliveryAddressForm(props: Props) {
         }
         type="text"
         required
+        defaultValue={props.defaultValues?.street || ''}
       />
 
       <div className="row">

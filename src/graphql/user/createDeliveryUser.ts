@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-type AddressDetail = {
+export type AddressDetail = {
   id: number;
   name: string;
 };

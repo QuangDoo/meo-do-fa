@@ -41,12 +41,17 @@ export default function AddressItem(props: Props) {
     props.onDeleteCompleted();
   };
 
+  const onEditCompleted = () => {
+    setEditDialogIsOpen(false);
+  };
+
   return (
     <Grid item key={address.id} xs={12}>
       <EditDeliveryAddressDialog
         open={editDialogIsOpen}
         onClose={() => setEditDialogIsOpen(false)}
         address={address}
+        onEditCompleted={onEditCompleted}
       />
 
       <DeleteDeliveryAddressDialog

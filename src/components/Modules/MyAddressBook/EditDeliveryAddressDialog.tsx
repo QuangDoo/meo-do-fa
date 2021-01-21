@@ -7,6 +7,12 @@ import { toast } from 'react-toastify';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import MuiDialog from 'src/components/Layout/Modal/MuiDialog';
 import { GetAddressInfoUserData } from 'src/graphql/user/getAddressInfoUser';
+import {
+  UPDATE_DELIVERY_USER,
+  UpdateDeliveryUserData,
+  UpdateDeliveryUserVars
+} from 'src/graphql/user/updateDeliveryUser';
+import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 
 import DeliveryAddressForm from './DeliveryAddressForm';
 
@@ -24,15 +30,25 @@ type Props = {
   address: GetAddressInfoUserData['getAddressInfoUser']['deliveries'][0];
   open: boolean;
   onClose: () => void;
+  onUpdateCompleted: () => void;
 };
 
-export default function EditDeliveryAddressDialog({ address, open, onClose }: Props) {
+export default function EditDeliveryAddressDialog({ address, open, onClose, ...props }: Props) {
   const { t } = useTranslation(['myAddressBook']);
 
   const methods = useForm<Inputs>();
 
-  // const { loading } = useMutationAuth();
-  const loading = false;
+  const [updateDeliveryUser, { loading: updatingDeliveryUser }] = useMutationAuth<
+    UpdateDeliveryUserData,
+    UpdateDeliveryUserVars
+  >(UPDATE_DELIVERY_USER, {
+    onError: (err) => {
+      toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
+    },
+    onCompleted: () => {
+      props.onUpdateCompleted();
+    }
+  });
 
   const onSubmit = (data) => {
     console.log('Submit edit data:', data);
@@ -57,7 +73,7 @@ export default function EditDeliveryAddressDialog({ address, open, onClose }: Pr
           {t('myAddressBook:submit_edit')}
         </Button>
       }>
-      <LoadingBackdrop open={loading} />
+      <LoadingBackdrop open={updatingDeliveryUser} />
 
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit)}>
