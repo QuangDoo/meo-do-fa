@@ -10,9 +10,9 @@ import { Login } from './Login';
 import { ProductsContainer } from './ProductsContainer';
 
 const bannerImages = [
-  'https://firebasestorage.googleapis.com/v0/b/medofa-image.appspot.com/o/banner%2FBanner-Freeship.jpg?alt=media',
-  'https://firebasestorage.googleapis.com/v0/b/medofa-image.appspot.com/o/banner%2FBanner-Medofa.jpg?alt=media'
-  // '/assets/images/drugstore3.jpg'
+  // 'https://firebasestorage.googleapis.com/v0/b/medofa-image.appspot.com/o/banner%2FBanner-Freeship.jpg?alt=media',
+  // 'https://firebasestorage.googleapis.com/v0/b/medofa-image.appspot.com/o/banner%2FBanner-Medofa.jpg?alt=media'
+  '/assets/images/banner_1.png'
 ];
 
 const bannerMobiles = [
@@ -29,17 +29,22 @@ const Home = ({ dealsOfTheDayData, bestSellingData, promotionProductsData, newPr
   const carousels = [
     {
       title: t('carousels:deal_of_the_day'),
-      products: dealsOfTheDayData?.getProductDealOfTheDay || []
+      products: dealsOfTheDayData?.getProductDealOfTheDay || [],
+      seeMoreUrl: '/deals-of-the-day'
     },
     {
       title: t('carousels:bestseller'),
-      products: bestSellingData?.getProductByConditions.Products || []
+      products: bestSellingData?.getProductByConditions.Products || [],
+      seeMoreUrl: '/products?page=1&tag=best-seller'
     },
     {
       title: t('carousels:new_products'),
-      products: newProductsData?.getProductByConditions.Products || []
+      products: newProductsData?.getProductByConditions.Products || [],
+      seeMoreUrl: '/products?page=1&tag=new'
     }
   ];
+
+  console.log('bestSellingData', bestSellingData?.getProductByConditions.Products);
 
   const promotionProducts = promotionProductsData?.getPrmotionProducts.products || [];
 
@@ -77,7 +82,7 @@ const Home = ({ dealsOfTheDayData, bestSellingData, promotionProductsData, newPr
 
       {carousels.map((carousel, index) => (
         <div key={index} hidden={carousel.products.length === 0}>
-          <ProductsContainer title={carousel.title}>
+          <ProductsContainer title={carousel.title} seeMoreUrl={carousel.seeMoreUrl}>
             <ProductsCarousel products={carousel.products} />
           </ProductsContainer>
         </div>

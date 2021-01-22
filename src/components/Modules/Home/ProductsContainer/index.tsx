@@ -18,15 +18,23 @@ export const ProductsContainer = (props: ProductsContainerProps) => {
   return (
     <section className={clsx('py-5', props.className, props.deals && 'deals')}>
       <div className="container">
-        <div className="mb-4">
+        <div className="mb-4 d-flex">
           <h2 className={props.deals && 'text-white'}>{props.title}</h2>
+          <div className="ml-auto">
+            <Link href={`${props.seeMoreUrl}`}>
+              <a>
+                {t('common:see_more')}
+                <i className="fas fa-angle-double-right"> </i>
+              </a>
+            </Link>
+          </div>
         </div>
 
         <div className="mb-4">{props.children}</div>
 
-        {props.seeMoreUrl && (
+        {/* {props.seeMoreUrl && (
           <div className="text-center">
-            <Link href="/deals">
+            <Link href={`${props.seeMoreUrl}`}>
               <Button
                 variant={props.deals ? 'outline-light' : 'outline-primary'}
                 className={props.deals ? 'btn-transparent' : 'btn-white'}>
@@ -34,7 +42,7 @@ export const ProductsContainer = (props: ProductsContainerProps) => {
               </Button>
             </Link>
           </div>
-        )}
+        )} */}
       </div>
     </section>
   );

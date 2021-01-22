@@ -8,7 +8,7 @@ import { useCart } from 'src/contexts/Cart';
 import { useUser } from 'src/contexts/User';
 import { CREATE_ORDER, CreateOrderData, CreateOrderVars } from 'src/graphql/order/createOrder';
 import { GET_COUNSEL, GetCounselData, OutputCounsel } from 'src/graphql/order/getCounsel';
-import { useLazyQueryAuth, useMutationAuth } from 'src/hooks/useApolloHookAuth';
+import { useLazyQueryAuth, useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
 import swal from 'sweetalert';
 
 import Agreement from './Agreement';
@@ -91,30 +91,30 @@ const CheckoutPage = () => {
   const [counselData, setCounselData] = useState<OutputCounsel>();
 
   // Counsel
-  const [getCounsel, { loading: loadingCounsel }] = useLazyQueryAuth<GetCounselData, undefined>(
-    GET_COUNSEL,
-    {
-      onCompleted: (data) => {
-        setCounselData(data.getCounsel);
-        if (data.getCounsel.totalDcPayment > 0) {
-          setValue('paymentMethodId', '2');
-        }
-      },
-      onError: (err) => {
-        const errorCode = err.graphQLErrors?.[0]?.extensions?.code;
-        toast.error(t(`errors:code_${errorCode}`));
+  const { loading: loadingCounsel, refetch: refetchCounsel } = useQueryAuth<
+    GetCounselData,
+    undefined
+  >(GET_COUNSEL, {
+    fetchPolicy: 'network-only',
+    notifyOnNetworkStatusChange: true,
+    onCompleted: (data) => {
+      setCounselData(data.getCounsel);
+      if (data.getCounsel.totalDcPayment > 0) {
+        setValue('paymentMethodId', '2');
+      }
+    },
+    onError: (err) => {
+      const errorCode = err.graphQLErrors?.[0]?.extensions?.code;
+      toast.error(t(`errors:code_${errorCode}`));
 
-        if (errorCode === 114) {
-          router.push('/cart');
-        }
-      },
-      fetchPolicy: 'network-only',
-      notifyOnNetworkStatusChange: true
+      if (errorCode === 114) {
+        router.push('/cart');
+      }
     }
-  );
+  });
 
   useEffect(() => {
-    getCounsel();
+    refetchCounsel?.();
   }, []);
 
   const orderNo = counselData?.counsel?.orderNo;
