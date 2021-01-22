@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 
 type Props = {
   address: GetAddressInfoUserData['getAddressInfoUser']['deliveries'][0];
-  onDeleteCompleted: () => void;
+  refetchAddressInfoUser: () => void;
 };
 
 export default function AddressItem(props: Props) {
@@ -38,11 +38,13 @@ export default function AddressItem(props: Props) {
   const onDeleteCompleted = () => {
     setDeleteDialogIsOpen(false);
 
-    props.onDeleteCompleted();
+    props.refetchAddressInfoUser();
   };
 
-  const onEditCompleted = () => {
+  const onUpdateCompleted = () => {
     setEditDialogIsOpen(false);
+
+    props.refetchAddressInfoUser();
   };
 
   return (
@@ -51,7 +53,7 @@ export default function AddressItem(props: Props) {
         open={editDialogIsOpen}
         onClose={() => setEditDialogIsOpen(false)}
         address={address}
-        onEditCompleted={onEditCompleted}
+        onUpdateCompleted={onUpdateCompleted}
       />
 
       <DeleteDeliveryAddressDialog

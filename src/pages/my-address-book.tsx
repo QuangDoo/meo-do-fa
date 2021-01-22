@@ -118,7 +118,7 @@ function MyAddresses(props: Props) {
             <AddressItem
               address={address}
               key={address.id}
-              onDeleteCompleted={() => refetchAddressInfoUser()}
+              refetchAddressInfoUser={refetchAddressInfoUser}
             />
           ))}
         </Grid>

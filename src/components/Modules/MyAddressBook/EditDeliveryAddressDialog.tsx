@@ -6,6 +6,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import MuiDialog from 'src/components/Layout/Modal/MuiDialog';
+import { AddressDetail } from 'src/graphql/user/createDeliveryUser';
 import { GetAddressInfoUserData } from 'src/graphql/user/getAddressInfoUser';
 import {
   UPDATE_DELIVERY_USER,
@@ -33,6 +34,15 @@ type Props = {
   onUpdateCompleted: () => void;
 };
 
+function valueToObject(value: string): AddressDetail {
+  const [name, id] = value.split('__');
+
+  return {
+    id: +id,
+    name
+  };
+}
+
 export default function EditDeliveryAddressDialog({ address, open, onClose, ...props }: Props) {
   const { t } = useTranslation(['myAddressBook']);
 
@@ -50,8 +60,23 @@ export default function EditDeliveryAddressDialog({ address, open, onClose, ...p
     }
   });
 
-  const onSubmit = (data) => {
-    console.log('Submit edit data:', data);
+  const onSubmit = (data: Inputs) => {
+    updateDeliveryUser({
+      variables: {
+        inputs: {
+          id: address.id,
+          fullName: data.name,
+          email: data.email,
+          phone: data.phone,
+          shipping_address: {
+            street: data.street,
+            city: valueToObject(data.city),
+            district: valueToObject(data.district),
+            ward: valueToObject(data.ward)
+          }
+        }
+      }
+    });
   };
 
   const onError = (errors) => {
