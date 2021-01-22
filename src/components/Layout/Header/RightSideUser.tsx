@@ -24,6 +24,21 @@ const RightSideUser = () => {
 
   const notificationsData = data || [];
 
+  const wrapperRef = React.createRef<HTMLDivElement>();
+
+  useEffect(() => {
+    document.addEventListener('click', handleClick);
+  });
+
+  const handleClick = (event) => {
+    const { target } = event;
+    if (wrapperRef.current?.contains) {
+      if (!wrapperRef.current?.contains(target)) {
+        setShow((show) => !show);
+      }
+    }
+  };
+
   useEffect(() => {
     getNotify({ variables: { page: 1, pageSize: pageSize } });
   }, []);
@@ -53,7 +68,8 @@ const RightSideUser = () => {
           onKeyPress={toggleShow}
           className={clsx('dropdown header-right__link notification mr-2', !show && 'collapsed')}
           role="button"
-          tabIndex={0}>
+          tabIndex={0}
+          ref={wrapperRef}>
           <i className="far fa-bell header-right__icon" />
 
           {lengthNotifications?.length > 0 && (
