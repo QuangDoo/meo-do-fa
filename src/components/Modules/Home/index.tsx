@@ -10,9 +10,9 @@ import { Login } from './Login';
 import { ProductsContainer } from './ProductsContainer';
 
 const bannerImages = [
-  'https://firebasestorage.googleapis.com/v0/b/medofa-image.appspot.com/o/banner%2FBanner-Freeship.jpg?alt=media',
-  'https://firebasestorage.googleapis.com/v0/b/medofa-image.appspot.com/o/banner%2FBanner-Medofa.jpg?alt=media'
-  // '/assets/images/drugstore3.jpg'
+  // 'https://firebasestorage.googleapis.com/v0/b/medofa-image.appspot.com/o/banner%2FBanner-Freeship.jpg?alt=media',
+  // 'https://firebasestorage.googleapis.com/v0/b/medofa-image.appspot.com/o/banner%2FBanner-Medofa.jpg?alt=media'
+  '/assets/images/banner_1.png'
 ];
 
 const bannerMobiles = [

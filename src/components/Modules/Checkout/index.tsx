@@ -91,7 +91,10 @@ const CheckoutPage = () => {
   const [counselData, setCounselData] = useState<OutputCounsel>();
 
   // Counsel
-  const { loading: loadingCounsel } = useQueryAuth<GetCounselData, undefined>(GET_COUNSEL, {
+  const { loading: loadingCounsel, refetch: refetchCounsel } = useQueryAuth<
+    GetCounselData,
+    undefined
+  >(GET_COUNSEL, {
     fetchPolicy: 'network-only',
     notifyOnNetworkStatusChange: true,
     onCompleted: (data) => {
@@ -109,6 +112,10 @@ const CheckoutPage = () => {
       }
     }
   });
+
+  useEffect(() => {
+    refetchCounsel?.();
+  }, []);
 
   const orderNo = counselData?.counsel?.orderNo;
 
