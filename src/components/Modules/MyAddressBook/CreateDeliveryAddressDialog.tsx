@@ -115,7 +115,7 @@ export default function CreateDeliveryAddressDialog(props: Props) {
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit)}>
           <DeliveryAddressForm
-            names={{
+            fieldNames={{
               name: 'name',
               phone: 'phone',
               email: 'email',

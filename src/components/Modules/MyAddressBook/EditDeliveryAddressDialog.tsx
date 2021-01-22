@@ -103,7 +103,7 @@ export default function EditDeliveryAddressDialog({ address, open, onClose, ...p
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit)}>
           <DeliveryAddressForm
-            names={{
+            fieldNames={{
               name: 'name',
               phone: 'phone',
               email: 'email',

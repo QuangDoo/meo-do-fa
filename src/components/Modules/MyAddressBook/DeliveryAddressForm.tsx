@@ -26,7 +26,7 @@ export type DeliveryAddressInputs = {
 };
 
 type Props = {
-  names: DeliveryAddressInputs;
+  fieldNames: DeliveryAddressInputs;
   defaultValues?: DeliveryAddressInputs;
 };
 
@@ -37,17 +37,16 @@ export default function DeliveryAddressForm(props: Props) {
 
   const isFirstAddressLoad = useRef(true);
 
-  const chosenCity = watch(props.names.city, '');
-  const chosenDistrict = watch(props.names.district, '');
+  const chosenCity = watch(props.fieldNames.city, '');
+  const chosenDistrict = watch(props.fieldNames.district, '');
 
   const { data: getCitiesData } = useQuery<GetCitiesData, undefined>(GET_CITIES, {
-    notifyOnNetworkStatusChange: true,
     onCompleted: (data) => {
       if (!data.getCities?.length) return;
 
       const { id, name } = data.getCities.find((city) => city.name === props.defaultValues.city);
 
-      setValue(props.names.city, name + '__' + id);
+      setValue(props.fieldNames.city, name + '__' + id);
     },
     onError: (err) => {
       toast.error(t(`errors:code_${err.graphQLErrors[0]?.extensions?.code}`));
@@ -65,7 +64,7 @@ export default function DeliveryAddressForm(props: Props) {
           (district) => district.name === props.defaultValues.district
         );
 
-        setValue(props.names.district, name + '__' + id);
+        setValue(props.fieldNames.district, name + '__' + id);
       }
     },
     onError: (err) => {
@@ -80,12 +79,12 @@ export default function DeliveryAddressForm(props: Props) {
     },
     onCompleted: (data) => {
       if (isFirstAddressLoad.current && props.defaultValues?.ward) {
-        // Finish setting default address value
-        isFirstAddressLoad.current = false;
-
         const { id, name } = data.getWards.find((ward) => ward.name === props.defaultValues.ward);
 
-        setValue(props.names.ward, name + '__' + id);
+        setValue(props.fieldNames.ward, name + '__' + id);
+
+        // Finish setting default address value
+        isFirstAddressLoad.current = false;
       }
     },
     onError: (err) => {
@@ -93,11 +92,20 @@ export default function DeliveryAddressForm(props: Props) {
     }
   });
 
+  const handleCityChange = () => {
+    setValue(props.fieldNames.district, '');
+    setValue(props.fieldNames.ward, '');
+  };
+
+  const handleDistrictChange = () => {
+    setValue(props.fieldNames.ward, '');
+  };
+
   return (
     <React.Fragment>
       {/* Name input */}
       <InputWithLabel
-        name={props.names.name}
+        name={props.fieldNames.name}
         ref={register({
           required: t('checkout:name_required') + ''
         })}
@@ -110,7 +118,7 @@ export default function DeliveryAddressForm(props: Props) {
       <div className="row">
         {/* Phone input */}
         <InputWithLabel
-          name={props.names.phone}
+          name={props.fieldNames.phone}
           ref={register({
             required: t('checkout:phone_required') + '',
             pattern: {
@@ -127,7 +135,7 @@ export default function DeliveryAddressForm(props: Props) {
 
         {/* Email input */}
         <InputWithLabel
-          name={props.names.email}
+          name={props.fieldNames.email}
           ref={register({
             pattern: {
               value: emailRegex,
@@ -143,7 +151,7 @@ export default function DeliveryAddressForm(props: Props) {
 
       {/* Street input */}
       <InputWithLabel
-        name={props.names.street}
+        name={props.fieldNames.street}
         ref={register({
           required: t('checkout:address_required') + ''
         })}
@@ -161,13 +169,14 @@ export default function DeliveryAddressForm(props: Props) {
       <div className="row">
         {/* Select city */}
         <SelectWithLabel
-          name={props.names.city}
+          name={props.fieldNames.city}
           ref={register({
             required: t('checkout:city_required') + ''
           })}
           label={t('checkout:city_label')}
           containerClass="col-md-4"
-          required>
+          required
+          onChange={handleCityChange}>
           <option value="">{t('checkout:city_placeholder')}</option>
 
           {getCitiesData?.getCities.map((city) => (
@@ -179,14 +188,15 @@ export default function DeliveryAddressForm(props: Props) {
 
         {/* Select district */}
         <SelectWithLabel
-          name={props.names.district}
+          name={props.fieldNames.district}
           ref={register({
             required: t('checkout:district_required') + ''
           })}
           label={t('checkout:district_label')}
           labelClass="required"
           containerClass="col-md-4"
-          disabled={!getDistrictsData?.getDistricts.length}>
+          disabled={!getDistrictsData?.getDistricts.length || !chosenCity}
+          onChange={handleDistrictChange}>
           <option value="">{t('checkout:district_placeholder')}</option>
 
           {/* Map districts from chosen city */}
@@ -199,14 +209,14 @@ export default function DeliveryAddressForm(props: Props) {
 
         {/* Select ward */}
         <SelectWithLabel
-          name={props.names.ward}
+          name={props.fieldNames.ward}
           ref={register({
             required: t('checkout:ward_required') + ''
           })}
           label={t('checkout:ward_label')}
           labelClass="required"
           containerClass="col-md-4"
-          disabled={!getWardsData?.getWards.length}>
+          disabled={!getWardsData?.getWards.length || !chosenDistrict}>
           <option value="">{t('checkout:ward_placeholder')}</option>
 
           {/* Map wards from chosen district */}
