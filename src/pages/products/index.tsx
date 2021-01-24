@@ -29,7 +29,7 @@ import {
   ProductTag
 } from 'src/graphql/product/getProducts';
 
-const PAGE_SIZE = 12;
+const PAGE_SIZE = 24;
 
 const NAME_ASCENDING = '07'; // Name ascending
 

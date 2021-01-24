@@ -1,3 +1,4 @@
+import { ClickAwayListener } from '@material-ui/core';
 import clsx from 'clsx';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
@@ -48,38 +49,40 @@ const RightSideUser = () => {
     <div className="header-right d-none d-lg-block">
       <ul className="nav align-items-center">
         {/* Notifications here */}
-        <div
-          onClick={toggleShow}
-          onKeyPress={toggleShow}
-          className={clsx('dropdown header-right__link notification mr-2', !show && 'collapsed')}
-          role="button"
-          tabIndex={0}>
-          <i className="far fa-bell header-right__icon" />
-
-          {lengthNotifications?.length > 0 && (
-            <span className="notification__counter">{lengthNotifications?.length}</span>
-          )}
-
+        <ClickAwayListener onClickAway={() => setShow(false)}>
           <div
-            className={clsx(
-              'dropdown-menu dropdown-menu-right notification__dropdown p-0',
-              show && 'show'
-            )}>
-            {notificationsData?.length > 0 && (
-              <>
-                {notificationsData?.map((item, index) => (
-                  <NotiItem key={index} {...item} loading={loading} />
-                ))}
+            onClick={toggleShow}
+            onKeyPress={toggleShow}
+            className={clsx('dropdown header-right__link notification mr-2', !show && 'collapsed')}
+            role="button"
+            tabIndex={0}>
+            <i className="far fa-bell header-right__icon" />
 
-                <div className="dropdown__item notification__view-all">
-                  <Link href="/notifications">
-                    <a>{t('navbar:see_all_notifications')}</a>
-                  </Link>
-                </div>
-              </>
+            {lengthNotifications?.length > 0 && (
+              <span className="notification__counter">{lengthNotifications?.length}</span>
             )}
+
+            <div
+              className={clsx(
+                'dropdown-menu dropdown-menu-right notification__dropdown p-0',
+                show && 'show'
+              )}>
+              {notificationsData?.length > 0 && (
+                <>
+                  {notificationsData?.map((item, index) => (
+                    <NotiItem key={index} {...item} loading={loading} />
+                  ))}
+
+                  <div className="dropdown__item notification__view-all">
+                    <Link href="/notifications">
+                      <a>{t('navbar:see_all_notifications')}</a>
+                    </Link>
+                  </div>
+                </>
+              )}
+            </div>
           </div>
-        </div>
+        </ClickAwayListener>
 
         {user?.name && (
           <div className="header__user ml-3">
