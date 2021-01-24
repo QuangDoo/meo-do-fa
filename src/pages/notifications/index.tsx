@@ -8,6 +8,7 @@ import Pagination from 'src/components/Modules/Pagination';
 import { useNotify } from 'src/contexts/Notify';
 import { SEEN_ALL_NOTI } from 'src/graphql/notification/seenNoti.mutation';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
+import useNoti from 'src/hooks/useNoti';
 import withToken from 'src/utils/withToken';
 
 import Head from '../../components/Layout/Head';
@@ -24,11 +25,7 @@ function Notification() {
 
   const page = +router.query.page || 1;
 
-  const { data, total, getNotify, refetch, loading } = useNotify();
-
-  useEffect(() => {
-    getNotify({ variables: { page: page, pageSize: pageSize } });
-  }, []);
+  const { notifications, loading, refetchNoti } = useNoti({ page, pageSize });
 
   const [seenAllNoti] = useMutationAuth(SEEN_ALL_NOTI, {
     onError: (err) => {
@@ -36,14 +33,14 @@ function Notification() {
     }
   });
 
-  const notificationsData = data || [];
+  const notificationsData = notifications?.Notifies || [];
 
-  const notificationsPagination = total || 0;
+  const notificationsPagination = notifications?.total || 0;
 
   const handleReadAll = () => {
     // read all
     seenAllNoti();
-    refetch();
+    refetchNoti();
   };
 
   const { t } = useTranslation();

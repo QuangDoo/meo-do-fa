@@ -31,19 +31,19 @@ function QuickOrderPage() {
 
   const { t } = useTranslation(['cart', 'common', 'quickOrder']);
 
-  const paginationVars = {
-    variables: {
-      page: 1,
-      pageSize: 10
-    }
-  };
-
   const page = +router.query.page || 1;
 
   const { data: quickOrderData, loading: getQuickOrderLoading } = useQuery<
     GetQuickOrderProductsData,
     GetQuickOrderProductsVars
-  >(GET_QUICK_ORDER_PRODUCTS, paginationVars);
+  >(GET_QUICK_ORDER_PRODUCTS, {
+    fetchPolicy: 'network-only',
+    notifyOnNetworkStatusChange: true,
+    variables: {
+      page: page,
+      pageSize: 10
+    }
+  });
 
   const totalPagination = quickOrderData?.getProductByConditions.total;
 
@@ -73,8 +73,6 @@ function QuickOrderPage() {
                     sale_price={item.sale_price}
                     productId={item.id}
                     productName={item.name}
-                    quantity={0}
-                    uom_name="Unit"
                     slug={item.slug}
                     discount_percentage={item.discount_percentage}
                   />

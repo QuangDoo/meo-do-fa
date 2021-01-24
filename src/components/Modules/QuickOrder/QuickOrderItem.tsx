@@ -10,10 +10,8 @@ type Props = {
   image: string;
   productName: string;
   productId: number;
-  uom_name: string;
   price: number;
   sale_price: number;
-  quantity: number;
   list_price: number;
   _id: number;
   slug: string;

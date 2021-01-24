@@ -1,26 +1,22 @@
 import { gql } from '@apollo/client';
 
-type AddressDetail = {
+export type AddressDetail = {
   id: number;
   name: string;
 };
 
-type ContactAddress = {
-  city: AddressDetail;
-  district: AddressDetail;
-  ward: AddressDetail;
-  street: string;
-};
-
-type CreateDeliveryUserInput = {
-  fullName: string;
-  email: string;
-  shipping_address: ContactAddress;
-  phone: string;
-};
-
 export type CreateDeliveryUserVars = {
-  inputs: CreateDeliveryUserInput;
+  inputs: {
+    fullName: string;
+    email: string;
+    shipping_address: {
+      city: AddressDetail;
+      district: AddressDetail;
+      ward: AddressDetail;
+      street: string;
+    };
+    phone: string;
+  };
 };
 
 export type CreateDeliveryUserData = {
