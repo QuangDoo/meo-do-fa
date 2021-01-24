@@ -8,7 +8,7 @@ import { useCart } from 'src/contexts/Cart';
 import { useUser } from 'src/contexts/User';
 import { CREATE_ORDER, CreateOrderData, CreateOrderVars } from 'src/graphql/order/createOrder';
 import { GET_COUNSEL, GetCounselData, OutputCounsel } from 'src/graphql/order/getCounsel';
-import { useLazyQueryAuth, useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
+import { useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
 import swal from 'sweetalert';
 
 import Agreement from './Agreement';
@@ -186,7 +186,18 @@ const CheckoutPage = () => {
                   ward: invoiceWard || '',
                   street: data.invoiceStreet || ''
                 }
-              : undefined
+              : {
+                  fullName: user.name,
+                  email: user.email || '',
+                  tax: user.vat,
+                  partnerId: user.id,
+                  isNew: false,
+                  zipCode: +user.contact_address.ward.id,
+                  city: user.contact_address.city.name,
+                  district: user.contact_address.district.name,
+                  ward: user.contact_address.ward.name,
+                  street: user.contact_address.street
+                }
           },
           paymentMethodId: +data.paymentMethodId,
           deliveryMethodId: +data.deliveryMethodId || 0,
@@ -198,9 +209,7 @@ const CheckoutPage = () => {
   };
 
   const onError = (errors) => {
-    const fields = Object.keys(errors);
-
-    toast.error(errors[fields[0]].message);
+    toast.error(errors[Object.keys(errors)[0]].message);
   };
 
   if (counselData === null) {

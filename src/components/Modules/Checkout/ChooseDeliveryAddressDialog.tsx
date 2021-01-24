@@ -1,8 +1,23 @@
-import { Box, Button, Card, CardActions, CardContent, Grid, Typography } from '@material-ui/core';
+import {
+  Box,
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  Grid,
+  makeStyles,
+  Typography
+} from '@material-ui/core';
 import { useTranslation } from 'i18n';
 import React from 'react';
 import MuiDialog from 'src/components/Layout/Modal/MuiDialog';
 import { Address } from 'src/graphql/user/getAddressInfoUser';
+
+const useStyles = makeStyles(() => ({
+  cardContent: {
+    paddingBottom: 0
+  }
+}));
 
 type Props = {
   open: boolean;
@@ -15,6 +30,8 @@ type Props = {
 export default function ChooseDeliveryAddressDialog(props: Props) {
   const { t } = useTranslation(['chooseDeliveryAddress', 'errors']);
 
+  const classes = useStyles();
+
   return (
     <MuiDialog
       open={props.open}
@@ -25,12 +42,10 @@ export default function ChooseDeliveryAddressDialog(props: Props) {
         {props.addresses.map((address) => (
           <Grid key={address.id} item xs={12}>
             <Card>
-              <CardContent>
-                <Typography variant="h5" component="h2">
-                  {address.name}
-                </Typography>
+              <CardContent className={classes.cardContent}>
+                <Typography variant="h6">{address.name}</Typography>
 
-                <Box pt={2}>
+                <Box mt={1}>
                   <h6 className="delivery-address-content">
                     <div>{t('chooseDeliveryAddress:address')}:</div>
                     <div>

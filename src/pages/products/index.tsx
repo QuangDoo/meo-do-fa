@@ -41,7 +41,8 @@ Products.getInitialProps = async () => ({
     'products',
     'productCard',
     'productBadge',
-    'productsSidebar'
+    'productsSidebar',
+    'filterTags'
   ]
 });
 

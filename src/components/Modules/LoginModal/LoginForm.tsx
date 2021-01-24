@@ -10,7 +10,6 @@ import Button from 'src/components/Form/Button';
 import Input from 'src/components/Form/Input';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { useModalControlDispatch } from 'src/contexts/ModalControl';
-import { useUser } from 'src/contexts/User';
 import { LOGIN_USER, LoginData, LoginVars } from 'src/graphql/user/login';
 
 type Inputs = {

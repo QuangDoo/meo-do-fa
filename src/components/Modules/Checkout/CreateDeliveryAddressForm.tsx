@@ -3,7 +3,6 @@ import React from 'react';
 import { useFormContext } from 'react-hook-form';
 import { emailRegex } from 'src/assets/regex/email';
 import { viPhoneNumberRegex } from 'src/assets/regex/viPhoneNumber';
-import Checkbox from 'src/components/Form/Checkbox';
 import InputWithLabel from 'src/components/Form/InputWithLabel';
 import SelectWithLabel from 'src/components/Form/SelectWithLabel';
 import useAddress from 'src/hooks/useAddress';
