@@ -27,11 +27,22 @@ export const GET_MANUFACTURERS = gql`
   }
 `;
 
+export const SEARCH_MANUFACTURERS = gql`
+  query searchManufactory($page: Int!, $pageSize: Int!, $name: String!) {
+    searchManufactory(page: $page, pageSize: $pageSize, name: $name) {
+      short_name
+      id
+    }
+  }
+`;
+
 export type GetManufacturersData = {
   getManufactories: Manufacturer[];
+  searchManufactory?: Manufacturer[];
 };
 
 export type GetManufacturersVars = {
   page: number;
   pageSize: number;
+  name?: string;
 };

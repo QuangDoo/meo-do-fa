@@ -9,7 +9,8 @@ import Dropdown from 'src/components/Form/Dropdown';
 import {
   GET_MANUFACTURERS,
   GetManufacturersData,
-  GetManufacturersVars
+  GetManufacturersVars,
+  SEARCH_MANUFACTURERS
 } from 'src/graphql/manufacturers/manufacturers.query';
 import removeAccents from 'src/utils/removeAccents';
 
@@ -20,15 +21,17 @@ export default function ManufacturerFilter() {
 
   const router = useRouter();
 
-  const { data } = useQuery<GetManufacturersData, GetManufacturersVars>(GET_MANUFACTURERS, {
-    variables: {
-      page: 1,
-      pageSize: 20
-    },
-    onError: (err) => {
-      toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
+  const { data: dataMS } = useQuery<GetManufacturersData, GetManufacturersVars>(
+    SEARCH_MANUFACTURERS,
+    {
+      variables: { page: 1, pageSize: 20, name: inputValue },
+      onError: (err) => {
+        toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
+      }
     }
-  });
+  );
+
+  const manufacturers = dataMS?.searchManufactory;
 
   const getAllHref = () => {
     const newQuery = { ...router.query };
@@ -64,7 +67,7 @@ export default function ManufacturerFilter() {
         </Link>
       </div>
 
-      {data?.getManufactories.map(({ short_name, id }) => (
+      {manufacturers?.map(({ short_name, id }) => (
         <div
           hidden={!!inputValue && !removeAccents(short_name).includes(removeAccents(inputValue))}
           key={id}
@@ -89,7 +92,7 @@ export default function ManufacturerFilter() {
       ))}
 
       {inputValue &&
-        !data?.getManufactories.some((manufacturer) =>
+        !manufacturers?.some((manufacturer) =>
           removeAccents(manufacturer.short_name).includes(removeAccents(inputValue))
         ) && (
           <React.Fragment>
