@@ -34,8 +34,6 @@ const FLAGS = {
 const useStyles = makeStyles(() => ({}));
 
 MyOrders.getInitialProps = async (ctx) => {
-  const token = getToken(ctx);
-
   try {
     await ctx.apolloClient.query({
       query: GET_ORDER_LIST,
@@ -47,7 +45,7 @@ MyOrders.getInitialProps = async (ctx) => {
       notifyOnNetworkStatusChange: true,
       context: {
         headers: {
-          Authorization: token
+          Authorization: getToken(ctx)
         }
       }
     });
