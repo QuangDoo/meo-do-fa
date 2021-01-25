@@ -42,7 +42,7 @@ MyAddresses.getInitialProps = async (ctx) => {
       }
     });
   } catch (error) {
-    console.log('Error:', error);
+    console.log('getAddressInfoUser error:', error);
   }
 
   return {
