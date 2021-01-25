@@ -63,6 +63,7 @@ const InvoiceInfo = () => {
               <InputWithLabel
                 name="invoiceEmail"
                 ref={register({
+                  required: t('checkout:email_required') + '',
                   pattern: {
                     value: emailRegex,
                     message: t('checkout:email_invalid')
