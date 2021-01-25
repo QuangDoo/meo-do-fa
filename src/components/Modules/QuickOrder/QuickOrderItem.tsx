@@ -23,7 +23,7 @@ function QuickOrderItem(props: Props) {
 
   return (
     <div className="cart-item">
-      <div className="row align-items-center">
+      <div className="row align-items-center px-2">
         <div
           className="cart-item__image lozadloaded flex-shrink-0"
           style={{
@@ -56,7 +56,7 @@ function QuickOrderItem(props: Props) {
                   <div className="cart-item__qty">
                     <QuantityInput
                       productId={props.productId}
-                      productPrice={props.list_price}
+                      productPrice={props.sale_price}
                       productName={props.productName}
                       productImg={props.image}
                     />

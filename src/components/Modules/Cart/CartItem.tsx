@@ -109,7 +109,7 @@ function CartItem(props: CartItemProps) {
             <QuantityInput
               productId={props.productId}
               productName={props.productName}
-              productPrice={props.price}
+              productPrice={props.product.sale_price}
               productImg={props.product.image_512}
             />
 

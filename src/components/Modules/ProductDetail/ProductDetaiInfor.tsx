@@ -83,7 +83,7 @@ const ProductDetailInfor = (props: ProductDetails) => {
         {!token ? null : (
           <QuantityInput
             productId={props.id}
-            productPrice={props.list_price}
+            productPrice={props.sale_price}
             productName={props.name}
             productImg={props.image_512}
           />
