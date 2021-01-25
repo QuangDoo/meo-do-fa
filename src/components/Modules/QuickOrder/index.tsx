@@ -45,7 +45,7 @@ function QuickOrderPage() {
     }
   });
 
-  const totalPagination = quickOrderData?.getProductByConditions.total;
+  const totalPagination = quickOrderData?.getProductByConditions?.total;
 
   return (
     <div className="container py-5">
@@ -63,7 +63,7 @@ function QuickOrderPage() {
                   <Loading />
                 </div>
               ) : (
-                quickOrderData?.getProductByConditions.Products.map((item, index) => (
+                quickOrderData?.getProductByConditions?.Products.map((item, index) => (
                   <QuickOrderItem
                     key={index}
                     _id={item.id}
