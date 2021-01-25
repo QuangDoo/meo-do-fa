@@ -31,8 +31,6 @@ const FLAGS = {
   CANCELED: 25
 };
 
-const useStyles = makeStyles(() => ({}));
-
 MyOrders.getInitialProps = async (ctx) => {
   try {
     await ctx.apolloClient.query({
