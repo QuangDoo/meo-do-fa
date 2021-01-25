@@ -85,5 +85,6 @@
   "ward_placeholder": "Chọn phường/xã...",
   "ward_required": "Xin chọn phường/xã.",
   "warning_1": "Medofa có thể hủy đơn hàng của bạn nếu chênh lệch hơn 5% giá trị sản phẩm.",
-  "warning_2": "Số lượng sản phẩm khi giao có thể không đảm bảo đúng nhu cầu ban đầu tùy thuộc vào nhà cung cấp."
+  "warning_2": "Số lượng sản phẩm khi giao có thể không đảm bảo đúng nhu cầu ban đầu tùy thuộc vào nhà cung cấp.",
+  "email_required": "Xin nhập email"
 }
