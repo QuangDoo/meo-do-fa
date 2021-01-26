@@ -9454,7 +9454,6 @@ a.text-dark:focus {
   width: auto;
 }
 
-
 abbr[title] {
   text-decoration: none;
 }
@@ -10010,7 +10009,7 @@ abbr[title] {
   top: 0;
 }
 .banner__img--mobile {
-  min-height: 250px;
+  min-height: 175px;
   border-radius: 10px;
 }
 .btn-gradient {
@@ -11975,9 +11974,7 @@ abbr[title] {
   margin: auto;
 }
 .home__cta {
-  background: #000
-    url(/assets/images/thuoc.jpg)
-    center center no-repeat;
+  background: #000 url(/assets/images/thuoc.jpg) center center no-repeat;
   background-size: cover;
   background-attachment: fixed;
 }
@@ -13183,8 +13180,8 @@ abbr[title] {
     margin: 0;
   }
 
-/* Firefox */
-  input[type=number] {
+  /* Firefox */
+  input[type='number'] {
     -moz-appearance: textfield;
   }
 }

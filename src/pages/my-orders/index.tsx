@@ -110,13 +110,14 @@ const OrderItem = (props) => {
               {new Date(props.date_order).toLocaleDateString('en-GB')}
             </span>
           </div>
-
-          <div>
-            <span className="title">{t('myOrders:expected_date')}</span>
-            <span className="content">
-              {new Date(props.expected_date).toLocaleDateString('en-GB')}
-            </span>
-          </div>
+          {flag && [10, 20, 30, 40].includes(flag) && (
+            <div>
+              <span className="title">{t('myOrders:expected_date')}</span>
+              <span className="content">
+                {new Date(props.expected_date).toLocaleDateString('en-GB')}
+              </span>
+            </div>
+          )}
         </div>
       </div>
 
