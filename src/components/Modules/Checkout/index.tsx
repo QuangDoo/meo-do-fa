@@ -192,11 +192,11 @@ const CheckoutPage = () => {
                   tax: user.vat,
                   partnerId: user.id,
                   isNew: false,
-                  zipCode: +user.contact_address.ward.id,
-                  city: user.contact_address.city.name,
-                  district: user.contact_address.district.name,
-                  ward: user.contact_address.ward.name,
-                  street: user.contact_address.street
+                  zipCode: +user.contact_address?.ward.id || 0,
+                  city: user.contact_address?.city.name || '',
+                  district: user.contact_address?.district.name || '',
+                  ward: user.contact_address?.ward.name || '',
+                  street: user.contact_address?.street || ''
                 }
           },
           paymentMethodId: +data.paymentMethodId,

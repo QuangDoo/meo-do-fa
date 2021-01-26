@@ -52,6 +52,7 @@ export default function CartPage() {
   };
 
   const checkoutDisabled = cart?.totalNetPrice < minPrice;
+  const totalPrice = cart?.totalNetPrice - cart?.totalShippingFee;
 
   return (
     <>
@@ -95,7 +96,7 @@ export default function CartPage() {
                           <div>{t('cart:total')}</div>
                         </div>
                         <div className="cart__total">
-                          <PriceText price={cart?.totalNetPrice} />
+                          <PriceText price={totalPrice} />
                         </div>
                       </div>
                     </div>
