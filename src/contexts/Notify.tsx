@@ -17,6 +17,7 @@ type NotifySSRContextValue = {
   getNotify: (options?: QueryLazyOptions<GetNotiVars>) => void;
   data: Notifies[];
   total: number;
+  totalUnSeen: number;
   loading: boolean;
   refetch: () => Promise<ApolloQueryResult<GetNotiData>>;
 };
@@ -47,6 +48,7 @@ function NotifyProvider(props) {
         getNotify,
         data: data?.getNotify?.Notifies,
         total: data?.getNotify?.total,
+        totalUnSeen: data?.getNotify?.totalUnSeen,
         loading,
         refetch
       }}>
