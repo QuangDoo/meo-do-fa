@@ -168,7 +168,7 @@ function OrderDetails() {
                       open={open}
                       onClose={() => setOpen(false)}
                       orderNo={name}
-                      callBack={() => refetch()}
+                      onCancelCompleted={() => refetch()}
                     />
                   </Box>
                 </>
