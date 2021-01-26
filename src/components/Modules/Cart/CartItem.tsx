@@ -109,7 +109,7 @@ function CartItem(props: CartItemProps) {
             <QuantityInput
               productId={props.productId}
               productName={props.productName}
-              productPrice={props.price}
+              productPrice={props.product.sale_price}
               productImg={props.product.image_512}
             />
 
@@ -125,7 +125,7 @@ function CartItem(props: CartItemProps) {
               onConfirm={handleConfirmDelete}
               productName={props.productName}
               image={props.product.image_512}
-              price={props.price}
+              price={props.product.sale_price}
             />
           </div>
         </div>
