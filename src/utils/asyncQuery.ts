@@ -9,7 +9,7 @@ type Params<T, TVariables> = QueryOptions<TVariables, T> & {
   onError?: (error: ApolloError) => void;
 };
 
-export default async function asyncQuery<T, TVariables = OperationVariables>(
+export default async function asyncQuery<T = any, TVariables = OperationVariables>(
   params: Params<T, TVariables>
 ): Promise<ApolloQueryResult<T>> {
   let queryResults: ApolloQueryResult<T>;
@@ -27,13 +27,13 @@ export default async function asyncQuery<T, TVariables = OperationVariables>(
   }
 
   try {
-    queryResults = await ctx.apolloClient.query(queryOptions).then((results) => {
-      onCompleted?.(results.data);
-    });
+    queryResults = await ctx.apolloClient.query(queryOptions);
   } catch (error) {
     onError?.(error);
     return;
   }
+
+  onCompleted?.(queryResults.data);
 
   return queryResults;
 }
