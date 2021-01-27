@@ -18,18 +18,16 @@ const ProducerInformation = (props: ProductDetails) => {
               <th>{t('name')}</th>
               <th>{t('concentrations')}</th>
             </tr>
-            {props.ingredients?.map((item, index) => {
-              return (
-                <tr key={index}>
-                  <td>
-                    <Link href={`/ingredients/${item.ingredient_id}/${slugify(item.name)}`}>
-                      <a>{item.name}</a>
-                    </Link>
-                  </td>
-                  <td>{item.amount}</td>
-                </tr>
-              );
-            })}
+            {props.ingredients?.map((item, index) => (
+              <tr key={index}>
+                <td>
+                  <Link href={`/ingredients/${item.ingredient_id}/${slugify(item.name)}`}>
+                    <a>{item.name}</a>
+                  </Link>
+                </td>
+                <td>{item.amount}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>

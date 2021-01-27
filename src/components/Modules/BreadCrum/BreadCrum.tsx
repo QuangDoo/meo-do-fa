@@ -2,18 +2,12 @@ import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import Typography from '@material-ui/core/Typography';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
-import { useRouter, withRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
-
-type Category = {
-  id: string;
-  name: string;
-  parent_id: number;
-  parent_name: string;
-};
+import { ProductDetails } from 'src/graphql/product/product.query';
 
 type Props = {
-  categories: Category[];
+  categories: ProductDetails['categories'];
 };
 
 const SimpleBreadcrumbs = (props: Props) => {
