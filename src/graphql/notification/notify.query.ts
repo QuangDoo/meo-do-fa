@@ -15,7 +15,7 @@ export type GetNotiData = {
   getNotify: {
     Notifies: Notifies[];
     total: number;
-    totalUnSeen: number;
+    totalUnseen: number;
   };
 };
 
@@ -38,7 +38,7 @@ export const GET_NOTI = gql`
         create_date
       }
       total
-      totalUnSeen
+      totalUnseen
     }
   }
 `;
