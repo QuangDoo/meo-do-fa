@@ -32,7 +32,9 @@ function PathologyDropdownMenu(props: Props) {
       {pathologies.map(({ id, name }) => (
         <div key={id} className="mb-2">
           <Link href={`/products?pathology=${id}`}>
-            <a>{name}</a>
+            <a type="button" role="button" onClick={onClose} onKeyDown={onClose} tabIndex={0}>
+              {name}
+            </a>
           </Link>
         </div>
       ))}

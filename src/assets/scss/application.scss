@@ -9454,7 +9454,6 @@ a.text-dark:focus {
   width: auto;
 }
 
-
 abbr[title] {
   text-decoration: none;
 }
@@ -10010,7 +10009,7 @@ abbr[title] {
   top: 0;
 }
 .banner__img--mobile {
-  min-height: 250px;
+  min-height: 175px;
   border-radius: 10px;
 }
 .btn-gradient {
@@ -11975,9 +11974,7 @@ abbr[title] {
   margin: auto;
 }
 .home__cta {
-  background: #000
-    url(/assets/images/thuoc.jpg)
-    center center no-repeat;
+  background: #000 url(/assets/images/thuoc.jpg) center center no-repeat;
   background-size: cover;
   background-attachment: fixed;
 }
@@ -12654,6 +12651,7 @@ abbr[title] {
   width: 100%;
   min-height: 20em;
   max-height: 300px;
+  overflow: hidden;
 }
 .product__price-group {
   line-height: 1;
@@ -13182,8 +13180,8 @@ abbr[title] {
     margin: 0;
   }
 
-/* Firefox */
-  input[type=number] {
+  /* Firefox */
+  input[type='number'] {
     -moz-appearance: textfield;
   }
 }

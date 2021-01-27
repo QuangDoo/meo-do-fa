@@ -42,7 +42,7 @@ export default function DeliveryAddressForm(props: Props) {
 
   const { data: getCitiesData } = useQuery<GetCitiesData, undefined>(GET_CITIES, {
     onCompleted: (data) => {
-      if (!data.getCities?.length) return;
+      if (!data.getCities?.length || !props.defaultValues?.city) return;
 
       const { id, name } = data.getCities.find((city) => city.name === props.defaultValues.city);
 
@@ -59,13 +59,18 @@ export default function DeliveryAddressForm(props: Props) {
       city_id: +chosenCity.split('__')[1]
     },
     onCompleted: (data) => {
-      if (isFirstAddressLoad.current && props.defaultValues?.district) {
-        const { id, name } = data.getDistricts.find(
-          (district) => district.name === props.defaultValues.district
-        );
+      if (
+        !isFirstAddressLoad.current ||
+        !data.getDistricts?.length ||
+        !props.defaultValues?.district
+      )
+        return;
 
-        setValue(props.fieldNames.district, name + '__' + id);
-      }
+      const { id, name } = data.getDistricts.find(
+        (district) => district.name === props.defaultValues.district
+      );
+
+      setValue(props.fieldNames.district, name + '__' + id);
     },
     onError: (err) => {
       toast.error(t(`errors:code_${err.graphQLErrors[0]?.extensions?.code}`));
@@ -78,14 +83,16 @@ export default function DeliveryAddressForm(props: Props) {
       district_id: +chosenDistrict.split('__')[1]
     },
     onCompleted: (data) => {
-      if (isFirstAddressLoad.current && props.defaultValues?.ward) {
-        const { id, name } = data.getWards.find((ward) => ward.name === props.defaultValues.ward);
-
-        setValue(props.fieldNames.ward, name + '__' + id);
-
-        // Finish setting default address value
-        isFirstAddressLoad.current = false;
+      if (!isFirstAddressLoad.current || !data.getWards?.length || !props.defaultValues?.ward) {
+        return;
       }
+
+      const { id, name } = data.getWards.find((ward) => ward.name === props.defaultValues.ward);
+
+      setValue(props.fieldNames.ward, name + '__' + id);
+
+      // Finish setting default address value
+      isFirstAddressLoad.current = false;
     },
     onError: (err) => {
       toast.error(t(`errors:code_${err.graphQLErrors[0]?.extensions?.code}`));

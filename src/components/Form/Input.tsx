@@ -26,18 +26,18 @@ const Input = (props: Props, ref) => {
     <div className={`input-group form__input-group ${containerClass} `}>
       <i className={`${props.iconClass} form__input-icon`}></i>
       {type === 'file' ? (
-        <div className="custom-file">
+        <div className="input-file">
           <input
             ref={ref}
             name={props.name}
             disabled={props.disabled}
             type="file"
-            className="custom-file-input form-control no-spinner"
+            className="input-file-input form-control no-spinner"
             accept={props.accept}
             onChange={props.onChange}
           />
-          <div className="custom-file-label overflow-hidden">
-            <span className="pl-4 ml-2">{props.placeholder}</span>
+          <div className="input-file-label overflow-hidden">
+            <span>{props.placeholder}</span>
           </div>
         </div>
       ) : (
