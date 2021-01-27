@@ -21,7 +21,7 @@ const RightSideUser = () => {
 
   const [show, setShow] = useState(false);
 
-  const { data, getNotify, refetch, loading, totalUnSeen } = useNotify();
+  const { data, getNotify, refetch, loading, totalUnseen } = useNotify();
 
   const notificationsData = data || [];
 
@@ -58,7 +58,7 @@ const RightSideUser = () => {
             tabIndex={0}>
             <i className="far fa-bell header-right__icon" />
 
-            {totalUnSeen > 0 && <span className="notification__counter">{totalUnSeen}</span>}
+            {totalUnseen > 0 && <span className="notification__counter">{totalUnseen}</span>}
 
             <div
               className={clsx(
