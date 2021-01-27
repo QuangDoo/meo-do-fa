@@ -21,7 +21,7 @@ const RightSideUser = () => {
 
   const [show, setShow] = useState(false);
 
-  const { data, getNotify, refetch, loading, totalUnSeen } = useNotify();
+  const { data, getNotify, refetch, loading, totalUnseen } = useNotify();
 
   const notificationsData = data || [];
 
@@ -39,12 +39,6 @@ const RightSideUser = () => {
     setShow((show) => !show);
   }
 
-  const lengthNotifications = notificationsData?.filter((noti) => {
-    if (!noti.isSeen) {
-      return noti;
-    }
-  });
-
   return (
     <div className="header-right d-none d-lg-block">
       <ul className="nav align-items-center">
@@ -58,7 +52,7 @@ const RightSideUser = () => {
             tabIndex={0}>
             <i className="far fa-bell header-right__icon" />
 
-            {totalUnSeen > 0 && <span className="notification__counter">{totalUnSeen}</span>}
+            {totalUnseen > 0 && <span className="notification__counter">{totalUnseen}</span>}
 
             <div
               className={clsx(
