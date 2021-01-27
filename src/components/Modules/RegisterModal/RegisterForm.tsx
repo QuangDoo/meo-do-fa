@@ -155,6 +155,7 @@ const RegisterForm = () => {
             containerClass="mb-4"
             iconClass="icomoon icon-user"
             placeholder={t('register:input_name_placeholder')}
+            required
           />
 
           <Input
@@ -170,6 +171,7 @@ const RegisterForm = () => {
             containerClass="mb-4"
             iconClass="icomoon icon-phone"
             placeholder={t('register:input_phone_placeholder')}
+            required
           />
 
           <Input
@@ -194,6 +196,7 @@ const RegisterForm = () => {
             containerClass="mb-4"
             iconClass="icomoon icon-mail"
             placeholder={t('register:input_email_placeholder')}
+            required
           />
 
           <Input
@@ -235,6 +238,7 @@ const RegisterForm = () => {
             iconClass="icomoon icon-lock"
             placeholder={t('register:input_password_placeholder')}
             type="password"
+            required
           />
 
           <Checkbox

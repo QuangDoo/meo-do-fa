@@ -10528,10 +10528,17 @@ abbr[title] {
 }
 .form__password-label {
   position: absolute;
-  right: 1em;
+  right: 2em;
   top: calc(50% - 0.75em);
   cursor: pointer;
   color: #919aa3;
+}
+.form__required-label {
+  position: absolute;
+  right: 1em;
+  top: calc(50% - 0.75em);
+  cursor: pointer;
+  color: #dc3545;
 }
 .form__password-checkbox {
   display: none;
