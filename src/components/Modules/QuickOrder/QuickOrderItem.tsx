@@ -56,7 +56,7 @@ function QuickOrderItem(props: Props) {
                   <div className="cart-item__qty">
                     <QuantityInput
                       productId={props.productId}
-                      productPrice={props.sale_price}
+                      productPrice={props.list_price}
                       productName={props.productName}
                       productImg={props.image}
                     />
