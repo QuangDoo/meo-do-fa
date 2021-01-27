@@ -35,7 +35,6 @@ import {
 } from 'src/graphql/order/getOrder';
 import { useQueryAuth } from 'src/hooks/useApolloHookAuth';
 import asyncQuery from 'src/utils/asyncQuery';
-import redirect from 'src/utils/redirect';
 import withToken from 'src/utils/withToken';
 
 import ConfirmCancelOrder from '../../components/Modules/My-orders/ConfirmCancelOrder';
