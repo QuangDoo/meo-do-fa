@@ -26,59 +26,45 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 MyAddresses.getInitialProps = async (ctx) => {
-  const token = getToken(ctx);
-
-  let addressInfoUser;
-
   try {
-    addressInfoUser = await ctx.apolloClient.query({
+    await ctx.apolloClient.query({
       query: GET_ADDRESS_INFO_USER,
-      fetchPolicy: 'no-cache',
+      fetchPolicy: 'network-only',
       notifyOnNetworkStatusChange: true,
       context: {
         headers: {
-          Authorization: token
+          Authorization: getToken(ctx)
         }
       }
     });
   } catch (error) {
-    console.log('Error:', error);
+    console.log('getAddressInfoUser error:', error);
   }
 
   return {
-    namespacesRequired: [...mainLayoutNamespacesRequired, 'myAddressBook'],
-    addressBook: addressInfoUser?.data.getAddressInfoUser.deliveries
+    namespacesRequired: [...mainLayoutNamespacesRequired, 'myAddressBook']
   };
 };
 
-type Props = {
-  addressBook: GetAddressInfoUserData['getAddressInfoUser']['deliveries'];
-};
-
-function MyAddresses(props: Props) {
+function MyAddresses() {
   const classes = useStyles();
 
   const { t } = useTranslation(['myAddressBook', 'errors']);
 
-  const [addressBook, setAddressBook] = useState<typeof props['addressBook']>(
-    props.addressBook || []
-  );
-
   const [openCreate, setOpenCreate] = useState<boolean>(false);
 
-  const { refetch: refetchAddressInfoUser, loading } = useQueryAuth<
+  const { data: addressInfoUserData, refetch: refetchAddressInfoUser, loading } = useQueryAuth<
     GetAddressInfoUserData,
     undefined
   >(GET_ADDRESS_INFO_USER, {
-    fetchPolicy: 'no-cache',
+    fetchPolicy: 'network-only',
     notifyOnNetworkStatusChange: true,
-    onCompleted: (data) => {
-      setAddressBook(data.getAddressInfoUser.deliveries);
-    },
     onError: (err) => {
       toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
     }
   });
+
+  const addressBook = addressInfoUserData?.getAddressInfoUser.deliveries || [];
 
   const onCreateCompleted = () => {
     setOpenCreate(false);

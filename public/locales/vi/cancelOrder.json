@@ -3,13 +3,13 @@
   "cancel_order_unsuccessful": "Hủy đơn hàng thất bại",
   "reason_for_cancellation": "Lý do hủy đơn",
   "additional_information": "Thông tin thêm(không bắt buộc)",
-  "cancellation_policy": "tôi đồng ý với chính sách huỷ đơn",
+  "cancellation_policy": "Tôi đồng ý với chính sách huỷ đơn",
   "request_cancellation": "Yêu cầu hủy đơn",
   "delivery_is_too_long": "Giao hàng quá lâu",
   "change_of_mind": "Thay đổi ý muốn",
   "duplicate_order": "Trùng đơn hàng",
   "change_delivery_address": "Thay đổi địa điểm nhận",
   "button_title": "Xác nhận",
-  "is_check" : "Xin vui lòng xác thực điều khoản",
+  "is_check": "Xin vui lòng xác thực điều khoản",
   "help": "Gọi hỗ trợ"
 }

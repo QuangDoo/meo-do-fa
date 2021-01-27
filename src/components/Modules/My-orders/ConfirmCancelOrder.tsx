@@ -24,13 +24,20 @@ const options = [
   { key: 'change_delivery_address', reason: 'Thay đổi địa chỉ giao hàng', default: false }
 ];
 
-const ConfirmCancelOrder = (props) => {
-  const { open, onClose, orderNo, callBack } = props;
+type Props = {
+  open: boolean;
+  onClose: () => void;
+  orderNo: string;
+  onCancelCompleted: () => void;
+};
+
+const ConfirmCancelOrder = (props: Props) => {
+  const { open, onClose, orderNo, onCancelCompleted } = props;
 
   const [cancelOrder] = useMutationAuth(CANCEL_ORDER, {
     onCompleted: () => {
       toast.success(t('cancelOrder:cancel_order_successful'));
-      callBack();
+      onCancelCompleted();
       onClose();
     },
     onError: () => {
@@ -55,8 +62,6 @@ const ConfirmCancelOrder = (props) => {
     });
   };
 
-  const hocTrans = (key) => t(`cancelOrder:${key}`);
-
   return (
     <ModalBase open={open} onClose={onClose}>
       <div className="container p-3">
@@ -72,7 +77,7 @@ const ConfirmCancelOrder = (props) => {
           <Select ref={register} className="custom-select my-1 mr-sm-2" name="reason">
             {options &&
               options.map((option) => {
-                const value = hocTrans(option.key);
+                const value = t(`cancelOrder:${option.key}`);
                 return (
                   <option key={value} value={value}>
                     {value}
@@ -95,6 +100,7 @@ const ConfirmCancelOrder = (props) => {
             name="check"
             label={t('cancelOrder:cancellation_policy')}
           />
+
           <Button type="submit" variant="primary" className="my-1">
             {t('cancelOrder:button_title')}
           </Button>

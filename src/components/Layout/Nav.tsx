@@ -57,7 +57,7 @@ const Nav = () => {
         <div className="row">
           <div className="col-12 d-flex align-items-center justify-content-between">
             <ul className="nav text-capitalize">
-              {categories.length !== 0 ? (
+              {/* {categories.length !== 0 ? (
                 <CategoryMenu />
               ) : (
                 <li className="rockland-nav__item">
@@ -68,7 +68,15 @@ const Nav = () => {
                     </a>
                   </Link>
                 </li>
-              )}
+              )} */}
+              <li className="rockland-nav__item">
+                <Link href="/products">
+                  <a className="rockland-nav__link">
+                    <i className="rockland-nav__icon fas fa-list-ul" />
+                    <span className="rockland-nav__title">{t('navbar:category')}</span>
+                  </a>
+                </Link>
+              </li>
 
               <li className="rockland-nav__item">
                 <Link href="/deals-of-the-day">

@@ -10,6 +10,8 @@ import { viPhoneNumberRegex } from 'src/assets/regex/viPhoneNumber';
 import Button from 'src/components/Form/Button';
 import Checkbox from 'src/components/Form/Checkbox';
 import Input from 'src/components/Form/Input';
+import InputFile from 'src/components/Form/InputFile';
+import InputWithLabel from 'src/components/Form/InputWithLabel';
 import Select from 'src/components/Form/Select';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { useModalControlDispatch } from 'src/contexts/ModalControl';

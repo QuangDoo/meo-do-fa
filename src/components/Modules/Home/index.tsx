@@ -15,11 +15,7 @@ const bannerImages = [
   '/assets/images/banner_1.png'
 ];
 
-const bannerMobiles = [
-  '/assets/images/banner_mobile.jpg',
-  '/assets/images/banner_mobile.jpg',
-  '/assets/images/banner_mobile.jpg'
-];
+const bannerMobiles = ['/assets/images/banner_mobile_1.jpg', '/assets/images/banner_mobile_2.jpg'];
 
 const Home = ({ dealsOfTheDayData, bestSellingData, promotionProductsData, newProductsData }) => {
   const { t } = useTranslation(['carousels']);
