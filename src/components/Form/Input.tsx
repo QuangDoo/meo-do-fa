@@ -51,6 +51,8 @@ const Input = (props: Props, ref) => {
         />
       )}
 
+      {props.required && <div className="form__required-label">*</div>}
+
       {/* Show password checkbox */}
       {type === 'password' && (
         <div
