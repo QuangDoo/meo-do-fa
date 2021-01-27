@@ -28,6 +28,7 @@ import {
   GetProductsVars,
   ProductTag
 } from 'src/graphql/product/getProducts';
+import asyncQuery from 'src/utils/asyncQuery';
 
 const PAGE_SIZE = 24;
 
@@ -35,16 +36,42 @@ const NAME_ASCENDING = '07'; // Name ascending
 
 import withToken from 'src/utils/withToken';
 
-Products.getInitialProps = async () => ({
-  namespacesRequired: [
-    ...mainLayoutNamespacesRequired,
-    'products',
-    'productCard',
-    'productBadge',
-    'productsSidebar',
-    'filterTags'
-  ]
-});
+Products.getInitialProps = async (ctx) => {
+  await asyncQuery({
+    ctx,
+    query: GET_CATEGORIES_LEVEL
+  });
+
+  await asyncQuery<GetProductsData, GetProductsVars>({
+    ctx,
+    query: GET_PRODUCTS,
+    variables: {
+      page: +ctx.query.page || 1,
+      pageSize: PAGE_SIZE,
+      type: ctx.query.tag as ProductTag,
+      condition: {
+        manufacturer_id: ctx.query.manufacturer,
+        category_id: ctx.query.category,
+        name: ctx.query.search,
+        order_type: ctx.query.sort || NAME_ASCENDING,
+        min_price: +ctx.query.priceFrom || 1,
+        max_price: +ctx.query.priceTo || 10000000,
+        pathology_id: ctx.query.pathology
+      }
+    }
+  });
+
+  return {
+    namespacesRequired: [
+      ...mainLayoutNamespacesRequired,
+      'products',
+      'productCard',
+      'productBadge',
+      'productsSidebar',
+      'filterTags'
+    ]
+  };
+};
 
 function Products() {
   const { t } = useTranslation(['products', 'errors']);
@@ -125,7 +152,6 @@ function Products() {
     if (productsLoading) {
       animateScroll.scrollToTop();
     }
-    router.query.page = '1';
   }, [productsLoading]);
 
   return (
