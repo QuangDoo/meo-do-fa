@@ -125,7 +125,6 @@ function Products() {
     if (productsLoading) {
       animateScroll.scrollToTop();
     }
-    router.query.page = '1';
   }, [productsLoading]);
 
   return (
