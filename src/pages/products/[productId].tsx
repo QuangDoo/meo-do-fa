@@ -72,7 +72,7 @@ function ProductDetail() {
             <div className="col-md-8">
               <div className="row">
                 <div className="col-md-6">
-                  <div className="lozad product__image">
+                  <div className="product__image">
                     {image && (
                       <MagnifierContainer>
                         <SideBySideMagnifier
@@ -98,8 +98,8 @@ function ProductDetail() {
               <ProductSidebar />
             </div>
           </div>
-          <div className="row justify-content-center">
-            <div className="col-sm-10">
+          <div className="row px-3">
+            <div className="col-12">
               <ProducerInformation {...product} />
             </div>
           </div>
