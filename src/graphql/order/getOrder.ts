@@ -46,7 +46,7 @@ export type GetOrderDetailVars = {
   orderNo: string;
 };
 
-export const GET_ORDER = gql`
+export const GET_ORDER_DETAIL = gql`
   query getOrderDetail($orderNo: String!) {
     getOrderDetail(orderNo: $orderNo) {
       id

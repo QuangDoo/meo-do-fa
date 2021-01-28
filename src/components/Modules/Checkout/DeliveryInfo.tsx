@@ -45,6 +45,11 @@ const DeliveryInfo = () => {
     setValue('deliveryPartnerId', address.id);
   };
 
+  const handleCreateAddressClick = () => {
+    setChosenAddress(undefined);
+    setValue('deliveryPartnerId', '');
+  };
+
   return (
     <InputCard title={t('checkout:deliveryInfo_title')} hasRequired={!chosenAddress}>
       {chosenAddress ? (
@@ -78,7 +83,7 @@ const DeliveryInfo = () => {
             </Fragment>
           )}
 
-          <button type="button" className="btn-link" onClick={() => setChosenAddress(undefined)}>
+          <button type="button" className="btn-link" onClick={handleCreateAddressClick}>
             {t('checkout:create_address')}
           </button>
         </Box>

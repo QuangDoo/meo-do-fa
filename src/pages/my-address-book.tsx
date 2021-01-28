@@ -12,7 +12,7 @@ import CreateDeliveryAddressDialog from 'src/components/Modules/MyAddressBook/Cr
 import ProfileLayout from 'src/components/Modules/ProfileLayout';
 import { GET_ADDRESS_INFO_USER, GetAddressInfoUserData } from 'src/graphql/user/getAddressInfoUser';
 import { useQueryAuth } from 'src/hooks/useApolloHookAuth';
-import getToken from 'src/utils/getToken';
+import asyncQuery from 'src/utils/asyncQuery';
 import withToken from 'src/utils/withToken';
 
 const useStyles = makeStyles((theme) => ({
@@ -26,20 +26,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 MyAddresses.getInitialProps = async (ctx) => {
-  try {
-    await ctx.apolloClient.query({
-      query: GET_ADDRESS_INFO_USER,
-      fetchPolicy: 'network-only',
-      notifyOnNetworkStatusChange: true,
-      context: {
-        headers: {
-          Authorization: getToken(ctx)
-        }
-      }
-    });
-  } catch (error) {
-    console.log('getAddressInfoUser error:', error);
-  }
+  await asyncQuery({
+    ctx,
+    query: GET_ADDRESS_INFO_USER,
+    fetchPolicy: 'network-only',
+    notifyOnNetworkStatusChange: true,
+    auth: true
+  });
 
   return {
     namespacesRequired: [...mainLayoutNamespacesRequired, 'myAddressBook']

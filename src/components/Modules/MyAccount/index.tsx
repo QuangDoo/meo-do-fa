@@ -30,7 +30,8 @@ type Inputs = {
   accountType: string;
   companyName: string;
   representative: string;
-  businessLicense: FileList;
+  // businessLicense: FileList;
+  businessLicense: string;
   taxCode: string;
   companyStreet: string;
   companyCity: string;
@@ -42,6 +43,8 @@ type Inputs = {
   deliveryWard: string;
 };
 
+const BASE64_PREFIX = 'data:image/jpeg;base64,';
+
 export default function MyAccountPage() {
   const { t } = useTranslation(['myAccount', 'common', 'errors']);
 
@@ -49,7 +52,11 @@ export default function MyAccountPage() {
 
   const { register, handleSubmit, watch, setValue } = useForm<Inputs>();
 
-  const businessLicense: FileList = watch('businessLicense');
+  const businessLicense: string = watch('businessLicense', user?.business_license);
+
+  useEffect(() => {
+    console.log('watch businessLicense:', businessLicense);
+  }, [businessLicense]);
 
   const [firstLoadCities, setFirstLoadCities] = useState(true);
   const [firstLoadDistricts, setFirstLoadDistricts] = useState(true);
@@ -160,19 +167,32 @@ export default function MyAccountPage() {
     if (!isImage) {
       setValue('businessLicense', undefined);
       toast.error(t('cart:file_is_not_image'));
+      return;
+    }
+
+    try {
+      toBase64(file).then((res) => setValue('businessLicense', res.replace(BASE64_PREFIX, '')));
+    } catch (err) {
+      console.log('Error converting file to base64:', err);
     }
   };
 
   const onSubmit = async (data: Inputs) => {
-    let businessLicenseBase64 = '';
+    // let rawBase64 = '';
 
-    if (data.businessLicense.length) {
-      try {
-        businessLicenseBase64 = await toBase64(data.businessLicense[0]);
-      } catch (err) {
-        console.log('Error converting file to base64:', err);
-      }
-    }
+    // if (data.businessLicense.length) {
+    //   try {
+    //     rawBase64 = await toBase64(data.businessLicense[0]);
+    //   } catch (err) {
+    //     console.log('Error converting file to base64:', err);
+    //   }
+    // }
+
+    // const base64 = rawBase64.replace(BASE64_PREFIX, '');
+
+    console.log('Submit data:', data);
+
+    return;
 
     const [cityName, cityId] = data.companyCity.split('__');
     const [districtName, districtId] = data.companyDistrict.split('__');
@@ -200,7 +220,7 @@ export default function MyAccountPage() {
         company_name: data.companyName,
         vat: data.taxCode,
         representative: data.representative,
-        business_license: businessLicenseBase64
+        business_license: data.businessLicense.replace(BASE64_PREFIX, '')
       }
     });
   };
@@ -289,8 +309,8 @@ export default function MyAccountPage() {
             placeholder={t('myAccount:tax_code_placeholder')}
           />
 
-          {/* Business license file */}
-          <InputWithLabel
+          {/* Business license file input */}
+          {/* <InputWithLabel
             ref={register}
             label={t('myAccount:business_license_label')}
             name="businessLicense"
@@ -302,7 +322,31 @@ export default function MyAccountPage() {
                 : t('myAccount:business_license_placeholder')
             }
             onChange={handleFileChange}
+          /> */}
+
+          <InputWithLabel
+            label={t('myAccount:business_license_label')}
+            type="file"
+            accept="image/*"
+            placeholder={t('myAccount:business_license_placeholder')}
+            onChange={handleFileChange}
+            containerClass="mb-2"
           />
+
+          <input
+            hidden
+            ref={register}
+            name="businessLicense"
+            defaultValue={user?.business_license}
+          />
+
+          {businessLicense && (
+            <img
+              alt=""
+              className="mb-3 business-license-img"
+              src={BASE64_PREFIX + businessLicense}
+            />
+          )}
 
           <InputWithLabel
             ref={register({
