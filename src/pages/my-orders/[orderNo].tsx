@@ -91,7 +91,7 @@ function OrderDetails() {
       setActiveStep(flagSteps.indexOf(data.getOrderDetail.flag));
     },
     onError: (err) => {
-      toast.error(t(`errors:code_${err.graphQLErrors?.[0].extensions?.code}`));
+      toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
     }
   });
 
