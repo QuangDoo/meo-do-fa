@@ -72,7 +72,7 @@ const InputWithLabel = (props: Props, ref) => {
         <input {...sharedInputProps} type={props.type} className="form-control no-spinner" />
       )}
 
-      <small className="text-muted">{props.guide}</small>
+      {props.guide && <small className="text-muted">{props.guide}</small>}
     </FormGroup>
   );
 };
