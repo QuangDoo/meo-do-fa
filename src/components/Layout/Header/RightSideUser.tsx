@@ -39,12 +39,6 @@ const RightSideUser = () => {
     setShow((show) => !show);
   }
 
-  const lengthNotifications = notificationsData?.filter((noti) => {
-    if (!noti.isSeen) {
-      return noti;
-    }
-  });
-
   return (
     <div className="header-right d-none d-lg-block">
       <ul className="nav align-items-center">

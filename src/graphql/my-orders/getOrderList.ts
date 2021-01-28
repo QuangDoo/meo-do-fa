@@ -31,9 +31,6 @@ export const GET_ORDER_LIST = gql`
       orderNo
       date_order
       expected_date
-      order_lines {
-        price_total
-      }
       is_expired
       flag
       state
