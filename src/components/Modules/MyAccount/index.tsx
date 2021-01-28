@@ -164,15 +164,17 @@ export default function MyAccountPage() {
   };
 
   const onSubmit = async (data: Inputs) => {
-    let businessLicenseBase64 = '';
+    let rawBase64 = '';
 
     if (data.businessLicense.length) {
       try {
-        businessLicenseBase64 = await toBase64(data.businessLicense[0]);
+        rawBase64 = await toBase64(data.businessLicense[0]);
       } catch (err) {
         console.log('Error converting file to base64:', err);
       }
     }
+
+    const base64 = rawBase64.replace('data:image/jpeg;base64,', '');
 
     const [cityName, cityId] = data.companyCity.split('__');
     const [districtName, districtId] = data.companyDistrict.split('__');
@@ -200,7 +202,7 @@ export default function MyAccountPage() {
         company_name: data.companyName,
         vat: data.taxCode,
         representative: data.representative,
-        business_license: businessLicenseBase64
+        business_license: base64
       }
     });
   };
