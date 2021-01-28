@@ -12,7 +12,7 @@ import { ProductsContainer } from './ProductsContainer';
 const bannerImages = [
   // 'https://firebasestorage.googleapis.com/v0/b/medofa-image.appspot.com/o/banner%2FBanner-Freeship.jpg?alt=media',
   // 'https://firebasestorage.googleapis.com/v0/b/medofa-image.appspot.com/o/banner%2FBanner-Medofa.jpg?alt=media'
-  '/assets/images/banner_1.png'
+  '/assets/images/banner_1.jpg'
 ];
 
 const bannerMobiles = ['/assets/images/banner_mobile_1.jpg', '/assets/images/banner_mobile_2.jpg'];
