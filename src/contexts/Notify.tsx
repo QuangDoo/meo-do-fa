@@ -33,7 +33,6 @@ function NotifyProvider(props) {
     GET_NOTI,
     {
       fetchPolicy: 'network-only',
-      notifyOnNetworkStatusChange: true,
       onError: (error) => {
         const errorCode = error.graphQLErrors?.[0]?.extensions?.code;
 
