@@ -20,14 +20,14 @@ type Props = {
 
 function QuickOrderItem(props: Props) {
   const token = useToken();
-
+  const image = props?.image || '/assets/images/no-image.jpg';
   return (
     <div className="cart-item">
       <div className="row align-items-center px-2">
         <div
           className="cart-item__image lozadloaded flex-shrink-0"
           style={{
-            backgroundImage: `url(${props.image})`
+            backgroundImage: `url(${image})`
           }}
         />
         <div className="flex-1 pl-2 pr-2">
@@ -58,7 +58,7 @@ function QuickOrderItem(props: Props) {
                       productId={props.productId}
                       productPrice={props.list_price}
                       productName={props.productName}
-                      productImg={props.image}
+                      productImg={image}
                     />
                   </div>
                 )}
