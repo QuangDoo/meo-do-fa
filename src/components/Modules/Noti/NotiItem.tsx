@@ -3,64 +3,21 @@ import clsx from 'clsx';
 import { useTranslation } from 'i18n';
 import moment from 'moment';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
-import { SEEN_NOTI } from 'src/graphql/notification/seenNoti.mutation';
-import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
-import useNoti from 'src/hooks/useNoti';
+import React from 'react';
+import { Notifies } from 'src/graphql/notification/notify.query';
 
-type Props = {
-  _id: string;
-
-  description?: string;
-
-  content: string;
-
-  isSeen: boolean;
-
-  create_date: string;
-
-  isRead?: boolean;
-
-  type: string;
-
-  loading?: boolean;
+type Props = Notifies & {
+  onClick?: () => void;
 };
 
-const pageSize = 10;
-
 const NotiItem = (props: Props) => {
-  const [seenNotify] = useMutationAuth(SEEN_NOTI);
-
-  const [dataContent, setDataContent] = useState('');
-
-  const router = useRouter();
-
-  const page = +router.query.page || 1;
-
-  const { _id, content, create_date, description, type, loading } = props;
-
-  const { refetchNoti } = useNoti({ page, pageSize });
+  const { content, create_date, description, type } = props;
 
   const { t } = useTranslation('noti');
 
-  useEffect(() => {
-    content === '10' && setDataContent(`${t('noti:10', { description })}`);
-    content === '20' && setDataContent(`${t('noti:20', { description })}`);
-    content === '25' && setDataContent(`${t('noti:25', { description })}`);
-    content === '30' && setDataContent(`${t('noti:30', { description })}`);
-    content === '40' && setDataContent(`${t('noti:40', { description })}`);
-    content === '80' && setDataContent(`${t('noti:80', { description })}`);
-  }, [content]);
-
-  const handleRead = () => {
-    seenNotify({ variables: { _id } });
-    refetchNoti();
-  };
-
   return (
     // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-    <div className="col-12 p-0" onClick={handleRead}>
+    <div className="col-12 p-0" onClick={props.onClick}>
       {type === 'order' && (
         <Link href={`/my-orders/${description}`}>
           <a
@@ -74,7 +31,9 @@ const NotiItem = (props: Props) => {
             <div className="notification__content">
               <div
                 className="notification__content-title"
-                dangerouslySetInnerHTML={{ __html: dataContent }}
+                dangerouslySetInnerHTML={{
+                  __html: t(`noti:${content}`, { description })
+                }}
               />
               <small className="notification__content-created-at">
                 {moment(create_date)

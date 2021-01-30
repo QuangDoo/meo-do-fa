@@ -76,7 +76,6 @@ OrderDetails.getInitialProps = async (ctx) => {
       orderNo: ctx.query.orderNo
     },
     fetchPolicy: 'network-only',
-    notifyOnNetworkStatusChange: true,
     auth: true
   });
 

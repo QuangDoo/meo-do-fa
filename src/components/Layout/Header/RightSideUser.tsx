@@ -3,9 +3,13 @@ import clsx from 'clsx';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import NotiItem from 'src/components/Modules/Noti/NotiItem';
 import { useNotify } from 'src/contexts/Notify';
 import { useUser } from 'src/contexts/User';
+import { Notifies } from 'src/graphql/notification/notify.query';
+import { SEEN_NOTI } from 'src/graphql/notification/seenNoti.mutation';
+import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 
 type NotiItem = {
   time: string;
@@ -17,23 +21,35 @@ const pageSize = 5;
 const RightSideUser = () => {
   const { data: user } = useUser();
 
-  const { t } = useTranslation('noti');
-
+  const { t } = useTranslation(['noti', 'errors']);
   const [show, setShow] = useState(false);
 
-  const { data, getNotify, refetch, loading, totalUnseen } = useNotify();
+  const { data, refetch } = useNotify();
 
   const notificationsData = data || [];
-
-  useEffect(() => {
-    getNotify({ variables: { page: 1, pageSize: pageSize } });
-  }, []);
 
   useEffect(() => {
     if (!data) return;
 
     refetch();
   }, [data]);
+
+  const [seenNotify] = useMutationAuth(SEEN_NOTI, {
+    onError: (error) => {
+      toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
+    },
+    onCompleted: () => {
+      refetch();
+    }
+  });
+
+  function handleNotiItemClick(notiItem: Notifies) {
+    seenNotify({
+      variables: {
+        _id: notiItem._id
+      }
+    });
+  }
 
   function toggleShow() {
     setShow((show) => !show);
@@ -52,17 +68,19 @@ const RightSideUser = () => {
             tabIndex={0}>
             <i className="far fa-bell header-right__icon" />
 
-            {totalUnseen > 0 && <span className="notification__counter">{totalUnseen}</span>}
+            {data?.totalUnseen > 0 && (
+              <span className="notification__counter">{data.totalUnseen}</span>
+            )}
 
             <div
               className={clsx(
                 'dropdown-menu dropdown-menu-right notification__dropdown p-0',
                 show && 'show'
               )}>
-              {notificationsData?.length > 0 && (
+              {data?.Notifies?.length > 0 && (
                 <>
-                  {notificationsData?.map((item, index) => (
-                    <NotiItem key={index} {...item} loading={loading} />
+                  {data.Notifies.map((item, index) => (
+                    <NotiItem key={index} {...item} onClick={() => handleNotiItemClick(item)} />
                   ))}
 
                   <div className="dropdown__item notification__view-all">

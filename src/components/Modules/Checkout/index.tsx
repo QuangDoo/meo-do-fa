@@ -5,6 +5,7 @@ import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { useCart } from 'src/contexts/Cart';
+import { useNotify } from 'src/contexts/Notify';
 import { useUser } from 'src/contexts/User';
 import { CREATE_ORDER, CreateOrderData, CreateOrderVars } from 'src/graphql/order/createOrder';
 import { GET_COUNSEL, GetCounselData, OutputCounsel } from 'src/graphql/order/getCounsel';
@@ -123,6 +124,8 @@ const CheckoutPage = () => {
 
   const { data: cart, refetch: refetchCart } = useCart();
 
+  const { refetch: refetchNoti } = useNotify();
+
   const [createOrder, { loading: creatingOrder }] = useMutationAuth<
     CreateOrderData,
     CreateOrderVars
@@ -138,6 +141,8 @@ const CheckoutPage = () => {
           })
         )
         .then(() => router.push('/'));
+
+      refetchNoti();
     },
     onError: (err) => {
       const errorCode = err.graphQLErrors[0]?.extensions?.code;
