@@ -97,7 +97,6 @@ const CheckoutPage = () => {
     undefined
   >(GET_COUNSEL, {
     fetchPolicy: 'network-only',
-    notifyOnNetworkStatusChange: true,
     onCompleted: (data) => {
       setCounselData(data.getCounsel);
       if (data.getCounsel.totalDcPayment > 0) {
