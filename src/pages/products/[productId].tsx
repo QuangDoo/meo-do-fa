@@ -26,8 +26,7 @@ ProductDetail.getInitialProps = async (ctx) => {
     variables: {
       id: getProductId(ctx.query.productId)
     },
-    fetchPolicy: 'network-only',
-    notifyOnNetworkStatusChange: true
+    fetchPolicy: 'network-only'
   });
 
   return {

@@ -72,6 +72,12 @@ export default function ApplyPromoCodesDialog(props: Props) {
 
   const appliedCode = props.counselData?.counsel?.promotion?.coupon_code;
 
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && input.length > 0) {
+      props.handleApplyCoupon(input);
+    }
+  };
+
   return (
     <Dialog open={props.open} onClose={props.onClose} maxWidth="sm" fullWidth>
       <LoadingBackdrop open={props.loading} />
@@ -95,6 +101,7 @@ export default function ApplyPromoCodesDialog(props: Props) {
                 variant="outlined"
                 value={input}
                 onChange={(event) => setInput(event.target.value)}
+                onKeyPress={handleKeyPress}
               />
 
               <Button
