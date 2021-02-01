@@ -28,8 +28,13 @@ import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules
 import CustomCard from 'src/components/Modules/OrderDetails/CustomCard';
 import CustomStepper from 'src/components/Modules/OrderDetails/CustomStepper';
 import ProfileLayout from 'src/components/Modules/ProfileLayout';
-import { GET_ORDER, GetOrderDetailData, GetOrderDetailVars } from 'src/graphql/order/getOrder';
+import {
+  GET_ORDER_DETAIL,
+  GetOrderDetailData,
+  GetOrderDetailVars
+} from 'src/graphql/order/getOrder';
 import { useQueryAuth } from 'src/hooks/useApolloHookAuth';
+import asyncQuery from 'src/utils/asyncQuery';
 import withToken from 'src/utils/withToken';
 
 import ConfirmCancelOrder from '../../components/Modules/My-orders/ConfirmCancelOrder';
@@ -63,7 +68,17 @@ const TextWithLabel = (props) => {
   );
 };
 
-OrderDetails.getInitialProps = async () => {
+OrderDetails.getInitialProps = async (ctx) => {
+  await asyncQuery<GetOrderDetailData, GetOrderDetailVars>({
+    ctx,
+    query: GET_ORDER_DETAIL,
+    variables: {
+      orderNo: ctx.query.orderNo
+    },
+    fetchPolicy: 'network-only',
+    auth: true
+  });
+
   return {
     namespacesRequired: [...mainLayoutNamespacesRequired, 'myOrders']
   };
@@ -80,24 +95,24 @@ function OrderDetails() {
 
   const [activeStep, setActiveStep] = useState(-1);
 
-  const { data: orderDetail, refetch, loading: loadingOrderDetail } = useQueryAuth<
+  const { data: getOrderDetailData, refetch, loading: loadingOrderDetail } = useQueryAuth<
     GetOrderDetailData,
     GetOrderDetailVars
-  >(GET_ORDER, {
+  >(GET_ORDER_DETAIL, {
     fetchPolicy: 'network-only',
     notifyOnNetworkStatusChange: true,
     variables: { orderNo: router.query.orderNo as string },
     onCompleted: (data) => {
-      setActiveStep(flagSteps.indexOf(data.getOrderDetail.flag));
+      setActiveStep(flagSteps.indexOf(data.getOrderDetail?.flag));
     },
     onError: (err) => {
-      toast.error(t(`errors:code_${err.graphQLErrors?.[0].extensions?.code}`));
+      toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
     }
   });
 
-  const flag = orderDetail?.getOrderDetail?.flag;
-  const name = orderDetail?.getOrderDetail?.name;
-  const partnerShipping = orderDetail?.getOrderDetail?.partner_shipping;
+  const flag = getOrderDetailData?.getOrderDetail?.flag;
+  const name = getOrderDetailData?.getOrderDetail?.name;
+  const partnerShipping = getOrderDetailData?.getOrderDetail?.partner_shipping;
 
   const classes = useStyles();
 
@@ -133,10 +148,10 @@ function OrderDetails() {
                       <Typography>
                         {t('myOrders:expected_date')}{' '}
                         <strong>
-                          {orderDetail?.getOrderDetail?.expected_date &&
-                            new Date(orderDetail?.getOrderDetail?.expected_date).toLocaleDateString(
-                              'en-GB'
-                            )}
+                          {getOrderDetailData?.getOrderDetail?.expected_date &&
+                            new Date(
+                              getOrderDetailData?.getOrderDetail?.expected_date
+                            ).toLocaleDateString('en-GB')}
                         </strong>
                       </Typography>
                     )}
@@ -202,7 +217,7 @@ function OrderDetails() {
             <CustomCard>
               <TextWithLabel
                 label={t('myOrders:note')}
-                text={orderDetail?.getOrderDetail?.note || t('myOrders:no_notes')}
+                text={getOrderDetailData?.getOrderDetail?.note || t('myOrders:no_notes')}
               />
             </CustomCard>
           </Grid>
@@ -229,7 +244,7 @@ function OrderDetails() {
                 </TableHead>
 
                 <TableBody>
-                  {orderDetail?.getOrderDetail?.order_lines?.map((product) => (
+                  {getOrderDetailData?.getOrderDetail?.order_lines?.map((product) => (
                     <TableRow key={product.name}>
                       <TableCell component="th" scope="row">
                         {product.product_type !== 'product' ? (
@@ -262,7 +277,7 @@ function OrderDetails() {
                       <Typography color="initial" variant="h5" align="right">
                         {t('myOrders:total')}{' '}
                         <Typography color="primary" variant="h4" display="inline">
-                          <PriceText price={orderDetail?.getOrderDetail?.amount_total} />
+                          <PriceText price={getOrderDetailData?.getOrderDetail?.amount_total} />
                         </Typography>
                       </Typography>
                     </TableCell>

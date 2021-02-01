@@ -24,7 +24,6 @@ const CartProvider = (props) => {
 
   const { data, loading, refetch } = useQueryAuth<GetCartData, undefined>(GET_CART, {
     fetchPolicy: 'network-only',
-    notifyOnNetworkStatusChange: true,
     onError: (error) => {
       const errorCode = error.graphQLErrors?.[0]?.extensions?.code;
 
