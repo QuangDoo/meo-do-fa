@@ -10004,12 +10004,14 @@ abbr[title] {
   background-position: center center;
   background-size: contain;
   width: 100%;
-  min-height: 24vw;
+  // min-height: 24vw;
+  padding-top: 25%;
   position: absolute;
   top: 0;
 }
 .banner__img--mobile {
-  min-height: 175px;
+  // min-height: 175px;
+  padding-top: 50%;
   border-radius: 10px;
 }
 .btn-gradient {

@@ -59,7 +59,7 @@
   float: right;
 }
 .slick-slide img {
-  display: block;
+  object-fit: contain !important;
 }
 .slick-slide.slick-loading img {
   display: none;
