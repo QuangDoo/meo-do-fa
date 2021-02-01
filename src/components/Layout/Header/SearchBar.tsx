@@ -127,6 +127,8 @@ const SearchBar = () => {
   );
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!value) return;
     router.push({
       pathname: '/products',
       query: {

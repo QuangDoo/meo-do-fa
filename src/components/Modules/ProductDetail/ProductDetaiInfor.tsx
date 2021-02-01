@@ -81,12 +81,14 @@ const ProductDetailInfor = (props: ProductDetails) => {
         </div>
         <div className="product__status mb-4" />
         {!token ? null : (
-          <QuantityInput
-            productId={props.id}
-            productPrice={props.list_price}
-            productName={props.name}
-            productImg={props.image_512}
-          />
+          <div className="col-6 px-0">
+            <QuantityInput
+              productId={props.id}
+              productPrice={props.list_price}
+              productName={props.name}
+              productImg={props.image_512}
+            />
+          </div>
         )}
       </div>
     </div>
