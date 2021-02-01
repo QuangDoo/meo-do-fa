@@ -21,6 +21,8 @@ const useNotify = () => useContext(NotifyContext);
 function NotifyProvider(props) {
   const { t } = useTranslation(['errors']);
 
+  const token = useToken();
+
   const { data, loading, refetch } = useQueryAuth<GetNotiData, GetNotiVars>(GET_NOTI, {
     variables: {
       page: 1,
@@ -38,7 +40,8 @@ function NotifyProvider(props) {
           pageSize: 5
         });
       }, 600000);
-    }
+    },
+    skip: !token
   });
 
   return (
