@@ -22,16 +22,14 @@ export default function Sort() {
     <>
       <div className="products__filter-header mb-2">{t('productsSidebar:sort')}</div>
 
-      <Select onChange={handleSortChange}>
+      <Select onChange={handleSortChange} defaultValue="07">
         {/* <option value="01">Sản phẩm mới</option> */}
         {/* <option value="02">Bán chạy nhất</option> */}
         {/* <option value="03">Phù hợp nhất</option> */}
         <option value="04">{t('productsSidebar:price_high_to_low')}</option>
         <option value="05">{t('productsSidebar:price_low_to_high')}</option>
         <option value="06">{t('productsSidebar:name_z_to_a')}</option>
-        <option value="07" selected>
-          {t('productsSidebar:name_a_to_z')}
-        </option>
+        <option value="07">{t('productsSidebar:name_a_to_z')}</option>
       </Select>
     </>
   );
