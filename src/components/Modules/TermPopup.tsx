@@ -1,9 +1,10 @@
 import clsx from 'clsx';
 import { useTranslation } from 'i18n';
-import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 
-export default function TermPopup() {
+import Button from '../Form/Button';
+
+export default function TermPopup(): JSX.Element {
   const [open, setOpen] = useState<boolean>(true);
 
   const [visible, setVisible] = useState<boolean>(false);
@@ -37,21 +38,21 @@ export default function TermPopup() {
 
             <div className="mypage">
               <p style={{ textAlign: 'justify' }}>
-                <span style={{ fontSize: 12 }}>
-                  {t('termPopup:trading_floor')} MEDOFA.vn (“
+                <span style={{ fontSize: 13 }}>
+                  {t('termPopup:trading_floor')} MEDOFA.COM (“
                   <strong>{t('termPopup:exchanges')}</strong>”) {t('termPopup:content')}
                 </span>
               </p>
             </div>
-            <div className="accept">
-              <button onClick={handleClick} className="accept">
+            <div className="text-center">
+              <Button variant="primary" className="accept" onClick={handleClick}>
                 {t('termPopup:agree')}
-              </button>
+              </Button>
             </div>
-            <div className="no-accept">
-              <button className="no-accept" onClick={() => alertMessage()}>
+            <div className="text-center py-2">
+              <Button variant="secondary" className="no-accept" onClick={() => alertMessage()}>
                 {t('termPopup:no_agree')}
-              </button>
+              </Button>
             </div>
           </div>
         </>

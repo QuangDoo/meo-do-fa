@@ -10,6 +10,7 @@ import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules
 import AddressItem from 'src/components/Modules/MyAddressBook/AddressItem';
 import CreateDeliveryAddressDialog from 'src/components/Modules/MyAddressBook/CreateDeliveryAddressDialog';
 import ProfileLayout from 'src/components/Modules/ProfileLayout';
+import TermPopup from 'src/components/Modules/TermPopup';
 import { GET_ADDRESS_INFO_USER, GetAddressInfoUserData } from 'src/graphql/user/getAddressInfoUser';
 import { useQueryAuth } from 'src/hooks/useApolloHookAuth';
 import asyncQuery from 'src/utils/asyncQuery';
@@ -68,6 +69,7 @@ function MyAddresses() {
       <Head>
         <title>Medofa</title>
       </Head>
+      <TermPopup />
 
       <LoadingBackdrop open={loading} />
 
