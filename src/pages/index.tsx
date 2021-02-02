@@ -3,6 +3,7 @@ import React from 'react';
 import Head from 'src/components/Layout/Head';
 import HomePage from 'src/components/Modules/Home';
 import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
+import TermPopup from 'src/components/Modules/TermPopup';
 import {
   GET_BEST_SELLING_PRODUCTS,
   GetBestSellingProductsData,
@@ -62,7 +63,7 @@ function Home() {
       <Head>
         <title>Medofa</title>
       </Head>
-
+      <TermPopup />
       <HomePage
         bestSellingData={bestSellingData}
         newProductsData={newProductsData}
