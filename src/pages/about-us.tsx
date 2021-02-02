@@ -1,6 +1,7 @@
 import { useTranslation } from 'i18n';
 import React from 'react';
 import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
+import TermPopup from 'src/components/Modules/TermPopup';
 import withToken from 'src/utils/withToken';
 
 import Head from '../components/Layout/Head';
@@ -13,6 +14,7 @@ function AboutUs() {
       <Head>
         <title>Medofa</title>
       </Head>
+      <TermPopup />
 
       <div className="container my-5">
         <h2 className="text-center my-5">{t('aboutUs:title')}</h2>

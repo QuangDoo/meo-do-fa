@@ -10,6 +10,7 @@ import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import FormCard from 'src/components/Modules/MyAccount/FormCard';
 import ProfileLayout from 'src/components/Modules/ProfileLayout';
+import TermPopup from 'src/components/Modules/TermPopup';
 import { useUser } from 'src/contexts/User';
 import {
   CHANGE_PASSWORD,
@@ -77,6 +78,7 @@ function ChangePassWord() {
       <Head>
         <title>Medofa</title>
       </Head>
+      <TermPopup />
 
       <ProfileLayout title={t('myAccount:title')}>
         <form onSubmit={handleSubmit(onSubmit, onError)}>

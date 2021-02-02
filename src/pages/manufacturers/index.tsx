@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import Head from 'src/components/Layout/Head';
 import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import SearchScreen from 'src/components/Modules/SearchScreen';
+import TermPopup from 'src/components/Modules/TermPopup';
 import {
   GET_ALL_MANUFACTURERS,
   GetAllManufacturersData
@@ -29,6 +30,7 @@ function Manufacturers() {
       <Head>
         <title>{t('manufacturers:title')} - Medofa</title>
       </Head>
+      <TermPopup />
 
       <SearchScreen
         data={data?.getManufactoriesAll.map((i) => ({ id: i.id, name: i.short_name })) || []}

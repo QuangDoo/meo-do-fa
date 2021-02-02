@@ -2,6 +2,7 @@ import { useTranslation } from 'i18n';
 import React from 'react';
 import Head from 'src/components/Layout/Head';
 import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
+import TermPopup from 'src/components/Modules/TermPopup';
 import withToken from 'src/utils/withToken';
 
 TermsAndConditions.getInitialProps = async () => ({
@@ -16,6 +17,7 @@ function TermsAndConditions() {
       <Head>
         <title>Medofa</title>
       </Head>
+      <TermPopup />
 
       <div className="container my-5">
         <h2 className="text-center my-5">{t('termsAndConditions:title')}</h2>
