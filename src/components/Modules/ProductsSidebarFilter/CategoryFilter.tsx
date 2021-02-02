@@ -80,7 +80,7 @@ export default function CategoryFilter() {
       </div>
 
       <div className="mb-2">
-        <Link href={getAllHref()}>
+        <Link href={'/products'}>
           <a className={clsx('products__filter-category', !router.query.category && 'active')}>
             {t('productsSidebar:all')}
           </a>
