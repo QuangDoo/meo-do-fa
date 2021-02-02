@@ -6,6 +6,7 @@ import ProductCard from './ProductCard';
 
 type ProductsCarouselProps = {
   products?: Product[];
+  slidesToShow?: number;
 };
 
 type ArrowButtonProps = {
@@ -24,11 +25,11 @@ const ArrowButton = ({ onClick, type = 'prev' }: ArrowButtonProps) => {
   );
 };
 
-export const ProductsCarousel = ({ products }: ProductsCarouselProps) => {
+export const ProductsCarousel = ({ products, slidesToShow = 5 }: ProductsCarouselProps) => {
   return (
     <Slider
       speed={500}
-      slidesToShow={Math.min(5, products.length)}
+      slidesToShow={Math.min(slidesToShow, products.length)}
       slidesToScroll={3}
       prevArrow={<ArrowButton />}
       nextArrow={<ArrowButton type="next" />}
