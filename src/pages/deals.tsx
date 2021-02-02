@@ -7,6 +7,7 @@ import Loading from 'src/components/Layout/Loading';
 import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import Pagination from 'src/components/Modules/Pagination';
 import ProductCard from 'src/components/Modules/ProductCard';
+import TermPopup from 'src/components/Modules/TermPopup';
 import { GET_PRODUCTS, GetProductsData, GetProductsVars } from 'src/graphql/product/getProducts';
 
 const pageSize = 20;
@@ -61,6 +62,7 @@ function Deal() {
       <Head>
         <title>Medofa</title>
       </Head>
+      <TermPopup />
 
       <section className="deals deals--mobile py-5">
         <div className="container px-0">

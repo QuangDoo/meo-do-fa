@@ -7,6 +7,7 @@ import Head from 'src/components/Layout/Head';
 import Loading from 'src/components/Layout/Loading';
 import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import SearchScreen from 'src/components/Modules/SearchScreen';
+import TermPopup from 'src/components/Modules/TermPopup';
 import {
   GET_ALL_INGREDIENTS,
   GetAllIngredientsData
@@ -36,6 +37,7 @@ function Ingredients() {
       <Head>
         <title>Medofa</title>
       </Head>
+      <TermPopup />
 
       {loading ? (
         <div className="w-100 p-5 text-center">

@@ -13,6 +13,7 @@ import Head from 'src/components/Layout/Head';
 import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import Pagination from 'src/components/Modules/Pagination';
 import ProfileLayout from 'src/components/Modules/ProfileLayout';
+import TermPopup from 'src/components/Modules/TermPopup';
 import {
   GET_COUPONS_BY_USER,
   GetCouponsByUserData,
@@ -69,6 +70,7 @@ function MyPromoCodes() {
       <Head>
         <title>Medofa</title>
       </Head>
+      <TermPopup />
 
       <ProfileLayout title={t('myPromoCodes:my_promo_codes')}>
         <TableContainer component={Paper}>
