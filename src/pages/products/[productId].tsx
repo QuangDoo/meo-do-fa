@@ -11,6 +11,7 @@ import { DiscountRibbon } from 'src/components/Modules/ProductCard/DiscountRibbo
 import ProductDetailInfor from 'src/components/Modules/ProductDetail/ProductDetaiInfor';
 import ProducerInformation from 'src/components/Modules/ProductDetail/ProductInformation/ProducerInformation';
 import ProductSidebar from 'src/components/Modules/ProductDetail/ProductInformation/ProductSidebar';
+import RelativeProducts from 'src/components/Modules/ProductDetail/RelativeProducts';
 import { GET_PRODUCT, GetProductData, GetProductVars } from 'src/graphql/product/product.query';
 import asyncQuery from 'src/utils/asyncQuery';
 import withToken from 'src/utils/withToken';
@@ -108,7 +109,7 @@ function ProductDetail() {
           </div>
         </div>
 
-        {/* <RelativeProducts /> */}
+        <RelativeProducts />
       </div>
     </MainLayout>
   );

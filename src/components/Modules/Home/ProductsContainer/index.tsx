@@ -20,14 +20,16 @@ export const ProductsContainer = (props: ProductsContainerProps) => {
       <div className="container">
         <div className="mb-4 d-flex">
           <h2 className={props.deals && 'text-white'}>{props.title}</h2>
-          <div className="ml-auto">
-            <Link href={`${props.seeMoreUrl}`}>
-              <a>
-                {t('common:see_more')}
-                <i className="fas fa-angle-double-right ml-2"> </i>
-              </a>
-            </Link>
-          </div>
+          {props.seeMoreUrl && (
+            <div className="ml-auto">
+              <Link href={`${props.seeMoreUrl}`}>
+                <a>
+                  {t('common:see_more')}
+                  <i className="fas fa-angle-double-right ml-2"> </i>
+                </a>
+              </Link>
+            </div>
+          )}
         </div>
 
         <div className="mb-4">{props.children}</div>
