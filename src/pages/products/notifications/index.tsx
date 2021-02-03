@@ -31,8 +31,7 @@ Notification.getInitialProps = async (ctx) => {
       pageSize: PAGE_SIZE
     },
     auth: true,
-    fetchPolicy: 'network-only',
-    notifyOnNetworkStatusChange: true
+    fetchPolicy: 'network-only'
   });
 
   return {
