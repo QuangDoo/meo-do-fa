@@ -10,6 +10,7 @@ type ProductsContainerProps = {
   seeMoreUrl?: string;
   title: string;
   children: ReactNode;
+  iconClass?: string;
 };
 
 export const ProductsContainer = (props: ProductsContainerProps) => {
@@ -18,7 +19,8 @@ export const ProductsContainer = (props: ProductsContainerProps) => {
   return (
     <section className={clsx('py-5', props.className, props.deals && 'deals')}>
       <div className="container">
-        <div className="mb-4 d-flex">
+        <div className="mb-4 d-flex align-items-center">
+          {props.iconClass && <h4 className={clsx('mr-2 mb-0', props.iconClass)}></h4>}
           <h2 className={props.deals && 'text-white'}>{props.title}</h2>
           {props.seeMoreUrl && (
             <div className="ml-auto">
