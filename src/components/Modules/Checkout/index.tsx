@@ -1,6 +1,6 @@
 import { useTranslation } from 'i18n';
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
@@ -92,12 +92,8 @@ const CheckoutPage = () => {
   const [counselData, setCounselData] = useState<OutputCounsel>();
 
   // Counsel
-  const { loading: loadingCounsel, refetch: refetchCounsel } = useQueryAuth<
-    GetCounselData,
-    undefined
-  >(GET_COUNSEL, {
+  const { loading: loadingCounsel } = useQueryAuth<GetCounselData, undefined>(GET_COUNSEL, {
     fetchPolicy: 'network-only',
-    notifyOnNetworkStatusChange: true,
     onCompleted: (data) => {
       setCounselData(data.getCounsel);
       if (data.getCounsel.totalDcPayment > 0) {
@@ -113,10 +109,6 @@ const CheckoutPage = () => {
       }
     }
   });
-
-  useEffect(() => {
-    refetchCounsel?.();
-  }, []);
 
   const orderNo = counselData?.counsel?.orderNo;
 

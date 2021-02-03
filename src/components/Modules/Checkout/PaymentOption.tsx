@@ -95,7 +95,11 @@ const PaymentOption = (props: Props) => {
               <Trans
                 i18nKey="checkout:paymentOption_bank"
                 components={{
-                  Link: <LinkText href="/help/huong-dan-chuyen-khoan"> </LinkText>
+                  Link: (
+                    <LinkText href="/help/huong-dan-chuyen-khoan" target="_blank">
+                      {' '}
+                    </LinkText>
+                  )
                 }}
               />
             ),

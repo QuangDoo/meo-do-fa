@@ -30,7 +30,6 @@ MyAddresses.getInitialProps = async (ctx) => {
     ctx,
     query: GET_ADDRESS_INFO_USER,
     fetchPolicy: 'network-only',
-    notifyOnNetworkStatusChange: true,
     auth: true
   });
 

@@ -2,7 +2,7 @@ import { ClickAwayListener } from '@material-ui/core';
 import clsx from 'clsx';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import NotiItem from 'src/components/Modules/Noti/NotiItem';
 import { useNotify } from 'src/contexts/Notify';

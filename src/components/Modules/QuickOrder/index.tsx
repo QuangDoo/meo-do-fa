@@ -38,7 +38,6 @@ function QuickOrderPage() {
     GetQuickOrderProductsVars
   >(GET_QUICK_ORDER_PRODUCTS, {
     fetchPolicy: 'network-only',
-    notifyOnNetworkStatusChange: true,
     variables: {
       page: page,
       pageSize: 10

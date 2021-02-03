@@ -5,6 +5,8 @@ import { toast } from 'react-toastify';
 import { GET_NOTI, GetNotiData, GetNotiVars } from 'src/graphql/notification/notify.query';
 import { useQueryAuth } from 'src/hooks/useApolloHookAuth';
 
+import { useToken } from './Token';
+
 type ContextValue = {
   data: GetNotiData['getNotify'];
   loading: boolean;
@@ -17,6 +19,8 @@ const useNotify = () => useContext(NotifyContext);
 
 function NotifyProvider(props) {
   const { t } = useTranslation(['errors']);
+
+  const token = useToken();
 
   const { data, loading, refetch } = useQueryAuth<GetNotiData, GetNotiVars>(GET_NOTI, {
     variables: {
@@ -35,7 +39,8 @@ function NotifyProvider(props) {
           pageSize: 5
         });
       }, 600000);
-    }
+    },
+    skip: !token
   });
 
   return (

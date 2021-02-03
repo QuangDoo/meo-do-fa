@@ -152,39 +152,20 @@ const Footer = () => {
                   </div>
                 </div>
                 <div className="footer__info-title mb-3">
-                  <b className="text-primary">Medofa.com</b> {t('footer:website_ownership')}
+                  <b className="text-primary text-uppercase">{t('footer:copyright_by_medofa')}</b>
                 </div>
                 <p className="footer__info-company">
-                  <b>{t('footer:company_name')}</b>
-
+                  <b className="text-primary">Medofa.com</b> {t('footer:website_ownership')}
                   <br />
-
-                  {t('footer:company_address_label') + ': '}
-                  <b>{t('footer:company_address')}</b>
-
-                  <br />
-
                   {t('footer:business_certificate_label') + ': '}
-                  <b>
-                    {t('footer:business_certificate_number') +
-                      ', ' +
-                      t('footer:business_certificate_issue_date') +
-                      ', '}
-                  </b>
-
+                  <b>{t('footer:business_certificate_number')}</b>
                   <br />
-
-                  {t('footer:business_certificate_issued_at')}
-
+                  {t('footer:business_certificate_issued_at') + ' '}
+                  <b>{t('footer:business_certificate_issue_date')}</b>
                   <br />
-
-                  {/* {t('footer:ecommerce_license_label') + ': '}
-                  <b>
-                    <FooterLink
-                      href="/ecommerce-license"
-                      text={t('footer:ecommerce_license_number')}
-                    />
-                  </b> */}
+                  {t('footer:reference_illustration')}
+                  <br />
+                  {t('footer:the_use_of_drug')}
                 </p>
 
                 {/* <div className="footer__bct">

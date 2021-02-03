@@ -1,10 +1,10 @@
 import Link from 'next/link';
 import React from 'react';
 
-const LinkText = ({ href, children, ...props }) => {
+const LinkText = ({ href, target = '_self', children, ...props }) => {
   return (
     <Link href={href || ''}>
-      <a>{children}</a>
+      <a target={target}>{children}</a>
     </Link>
   );
 };

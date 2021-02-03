@@ -15,7 +15,6 @@ import {
 import { SEEN_ALL_NOTI, SEEN_NOTI } from 'src/graphql/notification/seenNoti.mutation';
 import { useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
 import asyncQuery from 'src/utils/asyncQuery';
-import getToken from 'src/utils/getToken';
 import withToken from 'src/utils/withToken';
 
 import Head from '../../components/Layout/Head';
