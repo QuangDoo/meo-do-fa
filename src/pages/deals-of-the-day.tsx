@@ -24,7 +24,7 @@ import {
 } from 'src/graphql/product/getProducts';
 import withToken from 'src/utils/withToken';
 
-const PAGE_SIZE = 15;
+const PAGE_SIZE = 20;
 
 DealOfTheDay.getInitialProps = async () => ({
   namespacesRequired: [...mainLayoutNamespacesRequired, 'dealsOfTheDay']
