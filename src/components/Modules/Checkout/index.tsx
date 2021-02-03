@@ -112,6 +112,8 @@ const CheckoutPage = () => {
 
   const orderNo = counselData?.counsel?.orderNo;
 
+  console.log('counselData', counselData);
+
   const router = useRouter();
 
   const { data: cart, refetch: refetchCart } = useCart();

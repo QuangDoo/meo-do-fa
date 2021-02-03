@@ -5,6 +5,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { animateScroll } from 'react-scroll';
+import { toast } from 'react-toastify';
 import Loading from 'src/components/Layout/Loading';
 import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import Pagination from 'src/components/Modules/Pagination';
@@ -15,10 +16,15 @@ import {
   GetDealsOfTheDayData,
   GetDealsOfTheDayVars
 } from 'src/graphql/product/getDealsOfTheDay';
-import { GET_PRODUCTS, GetProductsData, GetProductsVars } from 'src/graphql/product/getProducts';
+import {
+  GET_PRODUCTS,
+  GetProductsData,
+  GetProductsVars,
+  ProductTag
+} from 'src/graphql/product/getProducts';
 import withToken from 'src/utils/withToken';
 
-const pageSize = 20;
+const PAGE_SIZE = 20;
 
 DealOfTheDay.getInitialProps = async () => ({
   namespacesRequired: [...mainLayoutNamespacesRequired, 'dealsOfTheDay']
@@ -41,8 +47,27 @@ function DealOfTheDay() {
       pageSize: 15
     }
   });
-  const hotDeals = hotDealData?.getProductDealOfTheDay || [];
-  const numberHotDeals = hotDealData?.getProductDealOfTheDay?.length || 0;
+  const { data: productsData, loading: productsLoading } = useQuery<
+    GetProductsData,
+    GetProductsVars
+  >(GET_PRODUCTS, {
+    variables: {
+      page,
+      pageSize: PAGE_SIZE,
+      type: 'dod' as ProductTag,
+      condition: {
+        order_type: ''
+      }
+    },
+    fetchPolicy: 'network-only',
+    notifyOnNetworkStatusChange: true,
+    onError: (err) => {
+      toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
+    }
+  });
+
+  const hotDeals = productsData?.getProductByConditions?.Products || [];
+  const numberHotDeals = productsData?.getProductByConditions?.total || 0;
 
   // const { data: hotDealData, loading: hotDealLoading } = useQuery<GetProductsData, GetProductsVars>(
   //   GET_PRODUCTS,
@@ -65,7 +90,7 @@ function DealOfTheDay() {
   >(GET_PRODUCTS, {
     variables: {
       page: page,
-      pageSize: pageSize,
+      pageSize: PAGE_SIZE,
       type: 'promotion',
       condition: {
         order_type: '01'
@@ -134,9 +159,27 @@ function DealOfTheDay() {
                     'col-12 mt-3 text-center',
                     numberHotDeals < 11 ? 'd-none' : 'd-block'
                   )}>
-                  <button className="btn btn-primary" onClick={() => setShowMore(!showMore)}>
-                    {!showMore ? t('dealsOfTheDay:show_more') : t('dealsOfTheDay:show_less')}
-                  </button>
+                  <Pagination
+                    count={Math.ceil(numberHotDeals / PAGE_SIZE)}
+                    page={page}
+                    siblingCount={4}
+                    onChange={(page) => {
+                      router.push({
+                        pathname: router.pathname,
+                        query: {
+                          ...router.query,
+                          page: page
+                        }
+                      });
+                      refetchProducts({
+                        page: page,
+                        pageSize: PAGE_SIZE,
+                        condition: {
+                          order_type: '01'
+                        }
+                      });
+                    }}
+                  />
                 </div>
               </div>
             )
@@ -164,7 +207,7 @@ function DealOfTheDay() {
                       ))}
                     </div>
                     <Pagination
-                      count={Math.ceil(totalOtherDeals / pageSize)}
+                      count={Math.ceil(totalOtherDeals / PAGE_SIZE)}
                       page={page}
                       siblingCount={4}
                       onChange={(page) => {
@@ -177,7 +220,7 @@ function DealOfTheDay() {
                         });
                         refetchProducts({
                           page: page,
-                          pageSize: pageSize,
+                          pageSize: PAGE_SIZE,
                           condition: {
                             order_type: '01'
                           }
