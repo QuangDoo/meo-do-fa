@@ -20,7 +20,7 @@ export const ProductsContainer = (props: ProductsContainerProps) => {
     <section className={clsx('py-5', props.className, props.deals && 'deals')}>
       <div className="container">
         <div className="mb-4 d-flex align-items-center">
-          {props.iconClass && <h4 className={clsx('mr-2 mb-0', props.iconClass)}></h4>}
+          {props.iconClass && <i className={clsx('mr-2 mb-0', props.iconClass)}></i>}
           <h2 className={props.deals && 'text-white'}>{props.title}</h2>
           {props.seeMoreUrl && (
             <div className="ml-auto">

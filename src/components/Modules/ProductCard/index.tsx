@@ -80,6 +80,14 @@ const ProductCard = (props: Props) => {
                   </React.Fragment>
                 ))}
               </small>
+
+              {props.manufacturer.id && (
+                <small className="text-muted">
+                  {t('productCard:manufacturer')}: {props.manufacturer.short_name}
+                </small>
+              )}
+
+              <br />
             </div>
           </div>
 
