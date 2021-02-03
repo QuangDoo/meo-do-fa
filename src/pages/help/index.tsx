@@ -1,6 +1,7 @@
 import { useTranslation } from 'i18n';
 import React from 'react';
 import { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
+import TermPopup from 'src/components/Modules/TermPopup';
 import withToken from 'src/utils/withToken';
 
 import Footer from '../../components/Layout/Footer';
@@ -33,6 +34,7 @@ const Help = () => {
       <Header />
 
       <Nav />
+      <TermPopup />
 
       <FAQ title={t('help:frequently_asked_questions')}>
         {/* <div className="d-flex justify-content-center align-items-center p-5">

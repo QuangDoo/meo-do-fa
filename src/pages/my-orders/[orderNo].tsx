@@ -28,6 +28,7 @@ import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules
 import CustomCard from 'src/components/Modules/OrderDetails/CustomCard';
 import CustomStepper from 'src/components/Modules/OrderDetails/CustomStepper';
 import ProfileLayout from 'src/components/Modules/ProfileLayout';
+import TermPopup from 'src/components/Modules/TermPopup';
 import {
   GET_ORDER_DETAIL,
   GetOrderDetailData,
@@ -121,6 +122,7 @@ function OrderDetails() {
       <Head>
         <title>Medofa</title>
       </Head>
+      <TermPopup />
 
       <ProfileLayout>
         <Grid container spacing={2}>

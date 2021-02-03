@@ -12,6 +12,7 @@ import Pagination from 'src/components/Modules/Pagination';
 import ProductCard from 'src/components/Modules/ProductCard';
 import ProductsDrawerFilter from 'src/components/Modules/ProductDrawerFilter/ProductsDrawerFilter';
 import ProductsSidebarFilter from 'src/components/Modules/ProductsSidebarFilter';
+import TermPopup from 'src/components/Modules/TermPopup';
 import {
   GET_CATEGORIES_LEVEL,
   GetCategoriesLevelData
@@ -159,7 +160,7 @@ function Products() {
       <Head>
         <title>Medofa - {title}</title>
       </Head>
-
+      <TermPopup />
       {categoriesLevel ? (
         <div className="products container mobile-content my-3 my-sm-5">
           <div className="d-flex flex-nowrap justify-content-between">

@@ -1,5 +1,6 @@
 import React from 'react';
 import { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
+import TermPopup from 'src/components/Modules/TermPopup';
 import withToken from 'src/utils/withToken';
 
 import Footer from '../../components/Layout/Footer';
@@ -38,6 +39,7 @@ const HelpDetail = () => {
       <Head>
         <title>Medofa</title>
       </Head>
+      <TermPopup />
 
       <Header />
 
