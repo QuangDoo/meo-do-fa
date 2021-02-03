@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/client';
 import { useTranslation } from 'i18n';
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { emailRegex } from 'src/assets/regex/email';
@@ -32,6 +32,16 @@ type Props = {
 
 export default function DeliveryAddressForm(props: Props) {
   const { register, setValue, watch } = useFormContext();
+
+  console.log(props.defaultValues);
+
+  useEffect(() => {
+    if (!props.defaultValues) return;
+
+    ['name', 'phone', 'email', 'street'].forEach((field) => {
+      setValue(props.fieldNames[field], props.defaultValues[field]);
+    });
+  }, [props.defaultValues]);
 
   const { t } = useTranslation(['checkout', 'errors']);
 

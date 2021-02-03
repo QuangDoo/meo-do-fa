@@ -1,4 +1,5 @@
 import { useQuery } from '@apollo/client';
+import { useTranslation } from 'i18n';
 import React from 'react';
 import {
   GET_RELATED_PRODUCTS,
@@ -10,18 +11,20 @@ import { ProductsContainer } from '../Home/ProductsContainer';
 import { ProductsCarousel } from '../ProductsCarousel';
 
 const RelativeProducts = () => {
+  const { t } = useTranslation(['productDetail']);
+
   const { data } = useQuery<GetRelatedProductsData, GetRelatedProductsVars>(GET_RELATED_PRODUCTS, {
     variables: {
       page: 1,
-      pageSize: 10
+      pageSize: 20
     }
   });
 
   const relatedProducts = data?.getProductByConditions.Products || [];
 
   return (
-    <ProductsContainer title="Có thể bạn muốn mua " seeMoreUrl="#">
-      <ProductsCarousel products={relatedProducts} />
+    <ProductsContainer title={t('productDetail:related_product')}>
+      <ProductsCarousel products={relatedProducts} slidesToShow={4} />
     </ProductsContainer>
   );
 };

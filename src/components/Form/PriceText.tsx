@@ -1,4 +1,5 @@
 import { useTranslation } from 'i18n';
+import NumberFormat from 'react-number-format';
 
 type Props = {
   price: number;
@@ -7,9 +8,15 @@ type Props = {
 const PriceText = (props: Props) => {
   const { t } = useTranslation(['common']);
 
-  if (!props.price && props.price !== 0) return null;
-
-  return <>{`${props.price.toLocaleString('de-DE')} ${t('common:vnd')}`}</>;
+  return (
+    <NumberFormat
+      value={props.price}
+      displayType="text"
+      thousandSeparator="."
+      decimalSeparator=","
+      suffix={' ' + t('common:vnd')}
+    />
+  );
 };
 
 export default PriceText;

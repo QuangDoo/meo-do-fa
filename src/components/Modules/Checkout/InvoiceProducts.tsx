@@ -2,11 +2,12 @@ import slugify from '@sindresorhus/slugify';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import Checkbox from 'src/components/Form/Checkbox';
 import PriceText from 'src/components/Form/PriceText';
+import { useCart } from 'src/contexts/Cart';
 import {
   GET_INVOICE_COUNSEL,
   GetInvoiceCounselData,
@@ -63,7 +64,7 @@ const InvoiceProducts = (props: Props) => {
                     <div
                       className="cart-item__image lozadloaded flex-shrink-0"
                       style={{
-                        backgroundImage: `url(${item.image})`
+                        backgroundImage: `url(${item.image_128})`
                       }}
                     />
                   </a>
@@ -81,14 +82,10 @@ const InvoiceProducts = (props: Props) => {
                   <div className="d-flex justify-content-between align-items-center">
                     <div className="flex-1 flex-column">
                       <div className="d-flex justify-content-between align-items-center">
-                        <PriceText price={item.price} />
-
-                        <div className="ml-3">
-                          <div>
-                            {t('checkout:quantity')}: {item.quantity}
-                          </div>
-                        </div>
+                        {t('checkout:price_invoice')} <PriceText price={item.list_price} />
+                        <div className="ml-3">{/* <div>{t('checkout:quantity')}</div> */}</div>
                       </div>
+                      {t('checkout:price_VAT')} <PriceText price={item.sale_price} />
                     </div>
                   </div>
                 </div>

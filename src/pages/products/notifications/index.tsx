@@ -1,6 +1,6 @@
 import { useTranslation } from 'i18n';
 import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { toast } from 'react-toastify';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
@@ -15,7 +15,6 @@ import {
 import { SEEN_ALL_NOTI, SEEN_NOTI } from 'src/graphql/notification/seenNoti.mutation';
 import { useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
 import asyncQuery from 'src/utils/asyncQuery';
-import getToken from 'src/utils/getToken';
 import withToken from 'src/utils/withToken';
 
 import Head from '../../../components/Layout/Head';
@@ -81,9 +80,9 @@ function Notification() {
   const total = data?.getNotify?.total || 0;
 
   const handleReadAll = () => {
-    // read all
     seenAllNoti();
   };
+
   const handleNotiItemClick = (notiItem: Notifies) => {
     seenNotify({
       variables: {

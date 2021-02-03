@@ -10,6 +10,7 @@ type ProductsContainerProps = {
   seeMoreUrl?: string;
   title: string;
   children: ReactNode;
+  iconClass?: string;
 };
 
 export const ProductsContainer = (props: ProductsContainerProps) => {
@@ -18,16 +19,19 @@ export const ProductsContainer = (props: ProductsContainerProps) => {
   return (
     <section className={clsx('py-5', props.className, props.deals && 'deals')}>
       <div className="container">
-        <div className="mb-4 d-flex">
+        <div className="mb-4 d-flex align-items-center">
+          {props.iconClass && <i className={clsx('mr-2 mb-0', props.iconClass)}></i>}
           <h2 className={props.deals && 'text-white'}>{props.title}</h2>
-          <div className="ml-auto">
-            <Link href={`${props.seeMoreUrl}`}>
-              <a>
-                {t('common:see_more')}
-                <i className="fas fa-angle-double-right ml-2"> </i>
-              </a>
-            </Link>
-          </div>
+          {props.seeMoreUrl && (
+            <div className="ml-auto">
+              <Link href={`${props.seeMoreUrl}`}>
+                <a>
+                  {t('common:see_more')}
+                  <i className="fas fa-angle-double-right ml-2"> </i>
+                </a>
+              </Link>
+            </div>
+          )}
         </div>
 
         <div className="mb-4">{props.children}</div>

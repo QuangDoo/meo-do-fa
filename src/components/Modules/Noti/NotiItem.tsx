@@ -44,11 +44,6 @@ const NotiItem = (props: Props) => {
           </a>
         </Link>
       )}
-      {/* {loading && (
-        <div className="search__result--empty text-center">
-          <Loading />
-        </div>
-      )} */}
     </div>
   );
 };
