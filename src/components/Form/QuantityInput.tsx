@@ -47,6 +47,8 @@ function QuantityInput(props: Props) {
       onError: (err) => {
         const errorCode = err.graphQLErrors?.[0]?.extensions?.code;
 
+        setQuantity(quantityInCart);
+
         if (errorCode === 121) {
           toast.error(
             t(`errors:code_${errorCode}`, {
@@ -106,8 +108,12 @@ function QuantityInput(props: Props) {
   const debouncedHandleUpdate = useDebounce(handleUpdate, 450);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Remove all non-numeric characters
     const string = e.target.value.replace(/\D/g, '');
+
+    // Convert string to number
     const newQuantity = +string || 0;
+
     setQuantity(newQuantity);
   };
 

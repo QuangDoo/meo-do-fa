@@ -2,7 +2,7 @@ import { ClickAwayListener } from '@material-ui/core';
 import clsx from 'clsx';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import NotiItem from 'src/components/Modules/Noti/NotiItem';
 import { useNotify } from 'src/contexts/Notify';
@@ -16,23 +16,14 @@ type NotiItem = {
   notiInfo: string;
 };
 
-const pageSize = 5;
-
 const RightSideUser = () => {
   const { data: user } = useUser();
 
   const { t } = useTranslation(['noti', 'errors']);
-  const [show, setShow] = useState(false);
 
   const { data, refetch } = useNotify();
 
-  const notificationsData = data || [];
-
-  useEffect(() => {
-    if (!data) return;
-
-    refetch();
-  }, [data]);
+  const [show, setShow] = useState(false);
 
   const [seenNotify] = useMutationAuth(SEEN_NOTI, {
     onError: (error) => {
@@ -43,16 +34,16 @@ const RightSideUser = () => {
     }
   });
 
+  function toggleShow() {
+    setShow((show) => !show);
+  }
+
   function handleNotiItemClick(notiItem: Notifies) {
     seenNotify({
       variables: {
         _id: notiItem._id
       }
     });
-  }
-
-  function toggleShow() {
-    setShow((show) => !show);
   }
 
   return (
