@@ -1,6 +1,5 @@
 import { ApolloQueryResult } from '@apollo/client';
 import { useTranslation } from 'i18n';
-import cookies from 'js-cookie';
 import React, { createContext, useContext } from 'react';
 import { toast } from 'react-toastify';
 import { GET_NOTI, GetNotiData, GetNotiVars } from 'src/graphql/notification/notify.query';
