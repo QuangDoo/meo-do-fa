@@ -283,6 +283,16 @@ const Footer = () => {
                 /> */}
                 </div>
               </div>
+              <div className="footer__bct mt-3">
+                <a rel="nofollow">
+                  <img
+                    alt="Dấu đỏ của Bộ Công Thương"
+                    className="img-fluid"
+                    src="/assets/images/logo_dang_cho_duyet.png"
+                    title="Dấu đỏ của Bộ Công Thương"
+                  />
+                </a>
+              </div>
             </div>
           </div>
         </div>
