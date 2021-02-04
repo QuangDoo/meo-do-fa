@@ -75,7 +75,7 @@ const StickySidebar = (props: Props): JSX.Element => {
               </a>
             </div>
 
-            <div>
+            <div className="d-flex flex-shrink-0">
               <PriceText price={product.price} />
             </div>
           </div>
