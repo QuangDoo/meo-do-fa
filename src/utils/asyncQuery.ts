@@ -27,6 +27,20 @@ export default async function asyncQuery<T = any, TVariables = OperationVariable
   }
 
   try {
+    if (queryOptions.fetchPolicy === 'network-only') {
+      queryResults = await ctx.apolloClient.query({
+        ...queryOptions,
+        fetchPolicy: 'no-cache'
+      });
+
+      await ctx.apolloClient.writeQuery({
+        query: params.query,
+        data: queryResults.data
+      });
+
+      return;
+    }
+
     queryResults = await ctx.apolloClient.query(queryOptions);
   } catch (error) {
     onError?.(error);

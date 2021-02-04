@@ -81,11 +81,9 @@ const InvoiceProducts = (props: Props) => {
                   </div>
                   <div className="d-flex justify-content-between align-items-center">
                     <div className="flex-1 flex-column">
-                      <div className="d-flex justify-content-between align-items-center">
-                        {t('checkout:price_invoice')} <PriceText price={item.list_price} />
-                        <div className="ml-3">{/* <div>{t('checkout:quantity')}</div> */}</div>
-                      </div>
-                      {t('checkout:price_VAT')} <PriceText price={item.sale_price} />
+                      {t('checkout:price_invoice')}: <PriceText price={item.list_price} />
+                      <div className="ml-3">{/* <div>{t('checkout:quantity')}</div> */}</div>
+                      {t('checkout:price_VAT')}: <PriceText price={item.sale_price} />
                     </div>
                   </div>
                 </div>

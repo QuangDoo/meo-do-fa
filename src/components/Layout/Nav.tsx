@@ -28,6 +28,7 @@ const Nav = () => {
   const logOut = () => {
     cookies.remove('token');
     window.location.href = '/';
+    // window.location.reload();
   };
 
   const [anchorEl, setAnchorEl] = useState(null);
