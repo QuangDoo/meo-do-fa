@@ -33,20 +33,9 @@ DealOfTheDay.getInitialProps = async () => ({
 function DealOfTheDay() {
   const router = useRouter();
   const { t } = useTranslation(['dealsOfTheDay']);
-  const [showMore, setShowMore] = useState(false);
 
   const page = +router.query.page || 1;
-  const numberProducts = showMore ? 15 : 10;
 
-  const { data: hotDealData, loading: hotDealLoading } = useQuery<
-    GetDealsOfTheDayData,
-    GetDealsOfTheDayVars
-  >(GET_DEALS_OF_THE_DAY, {
-    variables: {
-      page: 1,
-      pageSize: 15
-    }
-  });
   const { data: productsData, loading: productsLoading } = useQuery<
     GetProductsData,
     GetProductsVars
@@ -69,21 +58,6 @@ function DealOfTheDay() {
   const hotDeals = productsData?.getProductByConditions?.Products || [];
   const numberHotDeals = productsData?.getProductByConditions?.total || 0;
 
-  // const { data: hotDealData, loading: hotDealLoading } = useQuery<GetProductsData, GetProductsVars>(
-  //   GET_PRODUCTS,
-  //   {
-  //     variables: {
-  //       page: 1,
-  //       pageSize: 15,
-  //       condition: {
-  //         order_type: '05'
-  //       }
-  //     }
-  //   }
-  // );
-  // const hotDeals = hotDealData?.getProductByConditions?.Products || [];
-  // const numberHotDeals = hotDealData?.getProductByConditions?.Products?.length || 0;
-
   const { data: otherDealData, refetch: refetchProducts, loading: otherDealLoading } = useQuery<
     GetProductsData,
     GetProductsVars
@@ -99,21 +73,6 @@ function DealOfTheDay() {
   });
   const otherDeals = otherDealData?.getProductByConditions?.Products || [];
   const totalOtherDeals = otherDealData?.getProductByConditions?.total || 0;
-
-  // const { data: otherDealData, refetch: refetchProducts, loading: otherDealLoading } = useQuery<
-  //   GetProductsData,
-  //   GetProductsVars
-  // >(GET_PRODUCTS, {
-  //   variables: {
-  //     page: page,
-  //     pageSize: pageSize,
-  //     condition: {
-  //       order_type: '05'
-  //     }
-  //   }
-  // });
-  // const otherDeals = otherDealData?.getProductByConditions?.Products || [];
-  // const totalOtherDeals = otherDealData?.getProductByConditions?.total || 0;
 
   useEffect(() => {
     if (otherDealLoading) {
@@ -133,11 +92,11 @@ function DealOfTheDay() {
           <h1 className="text-white mb-3">{t('dealsOfTheDay:title')}</h1>
           {hotDeals.length === 0 &&
             otherDeals.length === 0 &&
-            !hotDealLoading &&
+            !productsLoading &&
             !otherDealLoading && (
               <h3 className="text-center text-white">{t('dealsOfTheDay:no_products')}</h3>
             )}
-          {hotDealLoading ? (
+          {productsLoading ? (
             <div className="w-100 p-5 text-center">
               <Loading className="lds-roller-white" />
             </div>
@@ -149,7 +108,7 @@ function DealOfTheDay() {
                 </div>
                 <div className="col-12">
                   <div className="products__cards mb-3">
-                    {hotDeals.slice(0, numberProducts).map((product) => (
+                    {hotDeals.slice(0, 20).map((product) => (
                       <ProductCard key={product.id} {...product} />
                     ))}
                   </div>
