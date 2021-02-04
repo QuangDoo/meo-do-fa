@@ -3,6 +3,7 @@ import { useTranslation } from 'i18n';
 import React, { Fragment, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import { useUser } from 'src/contexts/User';
 import {
   Address,
   GET_ADDRESS_INFO_USER,
@@ -10,13 +11,15 @@ import {
 } from 'src/graphql/user/getAddressInfoUser';
 import { useQueryAuth } from 'src/hooks/useApolloHookAuth';
 
+import DeliveryAddressForm from '../MyAddressBook/DeliveryAddressForm';
 import { CheckoutFormInputs } from '.';
 import ChooseDeliveryAddressDialog from './ChooseDeliveryAddressDialog';
-import CreateDeliveryAddressForm from './CreateDeliveryAddressForm';
 import InputCard from './InputCard';
 
 const DeliveryInfo = () => {
   const { t } = useTranslation(['checkout', 'errors']);
+
+  const { data: user } = useUser();
 
   const [open, setOpen] = useState(false);
 
@@ -67,7 +70,26 @@ const DeliveryInfo = () => {
           <div>{chosenAddress.email || t('chooseDeliveryAddress:email_not_provided')}</div>
         </h6>
       ) : (
-        <CreateDeliveryAddressForm />
+        <DeliveryAddressForm
+          fieldNames={{
+            name: 'deliveryName',
+            phone: 'deliveryPhone',
+            email: 'deliveryEmail',
+            street: 'deliveryStreet',
+            city: 'deliveryCity',
+            district: 'deliveryDistrict',
+            ward: 'deliveryWard'
+          }}
+          defaultValues={{
+            name: user.name,
+            phone: user.phone,
+            email: user.email,
+            street: user.contact_address?.street,
+            ward: user.contact_address?.ward?.name,
+            district: user.contact_address?.district?.name,
+            city: user.contact_address?.city?.name
+          }}
+        />
       )}
 
       {chosenAddress ? (

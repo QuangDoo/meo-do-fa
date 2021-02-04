@@ -26,17 +26,20 @@ const Home = ({ dealsOfTheDayData, bestSellingData, promotionProductsData, newPr
     {
       title: t('carousels:deal_of_the_day'),
       products: dealsOfTheDayData?.getProductDealOfTheDay || [],
-      seeMoreUrl: '/deals-of-the-day'
+      seeMoreUrl: '/deals-of-the-day',
+      iconClass: 'fas fa-capsules'
     },
     {
       title: t('carousels:bestseller'),
       products: bestSellingData?.getProductByConditions.Products || [],
-      seeMoreUrl: '/products?page=1&tag=best-seller'
+      seeMoreUrl: '/products?page=1&tag=best-seller',
+      iconClass: 'fas fa-capsules'
     },
     {
       title: t('carousels:new_products'),
       products: newProductsData?.getProductByConditions.Products || [],
-      seeMoreUrl: '/products?page=1&tag=new'
+      seeMoreUrl: '/products?page=1&tag=new',
+      iconClass: 'fas fa-capsules'
     }
   ];
 
@@ -76,7 +79,10 @@ const Home = ({ dealsOfTheDayData, bestSellingData, promotionProductsData, newPr
 
       {carousels.map((carousel, index) => (
         <div key={index} hidden={carousel.products.length === 0}>
-          <ProductsContainer title={carousel.title} seeMoreUrl={carousel.seeMoreUrl}>
+          <ProductsContainer
+            title={carousel.title}
+            iconClass={carousel.iconClass}
+            seeMoreUrl={carousel.seeMoreUrl}>
             <ProductsCarousel products={carousel.products} />
           </ProductsContainer>
         </div>

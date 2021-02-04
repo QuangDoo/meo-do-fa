@@ -54,10 +54,6 @@ export default function MyAccountPage() {
 
   const businessLicense: string = watch('businessLicense', user?.business_license);
 
-  useEffect(() => {
-    console.log('watch businessLicense:', businessLicense);
-  }, [businessLicense]);
-
   const [firstLoadCities, setFirstLoadCities] = useState(true);
   const [firstLoadDistricts, setFirstLoadDistricts] = useState(true);
   const [firstLoadWards, setFirstLoadWards] = useState(true);
