@@ -33,8 +33,6 @@ type Props = {
 export default function DeliveryAddressForm(props: Props) {
   const { register, setValue, watch } = useFormContext();
 
-  console.log(props.defaultValues);
-
   useEffect(() => {
     if (!props.defaultValues) return;
 

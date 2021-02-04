@@ -11,7 +11,8 @@ Checkout.getInitialProps = async (ctx) => {
   await asyncQuery({
     ctx,
     query: GET_COUNSEL,
-    fetchPolicy: 'network-only'
+    fetchPolicy: 'network-only',
+    auth: true
   });
 
   return {
