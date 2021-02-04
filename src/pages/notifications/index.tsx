@@ -17,8 +17,8 @@ import { useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
 import asyncQuery from 'src/utils/asyncQuery';
 import withToken from 'src/utils/withToken';
 
-import Head from '../../../components/Layout/Head';
-import NotiItem from '../../../components/Modules/Noti/NotiItem';
+import Head from '../../components/Layout/Head';
+import NotiItem from '../../components/Modules/Noti/NotiItem';
 
 const PAGE_SIZE = 10;
 
