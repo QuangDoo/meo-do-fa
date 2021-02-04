@@ -13,6 +13,11 @@ import ProducerInformation from 'src/components/Modules/ProductDetail/ProductInf
 import ProductSidebar from 'src/components/Modules/ProductDetail/ProductInformation/ProductSidebar';
 import RelativeProducts from 'src/components/Modules/ProductDetail/RelativeProducts';
 import TermPopup from 'src/components/Modules/TermPopup';
+import {
+  GET_RELATED_PRODUCTS,
+  GetRelatedProductsData,
+  GetRelatedProductsVars
+} from 'src/graphql/product/getRelatedProducts';
 import { GET_PRODUCT, GetProductData, GetProductVars } from 'src/graphql/product/product.query';
 import asyncQuery from 'src/utils/asyncQuery';
 import withToken from 'src/utils/withToken';
@@ -52,7 +57,24 @@ function ProductDetail() {
     }
   });
 
+  const { data } = useQuery<GetRelatedProductsData, GetRelatedProductsVars>(GET_RELATED_PRODUCTS, {
+    variables: {
+      page: 1,
+      pageSize: 20,
+      productId: getProductId(router.query.productId as string)
+    },
+    fetchPolicy: 'network-only',
+    notifyOnNetworkStatusChange: true,
+    onError: (error) => {
+      toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
+    }
+  });
+
+  console.log('data', data);
+
   const product = getProductData?.getProduct;
+
+  const relatedProducts = data?.getRelatedProducts;
 
   if (!product) {
     return (
@@ -110,7 +132,7 @@ function ProductDetail() {
           </div>
         </div>
 
-        <RelativeProducts />
+        <RelativeProducts relatedProducts={relatedProducts} />
       </div>
     </MainLayout>
   );
