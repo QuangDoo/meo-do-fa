@@ -186,9 +186,9 @@ export default function MyAccountPage() {
 
     // const base64 = rawBase64.replace(BASE64_PREFIX, '');
 
-    console.log('Submit data:', data);
+    // console.log('Submit data:', data);
 
-    return;
+    // return;
 
     const [cityName, cityId] = data.companyCity.split('__');
     const [districtName, districtId] = data.companyDistrict.split('__');
