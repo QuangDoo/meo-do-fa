@@ -81,13 +81,13 @@ const DeliveryInfo = () => {
             ward: 'deliveryWard'
           }}
           defaultValues={{
-            name: user.name,
-            phone: user.phone,
-            email: user.email,
-            street: user.contact_address?.street,
-            ward: user.contact_address?.ward?.name,
-            district: user.contact_address?.district?.name,
-            city: user.contact_address?.city?.name
+            name: user?.name,
+            phone: user?.phone,
+            email: user?.email,
+            street: user?.contact_address?.street,
+            ward: user?.contact_address?.ward?.name,
+            district: user?.contact_address?.district?.name,
+            city: user?.contact_address?.city?.name
           }}
         />
       )}
