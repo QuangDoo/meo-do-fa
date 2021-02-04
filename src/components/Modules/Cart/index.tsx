@@ -51,8 +51,6 @@ export default function CartPage() {
     });
   };
 
-  console.log('cart', cart);
-
   const checkoutDisabled = cart?.totalNetPrice < minPrice;
 
   return (
