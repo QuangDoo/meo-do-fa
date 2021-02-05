@@ -29,7 +29,7 @@ export const ProductsCarousel = ({ products, slidesToShow = 5 }: ProductsCarouse
   return (
     <Slider
       speed={500}
-      slidesToShow={Math.min(slidesToShow, products.length)}
+      slidesToShow={Math.min(slidesToShow, products?.length)}
       slidesToScroll={3}
       prevArrow={<ArrowButton />}
       nextArrow={<ArrowButton type="next" />}
@@ -38,28 +38,28 @@ export const ProductsCarousel = ({ products, slidesToShow = 5 }: ProductsCarouse
         {
           breakpoint: 1105,
           settings: {
-            slidesToShow: Math.min(4, products.length),
+            slidesToShow: Math.min(4, products?.length),
             slidesToScroll: 2
           }
         },
         {
           breakpoint: 890,
           settings: {
-            slidesToShow: Math.min(3, products.length),
+            slidesToShow: Math.min(3, products?.length),
             slidesToScroll: 1
           }
         },
         {
           breakpoint: 675,
           settings: {
-            slidesToShow: Math.min(2, products.length),
+            slidesToShow: Math.min(2, products?.length),
             slidesToScroll: 1
           }
         },
         {
           breakpoint: 460,
           settings: {
-            slidesToShow: Math.min(2, products.length),
+            slidesToShow: Math.min(2, products?.length),
             slidesToScroll: 1
           }
         }

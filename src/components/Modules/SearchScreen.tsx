@@ -41,7 +41,7 @@ export default function SearchScreen(props: Props) {
     setData(
       searchChar === '#'
         ? props.data
-        : props.data.filter((item) => item.name.toLowerCase().startsWith(searchChar))
+        : props.data.filter((item) => item.name?.toLowerCase().startsWith(searchChar))
     );
   };
 
