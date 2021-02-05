@@ -20,5 +20,6 @@
   "update_success": "Update cart success!",
   "yes": "Yes",
   "minimum_price": "Minimum price",
-  "file_is_not_image": "Chosen file is not an image."
+  "file_is_not_image": "Chosen file is not an image.",
+  "shipping_fee": "Shipping fee"
 }

@@ -10,7 +10,7 @@ import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 
 import CartItem from './CartItem';
 
-const minPrice = 1000000;
+const MIN_PRICE = 1000000;
 
 export default function CartPage() {
   const { data: cart } = useCart();
@@ -51,7 +51,9 @@ export default function CartPage() {
     });
   };
 
-  const checkoutDisabled = cart?.totalNetPrice < minPrice;
+  const total = cart?.totalNetPrice - cart?.totalShippingFee;
+
+  const checkoutDisabled = total < MIN_PRICE;
 
   return (
     <>
@@ -95,9 +97,14 @@ export default function CartPage() {
                           <div>{t('cart:total')}</div>
                         </div>
                         <div className="cart__total">
-                          <PriceText price={cart?.totalNetPrice} />
+                          <PriceText price={total} />
                         </div>
                       </div>
+                    </div>
+
+                    <div hidden={total < MIN_PRICE} className="col-12">
+                      {t('cart:shipping_fee') + ': '}
+                      <PriceText price={cart?.totalShippingFee} />
                     </div>
 
                     <div className="col-12">
@@ -111,7 +118,7 @@ export default function CartPage() {
 
                         <div hidden={!checkoutDisabled} className="text-center mt-1">
                           {t('cart:minimum_price') + ' '}
-                          <PriceText price={minPrice} />
+                          <PriceText price={MIN_PRICE} />
                         </div>
                       </div>
                     </div>
