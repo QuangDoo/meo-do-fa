@@ -120,13 +120,30 @@ function CartItem(props: CartItemProps) {
             </div>
 
             <ConfirmDeleteModal
+              title={t('cart:remove_title')}
+              question={t('cart:remove_confirm')}
               open={open}
               onClose={handleCloseModal}
-              onConfirm={handleConfirmDelete}
-              productName={props.productName}
-              image={props.product.image_512}
-              price={props.product.sale_price}
-            />
+              onConfirm={handleConfirmDelete}>
+              <div className="elevated p-3 d-flex">
+                <div className="mr-3">
+                  <img
+                    alt=""
+                    className="lozad img-fluid loaded"
+                    src={props.product.image_512}
+                    width={100}
+                  />
+                </div>
+
+                <div className="text-left">
+                  <div className="cart-item__name mb-2">{props.productName}</div>
+
+                  <div className="cart-item__price">
+                    <PriceText price={props.product.sale_price} />
+                  </div>
+                </div>
+              </div>
+            </ConfirmDeleteModal>
           </div>
         </div>
       </div>

@@ -1,6 +1,5 @@
 import { useTranslation } from 'i18n';
-import React, { FC } from 'react';
-import PriceText from 'src/components/Form/PriceText';
+import React from 'react';
 import ModalBase from 'src/components/Layout/Modal/ModalBase';
 
 type Props = {
@@ -13,15 +12,15 @@ type Props = {
   // On confirm delete
   onConfirm: () => void;
 
-  productName: string;
+  title: string;
 
-  price: number;
+  question?: string;
 
-  image: string;
+  children?: React.ReactNode;
 };
 
-const ConfirmDeleteModal: FC<Props> = (props) => {
-  const { open, onClose, onConfirm, productName, price, image } = props;
+const ConfirmDeleteModal = (props: Props) => {
+  const { open, onClose, onConfirm } = props;
 
   const { t } = useTranslation(['cart', 'errors']);
 
@@ -33,9 +32,11 @@ const ConfirmDeleteModal: FC<Props> = (props) => {
             <div className="swal2-icon swal2-warning swal2-icon-show d-flex">
               <div className="swal2-icon-content">!</div>
             </div>
+
             <h2 className="swal2-title d-flex" id="swal2-title">
-              {t('cart:remove_title')}
+              {props.title}
             </h2>
+
             <button
               type="button"
               className="swal2-close d-flex"
@@ -44,22 +45,15 @@ const ConfirmDeleteModal: FC<Props> = (props) => {
               ×
             </button>
           </div>
+
           <div className="cart-item-remove-dialog">
             <div className="container-fluid">
-              <div className="swal2-content">{t('cart:remove_confirm')}</div>
-              <div className="elevated p-3 d-flex">
-                <div className="mr-3">
-                  <img alt="" className="lozad img-fluid loaded" src={image} width={100} />
-                </div>
-                <div className="text-left">
-                  <div className="cart-item__name mb-2">{productName}</div>
-                  <div className="cart-item__price">
-                    <PriceText price={price} />
-                  </div>
-                </div>
-              </div>
+              {props.question && <div className="swal2-content">{props.question}</div>}
+
+              {props.children}
             </div>
           </div>
+
           <div className="swal2-actions">
             <button
               type="button"
@@ -67,6 +61,7 @@ const ConfirmDeleteModal: FC<Props> = (props) => {
               onClick={onClose}>
               {t('cart:no')}
             </button>
+
             <button
               type="button"
               className="swal2-confirm btn btn-primary px-4 m-2"
