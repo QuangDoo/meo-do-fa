@@ -34,7 +34,7 @@ export const ProductsContainer = (props: ProductsContainerProps) => {
           )}
         </div>
 
-        <div className="mb-4">{props.children}</div>
+        <div>{props.children}</div>
 
         {/* {props.seeMoreUrl && (
           <div className="text-center">
