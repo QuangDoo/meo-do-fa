@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import PriceText from 'src/components/Form/PriceText';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { useCart } from 'src/contexts/Cart';
+import { DELETE_CARTS, DeleteCartData, DeleteCartsVars } from 'src/graphql/cart/deleteCarts';
 import { CREATE_COUNSEL } from 'src/graphql/order/order.mutation';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 
@@ -15,7 +16,7 @@ import ConfirmDeleteModal from './ConfirmDeleteModal';
 const MIN_PRICE = 1000000;
 
 export default function CartPage() {
-  const { data: cart } = useCart();
+  const { data: cart, refetch: refetchCart } = useCart();
 
   const { t } = useTranslation(['cart', 'common', 'errors']);
 
@@ -45,12 +46,30 @@ export default function CartPage() {
     }
   });
 
+  const [deleteCarts, { loading: deletingCarts }] = useMutationAuth<
+    DeleteCartData,
+    DeleteCartsVars
+  >(DELETE_CARTS, {
+    onError: (err) => {
+      toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
+    },
+    onCompleted: () => {
+      setDeleteAllIsOpen(false);
+
+      refetchCart().then(() => {
+        toast.success(t(`cart:delete_all_success`));
+      });
+    }
+  });
+
   const handleCheckoutClick = () => {
     if (cart?.carts.length === 0) return;
 
+    const cartIds = cart?.carts.map((item) => item._id);
+
     createCounsel({
       variables: {
-        cartIds: cart?.carts.map((i) => i._id)
+        cartIds
       }
     });
   };
@@ -64,7 +83,13 @@ export default function CartPage() {
   const handleCloseDeleteAllModal = () => setDeleteAllIsOpen(false);
 
   const handleConfirmDeleteAll = () => {
-    console.log('Delete all products from cart');
+    const ids = cart.carts.map((item) => item._id);
+
+    deleteCarts({
+      variables: {
+        ids
+      }
+    });
   };
 
   return (
@@ -137,6 +162,7 @@ export default function CartPage() {
                   </div>
 
                   <button
+                    hidden={cart?.carts?.length === 0}
                     onClick={handleOpenDeleteAllModal}
                     className="w-100 p-2 btn-link text-danger text-left">
                     <i className="fas fa-fw fa-trash mr-1" />
@@ -148,8 +174,9 @@ export default function CartPage() {
                     title={t('cart:remove_title')}
                     question={t('cart:remove_all_confirm')}
                     onClose={handleCloseDeleteAllModal}
-                    onConfirm={handleConfirmDeleteAll}
-                  />
+                    onConfirm={handleConfirmDeleteAll}>
+                    <LoadingBackdrop open={deletingCarts} />
+                  </ConfirmDeleteModal>
 
                   <Link href="/products">
                     <a className="d-block">
