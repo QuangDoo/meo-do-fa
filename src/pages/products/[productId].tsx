@@ -107,6 +107,7 @@ function ProductDetail() {
                       <SideBySideMagnifier
                         alwaysInPlace={true}
                         imageSrc={product?.image_512 || '/assets/images/no_images.jpg'}
+                        className="product-img-magnifier"
                       />
                     </MagnifierContainer>
 

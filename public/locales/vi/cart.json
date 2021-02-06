@@ -15,10 +15,11 @@
   "quick_invoice_with_tax": "Hóa đơn ({{tax}}% thuế)",
   "remove_confirm": "Bạn có chắc muốn xoá sản phẩm này khỏi giỏ hàng?",
   "remove_title": "Xin xác nhận",
-  "total": "Tổng tiền",
+  "total": "Tạm tính",
   "update_note": "Cập nhật ghi chú",
   "update_success": "Cập nhật giỏ hàng thành công!",
   "yes": "Có",
   "minimum_price": "Đơn hàng tối thiểu",
-  "file_is_not_image": "Chỉ chấp nhận file ảnh."
+  "file_is_not_image": "Chỉ chấp nhận file ảnh.",
+  "shipping_fee": "Phí ship"
 }

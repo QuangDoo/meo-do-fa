@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { useTranslation } from 'i18n';
 import Image from 'next/image';
 import React from 'react';
@@ -82,7 +83,8 @@ const Home = ({ dealsOfTheDayData, bestSellingData, promotionProductsData, newPr
           <ProductsContainer
             title={carousel.title}
             iconClass={carousel.iconClass}
-            seeMoreUrl={carousel.seeMoreUrl}>
+            seeMoreUrl={carousel.seeMoreUrl}
+            className={clsx(index === 0 && 'mt-5')}>
             <ProductsCarousel products={carousel.products} />
           </ProductsContainer>
         </div>
@@ -105,11 +107,7 @@ const Home = ({ dealsOfTheDayData, bestSellingData, promotionProductsData, newPr
 
       {/* <Strength /> */}
 
-      {token ? null : (
-        <>
-          <Login />
-        </>
-      )}
+      {!token && <Login />}
 
       {/* <Question /> */}
 
