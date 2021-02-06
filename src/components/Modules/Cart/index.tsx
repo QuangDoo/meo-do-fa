@@ -102,7 +102,7 @@ export default function CartPage() {
                       </div>
                     </div>
 
-                    <div hidden={total < MIN_PRICE} className="col-12">
+                    <div hidden={total < MIN_PRICE} className="col-12 p-3 cart__info-total">
                       {t('cart:shipping_fee') + ': '}
                       <PriceText price={cart?.totalShippingFee} />
                     </div>
