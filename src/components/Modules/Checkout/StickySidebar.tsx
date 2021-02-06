@@ -95,15 +95,13 @@ const StickySidebar = (props: Props): JSX.Element => {
 
         <SidebarItem label={t('checkout:price_total_discount')}>
           <span>
-            {!!counselData?.totalDcAmt && '-'}
-
-            <PriceText price={counselData.totalDcAmt} />
+            <PriceText negative price={counselData.totalDcAmt} />
           </span>
         </SidebarItem>
 
         {counselData?.totalDcPayment > 0 && (
           <SidebarItem label={t('checkout:price_total_dc_payment')}>
-            -<PriceText price={counselData.totalDcPayment} />
+            <PriceText negative price={counselData.totalDcPayment} />
           </SidebarItem>
         )}
 
