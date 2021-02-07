@@ -3,6 +3,7 @@ import NumberFormat from 'react-number-format';
 
 type Props = {
   price: number;
+  negative?: boolean;
 };
 
 const PriceText = (props: Props) => {
@@ -15,6 +16,7 @@ const PriceText = (props: Props) => {
       thousandSeparator="."
       decimalSeparator=","
       suffix={' ' + t('common:vnd')}
+      prefix={props.negative && props.price > 0 && '- '}
     />
   );
 };

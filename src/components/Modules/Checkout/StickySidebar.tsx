@@ -75,15 +75,15 @@ const StickySidebar = (props: Props): JSX.Element => {
               </a>
             </div>
 
-            <div className="d-flex flex-shrink-0">
-              <PriceText price={product.price} />
+            <div className="d-flex flex-shrink-0 ml-3">
+              <PriceText price={(product.price - product.dcAmtProduct) * (1 + product.tax / 100)} />
             </div>
           </div>
         ))}
 
         <SidebarItem label={t('checkout:price_provisional_sums')}>
           <span>
-            <PriceText price={counselData.totalPrice} />
+            <PriceText price={counselData.totalPrice + counselData.totalPriceVat} />
           </span>
         </SidebarItem>
 
@@ -95,23 +95,15 @@ const StickySidebar = (props: Props): JSX.Element => {
 
         <SidebarItem label={t('checkout:price_total_discount')}>
           <span>
-            {!!counselData?.totalDcAmt && '-'}
-
-            <PriceText price={counselData.totalDcAmt} />
+            <PriceText negative price={counselData.totalDcAmt} />
           </span>
         </SidebarItem>
 
         {counselData?.totalDcPayment > 0 && (
           <SidebarItem label={t('checkout:price_total_dc_payment')}>
-            -<PriceText price={counselData.totalDcPayment} />
+            <PriceText negative price={counselData.totalDcPayment} />
           </SidebarItem>
         )}
-
-        <SidebarItem label={t('checkout:price_tax')}>
-          <span>
-            <PriceText price={counselData.totalPriceVat} />
-          </span>
-        </SidebarItem>
 
         <SidebarItem label={t('checkout:price_total')} containerClass="border-top pt-2 mt-2">
           <span className="checkout__total font-weight-bold">
