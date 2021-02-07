@@ -36,6 +36,17 @@ ProductDetail.getInitialProps = async (ctx) => {
     fetchPolicy: 'network-only'
   });
 
+  await asyncQuery<GetRelatedProductsData, GetRelatedProductsVars>({
+    ctx,
+    query: GET_RELATED_PRODUCTS,
+    variables: {
+      page: 1,
+      pageSize: 20,
+      productId: getProductId(ctx.query.productId as string)
+    },
+    fetchPolicy: 'network-only'
+  });
+
   return {
     namespacesRequired: [...mainLayoutNamespacesRequired, 'productDetail']
   };
@@ -57,24 +68,25 @@ function ProductDetail() {
     }
   });
 
-  const { data } = useQuery<GetRelatedProductsData, GetRelatedProductsVars>(GET_RELATED_PRODUCTS, {
-    variables: {
-      page: 1,
-      pageSize: 20,
-      productId: getProductId(router.query.productId as string)
-    },
-    fetchPolicy: 'network-only',
-    notifyOnNetworkStatusChange: true,
-    onError: (error) => {
-      toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
+  const { data: getRelatedProductsData } = useQuery<GetRelatedProductsData, GetRelatedProductsVars>(
+    GET_RELATED_PRODUCTS,
+    {
+      variables: {
+        page: 1,
+        pageSize: 20,
+        productId: getProductId(router.query.productId as string)
+      },
+      fetchPolicy: 'network-only',
+      notifyOnNetworkStatusChange: true,
+      onError: (error) => {
+        toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
+      }
     }
-  });
-
-  console.log('data', data);
+  );
 
   const product = getProductData?.getProduct;
 
-  const relatedProducts = data?.getRelatedProducts;
+  const relatedProducts = getRelatedProductsData?.getRelatedProducts;
 
   if (!product) {
     return (
@@ -91,10 +103,12 @@ function ProductDetail() {
       <Head>
         <title>Medofa - {product?.name}</title>
       </Head>
+
       <TermPopup />
-      <div className="product container py-2">
+
+      {/* <div className="product container py-2">
         <SimpleBreadcrumbs categories={product?.categories} />
-      </div>
+      </div> */}
 
       <div className="product container py-5">
         <div className="elevated">
@@ -133,7 +147,7 @@ function ProductDetail() {
           </div>
         </div>
 
-        <RelativeProducts relatedProducts={relatedProducts} />
+        {relatedProducts && <RelativeProducts relatedProducts={relatedProducts} />}
       </div>
     </MainLayout>
   );
