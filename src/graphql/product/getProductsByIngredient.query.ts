@@ -2,7 +2,7 @@ import { gql } from '@apollo/client';
 import { Product, productCardQueryProps } from 'src/graphql/product/getProducts';
 
 export type GetProductsByIngredientData = {
-  getProductsByIngredient: Product[];
+  getProductByIngredient: Product[];
 };
 
 export type GetProductsByIngredientVars = {

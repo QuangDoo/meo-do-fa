@@ -59,7 +59,9 @@ Products.getInitialProps = async (ctx) => {
         max_price: +ctx.query.priceTo || 10000000,
         pathology_id: ctx.query.pathology
       }
-    }
+    },
+    fetchPolicy: 'network-only',
+    notifyOnNetworkStatusChange: true
   });
 
   return {
@@ -200,7 +202,7 @@ function Products() {
                 )}
               </div>
 
-              <div className="d-none d-sm-block mb-4">
+              <div hidden={products?.length === 0} className="d-none d-sm-block mb-4">
                 <FilterTags />
               </div>
 
@@ -217,20 +219,22 @@ function Products() {
                   </div>
                 )}
 
-                <Pagination
-                  count={Math.ceil(total / PAGE_SIZE)}
-                  page={page}
-                  siblingCount={4}
-                  onChange={(page) =>
-                    router.push({
-                      pathname: router.pathname,
-                      query: {
-                        ...router.query,
-                        page
-                      }
-                    })
-                  }
-                />
+                {!productsLoading && (
+                  <Pagination
+                    count={Math.ceil(total / PAGE_SIZE)}
+                    page={page}
+                    siblingCount={4}
+                    onChange={(page) =>
+                      router.push({
+                        pathname: router.pathname,
+                        query: {
+                          ...router.query,
+                          page
+                        }
+                      })
+                    }
+                  />
+                )}
               </main>
             </div>
           </div>

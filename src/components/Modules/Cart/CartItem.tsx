@@ -10,7 +10,7 @@ import { DELETE_CART, DeleteCartData, DeleteCartVars } from 'src/graphql/cart/de
 import { CartItem as CartItemProps } from 'src/graphql/cart/getCart';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 
-import ConfirmDeleteModal from './ConfirmDeleteModal';
+import ConfirmDeleteItemModal from './ConfirmDeleteItemModal';
 
 function CartItem(props: CartItemProps) {
   const { t } = useTranslation(['cart', 'errors']);
@@ -119,12 +119,14 @@ function CartItem(props: CartItemProps) {
               </button>
             </div>
 
-            <ConfirmDeleteModal
+            <ConfirmDeleteItemModal
+              title={t('cart:remove_title')}
+              question={t('cart:remove_confirm')}
               open={open}
               onClose={handleCloseModal}
               onConfirm={handleConfirmDelete}
-              productName={props.productName}
-              image={props.product.image_512}
+              img={props.product.image_512}
+              name={props.productName}
               price={props.product.sale_price}
             />
           </div>
