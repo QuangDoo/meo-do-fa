@@ -19,11 +19,34 @@ import {
   GetProductsByIngredientData,
   GetProductsByIngredientVars
 } from 'src/graphql/product/getProductsByIngredient.query';
+import asyncQuery from 'src/utils/asyncQuery';
 import withToken from 'src/utils/withToken';
 
-IngredientDetails.getInitialProps = async () => ({
-  namespacesRequired: [...mainLayoutNamespacesRequired, 'ingredientDetails']
-});
+IngredientDetails.getInitialProps = async (ctx) => {
+  const ingredientId = ctx.query.slug[0];
+
+  await asyncQuery<GetIngredientDetailsData, GetIngredientDetailsVars>({
+    ctx,
+    query: GET_INGREDIENT_DETAILS,
+    variables: {
+      id: ingredientId
+    }
+  });
+
+  await asyncQuery<GetProductsByIngredientData, GetProductsByIngredientVars>({
+    ctx,
+    query: GET_PRODUCTS_BY_INGREDIENT,
+    variables: {
+      page: 1,
+      pageSize: 20,
+      ingredientId
+    }
+  });
+
+  return {
+    namespacesRequired: [...mainLayoutNamespacesRequired, 'ingredientDetails']
+  };
+};
 
 function IngredientDetails() {
   const router = useRouter();
@@ -49,6 +72,9 @@ function IngredientDetails() {
         page: 1,
         pageSize: 20,
         ingredientId: ingredientId
+      },
+      onCompleted: (data) => {
+        console.log('Product by ingredient data', data);
       },
       onError: (error) => {
         toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
@@ -87,10 +113,10 @@ function IngredientDetails() {
 
       <hr />
 
-      {productsData?.getProductsByIngredient && (
+      {productsData?.getProductByIngredient?.length > 0 && (
         <ProductsContainer
           title={t('products_containing_ingredient') + detailsData?.getIngredient.name}>
-          <ProductsCarousel products={productsData?.getProductsByIngredient} />
+          <ProductsCarousel products={productsData?.getProductByIngredient} />
         </ProductsContainer>
       )}
     </MainLayout>
