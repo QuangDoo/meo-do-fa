@@ -8,7 +8,7 @@ import { DELETE_CART, DeleteCartData, DeleteCartVars } from 'src/graphql/cart/de
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import useDebounce from 'src/hooks/useDebounce';
 
-import ConfirmDeleteModal from '../Modules/Cart/ConfirmDeleteModal';
+import ConfirmDeleteItemModal from '../Modules/Cart/ConfirmDeleteItemModal';
 
 type Props = {
   productId: number;
@@ -20,7 +20,7 @@ type Props = {
 function QuantityInput(props: Props) {
   const { productId, productPrice, productName, productImg } = props;
 
-  const { t } = useTranslation(['errors', 'success']);
+  const { t } = useTranslation(['errors', 'success', 'cart']);
 
   const { data: cart, refetch: refetchCart } = useCart();
 
@@ -178,12 +178,14 @@ function QuantityInput(props: Props) {
         </button>
       </div>
 
-      <ConfirmDeleteModal
+      <ConfirmDeleteItemModal
+        title={t('cart:remove_title')}
+        question={t('cart:remove_confirm')}
         open={open}
         onClose={handleCloseModal}
         onConfirm={handleConfirmDelete}
-        productName={productName}
-        image={productImg}
+        img={productImg}
+        name={productName}
         price={productPrice}
       />
 

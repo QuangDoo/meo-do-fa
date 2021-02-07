@@ -11,7 +11,7 @@ import { CREATE_COUNSEL } from 'src/graphql/order/order.mutation';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 
 import CartItem from './CartItem';
-import ConfirmDeleteModal from './ConfirmDeleteModal';
+import ConfirmModal from './ConfirmModal';
 
 const MIN_PRICE = 1000000;
 
@@ -169,14 +169,14 @@ export default function CartPage() {
                     {t('cart:delete_all_button_label')}
                   </button>
 
-                  <ConfirmDeleteModal
+                  <ConfirmModal
                     open={deleteAllIsOpen}
                     title={t('cart:remove_title')}
                     question={t('cart:remove_all_confirm')}
                     onClose={handleCloseDeleteAllModal}
                     onConfirm={handleConfirmDeleteAll}>
                     <LoadingBackdrop open={deletingCarts} />
-                  </ConfirmDeleteModal>
+                  </ConfirmModal>
 
                   <Link href="/products">
                     <a className="d-block">

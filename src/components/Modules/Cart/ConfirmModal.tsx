@@ -1,25 +1,15 @@
 import { useTranslation } from 'i18n';
 import React from 'react';
-import ModalBase from 'src/components/Layout/Modal/ModalBase';
+import ModalBase, { ModalBaseProps } from 'src/components/Layout/Modal/ModalBase';
 
-type Props = {
-  // Modal is open
-  open: boolean;
-
-  // On modal close
-  onClose: () => void;
-
-  // On confirm delete
+export type ConfirmModalProps = ModalBaseProps & {
   onConfirm: () => void;
-
   title: string;
-
   question?: string;
-
   children?: React.ReactNode;
 };
 
-const ConfirmDeleteModal = (props: Props) => {
+const ConfirmModal = (props: ConfirmModalProps) => {
   const { open, onClose, onConfirm } = props;
 
   const { t } = useTranslation(['cart', 'errors']);
@@ -75,4 +65,4 @@ const ConfirmDeleteModal = (props: Props) => {
   );
 };
 
-export default ConfirmDeleteModal;
+export default ConfirmModal;
