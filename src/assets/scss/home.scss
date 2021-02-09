@@ -100,6 +100,18 @@
     width: 900px;
   }
 }
+@media only screen and (max-width: 768px){
+  .engo-popup .content{
+      width: 350px;
+      margin: auto;
+      margin-top: 50px;
+  }
+}
+@media only screen and (max-width: 768px){
+  .engo-popup .content .mypage > span{
+      font-size: 5px;
+  }
+}
 
 .accept {
   background: #2b3695;

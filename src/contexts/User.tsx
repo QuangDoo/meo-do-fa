@@ -24,7 +24,7 @@ function UserProvider(props) {
   const { t } = useTranslation(['errors']);
 
   const { data, loading, refetch } = useQueryAuth<GetUserData, undefined>(GET_USER, {
-    fetchPolicy: 'no-cache',
+    fetchPolicy: 'network-only',
     notifyOnNetworkStatusChange: true,
     onError: (error) => {
       const errorCode = error.graphQLErrors?.[0]?.extensions?.code;
