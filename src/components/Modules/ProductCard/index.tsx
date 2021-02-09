@@ -10,6 +10,7 @@ import QuantityInput from '../../Form/QuantityInput';
 import { DiscountRibbon } from './DiscountRibbon';
 import LoginToSeePrice from './LoginToSeePrice';
 import ProductBadge from './ProductBadge';
+import ProductBadges from './ProductBadges';
 import { ProductPrice } from './ProductPrice';
 
 type Props = Product;
@@ -54,15 +55,7 @@ const ProductCard = (props: Props) => {
               </Link>
 
               <div className="product__status mb-2">
-                {token && (
-                  <>
-                    {props.is_quick_invoice && <ProductBadge type="is_quick_invoice" />}
-
-                    {props.is_exclusive && <ProductBadge type="is_exclusive" />}
-
-                    {props.is_vn && <ProductBadge type="is_vn" />}
-                  </>
-                )}
+                {token && <ProductBadges product={props} />}
               </div>
 
               <small className="text-muted">{props.packing_unit}</small>

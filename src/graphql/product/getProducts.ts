@@ -16,6 +16,7 @@ export const productCardQueryProps = `
   is_quick_invoice
   is_vn
   is_exclusive
+  is_available
   slug
   categories {
     id
@@ -43,6 +44,7 @@ export type Product = {
   is_quick_invoice: boolean;
   is_vn: boolean;
   is_exclusive: boolean;
+  is_available: boolean;
   slug: string;
   categories: {
     id: number;

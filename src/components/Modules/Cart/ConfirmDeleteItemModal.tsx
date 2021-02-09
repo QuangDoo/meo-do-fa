@@ -16,7 +16,12 @@ export default function ConfirmDeleteItemModal(props: Props) {
     <ConfirmModal {...rest}>
       <div className="elevated p-3 d-flex">
         <div className="mr-3">
-          <img alt="" className="lozad img-fluid loaded" src={img} width={100} />
+          <img
+            alt=""
+            className="lozad img-fluid loaded"
+            src={img || '/assets/images/no_images.jpg'}
+            width={100}
+          />
         </div>
 
         <div className="text-left">

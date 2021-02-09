@@ -51,6 +51,7 @@
   "name_label_invoice": "Tên công ty",
   "name_placeholder": "Vd. Nguyễn Văn B",
   "name_required": "Xin nhập họ tên.",
+  "no_coupons": "Bạn không có mã giảm giá nào.",
   "not_this_address": "Không phải địa chỉ bạn muốn?",
   "notes_description": "Trường hợp không tìm được thuốc mong muốn, Quý khách vui lòng điền yêu cầu bên dưới. Chúng tôi sẽ liên hệ mua thuốc và báo giá sớm nhất có thể.",
   "notes_placeholder": "Ghi chú của khách hàng",
@@ -66,12 +67,14 @@
   "phone_label": "Số điện thoại",
   "phone_placeholder": "Vd. 0999123456",
   "phone_required": "Xin nhập số điện thoại.",
+  "price_invoice": "Giá",
   "price_provisional_sums": "Tạm tính",
   "price_shipping_fee": "Phí vận chuyển",
   "price_tax": "Thuế",
   "price_total": "Thành tiền",
   "price_total_dc_payment": "Giảm giá chuyển khoản",
   "price_total_discount": "Khuyến mãi",
+  "price_VAT": "VAT",
   "promo_codes_title": "Mã khuyến mãi",
   "quantity": "Số lượng",
   "reward_type_discount": "Giảm giá",
@@ -86,8 +89,5 @@
   "ward_placeholder": "Chọn phường/xã...",
   "ward_required": "Xin chọn phường/xã",
   "warning_1": "Medofa có thể hủy đơn hàng của bạn nếu chênh lệch hơn 5% giá trị sản phẩm.",
-  "warning_2": "Số lượng sản phẩm khi giao có thể không đảm bảo đúng nhu cầu ban đầu tùy thuộc vào nhà cung cấp.",
-  "email_required": "Xin nhập email",
-  "price_invoice": "Giá",
-  "price_VAT":"VAT"
+  "warning_2": "Số lượng sản phẩm khi giao có thể không đảm bảo đúng nhu cầu ban đầu tùy thuộc vào nhà cung cấp."
 }

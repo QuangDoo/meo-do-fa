@@ -32,6 +32,7 @@ export type ProductDetails = {
   is_vn: boolean;
   is_drop_ship: boolean;
   is_quick_invoice: boolean;
+  is_available: boolean;
   info: string;
   indication: string;
   contraindication: string;
@@ -74,6 +75,7 @@ export const GET_PRODUCT = gql`
       is_vn
       is_drop_ship
       is_quick_invoice
+      is_available
       info
       indication
       contraindication
