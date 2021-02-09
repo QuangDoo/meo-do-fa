@@ -7,42 +7,16 @@ import { toast } from 'react-toastify';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { APPLY_COUPON, ApplyCouponData, ApplyCouponVars } from 'src/graphql/coupons/applyCoupon';
 import { GET_USED_COUPONS, GetUsedCouponsData } from 'src/graphql/coupons/getUsedCoupons';
-import { OutputCounsel, PromotionType } from 'src/graphql/order/getCounsel';
+import { OutputCounsel, PromotionInfo } from 'src/graphql/order/getCounsel';
 import { useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
 
 import ApplyPromoCodesDialog from './ApplyPromoCodesDialog';
+import Coupon from './Coupon';
 
 type Props = {
   setCounselData: (data: OutputCounsel) => void;
   counselData: OutputCounsel;
 };
-
-type CouponProps = {
-  promotion: PromotionType;
-  onClick: () => void;
-};
-
-function Coupon(props: CouponProps) {
-  const { t } = useTranslation('checkout');
-
-  const { promotion, onClick } = props;
-
-  return (
-    <div
-      key={promotion.coupon_code}
-      className="d-flex mt-3 align-items-center justify-content-between promo-coupon">
-      <div className="px-2 flex-grow-1 promo-coupon__name-container">
-        <div className="promo-coupon__name" title={promotion.program_name}>
-          {promotion.program_name}
-        </div>
-      </div>
-
-      <button type="button" className="px-3 py-4 promo-coupon__unapply-btn" onClick={onClick}>
-        {t('checkout:unapply_coupon_btn')}
-      </button>
-    </div>
-  );
-}
 
 export default function PromoCodes(props: Props) {
   const [open, setOpen] = useState(false);
@@ -110,12 +84,17 @@ export default function PromoCodes(props: Props) {
 
   const promotion = props.counselData?.counsel?.promotion;
 
+  const promotions = props.counselData?.counsel?.promotions_coupon;
+
   return (
     <div className="mb-4">
       <div className="h4 mb-3">{t('checkout:promo_codes_title')}</div>
 
       {promotion?.coupon_code ? (
-        <Coupon promotion={promotion} onClick={() => handleUnapplyCoupon(promotion.coupon_code)} />
+        <Coupon
+          promotion={promotions[0]}
+          onClick={() => handleUnapplyCoupon(promotion.coupon_code)}
+        />
       ) : (
         <div className="elevated overflow-hidden">
           <Button
