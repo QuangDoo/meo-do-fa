@@ -72,13 +72,11 @@ export default function ApplyPromoCodesDialog(props: Props) {
 
   const appliedCode = props.counselData?.counsel?.promotion?.coupon_code;
 
-  // const availableCoupons =
-  //   props.usableCoupons
-  //     ?.slice()
-  //     .filter((coupon) => new Date(coupon.expiration_date).valueOf() - new Date().valueOf() > 0) ||
-  //   [];
-
-  const availableCoupons = props.usableCoupons?.slice() || [];
+  const availableCoupons =
+    props.usableCoupons
+      ?.slice()
+      .filter((coupon) => new Date(coupon.expiration_date).valueOf() - new Date().valueOf() > 0) ||
+    [];
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && input.length > 0) {
