@@ -1,5 +1,6 @@
 {
-  "is_quick_invoice": "Hóa đơn",
-  "is_exclusive": "Chỉ có tại Medofa",
-  "is_vn": "Người Việt dùng hàng Việt"
+  "invoice_exportable": "Hóa đơn",
+  "only_medofa": "Chỉ có tại Medofa",
+  "use_vietnamese": "Người Việt dùng hàng Việt",
+  "out_of_stocks": "Tạm hết hàng"
 }

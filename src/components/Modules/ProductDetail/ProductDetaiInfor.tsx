@@ -7,7 +7,7 @@ import { useToken } from 'src/contexts/Token';
 import { ProductDetails } from 'src/graphql/product/product.query';
 
 import LoginModal from '../LoginModal';
-import ProductBadge from '../ProductCard/ProductBadge';
+import ProductBadges from '../ProductCard/ProductBadges';
 
 const ProductDetailInfor = (props: ProductDetails) => {
   const token = useToken();
@@ -20,11 +20,7 @@ const ProductDetailInfor = (props: ProductDetails) => {
         <h1 className="h3 text-capitalize">{props.name}</h1>
 
         <div className="product__status mb-3">
-          {props.is_quick_invoice && <ProductBadge type="is_quick_invoice" />}
-
-          {props.is_exclusive && <ProductBadge type="is_exclusive" />}
-
-          {props.is_vn && <ProductBadge type="is_vn" />}
+          <ProductBadges product={props} />
         </div>
 
         {!token ? (

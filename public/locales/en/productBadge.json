@@ -1,5 +1,6 @@
 {
-  "is_quick_invoice": "Invoice",
-  "is_exclusive": "Only at Medofa",
-  "is_vn": "Made in Vietnam"
+  "invoice_exportable": "Invoice",
+  "only_medofa": "Only at Medofa",
+  "use_vietnamese": "Made in Vietnam",
+  "out_of_stocks": "Out of stocks"
 }

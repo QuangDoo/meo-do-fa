@@ -1,30 +1,20 @@
 import clsx from 'clsx';
-import { withTranslation } from 'i18n';
-import { WithTranslation } from 'next-i18next';
+import { useTranslation } from 'i18n';
 import React from 'react';
 
-// BadgeType must be the same as badge types in productBadge.json translation file
-export type BadgeType = 'is_quick_invoice' | 'is_vn' | 'is_exclusive';
-
-interface ProductBadgeProps extends WithTranslation {
-  type: BadgeType;
-}
-
-const classMapping: Record<BadgeType, string> = {
-  is_quick_invoice: 'invoice_exportable',
-  is_vn: 'use_vietnamese',
-  is_exclusive: 'only_medofa'
+type Props = {
+  type: 'invoice_exportable' | 'use_vietnamese' | 'only_medofa' | 'out_of_stocks';
 };
 
-const ProductBadge = (props: ProductBadgeProps) => {
-  const { t } = props;
+const ProductBadge = (props: Props) => {
+  const { t } = useTranslation(['productBadge']);
 
   return (
-    <span className={clsx('badge badge-light display-status mr-1 mb-1', classMapping[props.type])}>
+    <span className={clsx('badge badge-light display-status mr-1 mb-1', props.type)}>
       <i className="fas mr-1"></i>
       {t(`productBadge:${props.type}`)}
     </span>
   );
 };
 
-export default withTranslation('productBadge')(ProductBadge);
+export default ProductBadge;
