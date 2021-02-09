@@ -56,6 +56,8 @@ export default function PromoCodes(props: Props) {
     loading: gettingUsedCoupons,
     refetch: refetchUsedCoupons
   } = useQueryAuth<GetUsedCouponsData, undefined>(GET_USED_COUPONS, {
+    fetchPolicy: 'network-only',
+    notifyOnNetworkStatusChange: true,
     onError: (error) => {
       const errorCode = error.graphQLErrors[0]?.extensions?.code;
       toast.error(t(`errors:code_${errorCode}`));
@@ -63,8 +65,7 @@ export default function PromoCodes(props: Props) {
       if (errorCode === 114) {
         router.push('/cart');
       }
-    },
-    fetchPolicy: 'network-only'
+    }
   });
 
   const [applyCoupon, { loading: applyingCoupon }] = useMutationAuth<
