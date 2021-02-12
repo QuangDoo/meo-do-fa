@@ -70,7 +70,7 @@ class MyDocument extends Document {
             }}
           />
 
-          <script
+          {/* <script
             dangerouslySetInnerHTML={{
               __html: `
               window.dataLayer = window.dataLayer || [];
@@ -78,7 +78,7 @@ class MyDocument extends Document {
               gtag('js', new Date());
               gtag('config', 'G-95PXEWD1KY');`
             }}
-          />
+          /> */}
 
           <script
             dangerouslySetInnerHTML={{
