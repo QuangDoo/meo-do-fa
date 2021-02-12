@@ -1,3 +1,6 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+import Tooltip from '@material-ui/core/Tooltip';
 import { useTranslation } from 'i18n';
 import React from 'react';
 
@@ -17,7 +20,9 @@ export default function PromoCodeItem(props: Props) {
   const imgUrl = '/assets/images/gift.jpg';
   const { rewardType } = props;
   const discountFixedAmount = props.discountFixedAmount.toLocaleString('de-DE');
-
+  const handleCopy = () => {
+    navigator.clipboard.writeText(props.couponCode || '');
+  };
   const leftPromoCode = (rewardType) => {
     switch (rewardType) {
       case 'product':
@@ -60,7 +65,11 @@ export default function PromoCodeItem(props: Props) {
           <span>{props.couponDescription}</span>
         </div>
         {props.couponCode !== 'false' && (
-          <div className="coupon__code mb-2">{props.couponCode}</div>
+          <Tooltip title="Click to copy" placement="top-end">
+            <span className="coupon__code mb-2" onClick={handleCopy}>
+              {props.couponCode}
+            </span>
+          </Tooltip>
         )}
 
         <div className="coupon__button">
