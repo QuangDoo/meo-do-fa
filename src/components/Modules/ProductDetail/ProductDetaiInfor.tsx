@@ -14,6 +14,8 @@ const ProductDetailInfor = (props: ProductDetails) => {
 
   const { t } = useTranslation(['common', 'productDetail']);
 
+  console.log('props', props?.categories?.length);
+
   return (
     <div className="row">
       <div className="col-12">
@@ -46,7 +48,7 @@ const ProductDetailInfor = (props: ProductDetails) => {
         )}
 
         <div className="my-3">
-          {props?.manufacturer && (
+          {props?.manufacturer?.id ? (
             <>
               <div className="product__info-label">{t('productDetail:manufacturer')}</div>
               <div className="text-capitalize">
@@ -55,10 +57,10 @@ const ProductDetailInfor = (props: ProductDetails) => {
                 </Link>
               </div>
             </>
-          )}
+          ) : null}
         </div>
         <div className="mb-3">
-          {props?.categories?.length > 0 && (
+          {props?.categories[0].id && (
             <div className="product__info-label">{t('productDetail:category')}</div>
           )}
           {props?.categories &&

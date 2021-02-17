@@ -147,7 +147,9 @@ function ProductDetail() {
           </div>
         </div>
 
-        {relatedProducts && <RelativeProducts relatedProducts={relatedProducts} />}
+        {relatedProducts?.length > 0 ? (
+          <RelativeProducts relatedProducts={relatedProducts} />
+        ) : null}
       </div>
     </MainLayout>
   );
