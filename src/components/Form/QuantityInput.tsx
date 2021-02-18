@@ -1,197 +1,85 @@
-import { useTranslation } from 'i18n';
-import React, { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
-import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
-import { useCart } from 'src/contexts/Cart';
-import { ADD_TO_CART, AddToCartData, AddToCartVars } from 'src/graphql/cart/addToCart';
-import { DELETE_CART, DeleteCartData, DeleteCartVars } from 'src/graphql/cart/deleteCart.mutation';
-import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
-import useDebounce from 'src/hooks/useDebounce';
-
-import ConfirmDeleteItemModal from '../Modules/Cart/ConfirmDeleteItemModal';
+import React from 'react';
+import toNumbersOnly from 'src/utils/removeNonNumerics';
 
 type Props = {
-  productId: number;
-  productPrice: number;
-  productName: string;
-  productImg: string;
+  quantity: number;
+  setQuantity?: React.Dispatch<React.SetStateAction<number>>;
+  onMinusClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onPlusClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onKeyDown?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
+  onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
+  min?: number;
+  max?: number;
 };
 
-function QuantityInput(props: Props) {
-  const { productId, productPrice, productName, productImg } = props;
+export default function QuantityInput(props: Props) {
+  const {
+    quantity,
+    setQuantity,
+    min,
+    max,
+    onChange,
+    onKeyDown,
+    onBlur,
+    onMinusClick,
+    onPlusClick
+  } = props;
 
-  const { t } = useTranslation(['errors', 'success', 'cart']);
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    onChange?.(event);
 
-  const { data: cart, refetch: refetchCart } = useCart();
+    if (setQuantity) {
+      const newValue = toNumbersOnly(event.target.value);
 
-  const thisProductInCart = cart?.carts.find((product) => product.productId === productId);
-
-  const quantityInCart = thisProductInCart?.quantity || 0;
-
-  const [quantity, setQuantity] = useState<number>(quantityInCart);
-
-  const [open, setOpen] = useState<boolean>(false);
-
-  useEffect(() => {
-    setQuantity(quantityInCart);
-  }, [quantityInCart]);
-
-  const [addToCart, { loading: addingToCart }] = useMutationAuth<AddToCartData, AddToCartVars>(
-    ADD_TO_CART,
-    {
-      onCompleted: () => {
-        refetchCart().then(() => {
-          toast.success(t(`success:update_cart`));
-        });
-      },
-      onError: (err) => {
-        const errorCode = err.graphQLErrors?.[0]?.extensions?.code;
-
-        setQuantity(quantityInCart);
-
-        if (errorCode === 121) {
-          toast.error(
-            t(`errors:code_${errorCode}`, {
-              name: err.graphQLErrors[0].message.replace(
-                'Sales price changed. Please remove product on cart. Product: ',
-                ''
-              )
-            })
-          );
-        } else {
-          toast.error(t(`errors:code_${errorCode}`));
-        }
+      if (max !== undefined && newValue > max) {
+        setQuantity(max);
+        return;
       }
-    }
-  );
 
-  const [deleteCart, { loading: deletingCart }] = useMutationAuth<DeleteCartData, DeleteCartVars>(
-    DELETE_CART,
-    {
-      onCompleted: () => {
-        refetchCart().then(() => {
-          toast.success(t(`success:delete_cart`));
-        });
-      },
-      onError: (err) => {
-        toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
+      if (min !== undefined && newValue < min) {
+        setQuantity(min);
+        return;
       }
-    }
-  );
 
-  const handleUpdate = (
-    prevQuantity: number,
-    newQuantity: number,
-    price: number = productPrice,
-    id: number = productId,
-    name: string = productName
-  ) => {
-    if (newQuantity === prevQuantity) {
-      return;
-    }
-
-    if (newQuantity === 0) {
-      setOpen(true);
-      return;
-    }
-
-    addToCart({
-      variables: {
-        price: price,
-        productId: id,
-        productName: name,
-        quantity: newQuantity
-      }
-    });
-  };
-
-  const debouncedHandleUpdate = useDebounce(handleUpdate, 450);
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // Remove all non-numeric characters
-    const string = e.target.value.replace(/\D/g, '');
-
-    // Convert string to number
-    const newQuantity = +string || 0;
-
-    setQuantity(newQuantity);
-  };
-
-  // Blur on enter
-  const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      e.currentTarget.blur();
+      setQuantity(newValue);
     }
   };
 
-  // Update quantity on blur
-  const handleInputBlur = () => {
-    handleUpdate(quantityInCart, quantity);
-  };
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    onKeyDown?.(event);
 
-  const handlePlusClick = () => {
-    const newQuantity = quantity + 1;
-    setQuantity(newQuantity);
-    debouncedHandleUpdate(quantityInCart, newQuantity, productPrice, productId, productName);
-  };
-
-  const handleMinusClick = () => {
-    const newQuantity = Math.max(quantity - 1, 0);
-    setQuantity(newQuantity);
-    debouncedHandleUpdate(quantityInCart, newQuantity, productPrice, productId, productName);
-  };
-
-  const handleCloseModal = () => {
-    setOpen(false);
-    setQuantity(quantityInCart);
-  };
-
-  const handleConfirmDelete = () => {
-    setOpen(false);
-    deleteCart({
-      variables: {
-        _id: thisProductInCart._id
-      }
-    });
+    if (event.key === 'Enter') {
+      event.currentTarget.blur();
+    }
   };
 
   return (
-    <>
-      <div className="qty js-qty">
-        <button className="btn btn-sm qty__button qty__button--minus" onClick={handleMinusClick}>
-          <i className="fas fa-minus" />
-        </button>
+    <div className="qty js-qty">
+      <button
+        disabled={quantity <= min}
+        className="btn btn-sm qty__button qty__button--minus"
+        onClick={onMinusClick}>
+        <i className="fas fa-minus" />
+      </button>
 
-        <input
-          type="tel"
-          className="form-control px-1 no-spinner text-center qty__input"
-          min={0}
-          max={100000}
-          value={quantity}
-          onChange={handleInputChange}
-          onKeyDown={handleInputKeyDown}
-          onBlur={handleInputBlur}
-        />
-
-        <button className="btn btn-sm qty__button qty__button--plus" onClick={handlePlusClick}>
-          <i className="fas fa-plus" />
-        </button>
-      </div>
-
-      <ConfirmDeleteItemModal
-        title={t('cart:remove_title')}
-        question={t('cart:remove_confirm')}
-        open={open}
-        onClose={handleCloseModal}
-        onConfirm={handleConfirmDelete}
-        img={productImg}
-        name={productName}
-        price={productPrice}
+      <input
+        type="tel"
+        className="form-control px-1 no-spinner text-center qty__input"
+        min={min}
+        max={max}
+        value={quantity}
+        onChange={handleChange}
+        onKeyDown={handleKeyDown}
+        onBlur={onBlur}
       />
 
-      <LoadingBackdrop open={addingToCart || deletingCart} />
-    </>
+      <button
+        disabled={quantity >= max}
+        className="btn btn-sm qty__button qty__button--plus"
+        onClick={onPlusClick}>
+        <i className="fas fa-plus" />
+      </button>
+    </div>
   );
 }
-
-export default QuantityInput;

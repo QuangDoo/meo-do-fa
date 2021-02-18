@@ -7,6 +7,7 @@ import Footer from '../Layout/Footer';
 import Header from '../Layout/Header';
 import LoadingBackdrop from '../Layout/LoadingBackdrop';
 import Nav from '../Layout/Nav';
+import TermPopup from './TermPopup';
 
 type Props = {
   children: ReactNode;
@@ -21,6 +22,8 @@ export default function MainLayout(props: Props) {
 
   return (
     <>
+      <TermPopup />
+
       <Header />
 
       <Nav />
@@ -44,5 +47,6 @@ export const mainLayoutNamespacesRequired = [
   'errors',
   'login',
   'register',
-  'password'
+  'password',
+  'termPopup'
 ];

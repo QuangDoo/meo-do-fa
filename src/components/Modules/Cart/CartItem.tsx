@@ -3,8 +3,8 @@ import Link from 'next/link';
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import PriceText from 'src/components/Form/PriceText';
-import QuantityInput from 'src/components/Form/QuantityInput';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
+import ProductCardQuantityInput from 'src/components/Modules/ProductCard/ProductCardQuantityInput';
 import { useCart } from 'src/contexts/Cart';
 import { DELETE_CART, DeleteCartData, DeleteCartVars } from 'src/graphql/cart/deleteCart.mutation';
 import { CartItem as CartItemProps } from 'src/graphql/cart/getCart';
@@ -106,7 +106,7 @@ function CartItem(props: CartItemProps) {
           )}
 
           <div className="mt-3 d-flex cart-item__qty align-items-center">
-            <QuantityInput
+            <ProductCardQuantityInput
               productId={props.productId}
               productName={props.productName}
               productPrice={props.price}
