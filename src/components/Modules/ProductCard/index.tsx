@@ -14,6 +14,10 @@ import { ProductPrice } from './ProductPrice';
 
 type Props = Product;
 
+const isNotNull = (category: Product['categories'][0]) => {
+  return category.id !== null && category.name !== null;
+};
+
 const ProductCard = (props: Props) => {
   const token = useToken();
 
@@ -61,21 +65,31 @@ const ProductCard = (props: Props) => {
 
               <br />
 
-              <small className="text-muted product-card__category text-max-3">
-                {t('productCard:category')}:{' '}
-                {props.categories?.map(({ id, name }, index, arr) => (
-                  <React.Fragment key={id}>
-                    <Link href={`/products?category=${id}`}>
-                      <a>{name}</a>
-                    </Link>
-                    {index < arr.length - 1 && '; '}
-                  </React.Fragment>
-                ))}
-              </small>
+              {props.categories?.some(isNotNull) && (
+                <small className="text-muted product-card__category text-max-3">
+                  {t('productCard:category')}:{' '}
+                  {props.categories
+                    ?.slice()
+                    .filter(isNotNull)
+                    .map(({ id, name }, index, arr) => (
+                      <React.Fragment key={id}>
+                        <Link href={`/products?category=${id}`}>
+                          <a>{name}</a>
+                        </Link>
+                        {index < arr.length - 1 && '; '}
+                      </React.Fragment>
+                    ))}
+                </small>
+              )}
 
-              {props.manufacturer.id && (
-                <small className="text-muted">
-                  {t('productCard:manufacturer')}: {props.manufacturer.short_name}
+              {props.manufacturer.id !== null && (
+                <small
+                  title={props.manufacturer.name}
+                  className="text-muted product-card__manufacturer">
+                  {t('productCard:manufacturer')}:{' '}
+                  <Link href={`/products?manufacturer=${props.manufacturer.id}`}>
+                    {props.manufacturer.short_name || props.manufacturer.name}
+                  </Link>
                 </small>
               )}
 
