@@ -19,8 +19,6 @@ import {
 } from 'src/graphql/search/search.products.query';
 import { useDebouncedEffect } from 'src/hooks/useDebouncedEffect';
 
-import Loading from '../Loading';
-
 const SearchResults = (props: {
   array: SearchResult[];
   value: string;
