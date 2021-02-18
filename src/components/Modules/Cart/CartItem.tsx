@@ -83,7 +83,7 @@ function CartItem(props: CartItemProps) {
                 {props.tax !== -1 && (
                   <>
                     <i className="fas mr-1"></i>
-                    {t(`cart:quick_invoice_with_tax`, { tax: props.tax })}{' '}
+                    {t(`cart:quick_invoice`)}{' '}
                   </>
                 )}
               </span>
