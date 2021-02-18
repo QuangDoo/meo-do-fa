@@ -71,7 +71,7 @@ export default function ManufacturerFilter() {
         />
       </div>
 
-      {searchingManufacturers && <CircularProgress color="inherit" />}
+      {searchingManufacturers && <CircularProgress size={60} />}
 
       <div className="mb-2" hidden={searchingManufacturers}>
         <Link href={getAllHref()}>

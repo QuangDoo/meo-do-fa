@@ -1,4 +1,5 @@
 import { useLazyQuery } from '@apollo/client';
+import { CircularProgress } from '@material-ui/core';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import clsx from 'clsx';
 import { useTranslation } from 'i18n';
@@ -191,7 +192,7 @@ const SearchBar = () => {
 
             {(pLoading || mLoading) && (
               <div className="search__result--empty text-center">
-                <Loading />
+                <CircularProgress size={60} />
               </div>
             )}
           </div>
