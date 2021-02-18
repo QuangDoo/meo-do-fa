@@ -10,7 +10,6 @@ import Loading from 'src/components/Layout/Loading';
 import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import Pagination from 'src/components/Modules/Pagination';
 import ProductCard from 'src/components/Modules/ProductCard';
-import TermPopup from 'src/components/Modules/TermPopup';
 import {
   GET_DEALS_OF_THE_DAY,
   GetDealsOfTheDayData,
@@ -85,7 +84,6 @@ function DealOfTheDay() {
       <Head>
         <title>Medofa</title>
       </Head>
-      <TermPopup />
 
       <div className="deals deals--mobile py-5">
         <div className="container px-0">

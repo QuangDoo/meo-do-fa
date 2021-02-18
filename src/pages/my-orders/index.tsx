@@ -1,4 +1,4 @@
-import { AppBar, Box, CircularProgress, Grid, makeStyles, Tab, Tabs } from '@material-ui/core';
+import { AppBar, Box, CircularProgress, Grid, Tab, Tabs } from '@material-ui/core';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -9,7 +9,6 @@ import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules
 import OrderItem from 'src/components/Modules/My-orders/OrderItem';
 import Pagination from 'src/components/Modules/Pagination';
 import ProfileLayout from 'src/components/Modules/ProfileLayout';
-import TermPopup from 'src/components/Modules/TermPopup';
 import {
   GET_ORDER_LIST,
   GetOrderListData,
@@ -87,8 +86,6 @@ function MyOrders() {
       <Head>
         <title>Medofa</title>
       </Head>
-
-      <TermPopup />
 
       <ProfileLayout title={t('myOrders:my_orders')}>
         <Grid container spacing={2}>

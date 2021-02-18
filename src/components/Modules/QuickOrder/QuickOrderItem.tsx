@@ -2,8 +2,8 @@ import Link from 'next/link';
 import React from 'react';
 import { useToken } from 'src/contexts/Token';
 
-import QuantityInput from '../../Form/QuantityInput';
 import LoginToSeePrice from '../ProductCard/LoginToSeePrice';
+import ProductCardQuantityInput from '../ProductCard/ProductCardQuantityInput';
 import { ProductPrice } from '../ProductCard/ProductPrice';
 
 type Props = {
@@ -54,7 +54,7 @@ function QuickOrderItem(props: Props) {
 
                 {token && (
                   <div className="cart-item__qty">
-                    <QuantityInput
+                    <ProductCardQuantityInput
                       productId={props.productId}
                       productPrice={props.list_price}
                       productName={props.productName}

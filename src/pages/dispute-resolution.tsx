@@ -2,7 +2,6 @@ import { useTranslation } from 'i18n';
 import React from 'react';
 import Head from 'src/components/Layout/Head';
 import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
-import TermPopup from 'src/components/Modules/TermPopup';
 import withToken from 'src/utils/withToken';
 
 DisputeResolution.getInitialProps = async () => ({
@@ -17,7 +16,6 @@ function DisputeResolution() {
       <Head>
         <title>Medofa</title>
       </Head>
-      <TermPopup />
 
       <div className="container text-justify my-5">
         <h2 className="text-center my-5">{t('disputeResolution:title')}</h2>

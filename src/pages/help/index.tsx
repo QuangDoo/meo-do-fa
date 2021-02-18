@@ -31,10 +31,11 @@ const Help = () => {
         <title>Medofa</title>
       </Head>
 
+      <TermPopup />
+
       <Header />
 
       <Nav />
-      <TermPopup />
 
       <FAQ title={t('help:frequently_asked_questions')}>
         {/* <div className="d-flex justify-content-center align-items-center p-5">

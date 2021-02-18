@@ -6,11 +6,10 @@ import React from 'react';
 import { useToken } from 'src/contexts/Token';
 import { Product } from 'src/graphql/product/getProducts';
 
-import QuantityInput from '../../Form/QuantityInput';
 import { DiscountRibbon } from './DiscountRibbon';
 import LoginToSeePrice from './LoginToSeePrice';
-import ProductBadge from './ProductBadge';
 import ProductBadges from './ProductBadges';
+import ProductCardQuantityInput from './ProductCardQuantityInput';
 import { ProductPrice } from './ProductPrice';
 
 type Props = Product;
@@ -92,7 +91,7 @@ const ProductCard = (props: Props) => {
                 </div>
 
                 <div className="product_qty">
-                  <QuantityInput
+                  <ProductCardQuantityInput
                     productId={props.id}
                     productPrice={props.list_price}
                     productName={props.name}
