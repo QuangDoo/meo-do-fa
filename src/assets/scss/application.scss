@@ -10865,7 +10865,7 @@ abbr[title] {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  line-height: 1.2;
+  line-height: 1.5;
 }
 .product-card__name:hover {
   color: $primary;
@@ -10877,12 +10877,12 @@ abbr[title] {
 .product-card__category {
   text-transform: capitalize;
 }
-.product-card__category a {
+.product-card__category a, .product-card__manufacturer a {
   text-decoration: none;
   color: #495057;
   transition: color 0.2s;
 }
-.product-card__category a:hover {
+.product-card__category a:hover, .product-card__manufacturer a:hover {
   color: $primary;
   transition: color 0.2s;
 }
