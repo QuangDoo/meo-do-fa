@@ -169,10 +169,10 @@ const ProductDetailInfor = (props: ProductDetails) => {
 
             <div className="d-flex mt-3 w-100">
               <button className="btn btn-primary mr-2" onClick={handleBuyNow}>
-                Mua ngay
+                {t('productDetail:buy_now')}
               </button>
               <button className="btn btn-secondary" onClick={handleAddToCart}>
-                Thêm vào giỏ hàng
+                {t('productDetail:add_to_cart')}
               </button>
             </div>
           </React.Fragment>
