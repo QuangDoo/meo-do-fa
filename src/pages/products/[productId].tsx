@@ -12,7 +12,6 @@ import ProductDetailInfor from 'src/components/Modules/ProductDetail/ProductDeta
 import ProducerInformation from 'src/components/Modules/ProductDetail/ProductInformation/ProducerInformation';
 import ProductSidebar from 'src/components/Modules/ProductDetail/ProductInformation/ProductSidebar';
 import RelativeProducts from 'src/components/Modules/ProductDetail/RelativeProducts';
-import TermPopup from 'src/components/Modules/TermPopup';
 import {
   GET_RELATED_PRODUCTS,
   GetRelatedProductsData,
@@ -103,8 +102,6 @@ function ProductDetail() {
       <Head>
         <title>Medofa - {product?.name}</title>
       </Head>
-
-      <TermPopup />
 
       {/* <div className="product container py-2">
         <SimpleBreadcrumbs categories={product?.categories} />

@@ -2,7 +2,6 @@ import React from 'react';
 import Head from 'src/components/Layout/Head';
 import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import PromoCodes from 'src/components/Modules/PromoCodes';
-import TermPopup from 'src/components/Modules/TermPopup';
 import withToken from 'src/utils/withToken';
 
 PromotionCode.getInitialProps = async () => ({
@@ -15,7 +14,7 @@ function PromotionCode() {
       <Head>
         <title>Medofa</title>
       </Head>
-      <TermPopup />
+
       <PromoCodes />
     </MainLayout>
   );
