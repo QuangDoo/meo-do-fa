@@ -1,4 +1,5 @@
 import { useQuery } from '@apollo/client';
+import { CircularProgress } from '@material-ui/core';
 import clsx from 'clsx';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
@@ -7,31 +8,42 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import Dropdown from 'src/components/Form/Dropdown';
 import {
-  GET_MANUFACTURERS,
   GetManufacturersData,
   GetManufacturersVars,
   SEARCH_MANUFACTURERS
 } from 'src/graphql/manufacturers/manufacturers.query';
-import removeAccents from 'src/utils/removeAccents';
+import { useDebouncedEffect } from 'src/hooks/useDebouncedEffect';
 
 export default function ManufacturerFilter() {
   const { t } = useTranslation(['productsSidebar', 'searchBar']);
 
   const [inputValue, setInputValue] = useState<string>('');
 
+  const [searchValue, setSearchValue] = useState<string>('');
+
   const router = useRouter();
 
-  const { data: dataMS } = useQuery<GetManufacturersData, GetManufacturersVars>(
-    SEARCH_MANUFACTURERS,
-    {
-      variables: { page: 1, pageSize: 20, name: inputValue },
-      onError: (err) => {
-        toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
-      }
+  const { data: searchManufacturersData, loading: searchingManufacturers } = useQuery<
+    GetManufacturersData,
+    GetManufacturersVars
+  >(SEARCH_MANUFACTURERS, {
+    variables: { page: 1, pageSize: 20, name: searchValue },
+    notifyOnNetworkStatusChange: true,
+    onError: (err) => {
+      toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
     }
+  });
+
+  // Debounce search manufacturers
+  useDebouncedEffect(
+    () => {
+      setSearchValue(inputValue);
+    },
+    400,
+    [inputValue]
   );
 
-  const manufacturers = dataMS?.searchManufactory;
+  const manufacturers = searchManufacturersData?.searchManufactory;
 
   const getAllHref = () => {
     const newQuery = { ...router.query };
@@ -59,7 +71,9 @@ export default function ManufacturerFilter() {
         />
       </div>
 
-      <div className="mb-2">
+      {searchingManufacturers && <CircularProgress color="inherit" />}
+
+      <div className="mb-2" hidden={searchingManufacturers}>
         <Link href={getAllHref()}>
           <a className={clsx('products__filter-category', !router.query.manufacturer && 'active')}>
             {t('productsSidebar:all')}
@@ -67,44 +81,40 @@ export default function ManufacturerFilter() {
         </Link>
       </div>
 
-      {manufacturers?.map(({ short_name, id }) => (
-        <div
-          hidden={!!inputValue && !removeAccents(short_name).includes(removeAccents(inputValue))}
-          key={id}
-          className="mb-2">
-          <Link
-            href={{
-              pathname: router.pathname,
-              query: {
-                ...router.query,
-                manufacturer: id
-              }
-            }}>
-            <a
-              className={clsx(
-                'products__filter-category',
-                router.query.manufacturer === id.toString() && 'active'
-              )}>
-              {short_name}
-            </a>
-          </Link>
-        </div>
-      ))}
+      {!searchingManufacturers &&
+        manufacturers?.map(({ name, short_name, id }) => (
+          <div key={id} className="mb-2">
+            <Link
+              href={{
+                pathname: router.pathname,
+                query: {
+                  ...router.query,
+                  manufacturer: id
+                }
+              }}>
+              <a
+                title={name}
+                className={clsx(
+                  'products__filter-category',
+                  router.query.manufacturer === id.toString() && 'active'
+                )}>
+                {short_name || name}
+              </a>
+            </Link>
+          </div>
+        ))}
 
-      {inputValue &&
-        !manufacturers?.some((manufacturer) =>
-          removeAccents(manufacturer.short_name).includes(removeAccents(inputValue))
-        ) && (
-          <React.Fragment>
-            <div className="search__result--empty">
-              {t('searchBar:no_manufacturers')} <b>{inputValue}</b>
-            </div>
+      {!searchingManufacturers && manufacturers?.length === 0 && (
+        <React.Fragment>
+          <div className="search__result--empty">
+            {t('searchBar:no_manufacturers')} <b>{searchValue}</b>
+          </div>
 
-            <hr />
-          </React.Fragment>
-        )}
+          <hr />
+        </React.Fragment>
+      )}
 
-      <div>
+      <div hidden={searchingManufacturers || !manufacturers || manufacturers.length === 0}>
         <Link href="/manufacturers">
           <a className="products__filter-category">{t('productsSidebar:see_more')}</a>
         </Link>

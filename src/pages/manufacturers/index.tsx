@@ -33,7 +33,13 @@ function Manufacturers() {
       <TermPopup />
 
       <SearchScreen
-        data={data?.getManufactoriesAll.map((i) => ({ id: i.id, name: i.short_name })) || []}
+        data={
+          data?.getManufactoriesAll.map((i) => ({
+            id: i.id,
+            name: i.name,
+            short_name: i.short_name
+          })) || []
+        }
         getItemHref={(id) => `/products?manufacturer=${id}`}
       />
     </MainLayout>
