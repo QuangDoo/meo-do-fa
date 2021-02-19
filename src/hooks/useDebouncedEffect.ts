@@ -1,9 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { DependencyList, useCallback, useEffect, useRef } from 'react';
+import { DependencyList, useEffect, useRef } from 'react';
 
 export const useDebouncedEffect = (effect, delay: number, deps: DependencyList) => {
-  const callback = useCallback(effect, deps);
-
   const isFirstUpdate = useRef(true);
 
   useEffect(() => {
@@ -13,11 +11,11 @@ export const useDebouncedEffect = (effect, delay: number, deps: DependencyList) 
     }
 
     const handler = setTimeout(() => {
-      callback();
+      effect();
     }, delay);
 
     return () => {
       clearTimeout(handler);
     };
-  }, [callback, delay]);
+  }, deps);
 };

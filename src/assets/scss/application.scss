@@ -9585,9 +9585,9 @@ abbr[title] {
   position: relative;
 }
 .header__user-name {
-  color: white;
+  color: $primary;
   text-transform: capitalize;
-  font-weight: 500;
+  font-weight: bold;
   min-width: 7em;
 }
 .header__user-avatar {
@@ -11115,7 +11115,12 @@ abbr[title] {
   max-width: var(--size);
   height: var(--size);
   font-size: var(--button-font-size);
+
+  &:disabled {
+    cursor: not-allowed;
+  }
 }
+
 .qty__button--minus {
   background-color: var(--c-minus-bg);
   color: var(--c-minus-color);

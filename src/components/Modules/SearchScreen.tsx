@@ -9,6 +9,7 @@ type Props = {
   data: {
     id: string;
     name: string;
+    short_name?: string;
   }[];
   getItemHref: (id: string, name: string) => string;
 };
@@ -102,7 +103,9 @@ export default function SearchScreen(props: Props) {
       <div className="filter-search__list py-3">
         {data?.map((item) => (
           <Link key={item.id} href={props.getItemHref(item.id.toString(), item.name)}>
-            <a className="filter-search__list-item mix all">{item.name}</a>
+            <a title={item.name} className="filter-search__list-item mix all">
+              {item.short_name || item.name}
+            </a>
           </Link>
         ))}
       </div>

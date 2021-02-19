@@ -2,6 +2,7 @@ import { gql } from '@apollo/client';
 
 export type Manufacturer = {
   id: string;
+  name: string;
   short_name: string;
 };
 
@@ -9,6 +10,7 @@ export const GET_ALL_MANUFACTURERS = gql`
   query {
     getManufactoriesAll {
       id
+      name
       short_name
     }
   }
@@ -22,6 +24,7 @@ export const GET_MANUFACTURERS = gql`
   query getManufactories($page: Int!, $pageSize: Int!) {
     getManufactories(page: $page, pageSize: $pageSize) {
       id
+      name
       short_name
     }
   }
@@ -30,8 +33,9 @@ export const GET_MANUFACTURERS = gql`
 export const SEARCH_MANUFACTURERS = gql`
   query searchManufactory($page: Int!, $pageSize: Int!, $name: String!) {
     searchManufactory(page: $page, pageSize: $pageSize, name: $name) {
-      short_name
       id
+      name
+      short_name
     }
   }
 `;

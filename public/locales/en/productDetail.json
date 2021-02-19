@@ -1,13 +1,14 @@
 {
-    "vat_included": "VAT included",
-    "manufacturer": "Manufacturer",
-    "category": "Category",
-    "image_change": "Product images may change over time",
-    "add_to_cart": "Add to cart",
-    "commitment": "COMMITMENT",
-    "commitment_1": "Fast delivery, right time, right order",
-    "commitment_2": "Free return of goods",
-    "commitment_3": "Qualified and trusted product origin",
-    "commitment_4": "Hotline: <a>1900232436</a>",
-    "related_product": "Similar products"
+  "add_to_cart": "Add to cart",
+  "buy_now": "Buy now",
+  "category": "Category",
+  "commitment": "COMMITMENT",
+  "commitment_1": "Fast delivery, right time, right order",
+  "commitment_2": "Free return of goods",
+  "commitment_3": "Qualified and trusted product origin",
+  "commitment_4": "Hotline: <a>1900232436</a>",
+  "image_change": "Product images may change over time",
+  "manufacturer": "Manufacturer",
+  "related_product": "Similar products",
+  "vat_included": "VAT included"
 }

@@ -8,7 +8,6 @@ import { ProductsContainer } from 'src/components/Modules/Home/ProductsContainer
 import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import { ProductsCarousel } from 'src/components/Modules/ProductsCarousel';
 import ScrollableTabsButtonAuto from 'src/components/Modules/ScrollableTabsButtonAuto/ScrollableTabsButtonAuto';
-import TermPopup from 'src/components/Modules/TermPopup';
 import {
   GET_INGREDIENT_DETAILS,
   GetIngredientDetailsData,
@@ -89,7 +88,6 @@ function IngredientDetails() {
       <Head>
         <title>Medofa - {title}</title>
       </Head>
-      <TermPopup />
 
       <main className="ingredient container py-3 py-sm-5">
         <div className="row justify-content-center">

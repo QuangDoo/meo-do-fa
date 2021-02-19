@@ -1,13 +1,14 @@
 {
-    "vat_included": "Đã bao gồm VAT",
-    "manufacturer": "Nhà sản xuất",
-    "category": "Nhóm thuốc",
-    "image_change": "Hình ảnh sản phẩm có thể thay đổi theo thời gian",
-    "add_to_cart": "Thêm vào giỏ hàng",
-    "commitment": "CAM KẾT",
-    "commitment_1": "Cam kết giao hàng nhanh đúng thời điểm, đúng hàng đã đặt",
-    "commitment_2": "Cam kết đổi trả hàng miễn phí",
-    "commitment_3": "Cam kết nguồn gốc sản phẩm chất lượng, uy tín",
-    "commitment_4": "Số hotline <a>1900232436</a>",
-    "related_product": "Sản phẩm tương tự"
+  "add_to_cart": "Thêm vào giỏ hàng",
+  "buy_now": "Mua ngay",
+  "category": "Nhóm thuốc",
+  "commitment": "CAM KẾT",
+  "commitment_1": "Cam kết giao hàng nhanh đúng thời điểm, đúng hàng đã đặt",
+  "commitment_2": "Cam kết đổi trả hàng miễn phí",
+  "commitment_3": "Cam kết nguồn gốc sản phẩm chất lượng, uy tín",
+  "commitment_4": "Số hotline <a>1900232436</a>",
+  "image_change": "Hình ảnh sản phẩm có thể thay đổi theo thời gian",
+  "manufacturer": "Nhà sản xuất",
+  "related_product": "Sản phẩm tương tự",
+  "vat_included": "Đã bao gồm VAT"
 }

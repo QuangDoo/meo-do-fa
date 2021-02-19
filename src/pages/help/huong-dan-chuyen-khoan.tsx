@@ -39,6 +39,7 @@ const HelpDetail = () => {
       <Head>
         <title>Medofa</title>
       </Head>
+
       <TermPopup />
 
       <Header />
