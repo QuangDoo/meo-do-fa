@@ -24,6 +24,7 @@ export const productCardQueryProps = `
   }
   manufacturer {
     id
+    name
     short_name
   }
 `;
@@ -52,6 +53,7 @@ export type Product = {
   }[];
   manufacturer: {
     id: number;
+    name: string;
     short_name: string;
   };
 };
