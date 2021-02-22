@@ -61,25 +61,36 @@ const StickySidebar = (props: Props): JSX.Element => {
       </div>
 
       <div className="elevated p-3 checkout__info row no-gutters mb-3">
-        {counselData?.counsel?.counsels?.map((product) => (
-          <div
-            className="w-100 d-flex flex-grow-1 justify-content-between border-bottom pb-2 mb-2 text-small"
-            key={product.productId}>
-            <div className="d-flex">
-              <div className="font-weight-bold mr-2 flex-shrink-0">{product.quantity} x</div>
-              <a
-                href={`products/${slugify(product.productName)}-pid${product.productId}`}
-                rel="noreferrer"
-                target="_blank">
-                {product.productName}
-              </a>
-            </div>
+        {counselData?.counsel?.counsels?.map((product) => {
+          const discountedPrice = product.price - product.dcAmtProduct;
 
-            <div className="d-flex flex-shrink-0 ml-3">
-              <PriceText price={(product.price - product.dcAmtProduct) * (1 + product.tax / 100)} />
+          const salePrice = [-1, 0].includes(product.tax)
+            ? discountedPrice
+            : discountedPrice * (1 + product.tax / 100);
+
+          const truncatedSalePrice = Math.trunc(salePrice);
+
+          return (
+            <div
+              className="w-100 d-flex flex-grow-1 justify-content-between border-bottom pb-2 mb-2 text-small"
+              key={product.productId}>
+              <div className="d-flex">
+                <div className="font-weight-bold mr-2 flex-shrink-0">{product.quantity} x</div>
+
+                <a
+                  href={`products/${slugify(product.productName)}-pid${product.productId}`}
+                  rel="noreferrer"
+                  target="_blank">
+                  {product.productName}
+                </a>
+              </div>
+
+              <div className="d-flex flex-shrink-0 ml-3">
+                <PriceText price={truncatedSalePrice} />
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
 
         <SidebarItem label={t('checkout:price_provisional_sums')}>
           <span>
