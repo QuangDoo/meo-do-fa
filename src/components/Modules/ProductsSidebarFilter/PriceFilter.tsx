@@ -12,13 +12,17 @@ export default function PriceFilter() {
   const { handleSubmit, control } = useForm();
 
   const onPriceRangeSubmit = (data) => {
+    const newQuery = {
+      ...router.query
+    };
+
+    if (data.priceFrom) newQuery.priceFrom = data.priceFrom;
+
+    if (data.priceTo) newQuery.priceTo = data.priceTo;
+
     router.push({
       pathname: router.pathname,
-      query: {
-        ...router.query,
-        priceFrom: data.priceFrom,
-        priceTo: data.priceTo
-      }
+      query: newQuery
     });
   };
 
