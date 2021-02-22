@@ -22,8 +22,10 @@ export default function PriceFilter() {
     };
 
     if (data.priceFrom) newQuery.priceFrom = data.priceFrom;
+    else delete newQuery.priceFrom;
 
     if (data.priceTo) newQuery.priceTo = data.priceTo;
+    else delete newQuery.priceTo;
 
     router.push({
       pathname: router.pathname,
