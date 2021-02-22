@@ -73,6 +73,7 @@ export default function SearchScreen(props: Props) {
             className="search"
             name="search"
             placeholder={t(`searchBar:enter_name_${router.pathname.substring(1)}`)}
+            onBlur={onSubmit}
           />
 
           <button type="submit" className="btn-search">

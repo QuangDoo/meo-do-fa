@@ -33,6 +33,8 @@ const ProductDetailInfor = (props: ProductDetails) => {
     setQuantity((quantity) => quantity + 1);
   };
 
+  const categories = props?.categories?.slice().filter((c) => c.id !== null) || [];
+
   const { data: cart, refetch: refetchCart } = useCart();
 
   const thisProductInCart = cart?.carts.find((product) => product.productId === props.id);
@@ -92,6 +94,9 @@ const ProductDetailInfor = (props: ProductDetails) => {
     });
   };
 
+  const hasBadge =
+    props?.is_quick_invoice || props?.is_exclusive || props?.is_vn || !props?.is_available;
+
   return (
     <div className="row">
       <LoadingBackdrop open={addingToCart} />
@@ -99,16 +104,18 @@ const ProductDetailInfor = (props: ProductDetails) => {
       <div className="col-12">
         <h1 className="h3 text-capitalize">{props.name}</h1>
 
-        <div className="product__status mb-3">
-          <ProductBadges product={props} />
-        </div>
+        {hasBadge && (
+          <div className="product__status mt-3">
+            <ProductBadges product={props} />
+          </div>
+        )}
 
-        {props?.packing_unit && <div className="mb-3 text-muted">{props.packing_unit}</div>}
+        {props?.packing_unit && <div className="text-muted">{props.packing_unit}</div>}
 
         {!token ? (
           <LoginModal />
         ) : (
-          <div className="d-flex flex-column">
+          <div className="d-flex flex-column mt-3">
             <div className="product__price-group mb-1">
               <span className="product__price">
                 <PriceText price={props.sale_price} />
@@ -127,38 +134,37 @@ const ProductDetailInfor = (props: ProductDetails) => {
           </div>
         )}
 
-        <div className="my-3">
-          {props?.manufacturer?.id ? (
-            <>
-              <div className="product__info-label">{t('productDetail:manufacturer')}</div>
-              <div className="text-capitalize">
-                <Link href={`/products?manufacturer=${props.manufacturer?.id}`}>
-                  <a>{props.manufacturer?.name}</a>
-                </Link>
-              </div>
-            </>
-          ) : null}
-        </div>
-        <div className="mb-3">
-          {props?.categories?.[0]?.id && (
-            <div className="product__info-label">{t('productDetail:category')}</div>
-          )}
-
-          {props?.categories?.map((item, index, arr) => (
-            <>
-              <Link href={`/products?category=${item.id}`}>
-                <a className="text-capitalize" key={index}>
-                  {item.name}
-                </a>
+        {props?.manufacturer?.id !== null && (
+          <div className="mt-3">
+            <div className="product__info-label">{t('productDetail:manufacturer')}</div>
+            <div className="text-capitalize">
+              <Link href={`/products?manufacturer=${props.manufacturer?.id}`}>
+                <a>{props.manufacturer?.name}</a>
               </Link>
-              {index < arr.length - 1 && '; '}
-            </>
-          ))}
-        </div>
+            </div>
+          </div>
+        )}
+
+        {categories.length > 0 && (
+          <div className="mt-3">
+            <div className="product__info-label">{t('productDetail:category')}</div>
+
+            {categories.map((item, index, arr) => (
+              <>
+                <Link href={`/products?category=${item.id}`}>
+                  <a className="text-capitalize" key={index}>
+                    {item.name}
+                  </a>
+                </Link>
+                {index < arr.length - 1 && '; '}
+              </>
+            ))}
+          </div>
+        )}
 
         {!!token && (
           <React.Fragment>
-            <div className="col-6 px-0">
+            <div className="col-6 px-0 mt-3">
               <QuantityInput
                 quantity={quantity}
                 setQuantity={setQuantity}
