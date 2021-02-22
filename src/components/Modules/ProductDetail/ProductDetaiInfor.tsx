@@ -105,17 +105,17 @@ const ProductDetailInfor = (props: ProductDetails) => {
         <h1 className="h3 text-capitalize">{props.name}</h1>
 
         {hasBadge && (
-          <div className="product__status mb-3">
+          <div className="product__status mt-3">
             <ProductBadges product={props} />
           </div>
         )}
 
-        {props?.packing_unit && <div className="mb-3 text-muted">{props.packing_unit}</div>}
+        {props?.packing_unit && <div className="text-muted">{props.packing_unit}</div>}
 
         {!token ? (
           <LoginModal />
         ) : (
-          <div className="d-flex flex-column my-3">
+          <div className="d-flex flex-column mt-3">
             <div className="product__price-group mb-1">
               <span className="product__price">
                 <PriceText price={props.sale_price} />
@@ -135,7 +135,7 @@ const ProductDetailInfor = (props: ProductDetails) => {
         )}
 
         {props?.manufacturer?.id !== null && (
-          <div className="my-3">
+          <div className="mt-3">
             <div className="product__info-label">{t('productDetail:manufacturer')}</div>
             <div className="text-capitalize">
               <Link href={`/products?manufacturer=${props.manufacturer?.id}`}>
@@ -146,7 +146,7 @@ const ProductDetailInfor = (props: ProductDetails) => {
         )}
 
         {categories.length > 0 && (
-          <div className="mb-3">
+          <div className="mt-3">
             <div className="product__info-label">{t('productDetail:category')}</div>
 
             {categories.map((item, index, arr) => (
@@ -164,7 +164,7 @@ const ProductDetailInfor = (props: ProductDetails) => {
 
         {!!token && (
           <React.Fragment>
-            <div className="col-6 px-0">
+            <div className="col-6 px-0 mt-3">
               <QuantityInput
                 quantity={quantity}
                 setQuantity={setQuantity}
