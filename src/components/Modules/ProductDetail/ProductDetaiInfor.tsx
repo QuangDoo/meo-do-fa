@@ -103,6 +103,8 @@ const ProductDetailInfor = (props: ProductDetails) => {
           <ProductBadges product={props} />
         </div>
 
+        {props?.packing_unit && <div className="mb-3 text-muted">{props.packing_unit}</div>}
+
         {!token ? (
           <LoginModal />
         ) : (
