@@ -16,6 +16,7 @@ export type CreateUserInput = {
   password: string;
   email: string;
   ref_email?: string;
+  vat?: string;
 };
 
 export type CreateUserVars = {

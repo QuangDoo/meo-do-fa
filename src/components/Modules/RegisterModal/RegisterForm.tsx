@@ -28,6 +28,7 @@ type Inputs = {
   referEmail: string;
   acceptTerms: boolean;
   businessLicense: FileList;
+  tax: string;
 };
 
 const accountTypes = ['PHARMACY', 'DRUGSTORE', 'CLINIC', 'HOSPITAL'];
@@ -77,6 +78,14 @@ const RegisterForm = () => {
   };
   // On form submit
   const onFormSubmit = (data: Inputs) => {
+    const regVat = /(^[0-9]{10}$)|(^[0-9]{13}$)/g;
+    let userVat = data?.tax.replace(/-/g, '');
+    if (userVat !== '' && !regVat.test(userVat)) {
+      return toast.error(t('errors:tax_code_invalid'));
+    }
+    if (userVat.length === 13) {
+      userVat = userVat.slice(0, 10) + '-' + userVat.slice(10, 13);
+    }
     createUser({
       variables: {
         inputs: {
@@ -85,7 +94,8 @@ const RegisterForm = () => {
           email: data.email,
           password: data.password,
           phone: data.phone.toString(),
-          ref_email: data.referEmail
+          ref_email: data.referEmail,
+          vat: userVat
         }
       }
     });
@@ -201,7 +211,7 @@ const RegisterForm = () => {
 
           <Input
             name="tax"
-            type="number"
+            type="text"
             ref={register({
               required: `${t('register:input_tax_error_required')}`
             })}
