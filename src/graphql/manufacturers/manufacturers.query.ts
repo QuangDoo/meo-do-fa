@@ -40,6 +40,16 @@ export const SEARCH_MANUFACTURERS = gql`
   }
 `;
 
+export const GET_MANUFACTORY_DETAILS = gql`
+  query($id: Int!) {
+    getManufactory(id: $id) {
+      id
+      name
+      short_name
+    }
+  }
+`;
+
 export type GetManufacturersData = {
   getManufactories: Manufacturer[];
   searchManufactory?: Manufacturer[];
@@ -49,4 +59,16 @@ export type GetManufacturersVars = {
   page: number;
   pageSize: number;
   name?: string;
+};
+
+export type GetManufactoryDetailsVars = {
+  id: number;
+};
+
+export type GetManufactoryDetailsData = {
+  getManufactory: {
+    id: number;
+    name: string;
+    short_name: string;
+  };
 };

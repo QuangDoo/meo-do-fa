@@ -11,5 +11,6 @@
   "no_manufacturers": "No manufacturers with keywords",
   "no_products": "No products with keywords",
   "result": "search result for",
-  "show": "Show"
+  "show": "Show",
+  "show_manufacturer_detail": "Show detail"
 }
