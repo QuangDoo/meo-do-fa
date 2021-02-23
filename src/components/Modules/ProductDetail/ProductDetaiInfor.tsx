@@ -12,10 +12,10 @@ import { ADD_TO_CART, AddToCartData, AddToCartVars } from 'src/graphql/cart/addT
 import { ProductDetails } from 'src/graphql/product/product.query';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 
+import ConfirmDeleteItemModal from '../Cart/ConfirmDeleteItemModal';
 import LoginModal from '../LoginModal';
 import ProductBadges from '../ProductCard/ProductBadges';
 
-const MIN_QUANTITY = 1;
 const MAX_QUANTITY = 100000;
 
 const ProductDetailInfor = (props: ProductDetails) => {
@@ -25,6 +25,8 @@ const ProductDetailInfor = (props: ProductDetails) => {
 
   const [quantity, setQuantity] = useState<number>(1);
 
+  const [open, setOpen] = useState<boolean>(false);
+
   const handleMinusClick = () => {
     setQuantity((quantity) => quantity - 1);
   };
@@ -32,6 +34,8 @@ const ProductDetailInfor = (props: ProductDetails) => {
   const handlePlusClick = () => {
     setQuantity((quantity) => quantity + 1);
   };
+
+  const handleCloseModal = () => setOpen(false);
 
   const categories = props?.categories?.slice().filter((c) => c.id !== null) || [];
 
@@ -98,6 +102,19 @@ const ProductDetailInfor = (props: ProductDetails) => {
         quantity: quantity
       }
     });
+  };
+
+  const handleUpdateCart = () => {
+    if (quantity === 0) {
+      setOpen(true);
+      return;
+    }
+
+    handleAddToCart();
+  };
+
+  const handleDeleteComplete = () => {
+    setQuantity(1);
   };
 
   const hasBadge =
@@ -174,10 +191,22 @@ const ProductDetailInfor = (props: ProductDetails) => {
               <QuantityInput
                 quantity={quantity}
                 setQuantity={setQuantity}
-                min={MIN_QUANTITY}
+                min={quantityInCart ? 0 : 1}
                 max={MAX_QUANTITY}
                 onPlusClick={handlePlusClick}
                 onMinusClick={handleMinusClick}
+              />
+
+              <ConfirmDeleteItemModal
+                title={t('cart:remove_title')}
+                question={t('cart:remove_confirm')}
+                open={open}
+                onClose={handleCloseModal}
+                onDeleteComplete={handleDeleteComplete}
+                cartId={thisProductInCart?._id}
+                img={props.image_256}
+                name={props.name}
+                price={props.sale_price}
               />
             </div>
 
@@ -186,7 +215,9 @@ const ProductDetailInfor = (props: ProductDetails) => {
                 {t('productDetail:buy_now')}
               </button>
 
-              <button className="btn btn-secondary" onClick={handleAddToCart}>
+              <button
+                className="btn btn-secondary"
+                onClick={quantityInCart ? handleUpdateCart : handleAddToCart}>
                 {quantityInCart ? t('productDetail:update_cart') : t('productDetail:add_to_cart')}
               </button>
             </div>
