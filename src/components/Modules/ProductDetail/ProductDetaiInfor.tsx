@@ -1,7 +1,7 @@
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import PriceText from 'src/components/Form/PriceText';
 import QuantityInput from 'src/components/Form/QuantityInput';
@@ -41,6 +41,12 @@ const ProductDetailInfor = (props: ProductDetails) => {
 
   const quantityInCart = thisProductInCart?.quantity || 0;
 
+  useEffect(() => {
+    if (!quantityInCart) return;
+
+    setQuantity(quantityInCart);
+  }, [quantityInCart]);
+
   const [addToCart, { loading: addingToCart }] = useMutationAuth<AddToCartData, AddToCartVars>(
     ADD_TO_CART,
     {
@@ -76,7 +82,7 @@ const ProductDetailInfor = (props: ProductDetails) => {
         price: props.list_price,
         productId: props.id,
         productName: props.name,
-        quantity: quantityInCart + quantity
+        quantity: quantity
       }
     }).then(() => {
       router.push('/cart');
@@ -89,7 +95,7 @@ const ProductDetailInfor = (props: ProductDetails) => {
         price: props.list_price,
         productId: props.id,
         productName: props.name,
-        quantity: quantityInCart + quantity
+        quantity: quantity
       }
     });
   };
@@ -179,8 +185,9 @@ const ProductDetailInfor = (props: ProductDetails) => {
               <button className="btn btn-primary mr-2" onClick={handleBuyNow}>
                 {t('productDetail:buy_now')}
               </button>
+
               <button className="btn btn-secondary" onClick={handleAddToCart}>
-                {t('productDetail:add_to_cart')}
+                {quantityInCart ? t('productDetail:update_cart') : t('productDetail:add_to_cart')}
               </button>
             </div>
           </React.Fragment>
