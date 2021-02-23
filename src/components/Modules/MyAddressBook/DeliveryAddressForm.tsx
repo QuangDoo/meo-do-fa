@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useQuery } from '@apollo/client';
 import { useTranslation } from 'i18n';
 import React, { useEffect, useRef } from 'react';
@@ -39,7 +40,12 @@ export default function DeliveryAddressForm(props: Props) {
     ['name', 'phone', 'email', 'street'].forEach((field) => {
       setValue(props.fieldNames[field], props.defaultValues[field]);
     });
-  }, [props.defaultValues]);
+  }, [
+    props.defaultValues.name,
+    props.defaultValues.phone,
+    props.defaultValues.email,
+    props.defaultValues.street
+  ]);
 
   const { t } = useTranslation(['checkout', 'errors']);
 
