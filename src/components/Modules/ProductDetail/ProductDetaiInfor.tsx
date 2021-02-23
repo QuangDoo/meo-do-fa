@@ -94,6 +94,11 @@ const ProductDetailInfor = (props: ProductDetails) => {
   };
 
   const handleAddToCart = () => {
+    if (quantity === 0) {
+      setOpen(true);
+      return;
+    }
+
     addToCart({
       variables: {
         price: props.list_price,
@@ -102,19 +107,6 @@ const ProductDetailInfor = (props: ProductDetails) => {
         quantity: quantity
       }
     });
-  };
-
-  const handleUpdateCart = () => {
-    if (quantity === 0) {
-      setOpen(true);
-      return;
-    }
-
-    handleAddToCart();
-  };
-
-  const handleDeleteComplete = () => {
-    setQuantity(1);
   };
 
   const hasBadge =
@@ -202,7 +194,6 @@ const ProductDetailInfor = (props: ProductDetails) => {
                 question={t('cart:remove_confirm')}
                 open={open}
                 onClose={handleCloseModal}
-                onDeleteComplete={handleDeleteComplete}
                 cartId={thisProductInCart?._id}
                 img={props.image_256}
                 name={props.name}
@@ -215,10 +206,8 @@ const ProductDetailInfor = (props: ProductDetails) => {
                 {t('productDetail:buy_now')}
               </button>
 
-              <button
-                className="btn btn-secondary"
-                onClick={quantityInCart ? handleUpdateCart : handleAddToCart}>
-                {quantityInCart ? t('productDetail:update_cart') : t('productDetail:add_to_cart')}
+              <button className="btn btn-secondary" onClick={handleAddToCart}>
+                {t(`productDetail:${quantityInCart ? 'update_cart' : 'add_to_cart'}`)}
               </button>
             </div>
           </React.Fragment>
