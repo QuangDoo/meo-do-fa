@@ -189,11 +189,18 @@ export default function MyAccountPage() {
     // console.log('Submit data:', data);
 
     // return;
+    const regVat = /(^[0-9]{10}$)|(^[0-9]{13}$)/g;
+    let userVat = data?.taxCode.replace(/-/g, '');
+    if (userVat !== '' && !regVat.test(userVat)) {
+      return toast.error(t('errors:tax_code_invalid'));
+    }
+    if (userVat.length === 13) {
+      userVat = userVat.slice(0, 10) + '-' + userVat.slice(10, 13);
+    }
 
     const [cityName, cityId] = data.companyCity.split('__');
     const [districtName, districtId] = data.companyDistrict.split('__');
     const [wardName, wardId] = data.companyWard.split('__');
-
     updateUser({
       variables: {
         name: data.name,
@@ -214,7 +221,7 @@ export default function MyAccountPage() {
           }
         },
         company_name: data.companyName,
-        vat: data.taxCode,
+        vat: userVat,
         representative: data.representative,
         business_license: data.businessLicense.replace(BASE64_PREFIX, '')
       }
@@ -302,6 +309,7 @@ export default function MyAccountPage() {
             label={t('myAccount:tax_code_label')}
             name="taxCode"
             type="text"
+            defaultValue={user?.vat}
             placeholder={t('myAccount:tax_code_placeholder')}
           />
 

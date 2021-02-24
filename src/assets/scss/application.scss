@@ -10293,7 +10293,7 @@ abbr[title] {
   justify-content: center;
   min-height: 2em;
   border-radius: 5px;
-  cursor:pointer;
+  cursor: pointer;
 }
 .coupon__apply {
   min-width: 7em;
@@ -10619,8 +10619,8 @@ abbr[title] {
   color: white;
   font-size: 0.75em;
   position: absolute;
-  top: -0.5em;
-  right: -1em;
+  top: -14px;
+  right: -16px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -10877,12 +10877,14 @@ abbr[title] {
 .product-card__category {
   text-transform: capitalize;
 }
-.product-card__category a, .product-card__manufacturer a {
+.product-card__category a,
+.product-card__manufacturer a {
   text-decoration: none;
   color: #495057;
   transition: color 0.2s;
 }
-.product-card__category a:hover, .product-card__manufacturer a:hover {
+.product-card__category a:hover,
+.product-card__manufacturer a:hover {
   color: $primary;
   transition: color 0.2s;
 }
@@ -12111,6 +12113,14 @@ abbr[title] {
   transition: color 0.2s;
 }
 .filter-search__list-item:hover {
+  color: $primary;
+}
+.filter-search__list-info {
+  padding: 0.25em;
+  color: #919aa3;
+  transition: color 0.2s;
+}
+.filter-search__list-info:hover {
   color: $primary;
 }
 .ingredient__details .tab-content {
