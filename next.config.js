@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable no-undef */
 const { nextI18NextRewrites } = require('next-i18next/rewrites');
-const withPWA = require('next-pwa');
+// const withPWA = require('next-pwa');
 const localeSubpaths = {};
 
-module.exports = withPWA({
+module.exports = {
   rewrites: async () => nextI18NextRewrites(localeSubpaths),
   publicRuntimeConfig: {
     localeSubpaths,
@@ -17,10 +17,10 @@ module.exports = withPWA({
   images: {
     domains: ['firebasestorage.googleapis.com', 'googleapis.com','files.medofa.com','files.medofa.bedigital.vn']
   },
-  pwa: {
-    disable: process.env.NODE_ENV === 'development',
-    register: true,
-    sw: 'service-worker.js',
-    dest: 'public'
-  }
-});
+  // pwa: {
+  //   disable: process.env.NODE_ENV === 'development',
+  //   register: true,
+  //   sw: 'service-worker.js',
+  //   dest: 'public'
+  // }
+};
