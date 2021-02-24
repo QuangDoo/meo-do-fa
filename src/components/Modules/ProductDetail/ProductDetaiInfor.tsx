@@ -1,7 +1,7 @@
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import PriceText from 'src/components/Form/PriceText';
 import QuantityInput from 'src/components/Form/QuantityInput';
@@ -12,10 +12,10 @@ import { ADD_TO_CART, AddToCartData, AddToCartVars } from 'src/graphql/cart/addT
 import { ProductDetails } from 'src/graphql/product/product.query';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 
+import ConfirmDeleteItemModal from '../Cart/ConfirmDeleteItemModal';
 import LoginModal from '../LoginModal';
 import ProductBadges from '../ProductCard/ProductBadges';
 
-const MIN_QUANTITY = 1;
 const MAX_QUANTITY = 100000;
 
 const ProductDetailInfor = (props: ProductDetails) => {
@@ -25,6 +25,8 @@ const ProductDetailInfor = (props: ProductDetails) => {
 
   const [quantity, setQuantity] = useState<number>(1);
 
+  const [open, setOpen] = useState<boolean>(false);
+
   const handleMinusClick = () => {
     setQuantity((quantity) => quantity - 1);
   };
@@ -33,6 +35,8 @@ const ProductDetailInfor = (props: ProductDetails) => {
     setQuantity((quantity) => quantity + 1);
   };
 
+  const handleCloseModal = () => setOpen(false);
+
   const categories = props?.categories?.slice().filter((c) => c.id !== null) || [];
 
   const { data: cart, refetch: refetchCart } = useCart();
@@ -40,6 +44,12 @@ const ProductDetailInfor = (props: ProductDetails) => {
   const thisProductInCart = cart?.carts.find((product) => product.productId === props.id);
 
   const quantityInCart = thisProductInCart?.quantity || 0;
+
+  useEffect(() => {
+    if (!quantityInCart) return;
+
+    setQuantity(quantityInCart);
+  }, [quantityInCart]);
 
   const [addToCart, { loading: addingToCart }] = useMutationAuth<AddToCartData, AddToCartVars>(
     ADD_TO_CART,
@@ -76,7 +86,7 @@ const ProductDetailInfor = (props: ProductDetails) => {
         price: props.list_price,
         productId: props.id,
         productName: props.name,
-        quantity: quantityInCart + quantity
+        quantity: quantity
       }
     }).then(() => {
       router.push('/cart');
@@ -84,12 +94,17 @@ const ProductDetailInfor = (props: ProductDetails) => {
   };
 
   const handleAddToCart = () => {
+    if (quantity === 0) {
+      setOpen(true);
+      return;
+    }
+
     addToCart({
       variables: {
         price: props.list_price,
         productId: props.id,
         productName: props.name,
-        quantity: quantityInCart + quantity
+        quantity: quantity
       }
     });
   };
@@ -168,10 +183,21 @@ const ProductDetailInfor = (props: ProductDetails) => {
               <QuantityInput
                 quantity={quantity}
                 setQuantity={setQuantity}
-                min={MIN_QUANTITY}
+                min={quantityInCart ? 0 : 1}
                 max={MAX_QUANTITY}
                 onPlusClick={handlePlusClick}
                 onMinusClick={handleMinusClick}
+              />
+
+              <ConfirmDeleteItemModal
+                title={t('cart:remove_title')}
+                question={t('cart:remove_confirm')}
+                open={open}
+                onClose={handleCloseModal}
+                cartId={thisProductInCart?._id}
+                img={props.image_256}
+                name={props.name}
+                price={props.sale_price}
               />
             </div>
 
@@ -179,8 +205,9 @@ const ProductDetailInfor = (props: ProductDetails) => {
               <button className="btn btn-primary mr-2" onClick={handleBuyNow}>
                 {t('productDetail:buy_now')}
               </button>
+
               <button className="btn btn-secondary" onClick={handleAddToCart}>
-                {t('productDetail:add_to_cart')}
+                {t(`productDetail:${quantityInCart ? 'update_cart' : 'add_to_cart'}`)}
               </button>
             </div>
           </React.Fragment>
