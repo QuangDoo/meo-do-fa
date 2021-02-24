@@ -48,7 +48,7 @@ export default function AddressItem(props: Props) {
   };
 
   return (
-    <Grid item key={address.id} xs={12}>
+    <Grid item key={address?.id} xs={12}>
       <EditDeliveryAddressDialog
         open={editDialogIsOpen}
         onClose={() => setEditDialogIsOpen(false)}
@@ -59,14 +59,14 @@ export default function AddressItem(props: Props) {
       <DeleteDeliveryAddressDialog
         open={deleteDialogIsOpen}
         onClose={() => setDeleteDialogIsOpen(false)}
-        id={address.id}
+        id={address?.id}
         onDeleteCompleted={onDeleteCompleted}
       />
 
       <Card variant="outlined" className={classes.card}>
         <Grid container>
           <Grid item xs>
-            <Typography variant="h6">{address.name}</Typography>
+            <Typography variant="h6">{address?.name}</Typography>
           </Grid>
 
           <Grid item>
@@ -89,13 +89,13 @@ export default function AddressItem(props: Props) {
 
         <h6 className="delivery-address-content mt-2">
           <div>{t('myAddressBook:address')}:</div>
-          <div>{`${address.street}, ${address.ward}, ${address.district}, ${address.city}`}</div>
+          <div>{`${address?.street}, ${address?.ward}, ${address?.district}, ${address?.city}`}</div>
 
           <div>{t('myAddressBook:phone')}:</div>
-          <div>{address.phone}</div>
+          <div>{address?.phone}</div>
 
           <div>{t('myAddressBook:email')}:</div>
-          <div>{address.email || t('myAddressBook:email_not_provided')}</div>
+          <div>{address?.email || t('myAddressBook:email_not_provided')}</div>
         </h6>
       </Card>
     </Grid>
