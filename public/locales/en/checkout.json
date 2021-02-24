@@ -94,6 +94,5 @@
   "ward_placeholder": "Choose a ward...",
   "ward_required": "Please choose a ward",
   "warning_1": "Medofa may cancel your order if the price difference is more than 5% of the product value.",
-  "warning_2": "The quantity of products delivered may not be exact, depending on the supplier.",
-  "street_placeholder": "Enter house number and street name"
+  "warning_2": "The quantity of products delivered may not be exact, depending on the supplier."
 }

@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { useCart } from 'src/contexts/Cart';
 import { ADD_TO_CART, AddToCartData, AddToCartVars } from 'src/graphql/cart/addToCart';
+import { DELETE_CART, DeleteCartData, DeleteCartVars } from 'src/graphql/cart/deleteCart.mutation';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import useDebounce from 'src/hooks/useDebounce';
 
@@ -68,6 +69,20 @@ function ProductCardQuantityInput(props: Props) {
     }
   );
 
+  const [deleteCart, { loading: deletingCart }] = useMutationAuth<DeleteCartData, DeleteCartVars>(
+    DELETE_CART,
+    {
+      onCompleted: () => {
+        refetchCart().then(() => {
+          toast.success(t(`success:delete_cart`));
+        });
+      },
+      onError: (err) => {
+        toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
+      }
+    }
+  );
+
   const handleUpdate = (
     prevQuantity: number,
     newQuantity: number,
@@ -118,6 +133,15 @@ function ProductCardQuantityInput(props: Props) {
     setQuantity(quantityInCart);
   };
 
+  const handleConfirmDelete = () => {
+    setOpen(false);
+    deleteCart({
+      variables: {
+        _id: thisProductInCart._id
+      }
+    });
+  };
+
   return (
     <>
       <QuantityInput
@@ -135,13 +159,13 @@ function ProductCardQuantityInput(props: Props) {
         question={t('cart:remove_confirm')}
         open={open}
         onClose={handleCloseModal}
-        cartId={thisProductInCart?._id}
+        onConfirm={handleConfirmDelete}
         img={productImg}
         name={productName}
         price={productPrice}
       />
 
-      <LoadingBackdrop open={addingToCart} />
+      <LoadingBackdrop open={addingToCart || deletingCart} />
     </>
   );
 }

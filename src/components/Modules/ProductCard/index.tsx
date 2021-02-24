@@ -1,4 +1,3 @@
-import { Tooltip } from '@material-ui/core';
 import clsx from 'clsx';
 import { useTranslation } from 'i18n';
 import Image from 'next/image';
@@ -52,11 +51,9 @@ const ProductCard = (props: Props) => {
             <div>
               <Link href={`/products/${props.slug}`}>
                 <a className="text-decoration-none">
-                  <Tooltip title={props.name} placement="bottom">
-                    <h6 title={props.name} className="product-card__name">
-                      {props.name}
-                    </h6>
-                  </Tooltip>
+                  <h6 title={props.name} className="product-card__name">
+                    {props.name}
+                  </h6>
                 </a>
               </Link>
 
