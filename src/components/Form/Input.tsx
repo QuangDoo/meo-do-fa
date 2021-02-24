@@ -24,8 +24,9 @@ const Input = (props: Props, ref) => {
 
   return (
     <div className={`input-group form__input-group ${containerClass} `}>
-      <i className={`${props.iconClass} form__input-icon`}></i>
-      {type === 'file' ? (
+      <i className={`${props.iconClass} form__input-icon`} />
+
+      {type === 'file' && (
         <div className="input-file">
           <input
             ref={ref}
@@ -36,22 +37,23 @@ const Input = (props: Props, ref) => {
             accept={props.accept}
             onChange={props.onChange}
           />
+
           <div className="input-file-label overflow-hidden">
             <span>{props.placeholder}</span>
           </div>
         </div>
-      ) : (
+      )}
+
+      {type !== 'file' && (
         <input
-          name={props.name}
           ref={ref}
+          name={props.name}
           className="form-control no-spinner"
           placeholder={props.placeholder}
           required={props.required}
           type={type === 'password' ? (showPassword ? 'text' : 'password') : type}
         />
       )}
-
-      {props.required && <div className="form__required-label">*</div>}
 
       {/* Show password checkbox */}
       {type === 'password' && (
@@ -75,7 +77,10 @@ const Input = (props: Props, ref) => {
           )}
         </div>
       )}
+
       {itemRight && <div className="input-group-prepend">{itemRight}</div>}
+
+      {props.required && <div className="form__required-label">*</div>}
     </div>
   );
 };

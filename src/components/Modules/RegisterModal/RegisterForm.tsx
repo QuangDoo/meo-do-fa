@@ -76,12 +76,6 @@ const RegisterForm = () => {
   };
   // On form submit
   const onFormSubmit = (data: Inputs) => {
-    let taxCode = data.tax;
-
-    if (taxCode.length === 13) {
-      taxCode = taxCode.slice(0, 10) + '-' + taxCode.slice(10, 13);
-    }
-
     createUser({
       variables: {
         inputs: {
@@ -91,7 +85,7 @@ const RegisterForm = () => {
           password: data.password,
           phone: data.phone.toString(),
           ref_email: data.referEmail,
-          vat: taxCode
+          vat: data.tax
         }
       }
     });
@@ -210,10 +204,9 @@ const RegisterForm = () => {
             type="text"
             ref={register({
               required: `${t('register:input_tax_error_required')}`,
-              validate: {
-                isRightFormat: (value) =>
-                  taxCodeRegex.test(value.replace('-', '')) ||
-                  (t('errors:tax_code_invalid') as string)
+              pattern: {
+                value: taxCodeRegex,
+                message: t('errors:tax_code_invalid') as string
               }
             })}
             containerClass="mb-4"
