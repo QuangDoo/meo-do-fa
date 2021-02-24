@@ -1,7 +1,7 @@
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import PriceText from 'src/components/Form/PriceText';
 import QuantityInput from 'src/components/Form/QuantityInput';
@@ -12,10 +12,10 @@ import { ADD_TO_CART, AddToCartData, AddToCartVars } from 'src/graphql/cart/addT
 import { ProductDetails } from 'src/graphql/product/product.query';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 
-import ConfirmDeleteItemModal from '../Cart/ConfirmDeleteItemModal';
 import LoginModal from '../LoginModal';
 import ProductBadges from '../ProductCard/ProductBadges';
 
+const MIN_QUANTITY = 1;
 const MAX_QUANTITY = 100000;
 
 const ProductDetailInfor = (props: ProductDetails) => {
@@ -25,8 +25,6 @@ const ProductDetailInfor = (props: ProductDetails) => {
 
   const [quantity, setQuantity] = useState<number>(1);
 
-  const [open, setOpen] = useState<boolean>(false);
-
   const handleMinusClick = () => {
     setQuantity((quantity) => quantity - 1);
   };
@@ -35,21 +33,11 @@ const ProductDetailInfor = (props: ProductDetails) => {
     setQuantity((quantity) => quantity + 1);
   };
 
-  const handleCloseModal = () => setOpen(false);
-
-  const categories = props?.categories?.slice().filter((c) => c.id !== null) || [];
-
   const { data: cart, refetch: refetchCart } = useCart();
 
   const thisProductInCart = cart?.carts.find((product) => product.productId === props.id);
 
   const quantityInCart = thisProductInCart?.quantity || 0;
-
-  useEffect(() => {
-    if (!quantityInCart) return;
-
-    setQuantity(quantityInCart);
-  }, [quantityInCart]);
 
   const [addToCart, { loading: addingToCart }] = useMutationAuth<AddToCartData, AddToCartVars>(
     ADD_TO_CART,
@@ -86,7 +74,7 @@ const ProductDetailInfor = (props: ProductDetails) => {
         price: props.list_price,
         productId: props.id,
         productName: props.name,
-        quantity: quantity
+        quantity: quantityInCart + quantity
       }
     }).then(() => {
       router.push('/cart');
@@ -94,23 +82,15 @@ const ProductDetailInfor = (props: ProductDetails) => {
   };
 
   const handleAddToCart = () => {
-    if (quantity === 0) {
-      setOpen(true);
-      return;
-    }
-
     addToCart({
       variables: {
         price: props.list_price,
         productId: props.id,
         productName: props.name,
-        quantity: quantity
+        quantity: quantityInCart + quantity
       }
     });
   };
-
-  const hasBadge =
-    props?.is_quick_invoice || props?.is_exclusive || props?.is_vn || !props?.is_available;
 
   return (
     <div className="row">
@@ -119,18 +99,14 @@ const ProductDetailInfor = (props: ProductDetails) => {
       <div className="col-12">
         <h1 className="h3 text-capitalize">{props.name}</h1>
 
-        {hasBadge && (
-          <div className="product__status mt-3">
-            <ProductBadges product={props} />
-          </div>
-        )}
-
-        {props?.packing_unit && <div className="text-muted">{props.packing_unit}</div>}
+        <div className="product__status mb-3">
+          <ProductBadges product={props} />
+        </div>
 
         {!token ? (
           <LoginModal />
         ) : (
-          <div className="d-flex flex-column mt-3">
+          <div className="d-flex flex-column">
             <div className="product__price-group mb-1">
               <span className="product__price">
                 <PriceText price={props.sale_price} />
@@ -149,55 +125,45 @@ const ProductDetailInfor = (props: ProductDetails) => {
           </div>
         )}
 
-        {props?.manufacturer?.id !== null && (
-          <div className="mt-3">
-            <div className="product__info-label">{t('productDetail:manufacturer')}</div>
-            <div className="text-capitalize">
-              <Link href={`/products?manufacturer=${props.manufacturer?.id}`}>
-                <a>{props.manufacturer?.name}</a>
-              </Link>
-            </div>
-          </div>
-        )}
-
-        {categories.length > 0 && (
-          <div className="mt-3">
-            <div className="product__info-label">{t('productDetail:category')}</div>
-
-            {categories.map((item, index, arr) => (
-              <>
-                <Link href={`/products?category=${item.id}`}>
-                  <a className="text-capitalize" key={index}>
-                    {item.name}
-                  </a>
+        <div className="my-3">
+          {props?.manufacturer?.id ? (
+            <>
+              <div className="product__info-label">{t('productDetail:manufacturer')}</div>
+              <div className="text-capitalize">
+                <Link href={`/products?manufacturer=${props.manufacturer?.id}`}>
+                  <a>{props.manufacturer?.name}</a>
                 </Link>
-                {index < arr.length - 1 && '; '}
-              </>
-            ))}
-          </div>
-        )}
+              </div>
+            </>
+          ) : null}
+        </div>
+        <div className="mb-3">
+          {props?.categories?.[0]?.id && (
+            <div className="product__info-label">{t('productDetail:category')}</div>
+          )}
+
+          {props?.categories?.map((item, index, arr) => (
+            <>
+              <Link href={`/products?category=${item.id}`}>
+                <a className="text-capitalize" key={index}>
+                  {item.name}
+                </a>
+              </Link>
+              {index < arr.length - 1 && '; '}
+            </>
+          ))}
+        </div>
 
         {!!token && (
           <React.Fragment>
-            <div className="col-6 px-0 mt-3">
+            <div className="col-6 px-0">
               <QuantityInput
                 quantity={quantity}
                 setQuantity={setQuantity}
-                min={quantityInCart ? 0 : 1}
+                min={MIN_QUANTITY}
                 max={MAX_QUANTITY}
                 onPlusClick={handlePlusClick}
                 onMinusClick={handleMinusClick}
-              />
-
-              <ConfirmDeleteItemModal
-                title={t('cart:remove_title')}
-                question={t('cart:remove_confirm')}
-                open={open}
-                onClose={handleCloseModal}
-                cartId={thisProductInCart?._id}
-                img={props.image_256}
-                name={props.name}
-                price={props.sale_price}
               />
             </div>
 
@@ -205,9 +171,8 @@ const ProductDetailInfor = (props: ProductDetails) => {
               <button className="btn btn-primary mr-2" onClick={handleBuyNow}>
                 {t('productDetail:buy_now')}
               </button>
-
               <button className="btn btn-secondary" onClick={handleAddToCart}>
-                {t(`productDetail:${quantityInCart ? 'update_cart' : 'add_to_cart'}`)}
+                {t('productDetail:add_to_cart')}
               </button>
             </div>
           </React.Fragment>

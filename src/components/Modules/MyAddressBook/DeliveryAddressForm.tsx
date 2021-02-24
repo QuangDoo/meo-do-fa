@@ -41,10 +41,10 @@ export default function DeliveryAddressForm(props: Props) {
       setValue(props.fieldNames[field], props.defaultValues[field]);
     });
   }, [
-    props.defaultValues?.name,
-    props.defaultValues?.phone,
-    props.defaultValues?.email,
-    props.defaultValues?.street
+    props.defaultValues.name,
+    props.defaultValues.phone,
+    props.defaultValues.email,
+    props.defaultValues.street
   ]);
 
   const { t } = useTranslation(['checkout', 'errors']);
@@ -176,11 +176,15 @@ export default function DeliveryAddressForm(props: Props) {
         ref={register({
           required: t('checkout:address_required') + ''
         })}
-        label={t('checkout:address_label')}
+        label={
+          <>
+            {t('checkout:address_label')}{' '}
+            <span className="text-muted">{t('checkout:address_instructions')}</span>
+          </>
+        }
         type="text"
         required
         defaultValue={props.defaultValues?.street || ''}
-        placeholder="Nhập số nhà và tên đường"
       />
 
       <div className="row">

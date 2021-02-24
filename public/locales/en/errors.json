@@ -48,6 +48,5 @@
   "send_password_to_email_success": "The new password has been sent to your inbox. Please check your email!",
   "error_retype_pw": "Password do not match",
   "error_match_pw": "Current password and new password cannot be matched",
-  "error_wrong_cr_pw": "Current password is incorrect",
-  "tax_code_invalid":"Tax Code is invalid"
+  "error_wrong_cr_pw": "Current password is incorrect"
 }

@@ -6,11 +6,13 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { emailRegex, noSpecialChars } from 'src/assets/regex/email';
-import { taxCodeRegex } from 'src/assets/regex/taxCode';
 import { viPhoneNumberRegex } from 'src/assets/regex/viPhoneNumber';
 import Button from 'src/components/Form/Button';
 import Checkbox from 'src/components/Form/Checkbox';
 import Input from 'src/components/Form/Input';
+import InputFile from 'src/components/Form/InputFile';
+import InputWithLabel from 'src/components/Form/InputWithLabel';
+import Select from 'src/components/Form/Select';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { useModalControlDispatch } from 'src/contexts/ModalControl';
 import { useUser } from 'src/contexts/User';
@@ -26,7 +28,6 @@ type Inputs = {
   referEmail: string;
   acceptTerms: boolean;
   businessLicense: FileList;
-  tax: string;
 };
 
 const accountTypes = ['PHARMACY', 'DRUGSTORE', 'CLINIC', 'HOSPITAL'];
@@ -76,12 +77,6 @@ const RegisterForm = () => {
   };
   // On form submit
   const onFormSubmit = (data: Inputs) => {
-    let taxCode = data.tax;
-
-    if (taxCode.length === 13) {
-      taxCode = taxCode.slice(0, 10) + '-' + taxCode.slice(10, 13);
-    }
-
     createUser({
       variables: {
         inputs: {
@@ -90,8 +85,7 @@ const RegisterForm = () => {
           email: data.email,
           password: data.password,
           phone: data.phone.toString(),
-          ref_email: data.referEmail,
-          vat: taxCode
+          ref_email: data.referEmail
         }
       }
     });
@@ -207,19 +201,13 @@ const RegisterForm = () => {
 
           <Input
             name="tax"
-            type="text"
+            type="number"
             ref={register({
-              required: `${t('register:input_tax_error_required')}`,
-              validate: {
-                isRightFormat: (value) =>
-                  taxCodeRegex.test(value.replace('-', '')) ||
-                  (t('errors:tax_code_invalid') as string)
-              }
+              required: `${t('register:input_tax_error_required')}`
             })}
             containerClass="mb-4"
             iconClass="fas fa-file-invoice-dollar"
             placeholder={t('register:input_tax_placeholder')}
-            required
           />
 
           <Input
