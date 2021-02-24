@@ -111,7 +111,7 @@ class MyDocument extends Document {
                   s0=document.getElementsByTagName("script")[0];
                   s1.async=true;
                   s1.src='https://embed.tawk.to/${
-                    document?.location?.host === 'www.medofa.com'
+                    typeof window !== 'undefined' && document.location.host === 'www.medofa.com'
                       ? '5fb4a74b3e20f61525e47d9f'
                       : '5fedb291df060f156a92a752'
                   }/1eqs832ov';
