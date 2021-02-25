@@ -28,8 +28,8 @@ const Header = () => {
         </div>
       </nav>
       <div className="container py-4">
-        <div className="d-sm-flex align-items-center justify-content-between">
-          <div className="mr-2 flex-shrink-0 mb-3 mb-sm-0 mr-0">
+        <div className="d-lg-flex align-items-center justify-content-between">
+          <div className="mr-2 flex-shrink-0 mb-3 mb-lg-0 mr-0">
             <div className="rockland-logo">
               <Link href="/">
                 <a title="Medofa.com">

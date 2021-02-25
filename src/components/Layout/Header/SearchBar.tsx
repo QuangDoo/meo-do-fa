@@ -1,5 +1,5 @@
 import { useLazyQuery } from '@apollo/client';
-import { CircularProgress } from '@material-ui/core';
+import { CircularProgress, useMediaQuery } from '@material-ui/core';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import clsx from 'clsx';
 import { useTranslation } from 'i18n';
@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import Button from 'src/components/Form/Button';
-import Input from 'src/components/Form/Input';
+import Select from 'src/components/Form/Select';
 import {
   SEARCH_MANUFACTURER,
   SearchManufacturerData,
@@ -66,7 +66,10 @@ const SearchResults = (props: {
 };
 
 const SearchBar = () => {
+  const isSmallScreen = useMediaQuery('(max-width:576px)');
+
   const { t } = useTranslation(['searchBar']);
+
   const router = useRouter();
 
   const [searchProducts, { data: pData, loading: pLoading }] = useLazyQuery<
@@ -96,6 +99,12 @@ const SearchBar = () => {
   const [showProducts, setShowProducts] = useState(false);
 
   const [showManufacturers, setShowManufacturers] = useState(false);
+
+  const [searchType, setSearchType] = useState('product');
+
+  const handleSearchTypeChange = (e) => {
+    setSearchType(e.target.value);
+  };
 
   // Search with debounce
   useDebouncedEffect(
@@ -150,24 +159,38 @@ const SearchBar = () => {
   };
 
   return (
-    <div className="d-flex justify-content-sm-center justify-content-start flex-grow-1 mr-sm-3">
+    <div className="d-flex justify-content-sm-center justify-content-start flex-grow-1 mr-lg-5 ml-lg-3">
       <ClickAwayListener onClickAway={() => setIsFocused(false)}>
         <div className="search">
           <form onSubmit={handleSubmit} autoComplete="off" acceptCharset="UTF-8">
-            <Input
-              type="search"
-              inputClass="form-control-sm search-input"
-              placeholder={t('searchBar:input')}
-              aria-label="search"
-              value={value}
-              onChange={handleChange}
-              onFocus={() => setIsFocused(true)}
-              itemRight={
+            <div className="input-group form__input-group">
+              <input
+                type="search"
+                placeholder={t('searchBar:input')}
+                aria-label="search"
+                className={clsx(
+                  'form-control form-control-sm search-input',
+                  isSmallScreen && 'w-100'
+                )}
+                value={value}
+                onChange={handleChange}
+              />
+
+              <Select
+                value={searchType}
+                onChange={handleSearchTypeChange}
+                className={isSmallScreen && 'width-fit-content'}>
+                <option value="product">Theo sản phẩm</option>
+                <option value="manufacturer">Theo nhà sản xuất</option>
+                <option value="ingredient">Theo hoạt chất</option>
+              </Select>
+
+              <div className="input-group-prepend">
                 <Button type="submit" variant="primary">
                   {t('searchBar:submit_search')}
                 </Button>
-              }
-            />
+              </div>
+            </div>
           </form>
 
           <div className={clsx('elevated search__results', isFocused && showResults && 'show')}>
