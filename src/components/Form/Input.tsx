@@ -1,20 +1,17 @@
+import clsx from 'clsx';
 import React, { useState } from 'react';
 
-type Props = {
-  name: string;
-  iconClass: string;
-  placeholder?: string;
-  required?: boolean;
-  type?: 'text' | 'number' | 'password' | 'email' | 'file';
+interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
+  iconClass?: string;
   containerClass?: string;
+  inputClass?: string;
   itemRight?: React.ReactNode;
-  disabled?: boolean;
-  accept?: string;
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-};
+}
 
 const Input = (props: Props, ref) => {
-  const { containerClass = '', type = 'text', itemRight } = props;
+  const { containerClass, inputClass, itemRight, iconClass, ...inputProps } = props;
+
+  const { type, required, placeholder } = inputProps;
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -23,35 +20,33 @@ const Input = (props: Props, ref) => {
   }
 
   return (
-    <div className={`input-group form__input-group ${containerClass} `}>
-      <i className={`${props.iconClass} form__input-icon`}></i>
+    <div className={clsx('input-group form__input-group', iconClass && 'has-icon', containerClass)}>
+      {iconClass && <i className={clsx('form__input-icon', iconClass)} />}
+
       {type === 'file' ? (
         <div className="input-file">
           <input
+            {...inputProps}
+            placeholder={undefined}
             ref={ref}
-            name={props.name}
-            disabled={props.disabled}
             type="file"
-            className="input-file-input form-control no-spinner"
-            accept={props.accept}
-            onChange={props.onChange}
+            className={clsx('input-file-input form-control', inputClass)}
           />
+
           <div className="input-file-label overflow-hidden">
-            <span>{props.placeholder}</span>
+            <span>{placeholder}</span>
           </div>
         </div>
       ) : (
         <input
-          name={props.name}
+          {...inputProps}
           ref={ref}
-          className="form-control no-spinner"
-          placeholder={props.placeholder}
-          required={props.required}
+          className={clsx('form-control no-spinner', type === 'number' && 'no-spinner', inputClass)}
           type={type === 'password' ? (showPassword ? 'text' : 'password') : type}
         />
       )}
 
-      {props.required && <div className="form__required-label">*</div>}
+      {required && <div className="form__required-label">*</div>}
 
       {/* Show password checkbox */}
       {type === 'password' && (
@@ -75,6 +70,7 @@ const Input = (props: Props, ref) => {
           )}
         </div>
       )}
+
       {itemRight && <div className="input-group-prepend">{itemRight}</div>}
     </div>
   );

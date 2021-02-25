@@ -6,6 +6,8 @@ import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
+import Button from 'src/components/Form/Button';
+import Input from 'src/components/Form/Input';
 import {
   SEARCH_MANUFACTURER,
   SearchManufacturerData,
@@ -127,15 +129,17 @@ const SearchBar = () => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
     if (!value) return;
+
     router.push({
       pathname: '/products',
       query: {
         search: value
       }
     });
+
     setShowResults(false);
-    event.preventDefault();
   };
 
   const handleChange = (e) => {
@@ -150,21 +154,22 @@ const SearchBar = () => {
       <ClickAwayListener onClickAway={() => setIsFocused(false)}>
         <div className="search">
           <form onSubmit={handleSubmit} autoComplete="off" acceptCharset="UTF-8">
-            <div className="input-group form__input-group">
-              <i className="fas fa-search form__input-icon" />
-
-              <input
-                type="search"
-                className="form-control form-control-sm search-input"
-                placeholder={t('searchBar:input')}
-                aria-label="search"
-                value={value}
-                onChange={handleChange}
-                onFocus={() => setIsFocused(true)}
-              />
-            </div>
+            <Input
+              type="search"
+              inputClass="form-control-sm search-input"
+              placeholder={t('searchBar:input')}
+              aria-label="search"
+              value={value}
+              onChange={handleChange}
+              onFocus={() => setIsFocused(true)}
+              itemRight={
+                <Button type="submit" variant="primary">
+                  {t('searchBar:submit_search')}
+                </Button>
+              }
+            />
           </form>
-          {/* && showResults === 2 */}
+
           <div className={clsx('elevated search__results', isFocused && showResults && 'show')}>
             {showProducts && (
               <SearchResults
