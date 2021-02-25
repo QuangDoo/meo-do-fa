@@ -33,7 +33,7 @@ const paginationVars = {
 };
 
 Home.getInitialProps = async () => ({
-  namespacesRequired: [...mainLayoutNamespacesRequired, 'productCard', 'productBadge']
+  namespacesRequired: [...mainLayoutNamespacesRequired, 'productCard', 'productBadge', 'carousels']
 });
 
 function Home() {
