@@ -53,9 +53,7 @@ const ProductCard = (props: Props) => {
               <Link href={`/products/${props.slug}`}>
                 <a className="text-decoration-none">
                   <Tooltip title={props.name} placement="bottom">
-                    <h6 title={props.name} className="product-card__name">
-                      {props.name}
-                    </h6>
+                    <h6 className="product-card__name">{props.name}</h6>
                   </Tooltip>
                 </a>
               </Link>

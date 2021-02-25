@@ -23,7 +23,7 @@ const Input = (props: Props, ref) => {
     <div className={clsx('input-group form__input-group', iconClass && 'has-icon', containerClass)}>
       {iconClass && <i className={clsx('form__input-icon', iconClass)} />}
 
-      {type === 'file' ? (
+      {type === 'file' && (
         <div className="input-file">
           <input
             {...inputProps}
@@ -37,7 +37,9 @@ const Input = (props: Props, ref) => {
             <span>{placeholder}</span>
           </div>
         </div>
-      ) : (
+      )}
+
+      {type !== 'file' && (
         <input
           {...inputProps}
           ref={ref}
@@ -45,8 +47,6 @@ const Input = (props: Props, ref) => {
           type={type === 'password' ? (showPassword ? 'text' : 'password') : type}
         />
       )}
-
-      {required && <div className="form__required-label">*</div>}
 
       {/* Show password checkbox */}
       {type === 'password' && (
@@ -72,6 +72,8 @@ const Input = (props: Props, ref) => {
       )}
 
       {itemRight && <div className="input-group-prepend">{itemRight}</div>}
+
+      {required && <div className="form__required-label">*</div>}
     </div>
   );
 };
