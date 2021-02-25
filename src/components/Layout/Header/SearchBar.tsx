@@ -21,47 +21,65 @@ import {
 } from 'src/graphql/search/search.products.query';
 import { useDebouncedEffect } from 'src/hooks/useDebouncedEffect';
 
-const SearchResults = (props: {
-  array: SearchResult[];
+type SearchResultsProps = {
+  items: SearchResult[];
   value: string;
-  type: 'products' | 'manufacturers';
-  onTitleClick: (value: string) => void;
+  previousValue: string;
+  type: 'products' | 'manufacturers' | 'ingredients';
+  loading: boolean;
+  allHref: string;
+  onAllClick: (value: string) => void;
   onItemClick: (item: SearchResult) => void;
-  generateHref: (item: SearchResult) => string;
-}) => {
+  getItemHref: (item: SearchResult) => string;
+};
+
+const SearchResults = (props: SearchResultsProps) => {
   const { t } = useTranslation(['searchBar']);
 
-  return props.array.length > 0 ? (
-    <>
+  if (props.loading) {
+    return (
+      <div className="search__result--empty text-center">
+        <CircularProgress size={60} />
+      </div>
+    );
+  }
+
+  if (!props.items) {
+    return null;
+  }
+
+  if (props.items.length === 0) {
+    return (
+      <div className="search__result--empty">
+        {t(`searchBar:no_${props.type}`)} <b>{props.value}</b>
+      </div>
+    );
+  }
+
+  return (
+    <React.Fragment>
       <button
         className="w-100 text-left border-bottom p-3"
-        onClick={() => props.onTitleClick(props.value)}>
-        <Link href={`/${props.type}?sort=best_match&search=${props.value}`}>
+        onClick={() => props.onAllClick(props.value)}>
+        <Link href={props.allHref}>
           <a>
-            <em>{props.value}</em> {t('searchBar:in')}{' '}
+            <em>{props.previousValue}</em> {t('searchBar:in')}{' '}
             <b className="text-primary">{t(`searchBar:all_${props.type}`)}</b>
           </a>
         </Link>
       </button>
 
-      {props.array.map((item) => (
+      {props.items.map((item) => (
         <button
           className="w-100 text-left border-bottom"
           key={item.id}
           onClick={() => props.onItemClick(item)}>
-          <Link href={props.generateHref(item)}>
+          <Link href={props.getItemHref(item)}>
             <a className="search__result">{item.name}</a>
           </Link>
         </button>
       ))}
-    </>
-  ) : (
-    <>
-      <div className="search__result--empty">
-        {t(`searchBar:no_${props.type}`)} <b>{props.value}</b>
-      </div>
-      <hr />
-    </>
+    </React.Fragment>
   );
 };
 
@@ -72,35 +90,33 @@ const SearchBar = () => {
 
   const router = useRouter();
 
-  const [searchProducts, { data: pData, loading: pLoading }] = useLazyQuery<
+  const [searchProducts, { data: productsData, loading: loadingProducts }] = useLazyQuery<
     SearchProductData,
     SearchProductVars
   >(SEARCH_PRODUCT, {
-    onCompleted: () => setShowProducts(true)
+    onCompleted: () => {
+      setPreviousValue(value);
+    }
   });
 
-  const products = pData?.searchProduct || [];
-
-  const [searchManufacturers, { data: mData, loading: mLoading }] = useLazyQuery<
-    SearchManufacturerData,
-    SearchManufacturerVars
-  >(SEARCH_MANUFACTURER, {
-    onCompleted: () => setShowManufacturers(true)
+  const [
+    searchManufacturers,
+    { data: manufacturersData, loading: loadingManufacturers }
+  ] = useLazyQuery<SearchManufacturerData, SearchManufacturerVars>(SEARCH_MANUFACTURER, {
+    onCompleted: () => {
+      setPreviousValue(value);
+    }
   });
-
-  const manufacturers = mData?.searchManufactory || [];
 
   const [value, setValue] = useState('');
+
+  const [previousValue, setPreviousValue] = useState('');
 
   const [isFocused, setIsFocused] = useState(false);
 
   const [showResults, setShowResults] = useState(false);
 
-  const [showProducts, setShowProducts] = useState(false);
-
-  const [showManufacturers, setShowManufacturers] = useState(false);
-
-  const [searchType, setSearchType] = useState('product');
+  const [searchType, setSearchType] = useState<SearchResultsProps['type']>('products');
 
   const handleSearchTypeChange = (e) => {
     setSearchType(e.target.value);
@@ -110,27 +126,30 @@ const SearchBar = () => {
   useDebouncedEffect(
     () => {
       if (value === '') {
-        setShowResults(true);
-        setShowProducts(false);
-        setShowManufacturers(false);
-        return;
+        setShowResults(false);
       }
 
-      searchProducts({
-        variables: {
-          page: 1,
-          pageSize: 15,
-          name: value
-        }
-      });
+      switch (searchType) {
+        case 'products':
+          searchProducts({
+            variables: {
+              page: 1,
+              pageSize: 15,
+              name: value
+            }
+          });
+          break;
 
-      searchManufacturers({
-        variables: {
-          page: 1,
-          pageSize: 15,
-          name: value
-        }
-      });
+        case 'manufacturers':
+          searchManufacturers({
+            variables: {
+              page: 1,
+              pageSize: 15,
+              name: value
+            }
+          });
+          break;
+      }
     },
     200,
     [value]
@@ -153,14 +172,20 @@ const SearchBar = () => {
 
   const handleChange = (e) => {
     setValue(e.target.value);
-    setShowProducts(false);
-    setShowManufacturers(false);
     setShowResults(true);
+  };
+
+  const handleFocus = () => {
+    setIsFocused(true);
+  };
+
+  const handleBlur = () => {
+    setIsFocused(false);
   };
 
   return (
     <div className="d-flex justify-content-sm-center justify-content-start flex-grow-1 mr-lg-5 ml-lg-3">
-      <ClickAwayListener onClickAway={() => setIsFocused(false)}>
+      <ClickAwayListener onClickAway={handleBlur}>
         <div className="search">
           <form onSubmit={handleSubmit} autoComplete="off" acceptCharset="UTF-8">
             <div className="input-group form__input-group">
@@ -174,12 +199,13 @@ const SearchBar = () => {
                 )}
                 value={value}
                 onChange={handleChange}
+                onFocus={handleFocus}
               />
 
               <Select
                 value={searchType}
                 onChange={handleSearchTypeChange}
-                className={isSmallScreen && 'width-fit-content'}>
+                className={!isSmallScreen && 'width-fit-content'}>
                 <option value="product">Theo sản phẩm</option>
                 <option value="manufacturer">Theo nhà sản xuất</option>
                 <option value="ingredient">Theo hoạt chất</option>
@@ -194,32 +220,32 @@ const SearchBar = () => {
           </form>
 
           <div className={clsx('elevated search__results', isFocused && showResults && 'show')}>
-            {showProducts && (
+            {searchType === 'products' && (
               <SearchResults
                 type="products"
-                array={products}
+                items={productsData?.searchProduct}
                 value={value}
-                onTitleClick={() => setIsFocused(false)}
-                generateHref={(item) => `/products/${item.slug}`}
-                onItemClick={() => setIsFocused(false)}
+                previousValue={previousValue}
+                allHref={`/products?search=${value}`}
+                onAllClick={handleBlur}
+                getItemHref={(product) => `/products/${product.slug}`}
+                onItemClick={handleBlur}
+                loading={loadingProducts}
               />
             )}
 
-            {showManufacturers && (
+            {searchType === 'manufacturers' && (
               <SearchResults
                 type="manufacturers"
-                array={manufacturers}
+                items={manufacturersData?.searchManufactory || []}
                 value={value}
-                onTitleClick={() => setIsFocused(false)}
-                generateHref={(item) => `/products?manufacturer=${item.id}`}
-                onItemClick={() => setIsFocused(false)}
+                previousValue={previousValue}
+                allHref={`/products?search=${value}`}
+                onAllClick={handleBlur}
+                getItemHref={(manufacturer) => `/products?manufacturer=${manufacturer.id}`}
+                onItemClick={handleBlur}
+                loading={loadingManufacturers}
               />
-            )}
-
-            {(pLoading || mLoading) && (
-              <div className="search__result--empty text-center">
-                <CircularProgress size={60} />
-              </div>
             )}
           </div>
         </div>
