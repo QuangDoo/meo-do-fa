@@ -1,19 +1,12 @@
-import { useQuery } from '@apollo/client';
 import { Menu } from '@material-ui/core';
+import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import { useTranslation } from 'i18n';
 import cookies from 'js-cookie';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import React, { useState } from 'react';
-import { toast } from 'react-toastify';
 import { useCart } from 'src/contexts/Cart';
 import { useToken } from 'src/contexts/Token';
-import {
-  GET_CATEGORIES_LEVEL,
-  GetCategoriesLevelData
-} from 'src/graphql/category/getCategoriesLevel';
 
-import CategoryMenu from '../Modules/CategoryMenu';
 import PathologyMenu from '../Modules/PathologyMenu';
 
 const Nav = () => {
@@ -41,16 +34,16 @@ const Nav = () => {
     setAnchorEl(null);
   };
 
-  const { data: categoriesData } = useQuery<GetCategoriesLevelData, undefined>(
-    GET_CATEGORIES_LEVEL,
-    {
-      onError: (error) => {
-        toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
-      }
-    }
-  );
+  // const { data: categoriesData } = useQuery<GetCategoriesLevelData, undefined>(
+  //   GET_CATEGORIES_LEVEL,
+  //   {
+  //     onError: (error) => {
+  //       toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
+  //     }
+  //   }
+  // );
 
-  const categories = categoriesData?.getCategoriesLevel || [];
+  // const categories = categoriesData?.getCategoriesLevel || [];
 
   return (
     <nav className="rockland-nav shrink header-menu">
@@ -142,7 +135,7 @@ const Nav = () => {
                   <li className="nav-item mr-4">
                     <Link href="/cart">
                       <a className="rockland-nav__link notification">
-                        <i className="fas fa-shopping-cart rockland-nav__icon" />
+                        <ShoppingCartOutlinedIcon />
                         {totalQty > 0 && <span className="notification__counter">{totalQty}</span>}
                       </a>
                     </Link>
