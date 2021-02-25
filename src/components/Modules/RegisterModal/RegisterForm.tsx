@@ -76,8 +76,10 @@ const RegisterForm = () => {
   };
   // On form submit
   const onFormSubmit = (data: Inputs) => {
-    let taxCode = data.tax;
-
+    let taxCode = data?.tax;
+    if (taxCode !== '' && !taxCodeRegex.test(taxCode.replace('-', ''))) {
+      return toast.error(t('errors:tax_code_invalid'));
+    }
     if (taxCode.length === 13) {
       taxCode = taxCode.slice(0, 10) + '-' + taxCode.slice(10, 13);
     }
@@ -181,13 +183,6 @@ const RegisterForm = () => {
           />
 
           <Input
-            name="address"
-            containerClass="mb-4"
-            iconClass="icomoon icon-home"
-            placeholder={t('register:input_address_placeholder')}
-          />
-
-          <Input
             name="email"
             ref={register({
               pattern: {
@@ -206,20 +201,35 @@ const RegisterForm = () => {
           />
 
           <Input
-            name="tax"
-            type="text"
+            name="password"
             ref={register({
-              required: `${t('register:input_tax_error_required')}`,
-              validate: {
-                isRightFormat: (value) =>
-                  taxCodeRegex.test(value.replace('-', '')) ||
-                  (t('errors:tax_code_invalid') as string)
+              required: `${t('register:input_password_error_required')}`,
+              minLength: {
+                value: 6,
+                message: `${t('register:input_password_error_minLength')}`
               }
             })}
             containerClass="mb-4"
+            iconClass="icomoon icon-lock"
+            placeholder={t('register:input_password_placeholder')}
+            type="password"
+            required
+          />
+
+          <Input
+            name="address"
+            containerClass="mb-4"
+            iconClass="icomoon icon-home"
+            placeholder={t('register:input_address_placeholder')}
+          />
+
+          <Input
+            name="tax"
+            type="text"
+            ref={register}
+            containerClass="mb-4"
             iconClass="fas fa-file-invoice-dollar"
             placeholder={t('register:input_tax_placeholder')}
-            required
           />
 
           <Input
@@ -235,22 +245,6 @@ const RegisterForm = () => {
                 : t('register:input_business_license_placeholder')
             }
             onChange={handleFileChange}
-          />
-
-          <Input
-            name="password"
-            ref={register({
-              required: `${t('register:input_password_error_required')}`,
-              minLength: {
-                value: 6,
-                message: `${t('register:input_password_error_minLength')}`
-              }
-            })}
-            containerClass="mb-4"
-            iconClass="icomoon icon-lock"
-            placeholder={t('register:input_password_placeholder')}
-            type="password"
-            required
           />
 
           <Checkbox
