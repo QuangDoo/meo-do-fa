@@ -175,13 +175,6 @@ const RegisterForm = () => {
           />
 
           <Input
-            name="address"
-            containerClass="mb-4"
-            iconClass="icomoon icon-home"
-            placeholder={t('register:input_address_placeholder')}
-          />
-
-          <Input
             name="email"
             ref={register({
               pattern: {
@@ -200,6 +193,29 @@ const RegisterForm = () => {
           />
 
           <Input
+            name="password"
+            ref={register({
+              required: `${t('register:input_password_error_required')}`,
+              minLength: {
+                value: 6,
+                message: `${t('register:input_password_error_minLength')}`
+              }
+            })}
+            containerClass="mb-4"
+            iconClass="icomoon icon-lock"
+            placeholder={t('register:input_password_placeholder')}
+            type="password"
+            required
+          />
+
+          <Input
+            name="address"
+            containerClass="mb-4"
+            iconClass="icomoon icon-home"
+            placeholder={t('register:input_address_placeholder')}
+          />
+
+          <Input
             name="tax"
             type="text"
             ref={register({
@@ -212,7 +228,6 @@ const RegisterForm = () => {
             containerClass="mb-4"
             iconClass="fas fa-file-invoice-dollar"
             placeholder={t('register:input_tax_placeholder')}
-            required
           />
 
           <Input
@@ -228,22 +243,6 @@ const RegisterForm = () => {
                 : t('register:input_business_license_placeholder')
             }
             onChange={handleFileChange}
-          />
-
-          <Input
-            name="password"
-            ref={register({
-              required: `${t('register:input_password_error_required')}`,
-              minLength: {
-                value: 6,
-                message: `${t('register:input_password_error_minLength')}`
-              }
-            })}
-            containerClass="mb-4"
-            iconClass="icomoon icon-lock"
-            placeholder={t('register:input_password_placeholder')}
-            type="password"
-            required
           />
 
           <Checkbox
