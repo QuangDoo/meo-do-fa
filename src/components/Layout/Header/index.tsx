@@ -28,22 +28,16 @@ const Header = () => {
         </div>
       </nav>
       <div className="container py-4">
-        <div className="d-flex align-items-stretch justify-content-between">
+        <div className="d-sm-flex align-items-center justify-content-between">
           <div className="mr-2 flex-shrink-0 mb-3 mb-sm-0 mr-0">
             <div className="rockland-logo">
               <Link href="/">
                 <a title="Medofa.com">
                   <img
                     alt="Medofa.com"
-                    className="img-fluid logo-header d-none d-sm-block"
+                    className="img-fluid logo-header d-block mx-auto"
                     title="Medofa.com"
                     src="/assets/images/logo2.png"
-                  />
-                  <img
-                    alt="Medofa.com"
-                    className="img-fluid logo-header d-block d-sm-none"
-                    title="Medofa.com"
-                    src="/assets/images/logo.png"
                   />
                 </a>
               </Link>
