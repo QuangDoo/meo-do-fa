@@ -9,23 +9,30 @@ import React, { useState } from 'react';
 import Button from 'src/components/Form/Button';
 import Select from 'src/components/Form/Select';
 import {
+  SEARCH_INGREDIENT,
+  SearchIngredientData,
+  SearchIngredientVars
+} from 'src/graphql/search/searchIngredients';
+import {
   SEARCH_MANUFACTURER,
   SearchManufacturerData,
   SearchManufacturerVars
-} from 'src/graphql/search/search.manufacturer.query';
+} from 'src/graphql/search/searchManufacturers';
 import {
   SEARCH_PRODUCT,
   SearchProductData,
   SearchProductVars,
   SearchResult
-} from 'src/graphql/search/search.products.query';
+} from 'src/graphql/search/searchProducts';
 import { useDebouncedEffect } from 'src/hooks/useDebouncedEffect';
+
+type SearchType = 'products' | 'manufacturers' | 'ingredients';
 
 type SearchResultsProps = {
   items: SearchResult[];
   value: string;
   previousValue: string;
-  type: 'products' | 'manufacturers' | 'ingredients';
+  type: SearchType;
   loading: boolean;
   allHref: string;
   onAllClick: (value: string) => void;
@@ -69,16 +76,35 @@ const SearchResults = (props: SearchResultsProps) => {
         </Link>
       </button>
 
-      {props.items.map((item) => (
-        <button
-          className="w-100 text-left border-bottom"
-          key={item.id}
-          onClick={() => props.onItemClick(item)}>
-          <Link href={props.getItemHref(item)}>
-            <a className="search__result">{item.name}</a>
-          </Link>
-        </button>
-      ))}
+      {props.items.map((item) => {
+        const regex = new RegExp(props.value, 'gi');
+
+        let name = item.name;
+
+        const results = item.name.matchAll(regex);
+
+        let result = results.next();
+
+        while (!result.done) {
+          name = name.replace(result.value, `<u>${result.value}</u>`);
+          result = results.next();
+        }
+
+        return (
+          <button
+            className="w-100 text-left border-bottom"
+            key={item.id}
+            onClick={() => props.onItemClick(item)}>
+            <Link href={props.getItemHref(item)}>
+              <a
+                className="search__result"
+                dangerouslySetInnerHTML={{
+                  __html: name
+                }}></a>
+            </Link>
+          </button>
+        );
+      })}
     </React.Fragment>
   );
 };
@@ -98,40 +124,49 @@ const SearchBar = () => {
     { data: manufacturersData, loading: loadingManufacturers }
   ] = useLazyQuery<SearchManufacturerData, SearchManufacturerVars>(SEARCH_MANUFACTURER);
 
+  const [searchIngredients, { data: ingredientsData, loading: loadingIngredients }] = useLazyQuery<
+    SearchIngredientData,
+    SearchIngredientVars
+  >(SEARCH_INGREDIENT);
+
   const [value, setValue] = useState('');
 
   const [previousValue, setPreviousValue] = useState('');
 
   const [isFocused, setIsFocused] = useState(false);
 
-  const [searchType, setSearchType] = useState<SearchResultsProps['type']>('products');
+  const [type, setType] = useState<SearchResultsProps['type']>('products');
+
+  const runSearch = (type: SearchType) => {
+    const options = {
+      variables: {
+        page: 1,
+        pageSize: 15,
+        name: value
+      }
+    };
+
+    switch (type) {
+      case 'products':
+        searchProducts(options);
+        break;
+
+      case 'manufacturers':
+        searchManufacturers(options);
+        break;
+
+      case 'ingredients':
+        searchIngredients(options);
+        break;
+    }
+  };
 
   // Search with debounce
   useDebouncedEffect(
     () => {
       setPreviousValue(value);
 
-      switch (searchType) {
-        case 'products':
-          searchProducts({
-            variables: {
-              page: 1,
-              pageSize: 15,
-              name: value
-            }
-          });
-          break;
-
-        case 'manufacturers':
-          searchManufacturers({
-            variables: {
-              page: 1,
-              pageSize: 15,
-              name: value
-            }
-          });
-          break;
-      }
+      runSearch(type);
     },
     200,
     [value]
@@ -155,7 +190,8 @@ const SearchBar = () => {
   };
 
   const handleSearchTypeChange = (e) => {
-    setSearchType(e.target.value);
+    setType(e.target.value);
+    runSearch(e.target.value);
   };
 
   const handleFocus = () => {
@@ -166,10 +202,10 @@ const SearchBar = () => {
     setIsFocused(false);
   };
 
-  const loading = loadingProducts || loadingManufacturers;
+  const loading = loadingProducts || loadingManufacturers || loadingIngredients;
 
   const showResultWindow =
-    (loading || productsData || manufacturersData) && previousValue && isFocused;
+    (loading || productsData || manufacturersData || ingredientsData) && previousValue && isFocused;
 
   return (
     <div className="d-flex justify-content-sm-center justify-content-start flex-grow-1 mr-lg-5 ml-lg-3">
@@ -187,13 +223,10 @@ const SearchBar = () => {
                 onFocus={handleFocus}
               />
 
-              <Select
-                value={searchType}
-                onChange={handleSearchTypeChange}
-                className="search-type-select">
-                <option value="product">Theo sản phẩm</option>
-                <option value="manufacturer">Theo nhà sản xuất</option>
-                <option value="ingredient">Theo hoạt chất</option>
+              <Select value={type} onChange={handleSearchTypeChange} className="search-type-select">
+                <option value="products">Theo sản phẩm</option>
+                <option value="manufacturers">Theo nhà sản xuất</option>
+                {/* <option value="ingredients">Theo hoạt chất</option> */}
               </Select>
 
               <div className="input-group-prepend">
@@ -205,7 +238,7 @@ const SearchBar = () => {
           </form>
 
           <div className={clsx('elevated search__results', showResultWindow && 'show')}>
-            {searchType === 'products' && (
+            {type === 'products' && (
               <SearchResults
                 type="products"
                 items={productsData?.searchProduct}
@@ -219,7 +252,7 @@ const SearchBar = () => {
               />
             )}
 
-            {searchType === 'manufacturers' && (
+            {type === 'manufacturers' && (
               <SearchResults
                 type="manufacturers"
                 items={manufacturersData?.searchManufactory || []}
@@ -230,6 +263,20 @@ const SearchBar = () => {
                 getItemHref={(manufacturer) => `/products?manufacturer=${manufacturer.id}`}
                 onItemClick={handleBlur}
                 loading={loadingManufacturers}
+              />
+            )}
+
+            {type === 'ingredients' && (
+              <SearchResults
+                type="ingredients"
+                items={ingredientsData?.searchIngredient || []}
+                value={value}
+                previousValue={previousValue}
+                allHref={`/ingredients?search=${value}`}
+                onAllClick={handleBlur}
+                getItemHref={(ingredient) => `/ingredients/${ingredient.slug}`}
+                onItemClick={handleBlur}
+                loading={loadingIngredients}
               />
             )}
           </div>
