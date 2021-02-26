@@ -13,5 +13,8 @@
   "result": "search result for",
   "show": "Show",
   "show_manufacturer_detail": "Show detail",
-  "submit_search": "Search"
+  "submit_search": "Search",
+  "search_by_products": "Products",
+  "search_by_manufacturers": "Manufacturers",
+  "search_by_ingredients": "Ingredients"
 }

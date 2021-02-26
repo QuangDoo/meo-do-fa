@@ -160,9 +160,15 @@ const SearchBar = () => {
               />
 
               <Select value={type} onChange={handleSearchTypeChange} className="search-type-select">
-                <option value="products">Theo sản phẩm</option>
-                <option value="manufacturers">Theo nhà sản xuất</option>
-                {/* <option value="ingredients">Theo hoạt chất</option> */}
+                {[
+                  'products',
+                  'manufacturers'
+                  // 'ingredients'
+                ].map((type) => (
+                  <option key={type} value={type}>
+                    {t(`searchBar:search_by_${type}`)}
+                  </option>
+                ))}
               </Select>
 
               <div className="input-group-prepend">
