@@ -26,6 +26,10 @@ import {
 } from 'src/graphql/search/searchProducts';
 import { useDebouncedEffect } from 'src/hooks/useDebouncedEffect';
 
+const underlinedString = (str) => {
+  return `<u>${str}</u>`;
+};
+
 type SearchType = 'products' | 'manufacturers' | 'ingredients';
 
 type SearchResultsProps = {
@@ -63,6 +67,8 @@ const SearchResults = (props: SearchResultsProps) => {
     );
   }
 
+  const keywordInName = new RegExp(props.previousValue, 'gi');
+
   return (
     <React.Fragment>
       <button
@@ -76,35 +82,21 @@ const SearchResults = (props: SearchResultsProps) => {
         </Link>
       </button>
 
-      {props.items.map((item) => {
-        const regex = new RegExp(props.value, 'gi');
-
-        let name = item.name;
-
-        const results = item.name.matchAll(regex);
-
-        let result = results.next();
-
-        while (!result.done) {
-          name = name.replace(result.value, `<u>${result.value}</u>`);
-          result = results.next();
-        }
-
-        return (
-          <button
-            className="w-100 text-left border-bottom"
-            key={item.id}
-            onClick={() => props.onItemClick(item)}>
-            <Link href={props.getItemHref(item)}>
-              <a
-                className="search__result"
-                dangerouslySetInnerHTML={{
-                  __html: name
-                }}></a>
-            </Link>
-          </button>
-        );
-      })}
+      {props.items.map((item) => (
+        <button
+          className="w-100 text-left border-bottom"
+          key={item.id}
+          onClick={() => props.onItemClick(item)}>
+          <Link href={props.getItemHref(item)}>
+            <a
+              className="search__result"
+              dangerouslySetInnerHTML={{
+                __html: item.name.replace(keywordInName, underlinedString)
+              }}
+            />
+          </Link>
+        </button>
+      ))}
     </React.Fragment>
   );
 };
