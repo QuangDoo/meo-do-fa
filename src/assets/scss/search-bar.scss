@@ -1,0 +1,18 @@
+@media (max-width: $breakpoint-sm) {
+  .search-input {
+    width: 100% !important;
+    margin-bottom: $spacing-3 !important;
+    border-top-right-radius: $spacing-1;
+    border-bottom-right-radius: $spacing-1;
+  }
+}
+
+.search-type-select {
+  padding-right: 2.5rem;
+}
+
+@media (min-width: $breakpoint-sm) {
+  .search-type-select {
+    max-width: fit-content;
+  }
+}

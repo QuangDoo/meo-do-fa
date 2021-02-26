@@ -1,5 +1,5 @@
 import { useLazyQuery } from '@apollo/client';
-import { CircularProgress, useMediaQuery } from '@material-ui/core';
+import { CircularProgress } from '@material-ui/core';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import clsx from 'clsx';
 import { useTranslation } from 'i18n';
@@ -84,8 +84,6 @@ const SearchResults = (props: SearchResultsProps) => {
 };
 
 const SearchBar = () => {
-  const isSmallScreen = useMediaQuery('(max-width:576px)');
-
   const { t } = useTranslation(['searchBar']);
 
   const router = useRouter();
@@ -93,20 +91,12 @@ const SearchBar = () => {
   const [searchProducts, { data: productsData, loading: loadingProducts }] = useLazyQuery<
     SearchProductData,
     SearchProductVars
-  >(SEARCH_PRODUCT, {
-    onCompleted: () => {
-      setPreviousValue(value);
-    }
-  });
+  >(SEARCH_PRODUCT);
 
   const [
     searchManufacturers,
     { data: manufacturersData, loading: loadingManufacturers }
-  ] = useLazyQuery<SearchManufacturerData, SearchManufacturerVars>(SEARCH_MANUFACTURER, {
-    onCompleted: () => {
-      setPreviousValue(value);
-    }
-  });
+  ] = useLazyQuery<SearchManufacturerData, SearchManufacturerVars>(SEARCH_MANUFACTURER);
 
   const [value, setValue] = useState('');
 
@@ -114,20 +104,12 @@ const SearchBar = () => {
 
   const [isFocused, setIsFocused] = useState(false);
 
-  const [showResults, setShowResults] = useState(false);
-
   const [searchType, setSearchType] = useState<SearchResultsProps['type']>('products');
-
-  const handleSearchTypeChange = (e) => {
-    setSearchType(e.target.value);
-  };
 
   // Search with debounce
   useDebouncedEffect(
     () => {
-      if (value === '') {
-        setShowResults(false);
-      }
+      setPreviousValue(value);
 
       switch (searchType) {
         case 'products':
@@ -166,13 +148,14 @@ const SearchBar = () => {
         search: value
       }
     });
-
-    setShowResults(false);
   };
 
-  const handleChange = (e) => {
+  const handleValueChange = (e) => {
     setValue(e.target.value);
-    setShowResults(true);
+  };
+
+  const handleSearchTypeChange = (e) => {
+    setSearchType(e.target.value);
   };
 
   const handleFocus = () => {
@@ -182,6 +165,11 @@ const SearchBar = () => {
   const handleBlur = () => {
     setIsFocused(false);
   };
+
+  const loading = loadingProducts || loadingManufacturers;
+
+  const showResultWindow =
+    (loading || productsData || manufacturersData) && previousValue && isFocused;
 
   return (
     <div className="d-flex justify-content-sm-center justify-content-start flex-grow-1 mr-lg-5 ml-lg-3">
@@ -193,19 +181,16 @@ const SearchBar = () => {
                 type="search"
                 placeholder={t('searchBar:input')}
                 aria-label="search"
-                className={clsx(
-                  'form-control form-control-sm search-input',
-                  isSmallScreen && 'w-100'
-                )}
+                className="form-control form-control-sm search-input"
                 value={value}
-                onChange={handleChange}
+                onChange={handleValueChange}
                 onFocus={handleFocus}
               />
 
               <Select
                 value={searchType}
                 onChange={handleSearchTypeChange}
-                className={!isSmallScreen && 'width-fit-content'}>
+                className="search-type-select">
                 <option value="product">Theo sản phẩm</option>
                 <option value="manufacturer">Theo nhà sản xuất</option>
                 <option value="ingredient">Theo hoạt chất</option>
@@ -219,7 +204,7 @@ const SearchBar = () => {
             </div>
           </form>
 
-          <div className={clsx('elevated search__results', isFocused && showResults && 'show')}>
+          <div className={clsx('elevated search__results', showResultWindow && 'show')}>
             {searchType === 'products' && (
               <SearchResults
                 type="products"
