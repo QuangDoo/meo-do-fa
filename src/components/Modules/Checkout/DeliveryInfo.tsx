@@ -1,4 +1,5 @@
 import { Box } from '@material-ui/core';
+import clsx from 'clsx';
 import { useTranslation } from 'i18n';
 import React, { Fragment, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
@@ -10,6 +11,7 @@ import {
   GetAddressInfoUserData
 } from 'src/graphql/user/getAddressInfoUser';
 import { useQueryAuth } from 'src/hooks/useApolloHookAuth';
+import getAddressString from 'src/utils/getAddressString';
 
 import DeliveryAddressForm from '../MyAddressBook/DeliveryAddressForm';
 import { CheckoutFormInputs } from '.';
@@ -61,7 +63,14 @@ const DeliveryInfo = () => {
           <div className="font-weight-bold">{chosenAddress.name}</div>
 
           <div>{t('chooseDeliveryAddress:address')}:</div>
-          <div>{`${chosenAddress.street}, ${chosenAddress.ward}, ${chosenAddress.district}, ${chosenAddress.city}`}</div>
+          <div>
+            {getAddressString({
+              street: chosenAddress.street,
+              ward: chosenAddress.ward,
+              district: chosenAddress.district,
+              city: chosenAddress.city
+            })}
+          </div>
 
           <div>{t('chooseDeliveryAddress:phone')}:</div>
           <div>{chosenAddress.phone}</div>
