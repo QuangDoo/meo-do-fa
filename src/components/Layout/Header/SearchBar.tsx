@@ -21,85 +21,11 @@ import {
 import {
   SEARCH_PRODUCT,
   SearchProductData,
-  SearchProductVars,
-  SearchResult
+  SearchProductVars
 } from 'src/graphql/search/searchProducts';
 import { useDebouncedEffect } from 'src/hooks/useDebouncedEffect';
 
-const underlinedString = (str) => {
-  return `<u>${str}</u>`;
-};
-
 type SearchType = 'products' | 'manufacturers' | 'ingredients';
-
-type SearchResultsProps = {
-  items: SearchResult[];
-  value: string;
-  previousValue: string;
-  type: SearchType;
-  loading: boolean;
-  allHref: string;
-  onAllClick: (value: string) => void;
-  onItemClick: (item: SearchResult) => void;
-  getItemHref: (item: SearchResult) => string;
-};
-
-const SearchResults = (props: SearchResultsProps) => {
-  const { t } = useTranslation(['searchBar']);
-
-  if (props.loading) {
-    return (
-      <div className="search__result--empty text-center">
-        <CircularProgress size={60} />
-      </div>
-    );
-  }
-
-  if (!props.items) {
-    return null;
-  }
-
-  if (props.items.length === 0) {
-    return (
-      <div className="search__result--empty">
-        {t(`searchBar:no_${props.type}`)} <b>{props.value}</b>
-      </div>
-    );
-  }
-
-  const keywordInName = new RegExp(props.previousValue, 'gi');
-
-  return (
-    <React.Fragment>
-      <button
-        className="w-100 text-left border-bottom p-3"
-        onClick={() => props.onAllClick(props.value)}>
-        <Link href={props.allHref}>
-          <a>
-            <em>{props.previousValue}</em> {t('searchBar:in')}{' '}
-            <b className="text-primary">{t(`searchBar:all_${props.type}`)}</b>
-          </a>
-        </Link>
-      </button>
-
-      {props.items.map((item) => (
-        <button
-          className="w-100 text-left border-bottom"
-          key={item.id}
-          onClick={() => props.onItemClick(item)}>
-          <Link href={props.getItemHref(item)}>
-            <a
-              className="search__result"
-              dangerouslySetInnerHTML={{
-                __html: item.name.replace(keywordInName, underlinedString)
-              }}
-            />
-          </Link>
-        </button>
-      ))}
-    </React.Fragment>
-  );
-};
 
 const SearchBar = () => {
   const { t } = useTranslation(['searchBar']);
@@ -199,6 +125,24 @@ const SearchBar = () => {
   const showResultWindow =
     (loading || productsData || manufacturersData || ingredientsData) && previousValue && isFocused;
 
+  const items = {
+    products: productsData?.searchProduct,
+    manufacturers: manufacturersData?.searchManufactory,
+    ingredients: ingredientsData?.searchIngredient
+  };
+
+  const getItemHref = {
+    products: (product) => `/products/${product.slug}`,
+    manufacturers: (manufacturer) => `/products?manufacturer=${manufacturer.id}`,
+    ingredients: (ingredient) => `/ingredients/${ingredient.slug}`
+  };
+
+  const allHref = {
+    products: `/products?search=${value}`,
+    manufacturers: `/products?search=${value}`,
+    ingredients: `/ingredients?search=${value}`
+  };
+
   return (
     <div className="d-flex justify-content-sm-center justify-content-start flex-grow-1 mr-lg-5 ml-lg-3">
       <ClickAwayListener onClickAway={handleBlur}>
@@ -230,47 +174,40 @@ const SearchBar = () => {
           </form>
 
           <div className={clsx('elevated search__results', showResultWindow && 'show')}>
-            {type === 'products' && (
-              <SearchResults
-                type="products"
-                items={productsData?.searchProduct}
-                value={value}
-                previousValue={previousValue}
-                allHref={`/products?search=${value}`}
-                onAllClick={handleBlur}
-                getItemHref={(product) => `/products/${product.slug}`}
-                onItemClick={handleBlur}
-                loading={loadingProducts}
-              />
+            {loading && (
+              <div className="search__result--empty text-center">
+                <CircularProgress size={60} />
+              </div>
             )}
 
-            {type === 'manufacturers' && (
-              <SearchResults
-                type="manufacturers"
-                items={manufacturersData?.searchManufactory || []}
-                value={value}
-                previousValue={previousValue}
-                allHref={`/products?search=${value}`}
-                onAllClick={handleBlur}
-                getItemHref={(manufacturer) => `/products?manufacturer=${manufacturer.id}`}
-                onItemClick={handleBlur}
-                loading={loadingManufacturers}
-              />
-            )}
+            {items[type] &&
+              (items[type].length === 0 ? (
+                <div className="search__result--empty">
+                  {t(`searchBar:no_${type}`)} <b>{previousValue}</b>
+                </div>
+              ) : (
+                <React.Fragment>
+                  <button className="w-100 text-left border-bottom p-3" onClick={handleBlur}>
+                    <Link href={allHref[type]}>
+                      <a>
+                        <em>{previousValue}</em> {t('searchBar:in')}{' '}
+                        <b className="text-primary">{t(`searchBar:all_${type}`)}</b>
+                      </a>
+                    </Link>
+                  </button>
 
-            {type === 'ingredients' && (
-              <SearchResults
-                type="ingredients"
-                items={ingredientsData?.searchIngredient || []}
-                value={value}
-                previousValue={previousValue}
-                allHref={`/ingredients?search=${value}`}
-                onAllClick={handleBlur}
-                getItemHref={(ingredient) => `/ingredients/${ingredient.slug}`}
-                onItemClick={handleBlur}
-                loading={loadingIngredients}
-              />
-            )}
+                  {items[type].map((item) => (
+                    <button
+                      className="w-100 text-left border-bottom"
+                      key={item.id}
+                      onClick={handleBlur}>
+                      <Link href={getItemHref[type](item)}>
+                        <a className="search__result">{item.name}</a>
+                      </Link>
+                    </button>
+                  ))}
+                </React.Fragment>
+              ))}
           </div>
         </div>
       </ClickAwayListener>
