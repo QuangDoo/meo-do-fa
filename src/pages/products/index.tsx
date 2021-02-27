@@ -169,7 +169,7 @@ function Products() {
               <ProductsSidebarFilter />
             </div>
 
-            <div className="flex-grow-1">
+            <div className="flex-grow-1 w-100">
               <div className="px-2 px-sm-0 mb-2">
                 <div className="d-block d-sm-none mb-3">
                   <ProductsDrawerFilter />
