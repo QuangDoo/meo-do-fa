@@ -53,7 +53,7 @@ const SearchBar = () => {
 
   const [isFocused, setIsFocused] = useState(false);
 
-  const [type, setType] = useState<SearchResultsProps['type']>('products');
+  const [type, setType] = useState<SearchType>('products');
 
   const runSearch = (type: SearchType) => {
     const options = {
