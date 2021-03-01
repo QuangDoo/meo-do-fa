@@ -1,7 +1,6 @@
-
 // Color system
 
-$white:    #fff !default;
+$white: #fff !default;
 $gray-100: #f8f9fa !default;
 $gray-200: #e9ecef !default;
 $gray-300: #dee2e6 !default;
@@ -12,35 +11,46 @@ $gray-700: #495057 !default;
 $gray-800: #343a40 !default;
 $gray-900: #212529 !default;
 // $black:    #000 !default;
-$black:    #000 ;
-$black1:    #23201f;
-$black2:    #333132;
-$black3:    #232020;
+$black: #000;
+$black1: #23201f;
+$black2: #333132;
+$black3: #232020;
 
-$blue:    #2f3b97 !default;
-$blue1:   #35409a;
-$blue2:   #35409a;
-$blue3:   #2b3695;
-$indigo:  #6610f2 !default;
-$purple:  #660099 !default;
-$pink:    #e83e8c !default;
-$red:     #FF0033 !default;
-$orange:  #F7A30A !default;
-$yellow:  #ffcb31 !default;
+$blue: #2f3b97 !default;
+$blue1: #35409a;
+$blue2: #35409a;
+$blue3: #2b3695;
+$indigo: #6610f2 !default;
+$purple: #660099 !default;
+$pink: #e83e8c !default;
+$red: #ff0033 !default;
+$orange: #f7a30a !default;
+$yellow: #ffcb31 !default;
 $yellow1: #ffcc31 !default;
 $yellow2: #ffc629 !default;
-$green:   #337321 !default;
-$teal:    #7DBA00 !default;
-$cyan:    #17a2b8 !default;
+$green: #337321 !default;
+$teal: #7dba00 !default;
+$cyan: #17a2b8 !default;
 
-
-$primary:       $blue !default;
+$primary: $blue !default;
 
 // #1460c5
-$secondary:     $yellow !default;
-$success:       $green !default;
-$info:          $cyan !default;
-$warning:       $yellow !default;
-$danger:        $red !default;
-$light:         $gray-100 !default;
-$dark:          $gray-800 !default;
+$secondary: $yellow !default;
+$success: $green !default;
+$info: $cyan !default;
+$warning: $yellow !default;
+$danger: $red !default;
+$light: $gray-100 !default;
+$dark: $gray-800 !default;
+
+$breakpoint-xs: 0px;
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;
+$spacer: 1rem;
+$spacing-1: $spacer * 0.25;
+$spacing-2: $spacer * 0.5;
+$spacing-3: $spacer;
+$spacing-4: $spacer * 1.5;
+$spacing-5: $spacer * 3;
