@@ -81,7 +81,7 @@
 }
 
 .mypage {
-  max-height: 80vh;
+  max-height: 75vh;
   overflow: auto;
   padding: 20px;
   border-radius: 5px;
@@ -104,12 +104,21 @@
   .engo-popup .content{
       width: 350px;
       margin: auto;
-      margin-top: 50px;
+      margin-top: 30px;
   }
 }
 @media only screen and (max-width: 768px){
   .engo-popup .content .mypage > span{
       font-size: 5px;
+  }
+  .mypage{
+    padding: 10px 20px 0;
+  }
+}
+
+@media only screen and (max-width: 500px){
+  .mypage{
+    padding: 10px 20px;
   }
 }
 

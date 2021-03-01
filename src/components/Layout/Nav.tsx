@@ -90,7 +90,7 @@ const Nav = () => {
                 </Link>
               </li>
 
-              <li className="rockland-nav__item dropdown dropdown-nav">
+              <li className="d-none d-sm-block rockland-nav__item dropdown dropdown-nav">
                 <div data-toggle="dropdown" data-hover="dropdown">
                   <a className="rockland-nav__link">
                     <i className="rockland-nav__icon fab fa-hotjar" />
@@ -98,6 +98,32 @@ const Nav = () => {
                   </a>
                 </div>
                 <ul className="dropdown-menu">
+                  <li className="dropdown-item">
+                    <Link href="/promo-codes">
+                      <a className="dropdown-item-text p-0">
+                        <i className="rockland-nav__icon fas fa-tag" />
+                        <span>{t('navbar:promo_code')}</span>
+                      </a>
+                    </Link>
+                  </li>
+                  <li className="dropdown-item">
+                    <Link href="/deals">
+                      <a className="dropdown-item-text p-0">
+                        <i className="rockland-nav__icon fas fa-gifts" />
+                        <span>{t('navbar:promo_products')}</span>
+                      </a>
+                    </Link>
+                  </li>
+                </ul>
+              </li>
+              <li className="d-block d-sm-none rockland-nav__item dropdown dropdown-nav">
+                <div data-toggle="dropdown" data-hover="dropdown">
+                  <a className="rockland-nav__link">
+                    <i className="rockland-nav__icon fab fa-hotjar" />
+                    <span className="rockland-nav__title">{t('navbar:promotion')}</span>
+                  </a>
+                </div>
+                <ul className="dropdown-menu dropdown-menu-mobile">
                   <li className="dropdown-item">
                     <Link href="/promo-codes">
                       <a className="dropdown-item-text p-0">

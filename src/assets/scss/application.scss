@@ -11343,7 +11343,7 @@ abbr[title] {
 .search__results {
   position: absolute;
   width: 100%;
-  min-width: 25em;
+  // min-width: 25em;
   margin-top: 1em;
   max-height: 20em;
   overflow-y: scroll;
@@ -12578,11 +12578,11 @@ abbr[title] {
 @media (max-width: 575.98px) {
   .products__cards {
     grid-template-columns: 1fr 1fr;
-    padding-left: 0.5em;
-    padding-right: 0.5em;
+    // padding-left: 0.5em;
+    // padding-right: 0.5em;
   }
   .products__cards .product-card {
-    max-width: 45vw;
+    max-width: 43vw;
   }
 }
 .products__filter-btn {
