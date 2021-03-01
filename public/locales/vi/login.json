@@ -12,5 +12,7 @@
   "remember_password": "Nhớ mật khẩu",
   "forgot_password": "<button>Quên mật khẩu</button>",
   "login": "Đăng nhập",
-  "login_for_deals": "<button><b>Đăng ký</b></button> để nhận nhiều ưu đãi hấp dẫn."
+  "login_for_deals": "<button><b>Đăng ký</b></button> để nhận nhiều ưu đãi hấp dẫn.",
+  "required_username":"Xin nhập tên đăng nhập",
+  "required_password": "Xin nhập mật khẩu"
 }

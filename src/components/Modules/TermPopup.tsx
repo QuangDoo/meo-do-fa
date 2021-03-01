@@ -38,7 +38,7 @@ export default function TermPopup(): JSX.Element {
 
             <div className="mypage">
               <p style={{ textAlign: 'justify' }}>
-                <span>
+                <span style={{ fontSize: 12 }}>
                   {t('termPopup:trading_floor')} MEDOFA.COM (“
                   <strong>{t('termPopup:exchanges')}</strong>”) {t('termPopup:content')}
                 </span>
