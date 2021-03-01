@@ -54,7 +54,7 @@ const InvoiceProducts = (props: Props) => {
       label={t('checkout:list_products_have_invoice')}>
       <div className="mt-2" hidden={!showInvoiceProducts}>
         {products.map((item, index) => {
-          const productLink = `products/${slugify(item.name)}-pid${item.id}`;
+          const productLink = `products/${slugify(item.name as string)}-pid${item.id}`;
 
           return (
             <div className="cart-item" key={index}>
