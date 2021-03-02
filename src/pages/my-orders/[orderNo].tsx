@@ -23,6 +23,7 @@ import { useState } from 'react';
 import { toast } from 'react-toastify';
 import PriceText from 'src/components/Form/PriceText';
 import Head from 'src/components/Layout/Head';
+import Loading from 'src/components/Layout/Loading';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import CustomCard from 'src/components/Modules/OrderDetails/CustomCard';
@@ -134,8 +135,13 @@ function OrderDetails() {
               <Box my={2}>
                 <Divider />
               </Box>
-
-              <CustomStepper flag={flag} activeStep={activeStep} />
+              {loadingOrderDetail ? (
+                <div className="d-flex w-100 p-5 justify-content-center">
+                  <Loading className="lds-roller-white" />
+                </div>
+              ) : (
+                <CustomStepper flag={flag} activeStep={activeStep} />
+              )}
 
               {flag !== 25 && (
                 <>
