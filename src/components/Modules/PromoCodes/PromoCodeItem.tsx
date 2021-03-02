@@ -4,7 +4,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import { useTranslation } from 'i18n';
 import React, { useState } from 'react';
 
-import PromocodeDetailDialog from './PromocodedetailDialog';
+// import PromocodeDetailDialog from './PromocodedetailDialog';
 
 type Props = {
   rewardType: string;
