@@ -12,5 +12,9 @@
   "no_products": "Không có sản phẩm với từ khóa",
   "result": "kết quả tìm kiếm cho",
   "show": "Hiển thị",
-  "show_manufacturer_detail": "Xem chi tiết"
+  "show_manufacturer_detail": "Xem chi tiết",
+  "submit_search": "Tìm kiếm",
+  "search_by_products": "Sản phẩm",
+  "search_by_manufacturers": "Nhà sản xuất",
+  "search_by_ingredients": "Hoạt chất"
 }
