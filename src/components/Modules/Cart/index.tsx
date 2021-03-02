@@ -117,7 +117,7 @@ export default function CartPage() {
             <div className="col-12 col-md-3">
               {cart && (
                 <div className="cart__info">
-                  <div className="elevated row no-gutters mb-2">
+                  <div hidden={cart?.carts?.length === 0} className="elevated row no-gutters mb-2">
                     <div className="col-md-12 col-lg-4 cart__info-quantity">
                       <div className="cart__info-item text-center">
                         <div className="mb-2">
