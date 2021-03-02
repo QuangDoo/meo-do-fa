@@ -1,10 +1,6 @@
-FROM node:12-alpine
-
-ARG NODE_ENV="production"
-ENV NODE_ENV=${NODE_ENV}
+FROM node:14-alpine
 
 ENV PORT 3000
-RUN apk update && apk add yarn && rm -rf /var/cache/apk/*
 
 # Create app directory
 RUN mkdir -p /usr/src/app
@@ -15,6 +11,11 @@ COPY yarn.lock ./
 RUN yarn --silent
 
 COPY ./ ./
+ARG NODE_ENV="production"
+ENV NODE_ENV=${NODE_ENV}
+
+
+
 RUN yarn build
 
 # Building app
