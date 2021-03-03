@@ -26,7 +26,7 @@ const Input = (props: Props, ref) => {
     <div className={`input-group form__input-group ${containerClass} `}>
       <i className={`${props.iconClass} form__input-icon`} />
 
-      {type === 'file' && (
+      {type === 'file' ? (
         <div className="input-file">
           <input
             ref={ref}
@@ -42,9 +42,7 @@ const Input = (props: Props, ref) => {
             <span>{props.placeholder}</span>
           </div>
         </div>
-      )}
-
-      {type !== 'file' && (
+      ) : (
         <input
           ref={ref}
           name={props.name}
@@ -54,6 +52,17 @@ const Input = (props: Props, ref) => {
           type={type === 'password' ? (showPassword ? 'text' : 'password') : type}
         />
       )}
+
+      {/* {type !== 'file' && (
+        <input
+          ref={ref}
+          name={props.name}
+          className="form-control no-spinner"
+          placeholder={props.placeholder}
+          required={props.required}
+          type={type === 'password' ? (showPassword ? 'text' : 'password') : type}
+        />
+      )} */}
 
       {/* Show password checkbox */}
       {type === 'password' && (

@@ -96,10 +96,17 @@
   background: rgb(0 0 0 / 40%);
   width: 100%;
   padding: 1em 0;
+  display: flex;
+  justify-content: center;
 }
 .footer .version {
   color: #192159;
-  position: absolute;
+  padding-left: 0.5rem;
+}
+@media (max-width: 575.98px) {
+  .copyright {
+    flex-direction: column;
+  }
 }
 .account {
   position: relative;

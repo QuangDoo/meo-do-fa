@@ -296,9 +296,13 @@ const Footer = () => {
             </div>
           </div>
         </div>
-        <div className="copyright">
+        {/* <div className="copyright">
           {t('footer:copyright')}
           <span className="version">Version: 0.9.10</span>
+        </div> */}
+        <div className="copyright">
+          <div>{t('footer:copyright')}</div>
+          <div className="version">Version: 0.9.10</div>
         </div>
         <LoadingBackdrop open={loadingSubcribe} />
         <BackToTop />
