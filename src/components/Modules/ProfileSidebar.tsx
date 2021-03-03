@@ -38,7 +38,7 @@ const ProfileSidebar = () => {
     <aside className="my-account__sidebar mb-3">
       <div className="mb-3">
         {t('navbar:account_of')}
-        <h5>{user?.name}</h5>
+        <h5 className="my-account__user-name">{user?.name}</h5>
         <h5>{user?.cust_no}</h5>
       </div>
 

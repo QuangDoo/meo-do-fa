@@ -58,7 +58,7 @@ export default function ManufacturerFilter() {
 
   return (
     <Dropdown label={t('productsSidebar:manufacturer')}>
-      <div className="input-group form__input-group mb-3">
+      <div className="input-group form__input-group has-icon mb-3">
         <i className="fas fa-search form__input-icon" />
 
         <input
