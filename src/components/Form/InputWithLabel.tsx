@@ -70,12 +70,16 @@ const InputWithLabel = (props: Props, ref) => {
             className="custom-file-input"
             accept={props.accept}
             onChange={props.onChange}
-            onBlur={handleTextBlur}
           />
           <div className="custom-file-label">{props.placeholder}</div>
         </div>
       ) : (
-        <input {...sharedInputProps} type={props.type} className="form-control no-spinner" />
+        <input
+          {...sharedInputProps}
+          type={props.type}
+          className="form-control no-spinner"
+          onBlur={handleTextBlur}
+        />
       )}
 
       {props.guide && <small className="text-muted">{props.guide}</small>}
