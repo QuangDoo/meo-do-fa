@@ -9,12 +9,14 @@ type Props = {
   onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void;
   disabled?: boolean;
   defaultValue?: string;
+  value?: string;
 };
 
 const Select = (props: Props, ref) => {
   return (
     <select
       onChange={props.onChange}
+      value={props.value}
       ref={ref}
       name={props.name}
       defaultValue={props.defaultValue}

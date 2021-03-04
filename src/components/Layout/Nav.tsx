@@ -1,19 +1,12 @@
-import { useQuery } from '@apollo/client';
 import { Menu } from '@material-ui/core';
+import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import { useTranslation } from 'i18n';
 import cookies from 'js-cookie';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import React, { useState } from 'react';
-import { toast } from 'react-toastify';
 import { useCart } from 'src/contexts/Cart';
 import { useToken } from 'src/contexts/Token';
-import {
-  GET_CATEGORIES_LEVEL,
-  GetCategoriesLevelData
-} from 'src/graphql/category/getCategoriesLevel';
 
-import CategoryMenu from '../Modules/CategoryMenu';
 import PathologyMenu from '../Modules/PathologyMenu';
 
 const Nav = () => {
@@ -41,16 +34,16 @@ const Nav = () => {
     setAnchorEl(null);
   };
 
-  const { data: categoriesData } = useQuery<GetCategoriesLevelData, undefined>(
-    GET_CATEGORIES_LEVEL,
-    {
-      onError: (error) => {
-        toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
-      }
-    }
-  );
+  // const { data: categoriesData } = useQuery<GetCategoriesLevelData, undefined>(
+  //   GET_CATEGORIES_LEVEL,
+  //   {
+  //     onError: (error) => {
+  //       toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
+  //     }
+  //   }
+  // );
 
-  const categories = categoriesData?.getCategoriesLevel || [];
+  // const categories = categoriesData?.getCategoriesLevel || [];
 
   return (
     <nav className="rockland-nav shrink header-menu">
@@ -97,7 +90,7 @@ const Nav = () => {
                 </Link>
               </li>
 
-              <li className="rockland-nav__item dropdown dropdown-nav">
+              <li className="d-none d-sm-block rockland-nav__item dropdown dropdown-nav">
                 <div data-toggle="dropdown" data-hover="dropdown">
                   <a className="rockland-nav__link">
                     <i className="rockland-nav__icon fab fa-hotjar" />
@@ -105,6 +98,32 @@ const Nav = () => {
                   </a>
                 </div>
                 <ul className="dropdown-menu">
+                  <li className="dropdown-item">
+                    <Link href="/promo-codes">
+                      <a className="dropdown-item-text p-0">
+                        <i className="rockland-nav__icon fas fa-tag" />
+                        <span>{t('navbar:promo_code')}</span>
+                      </a>
+                    </Link>
+                  </li>
+                  <li className="dropdown-item">
+                    <Link href="/deals">
+                      <a className="dropdown-item-text p-0">
+                        <i className="rockland-nav__icon fas fa-gifts" />
+                        <span>{t('navbar:promo_products')}</span>
+                      </a>
+                    </Link>
+                  </li>
+                </ul>
+              </li>
+              <li className="d-block d-sm-none rockland-nav__item dropdown dropdown-nav">
+                <div data-toggle="dropdown" data-hover="dropdown">
+                  <a className="rockland-nav__link">
+                    <i className="rockland-nav__icon fab fa-hotjar" />
+                    <span className="rockland-nav__title">{t('navbar:promotion')}</span>
+                  </a>
+                </div>
+                <ul className="dropdown-menu dropdown-menu-mobile">
                   <li className="dropdown-item">
                     <Link href="/promo-codes">
                       <a className="dropdown-item-text p-0">
@@ -142,7 +161,7 @@ const Nav = () => {
                   <li className="nav-item mr-4">
                     <Link href="/cart">
                       <a className="rockland-nav__link notification">
-                        <i className="fas fa-shopping-cart rockland-nav__icon" />
+                        <ShoppingCartOutlinedIcon />
                         {totalQty > 0 && <span className="notification__counter">{totalQty}</span>}
                       </a>
                     </Link>

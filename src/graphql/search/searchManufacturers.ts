@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-import { SEARCH_QUERY_ATTRIBUTES, SearchResult } from './search.products.query';
+import { SEARCH_QUERY_ATTRIBUTES, SearchResult } from './searchProducts';
 
 export type SearchManufacturerData = {
   searchManufactory: SearchResult[];

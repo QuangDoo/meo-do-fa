@@ -3,6 +3,7 @@ import clsx from 'clsx';
 import { useTranslation } from 'i18n';
 import React, { useState } from 'react';
 import { GetAddressInfoUserData } from 'src/graphql/user/getAddressInfoUser';
+import getAddressString from 'src/utils/getAddressString';
 
 import DeleteDeliveryAddressDialog from './DeleteDeliveryAddressDialog';
 import EditDeliveryAddressDialog from './EditDeliveryAddressDialog';
@@ -89,7 +90,14 @@ export default function AddressItem(props: Props) {
 
         <h6 className="delivery-address-content mt-2">
           <div>{t('myAddressBook:address')}:</div>
-          <div>{`${address?.street}, ${address?.ward}, ${address?.district}, ${address?.city}`}</div>
+          <div>
+            {getAddressString({
+              street: address.street,
+              ward: address.ward,
+              district: address.district,
+              city: address.city
+            })}
+          </div>
 
           <div>{t('myAddressBook:phone')}:</div>
           <div>{address?.phone}</div>
