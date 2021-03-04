@@ -10531,7 +10531,8 @@ abbr[title] {
 }
 .form__password-label {
   position: absolute;
-  right: 2em;
+  right: 1.5em;
+  z-index: 4;
   top: calc(50% - 0.75em);
   cursor: pointer;
   color: #919aa3;
@@ -10539,7 +10540,7 @@ abbr[title] {
 .form__required-label {
   position: absolute;
   right: 1em;
-  top: calc(50% - 0.75em);
+  top: calc(50% - 0.6em);
   cursor: pointer;
   color: #dc3545;
 }
@@ -10567,6 +10568,9 @@ abbr[title] {
 }
 .form__input-group.has-icon input {
   padding-left: 2.75em;
+}
+.form-control.has-show-password {
+  padding-right: 3em;
 }
 
 .form__input-group input::placeholder {
