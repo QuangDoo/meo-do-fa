@@ -209,13 +209,6 @@ const RegisterForm = () => {
           />
 
           <Input
-            name="address"
-            containerClass="mb-4"
-            iconClass="icomoon icon-home"
-            placeholder={t('register:input_address_placeholder')}
-          />
-
-          <Input
             name="tax"
             type="text"
             ref={register({
@@ -242,6 +235,20 @@ const RegisterForm = () => {
                 : t('register:input_business_license_placeholder')
             }
             onChange={handleFileChange}
+          />
+
+          <Input
+            name="address"
+            containerClass="mb-4"
+            iconClass="icomoon icon-home"
+            placeholder={t('register:input_address_placeholder')}
+          />
+
+          <Input
+            name="referEmail"
+            containerClass="mb-4"
+            iconClass="fas fa-user-friends"
+            placeholder={t('register:input_refer_placeholder')}
           />
 
           <Checkbox
