@@ -4,7 +4,6 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import Button from 'src/components/Form/Button';
 import Checkbox from 'src/components/Form/Checkbox';
-import Inputs from 'src/components/Form/Input';
 import Select from 'src/components/Form/Select';
 import Textarea from 'src/components/Form/Textarea';
 import ModalBase from 'src/components/Layout/Modal/ModalBase';
