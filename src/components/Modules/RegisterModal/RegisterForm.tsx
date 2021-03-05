@@ -147,6 +147,7 @@ const RegisterForm = () => {
               {t('register:edit')}
             </button>
           </div>
+
           <Input
             name="name"
             ref={register({
