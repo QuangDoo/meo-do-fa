@@ -101,95 +101,106 @@ export default function CartPage() {
               <h1 className="h3">{t('cart:cart')}</h1>
             </div>
           </div>
-          <div className="row">
-            <div className="col-12 col-md-9">
-              {cart?.carts.map((item) => (
-                <div key={item._id} className="elevated cart__items mb-3">
-                  <CartItem {...item} />
-                </div>
-              ))}
+          {cart?.totalQty !== 0 ? (
+            <div className="row">
+              <div className="col-12 col-md-9">
+                {cart?.carts.map((item) => (
+                  <div key={item._id} className="elevated cart__items mb-3">
+                    <CartItem {...item} />
+                  </div>
+                ))}
 
-              <div className="elevated text-muted p-3 mb-4">
-                <i className="fas fa-exclamation-circle mr-1" />
-                {t('cart:back_to_products')} <a href="/products">{t('cart:products')}</a>
+                <div className="elevated text-muted p-3 mb-4">
+                  <i className="fas fa-exclamation-circle mr-1" />
+                  {t('cart:back_to_products')} <a href="/products">{t('cart:products')}</a>
+                </div>
+              </div>
+              <div className="col-12 col-md-3">
+                {cart && (
+                  <div className="cart__info">
+                    <div className="elevated row no-gutters mb-2">
+                      <div className="col-md-12 col-lg-4 cart__info-quantity">
+                        <div className="cart__info-item text-center">
+                          <div className="mb-2">
+                            <div>{t('cart:quantity')}</div>
+                          </div>
+                          <div className="cart__quantity text-secondary">
+                            <b>{cart?.totalQty}</b>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-md-12 col-lg-8 cart__info-total">
+                        <div className="cart__info-item text-center text-lg-right">
+                          <div className="mb-2">
+                            <div>{t('cart:total')}</div>
+                          </div>
+                          <div className="cart__total">
+                            <PriceText price={total} />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div hidden={total < MIN_PRICE} className="col-12 p-3 cart__info-total">
+                        {t('cart:shipping_fee') + ': '}
+                        <PriceText price={cart?.totalShippingFee} />
+                      </div>
+
+                      <div className="col-12">
+                        <div className="cart__info-item">
+                          <button
+                            disabled={checkoutDisabled}
+                            onClick={handleCheckoutClick}
+                            className="btn btn-secondary btn-block text-small">
+                            {t('cart:continue_payment')}
+                          </button>
+
+                          <div hidden={!checkoutDisabled} className="text-center mt-1">
+                            {t('cart:minimum_price') + ' '}
+                            <PriceText price={MIN_PRICE} />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <button
+                      hidden={cart?.carts?.length === 0}
+                      onClick={handleOpenDeleteAllModal}
+                      className="w-100 p-2 btn-link text-danger text-left">
+                      <i className="fas fa-fw fa-trash mr-1" />
+                      {t('cart:delete_all_button_label')}
+                    </button>
+
+                    <ConfirmModal
+                      open={deleteAllIsOpen}
+                      title={t('cart:remove_title')}
+                      question={t('cart:remove_all_confirm')}
+                      onClose={handleCloseDeleteAllModal}
+                      onConfirm={handleConfirmDeleteAll}>
+                      <LoadingBackdrop open={deletingCarts} />
+                    </ConfirmModal>
+
+                    <Link href="/products">
+                      <a className="d-block">
+                        <button className="w-100 p-2 btn-link text-left">
+                          <i className="fas fa-fw fa-chevron-left mr-1" />
+                          {t('cart:continue_order')}
+                        </button>
+                      </a>
+                    </Link>
+                  </div>
+                )}
               </div>
             </div>
-            <div className="col-12 col-md-3">
-              {cart && (
-                <div className="cart__info">
-                  <div hidden={cart?.carts?.length === 0} className="elevated row no-gutters mb-2">
-                    <div className="col-md-12 col-lg-4 cart__info-quantity">
-                      <div className="cart__info-item text-center">
-                        <div className="mb-2">
-                          <div>{t('cart:quantity')}</div>
-                        </div>
-                        <div className="cart__quantity text-secondary">
-                          <b>{cart?.totalQty}</b>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-md-12 col-lg-8 cart__info-total">
-                      <div className="cart__info-item text-center text-lg-right">
-                        <div className="mb-2">
-                          <div>{t('cart:total')}</div>
-                        </div>
-                        <div className="cart__total">
-                          <PriceText price={total} />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div hidden={total < MIN_PRICE} className="col-12 p-3 cart__info-total">
-                      {t('cart:shipping_fee') + ': '}
-                      <PriceText price={cart?.totalShippingFee} />
-                    </div>
-
-                    <div className="col-12">
-                      <div className="cart__info-item">
-                        <button
-                          disabled={checkoutDisabled}
-                          onClick={handleCheckoutClick}
-                          className="btn btn-secondary btn-block text-small">
-                          {t('cart:continue_payment')}
-                        </button>
-
-                        <div hidden={!checkoutDisabled} className="text-center mt-1">
-                          {t('cart:minimum_price') + ' '}
-                          <PriceText price={MIN_PRICE} />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <button
-                    hidden={cart?.carts?.length === 0}
-                    onClick={handleOpenDeleteAllModal}
-                    className="w-100 p-2 btn-link text-danger text-left">
-                    <i className="fas fa-fw fa-trash mr-1" />
-                    {t('cart:delete_all_button_label')}
-                  </button>
-
-                  <ConfirmModal
-                    open={deleteAllIsOpen}
-                    title={t('cart:remove_title')}
-                    question={t('cart:remove_all_confirm')}
-                    onClose={handleCloseDeleteAllModal}
-                    onConfirm={handleConfirmDeleteAll}>
-                    <LoadingBackdrop open={deletingCarts} />
-                  </ConfirmModal>
-
-                  <Link href="/products">
-                    <a className="d-block">
-                      <button className="w-100 p-2 btn-link text-left">
-                        <i className="fas fa-fw fa-chevron-left mr-1" />
-                        {t('cart:continue_order')}
-                      </button>
-                    </a>
-                  </Link>
+          ) : (
+            <div className="row">
+              <div className="col-12">
+                <div className="elevated text-muted p-3 mb-4">
+                  <i className="fas fa-exclamation-circle mr-1" />
+                  {t('cart:back_to_products')} <a href="/products">{t('cart:products')}</a>
                 </div>
-              )}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
 
