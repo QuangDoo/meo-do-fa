@@ -1,7 +1,7 @@
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import PriceText from 'src/components/Form/PriceText';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
@@ -21,6 +21,8 @@ export default function CartPage() {
   const { t } = useTranslation(['cart', 'common', 'errors']);
 
   const [deleteAllIsOpen, setDeleteAllIsOpen] = useState<boolean>(false);
+
+  const [checkboxCarts, setCheckboxCarts] = useState<string[]>([]);
 
   const router = useRouter();
 
@@ -61,6 +63,11 @@ export default function CartPage() {
       });
     }
   });
+  useEffect(() => {
+    if (checkboxCarts) return;
+
+    refetchCart();
+  }, [checkboxCarts]);
 
   const handleCheckoutClick = () => {
     if (cart?.carts.length === 0) return;
@@ -92,6 +99,14 @@ export default function CartPage() {
     });
   };
 
+  const addToCheckCart = (id: string) => {
+    setCheckboxCarts([...checkboxCarts, id]);
+  };
+
+  const deleteToCheckCart = (id: string) => {
+    setCheckboxCarts(checkboxCarts.slice().filter((cart) => cart != id));
+  };
+
   return (
     <>
       <div className="container py-5">
@@ -106,7 +121,11 @@ export default function CartPage() {
               <div className="col-12 col-md-9">
                 {cart?.carts.map((item) => (
                   <div key={item._id} className="elevated cart__items mb-3">
-                    <CartItem {...item} />
+                    <CartItem
+                      {...item}
+                      addToCheckCart={() => addToCheckCart(item._id)}
+                      deleteToCheckCart={() => deleteToCheckCart(item._id)}
+                    />
                   </div>
                 ))}
 

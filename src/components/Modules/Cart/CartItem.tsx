@@ -1,13 +1,19 @@
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import React, { useState } from 'react';
+import Checkbox from 'src/components/Form/Checkbox';
 import PriceText from 'src/components/Form/PriceText';
 import ProductCardQuantityInput from 'src/components/Modules/ProductCard/ProductCardQuantityInput';
 import { CartItem as CartItemProps } from 'src/graphql/cart/getCart';
 
 import ConfirmDeleteItemModal from './ConfirmDeleteItemModal';
 
-function CartItem(props: CartItemProps) {
+type Props = CartItemProps & {
+  addToCheckCart?: () => void;
+  deleteToCheckCart?: () => void;
+};
+
+function CartItem(props: Props) {
   const { t } = useTranslation(['cart', 'errors']);
 
   const totalDiscountAmount = props.promotions
@@ -26,8 +32,18 @@ function CartItem(props: CartItemProps) {
 
   const productLink = 'products/' + props.product.slug;
 
+  const handleChange = (e) => {
+    if (e.target.checked) {
+      props.addToCheckCart();
+    } else {
+      props.deleteToCheckCart();
+    }
+  };
+
   return (
     <div className="d-flex p-3">
+      {/* <Checkbox/> */}
+      {/* <input type="checkbox" onChange={handleChange} /> */}
       <Link href={productLink}>
         <a>
           <img
