@@ -35,6 +35,10 @@ const InputWithLabel = (props: Props, ref) => {
     disabled: props.disabled
   };
 
+  const handleTextBlur = (e) => {
+    e.target.value = e.target.value.trim();
+  };
+
   return (
     <FormGroup className={props.containerClass}>
       <FormGroupLabel required={props.required} className={props.labelClass}>
@@ -46,6 +50,7 @@ const InputWithLabel = (props: Props, ref) => {
           <input
             {...sharedInputProps}
             type={showPassword ? 'text' : 'password'}
+            onBlur={handleTextBlur}
             className="form-control"
           />
 
@@ -69,7 +74,12 @@ const InputWithLabel = (props: Props, ref) => {
           <div className="custom-file-label">{props.placeholder}</div>
         </div>
       ) : (
-        <input {...sharedInputProps} type={props.type} className="form-control no-spinner" />
+        <input
+          {...sharedInputProps}
+          type={props.type}
+          className="form-control no-spinner"
+          onBlur={handleTextBlur}
+        />
       )}
 
       {props.guide && <small className="text-muted">{props.guide}</small>}

@@ -1,5 +1,4 @@
 import { Box } from '@material-ui/core';
-import clsx from 'clsx';
 import { useTranslation } from 'i18n';
 import React, { Fragment, useState } from 'react';
 import { useFormContext } from 'react-hook-form';

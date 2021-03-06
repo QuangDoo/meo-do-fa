@@ -9588,8 +9588,8 @@ abbr[title] {
   color: $primary;
   text-transform: capitalize;
   font-weight: bold;
-  width: 110px;
-  overflow: hidden;
+  min-width: 7em;
+  max-width: 15em;
 }
 .header__user-avatar {
   border-radius: 50%;

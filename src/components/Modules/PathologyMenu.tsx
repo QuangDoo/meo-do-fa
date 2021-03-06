@@ -53,12 +53,12 @@ function PathologyMenu() {
     <>
       <li className="main-menu rockland-nav__item d-none d-sm-block">
         <div className="menu-title">
-          {/* <Link href="/pathological">
-                        <a className="rockland-nav__link"> */}
-          <i className="rockland-nav__icon fas fa-laptop-medical" />
-          <span className="rockland-nav__title">{t('navbar:pathological')}</span>
-          {/* </a>
-                    </Link> */}
+          <Link href="/pathological">
+            <a className="rockland-nav__link">
+              <i className="rockland-nav__icon fas fa-laptop-medical" />
+              <span className="rockland-nav__title">{t('navbar:pathological')}</span>
+            </a>
+          </Link>
         </div>
         {pathologies && (
           <ul className="container-menu pathology-menu">
