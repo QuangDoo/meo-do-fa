@@ -5,6 +5,9 @@ export type ModalBaseProps = {
   open: boolean;
   onClose: () => void;
   children: React.ReactNode;
+  disableBackdropClick?: boolean;
+  disableEscapeKeyDown?: boolean;
+  onBackdropClick?: () => void;
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -26,7 +29,10 @@ const ModalBase = (props: ModalBaseProps) => {
       scroll="body"
       maxWidth="xs"
       fullWidth
-      classes={{ paper: classes.root }}>
+      classes={{ paper: classes.root }}
+      disableBackdropClick={props.disableBackdropClick}
+      onBackdropClick={props.onBackdropClick}
+      disableEscapeKeyDown={props.disableEscapeKeyDown}>
       {children}
     </Dialog>
   );
