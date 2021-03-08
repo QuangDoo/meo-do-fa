@@ -13,7 +13,7 @@ import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import CartItem from './CartItem';
 import ConfirmModal from './ConfirmModal';
 
-const MIN_PRICE = 1000000;
+const MIN_PRICE = 1500000;
 
 export default function CartPage() {
   const { data: cart, refetch: refetchCart } = useCart();

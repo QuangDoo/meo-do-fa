@@ -56,7 +56,7 @@ MyOrders.getInitialProps = async (ctx) => {
   };
 };
 
-function MyOrders() {
+function MyOrders(): JSX.Element {
   const { t } = useTranslation(['myOrders', 'errors']);
 
   const router = useRouter();
@@ -145,19 +145,6 @@ function MyOrders() {
             ))
           )}
         </Grid>
-
-        {/* <Pagination
-          page={+router.query.page}
-          onChange={(page) => {
-            router.push({
-              pathname: router.pathname,
-              query: {
-                ...router.query,
-                page: page
-              }
-            });
-          }}
-        /> */}
       </ProfileLayout>
     </MainLayout>
   );
