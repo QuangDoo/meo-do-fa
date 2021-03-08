@@ -22,10 +22,10 @@ stages:
 .pre-deploy-dev:
   before_script:
     - apk update  && apk add --no-cache curl git
-    # - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
-    # - chmod +x ./kubectl && mv ./kubectl /usr/local/bin/kubectl
-    # - mkdir -p $HOME/.kube
-    # - cp $KUBE_CONFIG_DEV $HOME/.kube/config
+    - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+    - chmod +x ./kubectl && mv ./kubectl /usr/local/bin/kubectl
+    - mkdir -p $HOME/.kube
+    - cp $KUBE_CONFIG_DEV $HOME/.kube/config
     - git clone https://${DOCKER_USER}:${DOCKER_PASSWORD}@gitlab.com/bebuy.vn/clients/thuocn/deployments.git
 
 .pre-deploy-master:
@@ -125,7 +125,7 @@ deploy-frontend-dev:
   interruptible: true
 
   tags:
-    - medofa-dev
+    - bebuy-gitlab-ci
   
   extends:
     - .pre-deploy-dev

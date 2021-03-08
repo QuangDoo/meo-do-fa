@@ -60,12 +60,10 @@ export default function PromoCodeItem(props: Props) {
         )}
       </div>
       <div className="col-8 d-flex flex-column justify-content-between text-center">
-        <Tooltip title={props.couponName} placement="top">
-          <div className="mb-2">
-            <div className="coupon__amount text-max-2">{props.couponName}</div>
-            <span>{props.couponDescription}</span>
-          </div>
-        </Tooltip>
+        <div className="mb-2">
+          <div className="coupon__amount text-max-2">{props.couponName}</div>
+          <span>{props.couponDescription}</span>
+        </div>
         {props.couponCode !== 'false' && (
           <Tooltip title="Click to copy" placement="top-end">
             <span className="coupon__code mb-2" onClick={handleCopy}>

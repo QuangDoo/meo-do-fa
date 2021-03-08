@@ -56,7 +56,7 @@ function MyAddresses() {
     }
   });
 
-  const addressBook = addressInfoUserData?.getAddressInfoUser?.deliveries || [];
+  const addressBook = addressInfoUserData?.getAddressInfoUser.deliveries || [];
 
   const onCreateCompleted = () => {
     setOpenCreate(false);
@@ -95,7 +95,7 @@ function MyAddresses() {
           {addressBook.map((address) => (
             <AddressItem
               address={address}
-              key={address?.id}
+              key={address.id}
               refetchAddressInfoUser={refetchAddressInfoUser}
             />
           ))}
