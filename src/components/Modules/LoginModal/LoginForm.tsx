@@ -39,6 +39,7 @@ const LoginForm = () => {
       if (router.pathname === '/products' || router.pathname === '/products/[productId]') {
         router.reload();
       } else {
+        //router.push("/products");
         router.push('/');
       }
     },
