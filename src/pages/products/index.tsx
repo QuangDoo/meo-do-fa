@@ -23,9 +23,11 @@ import {
   GetPathologyVars
 } from 'src/graphql/pathology/getPathology';
 import {
+  GET_P,
   GET_PRODUCTS,
   GetProductsData,
   GetProductsVars,
+  GetProductVars,
   ProductTag
 } from 'src/graphql/product/getProducts';
 import asyncQuery from 'src/utils/asyncQuery';
@@ -118,6 +120,9 @@ function Products() {
       toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
     }
   });
+
+  const { data } = useQuery<GetProductVars>(GET_P, { variables: { page, pageSize: PAGE_SIZE } });
+  console.log({ data });
 
   const products = productsData?.getProductByConditions?.Products || [];
 
