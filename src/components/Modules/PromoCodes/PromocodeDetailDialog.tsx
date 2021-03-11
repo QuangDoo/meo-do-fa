@@ -71,9 +71,7 @@ function PromocodeDetailDialog(props: Props) {
     variables: { id: props.id }
   });
 
-  const promoDetail = dataPromoDetail;
-
-  console.log('dataPromoDetail', dataPromoDetail);
+  const promoDetail = dataPromoDetail?.getCouponProgramsDetail;
 
   return (
     <Dialog onClose={props.onClose} aria-labelledby="customized-dialog-title" open={props.open}>
@@ -82,18 +80,20 @@ function PromocodeDetailDialog(props: Props) {
         {props.title}
       </DialogTitle>
       <DialogContent dividers className="d-flex flex-column justify-content-between">
-        <Typography gutterBottom>{t('promoCodes:code')}: MEDOFA</Typography>
-        <Typography gutterBottom>{t('promoCodes:exp_date')}: 03-03-1999</Typography>
+        <Typography gutterBottom>
+          {t('promoCodes:code')}:<b> {promoDetail?.promo_code}</b>
+        </Typography>
+        <Typography gutterBottom>
+          {t('promoCodes:exp_date')}:<b> </b>
+        </Typography>
         <hr />
         <Typography gutterBottom>
           {t('promoCodes:conditions')}:
           <div className="p-3">
             <ul>
               <li>
-                Giảm 100% cho tất cả các đơn hàng. Chỉ cần giới thiệu khách hàng mới thì sẽ có lợi
-                nhuận. không cần làm gì cũng có tiền.
+                <b>{promoDetail?.name}</b>
               </li>
-              <li>Cho luôn</li>
             </ul>
           </div>
         </Typography>

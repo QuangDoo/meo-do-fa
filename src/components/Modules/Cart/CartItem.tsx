@@ -11,6 +11,7 @@ import ConfirmDeleteItemModal from './ConfirmDeleteItemModal';
 type Props = CartItemProps & {
   addToCheckCart?: () => void;
   deleteToCheckCart?: () => void;
+  checked?: boolean;
 };
 
 function CartItem(props: Props) {
@@ -43,7 +44,9 @@ function CartItem(props: Props) {
   return (
     <div className="d-flex p-3">
       {/* <Checkbox/> */}
-      {/* <input type="checkbox" onChange={handleChange} /> */}
+      <div className="mr-3">
+        <input type="checkbox" onChange={handleChange} checked={props.checked} />
+      </div>
       <Link href={productLink}>
         <a>
           <img

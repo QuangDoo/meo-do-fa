@@ -180,7 +180,7 @@ export default function DeliveryAddressForm(props: Props) {
         type="text"
         required
         defaultValue={props.defaultValues?.street || ''}
-        placeholder="Nhập số nhà và tên đường"
+        placeholder={t('checkout:street')}
       />
 
       <div className="row">

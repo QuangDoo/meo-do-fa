@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-export type CouponData = {
+export type Coupon = {
   id: number;
   name: string;
   active: boolean;
@@ -14,6 +14,10 @@ export type CouponData = {
   discount_fixed_amount: number;
   reward_id: string[];
   rule_date_from: string;
+};
+
+export type CouponData = {
+  getCouponProgramsDetail: Coupon;
 };
 
 export type CouponVar = {

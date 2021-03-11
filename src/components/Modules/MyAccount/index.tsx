@@ -50,8 +50,6 @@ export default function MyAccountPage() {
 
   const { data: user, refetch: refetchUser } = useUser();
 
-  console.log('user', user);
-
   const { register, handleSubmit, watch, setValue } = useForm<Inputs>();
 
   const businessLicense: string = watch('businessLicense', user?.business_license);

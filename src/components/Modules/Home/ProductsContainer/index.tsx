@@ -8,7 +8,7 @@ type ProductsContainerProps = {
   deals?: boolean;
   className?: string;
   seeMoreUrl?: string;
-  title: string;
+  title?: string;
   children: ReactNode;
   iconClass?: string;
 };
