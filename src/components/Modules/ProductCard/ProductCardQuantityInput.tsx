@@ -18,7 +18,7 @@ type Props = {
 };
 
 const MIN_QUANTITY = 0;
-const MAX_QUANTITY = 100000;
+const MAX_QUANTITY = 999999;
 
 function ProductCardQuantityInput(props: Props) {
   const { productId, productPrice, productName, productImg } = props;
