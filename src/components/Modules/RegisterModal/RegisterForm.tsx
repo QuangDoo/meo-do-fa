@@ -157,6 +157,7 @@ const RegisterForm = () => {
             iconClass="icomoon icon-user"
             placeholder={t('register:input_name_placeholder')}
             required
+            maxLength={100}
           />
 
           <Input

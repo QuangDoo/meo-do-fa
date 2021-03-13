@@ -251,6 +251,7 @@ export default function MyAccountPage() {
             type="text"
             placeholder={t('myAccount:name_placeholder')}
             defaultValue={user?.name}
+            maxLength={100}
           />
 
           {/* Phone number */}
