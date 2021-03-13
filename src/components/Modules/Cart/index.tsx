@@ -13,7 +13,7 @@ import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import CartItem from './CartItem';
 import ConfirmModal from './ConfirmModal';
 
-const MIN_PRICE = 1500000;
+const MIN_PRICE = 1000000;
 
 export default function CartPage() {
   const { data: cart, refetch: refetchCart } = useCart();
@@ -77,6 +77,8 @@ export default function CartPage() {
   const total = cart?.totalNetPrice - cart?.totalShippingFee;
 
   const checkoutDisabled = total < MIN_PRICE;
+
+  const enableShippingFee = total > MIN_PRICE && total < 1500000;
 
   const handleOpenDeleteAllModal = () => setDeleteAllIsOpen(true);
 
