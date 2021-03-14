@@ -96,11 +96,6 @@ export type GetProductsVars = {
   condition: Condition;
 };
 
-export type GetProductVars = {
-  page: number;
-  pageSize: number;
-};
-
 export const GET_PRODUCTS = gql`
   query getProducts($page: Int!, $pageSize: Int!, $type: String, $condition: Condition) {
     getProductByConditions(page: $page, pageSize: $pageSize, type: $type, condition: $condition) {
@@ -108,15 +103,6 @@ export const GET_PRODUCTS = gql`
         ${productCardQueryProps}
       }
       total
-    }
-  }
-`;
-
-export const GET_P = gql`
-  query getProducts($page: Int!, $pageSize: Int!) {
-    getProducts(page: $page, pageSize: $pageSize) {
-      id
-      name
     }
   }
 `;

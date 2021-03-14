@@ -23,8 +23,10 @@ export default function CategoryFilter() {
 
   const [filterValue, setFilterValue] = useState<string>('');
 
+  // ALL CATEGORIES
   const [original, setOriginal] = useState<Category[]>([]);
 
+  // GET ALL CATEGORIES
   useQuery<GetCategoriesLevelData, undefined>(GET_CATEGORIES_LEVEL, {
     onError: (error) => {
       toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
@@ -32,6 +34,7 @@ export default function CategoryFilter() {
     onCompleted: (data) => {
       const original = [];
 
+      // SORT CHILDREN CATEGORIES ALPHABETICALLY IN EACH PARENT CATEGORY
       data.getCategoriesLevel.forEach((parent) => {
         original.push({
           id: parent.id,
@@ -41,10 +44,12 @@ export default function CategoryFilter() {
         });
       });
 
+      // SORT PARENT CATEGORIES ALPHABETICALLY AND SET TO ORIGINAL ARRAY
       setOriginal(original.sort((a, b) => a.name.localeCompare(b.name)));
     }
   });
 
+  // DEBOUNCE CHANGE FILTER VALUE
   useDebouncedEffect(
     () => {
       setFilterValue(removeAccents(inputValue));
@@ -53,16 +58,37 @@ export default function CategoryFilter() {
     [inputValue]
   );
 
+  // HREF FOR "ALL" LINK
   const getAllHref = () => {
     const newQuery = { ...router.query };
 
     delete newQuery.category;
+    delete newQuery.page;
 
     return {
       pathname: router.pathname,
       query: newQuery
     };
   };
+
+  // HREF FOR EACH CATEGORY LINK
+  const getCategoryHref = (id) => {
+    const newQuery = { ...router.query };
+
+    delete newQuery.page;
+
+    newQuery.category = id;
+
+    return {
+      pathname: router.pathname,
+      query: newQuery
+    };
+  };
+
+  // HIDE THIS COMPONENT IF THERE ARE NO CATEGORIES
+  if (!original.length) {
+    return null;
+  }
 
   return (
     <Dropdown label={t('productsSidebar:category')}>
@@ -125,14 +151,7 @@ export default function CategoryFilter() {
               }>
               <div className="pl-3 mb-3">
                 <div className="mb-1">
-                  <Link
-                    href={{
-                      pathname: router.pathname,
-                      query: {
-                        ...router.query,
-                        category: parent.id
-                      }
-                    }}>
+                  <Link href={getCategoryHref(parent.id)}>
                     <a
                       className={clsx(
                         'products__filter-category',
@@ -148,14 +167,7 @@ export default function CategoryFilter() {
                     hidden={!parentNameMatchesInput && !childrenNamesMatchInput.includes(name)}
                     key={id}
                     className="mb-1">
-                    <Link
-                      href={{
-                        pathname: router.pathname,
-                        query: {
-                          ...router.query,
-                          category: id
-                        }
-                      }}>
+                    <Link href={getCategoryHref(id)}>
                       <a
                         className={clsx(
                           'products__filter-category',
