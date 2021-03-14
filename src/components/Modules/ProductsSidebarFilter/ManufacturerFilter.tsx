@@ -17,24 +17,34 @@ import { useDebouncedEffect } from 'src/hooks/useDebouncedEffect';
 export default function ManufacturerFilter() {
   const { t } = useTranslation(['productsSidebar', 'searchBar']);
 
+  // INPUT VALUE
   const [inputValue, setInputValue] = useState<string>('');
 
+  // VALUE USED TO SEARCH
   const [searchValue, setSearchValue] = useState<string>('');
 
   const router = useRouter();
 
+  // SEARCH MANUFACTURERS
   const { data: searchManufacturersData, loading: searchingManufacturers } = useQuery<
     GetManufacturersData,
     GetManufacturersVars
   >(SEARCH_MANUFACTURERS, {
-    variables: { page: 1, pageSize: 20, name: searchValue },
+    variables: { page: 1, pageSize: 20, name: searchValue }, // TRIGGERED ON SEARCH VALUE CHANGE
     notifyOnNetworkStatusChange: true,
     onError: (err) => {
       toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
     }
   });
 
-  // Debounce search manufacturers
+  // SEARCH MANUFACTURERS DATA
+  const manufacturers = searchManufacturersData?.searchManufactory;
+
+  // DEBOUNCE SEARCH MANUFACTURERS
+  // DEBOUNCE TIME: 400ms
+  // BASED ON INPUT VALUE CHANGE
+  // WILL SET SEARCH VALUE TO INPUT VALUE
+  //   THEN THE NEW SEARCH VALUE WILL TRIGGER SEARCH MANUFACTURERS
   useDebouncedEffect(
     () => {
       setSearchValue(inputValue);
@@ -43,12 +53,26 @@ export default function ManufacturerFilter() {
     [inputValue]
   );
 
-  const manufacturers = searchManufacturersData?.searchManufactory;
-
+  // HREF FOR "ALL" LINK
   const getAllHref = () => {
     const newQuery = { ...router.query };
 
     delete newQuery.manufacturer;
+    delete newQuery.page;
+
+    return {
+      pathname: router.pathname,
+      query: newQuery
+    };
+  };
+
+  // HREF FOR EACH MANUFACTURER LINK
+  const getHref = (id) => {
+    const newQuery = { ...router.query };
+
+    delete newQuery.page;
+
+    newQuery.manufacturer = id;
 
     return {
       pathname: router.pathname,
@@ -84,14 +108,7 @@ export default function ManufacturerFilter() {
       {!searchingManufacturers &&
         manufacturers?.map(({ name, short_name, id }) => (
           <div key={id} className="mb-2">
-            <Link
-              href={{
-                pathname: router.pathname,
-                query: {
-                  ...router.query,
-                  manufacturer: id
-                }
-              }}>
+            <Link href={getHref(id)}>
               <a
                 title={name}
                 className={clsx(
