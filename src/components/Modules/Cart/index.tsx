@@ -101,6 +101,8 @@ export default function CartPage() {
 
   const checkoutDisabled = total < MIN_PRICE;
 
+  const enableShippingFee = total > MIN_PRICE && total < 1500000;
+
   const handleOpenDeleteAllModal = () => setDeleteAllIsOpen(true);
 
   const handleCloseDeleteAllModal = () => setDeleteAllIsOpen(false);
