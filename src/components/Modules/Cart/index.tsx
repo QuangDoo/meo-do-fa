@@ -7,8 +7,13 @@ import PriceText from 'src/components/Form/PriceText';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { useCart } from 'src/contexts/Cart';
 import { DELETE_CARTS, DeleteCartData, DeleteCartsVars } from 'src/graphql/cart/deleteCarts';
+import {
+  GET_CART_BY_PRODUCT,
+  GetCartByProductData,
+  getCartByproductVars
+} from 'src/graphql/cart/getCartByProduct';
 import { CREATE_COUNSEL } from 'src/graphql/order/order.mutation';
-import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
+import { useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
 
 import CartItem from './CartItem';
 import ConfirmModal from './ConfirmModal';
@@ -22,9 +27,18 @@ export default function CartPage() {
 
   const [deleteAllIsOpen, setDeleteAllIsOpen] = useState<boolean>(false);
 
-  const [checkboxCarts, setCheckboxCarts] = useState([]);
+  const [checkboxCarts, setCheckboxCarts] = useState<string[]>([]);
 
   const router = useRouter();
+
+  const { data: dataGetCartByProduct, loading: gettingCartByProducts } = useQueryAuth<
+    GetCartByProductData,
+    getCartByproductVars
+  >(GET_CART_BY_PRODUCT, {
+    variables: { ids: checkboxCarts }
+  });
+
+  const cartsCheckBox = dataGetCartByProduct?.getCartByProduct;
 
   const [createCounsel, { loading: creatingCounsel }] = useMutationAuth(CREATE_COUNSEL, {
     onCompleted: () => {
@@ -47,6 +61,8 @@ export default function CartPage() {
       }
     }
   });
+
+  console.log('cartsCheckBox', cartsCheckBox);
   useEffect(() => {
     if (checkboxCarts) return;
 
@@ -81,7 +97,7 @@ export default function CartPage() {
     });
   };
 
-  const total = cart?.totalNetPrice - cart?.totalShippingFee;
+  const total = cartsCheckBox?.totalNetPrice - cartsCheckBox?.totalShippingFee;
 
   const checkoutDisabled = total < MIN_PRICE;
 
@@ -162,7 +178,7 @@ export default function CartPage() {
                           <div>{t('cart:quantity')}</div>
                         </div>
                         <div className="cart__quantity text-secondary">
-                          <b>{cart?.totalQty}</b>
+                          <b>{cartsCheckBox?.totalQty}</b>
                         </div>
                       </div>
                     </div>
@@ -179,7 +195,7 @@ export default function CartPage() {
 
                     <div hidden={total < MIN_PRICE} className="col-12 p-3 cart__info-total">
                       {t('cart:shipping_fee') + ': '}
-                      <PriceText price={cart?.totalShippingFee} />
+                      <PriceText price={cartsCheckBox?.totalShippingFee} />
                     </div>
 
                     <div className="col-12">
@@ -200,7 +216,7 @@ export default function CartPage() {
                   </div>
 
                   <button
-                    hidden={cart?.carts?.length === 0}
+                    hidden={cartsCheckBox?.carts?.length === 0}
                     onClick={handleOpenDeleteAllModal}
                     className="w-100 p-2 btn-link text-danger text-left">
                     <i className="fas fa-fw fa-trash mr-1" />

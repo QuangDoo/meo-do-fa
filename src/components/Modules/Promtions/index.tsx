@@ -1,8 +1,15 @@
+import { useQuery } from '@apollo/client';
 import { useTranslation } from 'i18n';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
+import {
+  bannerInputVars,
+  BannerType,
+  GET_BANNER,
+  WebBannerData
+} from 'src/graphql/banner/getBannerWebSite';
 
 import Pagination from '../Pagination';
 
@@ -15,17 +22,25 @@ const Promotions = (): JSX.Element => {
     '/assets/images/banner_1.jpg',
     '/assets/images/banner_mobile_2.jpg'
   ];
+  const { data: dataBaner, loading: getingBanner } = useQuery<WebBannerData, bannerInputVars>(
+    GET_BANNER,
+    {
+      variables: { type: BannerType.PROMOTION }
+    }
+  );
+
+  const Promotivebanner = dataBaner.getWebsiteBanner;
 
   const router = useRouter();
 
-  const { t } = useTranslation('promotion');
+  const { t } = useTranslation('promotions');
   return (
     <div className="container py-5">
       <div className="col-12 mb-3">
-        <h1>{t('promotion:promotions')}</h1>
+        <h1>{t('promotions:promotions')}</h1>
 
         {bannerImages.map((img) => (
-          <div className="banner__slide mt-3" key={img}>
+          <div className="banner__slide__promotion" key={img}>
             <div className="banner__img">
               <Link href={`promotions/1`}>
                 <a>
