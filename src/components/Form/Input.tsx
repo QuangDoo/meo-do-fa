@@ -19,11 +19,17 @@ const Input = (props: Props, ref) => {
     setShowPassword(!showPassword);
   }
 
+  function handleTextBlur(e) {
+    e.target.value = e.target.value.trim();
+
+    props.onBlur?.(e);
+  }
+
   return (
     <div className={clsx('input-group form__input-group', iconClass && 'has-icon', containerClass)}>
       {iconClass && <i className={clsx('form__input-icon', iconClass)} />}
 
-      {type === 'file' && (
+      {type === 'file' ? (
         <div className="input-file">
           <input
             {...inputProps}
@@ -37,9 +43,7 @@ const Input = (props: Props, ref) => {
             <span>{placeholder}</span>
           </div>
         </div>
-      )}
-
-      {type !== 'file' && (
+      ) : (
         <input
           {...inputProps}
           ref={ref}
@@ -49,8 +53,8 @@ const Input = (props: Props, ref) => {
             type === 'password' && 'has-show-password',
             inputClass
           )}
-          // type={type === 'password' ? (showPassword ? 'text' : 'password') : type}
           type={showPassword ? 'text' : type}
+          onBlur={handleTextBlur}
         />
       )}
 

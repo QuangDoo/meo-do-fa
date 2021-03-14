@@ -99,11 +99,11 @@ function QuickOrderPage() {
                         <div>{t('cart:total')}</div>
                       </div>
                       <div className="cart__total">
-                        <PriceText price={cart?.totalPrice} />
+                        <PriceText price={cart?.totalNetPrice} />
                       </div>
                     </div>
                   </div>
-                  {cart?.totalPrice > 0 && (
+                  {cart?.totalNetPrice > 0 && (
                     <div className="col-12">
                       <div className="cart__info-item">
                         <Link href="/cart">

@@ -72,7 +72,7 @@ export default function CategoryFilter() {
 
   return (
     <Dropdown label={t('productsSidebar:category')}>
-      <div className="input-group form__input-group mb-3">
+      <div className="input-group form__input-group has-icon mb-3">
         <i className="fas fa-search form__input-icon" />
 
         <input

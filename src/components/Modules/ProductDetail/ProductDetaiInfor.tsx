@@ -11,12 +11,14 @@ import { useToken } from 'src/contexts/Token';
 import { ADD_TO_CART, AddToCartData, AddToCartVars } from 'src/graphql/cart/addToCart';
 import { ProductDetails } from 'src/graphql/product/product.query';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
+import useDebounce from 'src/hooks/useDebounce';
 
 import ConfirmDeleteItemModal from '../Cart/ConfirmDeleteItemModal';
 import LoginModal from '../LoginModal';
 import ProductBadges from '../ProductCard/ProductBadges';
 
 const MAX_QUANTITY = 100000;
+const MIN_QUANTITY = 0;
 
 const ProductDetailInfor = (props: ProductDetails) => {
   const token = useToken();
@@ -28,11 +30,15 @@ const ProductDetailInfor = (props: ProductDetails) => {
   const [open, setOpen] = useState<boolean>(false);
 
   const handleMinusClick = () => {
-    setQuantity((quantity) => quantity - 1);
+    const newQuantity = Math.min(quantity - 1, MIN_QUANTITY);
+    setQuantity(newQuantity);
+    debouncedHandleUpdate(quantityInCart, newQuantity, props.list_price, props.id, props.name);
   };
 
   const handlePlusClick = () => {
-    setQuantity((quantity) => quantity + 1);
+    const newQuantity = Math.min(quantity + 1, MAX_QUANTITY);
+    setQuantity(newQuantity);
+    debouncedHandleUpdate(quantityInCart, newQuantity, props.list_price, props.id, props.name);
   };
 
   const handleCloseModal = () => setOpen(false);
@@ -107,6 +113,39 @@ const ProductDetailInfor = (props: ProductDetails) => {
         quantity: quantity
       }
     });
+  };
+
+  const handleUpdate = (
+    prevQuantity: number,
+    newQuantity: number,
+    price: number = props.list_price,
+    id: number = props.id,
+    name: string = props.name
+  ) => {
+    if (newQuantity === prevQuantity) {
+      return;
+    }
+
+    if (!newQuantity || newQuantity === 0) {
+      setOpen(true);
+      return;
+    }
+
+    addToCart({
+      variables: {
+        price: price,
+        productId: id,
+        productName: name,
+        quantity: newQuantity || 0
+      }
+    });
+  };
+
+  const debouncedHandleUpdate = useDebounce(handleUpdate, 450);
+
+  // Update quantity on blur
+  const handleBlur = () => {
+    handleUpdate(quantityInCart, quantity);
   };
 
   const hasBadge =
@@ -187,6 +226,7 @@ const ProductDetailInfor = (props: ProductDetails) => {
                 max={MAX_QUANTITY}
                 onPlusClick={handlePlusClick}
                 onMinusClick={handleMinusClick}
+                onBlur={handleBlur}
               />
 
               <ConfirmDeleteItemModal

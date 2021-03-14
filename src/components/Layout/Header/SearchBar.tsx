@@ -1,6 +1,7 @@
 import { useLazyQuery } from '@apollo/client';
 import { CircularProgress } from '@material-ui/core';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import slugify from '@sindresorhus/slugify';
 import clsx from 'clsx';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
@@ -128,13 +129,13 @@ const SearchBar = () => {
   const items = {
     products: productsData?.searchProduct,
     manufacturers: manufacturersData?.searchManufactory,
-    ingredients: ingredientsData?.searchIngredient
+    ingredients: ingredientsData?.searchIngredients
   };
 
   const getItemHref = {
     products: (product) => `/products/${product.slug}`,
     manufacturers: (manufacturer) => `/products?manufacturer=${manufacturer.id}`,
-    ingredients: (ingredient) => `/ingredients/${ingredient.slug}`
+    ingredients: (ingredient) => `/ingredients/${ingredient.id}/${slugify(ingredient.name)}`
   };
 
   const allHref = {
@@ -160,11 +161,7 @@ const SearchBar = () => {
               />
 
               <Select value={type} onChange={handleSearchTypeChange} className="search-type-select">
-                {[
-                  'products',
-                  'manufacturers'
-                  // 'ingredients'
-                ].map((type) => (
+                {['products', 'manufacturers', 'ingredients'].map((type) => (
                   <option key={type} value={type}>
                     {t(`searchBar:search_by_${type}`)}
                   </option>

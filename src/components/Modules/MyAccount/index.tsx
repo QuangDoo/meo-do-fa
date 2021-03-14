@@ -50,6 +50,8 @@ export default function MyAccountPage() {
 
   const { data: user, refetch: refetchUser } = useUser();
 
+  console.log('user', user);
+
   const { register, handleSubmit, watch, setValue } = useForm<Inputs>();
 
   const businessLicense: string = watch('businessLicense', user?.business_license);
@@ -178,7 +180,7 @@ export default function MyAccountPage() {
 
     // if (data.businessLicense.length) {
     //   try {
-    //     rawBase64 = await toBase64(data.businessLicense[0]);
+    //     rawBase64 = await toBase64(data.businessLicense[0] as string);
     //   } catch (err) {
     //     console.log('Error converting file to base64:', err);
     //   }
@@ -249,6 +251,7 @@ export default function MyAccountPage() {
             type="text"
             placeholder={t('myAccount:name_placeholder')}
             defaultValue={user?.name}
+            maxLength={100}
           />
 
           {/* Phone number */}

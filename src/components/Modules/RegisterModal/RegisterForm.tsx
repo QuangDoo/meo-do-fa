@@ -147,6 +147,7 @@ const RegisterForm = () => {
               {t('register:edit')}
             </button>
           </div>
+
           <Input
             name="name"
             ref={register({
@@ -156,6 +157,7 @@ const RegisterForm = () => {
             iconClass="icomoon icon-user"
             placeholder={t('register:input_name_placeholder')}
             required
+            maxLength={100}
           />
 
           <Input

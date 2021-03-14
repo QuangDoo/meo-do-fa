@@ -54,10 +54,29 @@ class MyDocument extends Document {
           />
 
           <style type="text/css">{globalStyles}</style>
+
+          <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js"></script>
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+              document.addEventListener("DOMContentLoaded", function(event) {
+                setTimeout(function() {
+                  window.OneSignal = window.OneSignal || [];
+                  OneSignal.push(function() {
+                    OneSignal.init({
+                      appId: "5c70e54f-8d3d-4a11-aec4-a824005d5657",
+                    });
+                  });
+              }, 10000);
+            });
+          `
+            }}
+          />
         </Head>
         <body>
           <Main />
           <NextScript />
+
           <script
             dangerouslySetInnerHTML={{
               __html: `
