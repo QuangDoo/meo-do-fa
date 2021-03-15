@@ -23,7 +23,7 @@ select:-webkit-autofill:active {
   line-height: 20px !important;
 }
 .form-control:focus {
-  border-color: #ced4d9;
+  border-color: transparent !important;
 }
 .custom-select {
   -webkit-appearance: none;
@@ -254,7 +254,8 @@ fieldset {
   appearance: none;
 }
 .custom-select:focus {
-  border-color: #ced4d9;
+  //border-color: #ced4d9;
+  border-color: $primary;
   outline: 0;
 }
 .custom-select:focus::-ms-value {
@@ -527,6 +528,7 @@ fieldset {
 .form-control:focus {
   color: $gray-700;
   background-color: $white;
+  border-color: $primary;
   outline: 0;
 }
 .form-control::placeholder {
