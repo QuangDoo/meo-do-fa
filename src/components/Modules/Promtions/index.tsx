@@ -29,7 +29,7 @@ const Promotions = (): JSX.Element => {
     }
   );
 
-  const Promotivebanner = dataBaner.getWebsiteBanner;
+  const Promotivebanner = dataBaner?.getWebsiteBanner;
 
   const router = useRouter();
 

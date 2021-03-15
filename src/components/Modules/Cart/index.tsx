@@ -62,7 +62,6 @@ export default function CartPage() {
     }
   });
 
-  console.log('cartsCheckBox', cartsCheckBox);
   useEffect(() => {
     if (checkboxCarts) return;
 
@@ -79,9 +78,13 @@ export default function CartPage() {
     onCompleted: () => {
       setDeleteAllIsOpen(false);
 
-      refetchCart().then(() => {
-        toast.success(t(`cart:delete_all_success`));
-      });
+      refetchCart()
+        .then(() => {
+          toast.success(t(`cart:delete_all_success`));
+        })
+        .then(() => {
+          setCheckboxCarts([]);
+        });
     }
   });
 
