@@ -15,7 +15,7 @@ export type WebBannerData = {
     name: string;
     link: string;
     image: string;
-  };
+  }[];
 };
 
 export const GET_BANNER = gql`

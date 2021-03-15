@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client';
-import { useTranslation } from 'i18n';
+import { Trans, useTranslation } from 'i18n';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -29,7 +29,9 @@ const Promotions = (): JSX.Element => {
     }
   );
 
-  const Promotivebanner = dataBaner?.getWebsiteBanner;
+  const promotivebanner = dataBaner?.getWebsiteBanner;
+
+  console.log(`promotivebanner`, promotivebanner);
 
   const router = useRouter();
 
@@ -38,20 +40,33 @@ const Promotions = (): JSX.Element => {
     <div className="container py-5">
       <div className="col-12 mb-3">
         <h1>{t('promotions:promotions')}</h1>
-
-        {bannerImages.map((img) => (
-          <div className="banner__slide__promotion" key={img}>
-            <div className="banner__img">
-              <Link href={`promotions/1`}>
-                <a>
-                  <Image src={img} layout="fill" objectFit="cover" />
-                </a>
-              </Link>
+        <div hidden={promotivebanner?.length === 0}>
+          {promotivebanner?.map(({ image, id }) => (
+            <div className="banner__slide__promotion" key={id}>
+              <div className="banner__img">
+                <Link href={`promotions/1`}>
+                  <a>
+                    <Image src={image} layout="fill" objectFit="cover" />
+                  </a>
+                </Link>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
+        <div hidden={promotivebanner?.length !== 0}>
+          <Trans
+            i18nKey="promotions:no_promotion"
+            components={{
+              a: (
+                <a href="/" target="_blank">
+                  {''}
+                </a>
+              )
+            }}
+          />
+        </div>
       </div>
-      <Pagination
+      {/* <Pagination
         count={100 / 1}
         page={page}
         siblingCount={4}
@@ -64,7 +79,7 @@ const Promotions = (): JSX.Element => {
             }
           });
         }}
-      />
+      /> */}
     </div>
   );
 };

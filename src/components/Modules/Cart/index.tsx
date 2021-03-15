@@ -35,7 +35,8 @@ export default function CartPage() {
     GetCartByProductData,
     getCartByproductVars
   >(GET_CART_BY_PRODUCT, {
-    variables: { ids: checkboxCarts }
+    variables: { ids: checkboxCarts },
+    nextFetchPolicy: 'network-only'
   });
 
   const cartsCheckBox = dataGetCartByProduct?.getCartByProduct;
@@ -142,15 +143,15 @@ export default function CartPage() {
           <div className="row">
             <div className="col-12 mb-3">
               <h1 className="h3">{t('cart:cart')}</h1>
-              <div className="d-flex align-items-center" hidden={total < MIN_PRICE}>
+              <div className="d-flex align-items-center" hidden={cart.totalQty === 0}>
                 <input
                   type="checkbox"
                   onChange={handleSelectAll}
-                  checked={checkboxCarts?.length === cart?.carts?.length}
+                  checked={cart?.carts?.length > 0 && checkboxCarts?.length === cart?.carts?.length}
                 />
                 <h1 className="h5 ml-2">
                   {t('cart:select_all')}
-                  {checkboxCarts?.length === cart?.carts?.length && `(${cart.totalQty})`}
+                  {checkboxCarts?.length === cart?.carts?.length && ` (${cart.totalQty})`}
                 </h1>
               </div>
             </div>
