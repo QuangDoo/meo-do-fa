@@ -48,6 +48,9 @@ function ManufacturerDetail() {
     }
   );
   const manufacturerName = detailsData?.getManufactory?.name;
+  const manufacturerDescription = detailsData?.getManufactory?.description
+    ? detailsData?.getManufactory?.description
+    : t('manufacturerDetails:updating');
 
   const { data: productsData, loading: productsLoading } = useQuery<
     GetProductsData,
@@ -84,7 +87,8 @@ function ManufacturerDetail() {
         <div className="row pl-3">
           <div className="col-12 mb-3">
             <h1 className="h3 mb-3">{t('manufacturerDetails:manu_info')}</h1>
-            <p className="h5 ml-3 mb-3">{t('manufacturerDetails:updating')}</p>
+
+            <p className="h5 ml-3 mb-3">{manufacturerDescription}</p>
           </div>
           {productsByManufacturer?.total !== 0 && (
             <div className="row no-gutters">
