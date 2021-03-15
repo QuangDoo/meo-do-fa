@@ -19,7 +19,10 @@ export default function Head(props) {
       <meta content="index, follow" name="robots" />
       <meta content="website" property="og:type" />
       <meta content="vi_VN" property="og:locale" />
-      <meta property="og:image" content="/icons/apple-icon-120x120-medofa-manifest-20129.png" />
+      <meta
+        property="og:image"
+        content="https://medofa.com/icons/favicon-32x32-medofa-manifest-20129.png"
+      />
       <meta content="Medofa - Medicine, online, fast" property="og:title" />
       <meta
         content="Medofa là giải pháp công nghệ ngành dược kết nối nhà máy, nhà phân phối, nhà thuốc, dược sĩ nhằm hợp tác tạo mối liên kết trực tiếp và gia tăng doanh thu."
