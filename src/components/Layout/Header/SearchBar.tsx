@@ -95,13 +95,31 @@ const SearchBar = () => {
     event.preventDefault();
 
     if (!value) return;
+    switch (type) {
+      case 'products':
+        return router.push({
+          pathname: '/products',
+          query: {
+            search: value
+          }
+        });
 
-    router.push({
-      pathname: '/products',
-      query: {
-        search: value
-      }
-    });
+      case 'manufacturers':
+        // eslint-disable-next-line no-case-declarations
+        const manufacturers = manufacturersData?.searchManufactory;
+        if (manufacturers.length) {
+          return router.push(getItemHref['manufacturers'](manufacturers[0]));
+        }
+        return;
+
+      case 'ingredients':
+        // eslint-disable-next-line no-case-declarations
+        const searchIngredients = ingredientsData?.searchIngredients;
+        if (searchIngredients.length) {
+          return router.push(getItemHref['ingredients'](searchIngredients[0]));
+        }
+        return;
+    }
   };
 
   const handleValueChange = (e) => {
