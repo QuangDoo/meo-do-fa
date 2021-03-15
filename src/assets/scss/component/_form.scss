@@ -23,7 +23,7 @@ select:-webkit-autofill:active {
   line-height: 20px !important;
 }
 .form-control:focus {
-  border-color: transparent !important;
+  border-color: #ced4d9;
 }
 .custom-select {
   -webkit-appearance: none;
@@ -254,9 +254,8 @@ fieldset {
   appearance: none;
 }
 .custom-select:focus {
-  border-color: $primary;
+  border-color: #ced4d9;
   outline: 0;
-  box-shadow: 0 0 0 0.2rem rgba($primary, 0.25);
 }
 .custom-select:focus::-ms-value {
   color: #495057;
@@ -508,7 +507,7 @@ fieldset {
   color: #495057;
   background-color: #ffffff;
   background-clip: padding-box;
-  border: 1px solid #ced4da;
+  border: 1px solid #ced4d9;
   border-radius: 0.25rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
@@ -528,9 +527,7 @@ fieldset {
 .form-control:focus {
   color: $gray-700;
   background-color: $white;
-  border-color: $primary;
   outline: 0;
-  box-shadow: 0 0 0 0.2rem rgba($primary, 0.25);
 }
 .form-control::placeholder {
   color: $gray-600;
