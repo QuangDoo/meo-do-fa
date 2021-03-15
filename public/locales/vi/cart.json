@@ -23,5 +23,6 @@
   "shipping_fee": "Phí ship",
   "delete_all_button_label": "Xóa tất cả sản phẩm",
   "delete_all_success": "Đã xóa tất cả sản phẩm khỏi giỏ hàng.",
-  "remove_all_confirm": "Bạn có chắc muốn xóa tất cả sản phẩm khỏi giỏ hàng?"
+  "remove_all_confirm": "Bạn có chắc muốn xóa tất cả sản phẩm khỏi giỏ hàng?",
+  "select_all": "Chọn tất cả sản phẩm"
 }

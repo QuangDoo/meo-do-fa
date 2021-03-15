@@ -9983,6 +9983,12 @@ abbr[title] {
 .banner__slide {
   position: relative;
 }
+
+.banner__slide__promotion {
+  position: relative;
+  margin-top: 40px;
+}
+
 .banner__bg-img {
   background-image: radial-gradient(circle, #f4f7fc 17%, #e0e8f7 100%);
   background-color: #343a40;
@@ -11421,12 +11427,12 @@ abbr[title] {
 .slider_products button.slide-arrow.slick-arrow.next-arrow,
 .banner button.slide-arrow.slick-arrow.next-arrow {
   right: 0;
-  margin-right: -15px;
+  margin-right: -25px;
 }
 .slider_products button.slide-arrow.slick-arrow.prev-arrow,
 .banner button.slide-arrow.slick-arrow.prev-arrow {
   left: 0;
-  margin-left: -15px;
+  margin-left: -25px;
 }
 .slider_products button.slide-arrow.slick-arrow i.fas,
 .slider_products button.slide-arrow.slick-arrow i.check,

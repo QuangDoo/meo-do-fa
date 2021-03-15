@@ -11,5 +11,8 @@
   "present": "Quà tặng",
   "discount": "Giảm giá",
   "order_now": "Đặt hàng ngay",
-  "promocde_title":"Chi tiết mã giảm giá"
+  "promocde_title":"Chi tiết mã giảm giá",
+  "code":"Mã",
+  "exp_date":"Ngày hết hạn",
+  "conditions":"Điều kiện"
 }

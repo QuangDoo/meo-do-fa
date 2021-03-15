@@ -122,6 +122,7 @@ export default function PromoCodes() {
                 couponsData?.getCouponPrograms.map((coupon, index) => (
                   <PromoCodeItem
                     key={index}
+                    id={coupon.id}
                     rewardType={coupon.reward_type}
                     couponName={coupon.name}
                     couponCode={coupon.promo_code}

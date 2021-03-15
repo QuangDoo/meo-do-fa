@@ -1,9 +1,16 @@
+import { useQuery } from '@apollo/client';
 import clsx from 'clsx';
 import { useTranslation } from 'i18n';
 import Image from 'next/image';
 import React from 'react';
 import SlickSlider from 'react-slick';
 import { useToken } from 'src/contexts/Token';
+import {
+  bannerInputVars,
+  BannerType,
+  GET_BANNER,
+  WebBannerData
+} from 'src/graphql/banner/getBannerWebSite';
 
 import ProductCard from '../ProductCard';
 import { ProductsCarousel } from '../ProductsCarousel';
@@ -20,6 +27,13 @@ const bannerMobiles = ['/assets/images/banner_mobile_1.jpg', '/assets/images/ban
 
 const Home = ({ dealsOfTheDayData, bestSellingData, promotionProductsData, newProductsData }) => {
   const { t } = useTranslation(['carousels']);
+
+  const { data: dataBaner, loading: getingBanner } = useQuery<WebBannerData, bannerInputVars>(
+    GET_BANNER,
+    {
+      variables: { type: BannerType.MAIN }
+    }
+  );
 
   const token = useToken();
 
