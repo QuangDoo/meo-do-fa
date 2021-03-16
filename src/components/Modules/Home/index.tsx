@@ -35,6 +35,8 @@ const Home = ({ dealsOfTheDayData, bestSellingData, promotionProductsData, newPr
     }
   );
 
+  const banner = dataBaner?.getWebsiteBanner;
+
   const token = useToken();
 
   const carousels = [
@@ -68,10 +70,10 @@ const Home = ({ dealsOfTheDayData, bestSellingData, promotionProductsData, newPr
         dots
         dotsClass="slick__dots bullet slick-dots"
         className="align-items-center mb-0 slick-dotted d-none d-sm-block">
-        {bannerImages.map((img) => (
-          <div className="banner__slide" key={img}>
+        {banner?.map(({ image, id }) => (
+          <div className="banner__slide" key={id}>
             <div className="banner__img">
-              <Image src={img} layout="fill" objectFit="cover" />
+              <Image src={image} layout="fill" objectFit="cover" />
             </div>
           </div>
         ))}

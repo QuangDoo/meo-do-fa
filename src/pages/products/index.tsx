@@ -59,8 +59,8 @@ Products.getInitialProps = async (ctx) => {
         pathology_id: ctx.query.pathology
       }
     },
-    fetchPolicy: 'network-only',
-    notifyOnNetworkStatusChange: true
+    fetchPolicy: 'network-only'
+    // notifyOnNetworkStatusChange: true
   });
 
   return {
