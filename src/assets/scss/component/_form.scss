@@ -254,9 +254,9 @@ fieldset {
   appearance: none;
 }
 .custom-select:focus {
-  //border-color: #ced4d9;
   border-color: $primary;
   outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba($primary, 0.25);
 }
 .custom-select:focus::-ms-value {
   color: #495057;
@@ -508,7 +508,7 @@ fieldset {
   color: #495057;
   background-color: #ffffff;
   background-clip: padding-box;
-  border: 1px solid #ced4d9;
+  border: 1px solid #ced4da;
   border-radius: 0.25rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
@@ -530,6 +530,7 @@ fieldset {
   background-color: $white;
   border-color: $primary;
   outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba($primary, 0.25);
 }
 .form-control::placeholder {
   color: $gray-600;
@@ -776,4 +777,11 @@ textarea.form-control {
   background-color: #e9ecef;
   border-left: inherit;
   border-radius: 0 0.25rem 0.25rem 0;
+}
+
+.hide-focus:focus{ 
+  box-shadow :none !important 
+} 
+.keep-border:focus{
+  border-color: #ced4da !important;
 }
