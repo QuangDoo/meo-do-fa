@@ -56,6 +56,8 @@ export default function ManufacturerFilter() {
     };
   };
 
+  if (manufacturers?.length === 0 && inputValue === '') return null;
+
   return (
     <Dropdown label={t('productsSidebar:manufacturer')}>
       <div className="input-group form__input-group has-icon mb-3">
