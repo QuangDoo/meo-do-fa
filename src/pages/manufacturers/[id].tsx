@@ -87,8 +87,10 @@ function ManufacturerDetail() {
         <div className="row pl-3">
           <div className="col-12 mb-3">
             <h1 className="h3 mb-3">{t('manufacturerDetails:manu_info')}</h1>
-
-            <p className="h5 ml-3 mb-3">{manufacturerDescription}</p>
+            <div
+              className="ml-3 mb-3"
+              dangerouslySetInnerHTML={{ __html: manufacturerDescription }}
+            />
           </div>
           {productsByManufacturer?.total !== 0 && (
             <div className="row no-gutters">
