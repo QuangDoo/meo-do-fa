@@ -47,7 +47,12 @@ const Input = (props: Props, ref) => {
         <input
           {...inputProps}
           ref={ref}
-          className={clsx('form-control no-spinner', type === 'number' && 'no-spinner', inputClass)}
+          className={clsx(
+            'form-control no-spinner',
+            type === 'number' && 'no-spinner',
+            type === 'password' && 'input__password',
+            inputClass
+          )}
           type={type === 'password' ? (showPassword ? 'text' : 'password') : type}
           onBlur={handleTextBlur}
         />
