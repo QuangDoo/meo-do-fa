@@ -778,3 +778,10 @@ textarea.form-control {
   border-left: inherit;
   border-radius: 0 0.25rem 0.25rem 0;
 }
+
+.hide-focus:focus{ 
+  box-shadow :none !important 
+} 
+.keep-border:focus{
+  border-color: #ced4da !important;
+}
