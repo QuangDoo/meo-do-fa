@@ -15,6 +15,7 @@ import {
 import { CREATE_COUNSEL } from 'src/graphql/order/order.mutation';
 import { useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
 
+import ProductDetaiInfor from '../ProductDetail/ProductDetaiInfor';
 import CartItem from './CartItem';
 import ConfirmModal from './ConfirmModal';
 

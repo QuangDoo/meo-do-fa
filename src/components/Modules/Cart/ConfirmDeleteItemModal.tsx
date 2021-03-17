@@ -14,6 +14,7 @@ type Props = Omit<ConfirmModalProps, 'children' | 'onConfirm'> & {
   name: string;
   price: number;
   cartId: string;
+  deleteToCheckCart?: () => void;
 };
 
 export default function ConfirmDeleteItemModal(props: Props) {
@@ -29,6 +30,7 @@ export default function ConfirmDeleteItemModal(props: Props) {
       onCompleted: () => {
         refetchCart().then(() => {
           toast.success(t(`success:delete_cart`));
+          props.deleteToCheckCart();
         });
       },
       onError: (err) => {
