@@ -1,3 +1,4 @@
+import configs from 'configs';
 import { useTranslation } from 'i18n';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
@@ -9,7 +10,6 @@ import useDebounce from 'src/hooks/useDebounce';
 
 import QuantityInput from '../../Form/QuantityInput';
 import ConfirmDeleteItemModal from '../Cart/ConfirmDeleteItemModal';
-
 type Props = {
   productId: number;
   productPrice: number;
@@ -17,8 +17,8 @@ type Props = {
   productImg: string;
 };
 
-const MIN_QUANTITY = 0;
-const MAX_QUANTITY = 999999;
+const MIN_QUANTITY = configs.MIN_QUANTITY;
+const MAX_QUANTITY = configs.MAX_QUANTITY;
 
 function ProductCardQuantityInput(props: Props) {
   const { productId, productPrice, productName, productImg } = props;
