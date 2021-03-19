@@ -9590,6 +9590,7 @@ abbr[title] {
   font-weight: bold;
   min-width: 7em;
   max-width: 15em;
+  text-overflow: ellipsis;
 }
 .header__user-avatar {
   border-radius: 50%;

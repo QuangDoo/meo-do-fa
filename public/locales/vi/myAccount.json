@@ -46,5 +46,6 @@
   "invalid_phone": "Số điện thoại không hợp lệ",
   "retype_newPassword": "Nhập lại mật khẩu mới",
   "retype_newPassword_required": "Xin nhập mật khẩu mới",
-  "error_retype_pw": "Mật khẩu không trùng khớp"
+  "error_retype_pw": "Mật khẩu không trùng khớp",
+  "active": "Vui lòng xác minh tài khoản của bạn <Link>tại đây</Link> để tiếp tục mua hàng"
 }

@@ -45,8 +45,8 @@ export default function TermPopup(): JSX.Element {
         {/* <button className="close_newletter closePopup" onClick={() => alertMessage()}></button> */}
 
         <div className="mypage">
-          <p style={{ textAlign: 'justify' }}>
-            <span style={{ fontSize: 10 }}>
+          <p className="mypage-block">
+            <span className="mypage-block__content">
               {t('termPopup:trading_floor')} MEDOFA.COM (“
               <strong>{t('termPopup:exchanges')}</strong>”) {t('termPopup:content')}
             </span>

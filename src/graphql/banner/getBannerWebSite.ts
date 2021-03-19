@@ -2,7 +2,8 @@ import { gql } from '@apollo/client';
 
 export enum BannerType {
   MAIN = 'MAIN',
-  PROMOTION = 'PROMOTION'
+  PROMOTION = 'PROMOTION',
+  MOBILE = 'MOBILE'
 }
 
 export type bannerInputVars = {

@@ -17,25 +17,34 @@ import { ProductsCarousel } from '../ProductsCarousel';
 import { Login } from './Login';
 import { ProductsContainer } from './ProductsContainer';
 
-const bannerImages = [
-  // 'https://firebasestorage.googleapis.com/v0/b/medofa-image.appspot.com/o/banner%2FBanner-Freeship.jpg?alt=media',
-  // 'https://firebasestorage.googleapis.com/v0/b/medofa-image.appspot.com/o/banner%2FBanner-Medofa.jpg?alt=media'
-  '/assets/images/banner_1.jpg'
-];
+// const bannerImages = [
+//   'https://firebasestorage.googleapis.com/v0/b/medofa-image.appspot.com/o/banner%2FBanner-Freeship.jpg?alt=media',
+//   'https://firebasestorage.googleapis.com/v0/b/medofa-image.appspot.com/o/banner%2FBanner-Medofa.jpg?alt=media',
+//   '/assets/images/banner_1.jpg'
+// ];
 
-const bannerMobiles = ['/assets/images/banner_mobile_1.jpg', '/assets/images/banner_mobile_2.jpg'];
+// const bannerMobiles = ['/assets/images/banner_mobile_1.jpg', '/assets/images/banner_mobile_2.jpg'];
 
 const Home = ({ dealsOfTheDayData, bestSellingData, promotionProductsData, newProductsData }) => {
   const { t } = useTranslation(['carousels']);
 
-  const { data: dataBaner, loading: getingBanner } = useQuery<WebBannerData, bannerInputVars>(
+  const { data: dataBanerPC, loading: getingBannerPC } = useQuery<WebBannerData, bannerInputVars>(
     GET_BANNER,
     {
       variables: { type: BannerType.MAIN }
     }
   );
 
-  const banner = dataBaner?.getWebsiteBanner;
+  const { data: dataBanerMoblie, loading: getingBannerMobile } = useQuery<
+    WebBannerData,
+    bannerInputVars
+  >(GET_BANNER, {
+    variables: { type: BannerType.MOBILE }
+  });
+
+  const bannerPC = dataBanerPC?.getWebsiteBanner;
+
+  const banerMoblie = dataBanerMoblie?.getWebsiteBanner;
 
   const token = useToken();
 
@@ -70,7 +79,7 @@ const Home = ({ dealsOfTheDayData, bestSellingData, promotionProductsData, newPr
         dots
         dotsClass="slick__dots bullet slick-dots"
         className="align-items-center mb-0 slick-dotted d-none d-sm-block">
-        {banner?.map(({ image, id }) => (
+        {bannerPC?.map(({ image, id }) => (
           <div className="banner__slide" key={id}>
             <div className="banner__img">
               <Image src={image} layout="fill" objectFit="cover" />
@@ -85,10 +94,10 @@ const Home = ({ dealsOfTheDayData, bestSellingData, promotionProductsData, newPr
         dots
         dotsClass="slick__dots bullet slick-dots"
         className="align-items-center mb-0 slick-dotted d-block d-sm-none">
-        {bannerMobiles.map((img) => (
-          <div className="banner__slide" key={img}>
+        {banerMoblie?.map(({ image, id }) => (
+          <div className="banner__slide" key={image}>
             <div className="banner__img banner__img--mobile">
-              <Image src={img} layout="fill" objectFit="cover" />
+              <Image src={image} layout="fill" objectFit="cover" />
             </div>
           </div>
         ))}
