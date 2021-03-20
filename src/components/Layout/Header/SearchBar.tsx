@@ -95,13 +95,31 @@ const SearchBar = () => {
     event.preventDefault();
 
     if (!value) return;
+    switch (type) {
+      case 'products':
+        return router.push({
+          pathname: '/products',
+          query: {
+            search: value
+          }
+        });
 
-    router.push({
-      pathname: '/products',
-      query: {
-        search: value
-      }
-    });
+      case 'manufacturers':
+        // eslint-disable-next-line no-case-declarations
+        const manufacturers = manufacturersData?.searchManufactory;
+        if (manufacturers.length) {
+          return router.push(getItemHref['manufacturers'](manufacturers[0]));
+        }
+        return;
+
+      case 'ingredients':
+        // eslint-disable-next-line no-case-declarations
+        const searchIngredients = ingredientsData?.searchIngredients;
+        if (searchIngredients.length) {
+          return router.push(getItemHref['ingredients'](searchIngredients[0]));
+        }
+        return;
+    }
   };
 
   const handleValueChange = (e) => {
@@ -154,13 +172,16 @@ const SearchBar = () => {
                 type="search"
                 placeholder={t(`searchBar:placeholder_${type}`)}
                 aria-label="search"
-                className="form-control form-control-sm search-input"
+                className="form-control form-control-sm search-input hide-focus keep-border"
                 value={value}
                 onChange={handleValueChange}
                 onFocus={handleFocus}
               />
 
-              <Select value={type} onChange={handleSearchTypeChange} className="search-type-select">
+              <Select
+                value={type}
+                onChange={handleSearchTypeChange}
+                className="search-type-select hide-focus">
                 {['products', 'manufacturers', 'ingredients'].map((type) => (
                   <option key={type} value={type}>
                     {t(`searchBar:search_by_${type}`)}

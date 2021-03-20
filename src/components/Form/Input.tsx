@@ -50,7 +50,7 @@ const Input = (props: Props, ref) => {
           className={clsx(
             'form-control',
             type === 'number' && 'no-spinner',
-            type === 'password' && 'has-show-password',
+            type === 'password' && 'input__password',
             inputClass
           )}
           type={showPassword ? 'text' : type}

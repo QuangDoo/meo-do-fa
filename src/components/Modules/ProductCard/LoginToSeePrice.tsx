@@ -9,7 +9,9 @@ const LoginToSeePrice = ({ t }: WithTranslation) => {
   const openLoginModal = () => openModal('LOGIN');
 
   return (
-    <button onClick={openLoginModal} className="btn btn-block btn-sm btn-outline-primary">
+    <button
+      onClick={openLoginModal}
+      className="btn btn-block btn-sm btn-outline-primary login__to-see">
       {t('productCard:loginToSeePrice')}
     </button>
   );

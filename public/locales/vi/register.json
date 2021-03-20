@@ -27,5 +27,6 @@
   "checkbox_acceptTerms_label": "Tôi đã đọc và đồng ý với <Link>Điều khoản sử dụng</Link>",
   "checkbox_acceptTerms_error_required": "Xin đồng ý với Điều khoản sử dụng.",
   "go_to_login": "Nếu bạn đã có tài khoản, vui lòng <button><b>Đăng nhập</b></button>",
-  "submit_button_text": "Tạo tài khoản"
+  "submit_button_text": "Tạo tài khoản",
+  "input_refer_placeholder": "Mã giới thiệu"
 }

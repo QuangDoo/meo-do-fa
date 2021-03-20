@@ -64,7 +64,9 @@ class MyDocument extends Document {
                   window.OneSignal = window.OneSignal || [];
                   OneSignal.push(function() {
                     OneSignal.init({
-                      appId: "5c70e54f-8d3d-4a11-aec4-a824005d5657",
+                      appId: document.location.host === 'medofa.com' ?
+                        "5c70e54f-8d3d-4a11-aec4-a824005d5657" :
+                        "356ba4fa-e52f-437c-b5f0-c03984642a60", 
                     });
                   });
               }, 10000);
@@ -88,16 +90,6 @@ class MyDocument extends Document {
               `
             }}
           />
-
-          {/* <script
-            dangerouslySetInnerHTML={{
-              __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-95PXEWD1KY');`
-            }}
-          /> */}
 
           <script
             dangerouslySetInnerHTML={{
@@ -149,9 +141,10 @@ class MyDocument extends Document {
               __html: `
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-              
-                gtag('config', 'G-TPL3K1KQZN');
+                if(document.location.host === 'medofa.com' ){
+                  gtag('js', new Date());
+                  gtag('config', 'G-TPL3K1KQZN');
+                }
               `
             }}
           />

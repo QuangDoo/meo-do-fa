@@ -1,9 +1,7 @@
 {
-  "key": "search results for: ",
   "no_products": "No products",
-  "no_products_matching_key": "No products matching the keyword: ",
-  "on_of": "on of ",
-  "products": "products",
-  "show": "Show",
-  "title": "All products"
+  "no_products_with_keyword": "No products matching the keyword: <bold>{{keyword}}</bold>",
+  "title": "All products",
+  "results": "Showing <bold>{{start}} - {{end}}</bold> of <bold>{{total}}</bold> total products",
+  "results_with_keyword": "Showing <bold>{{start}} - {{end}}</bold> of <bold>{{total}}</bold> total results for: <bold>{{keyword}}</bold>"
 }

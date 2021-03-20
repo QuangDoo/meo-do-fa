@@ -21,7 +21,8 @@
   "minimum_price": "Minimum price",
   "file_is_not_image": "Chosen file is not an image.",
   "shipping_fee": "Shipping fee",
-  "delete_all_button_label": "Remove all products",
+  "delete_all_button_label": "Remove products are selected",
   "delete_all_success": "Removed all products from cart.",
-  "remove_all_confirm": "Are you sure you want to remove all products from your cart?"
+  "remove_all_confirm": "Are you sure you want to remove all products from your cart?",
+  "select_all": "Select all products"
 }

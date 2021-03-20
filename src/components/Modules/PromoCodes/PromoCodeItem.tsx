@@ -4,9 +4,12 @@ import Tooltip from '@material-ui/core/Tooltip';
 import { useTranslation } from 'i18n';
 import React, { useState } from 'react';
 
+import PromocodeDetailDialog from './PromocodeDetailDialog';
+
 // import PromocodeDetailDialog from './PromocodedetailDialog';
 
 type Props = {
+  id?: number;
   rewardType: string;
   couponName?: string;
   couponCode: string;
@@ -90,11 +93,12 @@ export default function PromoCodeItem(props: Props) {
           <button onClick={() => setOpen(true)}>
             <i className="fa fa-info-circle info" aria-hidden="true" />
           </button>
-          {/* <PromocodeDetailDialog
+          <PromocodeDetailDialog
             open={open}
             onClose={() => setOpen(false)}
             title={t('promoCodes:promocde_title')}
-          /> */}
+            id={props.id}
+          />
         </div>
       </div>
     </>

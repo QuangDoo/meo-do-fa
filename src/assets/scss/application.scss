@@ -2982,7 +2982,16 @@ button.bg-dark:focus {
 .my-4 {
   margin-top: 1.5rem !important;
 }
-.mr-4,
+.mr-4 {
+  margin-right: 5.5rem !important;
+}
+
+.extraCart {
+  font-size: 0.8rem !important;
+  white-space: nowrap;
+  margin: 0.5rem 0.5rem 0 0.5rem !important;
+}
+
 .mx-4 {
   margin-right: 1.5rem !important;
 }
@@ -9590,6 +9599,7 @@ abbr[title] {
   font-weight: bold;
   min-width: 7em;
   max-width: 15em;
+  text-overflow: ellipsis;
 }
 .header__user-avatar {
   border-radius: 50%;
@@ -9983,6 +9993,12 @@ abbr[title] {
 .banner__slide {
   position: relative;
 }
+
+.banner__slide__promotion {
+  position: relative;
+  margin-top: 40px;
+}
+
 .banner__bg-img {
   background-image: radial-gradient(circle, #f4f7fc 17%, #e0e8f7 100%);
   background-color: #343a40;
@@ -10569,9 +10585,6 @@ abbr[title] {
 }
 .form__input-group.has-icon input {
   padding-left: 2.75em;
-}
-.form-control.has-show-password {
-  padding-right: 3em;
 }
 
 .form__input-group input::placeholder {
@@ -11426,12 +11439,12 @@ abbr[title] {
 .slider_products button.slide-arrow.slick-arrow.next-arrow,
 .banner button.slide-arrow.slick-arrow.next-arrow {
   right: 0;
-  margin-right: -15px;
+  margin-right: -25px;
 }
 .slider_products button.slide-arrow.slick-arrow.prev-arrow,
 .banner button.slide-arrow.slick-arrow.prev-arrow {
   left: 0;
-  margin-left: -15px;
+  margin-left: -25px;
 }
 .slider_products button.slide-arrow.slick-arrow i.fas,
 .slider_products button.slide-arrow.slick-arrow i.check,

@@ -146,6 +146,10 @@ button::-moz-focus-inner,
   color: #212529;
   text-decoration: none;
 }
+.login__to-see:not(:disabled):not(.disabled):hover{
+  color: #fff;
+  text-decoration: none;
+}
 
 .btn.disabled,
 .btn:disabled {

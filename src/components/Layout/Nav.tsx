@@ -16,7 +16,7 @@ const Nav = () => {
 
   const totalQty = cart?.totalQty;
 
-  const { t } = useTranslation(['navbar', 'errors', 'common']);
+  const { t } = useTranslation(['navbar', 'errors', 'common', 'cart']);
 
   const logOut = () => {
     cookies.remove('token');
@@ -114,6 +114,14 @@ const Nav = () => {
                       </a>
                     </Link>
                   </li>
+                  <li className="dropdown-item">
+                    <Link href="/promotions">
+                      <a className="dropdown-item-text p-0">
+                        <i className="rockland-nav__icon fab fa-product-hunt" />
+                        <span>{t('navbar:promotions')}</span>
+                      </a>
+                    </Link>
+                  </li>
                 </ul>
               </li>
               <li className="d-block d-sm-none rockland-nav__item dropdown dropdown-nav">
@@ -160,8 +168,9 @@ const Nav = () => {
                 <ul className="nav align-items-center">
                   <li className="nav-item mr-4">
                     <Link href="/cart">
-                      <a className="rockland-nav__link notification">
+                      <a className="rockland-nav__link notification" title={t('cart:cart')}>
                         <ShoppingCartOutlinedIcon />
+                        <span className="extraCart"> {t('cart:cart')} </span>
                         {totalQty > 0 && <span className="notification__counter">{totalQty}</span>}
                       </a>
                     </Link>

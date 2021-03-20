@@ -3,6 +3,7 @@ import { useCart } from 'src/contexts/Cart';
 import { useToken } from 'src/contexts/Token';
 import { useUser } from 'src/contexts/User';
 
+import ActiceUser from '../Layout/ActiceUser';
 import Footer from '../Layout/Footer';
 import Header from '../Layout/Header';
 import LoadingBackdrop from '../Layout/LoadingBackdrop';
@@ -16,13 +17,17 @@ type Props = {
 export default function MainLayout(props: Props) {
   const { loading: gettingCart } = useCart();
 
-  const { loading: gettingUser } = useUser();
+  const { data: dataUser, loading: gettingUser } = useUser();
+
+  const isActive = dataUser?.activated;
 
   const token = useToken();
 
   return (
     <>
       <TermPopup />
+
+      {token && !isActive && <ActiceUser />}
 
       <Header />
 
@@ -48,5 +53,7 @@ export const mainLayoutNamespacesRequired = [
   'login',
   'register',
   'password',
-  'termPopup'
+  'termPopup',
+  'promotions',
+  'myAccount'
 ];
