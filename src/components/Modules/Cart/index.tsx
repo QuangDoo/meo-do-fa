@@ -31,6 +31,24 @@ export default function CartPage() {
 
   const router = useRouter();
 
+  var IdURL = router.query.id_buy_now;
+  useEffect(() => {
+    if (IdURL != null) {
+      var ObjBuyNow = (cart?.carts.filter(obj =>
+        (obj.productId.toString() == IdURL)
+      ))
+
+      if (ObjBuyNow[0] != null)
+        setCheckboxCarts(
+          [ObjBuyNow[0]._id]
+        );
+      else
+        setCheckboxCarts(
+          []
+        );
+    }
+  }, [router.query])
+
   const { data: dataGetCartByProduct, loading: gettingCartByProducts } = useQueryAuth<
     GetCartByProductData,
     getCartByproductVars
