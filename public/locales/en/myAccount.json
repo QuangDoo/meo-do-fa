@@ -45,5 +45,6 @@
   "newPassword_required": "Please provide a new password",
   "oldPassword_required": "Please provide a current password",
   "retype_newPassword": "Retype a new password",
-  "retype_newPassword_required": "Please retype new password"
+  "retype_newPassword_required": "Please retype new password",
+  "active": "Please verify your account <Link>here</Link> to continue purchasing"
 }
