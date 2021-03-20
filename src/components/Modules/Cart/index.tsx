@@ -33,23 +33,15 @@ export default function CartPage() {
 
   const router = useRouter();
 
-  var IdURL = router.query.id_buy_now;
   useEffect(() => {
-    if (IdURL != null) {
-      var ObjBuyNow = (cart?.carts.filter(obj =>
-        (obj.productId.toString() == IdURL)
-      ))
+    const id = router.query.id_buy_now;
 
-      if (ObjBuyNow[0] != null)
-        setCheckboxCarts(
-          [ObjBuyNow[0]._id]
-        );
-      else
-        setCheckboxCarts(
-          []
-        );
+    if (id !== null) {
+      const buyNowProduct = cart?.carts.filter((obj) => obj.productId.toString() == id);
+
+      setCheckboxCarts(buyNowProduct.length ? [buyNowProduct[0]._id] : []);
     }
-  }, [router.query])
+  }, [router.query]);
 
   const { data: dataGetCartByProduct, loading: gettingCartByProducts } = useQueryAuth<
     GetCartByProductData,

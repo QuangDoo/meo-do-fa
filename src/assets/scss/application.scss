@@ -2982,11 +2982,11 @@ button.bg-dark:focus {
 .my-4 {
   margin-top: 1.5rem !important;
 }
-.mr-4{
+.mr-4 {
   margin-right: 5.5rem !important;
 }
 
-.extraCart{
+.extraCart {
   font-size: 0.8rem !important;
   white-space: nowrap;
   margin: 0.5rem 0.5rem 0 0.5rem !important;
@@ -10548,7 +10548,8 @@ abbr[title] {
 }
 .form__password-label {
   position: absolute;
-  right: 2em;
+  right: 1.5em;
+  z-index: 4;
   top: calc(50% - 0.75em);
   cursor: pointer;
   color: #919aa3;
@@ -10556,7 +10557,7 @@ abbr[title] {
 .form__required-label {
   position: absolute;
   right: 1em;
-  top: calc(50% - 0.75em);
+  top: calc(50% - 0.6em);
   cursor: pointer;
   color: #dc3545;
 }
@@ -11391,6 +11392,7 @@ abbr[title] {
 .search__result--empty {
   padding: 1rem;
   color: #343a40;
+  overflow-wrap: break-word;
 }
 .slider_products,
 .banner {

@@ -170,7 +170,7 @@ const SearchBar = () => {
             <div className="input-group form__input-group">
               <input
                 type="search"
-                placeholder={t('searchBar:input')}
+                placeholder={t(`searchBar:placeholder_${type}`)}
                 aria-label="search"
                 className="form-control form-control-sm search-input hide-focus keep-border"
                 value={value}
