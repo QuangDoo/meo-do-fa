@@ -1,3 +1,4 @@
+import configs from 'configs';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -18,7 +19,8 @@ import { useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
 import CartItem from './CartItem';
 import ConfirmModal from './ConfirmModal';
 
-const MIN_PRICE = 1000000;
+const MIN_PRICE = configs.MIN_PRICE;
+const FREE_SHIP = configs.FREESHIP_PRICE;
 
 export default function CartPage() {
   const { data: cart, refetch: refetchCart } = useCart();
@@ -123,7 +125,7 @@ export default function CartPage() {
 
   const checkoutDisabled = total < MIN_PRICE;
 
-  const enableShippingFee = total > MIN_PRICE && total < 1500000;
+  const enableShippingFee = total > MIN_PRICE && total < FREE_SHIP;
 
   const handleOpenDeleteAllModal = () => setDeleteAllIsOpen(true);
 
@@ -217,7 +219,12 @@ export default function CartPage() {
                       </div>
                     </div>
 
-                    <div hidden={total < MIN_PRICE} className="col-12 p-3 cart__info-total">
+                    {/* <div hidden={total > FREE_SHIP} className="col-12 p-3 cart__info-total">
+                      {t('cart:shipping_fee') + ': '}
+                      <PriceText price={cartsCheckBox?.totalShippingFee} />
+                    </div> */}
+
+                    <div hidden={!enableShippingFee} className="col-12 p-3 cart__info-total">
                       {t('cart:shipping_fee') + ': '}
                       <PriceText price={cartsCheckBox?.totalShippingFee} />
                     </div>
