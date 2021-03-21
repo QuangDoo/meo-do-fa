@@ -73,6 +73,7 @@ export default function PromoCodeItem(props: Props) {
             <div className="mb-2">
               <div className="coupon__amount text-max-2">{props.couponName}</div>
               <span>{props.couponDescription}</span>
+              {console.log(props.couponDescription)}
             </div>
           </Tooltip>
           {props.couponCode !== 'false' && (

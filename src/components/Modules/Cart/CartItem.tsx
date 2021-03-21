@@ -116,6 +116,7 @@ function CartItem(props: Props) {
               img={props.product.image_512}
               name={props.productName}
               price={props.product.sale_price}
+              deleteToCheckCart={() => props.deleteToCheckCart()}
             />
           </div>
         </div>

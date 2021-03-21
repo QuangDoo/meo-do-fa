@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import PriceText from 'src/components/Form/PriceText';
 import QuantityInput from 'src/components/Form/QuantityInput';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
+import index from 'src/components/Modules/Cart/index';
 import { useCart } from 'src/contexts/Cart';
 import { useToken } from 'src/contexts/Token';
 import { ADD_TO_CART, AddToCartData, AddToCartVars } from 'src/graphql/cart/addToCart';
@@ -111,6 +112,7 @@ const ProductDetailInfor = (props: ProductDetails) => {
         productId: props.id,
         productName: props.name,
         quantity: quantity
+        // addToCheckCart?:
       }
     });
   };
