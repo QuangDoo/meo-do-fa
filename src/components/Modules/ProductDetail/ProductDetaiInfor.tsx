@@ -96,7 +96,7 @@ const ProductDetailInfor = (props: ProductDetails) => {
         quantity: quantity
       }
     }).then(() => {
-      router.push('/cart/?id_buy_now='+props.id);
+      router.push('/cart/?id_buy_now=' + props.id);
     });
   };
 

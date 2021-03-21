@@ -239,12 +239,12 @@ const RegisterForm = () => {
             onChange={handleFileChange}
           />
 
-          <Input
+          {/* <Input
             name="address"
             containerClass="mb-4"
             iconClass="icomoon icon-home"
             placeholder={t('register:input_address_placeholder')}
-          />
+          /> */}
 
           <Input
             name="referEmail"
