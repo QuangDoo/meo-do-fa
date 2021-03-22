@@ -1,5 +1,5 @@
 const configs = {
-    "MAX_QUANTITY": 999999999,
+    "MAX_QUANTITY": 999999,
     "MIN_QUANTITY": 0,
     "MIN_PRICE": 1000000,
     "FREESHIP_PRICE": 1500000
