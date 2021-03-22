@@ -27,7 +27,7 @@ export const ProductsContainer = (props: ProductsContainerProps) => {
           {props.seeMoreUrl && (
             <Link href={`${props.seeMoreUrl}`}>
               <a>
-                {/* {t('common:see_more')} */}
+                <span className="hide-extra">{t('common:see_more')} </span>
                 <i className="fas fa-angle-double-right ml-2"> </i>
               </a>
             </Link>

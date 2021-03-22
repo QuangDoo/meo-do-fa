@@ -177,3 +177,8 @@
 // .theme-background-color {
 //   background-color: $secondary !important;
 // }
+@media (max-width:575.98px){
+  .hide-extra{
+    display: none;
+  }
+}
