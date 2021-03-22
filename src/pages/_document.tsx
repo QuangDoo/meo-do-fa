@@ -54,10 +54,31 @@ class MyDocument extends Document {
           />
 
           <style type="text/css">{globalStyles}</style>
+
+          <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js"></script>
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+              document.addEventListener("DOMContentLoaded", function(event) {
+                setTimeout(function() {
+                  window.OneSignal = window.OneSignal || [];
+                  OneSignal.push(function() {
+                    OneSignal.init({
+                      appId: document.location.host === 'medofa.com' ?
+                        "5c70e54f-8d3d-4a11-aec4-a824005d5657" :
+                        "356ba4fa-e52f-437c-b5f0-c03984642a60", 
+                    });
+                  });
+              }, 10000);
+            });
+          `
+            }}
+          />
         </Head>
         <body>
           <Main />
           <NextScript />
+
           <script
             dangerouslySetInnerHTML={{
               __html: `
@@ -69,16 +90,6 @@ class MyDocument extends Document {
               `
             }}
           />
-
-          {/* <script
-            dangerouslySetInnerHTML={{
-              __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-95PXEWD1KY');`
-            }}
-          /> */}
 
           <script
             dangerouslySetInnerHTML={{
@@ -133,9 +144,10 @@ class MyDocument extends Document {
               __html: `
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-              
-                gtag('config', 'G-TPL3K1KQZN');
+                if(document.location.host === 'medofa.com' ){
+                  gtag('js', new Date());
+                  gtag('config', 'G-TPL3K1KQZN');
+                }
               `
             }}
           />

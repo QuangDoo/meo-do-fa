@@ -18,6 +18,7 @@ type Props = {
   guide?: string;
   accept?: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  maxLength?: number;
 };
 
 const InputWithLabel = (props: Props, ref) => {
@@ -32,7 +33,12 @@ const InputWithLabel = (props: Props, ref) => {
     name: props.name,
     placeholder: props.placeholder,
     defaultValue: props.defaultValue,
-    disabled: props.disabled
+    disabled: props.disabled,
+    maxLength: props.maxLength
+  };
+
+  const handleTextBlur = (e) => {
+    e.target.value = e.target.value.trim();
   };
 
   return (
@@ -46,6 +52,7 @@ const InputWithLabel = (props: Props, ref) => {
           <input
             {...sharedInputProps}
             type={showPassword ? 'text' : 'password'}
+            onBlur={handleTextBlur}
             className="form-control"
           />
 
@@ -69,7 +76,12 @@ const InputWithLabel = (props: Props, ref) => {
           <div className="custom-file-label">{props.placeholder}</div>
         </div>
       ) : (
-        <input {...sharedInputProps} type={props.type} className="form-control no-spinner" />
+        <input
+          {...sharedInputProps}
+          type={props.type}
+          className="form-control no-spinner"
+          onBlur={handleTextBlur}
+        />
       )}
 
       {props.guide && <small className="text-muted">{props.guide}</small>}

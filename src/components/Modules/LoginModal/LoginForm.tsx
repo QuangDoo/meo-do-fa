@@ -39,7 +39,8 @@ const LoginForm = () => {
       if (router.pathname === '/products' || router.pathname === '/products/[productId]') {
         router.reload();
       } else {
-        router.push('/products');
+        //router.push("/products");
+        router.push('/');
       }
     },
     onError: (error) => {
@@ -73,11 +74,11 @@ const LoginForm = () => {
             pattern: {
               value: usernameRegex,
               message: t('login:invalid_username')
-            }
+            },
+            required: t('login:required_username') + ''
           })}
           containerClass="mb-4"
           iconClass="icomoon icon-user"
-          required
           placeholder={t('login:placeholder_username')}
         />
 
@@ -87,10 +88,10 @@ const LoginForm = () => {
             minLength: {
               value: 6,
               message: t('login:invalid_password')
-            }
+            },
+            required: t('login:required_password') + ''
           })}
           containerClass="mb-3"
-          required={true}
           iconClass="icomoon icon-lock"
           placeholder={t('login:placeholder_password')}
           type="password"

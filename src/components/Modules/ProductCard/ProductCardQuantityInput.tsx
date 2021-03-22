@@ -1,16 +1,15 @@
+import configs from 'configs';
 import { useTranslation } from 'i18n';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { useCart } from 'src/contexts/Cart';
 import { ADD_TO_CART, AddToCartData, AddToCartVars } from 'src/graphql/cart/addToCart';
-import { DELETE_CART, DeleteCartData, DeleteCartVars } from 'src/graphql/cart/deleteCart.mutation';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import useDebounce from 'src/hooks/useDebounce';
 
 import QuantityInput from '../../Form/QuantityInput';
 import ConfirmDeleteItemModal from '../Cart/ConfirmDeleteItemModal';
-
 type Props = {
   productId: number;
   productPrice: number;
@@ -18,8 +17,8 @@ type Props = {
   productImg: string;
 };
 
-const MIN_QUANTITY = 0;
-const MAX_QUANTITY = 100000;
+const MIN_QUANTITY = configs.MIN_QUANTITY;
+const MAX_QUANTITY = configs.MAX_QUANTITY;
 
 function ProductCardQuantityInput(props: Props) {
   const { productId, productPrice, productName, productImg } = props;
@@ -65,20 +64,6 @@ function ProductCardQuantityInput(props: Props) {
         } else {
           toast.error(t(`errors:code_${errorCode}`));
         }
-      }
-    }
-  );
-
-  const [deleteCart, { loading: deletingCart }] = useMutationAuth<DeleteCartData, DeleteCartVars>(
-    DELETE_CART,
-    {
-      onCompleted: () => {
-        refetchCart().then(() => {
-          toast.success(t(`success:delete_cart`));
-        });
-      },
-      onError: (err) => {
-        toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
       }
     }
   );
@@ -133,15 +118,6 @@ function ProductCardQuantityInput(props: Props) {
     setQuantity(quantityInCart);
   };
 
-  const handleConfirmDelete = () => {
-    setOpen(false);
-    deleteCart({
-      variables: {
-        _id: thisProductInCart._id
-      }
-    });
-  };
-
   return (
     <>
       <QuantityInput
@@ -159,13 +135,13 @@ function ProductCardQuantityInput(props: Props) {
         question={t('cart:remove_confirm')}
         open={open}
         onClose={handleCloseModal}
-        onConfirm={handleConfirmDelete}
+        cartId={thisProductInCart?._id}
         img={productImg}
         name={productName}
         price={productPrice}
       />
 
-      <LoadingBackdrop open={addingToCart || deletingCart} />
+      <LoadingBackdrop open={addingToCart} />
     </>
   );
 }

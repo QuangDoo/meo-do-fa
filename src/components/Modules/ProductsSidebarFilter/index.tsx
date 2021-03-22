@@ -16,7 +16,7 @@ const ProductsSidebarFilter = (props: Props) => {
   const { t } = useTranslation(['productsSidebar, searchBar']);
 
   return (
-    <aside className="text-capitalize w-100">
+    <aside className="w-100">
       <header className="products__filters-header d-flex align-items-center justify-content-between">
         <div>
           <span className="text-muted icomoon icon-tune mr-3" />

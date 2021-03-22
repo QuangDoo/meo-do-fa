@@ -6,13 +6,11 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { emailRegex, noSpecialChars } from 'src/assets/regex/email';
+import { taxCodeRegex } from 'src/assets/regex/taxCode';
 import { viPhoneNumberRegex } from 'src/assets/regex/viPhoneNumber';
 import Button from 'src/components/Form/Button';
 import Checkbox from 'src/components/Form/Checkbox';
 import Input from 'src/components/Form/Input';
-import InputFile from 'src/components/Form/InputFile';
-import InputWithLabel from 'src/components/Form/InputWithLabel';
-import Select from 'src/components/Form/Select';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { useModalControlDispatch } from 'src/contexts/ModalControl';
 import { useUser } from 'src/contexts/User';
@@ -28,6 +26,7 @@ type Inputs = {
   referEmail: string;
   acceptTerms: boolean;
   businessLicense: FileList;
+  tax: string;
 };
 
 const accountTypes = ['PHARMACY', 'DRUGSTORE', 'CLINIC', 'HOSPITAL'];
@@ -85,7 +84,8 @@ const RegisterForm = () => {
           email: data.email,
           password: data.password,
           phone: data.phone.toString(),
-          ref_email: data.referEmail
+          ref_email: data.referEmail,
+          vat: data.tax
         }
       }
     });
@@ -147,6 +147,7 @@ const RegisterForm = () => {
               {t('register:edit')}
             </button>
           </div>
+
           <Input
             name="name"
             ref={register({
@@ -156,6 +157,7 @@ const RegisterForm = () => {
             iconClass="icomoon icon-user"
             placeholder={t('register:input_name_placeholder')}
             required
+            maxLength={100}
           />
 
           <Input
@@ -172,13 +174,6 @@ const RegisterForm = () => {
             iconClass="icomoon icon-phone"
             placeholder={t('register:input_phone_placeholder')}
             required
-          />
-
-          <Input
-            name="address"
-            containerClass="mb-4"
-            iconClass="icomoon icon-home"
-            placeholder={t('register:input_address_placeholder')}
           />
 
           <Input
@@ -200,10 +195,29 @@ const RegisterForm = () => {
           />
 
           <Input
-            name="tax"
-            type="number"
+            name="password"
             ref={register({
-              required: `${t('register:input_tax_error_required')}`
+              required: `${t('register:input_password_error_required')}`,
+              minLength: {
+                value: 6,
+                message: `${t('register:input_password_error_minLength')}`
+              }
+            })}
+            containerClass="mb-4"
+            iconClass="icomoon icon-lock"
+            placeholder={t('register:input_password_placeholder')}
+            type="password"
+            required
+          />
+
+          <Input
+            name="tax"
+            type="text"
+            ref={register({
+              pattern: {
+                value: taxCodeRegex,
+                message: t('errors:tax_code_invalid') as string
+              }
             })}
             containerClass="mb-4"
             iconClass="fas fa-file-invoice-dollar"
@@ -225,20 +239,18 @@ const RegisterForm = () => {
             onChange={handleFileChange}
           />
 
-          <Input
-            name="password"
-            ref={register({
-              required: `${t('register:input_password_error_required')}`,
-              minLength: {
-                value: 6,
-                message: `${t('register:input_password_error_minLength')}`
-              }
-            })}
+          {/* <Input
+            name="address"
             containerClass="mb-4"
-            iconClass="icomoon icon-lock"
-            placeholder={t('register:input_password_placeholder')}
-            type="password"
-            required
+            iconClass="icomoon icon-home"
+            placeholder={t('register:input_address_placeholder')}
+          /> */}
+
+          <Input
+            name="referEmail"
+            containerClass="mb-4"
+            iconClass="fas fa-user-friends"
+            placeholder={t('register:input_refer_placeholder')}
           />
 
           <Checkbox

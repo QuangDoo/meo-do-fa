@@ -54,7 +54,7 @@ const InvoiceProducts = (props: Props) => {
       label={t('checkout:list_products_have_invoice')}>
       <div className="mt-2" hidden={!showInvoiceProducts}>
         {products.map((item, index) => {
-          const productLink = `products/${slugify(item.name)}-pid${item.id}`;
+          const productLink = `products/${slugify(item.name as string)}-pid${item.id}`;
 
           return (
             <div className="cart-item" key={index}>
@@ -82,6 +82,7 @@ const InvoiceProducts = (props: Props) => {
                   <div className="d-flex justify-content-between align-items-center">
                     <div className="flex-1 flex-column">
                       {t('checkout:price_invoice')}: <PriceText price={item.list_price} />
+                      {item.discount_percentage && <span>({item.discount_percentage}%)</span>}
                       <div className="ml-3">{/* <div>{t('checkout:quantity')}</div> */}</div>
                       {t('checkout:price_VAT')}: <PriceText price={item.sale_price} />
                     </div>

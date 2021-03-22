@@ -39,6 +39,7 @@ function Manufacturers() {
           })) || []
         }
         getItemHref={(id) => `/products?manufacturer=${id}`}
+        getInfoHref={(id) => `/manufacturers/${id}`}
       />
     </MainLayout>
   );

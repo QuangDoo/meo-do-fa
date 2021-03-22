@@ -12,6 +12,7 @@ type Props = {
     short_name?: string;
   }[];
   getItemHref: (id: string, name: string) => string;
+  getInfoHref?: (id: string) => string;
 };
 
 const filterChars = 'abcdefghijklmnopqrstuvwxyz#'.split('');
@@ -73,6 +74,7 @@ export default function SearchScreen(props: Props) {
             className="search"
             name="search"
             placeholder={t(`searchBar:enter_name_${router.pathname.substring(1)}`)}
+            onBlur={onSubmit}
           />
 
           <button type="submit" className="btn-search">
@@ -94,19 +96,28 @@ export default function SearchScreen(props: Props) {
       </div>
 
       <div className="count_result">
-        <em>
-          {t('searchBar:show')} {data.length} {t('searchBar:result')}{' '}
-        </em>
+        <em>{t('searchBar:showing_results_for', { count: data.length }) + ' '}</em>
         <b>{searchLabel}</b>
       </div>
 
       <div className="filter-search__list py-3">
         {data?.map((item) => (
-          <Link key={item.id} href={props.getItemHref(item.id.toString(), item.name)}>
-            <a title={item.name} className="filter-search__list-item mix all">
-              {item.short_name || item.name}
-            </a>
-          </Link>
+          <div key={item.id} className="d-flex align-items--center">
+            <Link href={props.getItemHref(item.id.toString(), item.name)}>
+              <a title={item.name} className="filter-search__list-item mix all">
+                {item.short_name || item.name}
+              </a>
+            </Link>
+            {props.getInfoHref && (
+              <Link href={props.getInfoHref(item.id)}>
+                <a
+                  title={t('searchBar:show_manufacturer_detail')}
+                  className="filter-search__list-info">
+                  <i className="fas fa-info-circle"></i>
+                </a>
+              </Link>
+            )}
+          </div>
         ))}
       </div>
     </div>

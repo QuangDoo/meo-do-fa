@@ -1,7 +1,7 @@
-image: docker:18.09.7-dind
+image: docker:18-dind
 
 services:
-  - name: docker:dind
+  - name: docker:18-dind
     entrypoint: ["env", "-u", "DOCKER_HOST"]
     command: ["dockerd-entrypoint.sh"]
 
@@ -22,10 +22,10 @@ stages:
 .pre-deploy-dev:
   before_script:
     - apk update  && apk add --no-cache curl git
-    - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
-    - chmod +x ./kubectl && mv ./kubectl /usr/local/bin/kubectl
-    - mkdir -p $HOME/.kube
-    - cp $KUBE_CONFIG_DEV $HOME/.kube/config
+    # - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+    # - chmod +x ./kubectl && mv ./kubectl /usr/local/bin/kubectl
+    # - mkdir -p $HOME/.kube
+    # - cp $KUBE_CONFIG_DEV $HOME/.kube/config
     - git clone https://${DOCKER_USER}:${DOCKER_PASSWORD}@gitlab.com/bebuy.vn/clients/thuocn/deployments.git
 
 .pre-deploy-master:
@@ -125,7 +125,7 @@ deploy-frontend-dev:
   interruptible: true
 
   tags:
-    - bebuy-gitlab-ci
+    - medofa-dev
   
   extends:
     - .pre-deploy-dev

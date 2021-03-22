@@ -10,5 +10,9 @@
   "all_promo_codes": "Các Mã Giảm Giá",
   "present": "Quà tặng",
   "discount": "Giảm giá",
-  "order_now": "Đặt hàng ngay"
+  "order_now": "Đặt hàng ngay",
+  "promocde_title":"Chi tiết mã giảm giá",
+  "code":"Mã",
+  "exp_date":"Ngày hết hạn",
+  "conditions":"Điều kiện"
 }

@@ -1,9 +1,7 @@
 {
-  "key": "kết quả tìm kiếm cho: ",
   "no_products": "Không có sản phẩm",
-  "no_products_matching_key": "Không có sản phẩm phù hợp với từ khoá: ",
-  "on_of": "trên tổng số ",
-  "products": "sản phẩm",
-  "show": "Hiển thị",
-  "title": "Tất cả sản phẩm"
+  "no_products_with_keyword": "Không có sản phẩm phù hợp với từ khoá: <bold>{{keyword}}</bold>",
+  "title": "Tất cả sản phẩm",
+  "results": "Hiển thị <bold>{{start}} - {{end}}</bold> trên tổng số <bold>{{total}}</bold> sản phẩm",
+  "results_with_keyword": "Hiển thị <bold>{{start}} - {{end}}</bold> trên tổng số <bold>{{total}}</bold> kết quả tìm kiếm cho: <bold>{{keyword}}</bold>"
 }

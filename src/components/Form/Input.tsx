@@ -1,20 +1,17 @@
+import clsx from 'clsx';
 import React, { useState } from 'react';
 
-type Props = {
-  name: string;
-  iconClass: string;
-  placeholder?: string;
-  required?: boolean;
-  type?: 'text' | 'number' | 'password' | 'email' | 'file';
+interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
+  iconClass?: string;
   containerClass?: string;
+  inputClass?: string;
   itemRight?: React.ReactNode;
-  disabled?: boolean;
-  accept?: string;
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-};
+}
 
 const Input = (props: Props, ref) => {
-  const { containerClass = '', type = 'text', itemRight } = props;
+  const { containerClass, inputClass, itemRight, iconClass, ...inputProps } = props;
+
+  const { type, required, placeholder } = inputProps;
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -22,60 +19,55 @@ const Input = (props: Props, ref) => {
     setShowPassword(!showPassword);
   }
 
+  function handleTextBlur(e) {
+    e.target.value = e.target.value.trim();
+
+    props.onBlur?.(e);
+  }
+
   return (
-    <div className={`input-group form__input-group ${containerClass} `}>
-      <i className={`${props.iconClass} form__input-icon`}></i>
+    <div className={clsx('input-group form__input-group', iconClass && 'has-icon', containerClass)}>
+      {iconClass && <i className={clsx('form__input-icon', iconClass)} />}
+
       {type === 'file' ? (
         <div className="input-file">
           <input
+            {...inputProps}
+            placeholder={undefined}
             ref={ref}
-            name={props.name}
-            disabled={props.disabled}
             type="file"
-            className="input-file-input form-control no-spinner"
-            accept={props.accept}
-            onChange={props.onChange}
+            className={clsx('input-file-input form-control', inputClass)}
           />
+
           <div className="input-file-label overflow-hidden">
-            <span>{props.placeholder}</span>
+            <span>{placeholder}</span>
           </div>
         </div>
       ) : (
         <input
-          name={props.name}
+          {...inputProps}
           ref={ref}
-          className="form-control no-spinner"
-          placeholder={props.placeholder}
-          required={props.required}
-          type={type === 'password' ? (showPassword ? 'text' : 'password') : type}
+          className={clsx(
+            'form-control',
+            type === 'number' && 'no-spinner',
+            type === 'password' && 'input__password',
+            inputClass
+          )}
+          type={showPassword ? 'text' : type}
+          onBlur={handleTextBlur}
         />
       )}
 
-      {props.required && <div className="form__required-label">*</div>}
-
       {/* Show password checkbox */}
       {type === 'password' && (
-        <div
-          className="form__password-label"
-          onClick={toggleShowPassword}
-          onKeyPress={toggleShowPassword}
-          role="checkbox"
-          aria-checked={showPassword}
-          tabIndex={0}
-          style={{ zIndex: 4 }} // Because focused input has z-index: 3
-        >
-          {showPassword ? (
-            <span className="form__password-label-hide">
-              <i className="fas fa-eye-slash mr-1"></i>
-            </span>
-          ) : (
-            <span className="form__password-label-show">
-              <i className="fas fa-eye mr-1"></i>
-            </span>
-          )}
-        </div>
+        <button type="button" className="form__password-label" onClick={toggleShowPassword}>
+          <i className={clsx('fas fa-fw mr-1', showPassword ? 'fa-eye-slash' : 'fa-eye')} />
+        </button>
       )}
+
       {itemRight && <div className="input-group-prepend">{itemRight}</div>}
+
+      {required && <div className="form__required-label">*</div>}
     </div>
   );
 };

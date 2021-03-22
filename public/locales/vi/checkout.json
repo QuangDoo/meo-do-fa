@@ -3,6 +3,7 @@
   "address_label": "Địa chỉ giao hàng",
   "address_label_invoice": "Địa chỉ công ty",
   "address_required": "Xin nhập địa chỉ giao hàng.",
+  "street":"Đường phố và số nhà.",
   "agreement_label": "Tôi đồng ý với <Link>Điều khoản sử dụng</Link>",
   "agreement_required": "Xin vui lòng xác thực điều khoản",
   "apply_coupon_btn_label": "Dùng mã",
@@ -67,14 +68,14 @@
   "phone_label": "Số điện thoại",
   "phone_placeholder": "Vd. 0999123456",
   "phone_required": "Xin nhập số điện thoại.",
-  "price_invoice": "Giá",
+  "price_invoice": "Giá trước thế",
   "price_provisional_sums": "Tạm tính",
   "price_shipping_fee": "Phí vận chuyển",
   "price_tax": "Thuế",
   "price_total": "Thành tiền",
   "price_total_dc_payment": "Giảm giá chuyển khoản",
   "price_total_discount": "Khuyến mãi",
-  "price_VAT": "VAT",
+  "price_VAT": "Giá sau thuế",
   "promo_codes_title": "Mã khuyến mãi",
   "quantity": "Số lượng",
   "reward_type_discount": "Giảm giá",
@@ -89,5 +90,6 @@
   "ward_placeholder": "Chọn phường/xã...",
   "ward_required": "Xin chọn phường/xã",
   "warning_1": "Medofa có thể hủy đơn hàng của bạn nếu chênh lệch hơn 5% giá trị sản phẩm.",
-  "warning_2": "Số lượng sản phẩm khi giao có thể không đảm bảo đúng nhu cầu ban đầu tùy thuộc vào nhà cung cấp."
+  "warning_2": "Số lượng sản phẩm khi giao có thể không đảm bảo đúng nhu cầu ban đầu tùy thuộc vào nhà cung cấp.",
+  "street_placeholder": "Nhập số nhà và tên đường"
 }

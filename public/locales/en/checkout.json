@@ -3,6 +3,7 @@
   "address_label": "Delivery address",
   "address_label_invoice": "Company address",
   "address_required": "Please provide a delivery address.",
+  "street":"Street and apartment number.",
   "agreement_label": "I agree with the <Link>Terms of Use</Link>",
   "agreement_required": "Please agree with the Terms of Use.",
   "apply_coupon_btn_label": "Use promo code",
@@ -71,14 +72,14 @@
   "phone_label": "Phone number",
   "phone_placeholder": "Ex. 0999123456",
   "phone_required": "Please provide a phone number.",
-  "price_invoice": "Price",
+  "price_invoice": "Price before tax",
   "price_provisional_sums": "Provisional sums",
   "price_shipping_fee": "Shipping fee",
   "price_tax": "Taxes",
   "price_total": "Total",
   "price_total_dc_payment": "Bank transfer discount",
   "price_total_discount": "Discount",
-  "price_VAT": "VAT",
+  "price_VAT": "Price after tax",
   "promo_codes_title": "Promo codes",
   "quantity": "quantity",
   "reward_type_discount": "Discount",
@@ -94,5 +95,6 @@
   "ward_placeholder": "Choose a ward...",
   "ward_required": "Please choose a ward",
   "warning_1": "Medofa may cancel your order if the price difference is more than 5% of the product value.",
-  "warning_2": "The quantity of products delivered may not be exact, depending on the supplier."
+  "warning_2": "The quantity of products delivered may not be exact, depending on the supplier.",
+  "street_placeholder": "Enter house number and street name"
 }

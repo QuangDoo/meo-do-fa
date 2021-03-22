@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client';
-import { useTranslation } from 'i18n';
+import { Trans, useTranslation } from 'i18n';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import { animateScroll } from 'react-scroll';
@@ -84,6 +84,7 @@ function Products() {
 
   const search = router.query.search as string;
 
+  // GET ALL CATEGORIES FOR SIDEBAR FILTER
   const { data: categoriesLevelData } = useQuery<GetCategoriesLevelData, undefined>(
     GET_CATEGORIES_LEVEL,
     {
@@ -92,8 +93,11 @@ function Products() {
       }
     }
   );
+
+  // ALL CATEGORIES DATA
   const categoriesLevel = categoriesLevelData?.getCategoriesLevel;
 
+  // GET PRODUCTS
   const { data: productsData, loading: productsLoading } = useQuery<
     GetProductsData,
     GetProductsVars
@@ -119,10 +123,13 @@ function Products() {
     }
   });
 
+  // PRODUCTS DATA
   const products = productsData?.getProductByConditions?.Products || [];
 
+  // TOTAL AMOUNT OF PRODUCTS, USED TO CALCULATE PAGE COUNT
   const total = productsData?.getProductByConditions?.total || 0;
 
+  // GET FILTERED CATEGORY DATA
   const { data: categoryData } = useQuery<CategorySubData, CategoryVar>(GET_CATEGORY, {
     variables: {
       id: +router.query.category
@@ -130,26 +137,41 @@ function Products() {
     onError: () => null,
     skip: !router.query.category
   });
+
+  // CATEGORY DATA
   const category = categoryData?.getCategory;
 
+  // GET PATHOLOGIES
   const { data: pathologyData } = useQuery<GetPathologyData, GetPathologyVars>(GET_PATHOLOGY, {
     variables: {
       id: Number(router.query.pathology)
     },
     skip: !router.query.pathology
   });
+
+  // PATHOLOGIES DATA
   const pathology = pathologyData?.getPathology;
 
+  // PARENT CATEGORY OF THE FILTERED CATEGORY
   const categoryParent = categoriesLevel
     ?.filter((category) => category.id === Number(router.query.category))
     ?.shift();
 
+  // TITLE OF THE PAGE WHEN FILTERED CATEGORY
+  // TODO: GET CATEGORY DETAILS WITH FILTERED CATEGORY ID AND GET THE NAME (NEEDS FIX FROM BACKEND)
+  //       REMOVE GET CATEGORY LEVELS
   const categoryTitle = category?.name || categoryParent?.name;
 
+  // TITLE OF THE PAGE WHEN FILTERED PATHOLOGY
   const pathologyTitle = categoryTitle || pathology?.name;
 
+  // TITLE OF THE PRODUCTS PAGE
+  // CATEGORY NAME WHEN FILTERED BY CATEGORY
+  // PATHOLOGY NAME WHEN FILTERED BY PATHOLOGY
+  // ELSE NORMAL TITLE
   const title = pathologyTitle || t('products:title');
 
+  // SCROLL TO TOP WHEN LOADING PRODUCTS
   useEffect(() => {
     if (productsLoading) {
       animateScroll.scrollToTop();
@@ -162,85 +184,80 @@ function Products() {
         <title>Medofa - {title}</title>
       </Head>
 
-      {categoriesLevel ? (
-        <div className="products container mobile-content my-3 my-sm-5">
-          <div className="d-flex flex-nowrap justify-content-between">
-            <div className="products__sidebar pr-4 d-none d-sm-block">
-              <ProductsSidebarFilter />
-            </div>
+      <div className="products container mobile-content my-3 my-sm-5">
+        <div className="d-flex flex-nowrap justify-content-between">
+          <div className="products__sidebar pr-4 d-none d-sm-block">
+            <ProductsSidebarFilter />
+          </div>
 
-            <div className="flex-grow-1">
-              <div className="px-2 px-sm-0 mb-2">
-                <div className="d-block d-sm-none mb-3">
-                  <ProductsDrawerFilter />
-                </div>
-                <h1 className="products__header text-capitalize mb-3">{title}</h1>
-                {productsLoading ? (
-                  <b></b>
-                ) : total > 0 ? (
-                  <>
-                    {t('products:show')}{' '}
-                    <b>
-                      {(page - 1) * PAGE_SIZE + 1}&nbsp;-&nbsp;
-                      {Math.min(page * PAGE_SIZE, total)}
-                    </b>{' '}
-                    {t('products:on_of')}
-                    <b>{`${total} `}</b>
-                    {search ? (
-                      <>
-                        {t('products:key')} <b>{search}</b>
-                      </>
-                    ) : (
-                      t('products:products')
-                    )}
-                  </>
-                ) : (
-                  <div>
-                    {t('products:no_products')} <b>{search}</b>
-                  </div>
-                )}
+          <div className="flex-grow-1 w-100">
+            <div className="px-2 px-sm-0 mb-2">
+              <div className="d-block d-sm-none mb-3">
+                <ProductsDrawerFilter />
               </div>
 
-              <div hidden={products?.length === 0} className="d-none d-sm-block mb-4">
-                <FilterTags />
-              </div>
+              <h1 className="products__header text-capitalize mb-3">{title}</h1>
 
-              <main className="products__products">
-                {productsLoading ? (
-                  <div className="container text-center pb-5 pt-5">
-                    <Loading />
-                  </div>
-                ) : (
-                  <div className="products__cards mb-3">
-                    {products.map((product, index) => (
-                      <ProductCard key={index} {...product} />
-                    ))}
-                  </div>
-                )}
-
-                {!productsLoading && (
-                  <Pagination
-                    count={Math.ceil(total / PAGE_SIZE)}
-                    page={page}
-                    siblingCount={4}
-                    onChange={(page) =>
-                      router.push({
-                        pathname: router.pathname,
-                        query: {
-                          ...router.query,
-                          page
-                        }
-                      })
-                    }
+              {!productsLoading &&
+                (total > 0 ? (
+                  <Trans
+                    i18nKey={search ? 'products:results_with_keyword' : 'products:results'}
+                    values={{
+                      start: (page - 1) * PAGE_SIZE + 1,
+                      end: Math.min(page * PAGE_SIZE, total),
+                      total: total,
+                      keyword: search
+                    }}
+                    components={{ bold: <b /> }}
                   />
-                )}
-              </main>
+                ) : (
+                  <Trans
+                    i18nKey={search ? 'products:no_products_with_keyword' : 'products:no_products'}
+                    values={{
+                      keyword: search
+                    }}
+                    components={{ bold: <b /> }}
+                  />
+                ))}
             </div>
+
+            <div hidden={products?.length === 0} className="d-none d-sm-block mb-4">
+              <FilterTags />
+            </div>
+
+            <main className="products__products">
+              {productsLoading ? (
+                <div className="container text-center pb-5 pt-5">
+                  <Loading />
+                </div>
+              ) : (
+                <div className="products__cards mb-3">
+                  {products.map((product, index) => (
+                    <ProductCard key={index} {...product} />
+                  ))}
+                </div>
+              )}
+
+              {!productsLoading && (
+                <Pagination
+                  count={Math.ceil(total / PAGE_SIZE)}
+                  page={page}
+                  siblingCount={4}
+                  onChange={(page) =>
+                    router.push({
+                      pathname: router.pathname,
+                      query: {
+                        ...router.query,
+                        page
+                      }
+                    })
+                  }
+                />
+              )}
+            </main>
           </div>
         </div>
-      ) : (
-        <div></div>
-      )}
+      </div>
     </MainLayout>
   );
 }

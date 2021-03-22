@@ -6,10 +6,19 @@
   "enter_name_ingredients": "Enter ingredient's name",
   "enter_name_manufacturers": "Enter manufacturer's name",
   "in": "in",
-  "input": "Enter the drug, ingredient's name...",
   "no_category": "No category with keywords",
   "no_manufacturers": "No manufacturers with keywords",
   "no_products": "No products with keywords",
   "result": "search result for",
-  "show": "Show"
+  "show": "Show",
+  "show_manufacturer_detail": "Show detail",
+  "submit_search": "Search",
+  "search_by_products": "Products",
+  "search_by_manufacturers": "Manufacturers",
+  "search_by_ingredients": "Ingredients",
+  "placeholder_products": "Enter product name...",
+  "placeholder_manufacturers": "Enter manufacturer name...",
+  "placeholder_ingredients": "Enter ingredient name...",
+  "showing_results_for": "Showing {{count}} search result for",
+  "showing_results_for_plural": "Showing {{count}} search results for"
 }

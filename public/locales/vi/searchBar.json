@@ -6,10 +6,18 @@
   "enter_name_ingredients": "Nhập tên hoạt chất",
   "enter_name_manufacturers": "Nhập tên nhà sản xuất",
   "in": "trong",
-  "input": "Nhập tên thuốc, hoạt chất cần tìm ...",
   "no_category": "Không có thể loại với từ khóa",
   "no_manufacturers": "Không có nhà sản xuất với từ khóa",
   "no_products": "Không có sản phẩm với từ khóa",
   "result": "kết quả tìm kiếm cho",
-  "show": "Hiển thị"
+  "show": "Hiển thị",
+  "show_manufacturer_detail": "Xem chi tiết",
+  "submit_search": "Tìm kiếm",
+  "search_by_products": "Sản phẩm",
+  "search_by_manufacturers": "Nhà sản xuất",
+  "search_by_ingredients": "Hoạt chất",
+  "placeholder_products": "Nhập tên thuốc cần tìm...",
+  "placeholder_manufacturers": "Nhập tên nhà sản xuất cần tìm...",
+  "placeholder_ingredients": "Nhập tên hoạt chất cần tìm...",
+  "showing_results_for": "Hiển thị {{count}} kết quả tìm kiếm cho"
 }

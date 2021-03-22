@@ -1,19 +1,27 @@
+import configs from 'configs';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import PriceText from 'src/components/Form/PriceText';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { useCart } from 'src/contexts/Cart';
 import { DELETE_CARTS, DeleteCartData, DeleteCartsVars } from 'src/graphql/cart/deleteCarts';
+import {
+  GET_CART_BY_PRODUCT,
+  GetCartByProductData,
+  getCartByproductVars
+} from 'src/graphql/cart/getCartByProduct';
 import { CREATE_COUNSEL } from 'src/graphql/order/order.mutation';
-import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
+import { useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
 
+import ProductDetaiInfor from '../ProductDetail/ProductDetaiInfor';
 import CartItem from './CartItem';
 import ConfirmModal from './ConfirmModal';
 
-const MIN_PRICE = 1000000;
+const MIN_PRICE = configs.MIN_PRICE;
+const FREE_SHIP = configs.FREESHIP_PRICE;
 
 export default function CartPage() {
   const { data: cart, refetch: refetchCart } = useCart();
@@ -22,7 +30,29 @@ export default function CartPage() {
 
   const [deleteAllIsOpen, setDeleteAllIsOpen] = useState<boolean>(false);
 
+  const [checkboxCarts, setCheckboxCarts] = useState<string[]>([]);
+
   const router = useRouter();
+
+  useEffect(() => {
+    const id = router.query.id_buy_now;
+
+    if (id !== null) {
+      const buyNowProduct = cart?.carts.filter((obj) => obj.productId.toString() == id);
+
+      setCheckboxCarts(buyNowProduct.length ? [buyNowProduct[0]._id] : []);
+    }
+  }, [router.query]);
+
+  const { data: dataGetCartByProduct, loading: gettingCartByProducts } = useQueryAuth<
+    GetCartByProductData,
+    getCartByproductVars
+  >(GET_CART_BY_PRODUCT, {
+    variables: { ids: checkboxCarts },
+    nextFetchPolicy: 'network-only'
+  });
+
+  const cartsCheckBox = dataGetCartByProduct?.getCartByProduct;
 
   const [createCounsel, { loading: creatingCounsel }] = useMutationAuth(CREATE_COUNSEL, {
     onCompleted: () => {
@@ -46,6 +76,12 @@ export default function CartPage() {
     }
   });
 
+  useEffect(() => {
+    if (checkboxCarts) return;
+
+    refetchCart();
+  }, [checkboxCarts]);
+
   const [deleteCarts, { loading: deletingCarts }] = useMutationAuth<
     DeleteCartData,
     DeleteCartsVars
@@ -56,16 +92,20 @@ export default function CartPage() {
     onCompleted: () => {
       setDeleteAllIsOpen(false);
 
-      refetchCart().then(() => {
-        toast.success(t(`cart:delete_all_success`));
-      });
+      refetchCart()
+        .then(() => {
+          toast.success(t(`cart:delete_all_success`));
+        })
+        .then(() => {
+          setCheckboxCarts([]);
+        });
     }
   });
 
   const handleCheckoutClick = () => {
     if (cart?.carts.length === 0) return;
 
-    const cartIds = cart?.carts.map((item) => item._id);
+    const cartIds = checkboxCarts;
 
     createCounsel({
       variables: {
@@ -74,22 +114,39 @@ export default function CartPage() {
     });
   };
 
-  const total = cart?.totalNetPrice - cart?.totalShippingFee;
+  const total = cartsCheckBox?.totalNetPrice - cartsCheckBox?.totalShippingFee;
 
   const checkoutDisabled = total < MIN_PRICE;
+
+  const enableShippingFee = total > MIN_PRICE && total < FREE_SHIP;
 
   const handleOpenDeleteAllModal = () => setDeleteAllIsOpen(true);
 
   const handleCloseDeleteAllModal = () => setDeleteAllIsOpen(false);
 
   const handleConfirmDeleteAll = () => {
-    const ids = cart.carts.map((item) => item._id);
+    const ids = checkboxCarts;
 
     deleteCarts({
       variables: {
         ids
       }
     });
+  };
+  const addToCheckCart = (id: string) => {
+    setCheckboxCarts((checkboxCarts) => [...checkboxCarts, id]);
+  };
+
+  const deleteToCheckCart = (id: string) => {
+    setCheckboxCarts((checkboxCarts) => checkboxCarts.slice().filter((cart) => cart !== id));
+  };
+
+  const handleSelectAll = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.checked) {
+      setCheckboxCarts(cart?.carts.map((item) => item._id));
+    } else {
+      setCheckboxCarts([]);
+    }
   };
 
   return (
@@ -99,13 +156,29 @@ export default function CartPage() {
           <div className="row">
             <div className="col-12 mb-3">
               <h1 className="h3">{t('cart:cart')}</h1>
+              <div className="d-flex align-items-center" hidden={cart.totalQty === 0}>
+                <input
+                  type="checkbox"
+                  onChange={handleSelectAll}
+                  checked={cart?.carts?.length > 0 && checkboxCarts?.length === cart?.carts?.length}
+                />
+                <h1 className="h5 ml-2">
+                  {t('cart:select_all')}
+                  {checkboxCarts?.length === cart?.carts?.length && ` (${cart.totalQty})`}
+                </h1>
+              </div>
             </div>
           </div>
           <div className="row">
             <div className="col-12 col-md-9">
               {cart?.carts.map((item) => (
                 <div key={item._id} className="elevated cart__items mb-3">
-                  <CartItem {...item} />
+                  <CartItem
+                    {...item}
+                    addToCheckCart={() => addToCheckCart(item._id)}
+                    deleteToCheckCart={() => deleteToCheckCart(item._id)}
+                    checked={checkboxCarts.includes(item._id)}
+                  />
                 </div>
               ))}
 
@@ -124,7 +197,7 @@ export default function CartPage() {
                           <div>{t('cart:quantity')}</div>
                         </div>
                         <div className="cart__quantity text-secondary">
-                          <b>{cart?.totalQty}</b>
+                          <b>{cartsCheckBox?.totalQty}</b>
                         </div>
                       </div>
                     </div>
@@ -139,9 +212,14 @@ export default function CartPage() {
                       </div>
                     </div>
 
-                    <div hidden={total < MIN_PRICE} className="col-12 p-3 cart__info-total">
+                    {/* <div hidden={total > FREE_SHIP} className="col-12 p-3 cart__info-total">
                       {t('cart:shipping_fee') + ': '}
-                      <PriceText price={cart?.totalShippingFee} />
+                      <PriceText price={cartsCheckBox?.totalShippingFee} />
+                    </div> */}
+
+                    <div hidden={!enableShippingFee} className="col-12 p-3 cart__info-total">
+                      {t('cart:shipping_fee') + ': '}
+                      <PriceText price={cartsCheckBox?.totalShippingFee} />
                     </div>
 
                     <div className="col-12">
@@ -162,7 +240,7 @@ export default function CartPage() {
                   </div>
 
                   <button
-                    hidden={cart?.carts?.length === 0}
+                    hidden={cartsCheckBox?.carts?.length === 0}
                     onClick={handleOpenDeleteAllModal}
                     className="w-100 p-2 btn-link text-danger text-left">
                     <i className="fas fa-fw fa-trash mr-1" />

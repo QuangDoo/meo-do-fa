@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import toNumbersOnly from 'src/utils/removeNonNumerics';
 
 type Props = {
@@ -25,6 +25,18 @@ export default function QuantityInput(props: Props) {
     onMinusClick,
     onPlusClick
   } = props;
+
+  useEffect(() => {
+    if (quantity < min) {
+      setQuantity(min);
+    }
+  }, [min]);
+
+  useEffect(() => {
+    if (quantity > max) {
+      setQuantity(max);
+    }
+  }, [max]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     onChange?.(event);

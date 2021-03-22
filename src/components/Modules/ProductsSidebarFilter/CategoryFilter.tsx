@@ -14,6 +14,12 @@ import {
 import { useDebouncedEffect } from 'src/hooks/useDebouncedEffect';
 import removeAccents from 'src/utils/removeAccents';
 
+function noAccentCompare(s1, s2) {
+  const noAccent1 = removeAccents(s1.trim());
+  const noAccent2 = removeAccents(s2.trim());
+  return noAccent1.includes(noAccent2);
+}
+
 export default function CategoryFilter() {
   const { t } = useTranslation(['productsSidebar', 'searchBar']);
 
@@ -23,8 +29,10 @@ export default function CategoryFilter() {
 
   const [filterValue, setFilterValue] = useState<string>('');
 
+  // ALL CATEGORIES
   const [original, setOriginal] = useState<Category[]>([]);
 
+  // GET ALL CATEGORIES
   useQuery<GetCategoriesLevelData, undefined>(GET_CATEGORIES_LEVEL, {
     onError: (error) => {
       toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
@@ -32,6 +40,7 @@ export default function CategoryFilter() {
     onCompleted: (data) => {
       const original = [];
 
+      // SORT CHILDREN CATEGORIES ALPHABETICALLY IN EACH PARENT CATEGORY
       data.getCategoriesLevel.forEach((parent) => {
         original.push({
           id: parent.id,
@@ -41,22 +50,26 @@ export default function CategoryFilter() {
         });
       });
 
+      // SORT PARENT CATEGORIES ALPHABETICALLY AND SET TO ORIGINAL ARRAY
       setOriginal(original.sort((a, b) => a.name.localeCompare(b.name)));
     }
   });
 
+  // DEBOUNCE CHANGE FILTER VALUE
   useDebouncedEffect(
     () => {
-      setFilterValue(removeAccents(inputValue));
+      setFilterValue(inputValue);
     },
     300,
     [inputValue]
   );
 
+  // HREF FOR "ALL" LINK
   const getAllHref = () => {
     const newQuery = { ...router.query };
 
     delete newQuery.category;
+    delete newQuery.page;
 
     return {
       pathname: router.pathname,
@@ -64,9 +77,28 @@ export default function CategoryFilter() {
     };
   };
 
+  // HREF FOR EACH CATEGORY LINK
+  const getCategoryHref = (id) => {
+    const newQuery = { ...router.query };
+
+    delete newQuery.page;
+
+    newQuery.category = id;
+
+    return {
+      pathname: router.pathname,
+      query: newQuery
+    };
+  };
+
+  // HIDE THIS COMPONENT IF THERE ARE NO CATEGORIES
+  if (!original.length) {
+    return null;
+  }
+
   return (
     <Dropdown label={t('productsSidebar:category')}>
-      <div className="input-group form__input-group mb-3">
+      <div className="input-group form__input-group has-icon mb-3">
         <i className="fas fa-search form__input-icon" />
 
         <input
@@ -80,7 +112,7 @@ export default function CategoryFilter() {
       </div>
 
       <div className="mb-2">
-        <Link href={'/products'}>
+        <Link href={getAllHref()}>
           <a className={clsx('products__filter-category', !router.query.category && 'active')}>
             {t('productsSidebar:all')}
           </a>
@@ -91,11 +123,11 @@ export default function CategoryFilter() {
         !original.some(
           (parent) =>
             removeAccents(parent.name).includes(filterValue) ||
-            parent.categorySub.some((child) => removeAccents(child.name).includes(filterValue))
+            parent.categorySub.some((child) => noAccentCompare(child.name, filterValue))
         ) && (
           <React.Fragment>
             <div className="search__result--empty">
-              {t('searchBar:no_category')} <b>{filterValue}</b>
+              {t('searchBar:no_category')} <b>{`"${filterValue}"`}</b>
             </div>
 
             <hr />
@@ -103,13 +135,18 @@ export default function CategoryFilter() {
         )}
 
       {original.map((parent) => {
-        const parentNameMatchesInput = removeAccents(parent.name).includes(filterValue);
+        const parentNameMatchesInput = noAccentCompare(parent.name, filterValue);
 
         const parentIdMatchesQuery = +router.query.category === parent.id;
 
+        // Children whose name matches input value
         const childrenNamesMatchInput = parent.categorySub
           .map((child) => child.name)
-          .filter((name) => removeAccents(name).includes(filterValue));
+          .filter((name) => noAccentCompare(name, filterValue));
+
+        const childIdMatchesQuery = parent.categorySub.some(
+          (child) => child.id === +router.query.category
+        );
 
         return (
           <div
@@ -118,21 +155,10 @@ export default function CategoryFilter() {
             className="mb-2">
             <Dropdown
               label={parent.name}
-              show={
-                !!filterValue ||
-                parentIdMatchesQuery ||
-                parent.categorySub.some((child) => child.id === +router.query.category)
-              }>
+              show={!!filterValue || parentIdMatchesQuery || childIdMatchesQuery}>
               <div className="pl-3 mb-3">
                 <div className="mb-1">
-                  <Link
-                    href={{
-                      pathname: router.pathname,
-                      query: {
-                        ...router.query,
-                        category: parent.id
-                      }
-                    }}>
+                  <Link href={getCategoryHref(parent.id)}>
                     <a
                       className={clsx(
                         'products__filter-category',
@@ -148,14 +174,7 @@ export default function CategoryFilter() {
                     hidden={!parentNameMatchesInput && !childrenNamesMatchInput.includes(name)}
                     key={id}
                     className="mb-1">
-                    <Link
-                      href={{
-                        pathname: router.pathname,
-                        query: {
-                          ...router.query,
-                          category: id
-                        }
-                      }}>
+                    <Link href={getCategoryHref(id)}>
                       <a
                         className={clsx(
                           'products__filter-category',

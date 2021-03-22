@@ -1,18 +1,20 @@
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import React, { useState } from 'react';
-import { toast } from 'react-toastify';
+import Checkbox from 'src/components/Form/Checkbox';
 import PriceText from 'src/components/Form/PriceText';
-import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import ProductCardQuantityInput from 'src/components/Modules/ProductCard/ProductCardQuantityInput';
-import { useCart } from 'src/contexts/Cart';
-import { DELETE_CART, DeleteCartData, DeleteCartVars } from 'src/graphql/cart/deleteCart.mutation';
 import { CartItem as CartItemProps } from 'src/graphql/cart/getCart';
-import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 
 import ConfirmDeleteItemModal from './ConfirmDeleteItemModal';
 
-function CartItem(props: CartItemProps) {
+type Props = CartItemProps & {
+  addToCheckCart?: () => void;
+  deleteToCheckCart?: () => void;
+  checked?: boolean;
+};
+
+function CartItem(props: Props) {
   const { t } = useTranslation(['cart', 'errors']);
 
   const totalDiscountAmount = props.promotions
@@ -23,42 +25,28 @@ function CartItem(props: CartItemProps) {
 
   const [open, setOpen] = useState<boolean>(false);
 
-  // Refetch cart on update cart complete
-  const { refetch: refetchCart } = useCart();
-
-  const [deleteCart, { loading: deletingCart }] = useMutationAuth<DeleteCartData, DeleteCartVars>(
-    DELETE_CART,
-    {
-      onCompleted: () => {
-        refetchCart().then(() => {
-          toast.success(t('cart:delete_success'));
-        });
-      },
-      onError: (err) => {
-        toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
-      }
-    }
-  );
-
   const handleDeleteClick = () => {
     setOpen(true);
   };
 
   const handleCloseModal = () => setOpen(false);
 
-  const handleConfirmDelete = () => {
-    setOpen(false);
-    deleteCart({
-      variables: {
-        _id: props._id
-      }
-    });
-  };
-
   const productLink = 'products/' + props.product.slug;
+
+  const handleChange = (e) => {
+    if (e.target.checked) {
+      props.addToCheckCart();
+    } else {
+      props.deleteToCheckCart();
+    }
+  };
 
   return (
     <div className="d-flex p-3">
+      {/* <Checkbox/> */}
+      <div className="mr-3">
+        <input type="checkbox" onChange={handleChange} checked={props.checked} />
+      </div>
       <Link href={productLink}>
         <a>
           <img
@@ -124,16 +112,15 @@ function CartItem(props: CartItemProps) {
               question={t('cart:remove_confirm')}
               open={open}
               onClose={handleCloseModal}
-              onConfirm={handleConfirmDelete}
+              cartId={props._id}
               img={props.product.image_512}
               name={props.productName}
               price={props.product.sale_price}
+              deleteToCheckCart={() => props.deleteToCheckCart()}
             />
           </div>
         </div>
       </div>
-
-      <LoadingBackdrop open={deletingCart} />
     </div>
   );
 }
