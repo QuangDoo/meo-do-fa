@@ -18,6 +18,7 @@ type Props = {
   couponDateFrom?: string;
   discountType: string;
   discountFixedAmount: number;
+  couponDateTo?: string;
 };
 
 export default function PromoCodeItem(props: Props) {
@@ -65,7 +66,7 @@ export default function PromoCodeItem(props: Props) {
         <div className="col-4 deal-info pr-3 d-flex flex-column justify-content-between align-items-center">
           {leftPromoCode(rewardType)}
           {props.couponDateFrom !== 'false' && (
-            <div className="text-muted">{`HSD: ${props.couponDateFrom}`}</div>
+            <div className="text-muted">{`HSD: ${props.couponDateTo}`}</div>
           )}
         </div>
         <div className="col-7 justify-content-between text-center">
