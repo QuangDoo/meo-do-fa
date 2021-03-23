@@ -85,7 +85,7 @@ OrderDetails.getInitialProps = async (ctx) => {
   };
 };
 
-const flagSteps = [10, 20, 30, 40, 80];
+const flagSteps = [10, 15, 20, 30, 40, 80];
 
 function OrderDetails() {
   const { t } = useTranslation(['myOrders', 'common']);
