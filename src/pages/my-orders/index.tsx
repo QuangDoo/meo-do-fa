@@ -7,7 +7,6 @@ import { toast } from 'react-toastify';
 import Head from 'src/components/Layout/Head';
 import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import OrderItem from 'src/components/Modules/My-orders/OrderItem';
-import Pagination from 'src/components/Modules/Pagination';
 import ProfileLayout from 'src/components/Modules/ProfileLayout';
 import {
   GET_ORDER_LIST,
@@ -24,6 +23,7 @@ const PAGE_SIZE = 20;
 const FLAGS = {
   ALL: 0,
   WAIT_CONFIRM: 10,
+  RECEIVED: 15,
   CONFIRMED: 20,
   HANDLING: 30,
   DELIVERING: 40,
@@ -101,6 +101,7 @@ function MyOrders(): JSX.Element {
                 aria-label="scrollable auto tabs example">
                 <Tab value={0} label={t('myOrders:all_order')} />
                 <Tab value={10} label={t('myOrders:wait_for_confirm')} />
+                <Tab value={15} label={t('myOrders:received')} />
                 <Tab value={20} label={t('myOrders:confirmed')} />
                 <Tab value={30} label={t('myOrders:handling')} />
                 <Tab value={40} label={t('myOrders:delivering')} />
@@ -151,3 +152,6 @@ function MyOrders(): JSX.Element {
 }
 
 export default withToken({ ssr: true, isProtected: true })(MyOrders);
+function GET_ORDER_CANCEL_TYPES<T, U>(GET_ORDER_CANCEL_TYPES: any): { data: any } {
+  throw new Error('Function not implemented.');
+}
