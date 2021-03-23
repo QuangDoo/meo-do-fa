@@ -149,6 +149,10 @@ export default function CartPage() {
     }
   };
 
+  useEffect(() => {
+    setCheckboxCarts(cart?.carts.map((item) => item._id));
+  }, []);
+
   return (
     <>
       <div className="container py-5">
@@ -178,6 +182,11 @@ export default function CartPage() {
                     addToCheckCart={() => addToCheckCart(item._id)}
                     deleteToCheckCart={() => deleteToCheckCart(item._id)}
                     checked={checkboxCarts.includes(item._id)}
+                    updateCheckboxCart={() => {
+                      setCheckboxCarts((checkboxCarts) =>
+                        checkboxCarts.slice().filter((cartId) => cartId !== item._id)
+                      );
+                    }}
                   />
                 </div>
               ))}
