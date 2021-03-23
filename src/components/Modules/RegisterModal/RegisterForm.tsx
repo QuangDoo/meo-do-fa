@@ -212,11 +212,12 @@ const RegisterForm = () => {
 
           <Input
             name="tax"
-            type="text"
+            //type="text"
             ref={register({
               pattern: {
                 value: taxCodeRegex,
-                message: t('errors:tax_code_invalid') as string
+                message: t('errors:tax_code_invalid')
+                //as string
               }
             })}
             containerClass="mb-4"

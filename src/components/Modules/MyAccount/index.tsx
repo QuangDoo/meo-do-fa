@@ -189,6 +189,7 @@ export default function MyAccountPage() {
     // console.log('Submit data:', data);
 
     // return;
+
     const regVat = /(^[0-9]{10}$)|(^[0-9]{13}$)/g;
     let userVat = data?.taxCode.replace(/-/g, '');
     if (userVat !== '' && !regVat.test(userVat)) {
