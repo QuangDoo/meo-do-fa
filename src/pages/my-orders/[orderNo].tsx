@@ -163,7 +163,7 @@ function OrderDetails() {
                     )}
 
                     {flag &&
-                      (flag === 10 ? (
+                      ([10, 15].includes(flag) ? (
                         <Button
                           size="small"
                           startIcon={<DeleteForeverIcon />}
