@@ -1,4 +1,5 @@
 import { useLazyQuery, useQuery } from '@apollo/client';
+import axios from 'axios';
 import { useTranslation } from 'i18n';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -17,7 +18,6 @@ import {
 import { GET_WARDS, GetWardsData, GetWardsVars } from 'src/graphql/address/getWards';
 import { UPDATE_USER, UpdateUserData, UpdateUserVars } from 'src/graphql/user/updateUser';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
-import toBase64 from 'src/utils/toBase64';
 
 import ProfileLayout from '../ProfileLayout';
 import FormCard from './FormCard';
@@ -43,16 +43,22 @@ type Inputs = {
   deliveryWard: string;
 };
 
-const BASE64_PREFIX = 'data:image/jpeg;base64,';
-
 export default function MyAccountPage() {
   const { t } = useTranslation(['myAccount', 'common', 'errors']);
+
+  // const FILE_SERVICE =
+  //   typeof window !== 'undefined' && document.location.host === 'medofa.com'
+  //     ? 'https://files.medofa.com'
+  //     : 'https://files.medofa.bedigital.vn';
+
+  const FILE_SERVICE = 'https://files.medofa.bedigital.vn';
 
   const { data: user, refetch: refetchUser } = useUser();
 
   const { register, handleSubmit, watch, setValue } = useForm<Inputs>();
 
-  const businessLicense: string = watch('businessLicense', user?.business_license);
+  const [licenseHidden, setLicenseHidden] = useState<boolean>(true);
+  const [licenseTime, setLicenseTime] = useState<number>(new Date().getTime());
 
   const [firstLoadCities, setFirstLoadCities] = useState(true);
   const [firstLoadDistricts, setFirstLoadDistricts] = useState(true);
@@ -161,39 +167,40 @@ export default function MyAccountPage() {
     const isImage = file.type.startsWith('image');
 
     if (!isImage) {
-      setValue('businessLicense', undefined);
       toast.error(t('cart:file_is_not_image'));
       return;
     }
 
-    try {
-      toBase64(file).then((res) => setValue('businessLicense', res.replace(BASE64_PREFIX, '')));
-    } catch (err) {
-      console.log('Error converting file to base64:', err);
-    }
+    console.log(file);
+
+    const formData = new FormData();
+
+    formData.append('image', file);
+    formData.append('id', user?.id + '');
+
+    axios
+      .post(`${FILE_SERVICE}/certificate`, formData)
+      .then((res) => {
+        console.log('Image upload response:', res);
+        setLicenseTime(new Date().getTime());
+        setLicenseHidden(false);
+      })
+      .catch((err) => {
+        console.log('Image upload error:', err);
+      });
   };
 
   const onSubmit = async (data: Inputs) => {
-    // let rawBase64 = '';
-
-    // if (data.businessLicense.length) {
-    //   try {
-    //     rawBase64 = await toBase64(data.businessLicense[0] as string);
-    //   } catch (err) {
-    //     console.log('Error converting file to base64:', err);
-    //   }
-    // }
-
-    // const base64 = rawBase64.replace(BASE64_PREFIX, '');
-
-    // console.log('Submit data:', data);
-
-    // return;
     const regVat = /(^[0-9]{10}$)|(^[0-9]{13}$)/g;
+
     let userVat = data?.taxCode.replace(/-/g, '');
+
     if (userVat !== '' && !regVat.test(userVat)) {
-      return toast.error(t('errors:tax_code_invalid'));
+      toast.error(t('errors:tax_code_invalid'));
+
+      return;
     }
+
     if (userVat.length === 13) {
       userVat = userVat.slice(0, 10) + '-' + userVat.slice(10, 13);
     }
@@ -222,8 +229,7 @@ export default function MyAccountPage() {
         },
         company_name: data.companyName,
         vat: userVat,
-        representative: data.representative,
-        business_license: data.businessLicense.replace(BASE64_PREFIX, '')
+        representative: data.representative
       }
     });
   };
@@ -314,21 +320,6 @@ export default function MyAccountPage() {
             placeholder={t('myAccount:tax_code_placeholder')}
           />
 
-          {/* Business license file input */}
-          {/* <InputWithLabel
-            ref={register}
-            label={t('myAccount:business_license_label')}
-            name="businessLicense"
-            type="file"
-            accept="image/*"
-            placeholder={
-              businessLicense?.length
-                ? businessLicense[0].name
-                : t('myAccount:business_license_placeholder')
-            }
-            onChange={handleFileChange}
-          /> */}
-
           <InputWithLabel
             label={t('myAccount:business_license_label')}
             type="file"
@@ -345,13 +336,13 @@ export default function MyAccountPage() {
             defaultValue={user?.business_license}
           />
 
-          {businessLicense && (
-            <img
-              alt=""
-              className="mb-3 business-license-img"
-              src={BASE64_PREFIX + businessLicense}
-            />
-          )}
+          <img
+            hidden={licenseHidden}
+            alt=""
+            className="mb-3 business-license-img"
+            src={`${FILE_SERVICE}/certificate/${user?.id}?${licenseTime}`}
+            onError={() => setLicenseHidden(true)}
+          />
 
           <InputWithLabel
             ref={register({
