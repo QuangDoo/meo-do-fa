@@ -51,7 +51,7 @@ export default function MyAccountPage() {
   //     ? 'https://files.medofa.com'
   //     : 'https://files.medofa.bedigital.vn';
 
-  const FILE_SERVICE = 'https://files.medofa.bedigital.vn';
+  const FILE_SERVICE = 'http://localhost:8080';
 
   const { data: user, refetch: refetchUser } = useUser();
 
