@@ -178,6 +178,11 @@ export default function CartPage() {
                     addToCheckCart={() => addToCheckCart(item._id)}
                     deleteToCheckCart={() => deleteToCheckCart(item._id)}
                     checked={checkboxCarts.includes(item._id)}
+                    updateCheckboxCart={() => {
+                      setCheckboxCarts((checkboxCarts) =>
+                        checkboxCarts.slice().filter((cartId) => cartId !== item._id)
+                      );
+                    }}
                   />
                 </div>
               ))}
