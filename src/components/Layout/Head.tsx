@@ -48,7 +48,6 @@ export default function Head(props) {
         href="/icons/apple-icon-120x120-medofa-manifest-20129.png"></link>
       <meta name="theme-color" content="#2f3b97" />
 
-      {/* add for zalo*/}
       <meta property="og:url" content="https://medofa.com/" />
       <meta
         property="og:image"
@@ -59,7 +58,6 @@ export default function Head(props) {
         property="og:description"
         content="MEDOFA là giải pháp công nghệ ngành dược kết nối nhà máy, nhà phân phối, nhà thuốc, dược sĩ nhằm hợp tác tạo mối liên kết trực tiếp và gia tăng doanh thu."
       />
-      {/* end add for zalo*/}
 
       <script async src="https://www.googletagmanager.com/gtag/js?id=G-95PXEWD1KY"></script>
       <script async src="https://www.googletagmanager.com/gtag/js?id=G-TPL3K1KQZN"></script>
