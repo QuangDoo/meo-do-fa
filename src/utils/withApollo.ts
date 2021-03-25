@@ -1,5 +1,6 @@
 import { ApolloClient, from, HttpLink, InMemoryCache } from '@apollo/client';
 import { onError } from '@apollo/client/link/error';
+import { i18n } from 'i18n';
 import { withApollo } from 'next-apollo';
 
 const getURI = () => {
@@ -7,11 +8,14 @@ const getURI = () => {
     return `http://${process.env.GRAPHQL_GATEWAY}`;
   }
 
-  return `https://${process.env.NEXT_PUBIC_GRAPHQL_GATEWAY_EXT}`;
+  return `https://${process.env.NEXT_PUBLIC_GRAPHQL_GATEWAY_EXT}`;
 };
 
 const httpLink = new HttpLink({
-  uri: getURI()
+  uri: getURI(),
+  headers: {
+    'x-language': i18n.language
+  }
 });
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
