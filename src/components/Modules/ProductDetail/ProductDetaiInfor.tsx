@@ -8,6 +8,7 @@ import QuantityInput from 'src/components/Form/QuantityInput';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import index from 'src/components/Modules/Cart/index';
 import { useCart } from 'src/contexts/Cart';
+import { useCheckboxCarts } from 'src/contexts/CheckboxCarts';
 import { useToken } from 'src/contexts/Token';
 import { ADD_TO_CART, AddToCartData, AddToCartVars } from 'src/graphql/cart/addToCart';
 import { ProductDetails } from 'src/graphql/product/product.query';
@@ -51,6 +52,8 @@ const ProductDetailInfor = (props: ProductDetails) => {
   const thisProductInCart = cart?.carts.find((product) => product.productId === props.id);
 
   const quantityInCart = thisProductInCart?.quantity || 0;
+
+  const { checkboxCarts, setCheckboxCarts } = useCheckboxCarts();
 
   useEffect(() => {
     if (!quantityInCart) return;
@@ -96,7 +99,8 @@ const ProductDetailInfor = (props: ProductDetails) => {
         quantity: quantity
       }
     }).then(() => {
-      router.push('/cart/?id_buy_now=' + props.id);
+      setCheckboxCarts([cart.carts.find((cart) => cart.productId === props.id)._id]);
+      router.push('/cart');
     });
   };
 
