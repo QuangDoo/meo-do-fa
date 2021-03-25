@@ -8,20 +8,17 @@ import Select from 'src/components/Form/Select';
 import Textarea from 'src/components/Form/Textarea';
 import ModalBase from 'src/components/Layout/Modal/ModalBase';
 import { CANCEL_ORDER } from 'src/graphql/my-orders/cancelOrder';
-import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
+import {
+  GET_ORDER_CANCEL_TYPES,
+  GetOrderCancelTypesData
+} from 'src/graphql/order/getOrderCancelTypes';
+import { useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
 
 type Inputs = {
   reason: string;
   text: string;
   check: true;
 };
-
-const options = [
-  { key: 'delivery_is_too_long', reason: 'Thời gian đặt hàng quá lâu', default: true },
-  { key: 'change_of_mind', reason: 'Thay đổi ý', default: false },
-  { key: 'duplicate_order', reason: 'Trùng đơn hàng', default: false },
-  { key: 'change_delivery_address', reason: 'Thay đổi địa chỉ giao hàng', default: false }
-];
 
 type Props = {
   open: boolean;
@@ -61,6 +58,17 @@ const ConfirmCancelOrder = (props: Props) => {
     });
   };
 
+  const { data: orderCancelTypes } = useQueryAuth<GetOrderCancelTypesData, undefined>(
+    GET_ORDER_CANCEL_TYPES,
+    {
+      onError: (error) => {
+        toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
+      }
+    }
+  );
+
+  const cancelOption = orderCancelTypes?.getOrderCancelTypes;
+
   return (
     <ModalBase open={open} onClose={onClose}>
       <div className="container p-3">
@@ -74,11 +82,11 @@ const ConfirmCancelOrder = (props: Props) => {
           </label>
 
           <Select ref={register} className="custom-select my-1 mr-sm-2" name="reason">
-            {options &&
-              options.map((option) => {
-                const value = t(`cancelOrder:${option.key}`);
+            {cancelOption &&
+              cancelOption.map((option) => {
+                const value = t(`cancelOrder:${option.name}`);
                 return (
-                  <option key={value} value={value}>
+                  <option key={option.id} value={value}>
                     {value}
                   </option>
                 );

@@ -198,7 +198,7 @@ const ProductDetailInfor = (props: ProductDetails) => {
           <div className="mt-3">
             <div className="product__info-label">{t('productDetail:manufacturer')}</div>
             <div className="text-capitalize">
-              <Link href={`/products?manufacturer=${props.manufacturer?.id}`}>
+              <Link href={`/manufacturers/${props.manufacturer?.id}`}>
                 <a>{props.manufacturer?.name}</a>
               </Link>
             </div>

@@ -74,7 +74,12 @@ function PromocodeDetailDialog(props: Props) {
   const promoDetail = dataPromoDetail?.getCouponProgramsDetail;
 
   return (
-    <Dialog onClose={props.onClose} aria-labelledby="customized-dialog-title" open={props.open}>
+    <Dialog
+      onClose={props.onClose}
+      aria-labelledby="customized-dialog-title"
+      open={props.open}
+      fullWidth={true}
+      maxWidth={'xs'}>
       <LoadingBackdrop open={props.loading} />
       <DialogTitle id="customized-dialog-title" onClose={props.onClose}>
         {props.title}
@@ -83,9 +88,16 @@ function PromocodeDetailDialog(props: Props) {
         <Typography gutterBottom>
           {t('promoCodes:code')}:<b> {promoDetail?.promo_code}</b>
         </Typography>
-        <Typography gutterBottom>
-          {t('promoCodes:exp_date')}:<b> </b>
-        </Typography>
+        {console.log(promoDetail?.rule_date_to)}
+        {promoDetail?.rule_date_to !== 'false' && (
+          <Typography gutterBottom>
+            {t('promoCodes:exp_date')}:
+            <b>
+              {' '}
+              {promoDetail?.rule_date_to.substring(0, promoDetail?.rule_date_to.indexOf(' '))}{' '}
+            </b>
+          </Typography>
+        )}
         <hr />
         <Typography gutterBottom>
           {t('promoCodes:conditions')}:

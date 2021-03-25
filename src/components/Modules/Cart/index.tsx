@@ -161,7 +161,7 @@ export default function CartPage() {
           </div>
           <div className="row">
             <div className="col-12 col-md-9">
-              {cart?.carts.map((item) => (
+              {cart?.carts.slice().reverse().map((item) => (
                 <div key={item._id} className="elevated cart__items mb-3">
                   <CartItem
                     {...item}
