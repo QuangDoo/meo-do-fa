@@ -35,7 +35,8 @@ const FilterTags = () => {
   return (
     <>
       <Link key={'all'} href={removeTag()}>
-        <a className={clsx('btn products__filter-btn', router.query.tag === undefined && 'active')}>
+        <a
+          className={clsx('btn products__filter-btn ', router.query.tag === undefined && 'active')}>
           {t('filterTags:all')}
         </a>
       </Link>
@@ -51,7 +52,7 @@ const FilterTags = () => {
               tag
             }
           }}>
-          <a className={clsx('btn products__filter-btn', router.query.tag === tag && 'active')}>
+          <a className={clsx('btn products__filter-btn  ', router.query.tag === tag && 'active')}>
             {t('filterTags:' + tag)}
           </a>
         </Link>
