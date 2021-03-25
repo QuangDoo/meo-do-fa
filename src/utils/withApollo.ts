@@ -1,20 +1,13 @@
 import { ApolloClient, from, HttpLink, InMemoryCache } from '@apollo/client';
 import { onError } from '@apollo/client/link/error';
 import { withApollo } from 'next-apollo';
-import getConfig from 'next/config';
-
-const { serverRuntimeConfig, publicRuntimeConfig } = getConfig();
 
 const getURI = () => {
-  // if (typeof window === 'undefined') {
-  //   console.log('SERVER...', JSON.stringify({ serverRuntimeConfig, publicRuntimeConfig }));
+  if (typeof window === 'undefined') {
+    return `http://${process.env.GRAPHQL_GATEWAY}`;
+  }
 
-  //   return `http://${serverRuntimeConfig.GRAPHQL_GATEWAY}`;
-  // }
-
-  // return `https://${publicRuntimeConfig.GRAPHQL_GATEWAY_EXT}`;
-
-  return 'https://graphql.medofa.com/';
+  return `https://${process.env.NEXT_PUBIC_GRAPHQL_GATEWAY_EXT}`;
 };
 
 const httpLink = new HttpLink({

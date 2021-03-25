@@ -43,21 +43,16 @@ type Inputs = {
   deliveryWard: string;
 };
 
+const FILES_GATEWAY = process.env.NEXT_PUBLIC_FILES_GATEWAY;
+
 export default function MyAccountPage() {
   const { t } = useTranslation(['myAccount', 'common', 'errors']);
-
-  // const FILE_SERVICE =
-  //   typeof window !== 'undefined' && document.location.host === 'medofa.com'
-  //     ? 'https://files.medofa.com'
-  //     : 'https://files.medofa.bedigital.vn';
-
-  const FILE_SERVICE = 'http://localhost:8080';
 
   const { data: user, refetch: refetchUser } = useUser();
 
   const { register, handleSubmit, watch, setValue } = useForm<Inputs>();
 
-  const [licenseHidden, setLicenseHidden] = useState<boolean>(true);
+  const [licenseHidden, setLicenseHidden] = useState<boolean>(false);
   const [licenseTime, setLicenseTime] = useState<number>(new Date().getTime());
 
   const [firstLoadCities, setFirstLoadCities] = useState(true);
@@ -171,17 +166,14 @@ export default function MyAccountPage() {
       return;
     }
 
-    console.log(file);
-
     const formData = new FormData();
 
     formData.append('image', file);
     formData.append('id', user?.id + '');
 
     axios
-      .post(`${FILE_SERVICE}/certificate`, formData)
-      .then((res) => {
-        console.log('Image upload response:', res);
+      .post(`${FILES_GATEWAY}/certificate`, formData)
+      .then(() => {
         setLicenseTime(new Date().getTime());
         setLicenseHidden(false);
       })
@@ -340,7 +332,7 @@ export default function MyAccountPage() {
             hidden={licenseHidden}
             alt=""
             className="mb-3 business-license-img"
-            src={`${FILE_SERVICE}/certificate/${user?.id}?${licenseTime}`}
+            src={`${FILES_GATEWAY}/certificate/${user?.id}?${licenseTime}`}
             onError={() => setLicenseHidden(true)}
           />
 
