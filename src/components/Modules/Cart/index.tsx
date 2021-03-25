@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import PriceText from 'src/components/Form/PriceText';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { useCart } from 'src/contexts/Cart';
+import { useCheckboxCarts } from 'src/contexts/CheckboxCarts';
 import { DELETE_CARTS, DeleteCartData, DeleteCartsVars } from 'src/graphql/cart/deleteCarts';
 import {
   GET_CART_BY_PRODUCT,
@@ -16,7 +17,6 @@ import {
 import { CREATE_COUNSEL } from 'src/graphql/order/order.mutation';
 import { useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
 
-import ProductDetaiInfor from '../ProductDetail/ProductDetaiInfor';
 import CartItem from './CartItem';
 import ConfirmModal from './ConfirmModal';
 
@@ -26,23 +26,13 @@ const FREE_SHIP = configs.FREESHIP_PRICE;
 export default function CartPage() {
   const { data: cart, refetch: refetchCart } = useCart();
 
+  const { checkboxCarts, setCheckboxCarts } = useCheckboxCarts();
+
   const { t } = useTranslation(['cart', 'common', 'errors']);
 
   const [deleteAllIsOpen, setDeleteAllIsOpen] = useState<boolean>(false);
 
-  const [checkboxCarts, setCheckboxCarts] = useState<string[]>([]);
-
   const router = useRouter();
-
-  useEffect(() => {
-    const id = router.query.id_buy_now;
-
-    if (id !== null) {
-      const buyNowProduct = cart?.carts.filter((obj) => obj.productId.toString() == id);
-
-      setCheckboxCarts(buyNowProduct.length ? [buyNowProduct[0]._id] : []);
-    }
-  }, [router.query]);
 
   const { data: dataGetCartByProduct, loading: gettingCartByProducts } = useQueryAuth<
     GetCartByProductData,
@@ -149,6 +139,10 @@ export default function CartPage() {
     }
   };
 
+  useEffect(() => {
+    setCheckboxCarts(cart?.carts.map((item) => item._id));
+  }, []);
+
   return (
     <>
       <div className="container py-5">
@@ -178,6 +172,11 @@ export default function CartPage() {
                     addToCheckCart={() => addToCheckCart(item._id)}
                     deleteToCheckCart={() => deleteToCheckCart(item._id)}
                     checked={checkboxCarts.includes(item._id)}
+                    updateCheckboxCart={() => {
+                      setCheckboxCarts((checkboxCarts) =>
+                        checkboxCarts.slice().filter((cartId) => cartId !== item._id)
+                      );
+                    }}
                   />
                 </div>
               ))}
@@ -274,4 +273,7 @@ export default function CartPage() {
       <LoadingBackdrop open={creatingCounsel} />
     </>
   );
+}
+function checkboxCartsContext(checkboxCartsContext: any) {
+  throw new Error('Function not implemented.');
 }
