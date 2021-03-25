@@ -116,27 +116,23 @@ function DealOfTheDay() {
                     'col-12 mt-3 text-center',
                     numberHotDeals < 11 ? 'd-none' : 'd-block'
                   )}>
-                  <Pagination
-                    count={Math.ceil(numberHotDeals / PAGE_SIZE)}
-                    page={page}
-                    siblingCount={4}
-                    onChange={(page) => {
-                      router.push({
-                        pathname: router.pathname,
-                        query: {
-                          ...router.query,
-                          page: page
-                        }
-                      });
-                      refetchProducts({
-                        page: page,
-                        pageSize: PAGE_SIZE,
-                        condition: {
-                          order_type: '01'
-                        }
-                      });
-                    }}
-                  />
+                  {!productsLoading && (
+                    <Pagination
+                      count={Math.ceil(numberHotDeals / PAGE_SIZE)}
+                      page={page}
+                      siblingCount={4}
+                      onChange={(page) => {
+                        router.push({
+                          pathname: router.pathname,
+                          query: {
+                            ...router.query,
+                            page: page
+                          }
+                        });
+                        window.scrollTo(0, 0);
+                      }}
+                    />
+                  )}
                 </div>
               </div>
             )
