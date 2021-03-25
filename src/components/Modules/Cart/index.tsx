@@ -165,21 +165,24 @@ export default function CartPage() {
           </div>
           <div className="row">
             <div className="col-12 col-md-9">
-              {cart?.carts.slice().reverse().map((item) => (
-                <div key={item._id} className="elevated cart__items mb-3">
-                  <CartItem
-                    {...item}
-                    addToCheckCart={() => addToCheckCart(item._id)}
-                    deleteToCheckCart={() => deleteToCheckCart(item._id)}
-                    checked={checkboxCarts.includes(item._id)}
-                    updateCheckboxCart={() => {
-                      setCheckboxCarts((checkboxCarts) =>
-                        checkboxCarts.slice().filter((cartId) => cartId !== item._id)
-                      );
-                    }}
-                  />
-                </div>
-              ))}
+              {cart?.carts
+                .slice()
+                .reverse()
+                .map((item) => (
+                  <div key={item._id} className="elevated cart__items mb-3">
+                    <CartItem
+                      {...item}
+                      addToCheckCart={() => addToCheckCart(item._id)}
+                      deleteToCheckCart={() => deleteToCheckCart(item._id)}
+                      checked={checkboxCarts.includes(item._id)}
+                      updateCheckboxCart={() => {
+                        setCheckboxCarts((checkboxCarts) =>
+                          checkboxCarts.slice().filter((cartId) => cartId !== item._id)
+                        );
+                      }}
+                    />
+                  </div>
+                ))}
 
               <div className="elevated text-muted p-3 mb-4">
                 <i className="fas fa-exclamation-circle mr-1" />
