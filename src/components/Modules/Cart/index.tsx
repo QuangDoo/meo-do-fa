@@ -139,10 +139,6 @@ export default function CartPage() {
     }
   };
 
-  useEffect(() => {
-    setCheckboxCarts(cart?.carts.map((item) => item._id));
-  }, []);
-
   return (
     <>
       <div className="container py-5">
