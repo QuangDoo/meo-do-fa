@@ -18,6 +18,7 @@
 @import './my-account.scss';
 @import './coupon.scss';
 @import './search-bar.scss';
+@import './active-message.scss';
 
 button {
   background-color: transparent;
@@ -71,4 +72,8 @@ button {
 .cart-item__name {
   -webkit-line-clamp: 2;
   text-transform: initial;
+}
+#onesignal-bell-container.onesignal-reset.onesignal-bell-container-bottom-right {
+  bottom: 140px !important;
+  right: 11px !important;
 }

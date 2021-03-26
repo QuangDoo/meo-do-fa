@@ -14,6 +14,7 @@ export type Coupon = {
   discount_fixed_amount: number;
   reward_id: string[];
   rule_date_from: string;
+  rule_date_to: string;
 };
 
 export type CouponData = {
@@ -40,6 +41,7 @@ export const GET_COUPON_PROGRAM = gql`
       discount_fixed_amount
       reward_id
       rule_date_from
+      rule_date_to
     }
   }
 `;

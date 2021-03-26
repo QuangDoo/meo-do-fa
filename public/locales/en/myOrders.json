@@ -34,5 +34,6 @@
   "total": "Total",
   "unit_price": "Unit price",
   "vat_invoice": "See information about VAT invoice",
-  "wait_for_confirm": "Wait for confirm"
+  "wait_for_confirm": "Wait for confirm",
+  "received": "Received"
 }

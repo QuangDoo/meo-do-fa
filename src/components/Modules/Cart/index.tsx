@@ -1,3 +1,4 @@
+import configs from 'configs';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -6,6 +7,7 @@ import { toast } from 'react-toastify';
 import PriceText from 'src/components/Form/PriceText';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { useCart } from 'src/contexts/Cart';
+import { useCheckboxCarts } from 'src/contexts/CheckboxCarts';
 import { DELETE_CARTS, DeleteCartData, DeleteCartsVars } from 'src/graphql/cart/deleteCarts';
 import {
   GET_CART_BY_PRODUCT,
@@ -18,16 +20,17 @@ import { useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
 import CartItem from './CartItem';
 import ConfirmModal from './ConfirmModal';
 
-const MIN_PRICE = 1000000;
+const MIN_PRICE = configs.MIN_PRICE;
+const FREE_SHIP = configs.FREESHIP_PRICE;
 
 export default function CartPage() {
   const { data: cart, refetch: refetchCart } = useCart();
 
+  const { checkboxCarts, setCheckboxCarts } = useCheckboxCarts();
+
   const { t } = useTranslation(['cart', 'common', 'errors']);
 
   const [deleteAllIsOpen, setDeleteAllIsOpen] = useState<boolean>(false);
-
-  const [checkboxCarts, setCheckboxCarts] = useState<string[]>([]);
 
   const router = useRouter();
 
@@ -105,7 +108,7 @@ export default function CartPage() {
 
   const checkoutDisabled = total < MIN_PRICE;
 
-  const enableShippingFee = total > MIN_PRICE && total < 1500000;
+  const enableShippingFee = total > MIN_PRICE && total < FREE_SHIP;
 
   const handleOpenDeleteAllModal = () => setDeleteAllIsOpen(true);
 
@@ -158,16 +161,24 @@ export default function CartPage() {
           </div>
           <div className="row">
             <div className="col-12 col-md-9">
-              {cart?.carts.map((item) => (
-                <div key={item._id} className="elevated cart__items mb-3">
-                  <CartItem
-                    {...item}
-                    addToCheckCart={() => addToCheckCart(item._id)}
-                    deleteToCheckCart={() => deleteToCheckCart(item._id)}
-                    checked={checkboxCarts.includes(item._id)}
-                  />
-                </div>
-              ))}
+              {cart?.carts
+                .slice()
+                .reverse()
+                .map((item) => (
+                  <div key={item._id} className="elevated cart__items mb-3">
+                    <CartItem
+                      {...item}
+                      addToCheckCart={() => addToCheckCart(item._id)}
+                      deleteToCheckCart={() => deleteToCheckCart(item._id)}
+                      checked={checkboxCarts.includes(item._id)}
+                      updateCheckboxCart={() => {
+                        setCheckboxCarts((checkboxCarts) =>
+                          checkboxCarts.slice().filter((cartId) => cartId !== item._id)
+                        );
+                      }}
+                    />
+                  </div>
+                ))}
 
               <div className="elevated text-muted p-3 mb-4">
                 <i className="fas fa-exclamation-circle mr-1" />
@@ -199,7 +210,12 @@ export default function CartPage() {
                       </div>
                     </div>
 
-                    <div hidden={total < MIN_PRICE} className="col-12 p-3 cart__info-total">
+                    {/* <div hidden={total > FREE_SHIP} className="col-12 p-3 cart__info-total">
+                      {t('cart:shipping_fee') + ': '}
+                      <PriceText price={cartsCheckBox?.totalShippingFee} />
+                    </div> */}
+
+                    <div hidden={!enableShippingFee} className="col-12 p-3 cart__info-total">
                       {t('cart:shipping_fee') + ': '}
                       <PriceText price={cartsCheckBox?.totalShippingFee} />
                     </div>
@@ -256,4 +272,7 @@ export default function CartPage() {
       <LoadingBackdrop open={creatingCounsel} />
     </>
   );
+}
+function checkboxCartsContext(checkboxCartsContext: any) {
+  throw new Error('Function not implemented.');
 }

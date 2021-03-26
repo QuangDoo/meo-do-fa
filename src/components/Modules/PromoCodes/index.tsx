@@ -131,6 +131,7 @@ export default function PromoCodes() {
                     couponDateFrom={coupon.rule_date_from}
                     discountType={coupon.discount_type}
                     discountFixedAmount={coupon.discount_fixed_amount}
+                    couponDateTo={coupon.rule_date_to}
                   />
                 ))}
             </div>

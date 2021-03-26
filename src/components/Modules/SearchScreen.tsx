@@ -96,9 +96,7 @@ export default function SearchScreen(props: Props) {
       </div>
 
       <div className="count_result">
-        <em>
-          {t('searchBar:show')} {data.length} {t('searchBar:result')}{' '}
-        </em>
+        <em>{t('searchBar:showing_results_for', { count: data.length }) + ' '}</em>
         <b>{searchLabel}</b>
       </div>
 
