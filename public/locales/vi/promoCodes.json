@@ -1,5 +1,5 @@
 {
-  "promo_codes": "Mã Giảm Giá",
+  "promo_codes": "Mã Khuyến Mãi",
   "user_manual": "Hướng dẫn sử dụng:",
   "order": "<b>Đặt hàng: </b> Vào trang <a1>Đặt hàng nhanh</a1> hoặc <a2>Sản phẩm</a2> để đặt hàng.",
   "order_content": "<b>Vào trang Thanh toán: </b>Vào trang <a1>Thanh toán</a1>. Nhấn vào chữ \"Dùng mã khuyến mãi\"",
@@ -14,5 +14,6 @@
   "promocde_title":"Chi tiết mã giảm giá",
   "code":"Mã",
   "exp_date":"Ngày hết hạn",
-  "conditions":"Điều kiện"
+  "conditions":"Điều kiện",
+  "HSD":"HSD"
 }

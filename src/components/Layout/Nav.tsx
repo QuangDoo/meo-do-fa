@@ -117,7 +117,7 @@ const Nav = () => {
                   <li className="dropdown-item">
                     <Link href="/promotions">
                       <a className="dropdown-item-text p-0">
-                        <i className="rockland-nav__icon fa fa-product-hunt" />
+                        <i className="rockland-nav__icon fab fa-product-hunt" />
                         <span>{t('navbar:promotions')}</span>
                       </a>
                     </Link>

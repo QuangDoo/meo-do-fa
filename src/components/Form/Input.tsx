@@ -47,33 +47,22 @@ const Input = (props: Props, ref) => {
         <input
           {...inputProps}
           ref={ref}
-          className={clsx('form-control no-spinner', type === 'number' && 'no-spinner', inputClass)}
-          type={type === 'password' ? (showPassword ? 'text' : 'password') : type}
+          className={clsx(
+            'form-control',
+            type === 'number' && 'no-spinner',
+            type === 'password' && 'input__password',
+            inputClass
+          )}
+          type={showPassword ? 'text' : type}
           onBlur={handleTextBlur}
         />
       )}
 
       {/* Show password checkbox */}
       {type === 'password' && (
-        <div
-          className="form__password-label"
-          onClick={toggleShowPassword}
-          onKeyPress={toggleShowPassword}
-          role="checkbox"
-          aria-checked={showPassword}
-          tabIndex={0}
-          style={{ zIndex: 4 }} // Because focused input has z-index: 3
-        >
-          {showPassword ? (
-            <span className="form__password-label-hide">
-              <i className="fas fa-eye-slash mr-1"></i>
-            </span>
-          ) : (
-            <span className="form__password-label-show">
-              <i className="fas fa-eye mr-1"></i>
-            </span>
-          )}
-        </div>
+        <button type="button" className="form__password-label" onClick={toggleShowPassword}>
+          <i className={clsx('fas fa-fw mr-1', showPassword ? 'fa-eye-slash' : 'fa-eye')} />
+        </button>
       )}
 
       {itemRight && <div className="input-group-prepend">{itemRight}</div>}

@@ -34,5 +34,6 @@
   "total": "Tổng cộng",
   "unit_price": "Đơn giá",
   "vat_invoice": "Xem thông tin xuất hoá đơn đỏ",
-  "wait_for_confirm": "Chờ xác nhận"
+  "wait_for_confirm": "Chờ xác nhận",
+  "received": "Đã tiếp nhận"
 }

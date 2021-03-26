@@ -14,10 +14,11 @@ type Props = Omit<ConfirmModalProps, 'children' | 'onConfirm'> & {
   name: string;
   price: number;
   cartId: string;
+  updateCheckboxCart?: () => void;
 };
 
 export default function ConfirmDeleteItemModal(props: Props) {
-  const { cartId, img, name, price, ...rest } = props;
+  const { cartId, img, name, price, updateCheckboxCart, ...rest } = props;
 
   const { refetch: refetchCart } = useCart();
 
@@ -45,6 +46,7 @@ export default function ConfirmDeleteItemModal(props: Props) {
         _id: cartId
       }
     });
+    updateCheckboxCart();
   };
 
   return (

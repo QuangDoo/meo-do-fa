@@ -88,7 +88,7 @@ const ProductCard = (props: Props) => {
                   title={props.manufacturer.name}
                   className="text-muted product-card__manufacturer">
                   {t('productCard:manufacturer')}:{' '}
-                  <Link href={`/products?manufacturer=${props.manufacturer.id}`}>
+                  <Link href={`/manufacturers/${props.manufacturer.id}`}>
                     {props.manufacturer.short_name || props.manufacturer.name}
                   </Link>
                 </small>
