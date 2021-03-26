@@ -53,11 +53,6 @@ export default function Head(props) {
         property="og:image"
         content="https://medofa.com/icons/favicon-32x32-medofa-manifest-20129.png"
       />
-      <meta property="og:title" content="MEDOFA - Medicine, online, fast" />
-      <meta
-        property="og:description"
-        content="MEDOFA là giải pháp công nghệ ngành dược kết nối nhà máy, nhà phân phối, nhà thuốc, dược sĩ nhằm hợp tác tạo mối liên kết trực tiếp và gia tăng doanh thu."
-      />
 
       <script async src="https://www.googletagmanager.com/gtag/js?id=G-95PXEWD1KY"></script>
       <script async src="https://www.googletagmanager.com/gtag/js?id=G-TPL3K1KQZN"></script>
