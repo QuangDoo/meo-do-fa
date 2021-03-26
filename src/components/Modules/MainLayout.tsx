@@ -3,7 +3,7 @@ import { useCart } from 'src/contexts/Cart';
 import { useToken } from 'src/contexts/Token';
 import { useUser } from 'src/contexts/User';
 
-import ActiceUser from '../Layout/ActiceUser';
+import ActiveUser from '../Layout/ActiveUser';
 import Footer from '../Layout/Footer';
 import Header from '../Layout/Header';
 import LoadingBackdrop from '../Layout/LoadingBackdrop';
@@ -27,7 +27,7 @@ export default function MainLayout(props: Props) {
     <>
       <TermPopup />
 
-      {token && !isActive && <ActiceUser />}
+      {token && !isActive && <ActiveUser />}
 
       <Header />
 
