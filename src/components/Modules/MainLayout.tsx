@@ -4,7 +4,9 @@ import { useCart } from 'src/contexts/Cart';
 import { useToken } from 'src/contexts/Token';
 import { useUser } from 'src/contexts/User';
 
-import ActiceUser from '../Layout/ActiceUser';
+import ActiveUser from '../Layout/ActiveUser';
+
+// import ActiceUser from '../Layout/ActiceUser';
 const DynamicTermPopup = dynamic(() => import('./TermPopup'));
 import Footer from '../Layout/Footer';
 import Header from '../Layout/Header';
@@ -29,7 +31,7 @@ export default function MainLayout(props: Props) {
     <>
       <DynamicTermPopup />
 
-      {token && !isActive && <ActiceUser />}
+      {token && !isActive && <ActiveUser />}
 
       <Header />
 

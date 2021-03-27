@@ -60,13 +60,23 @@ export default function PromoCodeItem(props: Props) {
     }
   };
 
+  const convertDate = (day) => {
+    const date = new Date(day?.substring(0, day?.indexOf(' ')));
+    if (!isNaN(date?.getTime())) {
+      // Months use 0 index.
+      return date?.getMonth() + 1 + '/' + date?.getDate() + '/' + date?.getFullYear();
+    }
+  };
+
   return (
     <>
       <div className={`row no-gutters coupon coupon--${props.rewardType}`}>
         <div className="col-4 deal-info pr-3 d-flex flex-column justify-content-between align-items-center">
           {leftPromoCode(rewardType)}
           {props.couponDateFrom !== 'false' && (
-            <div className="text-muted">{`HSD: ${props.couponDateTo}`}</div>
+            <div className="text-muted">{`${t('promoCodes:HSD')}: ${convertDate(
+              props.couponDateTo
+            )}`}</div>
           )}
         </div>
         <div className="col-7 justify-content-between text-center">
