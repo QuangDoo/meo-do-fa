@@ -1,6 +1,7 @@
 import { useLazyQuery, useQuery } from '@apollo/client';
 import axios from 'axios';
 import { useTranslation } from 'i18n';
+import getConfig from 'next/config';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -21,6 +22,7 @@ import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 
 import ProfileLayout from '../ProfileLayout';
 import FormCard from './FormCard';
+const { publicRuntimeConfig } = getConfig();
 
 type Inputs = {
   name: string;
@@ -43,8 +45,11 @@ type Inputs = {
   deliveryWard: string;
 };
 
-const FILES_GATEWAY = process.env.NEXT_PUBLIC_FILES_GATEWAY;
+const FILES_GATEWAY = `https://${
+  publicRuntimeConfig.FILES_GATEWAY_EXT || process.env.NEXT_PUBLIC_FILES_GATEWAY
+}`;
 
+console.log(`FILES_GATEWAY`, FILES_GATEWAY);
 export default function MyAccountPage() {
   const { t } = useTranslation(['myAccount', 'common', 'errors']);
 
