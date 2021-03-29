@@ -31,10 +31,6 @@ const Promotions = (): JSX.Element => {
 
   const promotivebanner = dataBaner?.getWebsiteBanner;
 
-  // console.log(`promotivebanner`, promotivebanner);
-
-  // const router = useRouter();
-
   const { t } = useTranslation('promotions');
   return (
     <div className="container py-5">

@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client';
+import dynamic from 'next/dynamic';
 import React from 'react';
 import Head from 'src/components/Layout/Head';
-import HomePage from 'src/components/Modules/Home';
 import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import {
   GET_BEST_SELLING_PRODUCTS,
@@ -24,6 +24,8 @@ import {
   GetPromotionProductsVars
 } from 'src/graphql/product/getPromotionProducts';
 import withToken from 'src/utils/withToken';
+
+const DynamicHomePage = dynamic(() => import('src/components/Modules/Home'));
 
 const paginationVars = {
   variables: {
@@ -63,12 +65,18 @@ function Home() {
         <title>Medofa</title>
       </Head>
 
-      <HomePage
+      <DynamicHomePage
         bestSellingData={bestSellingData}
         newProductsData={newProductsData}
         promotionProductsData={promotionProductsData}
         dealsOfTheDayData={dealsOfTheDayData}
       />
+      {/* <HomePage
+        bestSellingData={bestSellingData}
+        newProductsData={newProductsData}
+        promotionProductsData={promotionProductsData}
+        dealsOfTheDayData={dealsOfTheDayData}
+      /> */}
     </MainLayout>
   );
 }
