@@ -14,5 +14,6 @@
   "promocde_title":"Detail Promotion Code",
   "code":"Code",
   "exp_date":"Expire date",
-  "conditions":"Conditions"
+  "conditions":"Conditions",
+  "HSD":"EXP"
 }
