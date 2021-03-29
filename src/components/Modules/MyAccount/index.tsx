@@ -45,6 +45,7 @@ type Inputs = {
 
 const FILES_GATEWAY = process.env.NEXT_PUBLIC_FILES_GATEWAY;
 
+console.log(`FILES_GATEWAY`, process.env.NEXT_PUBLIC_FILES_GATEWAY);
 export default function MyAccountPage() {
   const { t } = useTranslation(['myAccount', 'common', 'errors']);
 
