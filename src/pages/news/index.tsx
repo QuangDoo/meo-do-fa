@@ -1,6 +1,9 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
+import Head from 'src/components/Layout/Head';
+import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
+import News from 'src/components/Modules/News';
+import NewsList from 'src/components/Modules/News/NewsList';
 
 const newsdata = [
   {
@@ -93,25 +96,17 @@ NewsPage.getInitialProps = async () => ({
 });
 
 function NewsPage() {
-  const router = useRouter();
+  return (
+    <MainLayout>
+      <Head>
+        <title>Medofa</title>
+      </Head>
 
-  useEffect(() => {
-    router.push('/');
-  }, []);
-
-  return null;
-
-  // return (
-  //   <MainLayout>
-  //     <Head>
-  //       <title>Medofa</title>
-  //     </Head>
-  //
-  //     <News bannerImgUrl={imgUrl} links={links}>
-  //       <NewsList news={newsdata} />
-  //     </News>
-  //   </MainLayout>
-  // );
+      <News bannerImgUrl={imgUrl} links={links}>
+        <NewsList news={newsdata} />
+      </News>
+    </MainLayout>
+  );
 }
 
 export default withToken({ ssr: true })(NewsPage);
