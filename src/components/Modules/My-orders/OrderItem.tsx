@@ -7,6 +7,7 @@ import ConfirmCancelOrder from './ConfirmCancelOrder';
 
 const badges = {
   10: { color: 'info', text: 'wait_for_confirm' },
+  15: { color: 'info', text: 'received' },
   20: { color: 'success', text: 'confirmed' },
   25: { color: 'danger', text: 'canceled' },
   30: { color: 'secondary', text: 'in_proceed' },
@@ -59,7 +60,7 @@ export default function OrderItem(props: Props) {
         </div>
       </div>
 
-      {flag === 10 && (
+      {[10, 15].includes(flag) && (
         <div className="my-orders__invoice">
           <button className="btn btn-outline-danger btn-sm" onClick={() => setOpen(true)}>
             {t('myOrders:cancel_order')}
