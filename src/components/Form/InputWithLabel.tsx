@@ -20,6 +20,7 @@ type Props = {
   accept?: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   maxLength?: number;
+  indexTab?: string;
 };
 
 const InputWithLabel = (props: Props, ref) => {
@@ -36,7 +37,8 @@ const InputWithLabel = (props: Props, ref) => {
     placeholder: props.placeholder,
     defaultValue: props.defaultValue,
     disabled: props.disabled,
-    maxLength: props.maxLength
+    maxLength: props.maxLength,
+    tabindex: props.indexTab
   };
 
   const handleTextBlur = (e) => {
