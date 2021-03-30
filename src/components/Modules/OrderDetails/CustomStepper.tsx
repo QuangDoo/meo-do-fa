@@ -9,7 +9,14 @@ import {
   useMediaQuery,
   useTheme
 } from '@material-ui/core';
-import { AssignmentTurnedIn, Done, LocalShipping, Receipt, Update } from '@material-ui/icons';
+import {
+  AssignmentTurnedIn,
+  CallReceived,
+  Done,
+  LocalShipping,
+  Receipt,
+  Update
+} from '@material-ui/icons';
 import clsx from 'clsx';
 import { useTranslation } from 'i18n';
 import React from 'react';
@@ -117,6 +124,10 @@ const steps = [
   {
     icon: <Receipt />,
     text: 'wait_for_confirm'
+  },
+  {
+    icon: <CallReceived />,
+    text: 'received'
   },
   {
     icon: <AssignmentTurnedIn />,

@@ -32,7 +32,7 @@ function UserProvider(props) {
       const isClient = typeof window !== 'undefined';
 
       if (isClient) {
-        if (errorCode === 500) {
+        if ([500, 107].includes(errorCode)) {
           cookies.remove('token');
         }
         toast.error(t(`errors:code_${errorCode}`));
