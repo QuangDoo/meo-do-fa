@@ -1,3 +1,4 @@
+import { useQuery } from '@apollo/client';
 import configs from 'configs';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
@@ -14,14 +15,15 @@ import {
   GetCartByProductData,
   getCartByproductVars
 } from 'src/graphql/cart/getCartByProduct';
+import { GET_WEBSITE_CONFIG, GetWebsiteConfigData } from 'src/graphql/configs/getWebsiteConfig';
 import { CREATE_COUNSEL } from 'src/graphql/order/order.mutation';
 import { useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
 
 import CartItem from './CartItem';
 import ConfirmModal from './ConfirmModal';
 
-const MIN_PRICE = configs.MIN_PRICE;
-const FREE_SHIP = configs.FREESHIP_PRICE;
+// const MIN_PRICE = configs.MIN_PRICE;
+// const FREE_SHIP = configs.FREESHIP_PRICE;
 
 export default function CartPage() {
   const { data: cart, refetch: refetchCart } = useCart();
@@ -33,6 +35,16 @@ export default function CartPage() {
   const [deleteAllIsOpen, setDeleteAllIsOpen] = useState<boolean>(false);
 
   const router = useRouter();
+
+  const { data: configData } = useQuery<GetWebsiteConfigData, undefined>(GET_WEBSITE_CONFIG);
+
+  const MIN_PRICE = parseInt(
+    configData?.getWebsiteConfig.find((config) => config.key === 'MIN_PRICE').value
+  );
+
+  const FREE_SHIP = parseInt(
+    configData?.getWebsiteConfig.find((config) => config.key === 'FREESHIP_PRICE').value
+  );
 
   const { data: dataGetCartByProduct, loading: gettingCartByProducts } = useQueryAuth<
     GetCartByProductData,
