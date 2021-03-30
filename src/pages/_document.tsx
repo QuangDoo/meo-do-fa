@@ -114,22 +114,25 @@ class MyDocument extends Document {
             dangerouslySetInnerHTML={{
               __html: `
               document.addEventListener("DOMContentLoaded", function(event) {
+
                 setTimeout(function() {
                   var Tawk_API=Tawk_API||{},
                    Tawk_LoadStart=new Date();
                   (function(){
                   var s1=document.createElement("script"),
                   s0=document.getElementsByTagName("script")[0];
+                  const key=typeof window !== 'undefined' && document.location.host === 'medofa.com'
+                  ? '5fb4a74b3e20f61525e47d9f'
+                  : '5fedb291df060f156a92a752'
                   s1.async=true;
-
-                  s1.src = document.location.host === 'medofa.com'
-                    ? 'https://embed.tawk.to/5fb4a74b3e20f61525e47d9f/default'
-                    : 'https://embed.tawk.to/5fedb291df060f156a92a752/1eqs832ov'
-                
+                  s1.src='https://embed.tawk.to/'+key+'/default';
                   s1.charset='UTF-8';
                   s1.setAttribute('crossorigin','*');
                   s0.parentNode.insertBefore(s1,s0);
                   })();
+                  console.log('test tawlt',typeof window !== 'undefined' && document.location.host === 'medofa.com'
+                  ? '5fb4a74b3e20f61525e47d9f'
+                  : '5fedb291df060f156a92a752')
                 }, 10000);
               });
               `
@@ -141,9 +144,10 @@ class MyDocument extends Document {
               __html: `
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-              
-                gtag('config', 'G-TPL3K1KQZN');
+                if(document.location.host === 'medofa.com' ){
+                  gtag('js', new Date());
+                  gtag('config', 'G-TPL3K1KQZN');
+                }
               `
             }}
           />

@@ -10,6 +10,9 @@ module.exports = new NextI18Next({
   otherLanguages: ['en'],
   localeSubpaths,
   localePath: path.resolve('./public/locales'),
-  browserLanguageDetection: false,
-  serverLanguageDetection: false
+  detection: {
+    lookupCookie: 'next-i18next',
+    order: ['cookie', 'querystring', 'localStorage', 'path', 'subdomain'],
+    caches: ['cookie']
+  }
 });

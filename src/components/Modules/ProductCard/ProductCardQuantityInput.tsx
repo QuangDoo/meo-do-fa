@@ -1,15 +1,17 @@
+import { useQuery } from '@apollo/client';
+import configs from 'configs';
 import { useTranslation } from 'i18n';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { useCart } from 'src/contexts/Cart';
 import { ADD_TO_CART, AddToCartData, AddToCartVars } from 'src/graphql/cart/addToCart';
+import { GET_WEBSITE_CONFIG, GetWebsiteConfigData } from 'src/graphql/configs/getWebsiteConfig';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import useDebounce from 'src/hooks/useDebounce';
 
 import QuantityInput from '../../Form/QuantityInput';
 import ConfirmDeleteItemModal from '../Cart/ConfirmDeleteItemModal';
-
 type Props = {
   productId: number;
   productPrice: number;
@@ -17,8 +19,8 @@ type Props = {
   productImg: string;
 };
 
-const MIN_QUANTITY = 0;
-const MAX_QUANTITY = 999999;
+// const MIN_QUANTITY = configs.MIN_QUANTITY;
+// const MAX_QUANTITY = configs.MAX_QUANTITY;
 
 function ProductCardQuantityInput(props: Props) {
   const { productId, productPrice, productName, productImg } = props;
@@ -34,6 +36,16 @@ function ProductCardQuantityInput(props: Props) {
   const [quantity, setQuantity] = useState<number>(quantityInCart);
 
   const [open, setOpen] = useState<boolean>(false);
+
+  const { data: configData } = useQuery<GetWebsiteConfigData, undefined>(GET_WEBSITE_CONFIG);
+
+  const MIN_QUANTITY = parseInt(
+    configData?.getWebsiteConfig.find((config) => config.key === 'MIN_QUANTITY').value
+  );
+
+  const MAX_QUANTITY = parseInt(
+    configData?.getWebsiteConfig.find((config) => config.key === 'MAX_QUANTITY').value
+  );
 
   useEffect(() => {
     setQuantity(quantityInCart);

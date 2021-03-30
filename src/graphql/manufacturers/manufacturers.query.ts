@@ -4,6 +4,7 @@ export type Manufacturer = {
   id: string;
   name: string;
   short_name: string;
+  description: string;
 };
 
 export const GET_ALL_MANUFACTURERS = gql`
@@ -46,6 +47,7 @@ export const GET_MANUFACTORY_DETAILS = gql`
       id
       name
       short_name
+      description
     }
   }
 `;
@@ -70,5 +72,6 @@ export type GetManufactoryDetailsData = {
     id: number;
     name: string;
     short_name: string;
+    description: string;
   };
 };

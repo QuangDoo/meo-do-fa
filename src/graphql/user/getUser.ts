@@ -21,6 +21,7 @@ export type User = {
   representative: string;
   business_license: string;
   cust_no: string;
+  activated: boolean;
 };
 
 export type GetUserData = {
@@ -55,6 +56,7 @@ export const GET_USER = gql`
       representative
       business_license
       cust_no
+      activated
     }
   }
 `;

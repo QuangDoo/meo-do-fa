@@ -26,7 +26,7 @@ const LanguagePicker = () => {
   return (
     <>
       <button className="promotion-nav__link" onClick={openMenu} style={{ border: 'none' }}>
-        <i className="promotion-nav__icon fas fa-language" />
+        <i className="promotion-nav__icon fas fa-globe-americas" />
         <span>{t('header:language')}</span>
       </button>
 

@@ -170,15 +170,18 @@ const SearchBar = () => {
             <div className="input-group form__input-group">
               <input
                 type="search"
-                placeholder={t('searchBar:input')}
+                placeholder={t(`searchBar:placeholder_${type}`)}
                 aria-label="search"
-                className="form-control form-control-sm search-input"
+                className="form-control form-control-sm search-input hide-focus keep-border"
                 value={value}
                 onChange={handleValueChange}
                 onFocus={handleFocus}
               />
 
-              <Select value={type} onChange={handleSearchTypeChange} className="search-type-select">
+              <Select
+                value={type}
+                onChange={handleSearchTypeChange}
+                className="search-type-select hide-focus">
                 {['products', 'manufacturers', 'ingredients'].map((type) => (
                   <option key={type} value={type}>
                     {t(`searchBar:search_by_${type}`)}

@@ -1,3 +1,4 @@
+import { useQuery } from '@apollo/client';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -8,8 +9,10 @@ import QuantityInput from 'src/components/Form/QuantityInput';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import index from 'src/components/Modules/Cart/index';
 import { useCart } from 'src/contexts/Cart';
+import { useCheckboxCarts } from 'src/contexts/CheckboxCarts';
 import { useToken } from 'src/contexts/Token';
 import { ADD_TO_CART, AddToCartData, AddToCartVars } from 'src/graphql/cart/addToCart';
+import { GET_WEBSITE_CONFIG, GetWebsiteConfigData } from 'src/graphql/configs/getWebsiteConfig';
 import { ProductDetails } from 'src/graphql/product/product.query';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import useDebounce from 'src/hooks/useDebounce';
@@ -18,8 +21,8 @@ import ConfirmDeleteItemModal from '../Cart/ConfirmDeleteItemModal';
 import LoginModal from '../LoginModal';
 import ProductBadges from '../ProductCard/ProductBadges';
 
-const MAX_QUANTITY = 100000;
-const MIN_QUANTITY = 0;
+// const MAX_QUANTITY = 100000;
+// const MIN_QUANTITY = 0;
 
 const ProductDetailInfor = (props: ProductDetails) => {
   const token = useToken();
@@ -29,6 +32,16 @@ const ProductDetailInfor = (props: ProductDetails) => {
   const [quantity, setQuantity] = useState<number>(1);
 
   const [open, setOpen] = useState<boolean>(false);
+
+  const { data: configData } = useQuery<GetWebsiteConfigData, undefined>(GET_WEBSITE_CONFIG);
+
+  const MIN_QUANTITY = parseInt(
+    configData?.getWebsiteConfig.find((config) => config.key === 'MIN_QUANTITY').value
+  );
+
+  const MAX_QUANTITY = parseInt(
+    configData?.getWebsiteConfig.find((config) => config.key === 'MAX_QUANTITY').value
+  );
 
   const handleMinusClick = () => {
     const newQuantity = Math.min(quantity - 1, MIN_QUANTITY);
@@ -51,6 +64,8 @@ const ProductDetailInfor = (props: ProductDetails) => {
   const thisProductInCart = cart?.carts.find((product) => product.productId === props.id);
 
   const quantityInCart = thisProductInCart?.quantity || 0;
+
+  const { checkboxCarts, setCheckboxCarts } = useCheckboxCarts();
 
   useEffect(() => {
     if (!quantityInCart) return;
@@ -96,6 +111,7 @@ const ProductDetailInfor = (props: ProductDetails) => {
         quantity: quantity
       }
     }).then(() => {
+      setCheckboxCarts([cart.carts.find((cart) => cart.productId === props.id)._id]);
       router.push('/cart');
     });
   };
@@ -194,7 +210,7 @@ const ProductDetailInfor = (props: ProductDetails) => {
           <div className="mt-3">
             <div className="product__info-label">{t('productDetail:manufacturer')}</div>
             <div className="text-capitalize">
-              <Link href={`/products?manufacturer=${props.manufacturer?.id}`}>
+              <Link href={`/manufacturers/${props.manufacturer?.id}`}>
                 <a>{props.manufacturer?.name}</a>
               </Link>
             </div>

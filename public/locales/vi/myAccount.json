@@ -27,7 +27,7 @@
   "tax_code_placeholder": "vd 8026906145",
   "street_required": "Xin nhập địa chỉ",
   "company_street_label": "Địa chỉ nhà thuốc/phòng khám",
-  "company_street_placeholder": "vd 11 Ngô Quyền, Tân Lợi, Tp. Buôn Ma Thuột, Đắk Lắk",
+  "company_street_placeholder": "vd 11 Ngô Quyền",
   "company_city_required": "Xin chọn tỉnh/thành phố.",
   "company_district_required": "Xin chọn quận/huyện.",
   "company_ward_required": "Xin chọn phường/xã.",
@@ -46,5 +46,6 @@
   "invalid_phone": "Số điện thoại không hợp lệ",
   "retype_newPassword": "Nhập lại mật khẩu mới",
   "retype_newPassword_required": "Xin nhập mật khẩu mới",
-  "error_retype_pw": "Mật khẩu không trùng khớp"
+  "error_retype_pw": "Mật khẩu không trùng khớp",
+  "active": "Vui lòng xác minh tài khoản của bạn <Link>tại đây</Link> để tiếp tục mua hàng"
 }

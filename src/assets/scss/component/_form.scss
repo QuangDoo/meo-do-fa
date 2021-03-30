@@ -319,6 +319,9 @@ fieldset {
 .custom-file-input:lang(en) ~ .custom-file-label::after {
   content: 'Browse';
 }
+.custom-file-input:lang(vi) ~ .custom-file-label::after {
+  content: 'Tải lên';
+}
 .custom-file-input ~ .custom-file-label[data-browse]::after {
   content: attr(data-browse);
 }
@@ -501,7 +504,7 @@ fieldset {
   display: block;
   width: 100%;
   height: calc(1.5em + 0.75rem + 2px);
-  padding: 0.375rem 0.75rem;
+  padding: 0.375rem 2rem;
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
@@ -511,6 +514,12 @@ fieldset {
   border: 1px solid #ced4da;
   border-radius: 0.25rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.form-control.input__password {
+  padding: 0.375rem 3.5rem;
+}
+.form-control.hide__address{
+  display: none;
 }
 @media (prefers-reduced-motion: reduce) {
   .form-control {
@@ -742,6 +751,9 @@ textarea.form-control {
 .input-file-input:lang(en) ~ .input-file-label::after {
   content: 'Browse';
 }
+.input-file-input:lang(vi) ~ .input-file-label::after {
+  content: 'Tải lên';
+}
 .input-file-input ~ .input-file-label[data-browse]::after {
   content: attr(data-browse);
 }
@@ -777,4 +789,11 @@ textarea.form-control {
   background-color: #e9ecef;
   border-left: inherit;
   border-radius: 0 0.25rem 0.25rem 0;
+}
+
+.hide-focus:focus {
+  box-shadow: none !important;
+}
+.keep-border:focus {
+  border-color: #ced4da !important;
 }

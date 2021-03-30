@@ -40,11 +40,18 @@ const ProductCard = (props: Props) => {
             <Link href={`/products/${props.slug}`}>
               <a>
                 <div className="product-card__image mb-3 lozad">
-                  <Image
+                  <div className="banner-wrapper">
+                    <img
+                      src={props.image_256 || '/assets/images/no_images.jpg'}
+                      className="banner--image"
+                      alt="Medofa product"
+                    />
+                  </div>
+                  {/* <Image
                     src={props.image_256 || '/assets/images/no_images.jpg'}
                     layout="fill"
                     objectFit={props.image_256 ? 'contain' : 'cover'}
-                  />
+                  /> */}
                 </div>
               </a>
             </Link>
@@ -88,7 +95,7 @@ const ProductCard = (props: Props) => {
                   title={props.manufacturer.name}
                   className="text-muted product-card__manufacturer">
                   {t('productCard:manufacturer')}:{' '}
-                  <Link href={`/products?manufacturer=${props.manufacturer.id}`}>
+                  <Link href={`/manufacturers/${props.manufacturer.id}`}>
                     {props.manufacturer.short_name || props.manufacturer.name}
                   </Link>
                 </small>

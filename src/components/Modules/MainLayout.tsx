@@ -1,8 +1,13 @@
+import dynamic from 'next/dynamic';
 import React, { ReactNode } from 'react';
 import { useCart } from 'src/contexts/Cart';
 import { useToken } from 'src/contexts/Token';
 import { useUser } from 'src/contexts/User';
 
+import ActiveUser from '../Layout/ActiveUser';
+
+// import ActiceUser from '../Layout/ActiceUser';
+const DynamicTermPopup = dynamic(() => import('./TermPopup'));
 import Footer from '../Layout/Footer';
 import Header from '../Layout/Header';
 import LoadingBackdrop from '../Layout/LoadingBackdrop';
@@ -16,13 +21,17 @@ type Props = {
 export default function MainLayout(props: Props) {
   const { loading: gettingCart } = useCart();
 
-  const { loading: gettingUser } = useUser();
+  const { data: dataUser, loading: gettingUser } = useUser();
+
+  const isActive = dataUser?.activated;
 
   const token = useToken();
 
   return (
     <>
-      <TermPopup />
+      <DynamicTermPopup />
+
+      {token && !isActive && <ActiveUser />}
 
       <Header />
 
@@ -49,5 +58,6 @@ export const mainLayoutNamespacesRequired = [
   'register',
   'password',
   'termPopup',
-  'promotions'
+  'promotions',
+  'myAccount'
 ];
