@@ -74,7 +74,7 @@ const Pagination = (props: PaginationProps) => {
   return (
     count > 1 && (
       <div className="d-flex justify-content-center mb-3">
-        <nav aria-label="pager" className="pagy-nav pagination" role="navigation">
+        <nav aria-label="pager" className="page-nav pagination" role="navigation">
           {/* Previous page button */}
           <button hidden={page === 1} className="page" onClick={() => onChange(page - 1)}>
             <i className="fas fa-arrow-left" />

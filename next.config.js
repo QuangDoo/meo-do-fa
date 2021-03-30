@@ -8,7 +8,8 @@ module.exports = withPWA({
   rewrites: async () => nextI18NextRewrites(localeSubpaths),
   publicRuntimeConfig: {
     localeSubpaths,
-    GRAPHQL_GATEWAY_EXT: process.env.GRAPHQL_GATEWAY_EXT
+    GRAPHQL_GATEWAY_EXT: process.env.GRAPHQL_GATEWAY_EXT,
+    FILES_GATEWAY_EXT: process.env.NEXT_PUBLIC_FILES_GATEWAY
   },
   serverRuntimeConfig: {
     // Will only be available on the server side
