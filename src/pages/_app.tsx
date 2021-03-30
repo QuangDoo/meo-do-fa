@@ -8,8 +8,9 @@ import 'src/assets/scss/toast.scss';
 
 import { ThemeProvider } from '@material-ui/core/styles';
 import App, { AppProps } from 'next/app';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
+import { CheckboxCartsProvider } from 'src/contexts/CheckboxCarts';
 import { ModalControlProvider } from 'src/contexts/ModalControl';
 import { muiTheme } from 'src/theme';
 
@@ -26,7 +27,9 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
     <ThemeProvider theme={muiTheme}>
       <ModalControlProvider>
-        <Component {...pageProps} />
+        <CheckboxCartsProvider>
+          <Component {...pageProps} />
+        </CheckboxCartsProvider>
 
         <ToastContainer autoClose={1500} />
       </ModalControlProvider>

@@ -133,7 +133,7 @@ function ProductDetail() {
                 </div>
               </div>
             </div>
-            <div className="col-md-4 mt-md-0 mt-3">
+            <div className="col-md-4 mt-md-0 mt-3 d-none d-md-block">
               <ProductSidebar />
             </div>
           </div>
@@ -141,6 +141,10 @@ function ProductDetail() {
             <div className="col-12">
               <ProducerInformation {...product} />
             </div>
+          </div>
+
+          <div className="col-md-4 mt-md-0 mt-3 d-md-none d-lg-none d-xl-none d-block">
+            <ProductSidebar />
           </div>
         </div>
 

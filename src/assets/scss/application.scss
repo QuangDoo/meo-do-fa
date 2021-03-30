@@ -2989,12 +2989,9 @@ button.bg-dark:focus {
 .extraCart {
   font-size: 0.8rem !important;
   white-space: nowrap;
-  margin: 0.5rem 0.5rem 0 0.5rem !important;
+  margin: 0.5rem 0.5rem 0 0.5rem ;
 }
 @media (max-width: 576px){
-  .extraCart{
-    display: none;
-  }
   .mr-4{
     margin-right: 1.5rem !important;
   }
@@ -10539,6 +10536,10 @@ abbr[title] {
 .elevated--mobile {
   border-radius: 0;
 }
+
+.elevated .mt-3{
+  padding-bottom: 15px;
+}
 .form__label {
   font-weight: 500;
   font-size: small;
@@ -11097,27 +11098,47 @@ abbr[title] {
   font-weight: 900;
   margin-bottom: 0.25em;
 }
-.pagy-nav {
-  --pagy-width: 2em;
+.page-nav {
+  --page-width: 2em;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
 }
-.pagy-nav .page {
+.page-nav .page {
   background-color: white;
   color: #919aa3;
   text-align: center;
   font-weight: 500;
-  line-height: var(--pagy-width);
-  min-width: var(--pagy-width);
-  min-height: var(--pagy-width);
+  line-height: var(--page-width);
+  min-width: var(--page-width);
+  min-height: var(--page-width);
   border-radius: 40px;
   margin: 0.5rem;
 }
-.pagy-nav .page.disabled {
+.page-nav .page.disabled {
   display: none;
 }
-.pagy-nav .page.current {
+@media (max-width:768px){
+  .page-nav {
+    --page-width: 1.5em;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .page-nav .page {
+    background-color: white;
+    color: #919aa3;
+    text-align: center;
+    font-weight: 500;
+    line-height: var(--page-width);
+    min-width: var(--page-width);
+    min-height: var(--page-width);
+    border-radius: 50px;
+    margin: 0.4rem;
+    padding: 0 0.1rem 0 0.1rem;
+  }
+}
+.page-nav .page.current {
   background: linear-gradient(102.04deg, $primary 0%, $blue1 100%);
   color: white;
 }
@@ -12292,6 +12313,7 @@ abbr[title] {
   .my-orders__detail .content {
     padding-left: 0;
   }
+  
 }
 .my-orders__invoice .btn {
   width: 10rem;

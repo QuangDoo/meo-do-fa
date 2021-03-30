@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import { useTranslation } from 'i18n';
 import React, { forwardRef, useState } from 'react';
 
 import FormGroup from './FormGroup';
@@ -24,6 +25,7 @@ type Props = {
 const InputWithLabel = (props: Props, ref) => {
   const [showPassword, setShowPassword] = useState(false);
 
+  const { t, i18n } = useTranslation();
   const toggleShowPassword = () => {
     setShowPassword((show) => !show);
   };
@@ -72,6 +74,7 @@ const InputWithLabel = (props: Props, ref) => {
             className="custom-file-input"
             accept={props.accept}
             onChange={props.onChange}
+            lang={i18n.language}
           />
           <div className="custom-file-label">{props.placeholder}</div>
         </div>

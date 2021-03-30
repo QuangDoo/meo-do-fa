@@ -12,6 +12,7 @@ type Props = CartItemProps & {
   addToCheckCart?: () => void;
   deleteToCheckCart?: () => void;
   checked?: boolean;
+  updateCheckboxCart?: () => void;
 };
 
 function CartItem(props: Props) {
@@ -116,7 +117,7 @@ function CartItem(props: Props) {
               img={props.product.image_512}
               name={props.productName}
               price={props.product.sale_price}
-              deleteToCheckCart={() => props.deleteToCheckCart()}
+              updateCheckboxCart={props.updateCheckboxCart}
             />
           </div>
         </div>

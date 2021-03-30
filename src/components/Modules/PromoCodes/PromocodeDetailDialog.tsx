@@ -1,7 +1,5 @@
 import { useQuery } from '@apollo/client';
-import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
-import MuiDialogActions from '@material-ui/core/DialogActions';
 import MuiDialogContent from '@material-ui/core/DialogContent';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import IconButton from '@material-ui/core/IconButton';
@@ -72,6 +70,13 @@ function PromocodeDetailDialog(props: Props) {
   });
 
   const promoDetail = dataPromoDetail?.getCouponProgramsDetail;
+  const convertDate = (day) => {
+    const date = new Date(day?.substring(0, day?.indexOf(' ')));
+    if (!isNaN(date?.getTime())) {
+      // Months use 0 index.
+      return date?.getMonth() + 1 + '/' + date?.getDate() + '/' + date?.getFullYear();
+    }
+  };
 
   return (
     <Dialog
@@ -88,14 +93,9 @@ function PromocodeDetailDialog(props: Props) {
         <Typography gutterBottom>
           {t('promoCodes:code')}:<b> {promoDetail?.promo_code}</b>
         </Typography>
-        {console.log(promoDetail?.rule_date_to)}
         {promoDetail?.rule_date_to !== 'false' && (
           <Typography gutterBottom>
-            {t('promoCodes:exp_date')}:
-            <b>
-              {' '}
-              {promoDetail?.rule_date_to.substring(0, promoDetail?.rule_date_to.indexOf(' '))}{' '}
-            </b>
+            {t('promoCodes:exp_date')}:<b> {convertDate(promoDetail?.rule_date_to)} </b>
           </Typography>
         )}
         <hr />

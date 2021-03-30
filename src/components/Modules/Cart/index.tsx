@@ -1,3 +1,4 @@
+import { useQuery } from '@apollo/client';
 import configs from 'configs';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
@@ -7,42 +8,43 @@ import { toast } from 'react-toastify';
 import PriceText from 'src/components/Form/PriceText';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { useCart } from 'src/contexts/Cart';
+import { useCheckboxCarts } from 'src/contexts/CheckboxCarts';
 import { DELETE_CARTS, DeleteCartData, DeleteCartsVars } from 'src/graphql/cart/deleteCarts';
 import {
   GET_CART_BY_PRODUCT,
   GetCartByProductData,
   getCartByproductVars
 } from 'src/graphql/cart/getCartByProduct';
+import { GET_WEBSITE_CONFIG, GetWebsiteConfigData } from 'src/graphql/configs/getWebsiteConfig';
 import { CREATE_COUNSEL } from 'src/graphql/order/order.mutation';
 import { useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
 
-import ProductDetaiInfor from '../ProductDetail/ProductDetaiInfor';
 import CartItem from './CartItem';
 import ConfirmModal from './ConfirmModal';
 
-const MIN_PRICE = configs.MIN_PRICE;
-const FREE_SHIP = configs.FREESHIP_PRICE;
+// const MIN_PRICE = configs.MIN_PRICE;
+// const FREE_SHIP = configs.FREESHIP_PRICE;
 
 export default function CartPage() {
   const { data: cart, refetch: refetchCart } = useCart();
+
+  const { checkboxCarts, setCheckboxCarts } = useCheckboxCarts();
 
   const { t } = useTranslation(['cart', 'common', 'errors']);
 
   const [deleteAllIsOpen, setDeleteAllIsOpen] = useState<boolean>(false);
 
-  const [checkboxCarts, setCheckboxCarts] = useState<string[]>([]);
-
   const router = useRouter();
 
-  useEffect(() => {
-    const id = router.query.id_buy_now;
+  const { data: configData } = useQuery<GetWebsiteConfigData, undefined>(GET_WEBSITE_CONFIG);
 
-    if (id !== null) {
-      const buyNowProduct = cart?.carts.filter((obj) => obj.productId.toString() == id);
+  const MIN_PRICE = parseInt(
+    configData?.getWebsiteConfig.find((config) => config.key === 'MIN_PRICE').value
+  );
 
-      setCheckboxCarts(buyNowProduct.length ? [buyNowProduct[0]._id] : []);
-    }
-  }, [router.query]);
+  const FREE_SHIP = parseInt(
+    configData?.getWebsiteConfig.find((config) => config.key === 'FREESHIP_PRICE').value
+  );
 
   const { data: dataGetCartByProduct, loading: gettingCartByProducts } = useQueryAuth<
     GetCartByProductData,
@@ -277,4 +279,7 @@ export default function CartPage() {
       <LoadingBackdrop open={creatingCounsel} />
     </>
   );
+}
+function checkboxCartsContext(checkboxCartsContext: any) {
+  throw new Error('Function not implemented.');
 }
