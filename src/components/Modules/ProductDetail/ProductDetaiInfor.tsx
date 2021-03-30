@@ -7,7 +7,6 @@ import { toast } from 'react-toastify';
 import PriceText from 'src/components/Form/PriceText';
 import QuantityInput from 'src/components/Form/QuantityInput';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
-import index from 'src/components/Modules/Cart/index';
 import { useCart } from 'src/contexts/Cart';
 import { useCheckboxCarts } from 'src/contexts/CheckboxCarts';
 import { useToken } from 'src/contexts/Token';
@@ -29,10 +28,6 @@ const ProductDetailInfor = (props: ProductDetails) => {
 
   const { t } = useTranslation(['common', 'productDetail', 'success']);
 
-  const [quantity, setQuantity] = useState<number>(1);
-
-  const [open, setOpen] = useState<boolean>(false);
-
   const { data: configData } = useQuery<GetWebsiteConfigData, undefined>(GET_WEBSITE_CONFIG);
 
   const MIN_QUANTITY = parseInt(
@@ -42,6 +37,10 @@ const ProductDetailInfor = (props: ProductDetails) => {
   const MAX_QUANTITY = parseInt(
     configData?.getWebsiteConfig.find((config) => config.key === 'MAX_QUANTITY').value
   );
+
+  const [quantity, setQuantity] = useState<number>(MIN_QUANTITY);
+
+  const [open, setOpen] = useState<boolean>(false);
 
   const handleMinusClick = () => {
     const newQuantity = Math.min(quantity - 1, MIN_QUANTITY);
@@ -77,7 +76,11 @@ const ProductDetailInfor = (props: ProductDetails) => {
     ADD_TO_CART,
     {
       onCompleted: () => {
-        refetchCart().then(() => {
+        refetchCart().then((data) => {
+          setCheckboxCarts([
+            ...checkboxCarts,
+            data.data.getCart?.carts.find((product) => product.productId === props.id)?._id
+          ]);
           toast.success(t(`success:update_cart`));
         });
       },
@@ -240,7 +243,7 @@ const ProductDetailInfor = (props: ProductDetails) => {
               <QuantityInput
                 quantity={quantity}
                 setQuantity={setQuantity}
-                min={quantityInCart ? 0 : 1}
+                min={MIN_QUANTITY}
                 max={MAX_QUANTITY}
                 onPlusClick={handlePlusClick}
                 onMinusClick={handleMinusClick}
@@ -264,7 +267,10 @@ const ProductDetailInfor = (props: ProductDetails) => {
                 {t('productDetail:buy_now')}
               </button>
 
-              <button className="btn btn-secondary" onClick={handleAddToCart}>
+              <button
+                className="btn btn-secondary"
+                disabled={quantity === 0 && quantityInCart === 0}
+                onClick={handleAddToCart}>
                 {t(`productDetail:${quantityInCart ? 'update_cart' : 'add_to_cart'}`)}
               </button>
             </div>
