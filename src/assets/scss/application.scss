@@ -2989,12 +2989,9 @@ button.bg-dark:focus {
 .extraCart {
   font-size: 0.8rem !important;
   white-space: nowrap;
-  margin: 0.5rem 0.5rem 0 0.5rem !important;
+  margin: 0.5rem 0.5rem 0 0.5rem ;
 }
 @media (max-width: 576px){
-  .extraCart{
-    display: none;
-  }
   .mr-4{
     margin-right: 1.5rem !important;
   }
@@ -10539,6 +10536,10 @@ abbr[title] {
 .elevated--mobile {
   border-radius: 0;
 }
+
+.elevated .mt-3{
+  padding-bottom: 15px;
+}
 .form__label {
   font-weight: 500;
   font-size: small;
@@ -12292,6 +12293,7 @@ abbr[title] {
   .my-orders__detail .content {
     padding-left: 0;
   }
+  
 }
 .my-orders__invoice .btn {
   width: 10rem;

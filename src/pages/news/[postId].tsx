@@ -79,42 +79,39 @@ const links = [
   { href: '', title: 'Contrary to to populartext Contrary to populartext Contrary to populartext' }
 ];
 
+import { useQuery } from '@apollo/client';
+import { GET_POST, PostData, PostVar } from 'src/graphql/news/getWebsitePost';
 import withToken from 'src/utils/withToken';
 
 NewsPage.getInitialProps = async () => ({
   namespacesRequired: [...mainLayoutNamespacesRequired]
 });
-
+function getPostId(slug) {
+  return +slug.split('-').pop().replace('nid', '');
+}
 function NewsPage() {
   const router = useRouter();
 
-  useEffect(() => {
-    router.push('/');
-  }, []);
+  const { postId } = router.query;
 
-  return null;
-  // return (
-  //   <>
-  //     <Head>
-  //       <title>Medofa</title>
-  //     </Head>
+  const postID = Number(getPostId(postId));
 
-  //     <Header />
-
-  //     <Nav />
-
-  //     <News bannerImgUrl={imgUrl} links={links}>
-  //       <NewsDetail
-  //         imgUrl={data.imgUrl}
-  //         categories={data.categories}
-  //         description={data.description}
-  //         author={data.author}
-  //         title={data.title}></NewsDetail>
-  //     </News>
-
-  //     <Footer />
-  //   </>
-  // );
+  const { data: postData, loading: loadingData } = useQuery<PostData, PostVar>(GET_POST, {
+    variables: { id: postID }
+  });
+  return (
+    <>
+      <Head>
+        <title>Medofa</title>
+      </Head>
+      <Header />
+      <Nav />
+      <div className="container py-5">
+        <div dangerouslySetInnerHTML={{ __html: postData?.getWebsitePostDetail?.content }} />
+      </div>
+      <Footer />
+    </>
+  );
 }
 
 export default withToken({ ssr: true })(NewsPage);

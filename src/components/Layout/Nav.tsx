@@ -170,7 +170,7 @@ const Nav = () => {
                     <Link href="/cart">
                       <a className="rockland-nav__link notification" title={t('cart:cart')}>
                         <ShoppingCartOutlinedIcon />
-                        <span className="extraCart "> {t('cart:cart')} </span>
+                        <span className="extraCart d-none d-sm-block "> {t('cart:cart')} </span>
                         {totalQty > 0 && <span className="notification__counter">{totalQty}</span>}
                       </a>
                     </Link>

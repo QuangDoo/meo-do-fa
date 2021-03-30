@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import { GET_CART, GetCartData } from 'src/graphql/cart/getCart';
 import { useQueryAuth } from 'src/hooks/useApolloHookAuth';
 
+import { useCheckboxCarts } from './CheckboxCarts';
 import { useToken } from './Token';
 
 type ContextValue = {
@@ -22,12 +23,20 @@ const CartProvider = (props) => {
 
   const { t } = useTranslation(['errors']);
 
+  const { checkboxCarts, setCheckboxCarts, isFirst, setIsFirst } = useCheckboxCarts();
+
   const { data, loading, refetch } = useQueryAuth<GetCartData, undefined>(GET_CART, {
     fetchPolicy: 'network-only',
     onError: (error) => {
       const errorCode = error.graphQLErrors?.[0]?.extensions?.code;
 
       toast.error(t(`errors:code_${errorCode}`));
+    },
+    onCompleted: () => {
+      if (isFirst) {
+        setCheckboxCarts(data?.getCart?.carts.map((cart) => cart._id));
+        setIsFirst(false);
+      }
     },
     skip: !token
   });

@@ -1,22 +1,32 @@
 import { ApolloClient, from, HttpLink, InMemoryCache } from '@apollo/client';
 import { onError } from '@apollo/client/link/error';
+import { i18n } from 'i18n';
 import { withApollo } from 'next-apollo';
 import getConfig from 'next/config';
 
 const { serverRuntimeConfig, publicRuntimeConfig } = getConfig();
 
 const getURI = () => {
+  console.log('SERVER...', JSON.stringify({ serverRuntimeConfig, publicRuntimeConfig }));
+  console.log(
+    `SERVER NEXT PUBLIC... NEXT_PUBLIC_GRAPHQL_GATEWAY: ${process.env.NEXT_PUBLIC_GRAPHQL_GATEWAY},  NEXT_PUBLIC_GRAPHQL_GATEWAY_EXT: ${process.env.NEXT_PUBLIC_GRAPHQL_GATEWAY_EXT} `
+  );
+
   if (typeof window === 'undefined') {
-    console.log('SERVER...', JSON.stringify({ serverRuntimeConfig, publicRuntimeConfig }));
-
-    return `http://${serverRuntimeConfig.GRAPHQL_GATEWAY}`;
+    return `http://${
+      serverRuntimeConfig.GRAPHQL_GATEWAY || process.env.NEXT_PUBLIC_GRAPHQL_GATEWAY
+    }`;
   }
-
-  return `https://${publicRuntimeConfig.GRAPHQL_GATEWAY_EXT}`;
+  return `https://${
+    publicRuntimeConfig.GRAPHQL_GATEWAY_EXT || process.env.NEXT_PUBLIC_GRAPHQL_GATEWAY_EXT
+  }`;
 };
 
 const httpLink = new HttpLink({
-  uri: getURI()
+  uri: getURI(),
+  headers: {
+    'x-language': i18n.language
+  }
 });
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {

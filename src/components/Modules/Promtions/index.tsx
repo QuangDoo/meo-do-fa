@@ -16,12 +16,6 @@ import Pagination from '../Pagination';
 const page = 1;
 
 const Promotions = (): JSX.Element => {
-  const bannerImages = [
-    // 'https://firebasestorage.googleapis.com/v0/b/medofa-image.appspot.com/o/banner%2FBanner-Freeship.jpg?alt=media',
-    // 'https://firebasestorage.googleapis.com/v0/b/medofa-image.appspot.com/o/banner%2FBanner-Medofa.jpg?alt=media'
-    '/assets/images/banner_1.jpg',
-    '/assets/images/banner_mobile_2.jpg'
-  ];
   const { data: dataBaner, loading: getingBanner } = useQuery<WebBannerData, bannerInputVars>(
     GET_BANNER,
     {
@@ -30,10 +24,6 @@ const Promotions = (): JSX.Element => {
   );
 
   const promotivebanner = dataBaner?.getWebsiteBanner;
-
-  console.log(`promotivebanner`, promotivebanner);
-
-  // const router = useRouter();
 
   const { t } = useTranslation('promotions');
   return (
