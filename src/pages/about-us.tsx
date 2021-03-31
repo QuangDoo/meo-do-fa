@@ -73,11 +73,11 @@ function AboutUs() {
           <li>Địa chỉ Văn phòng chính: 231 Lý Tự Trọng, Bến Thành, Quận 1, Tp.HCM</li>
         </ol>
         <p className="mb-0">
-          Medofa là website thuộc sở hữu của Công ty TNHH RockLand
+          Medofa là website thuộc sở hữu của Công ty TNHH DAYTON
           <br />
-          Công ty TNHH RockLand
+          Công ty TNHH DAYTON
           <br />
-          Mã số thuế: 0316560590
+          Mã số thuế: 0316558390
           <br />
           Địa chỉ: Lầu 5 – 231 Lý Tự Trọng, Bến Thành, Quận 1, Tp.HCM
         </p>
