@@ -2,6 +2,8 @@ import { useTranslation } from 'i18n';
 import React from 'react';
 import Head from 'src/components/Layout/Head';
 import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
+import StaticPage from 'src/components/Modules/StaticPage';
+import useWebsitePost from 'src/hooks/useWebsitePost';
 import withToken from 'src/utils/withToken';
 
 GeneralPolicy.getInitialProps = async () => ({
@@ -9,7 +11,7 @@ GeneralPolicy.getInitialProps = async () => ({
 });
 
 function GeneralPolicy() {
-  const { t } = useTranslation(['common', 'generalPolicy']);
+  const generalPolicyData = useWebsitePost('GPOLICY');
 
   return (
     <MainLayout>
@@ -17,13 +19,7 @@ function GeneralPolicy() {
         <title>Medofa</title>
       </Head>
 
-      <div className="container my-5">
-        <h2 className="text-center my-5">{t('generalPolicy:title')}</h2>
-
-        <div className="d-flex justify-content-center align-items-center p-5">
-          {t('common:updating')}
-        </div>
-      </div>
+      <StaticPage pageContent={generalPolicyData} />
     </MainLayout>
   );
 }
