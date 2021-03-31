@@ -1,3 +1,5 @@
+import { useQuery } from '@apollo/client';
+import clsx from 'clsx';
 import configs from 'configs';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
@@ -14,14 +16,15 @@ import {
   GetCartByProductData,
   getCartByproductVars
 } from 'src/graphql/cart/getCartByProduct';
+import { GET_WEBSITE_CONFIG, GetWebsiteConfigData } from 'src/graphql/configs/getWebsiteConfig';
 import { CREATE_COUNSEL } from 'src/graphql/order/order.mutation';
 import { useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
 
 import CartItem from './CartItem';
 import ConfirmModal from './ConfirmModal';
 
-const MIN_PRICE = configs.MIN_PRICE;
-const FREE_SHIP = configs.FREESHIP_PRICE;
+// const MIN_PRICE = configs.MIN_PRICE;
+// const FREE_SHIP = configs.FREESHIP_PRICE;
 
 export default function CartPage() {
   const { data: cart, refetch: refetchCart } = useCart();
@@ -33,6 +36,16 @@ export default function CartPage() {
   const [deleteAllIsOpen, setDeleteAllIsOpen] = useState<boolean>(false);
 
   const router = useRouter();
+
+  const { data: configData } = useQuery<GetWebsiteConfigData, undefined>(GET_WEBSITE_CONFIG);
+
+  const MIN_PRICE = parseInt(
+    configData?.getWebsiteConfig.find((config) => config.key === 'MIN_PRICE').value
+  );
+
+  const FREE_SHIP = parseInt(
+    configData?.getWebsiteConfig.find((config) => config.key === 'FREESHIP_PRICE').value
+  );
 
   const { data: dataGetCartByProduct, loading: gettingCartByProducts } = useQueryAuth<
     GetCartByProductData,
@@ -146,21 +159,25 @@ export default function CartPage() {
           <div className="row">
             <div className="col-12 mb-3">
               <h1 className="h3">{t('cart:cart')}</h1>
-              <div className="d-flex align-items-center" hidden={cart.totalQty === 0}>
-                <input
-                  type="checkbox"
-                  onChange={handleSelectAll}
-                  checked={cart?.carts?.length > 0 && checkboxCarts?.length === cart?.carts?.length}
-                />
-                <h1 className="h5 ml-2">
-                  {t('cart:select_all')}
-                  {checkboxCarts?.length === cart?.carts?.length && ` (${cart.totalQty})`}
-                </h1>
-              </div>
+              {cart.totalQty !== 0 && (
+                <div className="d-flex align-items-center">
+                  <input
+                    type="checkbox"
+                    onChange={handleSelectAll}
+                    checked={
+                      cart?.carts?.length > 0 && checkboxCarts?.length === cart?.carts?.length
+                    }
+                  />
+                  <h1 className="h5 ml-2">
+                    {t('cart:select_all')}
+                    {checkboxCarts?.length === cart?.carts?.length && ` (${cart.totalQty})`}
+                  </h1>
+                </div>
+              )}
             </div>
           </div>
           <div className="row">
-            <div className="col-12 col-md-9">
+            <div className={clsx(cart.totalQty === 0 ? 'col-md-12' : 'col-md-9', 'col-12')}>
               {cart?.carts
                 .slice()
                 .reverse()
@@ -171,11 +188,6 @@ export default function CartPage() {
                       addToCheckCart={() => addToCheckCart(item._id)}
                       deleteToCheckCart={() => deleteToCheckCart(item._id)}
                       checked={checkboxCarts.includes(item._id)}
-                      updateCheckboxCart={() => {
-                        setCheckboxCarts((checkboxCarts) =>
-                          checkboxCarts.slice().filter((cartId) => cartId !== item._id)
-                        );
-                      }}
                     />
                   </div>
                 ))}
@@ -185,7 +197,7 @@ export default function CartPage() {
                 {t('cart:back_to_products')} <a href="/products">{t('cart:products')}</a>
               </div>
             </div>
-            <div className="col-12 col-md-3">
+            <div className="col-12 col-md-3" hidden={cart.totalQty === 0}>
               {cart && (
                 <div className="cart__info">
                   <div className="elevated row no-gutters mb-2">

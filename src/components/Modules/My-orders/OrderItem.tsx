@@ -52,10 +52,14 @@ export default function OrderItem(props: Props) {
           </div>
 
           <div>
-            <span className="title">{t('myOrders:expected_date')}</span>
-            <span className="content">
-              {new Date(props.expected_date).toLocaleDateString('en-GB')}
-            </span>
+            {`${badges[flag].text}` !== 'canceled' && (
+              <div>
+                <span className="title">{t('myOrders:expected_date')}</span>
+                <span className="content">
+                  {new Date(props.expected_date).toLocaleDateString('en-GB')}
+                </span>
+              </div>
+            )}
           </div>
         </div>
       </div>

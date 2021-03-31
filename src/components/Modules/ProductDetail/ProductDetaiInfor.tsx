@@ -1,3 +1,4 @@
+import { useQuery } from '@apollo/client';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -6,11 +7,11 @@ import { toast } from 'react-toastify';
 import PriceText from 'src/components/Form/PriceText';
 import QuantityInput from 'src/components/Form/QuantityInput';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
-import index from 'src/components/Modules/Cart/index';
 import { useCart } from 'src/contexts/Cart';
 import { useCheckboxCarts } from 'src/contexts/CheckboxCarts';
 import { useToken } from 'src/contexts/Token';
 import { ADD_TO_CART, AddToCartData, AddToCartVars } from 'src/graphql/cart/addToCart';
+import { GET_WEBSITE_CONFIG, GetWebsiteConfigData } from 'src/graphql/configs/getWebsiteConfig';
 import { ProductDetails } from 'src/graphql/product/product.query';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import useDebounce from 'src/hooks/useDebounce';
@@ -19,15 +20,25 @@ import ConfirmDeleteItemModal from '../Cart/ConfirmDeleteItemModal';
 import LoginModal from '../LoginModal';
 import ProductBadges from '../ProductCard/ProductBadges';
 
-const MAX_QUANTITY = 100000;
-const MIN_QUANTITY = 0;
+// const MAX_QUANTITY = 100000;
+// const MIN_QUANTITY = 0;
 
 const ProductDetailInfor = (props: ProductDetails) => {
   const token = useToken();
 
   const { t } = useTranslation(['common', 'productDetail', 'success']);
 
-  const [quantity, setQuantity] = useState<number>(1);
+  const { data: configData } = useQuery<GetWebsiteConfigData, undefined>(GET_WEBSITE_CONFIG);
+
+  const MIN_QUANTITY = parseInt(
+    configData?.getWebsiteConfig.find((config) => config.key === 'MIN_QUANTITY').value
+  );
+
+  const MAX_QUANTITY = parseInt(
+    configData?.getWebsiteConfig.find((config) => config.key === 'MAX_QUANTITY').value
+  );
+
+  const [quantity, setQuantity] = useState<number>(MIN_QUANTITY);
 
   const [open, setOpen] = useState<boolean>(false);
 
@@ -65,7 +76,11 @@ const ProductDetailInfor = (props: ProductDetails) => {
     ADD_TO_CART,
     {
       onCompleted: () => {
-        refetchCart().then(() => {
+        refetchCart().then((data) => {
+          setCheckboxCarts([
+            ...checkboxCarts,
+            data.data.getCart?.carts.find((product) => product.productId === props.id)?._id
+          ]);
           toast.success(t(`success:update_cart`));
         });
       },
@@ -228,7 +243,7 @@ const ProductDetailInfor = (props: ProductDetails) => {
               <QuantityInput
                 quantity={quantity}
                 setQuantity={setQuantity}
-                min={quantityInCart ? 0 : 1}
+                min={MIN_QUANTITY}
                 max={MAX_QUANTITY}
                 onPlusClick={handlePlusClick}
                 onMinusClick={handleMinusClick}
@@ -252,7 +267,10 @@ const ProductDetailInfor = (props: ProductDetails) => {
                 {t('productDetail:buy_now')}
               </button>
 
-              <button className="btn btn-secondary" onClick={handleAddToCart}>
+              <button
+                className="btn btn-secondary"
+                disabled={quantity === 0 && quantityInCart === 0}
+                onClick={handleAddToCart}>
                 {t(`productDetail:${quantityInCart ? 'update_cart' : 'add_to_cart'}`)}
               </button>
             </div>

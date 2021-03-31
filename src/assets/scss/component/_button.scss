@@ -134,7 +134,7 @@ button::-moz-focus-inner,
   line-height: 1.5;
   border-radius: 50px;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
-    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 @media (prefers-reduced-motion: reduce) {
   .btn {
@@ -770,6 +770,7 @@ fieldset:disabled a.btn {
   line-height: 1.5;
   border-radius: 50px;
 }
+
 .btn-block {
   display: block;
   width: 100%;
@@ -781,4 +782,13 @@ input[type='submit'].btn-block,
 input[type='reset'].btn-block,
 input[type='button'].btn-block {
   width: 100%;
+}
+
+.subscribe-container .btn-border-rad,
+.search .btn-border-rad  {
+  border-radius: 3px;
+  overflow: hidden;
+}
+.subscribe-container .btn-border-rad{
+  max-width: 300px;
 }

@@ -3,7 +3,7 @@
   "address_label": "Địa chỉ giao hàng",
   "address_label_invoice": "Địa chỉ công ty",
   "address_required": "Xin nhập địa chỉ giao hàng.",
-  "street":"Đường phố và số nhà.",
+  "street":"Số nhà và tên đường.",
   "agreement_label": "Tôi đồng ý với <Link>Điều khoản sử dụng</Link>",
   "agreement_required": "Xin vui lòng xác thực điều khoản",
   "apply_coupon_btn_label": "Dùng mã",

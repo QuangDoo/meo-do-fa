@@ -106,7 +106,7 @@ const Footer = () => {
               onSubmit={handleSubmit(onSubmit, onError)}>
               <Input
                 name="email"
-                containerClass="group-input-footer"
+                containerClass="btn-border-rad"
                 iconClass="icomoon icon-mail"
                 placeholder={t('footer:email_input')}
                 ref={register({

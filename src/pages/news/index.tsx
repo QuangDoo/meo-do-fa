@@ -1,7 +1,17 @@
+import { useQuery } from '@apollo/client';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
-import { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
-
+import { type } from 'os';
+import React, { useEffect } from 'react';
+import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
+import News from 'src/components/Modules/News';
+import NewsList from 'src/components/Modules/News/NewsList';
+import {
+  GET_POST,
+  PostInputVars,
+  PostType,
+  WebsitePostData
+} from 'src/graphql/news/getWebsitePost';
 const newsdata = [
   {
     id: 8,
@@ -95,23 +105,19 @@ NewsPage.getInitialProps = async () => ({
 function NewsPage() {
   const router = useRouter();
 
-  useEffect(() => {
-    router.push('/');
-  }, []);
-
-  return null;
-
-  // return (
-  //   <MainLayout>
-  //     <Head>
-  //       <title>Medofa</title>
-  //     </Head>
-  //
-  //     <News bannerImgUrl={imgUrl} links={links}>
-  //       <NewsList news={newsdata} />
-  //     </News>
-  //   </MainLayout>
-  // );
+  const { data: newsData } = useQuery<WebsitePostData, PostInputVars>(GET_POST, {
+    variables: { type: PostType.NEWS }
+  });
+  return (
+    <MainLayout>
+      <Head>
+        <title>Medofa</title>
+      </Head>
+      <News bannerImgUrl={imgUrl} links={links}>
+        <NewsList news={newsData?.getWebsitePost} />
+      </News>
+    </MainLayout>
+  );
 }
 
 export default withToken({ ssr: true })(NewsPage);

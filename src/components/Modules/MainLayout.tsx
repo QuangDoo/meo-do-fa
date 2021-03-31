@@ -1,9 +1,13 @@
+import dynamic from 'next/dynamic';
 import React, { ReactNode } from 'react';
 import { useCart } from 'src/contexts/Cart';
 import { useToken } from 'src/contexts/Token';
 import { useUser } from 'src/contexts/User';
 
 import ActiveUser from '../Layout/ActiveUser';
+
+// import ActiceUser from '../Layout/ActiceUser';
+const DynamicTermPopup = dynamic(() => import('./TermPopup'));
 import Footer from '../Layout/Footer';
 import Header from '../Layout/Header';
 import LoadingBackdrop from '../Layout/LoadingBackdrop';
@@ -25,7 +29,7 @@ export default function MainLayout(props: Props) {
 
   return (
     <>
-      <TermPopup />
+      <DynamicTermPopup />
 
       {token && !isActive && <ActiveUser />}
 

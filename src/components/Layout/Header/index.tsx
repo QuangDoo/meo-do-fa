@@ -51,7 +51,7 @@ const Header = () => {
               <RightSideUser />
             </>
           ) : (
-            <div>
+            <div className="d-flex align-items-center justify-content-center">
               <LoginModal />
 
               <RegisterModal />
