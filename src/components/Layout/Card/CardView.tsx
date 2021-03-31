@@ -7,11 +7,12 @@ type Props = {
   imgUrl?: string;
   description?: string;
   createAt?: string;
+  slug: string;
 };
 
 export default function CardView(props: Props) {
   return (
-    <Link href={`/news/${props?.id}`}>
+    <Link href={`/news/${props?.slug}`}>
       <div className="post-item">
         <div className="post-item__img">
           <img className="post-item__img-item" alt={props?.title} src={props?.imgUrl}></img>
@@ -19,7 +20,11 @@ export default function CardView(props: Props) {
         <div className="post-item__content">
           <div className="post-item__content-title">{props?.title}</div>
           <div className="post-item__content-divider"></div>
-          <div className="post-item__content-description">{props?.description}</div>
+          <div
+            className="post-item__content-description"
+            dangerouslySetInnerHTML={{
+              __html: props?.description
+            }}></div>
         </div>
 
         <div className="post-item__badge">

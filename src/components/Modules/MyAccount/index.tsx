@@ -324,6 +324,7 @@ export default function MyAccountPage() {
             placeholder={t('myAccount:business_license_placeholder')}
             onChange={handleFileChange}
             containerClass="mb-2"
+            disabled={user.activated}
           />
 
           <input

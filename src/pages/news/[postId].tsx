@@ -80,38 +80,52 @@ const links = [
 ];
 
 import { useQuery } from '@apollo/client';
-import { GET_POST, PostData, PostVar } from 'src/graphql/news/getWebsitePost';
+import {
+  GET_POST_DETAIL,
+  GetWebsitePostData,
+  GetWebsitePostVariables,
+  PostDetail
+} from 'src/graphql/news/getWebsitePostDetail';
 import withToken from 'src/utils/withToken';
 
-NewsPage.getInitialProps = async () => ({
+NewsDetailPage.getInitialProps = async () => ({
   namespacesRequired: [...mainLayoutNamespacesRequired]
 });
-function getPostId(slug) {
+
+function getPostId(slug: string): number {
   return +slug.split('-').pop().replace('nid', '');
 }
-function NewsPage() {
+
+function NewsDetailPage() {
   const router = useRouter();
-
-  const { postId } = router.query;
-
-  const postID = Number(getPostId(postId));
-
-  const { data: postData, loading: loadingData } = useQuery<PostData, PostVar>(GET_POST, {
-    variables: { id: postID }
-  });
+  const { data: newsDetailData } = useQuery<GetWebsitePostData, GetWebsitePostVariables>(
+    GET_POST_DETAIL,
+    {
+      variables: { id: getPostId(router.query.postId as string) }
+    }
+  );
   return (
     <>
       <Head>
         <title>Medofa</title>
       </Head>
+
       <Header />
+
       <Nav />
-      <div className="container py-5">
-        <div dangerouslySetInnerHTML={{ __html: postData?.getWebsitePostDetail?.content }} />
-      </div>
+
+      <News bannerImgUrl={imgUrl} links={links}>
+        <NewsDetail
+          imgUrl={newsDetailData?.getWebsitePostDetail?.link}
+          categories={data.categories}
+          description={newsDetailData?.getWebsitePostDetail?.content}
+          author={data.author}
+          title={data.title}></NewsDetail>
+      </News>
+
       <Footer />
     </>
   );
 }
 
-export default withToken({ ssr: true })(NewsPage);
+export default withToken({ ssr: true })(NewsDetailPage);

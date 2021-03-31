@@ -1,25 +1,31 @@
 import { gql } from '@apollo/client';
 
-export type PostVar = {
-  id: number;
+export enum PostType {
+  NEWS = 'NEWS',
+  HR = 'HR'
+}
+export type PostInputVars = {
+  type: PostType;
 };
-
-export type PostData = {
-  getWebsitePostDetail: {
+export type WebsitePostData = {
+  getWebsitePost: {
     id: number;
     name: string;
-    link: string;
     content: string;
-  };
+    link: string;
+    slug: string;
+  }[];
 };
 
 export const GET_POST = gql`
-  query getWebsitePostDetail($id: Int!) {
-    getWebsitePostDetail(id: $id) {
+  query($type: PostType) {
+    getWebsitePost(type: $type) {
       id
       name
-      link
+      type
       content
+      link
+      slug
     }
   }
 `;
