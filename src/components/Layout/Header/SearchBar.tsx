@@ -167,7 +167,7 @@ const SearchBar = () => {
       <ClickAwayListener onClickAway={handleBlur}>
         <div className="search">
           <form onSubmit={handleSubmit} autoComplete="off" acceptCharset="UTF-8">
-            <div className="input-group form__input-group">
+            <div className="input-group form__input-group btn-border-rad">
               <input
                 type="search"
                 placeholder={t(`searchBar:placeholder_${type}`)}
