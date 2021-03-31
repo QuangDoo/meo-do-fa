@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { useCart } from 'src/contexts/Cart';
+import { useCheckboxCarts } from 'src/contexts/CheckboxCarts';
 import { ADD_TO_CART, AddToCartData, AddToCartVars } from 'src/graphql/cart/addToCart';
 import { GET_WEBSITE_CONFIG, GetWebsiteConfigData } from 'src/graphql/configs/getWebsiteConfig';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
@@ -47,6 +48,8 @@ function ProductCardQuantityInput(props: Props) {
     configData?.getWebsiteConfig.find((config) => config.key === 'MAX_QUANTITY').value
   );
 
+  const { checkboxCarts, setCheckboxCarts } = useCheckboxCarts();
+
   useEffect(() => {
     setQuantity(quantityInCart);
   }, [quantityInCart]);
@@ -55,9 +58,18 @@ function ProductCardQuantityInput(props: Props) {
     ADD_TO_CART,
     {
       onCompleted: () => {
-        refetchCart().then(() => {
+        refetchCart().then((data) => {
+          // console.log(
+          //   data.data.getCart?.carts.find((product) => product.productId === props.productId)?._id
+          // );
+          // console.log(cart?.carts.find((product) => product.productId === props.productId)?._id);
+          setCheckboxCarts([
+            ...checkboxCarts,
+            data.data.getCart?.carts.find((product) => product.productId === props.productId)?._id
+          ]);
           toast.success(t(`success:update_cart`));
         });
+        // console.log(cart);
       },
       onError: (err) => {
         const errorCode = err.graphQLErrors?.[0]?.extensions?.code;

@@ -1,4 +1,5 @@
 import { useQuery } from '@apollo/client';
+import clsx from 'clsx';
 import configs from 'configs';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
@@ -158,21 +159,25 @@ export default function CartPage() {
           <div className="row">
             <div className="col-12 mb-3">
               <h1 className="h3">{t('cart:cart')}</h1>
-              <div className="d-flex align-items-center" hidden={cart.totalQty === 0}>
-                <input
-                  type="checkbox"
-                  onChange={handleSelectAll}
-                  checked={cart?.carts?.length > 0 && checkboxCarts?.length === cart?.carts?.length}
-                />
-                <h1 className="h5 ml-2">
-                  {t('cart:select_all')}
-                  {checkboxCarts?.length === cart?.carts?.length && ` (${cart.totalQty})`}
-                </h1>
-              </div>
+              {cart.totalQty !== 0 && (
+                <div className="d-flex align-items-center">
+                  <input
+                    type="checkbox"
+                    onChange={handleSelectAll}
+                    checked={
+                      cart?.carts?.length > 0 && checkboxCarts?.length === cart?.carts?.length
+                    }
+                  />
+                  <h1 className="h5 ml-2">
+                    {t('cart:select_all')}
+                    {checkboxCarts?.length === cart?.carts?.length && ` (${cart.totalQty})`}
+                  </h1>
+                </div>
+              )}
             </div>
           </div>
           <div className="row">
-            <div className="col-12 col-md-9">
+            <div className={clsx(cart.totalQty === 0 ? 'col-md-12' : 'col-md-9', 'col-12')}>
               {cart?.carts
                 .slice()
                 .reverse()
@@ -192,7 +197,7 @@ export default function CartPage() {
                 {t('cart:back_to_products')} <a href="/products">{t('cart:products')}</a>
               </div>
             </div>
-            <div className="col-12 col-md-3">
+            <div className="col-12 col-md-3" hidden={cart.totalQty === 0}>
               {cart && (
                 <div className="cart__info">
                   <div className="elevated row no-gutters mb-2">
