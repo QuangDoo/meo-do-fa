@@ -79,42 +79,53 @@ const links = [
   { href: '', title: 'Contrary to to populartext Contrary to populartext Contrary to populartext' }
 ];
 
+import { useQuery } from '@apollo/client';
+import {
+  GET_POST_DETAIL,
+  GetWebsitePostData,
+  GetWebsitePostVariables,
+  PostDetail
+} from 'src/graphql/news/getWebsitePostDetail';
 import withToken from 'src/utils/withToken';
 
-NewsPage.getInitialProps = async () => ({
+NewsDetailPage.getInitialProps = async () => ({
   namespacesRequired: [...mainLayoutNamespacesRequired]
 });
 
-function NewsPage() {
-  const router = useRouter();
-
-  useEffect(() => {
-    router.push('/');
-  }, []);
-
-  return null;
-  // return (
-  //   <>
-  //     <Head>
-  //       <title>Medofa</title>
-  //     </Head>
-
-  //     <Header />
-
-  //     <Nav />
-
-  //     <News bannerImgUrl={imgUrl} links={links}>
-  //       <NewsDetail
-  //         imgUrl={data.imgUrl}
-  //         categories={data.categories}
-  //         description={data.description}
-  //         author={data.author}
-  //         title={data.title}></NewsDetail>
-  //     </News>
-
-  //     <Footer />
-  //   </>
-  // );
+function getPostId(slug: string): number {
+  return +slug.split('-').pop().replace('nid', '');
 }
 
-export default withToken({ ssr: true })(NewsPage);
+function NewsDetailPage() {
+  const router = useRouter();
+  const { data: newsDetailData } = useQuery<GetWebsitePostData, GetWebsitePostVariables>(
+    GET_POST_DETAIL,
+    {
+      variables: { id: getPostId(router.query.postId as string) }
+    }
+  );
+  return (
+    <>
+      <Head>
+        <title>Medofa</title>
+      </Head>
+
+      <Header />
+
+      <Nav />
+
+      <News bannerImgUrl={imgUrl} links={links}>
+        <NewsDetail
+          imgUrl={newsDetailData?.getWebsitePostDetail?.link}
+          categories={data.categories}
+          description={newsDetailData?.getWebsitePostDetail?.content}
+          author={data.author}
+          title={data.title}></NewsDetail>
+      </News>
+
+      <Footer />
+    </>
+  );
+}
+
+export default withToken({ ssr: true })(NewsDetailPage);
