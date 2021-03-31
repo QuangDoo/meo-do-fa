@@ -2991,11 +2991,11 @@ button.bg-dark:focus {
   white-space: nowrap;
   margin: 0.5rem 0.5rem 0 0.5rem !important;
 }
-@media (max-width: 576px){
-  .extraCart{
+@media (max-width: 576px) {
+  .extraCart {
     display: none;
   }
-  .mr-4{
+  .mr-4 {
     margin-right: 1.5rem !important;
   }
 }
@@ -12123,8 +12123,9 @@ abbr[title] {
 .filter-search__list {
   list-style: none;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 25% 25% 25% 25%;
 }
+
 @media (max-width: 991.98px) {
   .filter-search__list {
     grid-template-columns: 1fr 1fr;
