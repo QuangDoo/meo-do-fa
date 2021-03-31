@@ -12144,8 +12144,9 @@ abbr[title] {
 .filter-search__list {
   list-style: none;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 25% 25% 25% 25%;
 }
+
 @media (max-width: 991.98px) {
   .filter-search__list {
     grid-template-columns: 1fr 1fr;
