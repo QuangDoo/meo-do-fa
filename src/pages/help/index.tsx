@@ -1,59 +1,55 @@
+import { useQuery } from '@apollo/client';
+import { CircularProgress } from '@material-ui/core';
 import { useTranslation } from 'i18n';
-import React from 'react';
-import { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
-import TermPopup from 'src/components/Modules/TermPopup';
+import { useRouter } from 'next/router';
+import React, { useEffect } from 'react';
+import MainLayout from 'src/components/Modules/MainLayout';
+import {
+  GET_POST,
+  PostInputVars,
+  PostType,
+  WebsitePostData
+} from 'src/graphql/news/getWebsitePost';
+import useWebsitePost from 'src/hooks/useWebsitePost';
 import withToken from 'src/utils/withToken';
 
-import Footer from '../../components/Layout/Footer';
 import Head from '../../components/Layout/Head';
-import Header from '../../components/Layout/Header';
-import Nav from '../../components/Layout/Nav';
-import FAQ from '../../components/Modules/FAQ/index';
-import Questions from '../../components/Modules/FAQ/Questions';
 
 const Help = () => {
-  // const questions = [
-  //   { id: 1, href: '/1', title: 'Hủy đơn hàng và khóa tài khoản' },
-  //   { id: 2, href: '/1', title: 'Tại sao tôi đăng nhập bị lỗi?' },
-  //   { id: 3, href: '/1', title: 'Tại sao tôi không đăng nhập được tài khoản?' },
-  //   { id: 4, href: '/1', title: 'Quên mật khẩu đăng nhập' },
-  //   { id: 5, href: '/1', title: 'Medofa bán những sản phẩm gì' },
-  //   { id: 6, href: '/huong-dan-chuyen-khoan', title: 'Hướng dẫn chuyển khoản' },
-  //   { id: 5, href: '/1', title: 'Medofa bán những sản phẩm gì' },
-  //   { id: 5, href: '/1', title: 'Medofa bán những sản phẩm gì' }
-  // ];
+  const { t } = useTranslation(['common']);
 
-  const { t } = useTranslation(['common', 'help']);
+  const router = useRouter();
+  // const faqData = useWebsitePost('FAQ');
+  const { data: postList, loading } = useQuery<WebsitePostData, PostInputVars>(GET_POST, {
+    variables: {
+      type: PostType.FAQ
+    }
+  });
+  const faqData = postList?.getWebsitePost;
+
+  useEffect(() => {
+    if (faqData.length !== 0) {
+      router.push(`/help/${faqData?.[0].id}`);
+    }
+  }, []);
 
   return (
-    <>
+    <MainLayout>
       <Head>
         <title>Medofa</title>
       </Head>
 
-      <TermPopup />
-
-      <Header />
-
-      <Nav />
-
-      <FAQ title={t('help:frequently_asked_questions')}>
-        {/* <div className="d-flex justify-content-center align-items-center p-5">
+      {loading ? (
+        <div className="search__result--empty text-center">
+          <CircularProgress size={60} />
+        </div>
+      ) : (
+        <div className="d-flex justify-content-center align-items-center p-5">
           {t('common:updating')}
-        </div> */}
-        {/* <>
-          <div className="news__divider"></div>
-          <Questions questions={questions} />
-        </> */}
-      </FAQ>
-
-      <Footer />
-    </>
+        </div>
+      )}
+    </MainLayout>
   );
 };
-
-Help.getInitialProps = async () => ({
-  namespacesRequired: [...mainLayoutNamespacesRequired]
-});
 
 export default withToken({ ssr: true })(Help);
