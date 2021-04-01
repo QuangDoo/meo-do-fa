@@ -230,7 +230,8 @@ export default function MyAccountPage() {
       }
     });
   };
-
+  // console.log(typeof user.vat);
+  const vat = user.vat.replace('-', ' - ');
   const onError = (error) => {
     toast.error(error[Object.keys(error)[0]].message);
   };
@@ -313,7 +314,7 @@ export default function MyAccountPage() {
             label={t('myAccount:tax_code_label')}
             name="taxCode"
             type="text"
-            defaultValue={user?.vat}
+            defaultValue={vat}
             placeholder={t('myAccount:tax_code_placeholder')}
           />
 
