@@ -39,13 +39,11 @@ export default function CartPage() {
 
   const { data: configData } = useQuery<GetWebsiteConfigData, undefined>(GET_WEBSITE_CONFIG);
 
-  const MIN_PRICE = parseInt(
-    configData?.getWebsiteConfig.find((config) => config.key === 'MIN_PRICE').value
-  );
+  const MIN_PRICE = +configData?.getWebsiteConfig.find((config) => config.key === 'MIN_PRICE')
+    .value;
 
-  const FREE_SHIP = parseInt(
-    configData?.getWebsiteConfig.find((config) => config.key === 'FREESHIP_PRICE').value
-  );
+  const FREE_SHIP = +configData?.getWebsiteConfig.find((config) => config.key === 'FREESHIP_PRICE')
+    .value;
 
   const { data: dataGetCartByProduct, loading: gettingCartByProducts } = useQueryAuth<
     GetCartByProductData,
