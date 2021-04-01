@@ -2991,8 +2991,11 @@ button.bg-dark:focus {
   white-space: nowrap;
   margin: 0.5rem 0.5rem 0 0.5rem ;
 }
-@media (max-width: 576px){
-  .mr-4{
+@media (max-width: 576px) {
+  .extraCart {
+    display: none;
+  }
+  .mr-4 {
     margin-right: 1.5rem !important;
   }
 }
