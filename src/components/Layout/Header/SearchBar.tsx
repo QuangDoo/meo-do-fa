@@ -24,9 +24,14 @@ import {
   SearchProductData,
   SearchProductVars
 } from 'src/graphql/search/searchProducts';
+import {
+  SEARCH_SUPPLIER,
+  SearchSupplierData,
+  SearchSupplierVars
+} from 'src/graphql/search/searchSupplier';
 import { useDebouncedEffect } from 'src/hooks/useDebouncedEffect';
 
-type SearchType = 'products' | 'manufacturers' | 'ingredients';
+type SearchType = 'products' | 'manufacturers' | 'ingredients' | 'suppliers';
 
 const SearchBar = () => {
   const { t } = useTranslation(['searchBar']);
@@ -47,6 +52,11 @@ const SearchBar = () => {
     SearchIngredientData,
     SearchIngredientVars
   >(SEARCH_INGREDIENT);
+
+  const [searchSuppliers, { data: supplierData, loading: loadingSupplier }] = useLazyQuery<
+    SearchSupplierData,
+    SearchSupplierVars
+  >(SEARCH_SUPPLIER);
 
   const [value, setValue] = useState('');
 
@@ -76,6 +86,9 @@ const SearchBar = () => {
 
       case 'ingredients':
         searchIngredients(options);
+        break;
+      case 'suppliers':
+        searchSuppliers(options);
         break;
     }
   };
@@ -107,7 +120,7 @@ const SearchBar = () => {
       case 'manufacturers':
         // eslint-disable-next-line no-case-declarations
         const manufacturers = manufacturersData?.searchManufactory;
-        if (manufacturers.length) {
+        if (manufacturers?.length) {
           return router.push(getItemHref['manufacturers'](manufacturers[0]));
         }
         return;
@@ -153,7 +166,7 @@ const SearchBar = () => {
   const getItemHref = {
     products: (product) => `/products/${product.slug}`,
     manufacturers: (manufacturer) => `/products?manufacturer=${manufacturer.id}`,
-    ingredients: (ingredient) => `/ingredients/${ingredient.id}/${slugify(ingredient.name)}`
+    ingredients: (ingredient) => `/products?ingredient=${ingredient.id}`
   };
 
   const allHref = {
