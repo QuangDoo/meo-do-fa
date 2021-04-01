@@ -1,15 +1,18 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import { Menu } from '@material-ui/core';
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import { useTranslation } from 'i18n';
 import cookies from 'js-cookie';
 import Link from 'next/link';
 import React, { useState } from 'react';
-import { useCart } from 'src/contexts/Cart';
-import { useToken } from 'src/contexts/Token';
-import { useModalControlDispatch } from 'src/contexts/ModalControl';
-import PathologyMenu from '../Modules/PathologyMenu';
-import { useUser } from 'src/contexts/User';
 import LanguagePicker from 'src/components/Layout/Header/LanguagePicker';
+import { useCart } from 'src/contexts/Cart';
+import { useModalControlDispatch } from 'src/contexts/ModalControl';
+import { useToken } from 'src/contexts/Token';
+import { useUser } from 'src/contexts/User';
+
+import PathologyMenu from '../Modules/PathologyMenu';
 
 const Nav = () => {
   const { data: user } = useUser();
@@ -51,28 +54,30 @@ const Nav = () => {
 
   // const categories = categoriesData?.getCategoriesLevel || [];
   function handleClick() {
-    var a = document.getElementById("1");
-    a.classList.toggle("displayMenu")
+    const a = document.getElementById('1');
+    a.classList.toggle('displayMenu');
   }
   function handlePromotion() {
-    var a = document.getElementById("2");
-    a.classList.toggle("showSubPromotion")
+    const a = document.getElementById('2');
+    a.classList.toggle('showSubPromotion');
   }
   function handlePromotion2() {
-    var a = document.getElementById("3");
-    a.classList.toggle("showSubPromotion")
+    const a = document.getElementById('3');
+    a.classList.toggle('showSubPromotion');
   }
   function handleAcount() {
-    var a = document.getElementById("4");
-    a.classList.toggle("showSubPromotion")
+    const a = document.getElementById('4');
+    a.classList.toggle('showSubPromotion');
   }
   function OffMenuMobile() {
-    var a = document.getElementById("1");
-    a.classList.remove("displayMenu")
+    const a = document.getElementById('1');
+    a.classList.remove('displayMenu');
   }
   return (
     <div className="nav">
-      <div className="mobile-responsive menu-mobile" onClick={handleClick}> <i className="fas fa-list-ul" />
+      <div className="mobile-responsive menu-mobile" onClick={handleClick}>
+        {' '}
+        <i className="fas fa-list-ul" />
       </div>
       <div className="mr-2 flex-shrink-0 mb-3 mb-lg-0 mr-0 logo-mobile">
         <div className="rockland-logo">
@@ -105,10 +110,7 @@ const Nav = () => {
           <div className="row">
             {!token && (
               <div className="LoginInMenu">
-                <button
-                  className="LoginInMenu-button"
-                  onClick={() => openModal('LOGIN')}>
-
+                <button className="LoginInMenu-button" onClick={() => openModal('LOGIN')}>
                   <div className="LoginMenu-icon">
                     <i className="fas fa-sign-in-alt mr-1" />
                   </div>
@@ -137,7 +139,9 @@ const Nav = () => {
                       <div data-toggle="dropdown" data-hover="dropdown" onClick={handleAcount}>
                         <a className="rockland-nav__link">
                           <i className="rockland-nav__icon fab fa-hotjar" />
-                          <span className="rockland-nav__title">{t('navbar:account_management')}</span>
+                          <span className="rockland-nav__title">
+                            {t('navbar:account_management')}
+                          </span>
                         </a>
                       </div>
                       <div id="4" className="subPromotion offsubPromotion">
@@ -146,7 +150,9 @@ const Nav = () => {
                             <Link href="/my-account">
                               <a className="rockland-nav__link ">
                                 <i className="far fa-user-circle  rockland-nav__icon" />
-                                <span className="rockland-nav__title">{t('navbar:account_info')}</span>
+                                <span className="rockland-nav__title">
+                                  {t('navbar:account_info')}
+                                </span>
                               </a>
                             </Link>
                           </li>
@@ -154,7 +160,9 @@ const Nav = () => {
                             <Link href="/change-password">
                               <a className="rockland-nav__link ">
                                 <i className="fa fa-key rockland-nav__icon" />
-                                <span className="rockland-nav__title">{t('navbar:change_password')}</span>
+                                <span className="rockland-nav__title">
+                                  {t('navbar:change_password')}
+                                </span>
                               </a>
                             </Link>
                           </li>
@@ -170,12 +178,13 @@ const Nav = () => {
                             <Link href="/my-promo-codes">
                               <a className="rockland-nav__link">
                                 <i className="fas fa-tags rockland-nav__icon" />
-                                <span className="rockland-nav__title">{t('navbar:my_promo_code')}</span>
+                                <span className="rockland-nav__title">
+                                  {t('navbar:my_promo_code')}
+                                </span>
                               </a>
                             </Link>
                           </li>
                         </ul>
-
                       </div>
                     </li>
                   </div>
@@ -347,9 +356,7 @@ const Nav = () => {
 
                 {token && (
                   <li className="mobile-responsive rockland-nav__item">
-                    <button
-                      type="button"
-                      onClick={logOut}>
+                    <button type="button" onClick={logOut}>
                       <a className="rockland-nav__link">
                         <i className="fas fa-sign-out-alt rockland-nav__icon" />
                         <span className="rockland-nav__title">{t('navbar:logout')}</span>
@@ -366,7 +373,9 @@ const Nav = () => {
                         <a className="rockland-nav__link notification" title={t('cart:cart')}>
                           <ShoppingCartOutlinedIcon />
                           <span className="extraCart "> {t('cart:cart')} </span>
-                          {totalQty > 0 && <span className="notification__counter">{totalQty}</span>}
+                          {totalQty > 0 && (
+                            <span className="notification__counter">{totalQty}</span>
+                          )}
                         </a>
                       </Link>
                     </li>
@@ -434,7 +443,7 @@ const Nav = () => {
         </div>
         <div id="4" className="overlays" onClick={OffMenuMobile}></div>
       </nav>
-    </div >
+    </div>
   );
 };
 

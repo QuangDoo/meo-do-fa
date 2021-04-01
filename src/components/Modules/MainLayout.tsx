@@ -36,8 +36,8 @@ export default function MainLayout(props: Props) {
         <Header />
       </div>
 
-        <Nav />
-      
+      <Nav />
+
       <div className="header-mobile">
         <Header />
       </div>
