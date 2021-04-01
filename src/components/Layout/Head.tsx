@@ -47,6 +47,13 @@ export default function Head(props) {
         rel="apple-touch-icon"
         href="/icons/apple-icon-120x120-medofa-manifest-20129.png"></link>
       <meta name="theme-color" content="#2f3b97" />
+
+      <meta property="og:url" content="https://medofa.com/" />
+      <meta
+        property="og:image"
+        content="https://medofa.com/icons/favicon-32x32-medofa-manifest-20129.png"
+      />
+
       <script async src="https://www.googletagmanager.com/gtag/js?id=G-95PXEWD1KY"></script>
       <script async src="https://www.googletagmanager.com/gtag/js?id=G-TPL3K1KQZN"></script>
       {props.children}

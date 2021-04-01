@@ -76,4 +76,7 @@ button {
 #onesignal-bell-container.onesignal-reset.onesignal-bell-container-bottom-right {
   bottom: 140px !important;
   right: 11px !important;
+  z-index: 1900000000 !important;
+  // 2147483000
+  // 2000000000!important
 }

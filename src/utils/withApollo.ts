@@ -1,6 +1,5 @@
 import { ApolloClient, from, HttpLink, InMemoryCache } from '@apollo/client';
 import { onError } from '@apollo/client/link/error';
-import { i18n } from 'i18n';
 import { withApollo } from 'next-apollo';
 import getConfig from 'next/config';
 
@@ -23,10 +22,7 @@ const getURI = () => {
 };
 
 const httpLink = new HttpLink({
-  uri: getURI(),
-  headers: {
-    'x-language': i18n.language
-  }
+  uri: getURI()
 });
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {

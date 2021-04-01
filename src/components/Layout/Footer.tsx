@@ -298,7 +298,7 @@ const Footer = () => {
         </div>
         <div className="copyright">
           <div>{t('footer:copyright')}</div>
-          <div className="version">Version: 0.9.10</div>
+          <div className="version">Version: 0.9.11</div>
         </div>
         <LoadingBackdrop open={loadingSubcribe} />
         <BackToTop />
