@@ -10441,6 +10441,12 @@ abbr[title] {
   --deal-bar-background-gradient: linear-gradient(to right, $secondary 0%, #f5b700 70%);
   border: 1px solid #f5b700;
 }
+.availabel-card {
+  --deal-bar-height: 1em;
+  --deal-bar-background-color: #f6cdd1;
+  --deal-bar-background-gradient: linear-gradient(to right, $secondary 0%, #f53900 70%);
+  border: 1px solid #f53900;
+}
 .deal-card__description {
   line-height: 1rem;
   display: flex;
