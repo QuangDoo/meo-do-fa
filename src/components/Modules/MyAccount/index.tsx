@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import Button from 'src/components/Form/Button';
 import InputWithLabel from 'src/components/Form/InputWithLabel';
 import SelectWithLabel from 'src/components/Form/SelectWithLabel';
+import Loading from 'src/components/Layout/Loading';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { useUser } from 'src/contexts/User';
 import { GET_CITIES, GetCitiesData } from 'src/graphql/address/getCities';
@@ -59,6 +60,7 @@ export default function MyAccountPage() {
 
   const [licenseHidden, setLicenseHidden] = useState<boolean>(false);
   const [licenseTime, setLicenseTime] = useState<number>(new Date().getTime());
+  const [loadingCertificate, setLoadingCertificate] = useState<boolean>(false);
 
   const [firstLoadCities, setFirstLoadCities] = useState(true);
   const [firstLoadDistricts, setFirstLoadDistricts] = useState(true);
@@ -175,13 +177,16 @@ export default function MyAccountPage() {
 
     formData.append('image', file);
     formData.append('id', user?.id + '');
-
+    setLoadingCertificate(true);
     axios
       .post(`${FILES_GATEWAY}/certificate`, formData)
+
       .then(() => {
         setLicenseTime(new Date().getTime());
         setLicenseHidden(false);
+        setLoadingCertificate(false);
       })
+
       .catch((err) => {
         console.log('Image upload error:', err);
       });
@@ -333,14 +338,20 @@ export default function MyAccountPage() {
             name="businessLicense"
             defaultValue={user?.business_license}
           />
-
-          <img
-            hidden={licenseHidden}
-            alt=""
-            className="mb-3 business-license-img"
-            src={`${FILES_GATEWAY}/certificate/${user?.id}?${licenseTime}`}
-            onError={() => setLicenseHidden(true)}
-          />
+          {loadingCertificate && (
+            <div className="text-center">
+              <Loading />
+            </div>
+          )}
+          {!loadingCertificate && (
+            <img
+              hidden={licenseHidden}
+              alt=""
+              className="mb-3 business-license-img"
+              src={`${FILES_GATEWAY}/certificate/${user?.id}?${licenseTime}`}
+              onError={() => setLicenseHidden(true)}
+            />
+          )}
 
           <InputWithLabel
             ref={register({
