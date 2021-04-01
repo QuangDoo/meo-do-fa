@@ -13259,3 +13259,18 @@ abbr[title] {
     -moz-appearance: textfield;
   }
 }
+
+.c-text {
+  padding: 0.5rem 1rem 0.5rem 1rem;
+  // background-color: #17a2b8;
+  // color: white;
+}
+.c-size{
+  font-size: 16px;
+}
+.c-img{
+  display: flex;
+  flex-wrap: 'wrap';
+  justify-content: 'space-around';
+  overflow: 'hidden';
+}

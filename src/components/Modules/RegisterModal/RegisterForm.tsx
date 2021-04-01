@@ -151,7 +151,7 @@ const RegisterForm = () => {
           <Input
             name="name"
             ref={register({
-              required: `${t('input_name_error_required')}`
+              required: `${t('register:input_name_error_required')}`
             })}
             containerClass="mb-4"
             iconClass="icomoon icon-user"

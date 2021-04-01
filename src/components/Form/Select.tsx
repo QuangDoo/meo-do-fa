@@ -10,6 +10,7 @@ type Props = {
   disabled?: boolean;
   defaultValue?: string;
   value?: string;
+  required?: boolean;
 };
 
 const Select = (props: Props, ref) => {
@@ -21,7 +22,8 @@ const Select = (props: Props, ref) => {
       name={props.name}
       defaultValue={props.defaultValue}
       className={clsx('custom-select d-block', props.className)}
-      disabled={props.disabled}>
+      disabled={props.disabled}
+      required={props.required}>
       {props.children}
     </select>
   );
