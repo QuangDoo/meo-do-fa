@@ -10,7 +10,7 @@ TermsOfService.getInitialProps = async () => ({
 });
 
 function TermsOfService() {
-  const termsOfServiceData = useWebsitePost('TOC');
+  const termsOfServiceData = useWebsitePost('TOS');
 
   return (
     <MainLayout>
