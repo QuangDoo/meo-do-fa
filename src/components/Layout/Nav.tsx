@@ -75,7 +75,7 @@ const Nav = () => {
   }
   return (
     <div>
-      <div className="nav1">
+      <div>
         <div className="nav-mb mobile-responsive menu-mobile" onClick={handleClick}>
           {' '}
           <i className="fas fa-list-ul" />
