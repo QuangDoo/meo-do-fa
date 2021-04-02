@@ -30,12 +30,13 @@ const ProductsSidebarFilter = (props: Props) => {
           </IconButton>
         </div>
       </header>
-      <hr className="hr my-3" />
+      <div className="d-sm-none mb-3">
+        <hr className="hr my-3 " />
 
-      <FilterTags />
+        <FilterTags />
 
-      <hr className="hr my-3" />
-
+        <hr className="hr my-3" />
+      </div>
       <hr className="hr my-3" />
 
       <Sort />
