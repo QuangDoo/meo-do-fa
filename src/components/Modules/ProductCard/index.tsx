@@ -26,9 +26,16 @@ const ProductCard = (props: Props) => {
 
   const isDiscount = props.discount_percentage > 0;
 
+  const isAvailable = !props.is_available;
+
   return (
     <div className="product-card-container">
-      <article className={clsx('product-card card mx-auto', isDiscount && 'deal-card')}>
+      <article
+        className={clsx(
+          'product-card card mx-auto',
+          isDiscount && 'deal-card',
+          isAvailable && 'availabel-card'
+        )}>
         <div className="product-card__main">
           <div className="product-card__description mb-3">
             {props.is_new && (
@@ -40,11 +47,18 @@ const ProductCard = (props: Props) => {
             <Link href={`/products/${props.slug}`}>
               <a>
                 <div className="product-card__image mb-3 lozad">
-                  <Image
+                  <div className="banner-wrapper">
+                    <img
+                      src={props.image_256 || '/assets/images/no_images.jpg'}
+                      className="banner--image"
+                      alt="Medofa product"
+                    />
+                  </div>
+                  {/* <Image
                     src={props.image_256 || '/assets/images/no_images.jpg'}
                     layout="fill"
                     objectFit={props.image_256 ? 'contain' : 'cover'}
-                  />
+                  /> */}
                 </div>
               </a>
             </Link>

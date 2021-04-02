@@ -9,17 +9,19 @@ type Props = {
 export default function NewsList(props: Props) {
   return (
     <>
-      {props.news.map((item, index) => (
-        <div key={index} className="col-lg-6 col-sm-12 position-relative mb-2">
-          <CardView
-            id={index}
-            title={item.title}
-            description={item.description}
-            imgUrl={item.imgUrl}
-            createAt={item.createAt}
-          />
-        </div>
-      ))}
+      {props?.news &&
+        props?.news.map((item, index) => (
+          <div key={index} className="col-lg-6 col-sm-12 position-relative mb-2">
+            <CardView
+              id={item.id}
+              title={item.name}
+              description={item.content}
+              imgUrl={item.link}
+              createAt={item.createAt}
+              slug={item.slug}
+            />
+          </div>
+        ))}
     </>
   );
 }

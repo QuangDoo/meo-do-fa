@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import i18n, { useTranslation } from 'i18n';
 import React, { useState } from 'react';
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -10,7 +11,7 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
 
 const Input = (props: Props, ref) => {
   const { containerClass, inputClass, itemRight, iconClass, ...inputProps } = props;
-
+  const { t, i18n } = useTranslation();
   const { type, required, placeholder } = inputProps;
 
   const [showPassword, setShowPassword] = useState(false);
@@ -37,6 +38,7 @@ const Input = (props: Props, ref) => {
             ref={ref}
             type="file"
             className={clsx('input-file-input form-control', inputClass)}
+            lang={i18n.language}
           />
 
           <div className="input-file-label overflow-hidden">

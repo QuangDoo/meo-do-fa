@@ -3,6 +3,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import { useTranslation } from 'i18n';
 import React from 'react';
 
+import FilterTags from '../FilterTags';
 import CategoryFilter from './CategoryFilter';
 import ManufacturerFilter from './ManufacturerFilter';
 import PriceFilter from './PriceFilter';
@@ -29,7 +30,13 @@ const ProductsSidebarFilter = (props: Props) => {
           </IconButton>
         </div>
       </header>
+      <div className="d-sm-none mb-3">
+        <hr className="hr my-3 " />
 
+        <FilterTags />
+
+        <hr className="hr my-3" />
+      </div>
       <hr className="hr my-3" />
 
       <Sort />

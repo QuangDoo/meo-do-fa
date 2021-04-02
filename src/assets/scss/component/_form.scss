@@ -319,6 +319,9 @@ fieldset {
 .custom-file-input:lang(en) ~ .custom-file-label::after {
   content: 'Browse';
 }
+.custom-file-input:lang(vi) ~ .custom-file-label::after {
+  content: 'Tải lên';
+}
 .custom-file-input ~ .custom-file-label[data-browse]::after {
   content: attr(data-browse);
 }
@@ -501,7 +504,7 @@ fieldset {
   display: block;
   width: 100%;
   height: calc(1.5em + 0.75rem + 2px);
-  padding: 0.375rem 2rem;
+  padding: 0.200rem 2rem 0.375rem 0.550rem;
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
@@ -747,6 +750,9 @@ textarea.form-control {
 }
 .input-file-input:lang(en) ~ .input-file-label::after {
   content: 'Browse';
+}
+.input-file-input:lang(vi) ~ .input-file-label::after {
+  content: 'Tải lên';
 }
 .input-file-input ~ .input-file-label[data-browse]::after {
   content: attr(data-browse);

@@ -6,15 +6,19 @@ import getConfig from 'next/config';
 const { serverRuntimeConfig, publicRuntimeConfig } = getConfig();
 
 const getURI = () => {
+  console.log('SERVER...', JSON.stringify({ serverRuntimeConfig, publicRuntimeConfig }));
+  console.log(
+    `SERVER NEXT PUBLIC... NEXT_PUBLIC_GRAPHQL_GATEWAY: ${process.env.NEXT_PUBLIC_GRAPHQL_GATEWAY},  NEXT_PUBLIC_GRAPHQL_GATEWAY_EXT: ${process.env.NEXT_PUBLIC_GRAPHQL_GATEWAY_EXT} `
+  );
+
   if (typeof window === 'undefined') {
-    console.log('SERVER...', JSON.stringify({ serverRuntimeConfig, publicRuntimeConfig }));
-
-    return `http://${serverRuntimeConfig.GRAPHQL_GATEWAY}`;
-    // return `https://graphql.medofa.bedigital.vn/`;
+    return `http://${
+      serverRuntimeConfig.GRAPHQL_GATEWAY || process.env.NEXT_PUBLIC_GRAPHQL_GATEWAY
+    }`;
   }
-
-  return `https://${publicRuntimeConfig.GRAPHQL_GATEWAY_EXT}`;
-  // return `https://graphql.medofa.bedigital.vn/`;
+  return `https://${
+    publicRuntimeConfig.GRAPHQL_GATEWAY_EXT || process.env.NEXT_PUBLIC_GRAPHQL_GATEWAY_EXT
+  }`;
 };
 
 const httpLink = new HttpLink({

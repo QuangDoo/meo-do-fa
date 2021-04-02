@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import PriceText from 'src/components/Form/PriceText';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { useCart } from 'src/contexts/Cart';
+import { useCheckboxCarts } from 'src/contexts/CheckboxCarts';
 import { DELETE_CART, DeleteCartData, DeleteCartVars } from 'src/graphql/cart/deleteCart.mutation';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 
@@ -14,13 +15,14 @@ type Props = Omit<ConfirmModalProps, 'children' | 'onConfirm'> & {
   name: string;
   price: number;
   cartId: string;
-  updateCheckboxCart?: () => void;
 };
 
 export default function ConfirmDeleteItemModal(props: Props) {
-  const { cartId, img, name, price, updateCheckboxCart, ...rest } = props;
+  const { cartId, img, name, price, ...rest } = props;
 
   const { refetch: refetchCart } = useCart();
+
+  const { checkboxCarts, setCheckboxCarts } = useCheckboxCarts();
 
   const { t } = useTranslation(['errors', 'success', 'cart']);
 
@@ -46,7 +48,8 @@ export default function ConfirmDeleteItemModal(props: Props) {
         _id: cartId
       }
     });
-    updateCheckboxCart();
+
+    setCheckboxCarts(checkboxCarts.filter((checkbox) => checkbox !== cartId));
   };
 
   return (

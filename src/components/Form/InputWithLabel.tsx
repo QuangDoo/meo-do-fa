@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import { useTranslation } from 'i18n';
 import React, { forwardRef, useState } from 'react';
 
 import FormGroup from './FormGroup';
@@ -19,11 +20,13 @@ type Props = {
   accept?: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   maxLength?: number;
+  indexTab?: string;
 };
 
 const InputWithLabel = (props: Props, ref) => {
   const [showPassword, setShowPassword] = useState(false);
 
+  const { t, i18n } = useTranslation();
   const toggleShowPassword = () => {
     setShowPassword((show) => !show);
   };
@@ -34,7 +37,8 @@ const InputWithLabel = (props: Props, ref) => {
     placeholder: props.placeholder,
     defaultValue: props.defaultValue,
     disabled: props.disabled,
-    maxLength: props.maxLength
+    maxLength: props.maxLength,
+    tabindex: props.indexTab
   };
 
   const handleTextBlur = (e) => {
@@ -72,6 +76,7 @@ const InputWithLabel = (props: Props, ref) => {
             className="custom-file-input"
             accept={props.accept}
             onChange={props.onChange}
+            lang={i18n.language}
           />
           <div className="custom-file-label">{props.placeholder}</div>
         </div>

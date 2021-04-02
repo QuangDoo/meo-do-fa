@@ -1,7 +1,6 @@
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import React, { useState } from 'react';
-import Checkbox from 'src/components/Form/Checkbox';
 import PriceText from 'src/components/Form/PriceText';
 import ProductCardQuantityInput from 'src/components/Modules/ProductCard/ProductCardQuantityInput';
 import { CartItem as CartItemProps } from 'src/graphql/cart/getCart';
@@ -12,7 +11,6 @@ type Props = CartItemProps & {
   addToCheckCart?: () => void;
   deleteToCheckCart?: () => void;
   checked?: boolean;
-  updateCheckboxCart?: () => void;
 };
 
 function CartItem(props: Props) {
@@ -117,7 +115,6 @@ function CartItem(props: Props) {
               img={props.product.image_512}
               name={props.productName}
               price={props.product.sale_price}
-              updateCheckboxCart={props.updateCheckboxCart}
             />
           </div>
         </div>
