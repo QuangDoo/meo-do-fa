@@ -12158,13 +12158,15 @@ abbr[title] {
 
 @media (max-width: 991.98px) {
   .filter-search__list {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 50% 50%;
+  }
+}
+@media (max-width: 575.98px) {
+  .filter-search__list {
+    grid-template-columns: 100%;
   }
 }
 .filter-search__list-item {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
   padding: 0.25em;
   text-transform: capitalize;
   color: #919aa3;
