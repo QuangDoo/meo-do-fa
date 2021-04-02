@@ -79,7 +79,7 @@ function PathologyMenu() {
           <button onClick={() => setOpen(true)}>
             <a className="rockland-nav__link">
               <i className="rockland-nav__icon fas fa-laptop-medical" />
-              <span className="rockland-nav__title">{t('navbar:pathological')}</span>
+              <span className="rockland-nav__title">{t('navbar:category')}</span>
             </a>
           </button>
         </div>
