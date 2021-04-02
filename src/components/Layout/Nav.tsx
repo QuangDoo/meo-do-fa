@@ -74,37 +74,39 @@ const Nav = () => {
     a.classList.remove('displayMenu');
   }
   return (
-    <div className="nav">
-      <div className="mobile-responsive menu-mobile" onClick={handleClick}>
-        {' '}
-        <i className="fas fa-list-ul" />
-      </div>
-      <div className="mr-2 flex-shrink-0 mb-3 mb-lg-0 mr-0 logo-mobile">
-        <div className="rockland-logo">
-          <Link href="/">
-            <a title="Medofa.com">
-              <img
-                alt="Medofa.com"
-                className="img-fluid logo-header d-block mx-auto logo-img"
-                title="Medofa.com"
-                src="/assets/images/logo2.png"
-              />
-            </a>
-          </Link>
+    <div>
+      <div className="nav1">
+        <div className="nav-mb mobile-responsive menu-mobile" onClick={handleClick}>
+          {' '}
+          <i className="fas fa-list-ul" />
         </div>
-      </div>
 
-      {token && (
-        <div className="Cart mobile-responsive">
-          <Link href="/cart">
-            <a className="rockland-nav__link notification" title={t('cart:cart')}>
-              <ShoppingCartOutlinedIcon />
-              {totalQty > 0 && <span className="notification__counter">{totalQty}</span>}
-            </a>
-          </Link>
+        <div className="nav-mb mr-2 flex-shrink-0 mb-3 mb-lg-0 mr-0 logo-mobile">
+          <div className="rockland-logo">
+            <Link href="/">
+              <a title="Medofa.com">
+                <img
+                  alt="Medofa.com"
+                  className="img-fluid logo-header d-block mx-auto logo-img"
+                  title="Medofa.com"
+                  src="/assets/images/logo2.png"
+                />
+              </a>
+            </Link>
+          </div>
         </div>
-      )}
 
+        {token && (
+          <div className="nav-mb Cart mobile-responsive">
+            <Link href="/cart">
+              <a className="rockland-nav__link notification" title={t('cart:cart')}>
+                <ShoppingCartOutlinedIcon />
+                {totalQty > 0 && <span className="notification__counter">{totalQty}</span>}
+              </a>
+            </Link>
+          </div>
+        )}
+      </div>
       <nav className="rockland-nav shrink header-menu offMenu" id="1">
         <div className="container back_ground">
           <div className="row">
@@ -128,7 +130,7 @@ const Nav = () => {
                 {token && (
                   <div className="mobile-responsive">
                     <li className="rockland-nav__item">
-                      <Link href="/deals-of-the-day">
+                      <Link href="/my-account">
                         <a className="rockland-nav__link">
                           <i className="rockland-nav__icon far fa-user" />
                           <span className="rockland-nav__title">{user?.name}</span>

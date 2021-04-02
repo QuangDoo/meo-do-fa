@@ -24,5 +24,6 @@
   "change_password": "Change password",
   "product_category": "Product categories",
   "pathology": "Search by pathology",
-  "promotions": "Promotions"
+  "promotions": "Promotions",
+  "account_management":"Account management"
 }
