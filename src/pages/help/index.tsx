@@ -2,7 +2,7 @@ import { useQuery } from '@apollo/client';
 import { CircularProgress } from '@material-ui/core';
 import { useTranslation } from 'i18n';
 import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import React from 'react';
 import MainLayout from 'src/components/Modules/MainLayout';
 import {
   GET_POST,
@@ -10,7 +10,6 @@ import {
   PostType,
   WebsitePostData
 } from 'src/graphql/news/getWebsitePost';
-import useWebsitePost from 'src/hooks/useWebsitePost';
 import withToken from 'src/utils/withToken';
 
 import Head from '../../components/Layout/Head';
@@ -19,7 +18,6 @@ const Help = () => {
   const { t } = useTranslation(['common']);
 
   const router = useRouter();
-  // const faqData = useWebsitePost('FAQ');
   const { data: postList, loading } = useQuery<WebsitePostData, PostInputVars>(GET_POST, {
     variables: {
       type: PostType.FAQ
@@ -27,11 +25,9 @@ const Help = () => {
   });
   const faqData = postList?.getWebsitePost;
 
-  useEffect(() => {
-    if (faqData.length !== 0) {
-      router.push(`/help/${faqData?.[0].id}`);
-    }
-  }, []);
+  if (faqData && faqData.length !== 0) {
+    router.push(`/help/${faqData?.[0].id}`);
+  }
 
   return (
     <MainLayout>
