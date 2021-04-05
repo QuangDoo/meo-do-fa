@@ -50,7 +50,6 @@ const FILES_GATEWAY = `https://${
   publicRuntimeConfig.FILES_GATEWAY_EXT || process.env.NEXT_PUBLIC_FILES_GATEWAY
 }`;
 
-console.log(`FILES_GATEWAY`, FILES_GATEWAY);
 export default function MyAccountPage() {
   const { t } = useTranslation(['myAccount', 'common', 'errors']);
 
@@ -71,7 +70,7 @@ export default function MyAccountPage() {
   const cities = citiesData?.getCities || [];
 
   const chosenCity = watch('companyCity');
-
+  console.log(`user`, user);
   useEffect(() => {
     if (!user?.contact_address || !citiesData || !firstLoadCities) return;
 
@@ -235,7 +234,8 @@ export default function MyAccountPage() {
       }
     });
   };
-
+  // console.log(typeof user.vat);
+  const vat = user.vat.replace('-', ' - ');
   const onError = (error) => {
     toast.error(error[Object.keys(error)[0]].message);
   };
@@ -318,19 +318,23 @@ export default function MyAccountPage() {
             label={t('myAccount:tax_code_label')}
             name="taxCode"
             type="text"
-            defaultValue={user?.vat}
+            defaultValue={vat}
             placeholder={t('myAccount:tax_code_placeholder')}
           />
 
-          <InputWithLabel
-            label={t('myAccount:business_license_label')}
-            type="file"
-            accept="image/*"
-            placeholder={t('myAccount:business_license_placeholder')}
-            onChange={handleFileChange}
-            containerClass="mb-2"
-            disabled={user.activated}
-          />
+          {user.activated ? (
+            <label className="form__label mb-2">{t('myAccount:business_license_label')}</label>
+          ) : (
+            <InputWithLabel
+              label={t('myAccount:business_license_label')}
+              type="file"
+              accept="image/*"
+              placeholder={t('myAccount:business_license_placeholder')}
+              onChange={handleFileChange}
+              containerClass="mb-2"
+              disabled={user.activated}
+            />
+          )}
 
           <input
             hidden
@@ -344,13 +348,15 @@ export default function MyAccountPage() {
             </div>
           )}
           {!loadingCertificate && (
-            <img
-              hidden={licenseHidden}
-              alt=""
-              className="mb-3 business-license-img"
-              src={`${FILES_GATEWAY}/certificate/${user?.id}?${licenseTime}`}
-              onError={() => setLicenseHidden(true)}
-            />
+            <div>
+              <img
+                hidden={licenseHidden}
+                alt=""
+                className="mb-3 business-license-img"
+                src={`${FILES_GATEWAY}/certificate/${user?.id}?${licenseTime}`}
+                onError={() => setLicenseHidden(true)}
+              />
+            </div>
           )}
 
           <InputWithLabel

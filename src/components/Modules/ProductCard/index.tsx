@@ -26,9 +26,16 @@ const ProductCard = (props: Props) => {
 
   const isDiscount = props.discount_percentage > 0;
 
+  const isAvailable = !props.is_available;
+
   return (
     <div className="product-card-container">
-      <article className={clsx('product-card card mx-auto', isDiscount && 'deal-card')}>
+      <article
+        className={clsx(
+          'product-card card mx-auto',
+          isDiscount && 'deal-card',
+          isAvailable && 'availabel-card'
+        )}>
         <div className="product-card__main">
           <div className="product-card__description mb-3">
             {props.is_new && (

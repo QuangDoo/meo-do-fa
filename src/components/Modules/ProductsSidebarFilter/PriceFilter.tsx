@@ -1,6 +1,6 @@
 import { useTranslation } from 'i18n';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import NumberFormat from 'react-number-format';
 
@@ -9,12 +9,19 @@ export default function PriceFilter() {
 
   const router = useRouter();
 
-  const { handleSubmit, control } = useForm({
+  const { handleSubmit, control, setValue } = useForm({
     defaultValues: {
       priceFrom: router.query.priceFrom,
       priceTo: router.query.priceTo
     }
   });
+
+  useEffect(() => {
+    if (!router.query.priceFrom && !router.query.priceTo) {
+      setValue('priceFrom', '');
+      setValue('priceTo', '');
+    }
+  }, [router]);
 
   const onPriceRangeSubmit = (data) => {
     const newQuery = {
