@@ -10,6 +10,8 @@
   "no_category": "No category with keywords",
   "no_manufacturers": "No manufacturers with keywords",
   "no_products": "No products with keywords",
+  "no_ingredients": "No ingredients with keywords",
+  "no_suppliers": "No suppliers with keywords",
   "result": "search result for",
   "show": "Show",
   "show_manufacturer_detail": "Show detail",
@@ -17,9 +19,11 @@
   "search_by_products": "Products",
   "search_by_manufacturers": "Manufacturers",
   "search_by_ingredients": "Ingredients",
+  "search_by_suppliers": "Suppliers",
   "placeholder_products": "Enter product name...",
   "placeholder_manufacturers": "Enter manufacturer name...",
   "placeholder_ingredients": "Enter ingredient name...",
+  "placeholder_suppliers:": "Enter supplier name...",
   "showing_results_for": "Showing {{count}} search result for",
   "showing_results_for_plural": "Showing {{count}} search results for"
 }
