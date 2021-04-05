@@ -3,6 +3,7 @@
   "all_manufacturers": "Tất cả nhà sản xuất",
   "all_products": "Tất cả sản phẩm",
   "all_ingredients": "Tất cả hoạt chất",
+  "all_suppliers":"Tất cả nhà sản xuất",
   "enter_name_category": "Nhập tên nhóm thuốc",
   "enter_name_ingredients": "Nhập tên hoạt chất",
   "enter_name_manufacturers": "Nhập tên nhà sản xuất",
@@ -23,6 +24,6 @@
   "placeholder_products": "Nhập tên thuốc cần tìm...",
   "placeholder_manufacturers": "Nhập tên nhà sản xuất cần tìm...",
   "placeholder_ingredients": "Nhập tên hoạt chất cần tìm...",
-  "placeholder_suppliers:": "Nhập tên nhà cung cấp cần tìm",
+  "placeholder_suppliers": "Nhập tên nhà cung cấp cần tìm...",
   "showing_results_for": "Hiển thị {{count}} kết quả tìm kiếm cho"
 }
