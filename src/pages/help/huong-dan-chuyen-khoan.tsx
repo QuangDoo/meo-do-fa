@@ -46,7 +46,7 @@ const HelpDetail = () => {
 
       <Nav />
 
-      <FAQ title={question.question}>
+      <FAQ>
         <QuestionDetail
           question={question.question}
           answer={question.answer}

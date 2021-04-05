@@ -10441,6 +10441,12 @@ abbr[title] {
   --deal-bar-background-gradient: linear-gradient(to right, $secondary 0%, #f5b700 70%);
   border: 1px solid #f5b700;
 }
+.availabel-card {
+  --deal-bar-height: 1em;
+  --deal-bar-background-color: #f6cdd1;
+  --deal-bar-background-gradient: linear-gradient(to right, $secondary 0%, #f53900 70%);
+  border: 1px solid #f53900;
+}
 .deal-card__description {
   line-height: 1rem;
   display: flex;
@@ -12152,13 +12158,15 @@ abbr[title] {
 
 @media (max-width: 991.98px) {
   .filter-search__list {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 50% 50%;
+  }
+}
+@media (max-width: 575.98px) {
+  .filter-search__list {
+    grid-template-columns: 100%;
   }
 }
 .filter-search__list-item {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
   padding: 0.25em;
   text-transform: capitalize;
   color: #919aa3;

@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import Button from 'src/components/Form/Button';
 import InputWithLabel from 'src/components/Form/InputWithLabel';
 import SelectWithLabel from 'src/components/Form/SelectWithLabel';
+import Loading from 'src/components/Layout/Loading';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { useUser } from 'src/contexts/User';
 import { GET_CITIES, GetCitiesData } from 'src/graphql/address/getCities';
@@ -49,7 +50,6 @@ const FILES_GATEWAY = `https://${
   publicRuntimeConfig.FILES_GATEWAY_EXT || process.env.NEXT_PUBLIC_FILES_GATEWAY
 }`;
 
-console.log(`FILES_GATEWAY`, FILES_GATEWAY);
 export default function MyAccountPage() {
   const { t } = useTranslation(['myAccount', 'common', 'errors']);
 
@@ -59,6 +59,7 @@ export default function MyAccountPage() {
 
   const [licenseHidden, setLicenseHidden] = useState<boolean>(false);
   const [licenseTime, setLicenseTime] = useState<number>(new Date().getTime());
+  const [loadingCertificate, setLoadingCertificate] = useState<boolean>(false);
 
   const [firstLoadCities, setFirstLoadCities] = useState(true);
   const [firstLoadDistricts, setFirstLoadDistricts] = useState(true);
@@ -69,7 +70,7 @@ export default function MyAccountPage() {
   const cities = citiesData?.getCities || [];
 
   const chosenCity = watch('companyCity');
-
+  console.log(`user`, user);
   useEffect(() => {
     if (!user?.contact_address || !citiesData || !firstLoadCities) return;
 
@@ -175,13 +176,16 @@ export default function MyAccountPage() {
 
     formData.append('image', file);
     formData.append('id', user?.id + '');
-
+    setLoadingCertificate(true);
     axios
       .post(`${FILES_GATEWAY}/certificate`, formData)
+
       .then(() => {
         setLicenseTime(new Date().getTime());
         setLicenseHidden(false);
+        setLoadingCertificate(false);
       })
+
       .catch((err) => {
         console.log('Image upload error:', err);
       });
@@ -230,7 +234,8 @@ export default function MyAccountPage() {
       }
     });
   };
-
+  // console.log(typeof user.vat);
+  const vat = user.vat.replace('-', ' - ');
   const onError = (error) => {
     toast.error(error[Object.keys(error)[0]].message);
   };
@@ -313,19 +318,23 @@ export default function MyAccountPage() {
             label={t('myAccount:tax_code_label')}
             name="taxCode"
             type="text"
-            defaultValue={user?.vat}
+            defaultValue={vat}
             placeholder={t('myAccount:tax_code_placeholder')}
           />
 
-          <InputWithLabel
-            label={t('myAccount:business_license_label')}
-            type="file"
-            accept="image/*"
-            placeholder={t('myAccount:business_license_placeholder')}
-            onChange={handleFileChange}
-            containerClass="mb-2"
-            disabled={user.activated}
-          />
+          {user.activated ? (
+            <label className="form__label mb-2">{t('myAccount:business_license_label')}</label>
+          ) : (
+            <InputWithLabel
+              label={t('myAccount:business_license_label')}
+              type="file"
+              accept="image/*"
+              placeholder={t('myAccount:business_license_placeholder')}
+              onChange={handleFileChange}
+              containerClass="mb-2"
+              disabled={user.activated}
+            />
+          )}
 
           <input
             hidden
@@ -333,14 +342,22 @@ export default function MyAccountPage() {
             name="businessLicense"
             defaultValue={user?.business_license}
           />
-
-          <img
-            hidden={licenseHidden}
-            alt=""
-            className="mb-3 business-license-img"
-            src={`${FILES_GATEWAY}/certificate/${user?.id}?${licenseTime}`}
-            onError={() => setLicenseHidden(true)}
-          />
+          {loadingCertificate && (
+            <div className="text-center">
+              <Loading />
+            </div>
+          )}
+          {!loadingCertificate && (
+            <div>
+              <img
+                hidden={licenseHidden}
+                alt=""
+                className="mb-3 business-license-img"
+                src={`${FILES_GATEWAY}/certificate/${user?.id}?${licenseTime}`}
+                onError={() => setLicenseHidden(true)}
+              />
+            </div>
+          )}
 
           <InputWithLabel
             ref={register({

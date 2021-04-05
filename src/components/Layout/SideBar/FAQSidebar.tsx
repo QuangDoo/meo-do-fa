@@ -1,12 +1,15 @@
 import Link from 'next/link';
 import React from 'react';
 
-type category = {
-  href: string;
-  title: string;
+type question = {
+  id: number;
+  name: string;
+  content: string;
+  link: string;
+  slug: string;
 };
 type Props = {
-  categories: category[];
+  questionList: question[];
 };
 function Sidebar(props: Props) {
   return (
@@ -14,10 +17,10 @@ function Sidebar(props: Props) {
       <h3 className="news__title">{`Danh mục`}</h3>
       <div className="news__divider"></div>
       <ul className="list-unstyled">
-        {props?.categories?.map((category, index) => (
+        {props?.questionList?.map((question, index) => (
           <li key={index} className="pb-2">
-            <Link href={category.href}>
-              <a className="faq-link">{category.title}</a>
+            <Link href={`/help/${question.id}`}>
+              <a className="faq-link">{question.name}</a>
             </Link>
           </li>
         ))}
