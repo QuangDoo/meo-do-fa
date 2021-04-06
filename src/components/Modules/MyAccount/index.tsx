@@ -50,7 +50,6 @@ const FILES_GATEWAY = `https://${
   publicRuntimeConfig.FILES_GATEWAY_EXT || process.env.NEXT_PUBLIC_FILES_GATEWAY
 }`;
 
-console.log(`FILES_GATEWAY`, FILES_GATEWAY);
 export default function MyAccountPage() {
   const { t } = useTranslation(['myAccount', 'common', 'errors']);
 
@@ -162,6 +161,8 @@ export default function MyAccountPage() {
       }
     }
   );
+
+  console.log(`BC`, `${FILES_GATEWAY}/certificate/${user?.id}?${licenseTime}`);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.currentTarget.files[0];

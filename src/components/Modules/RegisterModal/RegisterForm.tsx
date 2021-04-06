@@ -1,8 +1,11 @@
 import { useMutation } from '@apollo/client';
+import axios from 'axios';
 import { Trans, useTranslation } from 'i18n';
 import cookies from 'js-cookie';
+import jwt_decode from 'jwt-decode';
+import getConfig from 'next/config';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { emailRegex, noSpecialChars } from 'src/assets/regex/email';
@@ -11,6 +14,7 @@ import { viPhoneNumberRegex } from 'src/assets/regex/viPhoneNumber';
 import Button from 'src/components/Form/Button';
 import Checkbox from 'src/components/Form/Checkbox';
 import Input from 'src/components/Form/Input';
+import Loading from 'src/components/Layout/Loading';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { useModalControlDispatch } from 'src/contexts/ModalControl';
 import { useUser } from 'src/contexts/User';
@@ -31,10 +35,30 @@ type Inputs = {
 
 const accountTypes = ['PHARMACY', 'DRUGSTORE', 'CLINIC', 'HOSPITAL'];
 
+const { publicRuntimeConfig } = getConfig();
+
+type DECODE = { userId: number };
+
 const RegisterForm = () => {
   const { t } = useTranslation(['register', 'errors']);
 
   const router = useRouter();
+
+  const FILES_GATEWAY = `https://${
+    publicRuntimeConfig.FILES_GATEWAY_EXT || process.env.NEXT_PUBLIC_FILES_GATEWAY
+  }`;
+
+  const [file, setFile] = useState<File>();
+
+  const [licenseTime, setLicenseTime] = useState<number>(new Date().getTime());
+
+  const [licenseHidden, setLicenseHidden] = useState<boolean>(false);
+
+  const [loadingCertificate, setLoadingCertificate] = useState<boolean>(false);
+
+  const [decodeToken, setDecodeToken] = useState<string>('');
+
+  const [userId, setUserId] = useState<string>('');
 
   const { register, handleSubmit, watch, setValue } = useForm<Inputs>();
 
@@ -54,6 +78,7 @@ const RegisterForm = () => {
     {
       onCompleted: (data) => {
         cookies.set('token', data.createUser.token);
+        setDecodeToken(data.createUser.token.substr(7));
         closeModal();
         refetchUser();
         router.reload();
@@ -66,14 +91,46 @@ const RegisterForm = () => {
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.currentTarget.files[0];
-
+    setFile(file);
     const isImage = file.type.startsWith('image');
 
     if (!isImage) {
-      setValue('businessLicense', undefined);
       toast.error(t('cart:file_is_not_image'));
+      return;
     }
   };
+
+  useEffect(() => {
+    if (!decodeToken) return;
+
+    const decode: DECODE = jwt_decode(decodeToken);
+    setUserId(decode.userId + '');
+  }, [decodeToken]);
+
+  const handleForm = () => {
+    const formData = new FormData();
+
+    formData.append('image', file);
+    formData.append('id', userId);
+    setLoadingCertificate(true);
+    axios
+      .post(`${FILES_GATEWAY}/certificate`, formData)
+
+      .then(() => {
+        setLicenseTime(new Date().getTime());
+        setLicenseHidden(false);
+        setLoadingCertificate(false);
+      })
+
+      .catch((err) => {
+        console.log('Image upload error:', err);
+      });
+  };
+
+  console.log(`userId`, userId);
+
+  console.log('business license', `${FILES_GATEWAY}/certificate/${userId}?${licenseTime}`);
+
   // On form submit
   const onFormSubmit = (data: Inputs) => {
     createUser({
@@ -88,7 +145,7 @@ const RegisterForm = () => {
           vat: data.tax
         }
       }
-    });
+    }).then(() => handleForm());
   };
 
   // On form error
@@ -238,6 +295,14 @@ const RegisterForm = () => {
                 : t('register:input_business_license_placeholder')
             }
             onChange={handleFileChange}
+          />
+
+          <img
+            hidden={licenseHidden}
+            alt=""
+            className="mb-3 business-license-img"
+            src={`${FILES_GATEWAY}/certificate/${userId}?${licenseTime}`}
+            onError={() => setLicenseHidden(true)}
           />
 
           {/* <Input
