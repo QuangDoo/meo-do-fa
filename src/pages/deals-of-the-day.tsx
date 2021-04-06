@@ -87,7 +87,7 @@ function DealOfTheDay() {
 
       <div className="deals deals--mobile py-5">
         <div className="container px-0">
-          <h1 className="text-white mb-3">{t('dealsOfTheDay:title')}</h1>
+          <h1 className="text-white mb-3 text-center">{t('dealsOfTheDay:title')}</h1>
           {hotDeals.length === 0 &&
             otherDeals.length === 0 &&
             !productsLoading &&

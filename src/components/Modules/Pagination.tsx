@@ -81,7 +81,9 @@ const Pagination = (props: PaginationProps) => {
           </button>
 
           {/* First page always shown */}
-          <button className={clsx('page', page === 1 && 'current')} onClick={() => onChange(1)}>
+          <button
+            className={clsx('page text-center', page === 1 && 'current')}
+            onClick={() => onChange(1)}>
             1
           </button>
 
@@ -106,7 +108,7 @@ const Pagination = (props: PaginationProps) => {
 
           {/* Last page always shown */}
           <button
-            className={clsx('page', page === count && 'current')}
+            className={clsx('page text-center', page === count && 'current')}
             onClick={() => onChange(count)}>
             {count}
           </button>

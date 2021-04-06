@@ -162,6 +162,8 @@ export default function MyAccountPage() {
     }
   );
 
+  console.log(`BC`, `${FILES_GATEWAY}/certificate/${user?.id}?${licenseTime}`);
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.currentTarget.files[0];
 

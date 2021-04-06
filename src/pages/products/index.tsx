@@ -113,7 +113,8 @@ function Products() {
         order_type: (router.query.sort as string) || NAME_ASCENDING,
         min_price: Number(router.query.priceFrom) || 1,
         max_price: Number(router.query.priceTo) || 10000000,
-        pathology_id: router.query.pathology as string
+        pathology_id: router.query.pathology as string,
+        supplier_id: router.query.supplier as string
       }
     },
     fetchPolicy: 'network-only',
