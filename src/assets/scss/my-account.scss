@@ -7,3 +7,8 @@
   text-overflow: ellipsis; 
   white-space: nowrap; 
 }
+@media (max-width: 576px){
+  .license-img-mobile{
+    max-width: 320px;
+  }
+}

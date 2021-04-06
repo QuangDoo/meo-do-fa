@@ -354,7 +354,7 @@ export default function MyAccountPage() {
               <img
                 hidden={licenseHidden}
                 alt=""
-                className="mb-3 business-license-img"
+                className="mb-3 business-license-img license-img-mobile"
                 src={`${FILES_GATEWAY}/certificate/${user?.id}?${licenseTime}`}
                 onError={() => setLicenseHidden(true)}
               />
