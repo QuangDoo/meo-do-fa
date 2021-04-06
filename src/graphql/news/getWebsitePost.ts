@@ -2,7 +2,15 @@ import { gql } from '@apollo/client';
 
 export enum PostType {
   NEWS = 'NEWS',
-  HR = 'HR'
+  HR = 'HR',
+  ABOUT = 'ABOUT',
+  DISPUTE = 'DISPUTE',
+  TOS = 'TOS',
+  GPOLICY = 'GPOLICY',
+  TOU = 'TOU',
+  TAC = 'TAC',
+  PPOLICY = 'PPOLICY',
+  FAQ = 'FAQ'
 }
 export type PostInputVars = {
   type: PostType;

@@ -313,6 +313,7 @@ const RegisterForm = () => {
           /> */}
 
           <Input
+            ref={register}
             name="referEmail"
             containerClass="mb-4"
             iconClass="fas fa-user-friends"
