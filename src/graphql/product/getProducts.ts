@@ -87,6 +87,7 @@ export type Condition = {
   min_price?: number;
   max_price?: number;
   pathology_id?: string;
+  supplier_id?: string;
 };
 
 export type GetProductsVars = {
