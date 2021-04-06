@@ -10616,6 +10616,11 @@ abbr[title] {
   z-index: 100;
   font-size: 1rem;
 }
+@media (max-width:576px){
+  .search-icon-input {
+    top: calc(50% - 1em);
+  }
+} 
 .in-the-news__items {
   align-items: center;
   max-width: 50em;
