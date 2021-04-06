@@ -27,7 +27,7 @@ const LanguagePicker = () => {
     <>
       <button className="promotion-nav__link" onClick={openMenu} style={{ border: 'none' }}>
         <i className="promotion-nav__icon fas fa-globe-americas" />
-        <span>{t('header:language')}</span>
+        <span className="menu-item-mobile">{t('header:language')}</span>
       </button>
 
       <Menu id="simple-menu" anchorEl={anchorEl} keepMounted open={!!anchorEl} onClose={closeMenu}>
