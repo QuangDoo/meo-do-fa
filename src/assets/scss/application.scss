@@ -277,6 +277,12 @@ legend {
   .nav1{
     height: 40px;
   }
+  .rockland-nav__icon, .promotion-nav__icon{
+    width: 25px;
+  }
+  .rockland-nav__title{
+    margin-left: 10px;
+  }
 }
 progress {
   vertical-align: baseline;
@@ -452,7 +458,7 @@ mark,
 }
 
 .MuiSvgIcon-root{
-  color: darkgreen !important;
+  color: #2f3b97 !important;
   }
 }
 .close:hover {
@@ -1640,7 +1646,7 @@ textarea.form-control.is-invalid {
     position: fixed !important;
   }
   .MuiSvgIcon-root{
-    color: darkgreen !important;
+    color: #2f3b97 !important;
     }
   .showSubPromotion{
     display: block !important;
@@ -9856,6 +9862,7 @@ abbr[title] {
   margin-left: 10px;
   width: 10%;
   float: left;
+  color: #2f3b97;
 }
 .hidden-login {
   display: none;
@@ -9949,7 +9956,6 @@ abbr[title] {
   font-size: larger;
   margin-right: 0.5em;
   cursor: pointer;
-  
 }
 .rockland-nav__tag {
   position: absolute;
