@@ -11,7 +11,7 @@ export default function NewsList(props: Props) {
     <>
       {props?.news &&
         props?.news.map((item, index) => (
-          <div key={index} className="col-lg-6 col-sm-12 position-relative mb-2">
+          <div key={index} className="col-lg-4 col-md-6 col-sm-12 position-relative mb-2">
             <CardView
               id={item.id}
               title={item.name}
