@@ -349,12 +349,12 @@ export default function MyAccountPage() {
               <Loading />
             </div>
           )}
-          {!loadingCertificate && (
+          {loadingCertificate && (
             <div>
               <img
                 hidden={licenseHidden}
                 alt=""
-                className="mb-3 business-license-img"
+                className="mb-3 business-license-img license-img-mobile"
                 src={`${FILES_GATEWAY}/certificate/${user?.id}?${licenseTime}`}
                 onError={() => setLicenseHidden(true)}
               />
