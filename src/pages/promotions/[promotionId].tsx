@@ -7,6 +7,7 @@ import { ProductsContainer } from 'src/components/Modules/Home/ProductsContainer
 import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import ProductCard from 'src/components/Modules/ProductCard';
 import { GET_PRODUCTS, GetProductsData, GetProductsVars } from 'src/graphql/product/getProducts';
+import { GET_PROMOTION, PromotionData, PromotionVar } from 'src/graphql/promotion/getPromotion';
 import withToken from 'src/utils/withToken';
 
 const pageSize = 20;
@@ -38,7 +39,14 @@ function PromotionDetail(): JSX.Element {
     }
   });
 
-  const img = '/assets/images/banner_1.jpg';
+  const { data: promontionData, loading: getingPromotion } = useQuery<PromotionData, PromotionVar>(
+    GET_PROMOTION,
+    {
+      variables: { id: Number(promotionId) }
+    }
+  );
+
+  const content = promontionData?.getWebsitePromotionDetail?.content || '';
 
   const promotionProducts = productsData?.getProductByConditions?.Products || [];
 
@@ -48,6 +56,7 @@ function PromotionDetail(): JSX.Element {
         <title>Medofa</title>
       </Head>
       <div className="container py-5">
+        <div dangerouslySetInnerHTML={{ __html: content }} />
         <div className="mt-3">
           <div hidden={promotionProducts.length === 0}>
             <ProductsContainer
