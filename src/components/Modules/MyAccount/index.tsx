@@ -1,4 +1,4 @@
-import { useLazyQuery, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import axios from 'axios';
 import { useTranslation } from 'i18n';
 import getConfig from 'next/config';
@@ -11,18 +11,20 @@ import SelectWithLabel from 'src/components/Form/SelectWithLabel';
 import Loading from 'src/components/Layout/Loading';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { useUser } from 'src/contexts/User';
-import { GET_CITIES, GetCitiesData } from 'src/graphql/address/getCities';
+import { City, GET_CITIES, GetCitiesData } from 'src/graphql/address/getCities';
 import {
+  District,
   GET_DISTRICTS,
   GetDistrictsData,
   GetDistrictsVars
 } from 'src/graphql/address/getDistricts';
-import { GET_WARDS, GetWardsData, GetWardsVars } from 'src/graphql/address/getWards';
+import { GET_WARDS, GetWardsData, GetWardsVars, Ward } from 'src/graphql/address/getWards';
 import { UPDATE_USER, UpdateUserData, UpdateUserVars } from 'src/graphql/user/updateUser';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 
 import ProfileLayout from '../ProfileLayout';
 import FormCard from './FormCard';
+
 const { publicRuntimeConfig } = getConfig();
 
 type Inputs = {
@@ -33,7 +35,6 @@ type Inputs = {
   accountType: string;
   companyName: string;
   representative: string;
-  // businessLicense: FileList;
   businessLicense: string;
   taxCode: string;
   companyStreet: string;
@@ -53,107 +54,151 @@ const FILES_GATEWAY = `https://${
 export default function MyAccountPage() {
   const { t } = useTranslation(['myAccount', 'common', 'errors']);
 
+  // User data
   const { data: user, refetch: refetchUser } = useUser();
 
+  // Form controller
   const { register, handleSubmit, watch, setValue } = useForm<Inputs>();
 
+  // Hide license or not
   const [licenseHidden, setLicenseHidden] = useState<boolean>(false);
+
+  // Timestamp to manually refresh license image
   const [licenseTime, setLicenseTime] = useState<number>(new Date().getTime());
+
+  // Uploading certificate image
   const [loadingCertificate, setLoadingCertificate] = useState<boolean>(false);
 
-  const [firstLoadCities, setFirstLoadCities] = useState(true);
-  const [firstLoadDistricts, setFirstLoadDistricts] = useState(true);
-  const [firstLoadWards, setFirstLoadWards] = useState(true);
+  const [cities, setCities] = useState<City[]>([]);
 
-  const { data: citiesData } = useQuery<GetCitiesData, undefined>(GET_CITIES);
+  const [districts, setDistricts] = useState<District[]>([]);
 
-  const cities = citiesData?.getCities || [];
+  const [wards, setWards] = useState<Ward[]>([]);
+
+  // Get cities
+  const { refetch: getCities } = useQuery<GetCitiesData, undefined>(GET_CITIES, {
+    skip: true,
+    notifyOnNetworkStatusChange: true
+  });
+
+  // Get districts
+  const { refetch: getDistricts } = useQuery<GetDistrictsData, GetDistrictsVars>(GET_DISTRICTS, {
+    skip: true,
+    notifyOnNetworkStatusChange: true
+  });
+
+  // Get wards
+  const { refetch: getWards } = useQuery<GetWardsData, GetWardsVars>(GET_WARDS, {
+    skip: true,
+    notifyOnNetworkStatusChange: true
+  });
 
   const chosenCity = watch('companyCity');
-  console.log(`user`, user);
-  useEffect(() => {
-    if (!user?.contact_address || !citiesData || !firstLoadCities) return;
+  const chosenDistrict = watch('companyDistrict');
 
-    setFirstLoadCities(false);
-    const { city } = user.contact_address;
-    setValue('companyCity', city.name + '__' + city.id);
-    getDistricts({
-      variables: {
-        city_id: city.id
+  // On user load
+  useEffect(() => {
+    let city: City;
+
+    if (user.contact_address) {
+      city = user.contact_address.city;
+    }
+
+    // Always get cities
+    getCities().then((response) => {
+      setCities(response.data.getCities);
+
+      // If user has contact address
+      if (city) {
+        setValue('companyCity', city.name + '__' + city.id);
       }
     });
-  }, [citiesData, user]);
 
+    // Abort if user doesn't have contact address
+    if (!user?.contact_address) return;
+
+    // Get user's city, district and ward
+    const { district, ward } = user.contact_address;
+
+    // Get districts then set selected district to user's district
+    getDistricts({
+      city_id: city.id
+    }).then((response) => {
+      setDistricts(response.data.getDistricts);
+      setValue('companyDistrict', district.name + '__' + district.id);
+    });
+
+    // Get wards then set selected ward to user's ward
+    getWards({
+      district_id: district.id
+    }).then((response) => {
+      setWards(response.data.getWards);
+      setValue('companyWard', ward.name + '__' + ward.id);
+    });
+  }, [user]);
+
+  // On city change
   const handleCityChange = (event) => {
+    // Selected city value
+    // Format: cityName__cityId
     const { value } = event.target;
 
+    // Selected city name and id
+    // We don't use city name here so we don't destructure it
+    const [, cityId] = value.split('__');
+
+    // Reset district and ward value
     setValue('companyDistrict', '');
     setValue('companyWard', '');
 
-    if (value) {
-      getDistricts({
-        variables: {
-          city_id: +value.split('__')[1]
-        }
-      });
-    }
+    // Clear district and ward data
+    setDistricts([]);
+    setWards([]);
+
+    // Get districts of the selected city
+    getDistricts({
+      city_id: +cityId
+    }).then((response) => {
+      setCities(response.data.getDistricts);
+    });
   };
 
-  const [getDistricts, { data: districtsData }] = useLazyQuery<GetDistrictsData, GetDistrictsVars>(
-    GET_DISTRICTS,
-    {
-      onCompleted: () => {
-        if (!firstLoadDistricts || !user?.contact_address) return;
-
-        setFirstLoadDistricts(false);
-        const { district } = user.contact_address;
-        setValue('companyDistrict', district.name + '__' + district.id);
-        getWards({
-          variables: {
-            district_id: district.id
-          }
-        });
-      }
-    }
-  );
-
+  // On district change
   const handleDistrictChange = (event) => {
+    // Selected district value
+    // Format: districtName__districtId
     const { value } = event.target;
 
+    // Selected district name and id
+    // We don't use district name here so we don't destructure it
+    const [, districtId] = value.split('__');
+
+    // Reset ward value
     setValue('companyWard', '');
 
-    if (value) {
-      getWards({
-        variables: {
-          district_id: +value.split('__')[1]
-        }
-      });
-    }
+    // Clear ward data
+    setWards([]);
+
+    // Get wards of the selected district
+    getWards({
+      district_id: +districtId
+    }).then((response) => {
+      setWards(response.data.getWards);
+    });
   };
 
-  const districts = districtsData?.getDistricts || [];
-
-  const chosenDistrict = watch('companyDistrict');
-
-  const [getWards, { data: wardsData }] = useLazyQuery<GetWardsData, GetWardsVars>(GET_WARDS, {
-    onCompleted: () => {
-      if (!firstLoadWards || !user?.contact_address) return;
-
-      setFirstLoadWards(false);
-      const { ward } = user.contact_address;
-      setValue('companyWard', ward.name + '__' + ward.id);
-    }
-  });
-
-  const wards = wardsData?.getWards || [];
-
+  // Update user
   const [updateUser, { loading: updatingUser }] = useMutationAuth<UpdateUserData, UpdateUserVars>(
     UPDATE_USER,
     {
+      // On update completed
       onCompleted: () => {
+        // Refetch user data then show success toast
         refetchUser().then(() => {
           toast.success(t('myAccount:update_success'));
         });
+
+        // Scroll to top
         window.scrollTo(0, 0);
       },
       onError: (err) => {
@@ -161,8 +206,6 @@ export default function MyAccountPage() {
       }
     }
   );
-
-  console.log(`BC`, `${FILES_GATEWAY}/certificate/${user?.id}?${licenseTime}`);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.currentTarget.files[0];
@@ -181,13 +224,11 @@ export default function MyAccountPage() {
     setLoadingCertificate(true);
     axios
       .post(`${FILES_GATEWAY}/certificate`, formData)
-
       .then(() => {
         setLicenseTime(new Date().getTime());
         setLicenseHidden(false);
         setLoadingCertificate(false);
       })
-
       .catch((err) => {
         console.log('Image upload error:', err);
       });
@@ -200,7 +241,6 @@ export default function MyAccountPage() {
 
     if (userVat !== '' && !regVat.test(userVat)) {
       toast.error(t('errors:tax_code_invalid'));
-
       return;
     }
 
@@ -211,6 +251,7 @@ export default function MyAccountPage() {
     const [cityName, cityId] = data.companyCity.split('__');
     const [districtName, districtId] = data.companyDistrict.split('__');
     const [wardName, wardId] = data.companyWard.split('__');
+
     updateUser({
       variables: {
         name: data.name,
@@ -236,7 +277,7 @@ export default function MyAccountPage() {
       }
     });
   };
-  // console.log(typeof user.vat);
+
   const vat = user.vat.replace('-', ' - ');
   const onError = (error) => {
     toast.error(error[Object.keys(error)[0]].message);
