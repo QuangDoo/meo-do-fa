@@ -26,7 +26,8 @@ import {
   GET_PRODUCTS,
   GetProductsData,
   GetProductsVars,
-  ProductTag
+  ProductTag,
+  TagType
 } from 'src/graphql/product/getProducts';
 import asyncQuery from 'src/utils/asyncQuery';
 
@@ -84,6 +85,19 @@ function Products() {
 
   const search = router.query.search as string;
 
+  const tag = router.query.searchtag as string;
+
+  // ["product", "manufacturer", "ingredient", "supplier"]
+
+  const searchTag =
+    tag === 'product'
+      ? TagType.PRODUCT
+      : tag === 'manufacturer'
+      ? TagType.MANUFATURE
+      : tag === 'ingredient'
+      ? TagType.INGREDIENT
+      : TagType.SUPPLIER;
+
   // GET ALL CATEGORIES FOR SIDEBAR FILTER
   const { data: categoriesLevelData } = useQuery<GetCategoriesLevelData, undefined>(
     GET_CATEGORIES_LEVEL,
@@ -114,7 +128,8 @@ function Products() {
         min_price: Number(router.query.priceFrom) || 1,
         max_price: Number(router.query.priceTo) || 10000000,
         pathology_id: router.query.pathology as string,
-        supplier_id: router.query.supplier as string
+        supplier_id: router.query.supplier as string,
+        search_tag: searchTag
       }
     },
     fetchPolicy: 'network-only',

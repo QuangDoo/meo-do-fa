@@ -1,26 +1,18 @@
 import { useLazyQuery, useQuery } from '@apollo/client';
+import clsx from 'clsx';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import {
   GET_PRODUCT_HOT_TAGS,
   GetProductHotTags
 } from 'src/graphql/product-tags/getProductHotTags';
-import {
-  SEARCH_PRODUCT,
-  SearchProductData,
-  SearchProductVars
-} from 'src/graphql/search/searchProducts';
 
 function HotTags() {
   const { t } = useTranslation(['error', 'navbar']);
-
-  const [searchProducts, { data: productsData, loading: loadingProducts }] = useLazyQuery<
-    SearchProductData,
-    SearchProductVars
-  >(SEARCH_PRODUCT);
-
+  const router = useRouter();
   const { data: hotTagsData } = useQuery<GetProductHotTags, undefined>(GET_PRODUCT_HOT_TAGS, {
     onError: (error) => {
       toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
@@ -42,11 +34,17 @@ function HotTags() {
               href={{
                 pathname: '/products',
                 query: {
-                  tag: type,
-                  tagname: name
+                  searchtag: type,
+                  search: name
                 }
               }}>
-              <a className="btn btn-secondary mr-1">{name}</a>
+              <a
+                className={clsx(
+                  'hottag-button',
+                  name === router.query.search && type === router.query.searchtag && 'active'
+                )}>
+                #{name}
+              </a>
             </Link>
           );
         })}
