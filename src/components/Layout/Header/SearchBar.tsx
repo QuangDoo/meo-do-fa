@@ -66,8 +66,6 @@ const SearchBar = () => {
 
   const [type, setType] = useState<SearchType>('products');
 
-  console.log(`type`, type);
-
   const runSearch = (type: SearchType) => {
     const options = {
       variables: {

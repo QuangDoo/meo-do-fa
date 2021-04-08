@@ -8,6 +8,7 @@ import { useCart } from 'src/contexts/Cart';
 import { useToken } from 'src/contexts/Token';
 
 import PathologyMenu from '../Modules/PathologyMenu';
+import HotTags from './HotTags';
 
 const Nav = () => {
   const token = useToken();
@@ -282,6 +283,9 @@ const Nav = () => {
             )}
           </div>
         </div>
+
+        {/* hot tags */}
+        <HotTags />
       </div>
     </nav>
   );
