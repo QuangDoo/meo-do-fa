@@ -33,7 +33,7 @@ type Inputs = {
   tax: string;
 };
 
-const accountTypes = ['PHARMACY', 'DRUGSTORE', 'CLINIC', 'HOSPITAL'];
+const accountTypes = ['PHARMACY', 'DRUGSTORE', 'CUSTOMER'];
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -133,11 +133,12 @@ const RegisterForm = () => {
 
   // On form submit
   const onFormSubmit = (data: Inputs) => {
+    const fullName = t(`register:${currentAccountType.toLowerCase()}`) + ' ' + data.name;
     createUser({
       variables: {
         inputs: {
           account_type: data.account_type,
-          name: data.name,
+          name: fullName,
           email: data.email,
           password: data.password,
           phone: data.phone.toString(),
@@ -169,22 +170,30 @@ const RegisterForm = () => {
 
             {/* Account type buttons */}
             <div className="row no-gutters">
-              {accountTypes.map((accountType) => (
-                <button
-                  key={accountType}
-                  type="button"
-                  className="col-6 business-group__item p-2"
-                  onClick={() => setValue('account_type', accountType)}>
-                  <img
-                    alt=""
-                    className="img-fluid"
-                    src={`/assets/images/account-type__${accountType.toLowerCase()}.png`}
-                  />
-                  <h6 className="business-group__item__text font-weight-bold">
-                    {t(`register:${accountType.toLowerCase()}`)}
-                  </h6>
-                </button>
-              ))}
+              {accountTypes.map((accountType) => {
+                let typeName = '';
+                if (accountType == 'CUSTOMER') {
+                  typeName = 'OTHER';
+                } else {
+                  typeName = accountType;
+                }
+                return (
+                  <button
+                    key={accountType}
+                    type="button"
+                    className="col-6 business-group__item p-2"
+                    onClick={() => setValue('account_type', accountType)}>
+                    <img
+                      alt=""
+                      className="img-fluid"
+                      src={`/assets/images/account-type__${accountType.toLowerCase()}.png`}
+                    />
+                    <h6 className="business-group__item__text font-weight-bold">
+                      {t(`register:${typeName.toLowerCase()}`)}
+                    </h6>
+                  </button>
+                );
+              })}
             </div>
           </div>
         </div>
