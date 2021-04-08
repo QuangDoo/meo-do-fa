@@ -30,5 +30,6 @@
   "submit_button_text": "Create account",
   "input_refer_placeholder": "Referral code",
   "customer":"Customer",
-  "other":"Other"
+  "other":"Other",
+  "hospital_clinic": "Hospital / Clinic"
 }

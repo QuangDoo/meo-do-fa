@@ -29,6 +29,7 @@
   "go_to_login": "Nếu bạn đã có tài khoản, vui lòng <button><b>Đăng nhập</b></button>",
   "submit_button_text": "Tạo tài khoản",
   "input_refer_placeholder": "Mã giới thiệu",
-  "customer":"Khách hàng",
-  "other":"Khác"
+  "customer": "Khách hàng",
+  "other": "Khác",
+  "hospital_clinic": "Bệnh viện / phòng khám"
 }

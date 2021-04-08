@@ -33,7 +33,7 @@ type Inputs = {
   tax: string;
 };
 
-const accountTypes = ['PHARMACY', 'DRUGSTORE', 'CUSTOMER'];
+const accountTypes = ['PHARMACY', 'DRUGSTORE'];
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -170,30 +170,38 @@ const RegisterForm = () => {
 
             {/* Account type buttons */}
             <div className="row no-gutters">
-              {accountTypes.map((accountType) => {
-                let typeName = '';
-                if (accountType == 'CUSTOMER') {
-                  typeName = 'OTHER';
-                } else {
-                  typeName = accountType;
-                }
-                return (
-                  <button
-                    key={accountType}
-                    type="button"
-                    className="col-6 business-group__item p-2"
-                    onClick={() => setValue('account_type', accountType)}>
-                    <img
-                      alt=""
-                      className="img-fluid"
-                      src={`/assets/images/account-type__${accountType.toLowerCase()}.png`}
-                    />
-                    <h6 className="business-group__item__text font-weight-bold">
-                      {t(`register:${typeName.toLowerCase()}`)}
-                    </h6>
-                  </button>
-                );
-              })}
+              {accountTypes.map((accountType) => (
+                <button
+                  key={accountType}
+                  type="button"
+                  className="col-6 business-group__item p-2"
+                  onClick={() => setValue('account_type', accountType)}>
+                  <img
+                    alt=""
+                    className="img-fluid"
+                    src={`/assets/images/account-type__${accountType.toLowerCase()}.png`}
+                  />
+                  <h6 className="business-group__item__text font-weight-bold">
+                    {t(`register:${accountType.toLowerCase()}`)}
+                    <br />
+                    <small>({t(`register:hospital_clinic`)})</small>
+                  </h6>
+                </button>
+              ))}
+              <button
+                key="CUSTOMER"
+                type="button"
+                className="col-6 business-group__item p-2"
+                onClick={() => setValue('account_type', 'CUSTOMER')}>
+                <img
+                  alt=""
+                  className="img-fluid"
+                  src={`/assets/images/account-type__customer.png`}
+                />
+                <h6 className="business-group__item__text font-weight-bold">
+                  {t(`register:other`)}
+                </h6>
+              </button>
             </div>
           </div>
         </div>
