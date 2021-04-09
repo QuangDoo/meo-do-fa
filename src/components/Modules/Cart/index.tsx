@@ -52,7 +52,6 @@ export default function CartPage() {
     variables: { ids: checkboxCarts },
     nextFetchPolicy: 'network-only'
   });
-
   const cartsCheckBox = dataGetCartByProduct?.getCartByProduct;
 
   const [createCounsel, { loading: creatingCounsel }] = useMutationAuth(CREATE_COUNSEL, {
