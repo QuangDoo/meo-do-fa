@@ -28,5 +28,8 @@
   "checkbox_acceptTerms_error_required": "Please agree with the Terms of Use.",
   "go_to_login": "If you already have an account, please <button><b>Login</b></button>",
   "submit_button_text": "Create account",
-  "input_refer_placeholder": "Referral code"
+  "input_refer_placeholder": "Referral code",
+  "customer":"Customer",
+  "other":"Other",
+  "hospital_clinic": "Hospital / Clinic"
 }
