@@ -208,7 +208,7 @@ const SearchBar = () => {
               <Select
                 value={type}
                 onChange={handleSearchTypeChange}
-                className="search-type-select hide-focus">
+                className="search-type-select hide-focus search-sm">
                 {['products', 'manufacturers', 'ingredients', 'suppliers'].map((type) => (
                   <option key={type} value={type}>
                     {t(`searchBar:search_by_${type}`)}
