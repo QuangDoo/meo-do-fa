@@ -107,3 +107,23 @@
 .dropdown-menu-mobile {
   left: -250%;
 }
+
+.hottag-button {
+  background-color: $secondary;
+  border-radius: 15px;
+  color: $primary;
+  padding: 2px 10px;
+  margin-right: 10px;
+  font-size: 15px;
+  font-weight: 700;
+
+  &:hover {
+    background-color: white;
+    color: $primary;
+  }
+
+  &.active {
+    background-color: white;
+    color: $primary;
+  }
+}
