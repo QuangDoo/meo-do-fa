@@ -90,13 +90,13 @@ function Products() {
   // ["product", "manufacturer", "ingredient", "supplier"]
 
   const searchTag =
-    tag === 'product'
-      ? TagType.PRODUCT
+    tag === 'supplier'
+      ? TagType.SUPPLIER
       : tag === 'manufacturer'
       ? TagType.MANUFATURE
       : tag === 'ingredient'
       ? TagType.INGREDIENT
-      : TagType.SUPPLIER;
+      : TagType.PRODUCT;
 
   // GET ALL CATEGORIES FOR SIDEBAR FILTER
   const { data: categoriesLevelData } = useQuery<GetCategoriesLevelData, undefined>(

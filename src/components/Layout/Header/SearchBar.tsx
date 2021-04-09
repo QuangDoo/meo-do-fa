@@ -1,7 +1,6 @@
 import { useLazyQuery } from '@apollo/client';
 import { CircularProgress } from '@material-ui/core';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-import slugify from '@sindresorhus/slugify';
 import clsx from 'clsx';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
@@ -107,6 +106,8 @@ const SearchBar = () => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    setIsFocused(false);
+
     if (!value) return;
     switch (type) {
       case 'products':
@@ -128,14 +129,14 @@ const SearchBar = () => {
       case 'ingredients':
         // eslint-disable-next-line no-case-declarations
         const searchIngredients = ingredientsData?.searchIngredients;
-        if (searchIngredients.length) {
+        if (searchIngredients?.length) {
           return router.push(getItemHref['ingredients'](searchIngredients[0]));
         }
         return;
       case 'suppliers':
         // eslint-disable-next-line no-case-declarations
         const searchSuppliers = supplierData?.getSuppliers;
-        if (searchSuppliers.length) {
+        if (searchSuppliers?.length) {
           return router.push(getItemHref['suppliers'](searchSuppliers[0]));
         }
         return;
@@ -143,6 +144,7 @@ const SearchBar = () => {
   };
 
   const handleValueChange = (e) => {
+    setIsFocused(true);
     setValue(e.target.value);
   };
 
