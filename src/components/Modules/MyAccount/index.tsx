@@ -69,58 +69,75 @@ export default function MyAccountPage() {
   // Uploading certificate image
   const [loadingCertificate, setLoadingCertificate] = useState<boolean>(false);
 
+  // Cities array
   const [cities, setCities] = useState<City[]>([]);
 
+  // Districts array
   const [districts, setDistricts] = useState<District[]>([]);
 
+  // Wards array
   const [wards, setWards] = useState<Ward[]>([]);
 
   // Get cities
+  // We use refetch because it returns a Promise
   const { refetch: getCities } = useQuery<GetCitiesData, undefined>(GET_CITIES, {
-    skip: true,
-    notifyOnNetworkStatusChange: true
+    skip: true, // Don't query automatically
+    notifyOnNetworkStatusChange: true,
+    onError: (error) => {
+      console.log('Get cities err:', error);
+      toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
+    }
   });
 
   // Get districts
+  // We use refetch because it returns a Promise
   const { refetch: getDistricts } = useQuery<GetDistrictsData, GetDistrictsVars>(GET_DISTRICTS, {
-    skip: true,
-    notifyOnNetworkStatusChange: true
+    skip: true, // Don't query automatically
+    notifyOnNetworkStatusChange: true,
+    onError: (error) => {
+      console.log('Get districts error:', error);
+      toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
+    }
   });
 
   // Get wards
+  // We use refetch because it returns a Promise
   const { refetch: getWards } = useQuery<GetWardsData, GetWardsVars>(GET_WARDS, {
-    skip: true,
-    notifyOnNetworkStatusChange: true
+    skip: true, // Don't query automatically
+    notifyOnNetworkStatusChange: true,
+    onError: (error) => {
+      console.log('Get wards error:', error);
+      toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
+    }
   });
 
-  const chosenCity = watch('companyCity');
-  const chosenDistrict = watch('companyDistrict');
+  // Selected city value
+  const selectedCity = watch('companyCity');
+
+  // Selected district value
+  const selectedDistrict = watch('companyDistrict');
 
   // On user load
   useEffect(() => {
-    let city: City;
-
-    if (user.contact_address) {
-      city = user.contact_address.city;
-    }
-
-    // Always get cities
+    // Always get cities, regardless if user has contact address or not
     getCities().then((response) => {
       setCities(response.data.getCities);
 
-      // If user has contact address
-      if (city) {
+      // If user has contact address, set city value to user's city
+      if (user.contact_address) {
+        const { city } = user.contact_address;
+
         setValue('companyCity', city.name + '__' + city.id);
       }
     });
 
-    // Abort if user doesn't have contact address
+    // Abort from now on if user doesn't have contact address
     if (!user?.contact_address) return;
 
     // Get user's city, district and ward
-    const { district, ward } = user.contact_address;
+    const { city, district, ward } = user.contact_address;
 
-    // Get districts then set selected district to user's district
+    // Get districts of user's city then set district value to user's district
     getDistricts({
       city_id: city.id
     }).then((response) => {
@@ -128,7 +145,7 @@ export default function MyAccountPage() {
       setValue('companyDistrict', district.name + '__' + district.id);
     });
 
-    // Get wards then set selected ward to user's ward
+    // Get wards of user's districts then set ward value to user's ward
     getWards({
       district_id: district.id
     }).then((response) => {
@@ -139,15 +156,10 @@ export default function MyAccountPage() {
 
   // On city change
   const handleCityChange = (event) => {
-    // Selected city value
-    // Format: cityName__cityId
-    const { value } = event.target;
-
-    console.log('City change:', value);
-
-    // Selected city name and id
-    // We don't use city name here so we don't destructure it
-    const [, cityId] = value.split('__');
+    // City value format: cityName__cityId
+    // Split the value by '__' to get cityName and cityId
+    // We don't use cityName here so we don't destructure it
+    const [, cityId] = event.target.value.split('__');
 
     // Reset district and ward value
     setValue('companyDistrict', '');
@@ -167,13 +179,10 @@ export default function MyAccountPage() {
 
   // On district change
   const handleDistrictChange = (event) => {
-    // Selected district value
-    // Format: districtName__districtId
-    const { value } = event.target;
-
-    // Selected district name and id
-    // We don't use district name here so we don't destructure it
-    const [, districtId] = value.split('__');
+    // District value format: districtName__districtId
+    // Split the value by '__' to get districtName and districtId
+    // We don't use districtName here so we don't destructure it
+    const [, districtId] = event.target.value.split('__');
 
     // Reset ward value
     setValue('companyWard', '');
@@ -444,7 +453,7 @@ export default function MyAccountPage() {
               containerClass="col-md-4"
               required
               label={t('common:district_select_label')}
-              disabled={!districts.length || !chosenCity}>
+              disabled={!districts.length || !selectedCity}>
               <option value="">{t('common:district_select_placeholder')}</option>
 
               {districts.map(({ id, name }) => (
@@ -462,7 +471,7 @@ export default function MyAccountPage() {
               containerClass="col-md-4"
               required
               label={t('common:ward_select_label')}
-              disabled={!wards.length || !chosenCity || !chosenDistrict}>
+              disabled={!wards.length || !selectedCity || !selectedDistrict}>
               <option value="">{t('common:ward_select_placeholder')}</option>
 
               {wards.map(({ id, name }) => (
