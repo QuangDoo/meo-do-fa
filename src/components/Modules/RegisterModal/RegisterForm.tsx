@@ -33,7 +33,7 @@ type Inputs = {
   tax: string;
 };
 
-const accountTypes = ['PHARMACY', 'DRUGSTORE', 'CLINIC', 'HOSPITAL'];
+const accountTypes = ['PHARMACY', 'DRUGSTORE'];
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -107,11 +107,12 @@ const RegisterForm = () => {
 
   // On form submit
   const onFormSubmit = (data: Inputs) => {
+    const fullName = t(`register:${currentAccountType.toLowerCase()}`) + ' ' + data.name;
     createUser({
       variables: {
         inputs: {
           account_type: data.account_type,
-          name: data.name,
+          name: fullName,
           email: data.email,
           password: data.password,
           phone: data.phone.toString(),
@@ -156,9 +157,25 @@ const RegisterForm = () => {
                   />
                   <h6 className="business-group__item__text font-weight-bold">
                     {t(`register:${accountType.toLowerCase()}`)}
+                    <br />
+                    <small>({t(`register:hospital_clinic`)})</small>
                   </h6>
                 </button>
               ))}
+              <button
+                key="CUSTOMER"
+                type="button"
+                className="col-6 business-group__item p-2"
+                onClick={() => setValue('account_type', 'CUSTOMER')}>
+                <img
+                  alt=""
+                  className="img-fluid"
+                  src={`/assets/images/account-type__customer.png`}
+                />
+                <h6 className="business-group__item__text font-weight-bold">
+                  {t(`register:other`)}
+                </h6>
+              </button>
             </div>
           </div>
         </div>

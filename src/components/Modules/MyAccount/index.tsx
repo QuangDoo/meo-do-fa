@@ -70,7 +70,7 @@ export default function MyAccountPage() {
   const cities = citiesData?.getCities || [];
 
   const chosenCity = watch('companyCity');
-  console.log(`user`, user);
+  // console.log(`user`, user);
   useEffect(() => {
     if (!user?.contact_address || !citiesData || !firstLoadCities) return;
 
@@ -162,7 +162,7 @@ export default function MyAccountPage() {
     }
   );
 
-  console.log(`BC`, `${FILES_GATEWAY}/certificate/${user?.id}?${licenseTime}`);
+  //console.log(`BC`, `${FILES_GATEWAY}/certificate/${user?.id}?${licenseTime}`);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.currentTarget.files[0];
@@ -299,7 +299,7 @@ export default function MyAccountPage() {
               label={t('myAccount:company_name_label')}
               name="companyName"
               type="text"
-              defaultValue={user?.company_name}
+              defaultValue={user?.company_name ? user.company_name : user.name}
               placeholder={t('myAccount:company_name_placeholder')}
             />
           </div>
