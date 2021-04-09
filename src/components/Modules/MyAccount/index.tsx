@@ -143,6 +143,8 @@ export default function MyAccountPage() {
     // Format: cityName__cityId
     const { value } = event.target;
 
+    console.log('City change:', value);
+
     // Selected city name and id
     // We don't use city name here so we don't destructure it
     const [, cityId] = value.split('__');
@@ -159,7 +161,7 @@ export default function MyAccountPage() {
     getDistricts({
       city_id: +cityId
     }).then((response) => {
-      setCities(response.data.getDistricts);
+      setDistricts(response.data.getDistricts);
     });
   };
 
