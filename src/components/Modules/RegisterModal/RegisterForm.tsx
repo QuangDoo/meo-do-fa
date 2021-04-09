@@ -50,16 +50,6 @@ const RegisterForm = () => {
 
   const [file, setFile] = useState<File>();
 
-  const [licenseTime, setLicenseTime] = useState<number>(new Date().getTime());
-
-  const [licenseHidden, setLicenseHidden] = useState<boolean>(false);
-
-  const [loadingCertificate, setLoadingCertificate] = useState<boolean>(false);
-
-  const [decodeToken, setDecodeToken] = useState<string>('');
-
-  const [userId, setUserId] = useState<string>('');
-
   const { register, handleSubmit, watch, setValue } = useForm<Inputs>();
 
   const businessLicense: FileList = watch('businessLicense');
@@ -78,7 +68,22 @@ const RegisterForm = () => {
     {
       onCompleted: (data) => {
         cookies.set('token', data.createUser.token);
-        setDecodeToken(data.createUser.token.substr(7));
+
+        const decode: DECODE = jwt_decode(data.createUser.token.substr(7));
+        const { userId } = decode;
+        if (file) {
+          const formData = new FormData();
+
+          formData.append('image', file);
+          formData.append('id', userId + '');
+
+          axios
+            .post(`${FILES_GATEWAY}/certificate`, formData)
+
+            .catch((err) => {
+              console.log('Image upload error:', err);
+            });
+        }
         closeModal();
         refetchUser();
         router.reload();
@@ -100,37 +105,6 @@ const RegisterForm = () => {
     }
   };
 
-  useEffect(() => {
-    if (!decodeToken) return;
-
-    const decode: DECODE = jwt_decode(decodeToken);
-    setUserId(decode.userId + '');
-  }, [decodeToken]);
-
-  const handleForm = () => {
-    const formData = new FormData();
-
-    formData.append('image', file);
-    formData.append('id', userId);
-    setLoadingCertificate(true);
-    axios
-      .post(`${FILES_GATEWAY}/certificate`, formData)
-
-      .then(() => {
-        setLicenseTime(new Date().getTime());
-        setLicenseHidden(false);
-        setLoadingCertificate(false);
-      })
-
-      .catch((err) => {
-        console.log('Image upload error:', err);
-      });
-  };
-
-  console.log(`userId`, userId);
-
-  console.log('business license', `${FILES_GATEWAY}/certificate/${userId}?${licenseTime}`);
-
   // On form submit
   const onFormSubmit = (data: Inputs) => {
     createUser({
@@ -145,7 +119,7 @@ const RegisterForm = () => {
           vat: data.tax
         }
       }
-    }).then(() => handleForm());
+    });
   };
 
   // On form error
@@ -295,14 +269,6 @@ const RegisterForm = () => {
                 : t('register:input_business_license_placeholder')
             }
             onChange={handleFileChange}
-          />
-
-          <img
-            hidden={licenseHidden}
-            alt=""
-            className="mb-3 business-license-img"
-            src={`${FILES_GATEWAY}/certificate/${userId}?${licenseTime}`}
-            onError={() => setLicenseHidden(true)}
           />
 
           {/* <Input

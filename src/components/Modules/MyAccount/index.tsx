@@ -349,7 +349,7 @@ export default function MyAccountPage() {
               <Loading />
             </div>
           )}
-          {loadingCertificate && (
+          {!loadingCertificate && (
             <div>
               <img
                 hidden={licenseHidden}
