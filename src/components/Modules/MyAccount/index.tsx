@@ -352,7 +352,7 @@ export default function MyAccountPage() {
               label={t('myAccount:company_name_label')}
               name="companyName"
               type="text"
-              defaultValue={user?.company_name}
+              defaultValue={user?.company_name ? user.company_name : user.name}
               placeholder={t('myAccount:company_name_placeholder')}
             />
           </div>
