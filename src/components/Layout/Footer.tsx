@@ -89,7 +89,7 @@ const Footer = () => {
                 <div className="col-sm-auto d-none d-md-block col-12 align-items-end text-center">
                   <img
                     style={{ height: '80px' }}
-                    src="/assets/images/newsletter.png"
+                    src="/assets/images/newsletter-md.png"
                     alt="newsletter"
                     className="img-fluid"
                   />
@@ -242,13 +242,13 @@ const Footer = () => {
                 <div>
                   <img
                     className="img-fluid footer__delivery"
-                    src="/assets/images/ghtk-22fbe4903100177078c795a37f7ce7260582b95c1bad6cf37a0dba76127e7f5d.png"
+                    src="/assets/images/logo-ghtk.png"
                     alt="logo-ghtk"
                   />
 
                   <img
                     className="img-fluid footer__delivery"
-                    src="/assets/images/pharma-logistics-logo.png"
+                    src="/assets/images/pharma-logistics-logo-sm.png"
                     alt="logo-logistics-pharma"
                   />
 
@@ -288,7 +288,7 @@ const Footer = () => {
                   <img
                     alt="Dấu đỏ của Bộ Công Thương"
                     className="img-fluid"
-                    src="/assets/images/logo_dang_cho_duyet.png"
+                    src="/assets/images/logo_dang_cho_duyet-sm.png"
                     title="Dấu đỏ của Bộ Công Thương"
                   />
                 </a>

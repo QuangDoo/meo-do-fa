@@ -37,7 +37,7 @@ const Header = () => {
                     alt="Medofa.com"
                     className="img-fluid logo-header d-block mx-auto"
                     title="Medofa.com"
-                    src="/assets/images/logo2.png"
+                    src="/assets/images/logo-md.png"
                   />
                 </a>
               </Link>
