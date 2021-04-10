@@ -1,16 +1,21 @@
 import { Menu, MenuItem } from '@material-ui/core';
+import {
+  Delete as DeleteIcon,
+  SwapHoriz as SwapHorizIcon,
+  Visibility as VisibilityIcon
+} from '@material-ui/icons';
+import WarningIcon from '@material-ui/icons/Warning';
+import clsx from 'clsx';
 import { useTranslation } from 'i18n';
 import React, { useRef, useState } from 'react';
 import { toast } from 'react-toastify';
-import { FILES_GATEWAY } from 'src/constants';
 
-import { ImageObject } from './CertificateUploadNew';
+import { ImageObject } from '.';
 
 type Props = {
   image: ImageObject;
   index: number;
-  setImages: React.Dispatch<React.SetStateAction<ImageObject[]>>;
-  setImageIdsToDelete: React.Dispatch<React.SetStateAction<string[]>>;
+  setCertificateImages: React.Dispatch<React.SetStateAction<ImageObject[]>>;
 };
 
 type MenuPosition = {
@@ -24,9 +29,11 @@ const initialState: MenuPosition = {
 };
 
 export default function CertificateImage(props: Props) {
-  const { image, index, setImages, setImageIdsToDelete } = props;
+  const { image, index, setCertificateImages: setImages } = props;
 
   const { t } = useTranslation(['myAccount', 'cart']);
+
+  const [loadFailed, setLoadFailed] = useState<boolean>(false);
 
   // File input's ref, we will use this to interact with the file input
   const fileInputRef = useRef(null);
@@ -96,15 +103,6 @@ export default function CertificateImage(props: Props) {
 
       return newImages;
     });
-
-    // If this is an uploaded image, it's src will start with FILES_GATEWAY
-    if (image.src.startsWith(FILES_GATEWAY)) {
-      // Get it's id
-      const id = image.src.split('/').pop();
-
-      // Add to array of image ids to delete later
-      setImageIdsToDelete((ids) => [...ids, id]);
-    }
   };
 
   // On change image file select
@@ -140,14 +138,25 @@ export default function CertificateImage(props: Props) {
     };
   };
 
+  const handleLoadError = () => {
+    setLoadFailed(true);
+  };
+
   return (
     <React.Fragment>
       <button
-        className="certificate-image-button"
+        className={clsx('certificate-image-button', loadFailed && 'error')}
         tabIndex={0}
         type="button"
         onClick={handleImageClick}>
-        <img alt={`certificate-${index}`} src={image.src} />
+        {loadFailed ? (
+          <React.Fragment>
+            <WarningIcon />
+            <div>{t('myAccount:certificate_image_load_error')}</div>
+          </React.Fragment>
+        ) : (
+          <img alt={`certificate-${index}`} src={image.src} onError={handleLoadError} />
+        )}
       </button>
 
       <input hidden accept="image/*" type="file" onChange={handleFileChange} ref={fileInputRef} />
@@ -161,9 +170,29 @@ export default function CertificateImage(props: Props) {
             ? { top: menuPosition.y, left: menuPosition.x }
             : undefined
         }>
-        <MenuItem onClick={handleViewImageClick}>{t('myAccount:menu_view_image')}</MenuItem>
-        <MenuItem onClick={handleChangeImageClick}>{t('myAccount:menu_change_image')}</MenuItem>
-        <MenuItem onClick={handleDeleteImageClick}>{t('myAccount:menu_delete_image')}</MenuItem>
+        <MenuItem onClick={handleViewImageClick}>
+          <VisibilityIcon />
+
+          <span className="certificate-image-menu-item-label">
+            {t('myAccount:menu_view_image')}
+          </span>
+        </MenuItem>
+
+        <MenuItem onClick={handleChangeImageClick}>
+          <SwapHorizIcon />
+
+          <span className="certificate-image-menu-item-label">
+            {t('myAccount:menu_change_image')}
+          </span>
+        </MenuItem>
+
+        <MenuItem onClick={handleDeleteImageClick}>
+          <DeleteIcon />
+
+          <span className="certificate-image-menu-item-label">
+            {t('myAccount:menu_delete_image')}
+          </span>
+        </MenuItem>
       </Menu>
     </React.Fragment>
   );

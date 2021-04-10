@@ -49,5 +49,6 @@
   "active": "Please verify your account <Link>here</Link> to continue purchasing",
   "menu_view_image": "View image",
   "menu_change_image": "Change image",
-  "menu_delete_image": "Delete image"
+  "menu_delete_image": "Delete image",
+  "certificate_image_load_error": "Server error"
 }

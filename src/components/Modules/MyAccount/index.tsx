@@ -1,10 +1,13 @@
+import axios from 'axios';
 import { useTranslation } from 'i18n';
+import _partition from 'lodash/partition';
 import React, { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import Button from 'src/components/Form/Button';
 import InputWithLabel from 'src/components/Form/InputWithLabel';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
+import { FILES_GATEWAY } from 'src/constants';
 import { useUser } from 'src/contexts/User';
 import { UPDATE_USER, UpdateUserData, UpdateUserVars } from 'src/graphql/user/updateUser';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
@@ -14,6 +17,11 @@ import AddressSelect from './AddressSelect';
 import CertificateUpload from './CertificateUpload';
 import CertificateUploadNew from './CertificateUploadNew';
 import FormCard from './FormCard';
+
+export type ImageObject = {
+  file?: File;
+  src: string;
+};
 
 type Inputs = {
   name: string;
@@ -67,11 +75,70 @@ export default function MyAccountPage() {
   );
 
   // Image ids that got replaced by new images, we will delete them later
-  const [imageIdsToDelete, setImageIdsToDelete] = useState<string[]>([]);
-
-  const [newImageFiles, setNewImageFiles] = useState<File[]>([]);
+  const [certificateImages, setCertificateImages] = useState<ImageObject[]>([]);
 
   const onSubmit = async (data: Inputs) => {
+    // Array to hold all of user's certificate image ids
+    // We will modify this to update certificates later
+    let originalImageIds: string[] = user.business_license.split(',');
+
+    // Separate old images from new images with Lodash partition based on if ImageObject has file or not
+    // If an ImageObject has file, that means it's a new image chosen by the user
+    const [untouchedImages, newImages] = _partition(certificateImages, (image) => image.file);
+
+    // Uploaded image ids that weren't deleted or replaced
+    // We get the image id by splitting the string by '/' and get the last item
+    const untouchedImageIds = untouchedImages.map((image) => image.src.split('/').pop());
+
+    // Image ids to delete
+    // They are ids that were in the original ids but have been deleted or replaced
+    //   which means they are not in the untouched image array
+    const imageIdsToDelete: string[] = originalImageIds.filter(
+      (id) => !untouchedImageIds.includes(id)
+    );
+
+    // Delete images
+    axios
+      .delete(`${FILES_GATEWAY}/certificate`, {
+        data: {
+          ids: imageIdsToDelete
+        }
+      })
+      .then(() => {
+        // On delete success
+        // Remove deleted ids from originalImageIds
+        imageIdsToDelete.forEach((id) => {
+          const index = originalImageIds.indexOf(id);
+
+          if (index > -1) {
+            originalImageIds.splice(index, 1);
+          }
+        });
+      })
+      .catch((error) => {
+        console.log('Delete certificate error:', error);
+      });
+
+    // Loop through old image ids, if they're not present in oldImages
+    // that means they've been deleted or replaced by new images
+    // so we add them to imageIdsToDelete
+
+    // Form data to upload new images
+    const uploadImagesFormData = new FormData();
+
+    // Add new images to form data
+    newImages.forEach((image) => {
+      uploadImagesFormData.append('images', image.file);
+    });
+
+    // Upload new images
+    axios.post(`${FILES_GATEWAY}/certificate`, uploadImagesFormData).then((response) => {
+      // Response is an array of uploaded image ids
+      originalImageIds = response.data;
+    });
+
+    // Loop through
+
     const regVat = /(^[0-9]{10}$)|(^[0-9]{13}$)/g;
 
     let userVat = data?.taxCode.replace(/-/g, '');
@@ -204,7 +271,10 @@ export default function MyAccountPage() {
               placeholder={t('myAccount:tax_code_placeholder')}
             />
 
-            <CertificateUploadNew setImageIdsToDelete={setImageIdsToDelete} />
+            <CertificateUploadNew
+              certificateImages={certificateImages}
+              setCertificateImages={setCertificateImages}
+            />
 
             <CertificateUpload />
 

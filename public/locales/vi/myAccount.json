@@ -50,5 +50,6 @@
   "active": "Vui lòng xác minh tài khoản của bạn <Link>tại đây</Link> để tiếp tục mua hàng",
   "menu_view_image": "Xem ảnh",
   "menu_change_image": "Đổi ảnh",
-  "menu_delete_image": "Xóa ảnh"
+  "menu_delete_image": "Xóa ảnh",
+  "certificate_image_load_error": "Lỗi máy chủ"
 }
