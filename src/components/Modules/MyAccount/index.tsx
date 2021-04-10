@@ -1,31 +1,18 @@
-import { useQuery } from '@apollo/client';
-import axios from 'axios';
 import { useTranslation } from 'i18n';
-import getConfig from 'next/config';
-import React, { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import React from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import Button from 'src/components/Form/Button';
 import InputWithLabel from 'src/components/Form/InputWithLabel';
-import SelectWithLabel from 'src/components/Form/SelectWithLabel';
-import Loading from 'src/components/Layout/Loading';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { useUser } from 'src/contexts/User';
-import { City, GET_CITIES, GetCitiesData } from 'src/graphql/address/getCities';
-import {
-  District,
-  GET_DISTRICTS,
-  GetDistrictsData,
-  GetDistrictsVars
-} from 'src/graphql/address/getDistricts';
-import { GET_WARDS, GetWardsData, GetWardsVars, Ward } from 'src/graphql/address/getWards';
 import { UPDATE_USER, UpdateUserData, UpdateUserVars } from 'src/graphql/user/updateUser';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 
 import ProfileLayout from '../ProfileLayout';
+import AddressSelect from './AddressSelect';
+import CertificateUpload from './CertificateUpload';
 import FormCard from './FormCard';
-
-const { publicRuntimeConfig } = getConfig();
 
 type Inputs = {
   name: string;
@@ -47,10 +34,6 @@ type Inputs = {
   deliveryWard: string;
 };
 
-const FILES_GATEWAY = `https://${
-  publicRuntimeConfig.FILES_GATEWAY_EXT || process.env.NEXT_PUBLIC_FILES_GATEWAY
-}`;
-
 export default function MyAccountPage() {
   const { t } = useTranslation(['myAccount', 'common', 'errors']);
 
@@ -58,145 +41,9 @@ export default function MyAccountPage() {
   const { data: user, refetch: refetchUser } = useUser();
 
   // Form controller
-  const { register, handleSubmit, watch, setValue } = useForm<Inputs>();
+  const methods = useForm<Inputs>();
 
-  // Hide license or not
-  const [licenseHidden, setLicenseHidden] = useState<boolean>(false);
-
-  // Timestamp to manually refresh license image
-  const [licenseTime, setLicenseTime] = useState<number>(new Date().getTime());
-
-  // Uploading certificate image
-  const [loadingCertificate, setLoadingCertificate] = useState<boolean>(false);
-
-  // Cities array
-  const [cities, setCities] = useState<City[]>([]);
-
-  // Districts array
-  const [districts, setDistricts] = useState<District[]>([]);
-
-  // Wards array
-  const [wards, setWards] = useState<Ward[]>([]);
-
-  // Get cities
-  // We use refetch because it returns a Promise
-  const { refetch: getCities } = useQuery<GetCitiesData, undefined>(GET_CITIES, {
-    skip: true, // Don't query automatically
-    notifyOnNetworkStatusChange: true,
-    onError: (error) => {
-      console.log('Get cities err:', error);
-      toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
-    }
-  });
-
-  // Get districts
-  // We use refetch because it returns a Promise
-  const { refetch: getDistricts } = useQuery<GetDistrictsData, GetDistrictsVars>(GET_DISTRICTS, {
-    skip: true, // Don't query automatically
-    notifyOnNetworkStatusChange: true,
-    onError: (error) => {
-      console.log('Get districts error:', error);
-      toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
-    }
-  });
-
-  // Get wards
-  // We use refetch because it returns a Promise
-  const { refetch: getWards } = useQuery<GetWardsData, GetWardsVars>(GET_WARDS, {
-    skip: true, // Don't query automatically
-    notifyOnNetworkStatusChange: true,
-    onError: (error) => {
-      console.log('Get wards error:', error);
-      toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
-    }
-  });
-
-  // Selected city value
-  const selectedCity = watch('companyCity');
-
-  // Selected district value
-  const selectedDistrict = watch('companyDistrict');
-
-  // On user load
-  useEffect(() => {
-    // Always get cities, regardless if user has contact address or not
-    getCities().then((response) => {
-      setCities(response.data.getCities);
-
-      // If user has contact address, set city value to user's city
-      if (user.contact_address) {
-        const { city } = user.contact_address;
-
-        setValue('companyCity', city.name + '__' + city.id);
-      }
-    });
-
-    // Abort from now on if user doesn't have contact address
-    if (!user?.contact_address) return;
-
-    // Get user's city, district and ward
-    const { city, district, ward } = user.contact_address;
-
-    // Get districts of user's city then set district value to user's district
-    getDistricts({
-      city_id: city.id
-    }).then((response) => {
-      setDistricts(response.data.getDistricts);
-      setValue('companyDistrict', district.name + '__' + district.id);
-    });
-
-    // Get wards of user's districts then set ward value to user's ward
-    getWards({
-      district_id: district.id
-    }).then((response) => {
-      setWards(response.data.getWards);
-      setValue('companyWard', ward.name + '__' + ward.id);
-    });
-  }, [user]);
-
-  // On city change
-  const handleCityChange = (event) => {
-    // City value format: cityName__cityId
-    // Split the value by '__' to get cityName and cityId
-    // We don't use cityName here so we don't destructure it
-    const [, cityId] = event.target.value.split('__');
-
-    // Reset district and ward value
-    setValue('companyDistrict', '');
-    setValue('companyWard', '');
-
-    // Clear district and ward data
-    setDistricts([]);
-    setWards([]);
-
-    // Get districts of the selected city
-    getDistricts({
-      city_id: +cityId
-    }).then((response) => {
-      setDistricts(response.data.getDistricts);
-    });
-  };
-
-  // On district change
-  const handleDistrictChange = (event) => {
-    // District value format: districtName__districtId
-    // Split the value by '__' to get districtName and districtId
-    // We don't use districtName here so we don't destructure it
-    const [, districtId] = event.target.value.split('__');
-
-    // Reset ward value
-    setValue('companyWard', '');
-
-    // Clear ward data
-    setWards([]);
-
-    // Get wards of the selected district
-    getWards({
-      district_id: +districtId
-    }).then((response) => {
-      setWards(response.data.getWards);
-    });
-  };
+  const { register, handleSubmit } = methods;
 
   // Update user
   const [updateUser, { loading: updatingUser }] = useMutationAuth<UpdateUserData, UpdateUserVars>(
@@ -217,33 +64,6 @@ export default function MyAccountPage() {
       }
     }
   );
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.currentTarget.files[0];
-
-    const isImage = file.type.startsWith('image');
-
-    if (!isImage) {
-      toast.error(t('cart:file_is_not_image'));
-      return;
-    }
-
-    const formData = new FormData();
-
-    formData.append('image', file);
-    formData.append('id', user?.id + '');
-    setLoadingCertificate(true);
-    axios
-      .post(`${FILES_GATEWAY}/certificate`, formData)
-      .then(() => {
-        setLicenseTime(new Date().getTime());
-        setLicenseHidden(false);
-        setLoadingCertificate(false);
-      })
-      .catch((err) => {
-        console.log('Image upload error:', err);
-      });
-  };
 
   const onSubmit = async (data: Inputs) => {
     const regVat = /(^[0-9]{10}$)|(^[0-9]{13}$)/g;
@@ -299,197 +119,109 @@ export default function MyAccountPage() {
     <ProfileLayout title={t('myAccount:title')}>
       <LoadingBackdrop open={updatingUser} />
 
-      <form onSubmit={handleSubmit(onSubmit, onError)}>
-        <FormCard title={t('myAccount:account_info')}>
-          {/* Full name */}
-          <InputWithLabel
-            ref={register({
-              required: t('myAccount:name_required') + ''
-            })}
-            required
-            label={t('myAccount:name_label')}
-            name="name"
-            type="text"
-            placeholder={t('myAccount:name_placeholder')}
-            defaultValue={user?.name}
-            maxLength={100}
-          />
+      <FormProvider {...methods}>
+        <form onSubmit={handleSubmit(onSubmit, onError)}>
+          <FormCard title={t('myAccount:account_info')}>
+            {/* Full name */}
+            <InputWithLabel
+              ref={register({
+                required: t('myAccount:name_required') + ''
+              })}
+              required
+              label={t('myAccount:name_label')}
+              name="name"
+              type="text"
+              placeholder={t('myAccount:name_placeholder')}
+              defaultValue={user?.name}
+              maxLength={100}
+            />
 
-          {/* Phone number */}
-          <InputWithLabel
-            disabled
-            label={t('myAccount:phone_label')}
-            type="text"
-            defaultValue={user?.phone}
-          />
-
-          {/* Email */}
-          <InputWithLabel
-            disabled
-            label={t('myAccount:email_label')}
-            type="text"
-            defaultValue={user?.email}
-          />
-        </FormCard>
-
-        <FormCard title={t('myAccount:business_info')}>
-          <div className="row">
-            {/* Account type */}
+            {/* Phone number */}
             <InputWithLabel
               disabled
-              containerClass="col-md-4"
-              label={t('myAccount:account_type_label')}
+              label={t('myAccount:phone_label')}
               type="text"
-              defaultValue={
-                user?.account_type ? t(`myAccount:account_type_${user.account_type}`) : ''
-              }
+              defaultValue={user?.phone}
             />
 
-            {/* Pharmacy/clinic name */}
+            {/* Email */}
             <InputWithLabel
-              ref={register}
-              containerClass="col-md-8"
-              label={t('myAccount:company_name_label')}
-              name="companyName"
+              disabled
+              label={t('myAccount:email_label')}
               type="text"
-              defaultValue={user?.company_name ? user.company_name : user.name}
-              placeholder={t('myAccount:company_name_placeholder')}
+              defaultValue={user?.email}
             />
-          </div>
+          </FormCard>
 
-          {/* Legal representative */}
-          <InputWithLabel
-            ref={register}
-            label={t('myAccount:representative_label')}
-            name="representative"
-            type="text"
-            defaultValue={user?.representative}
-            placeholder={t('myAccount:representative_placeholder')}
-          />
+          <FormCard title={t('myAccount:business_info')}>
+            <div className="row">
+              {/* Account type */}
+              <InputWithLabel
+                disabled
+                containerClass="col-md-4"
+                label={t('myAccount:account_type_label')}
+                type="text"
+                defaultValue={
+                  user?.account_type ? t(`myAccount:account_type_${user.account_type}`) : ''
+                }
+              />
 
-          {/* Tax code */}
-          <InputWithLabel
-            ref={register}
-            label={t('myAccount:tax_code_label')}
-            name="taxCode"
-            type="text"
-            defaultValue={vat}
-            placeholder={t('myAccount:tax_code_placeholder')}
-          />
-
-          {user.activated ? (
-            <label className="form__label mb-2">{t('myAccount:business_license_label')}</label>
-          ) : (
-            <InputWithLabel
-              label={t('myAccount:business_license_label')}
-              type="file"
-              accept="image/*"
-              placeholder={t('myAccount:business_license_placeholder')}
-              onChange={handleFileChange}
-              containerClass="mb-2"
-              disabled={user.activated}
-            />
-          )}
-
-          <input
-            hidden
-            ref={register}
-            name="businessLicense"
-            defaultValue={user?.business_license}
-          />
-          {loadingCertificate && (
-            <div className="text-center">
-              <Loading />
-            </div>
-          )}
-          {!loadingCertificate && (
-            <div>
-              <img
-                hidden={licenseHidden}
-                alt=""
-                className="mb-3 business-license-img license-img-mobile"
-                src={`${FILES_GATEWAY}/certificate/${user?.id}?${licenseTime}`}
-                onError={() => setLicenseHidden(true)}
+              {/* Pharmacy/clinic name */}
+              <InputWithLabel
+                ref={register}
+                containerClass="col-md-8"
+                label={t('myAccount:company_name_label')}
+                name="companyName"
+                type="text"
+                defaultValue={user?.company_name ? user.company_name : user.name}
+                placeholder={t('myAccount:company_name_placeholder')}
               />
             </div>
-          )}
 
-          <InputWithLabel
-            ref={register({
-              required: t('myAccount:street_required') + ''
-            })}
-            label={t('myAccount:company_street_label')}
-            name="companyStreet"
-            type="text"
-            placeholder={t('myAccount:company_street_placeholder')}
-            defaultValue={user?.contact_address?.street || ''}
-            required
-          />
+            {/* Legal representative */}
+            <InputWithLabel
+              ref={register}
+              label={t('myAccount:representative_label')}
+              name="representative"
+              type="text"
+              defaultValue={user?.representative}
+              placeholder={t('myAccount:representative_placeholder')}
+            />
 
-          <div className="row">
-            <SelectWithLabel
-              onChange={handleCityChange}
-              name="companyCity"
+            {/* Tax code */}
+            <InputWithLabel
+              ref={register}
+              label={t('myAccount:tax_code_label')}
+              name="taxCode"
+              type="text"
+              defaultValue={vat}
+              placeholder={t('myAccount:tax_code_placeholder')}
+            />
+
+            <CertificateUpload />
+
+            <InputWithLabel
               ref={register({
-                required: t('myAccount:company_city_required') + ''
+                required: t('myAccount:street_required') + ''
               })}
-              containerClass="col-md-4"
+              label={t('myAccount:company_street_label')}
+              name="companyStreet"
+              type="text"
+              placeholder={t('myAccount:company_street_placeholder')}
+              defaultValue={user?.contact_address?.street || ''}
               required
-              label={t('common:city_select_label')}>
-              <option value="">{t('common:city_select_placeholder')}</option>
+            />
 
-              {cities.map(({ id, name }) => (
-                <option key={id} value={name + '__' + id}>
-                  {name}
-                </option>
-              ))}
-            </SelectWithLabel>
+            <AddressSelect />
+          </FormCard>
 
-            <SelectWithLabel
-              onChange={handleDistrictChange}
-              name="companyDistrict"
-              ref={register({
-                required: t('myAccount:company_district_required') + ''
-              })}
-              containerClass="col-md-4"
-              required
-              label={t('common:district_select_label')}
-              disabled={!districts.length || !selectedCity}>
-              <option value="">{t('common:district_select_placeholder')}</option>
-
-              {districts.map(({ id, name }) => (
-                <option key={id} value={name + '__' + id}>
-                  {name}
-                </option>
-              ))}
-            </SelectWithLabel>
-
-            <SelectWithLabel
-              name="companyWard"
-              ref={register({
-                required: t('myAccount:company_ward_required') + ''
-              })}
-              containerClass="col-md-4"
-              required
-              label={t('common:ward_select_label')}
-              disabled={!wards.length || !selectedCity || !selectedDistrict}>
-              <option value="">{t('common:ward_select_placeholder')}</option>
-
-              {wards.map(({ id, name }) => (
-                <option key={id} value={name + '__' + id}>
-                  {name}
-                </option>
-              ))}
-            </SelectWithLabel>
+          <div className="col-12 d-flex justify-content-center">
+            <Button type="submit" variant="primary" size="lg">
+              {t('update_button')}
+            </Button>
           </div>
-        </FormCard>
-
-        <div className="col-12 d-flex justify-content-center">
-          <Button type="submit" variant="primary" size="lg">
-            {t('update_button')}
-          </Button>
-        </div>
-      </form>
+        </form>
+      </FormProvider>
     </ProfileLayout>
   );
 }
