@@ -124,15 +124,15 @@ export default function MyAccountPage() {
     // so we add them to imageIdsToDelete
 
     // Form data to upload new images
-    const uploadImagesFormData = new FormData();
+    const formData = new FormData();
 
     // Add new images to form data
     newImages.forEach((image) => {
-      uploadImagesFormData.append('images', image.file);
+      formData.append('images', image.file);
     });
 
     // Upload new images
-    axios.post(`${FILES_GATEWAY}/certificate`, uploadImagesFormData).then((response) => {
+    axios.post(`${FILES_GATEWAY}/certificate`, formData).then((response) => {
       // Response is an array of uploaded image ids
       originalImageIds = response.data;
     });
