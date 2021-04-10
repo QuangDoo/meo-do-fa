@@ -2,13 +2,19 @@
   max-height: 300px;
   object-fit: contain;
 }
-.my-account__user-name{
+.my-account__user-name {
   overflow: hidden;
-  text-overflow: ellipsis; 
-  white-space: nowrap; 
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
-@media (max-width: 576px){
-  .license-img-mobile{
+@media (max-width: 576px) {
+  .license-img-mobile {
     max-width: 320px;
   }
+}
+
+.certificate_upload_button {
+  width: 150px;
+  height: 150px;
+  background: black;
 }

@@ -103,7 +103,7 @@ export default function MyAccountPage() {
           }
         },
         company_name: data.companyName,
-        vat: userVat,
+        vat: userVat || undefined,
         representative: data.representative
       }
     });
@@ -141,7 +141,7 @@ export default function MyAccountPage() {
               disabled
               label={t('myAccount:phone_label')}
               type="text"
-              defaultValue={user?.phone}
+              defaultValue={user?.phone || ''}
             />
 
             {/* Email */}
@@ -149,7 +149,7 @@ export default function MyAccountPage() {
               disabled
               label={t('myAccount:email_label')}
               type="text"
-              defaultValue={user?.email}
+              defaultValue={user?.email || ''}
             />
           </FormCard>
 
@@ -173,7 +173,7 @@ export default function MyAccountPage() {
                 label={t('myAccount:company_name_label')}
                 name="companyName"
                 type="text"
-                defaultValue={user?.company_name ? user.company_name : user.name}
+                defaultValue={user?.company_name || user?.name || ''}
                 placeholder={t('myAccount:company_name_placeholder')}
               />
             </div>
@@ -184,7 +184,7 @@ export default function MyAccountPage() {
               label={t('myAccount:representative_label')}
               name="representative"
               type="text"
-              defaultValue={user?.representative}
+              defaultValue={user?.representative || ''}
               placeholder={t('myAccount:representative_placeholder')}
             />
 
@@ -194,7 +194,7 @@ export default function MyAccountPage() {
               label={t('myAccount:tax_code_label')}
               name="taxCode"
               type="text"
-              defaultValue={vat}
+              defaultValue={vat || ''}
               placeholder={t('myAccount:tax_code_placeholder')}
             />
 
