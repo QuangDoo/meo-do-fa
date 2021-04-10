@@ -1,5 +1,5 @@
 import { useTranslation } from 'i18n';
-import React from 'react';
+import React, { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import Button from 'src/components/Form/Button';
@@ -12,6 +12,7 @@ import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import ProfileLayout from '../ProfileLayout';
 import AddressSelect from './AddressSelect';
 import CertificateUpload from './CertificateUpload';
+import CertificateUploadNew from './CertificateUploadNew';
 import FormCard from './FormCard';
 
 type Inputs = {
@@ -64,6 +65,11 @@ export default function MyAccountPage() {
       }
     }
   );
+
+  // Image ids that got replaced by new images, we will delete them later
+  const [imageIdsToDelete, setImageIdsToDelete] = useState<string[]>([]);
+
+  const [newImageFiles, setNewImageFiles] = useState<File[]>([]);
 
   const onSubmit = async (data: Inputs) => {
     const regVat = /(^[0-9]{10}$)|(^[0-9]{13}$)/g;
@@ -197,6 +203,8 @@ export default function MyAccountPage() {
               defaultValue={vat || ''}
               placeholder={t('myAccount:tax_code_placeholder')}
             />
+
+            <CertificateUploadNew setImageIdsToDelete={setImageIdsToDelete} />
 
             <CertificateUpload />
 

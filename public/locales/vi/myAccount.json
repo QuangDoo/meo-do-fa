@@ -21,7 +21,7 @@
   "representative_label": "Tên người đại diện pháp luật",
   "representative_placeholder": "vd Trần Thị B",
   "business_license_label": "Giấy phép kinh doanh phòng khám/nhà thuốc",
-  "business_license_placeholder": "Chọn file",
+  "business_license_placeholder": "Thêm ảnh",
   "invoice_info": "Thông tin xuất hoá đơn",
   "tax_code_label": "Mã số thuế",
   "tax_code_placeholder": "vd 8026906145",
@@ -47,5 +47,8 @@
   "retype_newPassword": "Nhập lại mật khẩu mới",
   "retype_newPassword_required": "Xin nhập mật khẩu mới",
   "error_retype_pw": "Mật khẩu không trùng khớp",
-  "active": "Vui lòng xác minh tài khoản của bạn <Link>tại đây</Link> để tiếp tục mua hàng"
+  "active": "Vui lòng xác minh tài khoản của bạn <Link>tại đây</Link> để tiếp tục mua hàng",
+  "menu_view_image": "Xem ảnh",
+  "menu_change_image": "Đổi ảnh",
+  "menu_delete_image": "Xóa ảnh"
 }

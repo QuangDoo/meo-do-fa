@@ -4,8 +4,6 @@ import getConfig from 'next/config';
 import React, { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import FormGroup from 'src/components/Form/FormGroup';
-import FormGroupLabel from 'src/components/Form/FormGroupLabel';
 import InputWithLabel from 'src/components/Form/InputWithLabel';
 import Loading from 'src/components/Layout/Loading';
 import { useUser } from 'src/contexts/User';
@@ -15,8 +13,6 @@ const { publicRuntimeConfig } = getConfig();
 const FILES_GATEWAY = `https://${
   publicRuntimeConfig.FILES_GATEWAY_EXT || process.env.NEXT_PUBLIC_FILES_GATEWAY
 }`;
-
-const defaultCertificateIds = '1611';
 
 export default function CertificateUpload() {
   const { t } = useTranslation(['myAccount', 'cart']);
@@ -64,12 +60,6 @@ export default function CertificateUpload() {
 
   return (
     <React.Fragment>
-      <FormGroup>
-        <FormGroupLabel>{t('myAccount:business_license_label')}</FormGroupLabel>
-
-        <div className="certificate_upload_button">Ảnh</div>
-      </FormGroup>
-
       {user?.activated ? (
         <label className="form__label mb-2">{t('myAccount:business_license_label')}</label>
       ) : (
@@ -88,8 +78,7 @@ export default function CertificateUpload() {
         hidden
         ref={register}
         name="certificateIds"
-        // defaultValue={user?.business_license}
-        defaultValue={defaultCertificateIds}
+        defaultValue={user?.business_license || ''}
       />
 
       {loadingCertificate && (
