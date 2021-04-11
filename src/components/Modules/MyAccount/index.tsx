@@ -14,7 +14,6 @@ import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import ProfileLayout from '../ProfileLayout';
 import AddressSelect from './AddressSelect';
 import CertificateUpload from './CertificateUpload';
-import CertificateUploadNew from './CertificateUploadNew';
 import FormCard from './FormCard';
 
 export type ImageObject = {
@@ -273,13 +272,11 @@ export default function MyAccountPage() {
               placeholder={t('myAccount:tax_code_placeholder')}
             />
 
-            <CertificateUploadNew
+            <CertificateUpload
               certificateImages={previewImages}
               setCertificateImages={setPreviewImages}
               setDeletedImageIds={setDeletedImageIds}
             />
-
-            <CertificateUpload />
 
             <InputWithLabel
               ref={register({
