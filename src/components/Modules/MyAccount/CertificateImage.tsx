@@ -9,6 +9,7 @@ import clsx from 'clsx';
 import { useTranslation } from 'i18n';
 import React, { useRef, useState } from 'react';
 import { toast } from 'react-toastify';
+import { useUser } from 'src/contexts/User';
 
 import { ImageObject } from '.';
 
@@ -16,6 +17,7 @@ type Props = {
   image: ImageObject;
   index: number;
   setCertificateImages: React.Dispatch<React.SetStateAction<ImageObject[]>>;
+  setDeletedImageIds: React.Dispatch<React.SetStateAction<string[]>>;
 };
 
 type MenuPosition = {
@@ -29,9 +31,11 @@ const initialState: MenuPosition = {
 };
 
 export default function CertificateImage(props: Props) {
-  const { image, index, setCertificateImages: setImages } = props;
+  const { image, index, setCertificateImages, setDeletedImageIds } = props;
 
   const { t } = useTranslation(['myAccount', 'cart']);
+
+  const { data: user } = useUser();
 
   const [loadFailed, setLoadFailed] = useState<boolean>(false);
 
@@ -78,7 +82,8 @@ export default function CertificateImage(props: Props) {
     handleClose();
 
     // Open image in new tab
-    window.open(image.src, '_blank');
+    const w = window.open('', '_blank');
+    w.document.body.innerHTML = `<img src="${image.src}" />`;
   };
 
   // On 'Change image' menu item click
@@ -96,13 +101,18 @@ export default function CertificateImage(props: Props) {
     handleClose();
 
     // Delete item from images array
-    setImages((images) => {
+    setCertificateImages((images) => {
       const newImages = [...images];
 
       newImages.splice(index, 1);
 
       return newImages;
     });
+
+    // If it's an old uploaded image, push it's id into an array to delete later
+    if (!image.file) {
+      setDeletedImageIds((ids) => [...ids, image.src.split('/').pop()]);
+    }
   };
 
   // On change image file select
@@ -116,6 +126,11 @@ export default function CertificateImage(props: Props) {
       return;
     }
 
+    // If it's an old uploaded image, push it's id into an array to delete later
+    if (!image.file) {
+      setDeletedImageIds((ids) => [...ids, image.src.split('/').pop()]);
+    }
+
     // File reader
     const reader = new FileReader();
 
@@ -125,7 +140,7 @@ export default function CertificateImage(props: Props) {
     // On read complete
     reader.onloadend = () => {
       // Replace old image with new image
-      setImages((images) => {
+      setCertificateImages((images) => {
         const newImages = [...images];
 
         newImages[index] = {
@@ -178,21 +193,25 @@ export default function CertificateImage(props: Props) {
           </span>
         </MenuItem>
 
-        <MenuItem onClick={handleChangeImageClick}>
-          <SwapHorizIcon />
+        {!user?.activated && (
+          <React.Fragment>
+            <MenuItem onClick={handleChangeImageClick}>
+              <SwapHorizIcon />
 
-          <span className="certificate-image-menu-item-label">
-            {t('myAccount:menu_change_image')}
-          </span>
-        </MenuItem>
+              <span className="certificate-image-menu-item-label">
+                {t('myAccount:menu_change_image')}
+              </span>
+            </MenuItem>
 
-        <MenuItem onClick={handleDeleteImageClick}>
-          <DeleteIcon />
+            <MenuItem onClick={handleDeleteImageClick}>
+              <DeleteIcon />
 
-          <span className="certificate-image-menu-item-label">
-            {t('myAccount:menu_delete_image')}
-          </span>
-        </MenuItem>
+              <span className="certificate-image-menu-item-label">
+                {t('myAccount:menu_delete_image')}
+              </span>
+            </MenuItem>
+          </React.Fragment>
+        )}
       </Menu>
     </React.Fragment>
   );

@@ -13,12 +13,13 @@ import CertificateImage from './CertificateImage';
 type Props = {
   certificateImages: ImageObject[];
   setCertificateImages: React.Dispatch<React.SetStateAction<ImageObject[]>>;
+  setDeletedImageIds: React.Dispatch<React.SetStateAction<string[]>>;
 };
 
 export default function CertificateUpload(props: Props) {
   const { t } = useTranslation(['myAccount', 'cart']);
 
-  const { certificateImages, setCertificateImages } = props;
+  const { certificateImages, setCertificateImages, setDeletedImageIds } = props;
 
   const { data: user } = useUser();
 
@@ -106,6 +107,7 @@ export default function CertificateUpload(props: Props) {
               image={image}
               index={index}
               setCertificateImages={setCertificateImages}
+              setDeletedImageIds={setDeletedImageIds}
             />
           ))}
 

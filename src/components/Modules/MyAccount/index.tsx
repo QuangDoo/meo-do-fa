@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { useTranslation } from 'i18n';
-import _partition from 'lodash/partition';
 import React, { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -54,74 +53,43 @@ export default function MyAccountPage() {
 
   const { register, handleSubmit } = methods;
 
+  // Update user running
+  const [updatingUser, setUpdatingUser] = useState<boolean>(false);
+
   // Update user
-  const [updateUser, { loading: updatingUser }] = useMutationAuth<UpdateUserData, UpdateUserVars>(
-    UPDATE_USER,
-    {
-      // On update completed
-      onCompleted: () => {
-        // Refetch user data then show success toast
-        refetchUser().then(() => {
-          toast.success(t('myAccount:update_success'));
-        });
+  const [updateUser] = useMutationAuth<UpdateUserData, UpdateUserVars>(UPDATE_USER, {
+    // On update completed
+    onCompleted: () => {
+      // Turn off loading
+      setUpdatingUser(false);
 
-        // Scroll to top
-        window.scrollTo(0, 0);
-      },
-      onError: (err) => {
-        toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
-      }
-    }
-  );
-
-  // Image ids that got replaced by new images, we will delete them later
-  const [certificateImages, setCertificateImages] = useState<ImageObject[]>([]);
-
-  const onSubmit = async (data: Inputs) => {
-    // Array to hold all of user's certificate image ids
-    // We will modify this to update certificates later
-    let originalImageIds: string[] = user.business_license.split(',');
-
-    // Separate old images from new images with Lodash partition based on if ImageObject has file or not
-    // If an ImageObject has file, that means it's a new image chosen by the user
-    const [untouchedImages, newImages] = _partition(certificateImages, (image) => image.file);
-
-    // Uploaded image ids that weren't deleted or replaced
-    // We get the image id by splitting the string by '/' and get the last item
-    const untouchedImageIds = untouchedImages.map((image) => image.src.split('/').pop());
-
-    // Image ids to delete
-    // They are ids that were in the original ids but have been deleted or replaced
-    //   which means they are not in the untouched image array
-    const imageIdsToDelete: string[] = originalImageIds.filter(
-      (id) => !untouchedImageIds.includes(id)
-    );
-
-    // Delete images
-    axios
-      .delete(`${FILES_GATEWAY}/certificate`, {
-        data: {
-          ids: imageIdsToDelete
-        }
-      })
-      .then(() => {
-        // On delete success
-        // Remove deleted ids from originalImageIds
-        imageIdsToDelete.forEach((id) => {
-          const index = originalImageIds.indexOf(id);
-
-          if (index > -1) {
-            originalImageIds.splice(index, 1);
-          }
-        });
-      })
-      .catch((error) => {
-        console.log('Delete certificate error:', error);
+      // Refetch user data then show success toast
+      refetchUser().then(() => {
+        toast.success(t('myAccount:update_success'));
       });
 
-    // Loop through old image ids, if they're not present in oldImages
-    // that means they've been deleted or replaced by new images
-    // so we add them to imageIdsToDelete
+      // Scroll to top
+      window.scrollTo(0, 0);
+    },
+    onError: (err) => {
+      // Turn off loading
+      setUpdatingUser(false);
+      toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
+    }
+  });
+
+  // Certificate preview images
+  const [previewImages, setPreviewImages] = useState<ImageObject[]>([]);
+
+  // Deleted certificate image ids
+  const [deletedImageIds, setDeletedImageIds] = useState<string[]>([]);
+
+  // Upload new certificate images
+  const uploadNewImages = async () => {
+    // Get new images (images that has file)
+    const newImages = previewImages.filter((o) => o.file);
+
+    if (newImages.length === 0) return;
 
     // Form data to upload new images
     const formData = new FormData();
@@ -131,13 +99,46 @@ export default function MyAccountPage() {
       formData.append('images', image.file);
     });
 
-    // Upload new images
-    axios.post(`${FILES_GATEWAY}/certificate`, formData).then((response) => {
-      // Response is an array of uploaded image ids
-      originalImageIds = response.data;
-    });
+    try {
+      // Upload new images
+      // response.data is a string array containing updated image ids
+      const response = await axios.post(`${FILES_GATEWAY}/certificate`, formData);
 
-    // Loop through
+      return response.data;
+    } catch (error) {
+      console.log('Upload certificates error:', error);
+    }
+  };
+
+  const deleteOldImages = async () => {
+    if (deletedImageIds.length === 0) return;
+
+    // Delete images
+    axios
+      .delete(`${FILES_GATEWAY}/certificate`, {
+        data: {
+          ids: deletedImageIds
+        }
+      })
+      .then(() => {
+        setDeletedImageIds([]);
+      })
+      .catch((error) => {
+        console.log('Delete certificates error:', error);
+        console.log('Certificate ids to delete:', deletedImageIds);
+      });
+  };
+
+  const onSubmit = async (data: Inputs) => {
+    setUpdatingUser(true);
+
+    deleteOldImages();
+
+    const newIds = await uploadNewImages();
+
+    const imageIds = previewImages.map((o) =>
+      o.src.startsWith(FILES_GATEWAY) ? o.src.split('/').pop() : newIds.shift()
+    );
 
     const regVat = /(^[0-9]{10}$)|(^[0-9]{13}$)/g;
 
@@ -177,7 +178,8 @@ export default function MyAccountPage() {
         },
         company_name: data.companyName,
         vat: userVat || undefined,
-        representative: data.representative
+        representative: data.representative,
+        business_license: imageIds.join(',')
       }
     });
   };
@@ -272,8 +274,9 @@ export default function MyAccountPage() {
             />
 
             <CertificateUploadNew
-              certificateImages={certificateImages}
-              setCertificateImages={setCertificateImages}
+              certificateImages={previewImages}
+              setCertificateImages={setPreviewImages}
+              setDeletedImageIds={setDeletedImageIds}
             />
 
             <CertificateUpload />
