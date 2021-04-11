@@ -288,9 +288,8 @@ export default function MyAccountPage() {
       }
     });
   };
-
-  const vat = user?.vat?.replace('-', ' - ');
-
+  // console.log(typeof user.vat);
+  const vat = user.vat?.replace('-', ' - ');
   const onError = (error) => {
     toast.error(error[Object.keys(error)[0]].message);
   };
