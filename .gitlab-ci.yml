@@ -38,23 +38,23 @@ stages:
     - git clone -b master https://${DOCKER_USER}:${DOCKER_PASSWORD}@gitlab.com/medofa/medofa-deployments.git
 
 
-#lint-frontend:
-#  stage: lint
-#  image: node:12-alpine
-#  only:
-#    - merge_request
-#    - develop
+lint-frontend:
+  stage: lint
+  image: node:12-alpine
+  only:
+    - merge_request
+    - develop
 
-#  interruptible: true
+  interruptible: true
 
-#  tags:
-#    - bebuy-gitlab-ci
-#    - bb-gitlab-ci
+  tags:
+    - bebuy-gitlab-ci
+    - bb-gitlab-ci
 
-#  script:
-#    - apk update && apk add yarn && rm -rf /var/cache/apk/*
-#    - yarn
-#    - yarn lint
+  script:
+    - apk update && apk add yarn && rm -rf /var/cache/apk/*
+    - yarn
+    - yarn lint
 
 # sonar:
 #   stage: sonar
@@ -107,11 +107,6 @@ build-frontend-dev:
     - bb-gitlab-ci
 
   before_script:
-    - echo $DOCKER_USER
-    - echo $DOCKER_PASSWORD
-    - echo $REGISTRY
-    - echo ${REGISTRY}
-    - echo ${DOCKER_USER}
     - docker login registry.gitlab.com -u ${DOCKER_USER} -p ${DOCKER_PASSWORD}
   
   script:
