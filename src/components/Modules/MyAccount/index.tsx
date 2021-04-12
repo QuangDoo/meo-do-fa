@@ -1,9 +1,11 @@
 import axios from 'axios';
 import { useTranslation } from 'i18n';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import Button from 'src/components/Form/Button';
+import FormGroup from 'src/components/Form/FormGroup';
+import FormGroupLabel from 'src/components/Form/FormGroupLabel';
 import InputWithLabel from 'src/components/Form/InputWithLabel';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { FILES_GATEWAY } from 'src/constants';
@@ -12,8 +14,9 @@ import { UPDATE_USER, UpdateUserData, UpdateUserVars } from 'src/graphql/user/up
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 
 import ProfileLayout from '../ProfileLayout';
+import AddCertificate from './AddCertificate';
 import AddressSelect from './AddressSelect';
-import CertificateUpload from './CertificateUpload';
+import CertificateImage from './CertificateImage';
 import FormCard from './FormCard';
 
 export type ImageObject = {
@@ -44,46 +47,50 @@ type Inputs = {
 export default function MyAccountPage() {
   const { t } = useTranslation(['myAccount', 'common', 'errors']);
 
-  // User data
   const { data: user, refetch: refetchUser } = useUser();
 
-  // Form controller
   const methods = useForm<Inputs>();
 
   const { register, handleSubmit } = methods;
 
-  // Update user running
   const [updatingUser, setUpdatingUser] = useState<boolean>(false);
 
-  // Update user
   const [updateUser] = useMutationAuth<UpdateUserData, UpdateUserVars>(UPDATE_USER, {
-    // On update completed
     onCompleted: () => {
-      // Turn off loading
       setUpdatingUser(false);
 
-      // Refetch user data then show success toast
       refetchUser().then(() => {
         toast.success(t('myAccount:update_success'));
       });
 
-      // Scroll to top
       window.scrollTo(0, 0);
     },
     onError: (err) => {
-      // Turn off loading
       setUpdatingUser(false);
+
       toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
     }
   });
 
-  // Certificate preview images
   const [previewImages, setPreviewImages] = useState<ImageObject[]>([]);
 
-  // Deleted certificate image ids
+  // On user load
+  useEffect(() => {
+    if (!user) return;
+
+    // Uploaded image ids
+    const ids = user.business_license.split(',');
+
+    // Display uploaded images
+    setPreviewImages(
+      ids.map((id) => ({
+        src: `${FILES_GATEWAY}/certificate/${id}`
+      }))
+    );
+  }, [user]);
+
   const [deletedImageIds, setDeletedImageIds] = useState<string[]>([]);
 
-  // Upload new certificate images
   const uploadNewImages = async () => {
     // Get new images (images that has file)
     const newImages = previewImages.filter((o) => o.file);
@@ -131,9 +138,13 @@ export default function MyAccountPage() {
   const onSubmit = async (data: Inputs) => {
     setUpdatingUser(true);
 
+    console.log('Data before upload:', data);
+
     deleteOldImages();
 
     const newIds = await uploadNewImages();
+
+    console.log('Data after upload:', data);
 
     const imageIds = previewImages.map((o) =>
       o.src.startsWith(FILES_GATEWAY) ? o.src.split('/').pop() : newIds.shift()
@@ -272,11 +283,23 @@ export default function MyAccountPage() {
               placeholder={t('myAccount:tax_code_placeholder')}
             />
 
-            <CertificateUpload
-              certificateImages={previewImages}
-              setCertificateImages={setPreviewImages}
-              setDeletedImageIds={setDeletedImageIds}
-            />
+            <FormGroup>
+              <FormGroupLabel>{t('myAccount:business_license_label')}</FormGroupLabel>
+
+              <div className="certificate-container">
+                {previewImages.map((image, index) => (
+                  <CertificateImage
+                    key={image.src}
+                    image={image}
+                    index={index}
+                    setCertificateImages={setPreviewImages}
+                    setDeletedImageIds={setDeletedImageIds}
+                  />
+                ))}
+
+                <AddCertificate setPreviewImages={setPreviewImages} previewImages={previewImages} />
+              </div>
+            </FormGroup>
 
             <InputWithLabel
               ref={register({

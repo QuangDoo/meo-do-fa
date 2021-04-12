@@ -47,72 +47,70 @@ export default function CertificateImage(props: Props) {
 
   // On image button click and key down
   const handleImageClick = (event: React.MouseEvent) => {
-    // If event is fired through key down, mouse position will be (0, 0)
-    if (event.clientX === 0 && event.clientY === 0) {
-      // Get element rectangle in DOM
-      const targetRect = (event.target as HTMLElement).getBoundingClientRect();
+    setMenuPosition(() => {
+      // If event is fired through mouse click,
+      //   we set menu position to mouse position
+      if (event.detail) {
+        return {
+          x: event.clientX,
+          y: event.clientY
+        };
+      }
 
-      // Set menu position to top left of element
-      setMenuPosition({
-        x: targetRect.left,
-        y: targetRect.top
-      });
+      // Else event is fired through key press,
+      //   we set menu position to pressed element
 
-      // End
-      return;
-    }
+      const { left, top } = (event.target as HTMLElement).getBoundingClientRect();
 
-    // Else, event is fired through click so mouse position is available
-
-    // Set menu position to mouse position
-    setMenuPosition({
-      x: event.clientX,
-      y: event.clientY
+      return {
+        x: left,
+        y: top
+      };
     });
   };
 
-  // Close menu by resetting position
-  const handleClose = () => {
+  // Close menu by resetting position to initialState
+  const closeMenu = () => {
     setMenuPosition(initialState);
   };
 
-  // On 'View image' menu item click
-  const handleViewImageClick = () => {
-    // Close menu
-    handleClose();
+  // On menu item click
+  const handleMenuItemClick = (type: 'view' | 'update' | 'delete') => {
+    switch (type) {
+      case 'view': {
+        // Open image in new tab
+        const w = window.open('', '_blank');
+        w.document.body.innerHTML = `<img src="${image.src}" />`;
+        break;
+      }
 
-    // Open image in new tab
-    const w = window.open('', '_blank');
-    w.document.body.innerHTML = `<img src="${image.src}" />`;
-  };
+      case 'update': {
+        // Fire click event on file input to open file browser
+        fileInputRef.current.click();
 
-  // On 'Change image' menu item click
-  const handleChangeImageClick = () => {
-    // Close menu
-    handleClose();
+        break;
+      }
 
-    // Fire click event on file input to open it's file browser
-    fileInputRef.current.click();
-  };
+      case 'delete': {
+        // Delete item from images array
+        setCertificateImages((images) => {
+          const newImages = [...images];
 
-  // On 'Delete image' menu item click
-  const handleDeleteImageClick = () => {
-    // Close menu
-    handleClose();
+          newImages.splice(index, 1);
 
-    // Delete item from images array
-    setCertificateImages((images) => {
-      const newImages = [...images];
+          return newImages;
+        });
 
-      newImages.splice(index, 1);
+        // If it's an old uploaded image, push it's id into an array to delete later
+        if (!image.file) {
+          setDeletedImageIds((ids) => [...ids, image.src.split('/').pop()]);
+        }
 
-      return newImages;
-    });
-
-    // If it's an old uploaded image, push it's id into an array to delete later
-    if (!image.file) {
-      setDeletedImageIds((ids) => [...ids, image.src.split('/').pop()]);
+        break;
+      }
     }
+
+    closeMenu();
   };
 
   // On change image file select
@@ -178,14 +176,14 @@ export default function CertificateImage(props: Props) {
 
       <Menu
         open={menuPosition.x !== null && menuPosition.y !== null}
-        onClose={handleClose}
+        onClose={closeMenu}
         anchorReference="anchorPosition"
         anchorPosition={
           menuPosition.x !== null && menuPosition.y !== null
-            ? { top: menuPosition.y, left: menuPosition.x }
+            ? { left: menuPosition.x, top: menuPosition.y }
             : undefined
         }>
-        <MenuItem onClick={handleViewImageClick}>
+        <MenuItem onClick={() => handleMenuItemClick('view')}>
           <VisibilityIcon />
 
           <span className="certificate-image-menu-item-label">
@@ -193,9 +191,10 @@ export default function CertificateImage(props: Props) {
           </span>
         </MenuItem>
 
+        {/* Only allow update and delete if user is not activated */}
         {!user?.activated && (
           <React.Fragment>
-            <MenuItem onClick={handleChangeImageClick}>
+            <MenuItem onClick={() => handleMenuItemClick('update')}>
               <SwapHorizIcon />
 
               <span className="certificate-image-menu-item-label">
@@ -203,7 +202,7 @@ export default function CertificateImage(props: Props) {
               </span>
             </MenuItem>
 
-            <MenuItem onClick={handleDeleteImageClick}>
+            <MenuItem onClick={() => handleMenuItemClick('delete')}>
               <DeleteIcon />
 
               <span className="certificate-image-menu-item-label">
