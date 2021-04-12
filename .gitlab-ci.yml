@@ -33,6 +33,8 @@ stages:
     - chmod +x ./aws-iam-authenticator
     - mv ./aws-iam-authenticator /usr/local/bin
     - aws-iam-authenticator help
+    - cp ${AWS_CONFIG} $HOME/.aws/config
+    - cp ${AWS_CREDENTIALS} $HOME/.aws/credentials
 
 .pre-deploy-master:
   before_script:
