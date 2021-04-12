@@ -189,8 +189,9 @@ export default function MyAccountPage() {
         toast.success(t('myAccount:update_success'));
       });
   };
-  // console.log(typeof user.vat);
-  const vat = user.vat?.replace('-', ' - ');
+
+  const vat = user?.vat?.replace('-', ' - ');
+
   const onError = (error) => {
     toast.error(error[Object.keys(error)[0]].message);
   };
