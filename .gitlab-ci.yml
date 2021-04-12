@@ -27,6 +27,12 @@ stages:
     - mkdir -p $HOME/.kube
     - cp $KUBE_CONFIG_DEV $HOME/.kube/config
     - git clone https://${DOCKER_USER}:${DOCKER_PASSWORD}@gitlab.com/medofa/medofa-deployments.git
+    - apk add --no-cache python3 py3-pip && pip3 install --upgrade pip && pip3 install awscli && rm -rf /var/cache/apk/*
+    - aws --version
+    - curl -o aws-iam-authenticator https://amazon-eks.s3.us-west-2.amazonaws.com/1.15.10/2020-02-22/bin/linux/amd64/aws-iam-authenticator
+    - chmod +x ./aws-iam-authenticator
+    - sudo mv ./aws-iam-authenticator /usr/local/bin
+    - aws-iam-authenticator help
 
 .pre-deploy-master:
   before_script:
