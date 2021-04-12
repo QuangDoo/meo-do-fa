@@ -131,7 +131,7 @@ deploy-frontend-dev:
     - .pre-deploy-dev
 
   script:
-    - cd ./deployments/charts/frontend
+    - cd ./medofa-deployments/charts/frontend
     - helm upgrade --install -n medofa frontend "./" -f "./custom-values.dev.yaml"
 
 build-frontend-prod:
@@ -170,5 +170,5 @@ deploy-frontend-prod:
     - .pre-deploy-master
 
   script:
-    - cd ./deployments/charts/frontend
+    - cd ./medofa-deployments/charts/frontend
     - helm upgrade --install -n medofa frontend "./" -f "./custom-values.prod.yaml"
