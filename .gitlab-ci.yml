@@ -10,7 +10,7 @@ variables:
   DOCKER_DRIVER: overlay2
   # See https://github.com/docker-library/docker/pull/166
   DOCKER_TLS_CERTDIR: ""
-  REGISTRY: "registry.gitlab.com/bebuy.vn/clients/thuocn/frontend"
+  REGISTRY: "registry.gitlab.com/medofa/medofa-web"
 
 stages:
   # - prepare
@@ -26,7 +26,7 @@ stages:
     # - chmod +x ./kubectl && mv ./kubectl /usr/local/bin/kubectl
     # - mkdir -p $HOME/.kube
     # - cp $KUBE_CONFIG_DEV $HOME/.kube/config
-    - git clone https://${DOCKER_USER}:${DOCKER_PASSWORD}@gitlab.com/bebuy.vn/clients/thuocn/deployments.git
+    - git clone https://${DOCKER_USER}:${DOCKER_PASSWORD}@gitlab.com/medofa/medofa-deployments.git
 
 .pre-deploy-master:
   before_script:
@@ -35,7 +35,7 @@ stages:
     - chmod +x ./kubectl && mv ./kubectl /usr/local/bin/kubectl
     - mkdir -p $HOME/.kube
     - cp $KUBE_CONFIG $HOME/.kube/config
-    - git clone -b master https://${DOCKER_USER}:${DOCKER_PASSWORD}@gitlab.com/bebuy.vn/clients/thuocn/deployments.git
+    - git clone -b master https://${DOCKER_USER}:${DOCKER_PASSWORD}@gitlab.com/medofa/medofa-deployments.git
 
 
 lint-frontend:
