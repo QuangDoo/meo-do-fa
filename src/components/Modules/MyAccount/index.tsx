@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useTranslation } from 'i18n';
 import React, { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { animateScroll } from 'react-scroll';
 import { toast } from 'react-toastify';
 import Button from 'src/components/Form/Button';
 import FormGroup from 'src/components/Form/FormGroup';
@@ -56,15 +57,6 @@ export default function MyAccountPage() {
   const [updatingUser, setUpdatingUser] = useState<boolean>(false);
 
   const [updateUser] = useMutationAuth<UpdateUserData, UpdateUserVars>(UPDATE_USER, {
-    onCompleted: () => {
-      setUpdatingUser(false);
-
-      refetchUser().then(() => {
-        toast.success(t('myAccount:update_success'));
-      });
-
-      window.scrollTo(0, 0);
-    },
     onError: (err) => {
       setUpdatingUser(false);
 
@@ -138,13 +130,9 @@ export default function MyAccountPage() {
   const onSubmit = async (data: Inputs) => {
     setUpdatingUser(true);
 
-    console.log('Data before upload:', data);
-
     deleteOldImages();
 
     const newIds = await uploadNewImages();
-
-    console.log('Data after upload:', data);
 
     const imageIds = previewImages.map((o) =>
       o.src.startsWith(FILES_GATEWAY) ? o.src.split('/').pop() : newIds.shift()
@@ -191,7 +179,15 @@ export default function MyAccountPage() {
         representative: data.representative,
         business_license: imageIds.join(',')
       }
-    });
+    })
+      .then(() => refetchUser())
+      .then(() => {
+        setUpdatingUser(false);
+
+        animateScroll.scrollToTop();
+
+        toast.success(t('myAccount:update_success'));
+      });
   };
 
   const vat = user?.vat?.replace('-', ' - ');

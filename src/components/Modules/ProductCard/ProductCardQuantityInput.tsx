@@ -1,5 +1,4 @@
 import { useQuery } from '@apollo/client';
-import configs from 'configs';
 import { useTranslation } from 'i18n';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
@@ -59,17 +58,12 @@ function ProductCardQuantityInput(props: Props) {
     {
       onCompleted: () => {
         refetchCart().then((data) => {
-          // console.log(
-          //   data.data.getCart?.carts.find((product) => product.productId === props.productId)?._id
-          // );
-          // console.log(cart?.carts.find((product) => product.productId === props.productId)?._id);
           setCheckboxCarts([
             ...checkboxCarts,
             data.data.getCart?.carts.find((product) => product.productId === props.productId)?._id
           ]);
           toast.success(t(`success:update_cart`));
         });
-        // console.log(cart);
       },
       onError: (err) => {
         const errorCode = err.graphQLErrors?.[0]?.extensions?.code;
