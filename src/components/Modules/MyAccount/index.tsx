@@ -67,19 +67,19 @@ export default function MyAccountPage() {
   const [previewImages, setPreviewImages] = useState<ImageObject[]>([]);
 
   // On user load
-  useEffect(() => {
-    if (!user) return;
+  // useEffect(() => {
+  //   if (!user) return;
 
-    // Uploaded image ids
-    const ids = user.business_license.split(',');
+  //   // Uploaded image ids
+  //   const ids = user.business_license.split(',');
 
-    // Display uploaded images
-    setPreviewImages(
-      ids.map((id) => ({
-        src: `${FILES_GATEWAY}/certificate/${id}`
-      }))
-    );
-  }, [user]);
+  //   // Display uploaded images
+  //   setPreviewImages(
+  //     ids.map((id) => ({
+  //       src: `${FILES_GATEWAY}/certificate/${id}`
+  //     }))
+  //   );
+  // }, [user]);
 
   const [deletedImageIds, setDeletedImageIds] = useState<string[]>([]);
 
@@ -190,7 +190,7 @@ export default function MyAccountPage() {
       });
   };
 
-  const vat = user?.vat?.replace('-', ' - ') || '';
+  // const vat = user?.vat?.replace('-', ' - ') || '';
 
   const onError = (error) => {
     toast.error(error[Object.keys(error)[0]].message);
@@ -275,7 +275,7 @@ export default function MyAccountPage() {
               label={t('myAccount:tax_code_label')}
               name="taxCode"
               type="text"
-              defaultValue={vat || ''}
+              defaultValue={user?.vat || ''}
               placeholder={t('myAccount:tax_code_placeholder')}
             />
 
