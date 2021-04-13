@@ -5,13 +5,7 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { ProductTag } from 'src/graphql/product/getProducts';
 
-const tags: ProductTag[] = [
-  'new',
-  'invoice-exportable',
-  'only-medofa',
-  'use-vietnamese',
-  'best-seller'
-];
+const tags: ProductTag[] = ['new', 'invoice-exportable', 'only-medofa', 'best-seller'];
 
 const FilterTags = () => {
   const { t } = useTranslation('filterTags');
