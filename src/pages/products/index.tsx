@@ -1,4 +1,5 @@
 import { useQuery } from '@apollo/client';
+import { isNullableType } from 'graphql';
 import { Trans, useTranslation } from 'i18n';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
@@ -51,13 +52,13 @@ Products.getInitialProps = async (ctx) => {
       pageSize: PAGE_SIZE,
       type: ctx.query.tag as ProductTag,
       condition: {
-        manufacturer_id: ctx.query.manufacturer,
-        category_id: ctx.query.category,
+        manufacturer_id: ctx.query.manufacturer || null,
+        category_id: ctx.query.category || null,
         name: ctx.query.search,
         order_type: ctx.query.sort || NAME_ASCENDING,
         min_price: +ctx.query.priceFrom || 1,
         max_price: +ctx.query.priceTo || 10000000,
-        pathology_id: ctx.query.pathology
+        pathology_id: ctx.query.pathology || null
       }
     },
     fetchPolicy: 'network-only'
@@ -121,14 +122,14 @@ function Products() {
       pageSize: PAGE_SIZE,
       type: router.query.tag as ProductTag,
       condition: {
-        manufacturer_id: router.query.manufacturer as string,
-        category_id: router.query.category as string,
+        manufacturer_id: (router.query.manufacturer as string) || null,
+        category_id: (router.query.category as string) || null,
         name: search,
         order_type: (router.query.sort as string) || NAME_ASCENDING,
         min_price: Number(router.query.priceFrom) || 1,
         max_price: Number(router.query.priceTo) || 10000000,
-        pathology_id: router.query.pathology as string,
-        supplier_id: router.query.supplier as string,
+        pathology_id: (router.query.pathology as string) || null,
+        supplier_id: (router.query.supplier as string) || null,
         search_tag: searchTag
       }
     },
