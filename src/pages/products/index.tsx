@@ -51,13 +51,13 @@ Products.getInitialProps = async (ctx) => {
       pageSize: PAGE_SIZE,
       type: ctx.query.tag as ProductTag,
       condition: {
-        manufacturer_id: ctx.query.manufacturer || null,
-        category_id: ctx.query.category || null,
-        name: ctx.query.search,
+        manufacturer_id: (ctx.query.manufacturer as string) || null,
+        category_id: (ctx.query.category as string) || null,
+        name: (ctx.query.search as string) || null,
         order_type: ctx.query.sort || NAME_ASCENDING,
         min_price: +ctx.query.priceFrom || 1,
         max_price: +ctx.query.priceTo || 10000000,
-        pathology_id: ctx.query.pathology || null
+        pathology_id: (ctx.query.pathology as string) || null
       }
     },
     fetchPolicy: 'network-only'
