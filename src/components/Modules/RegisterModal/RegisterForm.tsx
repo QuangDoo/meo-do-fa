@@ -5,7 +5,6 @@ import cookies from 'js-cookie';
 import jwt_decode from 'jwt-decode';
 import getConfig from 'next/config';
 import { useRouter } from 'next/router';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -15,7 +14,6 @@ import { viPhoneNumberRegex } from 'src/assets/regex/viPhoneNumber';
 import Button from 'src/components/Form/Button';
 import Checkbox from 'src/components/Form/Checkbox';
 import Input from 'src/components/Form/Input';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import Loading from 'src/components/Layout/Loading';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { useModalControlDispatch } from 'src/contexts/ModalControl';
