@@ -117,7 +117,7 @@ function MyOrders(): JSX.Element {
                 <CircularProgress size={75} />
               </Box>
             </Grid>
-          ) : orderList.length === 0 ? (
+          ) : orderList?.length === 0 ? (
             <Grid item xs={12}>
               <Box textAlign="center">
                 <p>{t('myOrders:no_orders')}</p>
@@ -131,7 +131,7 @@ function MyOrders(): JSX.Element {
               </Box>
             </Grid>
           ) : (
-            orderList.map((order) => (
+            orderList?.map((order) => (
               <Grid item xs={12} key={order.id}>
                 <OrderItem
                   {...order}
@@ -152,6 +152,3 @@ function MyOrders(): JSX.Element {
 }
 
 export default withToken({ ssr: true, isProtected: true })(MyOrders);
-function GET_ORDER_CANCEL_TYPES<T, U>(GET_ORDER_CANCEL_TYPES: any): { data: any } {
-  throw new Error('Function not implemented.');
-}
