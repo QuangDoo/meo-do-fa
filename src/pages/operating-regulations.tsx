@@ -20,9 +20,9 @@ function OperatingRegulations() {
       <div className="container my-5">
         <h2 className="text-center my-5">{t('operatingRegulations:title')}</h2>
 
-        <div className="d-flex justify-content-center align-items-center p-5">
+        <p className="text-sub d-flex justify-content-center align-items-center p-5">
           {t('common:updating')}
-        </div>
+        </p>
       </div>
     </MainLayout>
   );

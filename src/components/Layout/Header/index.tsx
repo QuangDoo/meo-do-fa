@@ -19,7 +19,7 @@ const Header = () => {
           <div className="row">
             <div className="col-12 d-flex align-items-center justify-content-end">
               <ul className="nav">
-                <li className="promotion-nav__item language-lt">
+                <li className="promotion-nav__item">
                   <LanguagePicker />
                 </li>
               </ul>
@@ -29,7 +29,7 @@ const Header = () => {
       </nav>
       <div className="container py-4">
         <div className="d-lg-flex align-items-center justify-content-between">
-          <div className="mr-2 flex-shrink-0 mb-3 mb-lg-0 mr-0 logo-lt">
+          <div className="mr-2 flex-shrink-0 mb-3 mb-lg-0 mr-0">
             <div className="rockland-logo">
               <Link href="/">
                 <a title="Medofa.com">
@@ -37,7 +37,7 @@ const Header = () => {
                     alt="Medofa.com"
                     className="img-fluid logo-header d-block mx-auto"
                     title="Medofa.com"
-                    src="/assets/images/logo2.png"
+                    src="/assets/images/logo-md.png"
                   />
                 </a>
               </Link>
@@ -51,7 +51,7 @@ const Header = () => {
               <RightSideUser />
             </>
           ) : (
-            <div className="hidden-login">
+            <div className="d-flex align-items-center justify-content-center">
               <LoginModal />
 
               <RegisterModal />

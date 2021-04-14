@@ -1,7 +1,6 @@
 import { useLazyQuery } from '@apollo/client';
 import { CircularProgress } from '@material-ui/core';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-import slugify from '@sindresorhus/slugify';
 import clsx from 'clsx';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
@@ -24,9 +23,14 @@ import {
   SearchProductData,
   SearchProductVars
 } from 'src/graphql/search/searchProducts';
+import {
+  SEARCH_SUPPLIER,
+  SearchSupplierData,
+  SearchSupplierVars
+} from 'src/graphql/search/searchSupplier';
 import { useDebouncedEffect } from 'src/hooks/useDebouncedEffect';
 
-type SearchType = 'products' | 'manufacturers' | 'ingredients';
+type SearchType = 'products' | 'manufacturers' | 'ingredients' | 'suppliers';
 
 const SearchBar = () => {
   const { t } = useTranslation(['searchBar']);
@@ -47,6 +51,11 @@ const SearchBar = () => {
     SearchIngredientData,
     SearchIngredientVars
   >(SEARCH_INGREDIENT);
+
+  const [searchSuppliers, { data: supplierData, loading: loadingSuppliers }] = useLazyQuery<
+    SearchSupplierData,
+    SearchSupplierVars
+  >(SEARCH_SUPPLIER);
 
   const [value, setValue] = useState('');
 
@@ -77,6 +86,9 @@ const SearchBar = () => {
       case 'ingredients':
         searchIngredients(options);
         break;
+      case 'suppliers':
+        searchSuppliers(options);
+        break;
     }
   };
 
@@ -94,6 +106,8 @@ const SearchBar = () => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    setIsFocused(false);
+
     if (!value) return;
     switch (type) {
       case 'products':
@@ -107,7 +121,7 @@ const SearchBar = () => {
       case 'manufacturers':
         // eslint-disable-next-line no-case-declarations
         const manufacturers = manufacturersData?.searchManufactory;
-        if (manufacturers.length) {
+        if (manufacturers?.length) {
           return router.push(getItemHref['manufacturers'](manufacturers[0]));
         }
         return;
@@ -115,14 +129,22 @@ const SearchBar = () => {
       case 'ingredients':
         // eslint-disable-next-line no-case-declarations
         const searchIngredients = ingredientsData?.searchIngredients;
-        if (searchIngredients.length) {
+        if (searchIngredients?.length) {
           return router.push(getItemHref['ingredients'](searchIngredients[0]));
+        }
+        return;
+      case 'suppliers':
+        // eslint-disable-next-line no-case-declarations
+        const searchSuppliers = supplierData?.getSuppliers;
+        if (searchSuppliers?.length) {
+          return router.push(getItemHref['suppliers'](searchSuppliers[0]));
         }
         return;
     }
   };
 
   const handleValueChange = (e) => {
+    setIsFocused(true);
     setValue(e.target.value);
   };
 
@@ -139,27 +161,32 @@ const SearchBar = () => {
     setIsFocused(false);
   };
 
-  const loading = loadingProducts || loadingManufacturers || loadingIngredients;
+  const loading = loadingProducts || loadingManufacturers || loadingIngredients || loadingSuppliers;
 
   const showResultWindow =
-    (loading || productsData || manufacturersData || ingredientsData) && previousValue && isFocused;
+    (loading || productsData || manufacturersData || ingredientsData || supplierData) &&
+    previousValue &&
+    isFocused;
 
   const items = {
     products: productsData?.searchProduct,
     manufacturers: manufacturersData?.searchManufactory,
-    ingredients: ingredientsData?.searchIngredients
+    ingredients: ingredientsData?.searchIngredients,
+    suppliers: supplierData?.getSuppliers
   };
 
   const getItemHref = {
     products: (product) => `/products/${product.slug}`,
     manufacturers: (manufacturer) => `/products?manufacturer=${manufacturer.id}`,
-    ingredients: (ingredient) => `/ingredients/${ingredient.id}/${slugify(ingredient.name)}`
+    ingredients: (ingredient) => `/products?ingredient=${ingredient.id}`,
+    suppliers: (supplier) => `/products?supplier=${supplier.id}`
   };
 
   const allHref = {
     products: `/products?search=${value}`,
     manufacturers: `/products?search=${value}`,
-    ingredients: `/ingredients?search=${value}`
+    ingredients: `/ingredients?search=${value}`,
+    suppliers: `/product?search=${value}`
   };
 
   return (
@@ -181,8 +208,8 @@ const SearchBar = () => {
               <Select
                 value={type}
                 onChange={handleSearchTypeChange}
-                className="search-type-select hide-focus">
-                {['products', 'manufacturers', 'ingredients'].map((type) => (
+                className="search-type-select hide-focus search-sm">
+                {['products', 'manufacturers', 'ingredients', 'suppliers'].map((type) => (
                   <option key={type} value={type}>
                     {t(`searchBar:search_by_${type}`)}
                   </option>

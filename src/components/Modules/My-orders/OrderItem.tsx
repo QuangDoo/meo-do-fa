@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { GetOrderList } from 'src/graphql/my-orders/getOrderList';
 
 import ConfirmCancelOrder from './ConfirmCancelOrder';
+import ConfirmComplain from './ConfirmComplain';
 
 const badges = {
   10: { color: 'info', text: 'wait_for_confirm' },
@@ -25,6 +26,7 @@ export default function OrderItem(props: Props) {
   const { t } = useTranslation(['myOrders', 'errors']);
 
   const [open, setOpen] = useState(false);
+  const [openComplain, setOpenComplain] = useState(false);
 
   return (
     <div className="my-orders__item p-3 my-1">
@@ -69,6 +71,13 @@ export default function OrderItem(props: Props) {
           <button className="btn btn-outline-danger btn-sm" onClick={() => setOpen(true)}>
             {t('myOrders:cancel_order')}
           </button>
+          <>
+            <button
+              className="btn btn-outline-complain btn-sm"
+              onClick={() => setOpenComplain(true)}>
+              {t('myOrders:send_fb')}
+            </button>
+          </>
         </div>
       )}
 
@@ -79,6 +88,12 @@ export default function OrderItem(props: Props) {
           </a>
         </div>
       )}
+
+      <ConfirmComplain
+        open={openComplain}
+        onClose={() => setOpenComplain(false)}
+        orderNo={props.orderNo}
+      />
 
       <ConfirmCancelOrder
         open={open}

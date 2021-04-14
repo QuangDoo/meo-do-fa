@@ -1,5 +1,5 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import { Menu } from '@material-ui/core';
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import { useTranslation } from 'i18n';
@@ -13,11 +13,11 @@ import { useToken } from 'src/contexts/Token';
 import { useUser } from 'src/contexts/User';
 
 import PathologyMenu from '../Modules/PathologyMenu';
-
+import HotTags from './HotTags';
 const Nav = () => {
-  const { data: user } = useUser();
-
   const { openModal } = useModalControlDispatch();
+
+  const { data: user } = useUser();
 
   const token = useToken();
 
@@ -25,7 +25,7 @@ const Nav = () => {
 
   const totalQty = cart?.totalQty;
 
-  const { t } = useTranslation(['navbar', 'errors', 'common', 'cart', 'header']);
+  const { t } = useTranslation(['navbar', 'errors', 'common', 'cart']);
 
   const logOut = () => {
     cookies.remove('token');
@@ -77,7 +77,6 @@ const Nav = () => {
     <div>
       <div>
         <div className="nav-mb mobile-responsive menu-mobile" onClick={handleClick}>
-          {' '}
           <i className="fas fa-list-ul" />
         </div>
 
@@ -143,11 +142,20 @@ const Nav = () => {
                   <Link href="/products">
                     <a className="rockland-nav__link">
                       <i className="rockland-nav__icon fas fa-list-ul" />
-
                       <span className="rockland-nav__title">{t('navbar:category')}</span>
                     </a>
                   </Link>
                 </li>
+
+                <li className="rockland-nav__item">
+                  <Link href="/products">
+                    <a className="rockland-nav__link">
+                      <i className="rockland-nav__icon fas fa-list-ul" />
+                      <span className="rockland-nav__title">{t('navbar:category')}</span>
+                    </a>
+                  </Link>
+                </li>
+
                 <li className="rockland-nav__item">
                   <Link href="/deals-of-the-day">
                     <a className="rockland-nav__link">
@@ -156,23 +164,23 @@ const Nav = () => {
                     </a>
                   </Link>
                 </li>
+
                 <li className="rockland-nav__item">
                   <Link href="/quick-order">
                     <a className="rockland-nav__link">
                       <i className="rockland-nav__icon icomoon icon-quick-order" />
-
                       <span className="rockland-nav__title">{t('navbar:fast_order')}</span>
                     </a>
                   </Link>
                 </li>
+
                 <li className="d-none d-sm-block rockland-nav__item dropdown dropdown-nav">
-                  <div data-toggle="dropdown" data-hover="dropdown" onClick={handlePromotion}>
+                  <div data-toggle="dropdown" data-hover="dropdown">
                     <a className="rockland-nav__link">
                       <i className="rockland-nav__icon fab fa-hotjar" />
                       <span className="rockland-nav__title">{t('navbar:promotion')}</span>
                     </a>
                   </div>
-
                   <ul className="dropdown-menu">
                     <li className="dropdown-item">
                       <Link href="/promo-codes">
@@ -199,38 +207,9 @@ const Nav = () => {
                       </Link>
                     </li>
                   </ul>
-
-                  <div id="2" className="subPromotion offsubPromotion">
-                    <ul className="subPromotion1">
-                      <li className="menu-item">
-                        <Link href="/my-account">
-                          <a className="rockland-nav__link ">
-                            <i className="fas fa-tag  rockland-nav__icon" />
-                            <span className="titleSubPromotion">{t('navbar:promo_code')}</span>
-                          </a>
-                        </Link>
-                      </li>
-                      <li className="menu-item">
-                        <Link href="/my-account">
-                          <a className="rockland-nav__link ">
-                            <i className="fas fa-gifts  rockland-nav__icon" />
-                            <span className="titleSubPromotion">{t('navbar:promo_products')}</span>
-                          </a>
-                        </Link>
-                      </li>
-                      <li className="menu-item">
-                        <Link href="/my-account">
-                          <a className="rockland-nav__link ">
-                            <i className="fab fa-product-hunt  rockland-nav__icon" />
-                            <span className="titleSubPromotion">{t('navbar:promotions')}</span>
-                          </a>
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
                 </li>
                 <li className="d-block d-sm-none rockland-nav__item dropdown dropdown-nav">
-                  <div data-toggle="dropdown" data-hover="dropdown" onClick={handlePromotion2}>
+                  <div data-toggle="dropdown" data-hover="dropdown">
                     <a className="rockland-nav__link">
                       <i className="rockland-nav__icon fab fa-hotjar" />
                       <span className="rockland-nav__title">{t('navbar:promotion')}</span>
@@ -262,36 +241,10 @@ const Nav = () => {
                       </Link>
                     </li>
                   </ul>
-                  <div id="3" className="subPromotion offsubPromotion">
-                    <ul className="subPromotion1">
-                      <li className="menu-item">
-                        <Link href="/promo-codes">
-                          <a className="rockland-nav__link">
-                            <i className=" fas fa-tag rockland-nav__icon" />
-                            <span className="titleSubPromotion">{t('navbar:promo_code')}</span>
-                          </a>
-                        </Link>
-                      </li>
-                      <li className="menu-item">
-                        <Link href="/promo-codes">
-                          <a className="rockland-nav__link">
-                            <i className=" fas fa-gifts rockland-nav__icon" />
-                            <span className="titleSubPromotion">{t('navbar:promo_products')}</span>
-                          </a>
-                        </Link>
-                      </li>
-                      <li className="menu-item">
-                        <Link href="/promo-codes">
-                          <a className="rockland-nav__link">
-                            <i className="fab fa-product-hunt rockland-nav__icon" />
-                            <span className="titleSubPromotion">{t('navbar:promotions')}</span>
-                          </a>
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
                 </li>
+
                 <PathologyMenu />
+
                 <li className="rockland-nav__item">
                   <Link href="/ingredients">
                     <a className="rockland-nav__link">
@@ -300,84 +253,16 @@ const Nav = () => {
                     </a>
                   </Link>
                 </li>
-                <li className="rockland-nav__item language-mobile">
-                  <LanguagePicker></LanguagePicker>
-                </li>
-                {token && (
-                  <div className="mobile-responsive">
-                    <li className="rockland-nav__item">
-                      <div data-toggle="dropdown" data-hover="dropdown" onClick={handleAcount}>
-                        <a className="rockland-nav__link">
-                          <i className="fa fa-cogs rockland-nav__icon" aria-hidden="true"></i>
-                          <span className="rockland-nav__title">
-                            {t('navbar:account_management')}
-                          </span>
-                        </a>
-                      </div>
-                      <div id="4" className="subPromotion offsubPromotion">
-                        <ul className="subPromotion1">
-                          <li className="menu-item">
-                            <Link href="/my-account">
-                              <a className="rockland-nav__link ">
-                                <i className="far fa-user-circle  rockland-nav__icon" />
-                                <span className="rockland-nav__title">
-                                  {t('navbar:account_info')}
-                                </span>
-                              </a>
-                            </Link>
-                          </li>
-                          <li className="menu-item">
-                            <Link href="/change-password">
-                              <a className="rockland-nav__link ">
-                                <i className="fa fa-key rockland-nav__icon" />
-                                <span className="rockland-nav__title">
-                                  {t('navbar:change_password')}
-                                </span>
-                              </a>
-                            </Link>
-                          </li>
-                          <li className="menu-item">
-                            <Link href="/my-orders">
-                              <a className="rockland-nav__link ">
-                                <i className="icomoon icon-assignment rockland-nav__icon" />
-                                <span className="rockland-nav__title">{t('navbar:my_order')}</span>
-                              </a>
-                            </Link>
-                          </li>
-                          <li className="menu-item">
-                            <Link href="/my-promo-codes">
-                              <a className="rockland-nav__link">
-                                <i className="fas fa-tags rockland-nav__icon" />
-                                <span className="rockland-nav__title">
-                                  {t('navbar:my_promo_code')}
-                                </span>
-                              </a>
-                            </Link>
-                          </li>
-                        </ul>
-                      </div>
-                    </li>
-                  </div>
-                )}
-                {token && (
-                  <li className="mobile-responsive rockland-nav__item">
-                    <button type="button" onClick={logOut}>
-                      <a className="rockland-nav__link">
-                        <i className="fas fa-sign-out-alt rockland-nav__icon" />
-                        <span className="rockland-nav__title">{t('navbar:logout')}</span>
-                      </a>
-                    </button>
-                  </li>
-                )}
               </ul>
+
               {token && (
-                <div className="header-right flex-shrink-0 laptop-responsive">
+                <div className="header-right flex-shrink-0">
                   <ul className="nav align-items-center">
                     <li className="nav-item mr-4">
                       <Link href="/cart">
                         <a className="rockland-nav__link notification" title={t('cart:cart')}>
                           <ShoppingCartOutlinedIcon />
-                          <span className="extraCart "> {t('cart:cart')} </span>
+                          <span className="extraCart d-none d-sm-block "> {t('cart:cart')} </span>
                           {totalQty > 0 && (
                             <span className="notification__counter">{totalQty}</span>
                           )}
@@ -390,6 +275,7 @@ const Nav = () => {
                         <i className="fas fa-bars rockland-nav__icon m-0" />
                       </button>
                     </li>
+
                     <Menu
                       anchorEl={anchorEl}
                       open={!!anchorEl}
@@ -399,6 +285,26 @@ const Nav = () => {
                         vertical: 'top',
                         horizontal: 'right'
                       }}>
+                      {/* <div className="dropdown__item py-0">
+                      <div className="d-flex justify-content-between">
+                        <div className="text-left mr-3">
+                          <small className="text-muted">{t('navbar:e_wallet')}</small>
+                          <div className="text-primary">
+                            0<span className="unit">{t('common:vnd')}</span>
+                          </div>
+                        </div> 
+
+                        <div>
+                          <a href="/users/loyalty_points">
+                            <small className="text-muted">{t('navbar:reward_points')}</small>
+                            <div className="text-secondary">0</div>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+
+                    <hr className="my-2" /> */}
+
                       <div>
                         <Link href="/my-account">
                           <a className="dropdown__item dropdown__item-link">
@@ -407,6 +313,7 @@ const Nav = () => {
                           </a>
                         </Link>
                       </div>
+
                       <div className="d-block d-sm-none">
                         <Link href="/change-password">
                           <a className="dropdown__item dropdown__item-link">
@@ -415,6 +322,7 @@ const Nav = () => {
                           </a>
                         </Link>
                       </div>
+
                       <div>
                         <Link href="/my-orders">
                           <a className="dropdown__item dropdown__item-link">
@@ -423,30 +331,142 @@ const Nav = () => {
                           </a>
                         </Link>
                       </div>
-                      <div>
-                        <Link href="/my-promo-codes">
-                          <a className="dropdown__item dropdown__item-link">
-                            <i className="fas fa-tags dropdown__item-icon" />
-                            {t('navbar:my_promo_code')}
-                          </a>
-                        </Link>
-                      </div>
-
-                      <button
-                        type="button"
-                        className="dropdown__item dropdown__item-link w-100"
-                        onClick={logOut}>
-                        <i className="fas fa-sign-out-alt dropdown__item-icon" />
-                        {t('navbar:logout')}
-                      </button>
                     </Menu>
+
+                    <div id="3" className="subPromotion offsubPromotion">
+                      <ul className="subPromotion1">
+                        <li className="menu-item">
+                          <Link href="/promo-codes">
+                            <a className="rockland-nav__link">
+                              <i className=" fas fa-tag rockland-nav__icon" />
+                              <span className="titleSubPromotion">{t('navbar:promo_code')}</span>
+                            </a>
+                          </Link>
+                        </li>
+                        <li className="menu-item">
+                          <Link href="/promo-codes">
+                            <a className="rockland-nav__link">
+                              <i className=" fas fa-gifts rockland-nav__icon" />
+                              <span className="titleSubPromotion">
+                                {t('navbar:promo_products')}
+                              </span>
+                            </a>
+                          </Link>
+                        </li>
+                        <li className="menu-item">
+                          <Link href="/promo-codes">
+                            <a className="rockland-nav__link">
+                              <i className="fab fa-product-hunt rockland-nav__icon" />
+                              <span className="titleSubPromotion">{t('navbar:promotions')}</span>
+                            </a>
+                          </Link>
+                        </li>
+                      </ul>
+                    </div>
                   </ul>
                 </div>
               )}
+
+              <PathologyMenu />
+              <li className="rockland-nav__item">
+                <Link href="/ingredients">
+                  <a className="rockland-nav__link">
+                    <i className="rockland-nav__icon icomoon icon-ingredients" />
+                    <span className="rockland-nav__title">{t('navbar:ingredient')}</span>
+                  </a>
+                </Link>
+              </li>
+              <li className="rockland-nav__item language-mobile">
+                <LanguagePicker></LanguagePicker>
+              </li>
+              {token && (
+                <div className="mobile-responsive">
+                  <li className="rockland-nav__item">
+                    <div data-toggle="dropdown" data-hover="dropdown" onClick={handleAcount}>
+                      <a className="rockland-nav__link">
+                        <i className="fa fa-cogs rockland-nav__icon" aria-hidden="true"></i>
+                        <span className="rockland-nav__title">
+                          {t('navbar:account_management')}
+                        </span>
+                      </a>
+                    </div>
+                    <div id="4" className="subPromotion offsubPromotion">
+                      <ul className="subPromotion1">
+                        <li className="menu-item">
+                          <Link href="/my-account">
+                            <a className="rockland-nav__link ">
+                              <i className="far fa-user-circle  rockland-nav__icon" />
+                              <span className="rockland-nav__title">
+                                {t('navbar:account_info')}
+                              </span>
+                            </a>
+                          </Link>
+                        </li>
+                        <li className="menu-item">
+                          <Link href="/change-password">
+                            <a className="rockland-nav__link ">
+                              <i className="fa fa-key rockland-nav__icon" />
+                              <span className="rockland-nav__title">
+                                {t('navbar:change_password')}
+                              </span>
+                            </a>
+                          </Link>
+                        </li>
+                        <li className="menu-item">
+                          <Link href="/my-orders">
+                            <a className="rockland-nav__link ">
+                              <i className="icomoon icon-assignment rockland-nav__icon" />
+                              <span className="rockland-nav__title">{t('navbar:my_order')}</span>
+                            </a>
+                          </Link>
+                        </li>
+                        <li className="menu-item">
+                          <Link href="/my-promo-codes">
+                            <a className="rockland-nav__link">
+                              <i className="fas fa-tags rockland-nav__icon" />
+                              <span className="rockland-nav__title">
+                                {t('navbar:my_promo_code')}
+                              </span>
+                            </a>
+                          </Link>
+                        </li>
+                      </ul>
+                    </div>
+                  </li>
+                </div>
+              )}
+              {token && (
+                <li className="mobile-responsive rockland-nav__item">
+                  <button type="button" onClick={logOut}>
+                    <a className="rockland-nav__link">
+                      <i className="fas fa-sign-out-alt rockland-nav__icon" />
+                      <span className="rockland-nav__title">{t('navbar:logout')}</span>
+                    </a>
+                  </button>
+                </li>
+              )}
+
+              <div>
+                <Link href="/my-promo-codes">
+                  <a className="dropdown__item dropdown__item-link">
+                    <i className="fas fa-tags dropdown__item-icon" />
+                    {t('navbar:my_promo_code')}
+                  </a>
+                </Link>
+              </div>
+
+              {/* <Link href="/users/loyalty_points">
+                      <a className="dropdown__item dropdown__item-link">
+                        <i className="fas fa-hand-holding-usd dropdown__item-icon" />
+                        {t('navbar:cumulative_points')}
+                      </a>
+                    </Link> */}
+
+              {/* hot tags */}
+              <HotTags />
             </div>
           </div>
         </div>
-        <div id="4" className="overlays" onClick={OffMenuMobile}></div>
       </nav>
     </div>
   );

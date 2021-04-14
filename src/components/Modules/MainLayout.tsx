@@ -32,15 +32,11 @@ export default function MainLayout(props: Props) {
       <DynamicTermPopup />
 
       {token && !isActive && <ActiveUser />}
-      <div className="header-lt">
-        <Header />
-      </div>
+
+      <Header />
 
       <Nav />
 
-      <div className="header-mobile">
-        <Header />
-      </div>
       {token && <LoadingBackdrop open={gettingCart || gettingUser} />}
 
       {props.children}
@@ -63,5 +59,6 @@ export const mainLayoutNamespacesRequired = [
   'password',
   'termPopup',
   'promotions',
-  'myAccount'
+  'myAccount',
+  'cart'
 ];
