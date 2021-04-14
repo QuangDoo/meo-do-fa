@@ -61,7 +61,7 @@ function ManufacturerDetail() {
       pageSize: 20,
       condition: {
         order_type: '',
-        manufacturer_id: manufacturerId as string
+        manufacturer_id: (manufacturerId as string) || null
       }
     },
     fetchPolicy: 'network-only',
