@@ -28,7 +28,8 @@
   // text-transform: capitalize;
 }
 .footer__bct {
-  width: 117px;
+  // width: 117px;
+  margin-top: -35px;
 }
 .footer__link {
   display: inline-block;
@@ -104,6 +105,9 @@
   padding-left: 0.5rem;
 }
 @media (max-width: 575.98px) {
+  .footer__bct{
+    margin-top: 2rem !important;
+  }
   .copyright {
     flex-direction: column;
   }
