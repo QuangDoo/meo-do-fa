@@ -268,6 +268,21 @@ legend {
   legend {
     font-size: calc(1.275rem + 0.3vw);
   }
+  .login-responsive{
+    display: none !important;
+  }
+  .header-lt{
+    display: none !important;
+  }
+  .nav1{
+    height: 40px;
+  }
+  .rockland-nav__icon, .promotion-nav__icon{
+    width: 25px;
+  }
+  .rockland-nav__title{
+    margin-left: 10px;
+  }
 }
 progress {
   vertical-align: baseline;
@@ -413,6 +428,45 @@ mark,
   .close {
     font-size: calc(1.275rem + 0.3vw);
   }
+  .logo-img{
+    height: 25px;
+    width: 135px;
+  }
+  .promotion-nav {
+    display: none !important;
+  }
+  .overlays{
+    position: absolute;
+    height: 100%;
+    width: 1200px;
+    display: inline-block;
+    background-color:rgba(0, 0, 0, 0.7);
+  }
+ .rockland-nav {
+  width: 40% ;
+  position: absolute !important;
+  z-index: 1000 !important;
+  margin: 0 !important;
+  height: 100%;
+  position: fixed !important;
+}
+.back_ground{
+  position: relative;
+  background-color: rgb(255, 255, 255);
+  display: inline-block;
+}
+
+.MuiSvgIcon-root{
+  color: #2f3b97 !important;
+  }
+
+.menu-item-mobile{
+    margin-left: 10px;
+  }
+.rockland-nav__link1{
+  margin-left: 15px;
+  color: white;
+}
 }
 .close:hover {
   color: #343a40;
@@ -1575,6 +1629,31 @@ textarea.form-control.is-invalid {
   background-color: rgba(255, 255, 255, 0.075);
 }
 @media (max-width: 575.98px) {
+  .mobile-responsive{
+    display: inline-block !important;  
+    margin-left: 0px;
+  }
+  .laptop-responsive{
+    display: none;
+  }
+  .rockland-nav {
+    width: 80% !important;
+    position: absolute !important;
+    z-index: 1000 !important;
+    margin: 0 !important;
+    //height: 100%;
+    position: fixed !important;
+  }
+  .MuiSvgIcon-root{
+    color: #2f3b97 !important;
+    }
+  .showSubPromotion{
+    display: block !important;
+  }
+  .rockland-nav .rockland-nav__item{
+    width: 100%;
+    display: block;
+  }
   .table-responsive-sm {
     display: block;
     width: 100%;
@@ -9620,6 +9699,9 @@ abbr[title] {
 .header__user-avatar img {
   width: 3em;
 }
+.search-type-select{
+  margin-left: 1px !important;
+}
 .bottom-nav {
   --bottom-nav-bg-color: rgba(255, 255, 255, 0.96);
   --bottom-nav-text-color: #919aa3;
@@ -9691,9 +9773,99 @@ abbr[title] {
   color: white;
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
   border-bottom: 4px solid #ffcb31;
+
+}
+.menu-item{
+  padding-top: 10px;
+}
+.helloUser{
+  margin-left: 10px;
+  font-size: 18px;
+  font-weight: 600;
+}
+.displayMenu{
+  display: block !important;
+}
+@media (max-width:1200px){
+.offMenu{
+  display: none ;
+}
+.language-lt{
+  display: none !important;
+}
+.language-mobile{
+  display: block !important;
+}
+.logo-lt{
+  display: none !important;
+}
+.menu-mobile{
+  margin-left: 10px;
+  width: 10%;
+  float: left;
+  color: #2f3b97;
+}
+.hidden-login {
+  display: none;
+}
+.textcolor{
+  color: black;
 }
 .rockland-nav__link {
-  color: white !important;
+  color:black !important;
+}
+.rockland-nav{
+  background: white;
+}
+}
+.nav-mb {
+  margin-top: 10px;
+}
+.Cart{ 
+  float:right;
+  width: 10%;
+}
+
+.LoginInMenu{
+  width: 100%;
+  background: rgb(27, 168, 255);
+}
+.LoginInMenu-button {
+  margin-left: 20px;
+  color: white;
+}
+.LoginMenu-icon {
+  font-size: 40px;
+  display: inline-block;
+}
+.LoginInMenu-title {
+  display: inline-block;
+  margin-left: 10px;
+}
+.LoginInMenu-title1 {
+  text-align: left;
+}
+.LoginInMenu-title2 {
+ font-size: 11px;
+ font-weight: 500;
+}
+.offsubPromotion{
+  display: none;
+}
+
+.subPromotion{
+  padding-top: 5px;
+  padding-left:30px ;
+}
+.subPromotion1{
+  list-style-type: none;
+}
+.titleSubPromotion{
+  margin-left: 10px;
+}
+
+.rockland-nav__link {
+  color: white ;
   display: flex;
   align-items: center;
 }
@@ -9758,16 +9930,13 @@ abbr[title] {
   border-radius: 50px !important;
 }
 
-@media only screen and (max-width: 1200px) {
-  .rockland-nav.shrink .rockland-nav__title {
-    display: none;
-  }
-}
 .promotion-nav {
   position: relative;
   background: #e9ecef;
   color: #343a40;
   font-size: small;
+  //display: none;
+  height: 40px;
 }
 .promotion-nav__link {
   display: flex;
@@ -12010,7 +12179,7 @@ abbr[title] {
 @media (max-width: 767.98px) {
   .deals--mobile {
     min-height: 100vh;
-    margin-top: -3em;
+    margin-top: 0;
     padding-top: 4em !important;
   }
 }

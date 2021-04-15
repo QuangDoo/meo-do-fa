@@ -97,6 +97,17 @@
   overflow-y: scroll;
 }
 
+@media (min-width: 1200px) {
+  .dropdown.dropdown-nav:hover > .dropdown-menu {
+    display: block !important;
+    width: auto;
+    padding: 10px;
+    height: auto;
+  }
+  .LoginInMenu{
+    display: none;
+  }
+  
 .dropdown.dropdown-nav:hover > .dropdown-menu {
   display: block !important;
   width: auto;
@@ -126,4 +137,5 @@
     background-color: white;
     color: $primary;
   }
+}
 }
