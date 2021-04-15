@@ -8,7 +8,7 @@ import FormGroupLabel from './FormGroupLabel';
 type Props = {
   label: React.ReactNode;
   name?: string;
-  type: 'text' | 'number' | 'password' | 'file';
+  type: 'text' | 'number' | 'password' | 'file' | 'button';
 
   containerClass?: string;
   labelClass?: string;
@@ -19,6 +19,7 @@ type Props = {
   guide?: string;
   accept?: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   maxLength?: number;
   tabIndex?: number;
 };
@@ -79,6 +80,13 @@ const InputWithLabel = (props: Props, ref) => {
             lang={i18n.language}
           />
           <div className="custom-file-label">{props.placeholder}</div>
+        </div>
+      ) : props.type === 'button' ? (
+        <div className="input-group mb-3">
+          <input type="text" className="form-control no-spinner" {...sharedInputProps} />
+          <button onClick={props.onClick}>
+            <span className="input-group-text bg-danger text-light">Xác thực tài khoản</span>
+          </button>
         </div>
       ) : (
         <input
