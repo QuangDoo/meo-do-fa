@@ -1,0 +1,18 @@
+{
+  "title": "Phản hồi về đơn hàng",
+  "order_no_label": "Mã đơn hàng",
+  "customer_name_label": "Họ tên khách hàng",
+  "customer_phone_label": "Số điện thoại",
+  "note_label": "Ghi chú",
+  "issue_name_label": "Lỗi",
+  "image_label": "Hình ảnh minh họa lỗi",
+  "send_request": "Gửi yêu cầu",
+  "issue_placeholder": "Chọn lỗi",
+  "name_required": "Vui lòng nhập tên.",
+  "phone_required": "Vui lòng nhập số điện thoại.",
+  "phone_invalid": "Vui lòng nhập số điện thoại hợp lệ.",
+  "issue_required": "Vui lòng chọn lỗi",
+  "send_feedback_success": "Gửi phản hồi thành công",
+  "create_date_label": "Ngày tạo",
+  "total_amount_label": "Tổng tiền"
+}

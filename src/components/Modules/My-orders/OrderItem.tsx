@@ -1,6 +1,7 @@
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import React, { useState } from 'react';
+import { useUser } from 'src/contexts/User';
 import { GetOrderList } from 'src/graphql/my-orders/getOrderList';
 
 import ConfirmCancelOrder from './ConfirmCancelOrder';
@@ -26,7 +27,8 @@ export default function OrderItem(props: Props) {
   const { t } = useTranslation(['myOrders', 'errors']);
 
   const [open, setOpen] = useState(false);
-  const [openComplain, setOpenComplain] = useState(false);
+
+  const { data: user } = useUser();
 
   return (
     <div className="my-orders__item p-3 my-1">
@@ -71,13 +73,16 @@ export default function OrderItem(props: Props) {
           <button className="btn btn-outline-danger btn-sm" onClick={() => setOpen(true)}>
             {t('myOrders:cancel_order')}
           </button>
-          <>
-            <button
-              className="btn btn-outline-complain btn-sm"
-              onClick={() => setOpenComplain(true)}>
+          <Link
+            href={{
+              pathname: '/feedback',
+              query: { orderno: props.orderNo, name: user.company_name, phone: user.phone }
+            }}
+            passHref>
+            <a target="_blank" className="btn btn-outline-complain btn-sm">
               {t('myOrders:send_fb')}
-            </button>
-          </>
+            </a>
+          </Link>
         </div>
       )}
 
@@ -88,12 +93,6 @@ export default function OrderItem(props: Props) {
           </a>
         </div>
       )}
-
-      <ConfirmComplain
-        open={openComplain}
-        onClose={() => setOpenComplain(false)}
-        orderNo={props.orderNo}
-      />
 
       <ConfirmCancelOrder
         open={open}
