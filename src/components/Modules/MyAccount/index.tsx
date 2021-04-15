@@ -71,11 +71,11 @@ export default function MyAccountPage() {
     if (!user) return;
 
     // Uploaded image ids
-    const ids = user.business_license.split(',');
+    const ids = user.business_license?.split(',');
 
     // Display uploaded images
     setPreviewImages(
-      ids.map((id) => ({
+      ids?.map((id) => ({
         src: `${FILES_GATEWAY}/certificate/${id}`
       }))
     );
@@ -283,7 +283,7 @@ export default function MyAccountPage() {
               <FormGroupLabel>{t('myAccount:business_license_label')}</FormGroupLabel>
 
               <div className="certificate-container">
-                {previewImages.map((image, index) => (
+                {previewImages?.map((image, index) => (
                   <CertificateImage
                     key={image.src}
                     image={image}
