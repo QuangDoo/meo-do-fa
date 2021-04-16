@@ -9,7 +9,6 @@ import FormGroup from 'src/components/Form/FormGroup';
 import FormGroupLabel from 'src/components/Form/FormGroupLabel';
 import InputWithLabel from 'src/components/Form/InputWithLabel';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
-import ModalWithHeader from 'src/components/Layout/Modal/ModalWithHeader';
 import { FILES_GATEWAY } from 'src/constants';
 import { useUser } from 'src/contexts/User';
 import { UPDATE_USER, UpdateUserData, UpdateUserVars } from 'src/graphql/user/updateUser';
@@ -53,11 +52,9 @@ export default function MyAccountPage() {
 
   const methods = useForm<Inputs>();
 
-  const { register, handleSubmit, watch } = methods;
+  const { register, handleSubmit } = methods;
 
   const [updatingUser, setUpdatingUser] = useState<boolean>(false);
-
-  const [open, setOpen] = useState<boolean>(false);
 
   const [updateUser] = useMutationAuth<UpdateUserData, UpdateUserVars>(UPDATE_USER, {
     onError: (err) => {
@@ -72,8 +69,6 @@ export default function MyAccountPage() {
   // On user load
   useEffect(() => {
     if (!user) return;
-
-    if (!user?.business_license) return;
 
     // Uploaded image ids
     const ids = user.business_license?.split(',');
@@ -90,15 +85,15 @@ export default function MyAccountPage() {
 
   const uploadNewImages = async () => {
     // Get new images (images that has file)
-    const newImages = previewImages?.filter((o) => o.file);
+    const newImages = previewImages.filter((o) => o.file);
 
-    if (newImages?.length === 0) return;
+    if (newImages.length === 0) return;
 
     // Form data to upload new images
     const formData = new FormData();
 
     // Add new images to form data
-    newImages?.forEach((image) => {
+    newImages.forEach((image) => {
       formData.append('images', image.file);
     });
 
@@ -139,8 +134,8 @@ export default function MyAccountPage() {
 
     const newIds = await uploadNewImages();
 
-    const imageIds = previewImages?.map((o) =>
-      o.src.startsWith(FILES_GATEWAY) ? o.src.split('/').pop() : newIds?.shift()
+    const imageIds = previewImages.map((o) =>
+      o.src.startsWith(FILES_GATEWAY) ? o.src.split('/').pop() : newIds.shift()
     );
 
     const regVat = /(^[0-9]{10}$)|(^[0-9]{13}$)/g;
@@ -200,18 +195,6 @@ export default function MyAccountPage() {
   const onError = (error) => {
     toast.error(error[Object.keys(error)[0]].message);
   };
-  const handleOpentModal = (e) => {
-    e.preventDefault();
-    setOpen(true);
-  };
-
-  const onClose = () => {
-    setOpen(false);
-  };
-
-  const otpValue = watch('otp');
-
-  console.log(otpValue);
 
   return (
     <ProfileLayout title={t('myAccount:title')}>
@@ -238,13 +221,9 @@ export default function MyAccountPage() {
             <InputWithLabel
               disabled
               label={t('myAccount:phone_label')}
-              type="number"
-              // onClick={(e) => handleOpentModal(e)}
+              type="text"
               defaultValue={user?.phone || ''}
             />
-            {/* <ModalWithHeader title="OTP" open={open} onClose={onClose}>
-              <InputWithLabel required label={t('myAccount:otp_label')} name="otp" type="number" />
-            </ModalWithHeader> */}
 
             {/* Email */}
             <InputWithLabel
