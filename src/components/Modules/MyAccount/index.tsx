@@ -70,6 +70,8 @@ export default function MyAccountPage() {
   useEffect(() => {
     if (!user) return;
 
+    if (!user.business_license) return;
+
     // Uploaded image ids
     const ids = user.business_license.split(',');
 
