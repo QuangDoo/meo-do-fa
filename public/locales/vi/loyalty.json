@@ -1,0 +1,13 @@
+{
+  "title": "Điểm tích lũy",
+  "points_owner": "Bạn đang có {{points}} điểm tích lũy",
+  "redeem_points": "Đổi điểm",
+  "points_hisoty_title": "Lịch sử điểm tích lũy",
+  "created_date": "Ngày tạo",
+  "type": "Loại",
+  "points": "Số điểm",
+  "description": "Mô tả",
+  "redeem_title": "Danh sách quy đổi điểm tích lũy",
+  "cumulative_points": "Điểm tích lũy",
+  "exchange_value": "Giá trị quy đổi"
+}

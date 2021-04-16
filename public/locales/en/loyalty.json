@@ -1,0 +1,13 @@
+{
+  "title": "Cumulative points",
+  "points_owner": "You have {{points}} points to accumulate",
+  "redeem_points": "Redeem",
+  "points_hisoty_title": "Cumulative points history",
+  "created_date": "Created date",
+  "type": "Type",
+  "points": "Points",
+  "description": "Description",
+  "redeem_title": "List of accumulative points redemption",
+  "cumulative_points": "Cumulative points",
+  "exchange_value": "Exchange value"
+}
