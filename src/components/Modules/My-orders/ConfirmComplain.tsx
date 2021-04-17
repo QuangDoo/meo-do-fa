@@ -83,7 +83,7 @@ const ConfirmComplain = (props: Props) => {
     // console.log(`${user?.id}?${imgTime}`);
 
     axios
-      .post(`${FILES_GATEWAY}/complain`, formData)
+      .post(`${FILES_GATEWAY}/feedback`, formData)
       .then(() => {
         setImgTime(new Date().getTime());
         setImgsHidden(false);
