@@ -95,7 +95,7 @@ function ChangePassWord() {
               placeholder={t('myAccount:old_password')}
               name="oldPassword"
               type="password"
-              tabIndex={0}
+              indexTab="1"
             />
 
             {/* new password */}
@@ -112,7 +112,7 @@ function ChangePassWord() {
               required={true}
               name="newPassword"
               type="password"
-              tabIndex={0}
+              indexTab="2"
             />
 
             {/* Retype */}
@@ -129,7 +129,7 @@ function ChangePassWord() {
               required={true}
               name="retype"
               type="password"
-              tabIndex={0}
+              indexTab="3"
             />
           </FormCard>
 

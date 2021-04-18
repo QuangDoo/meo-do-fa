@@ -13,7 +13,7 @@ export default function SpecialPromoCodeItem(props: Props) {
     <div className="coupon2 d-flex">
       <div className="coupon2__image d-flex flex-column justify-content-between">
         <img
-          src="/assets/images/logo-md.png"
+          src="/assets/images/logo2.png"
           alt="medofa"
           className="coupon2__image-logo img-fluid lozad"
         />

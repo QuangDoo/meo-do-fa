@@ -85,9 +85,9 @@ function DealOfTheDay() {
         <title>Medofa</title>
       </Head>
 
-      <div className="deals deals--mobile py-5 ">
-        <div className="container mobile-content my-3 my-sm-5 ">
-          <h1 className="text-white mb-3 text-center">{t('dealsOfTheDay:title')}</h1>
+      <div className="deals deals--mobile py-5">
+        <div className="container px-0">
+          <h1 className="text-white mb-3">{t('dealsOfTheDay:title')}</h1>
           {hotDeals.length === 0 &&
             otherDeals.length === 0 &&
             !productsLoading &&
@@ -104,7 +104,7 @@ function DealOfTheDay() {
                 <div className="col-12 mb-3 px-3">
                   <h3 className="text-white text-center my-3">{t('dealsOfTheDay:hot_deals')}</h3>
                 </div>
-                <div className="col-12 ">
+                <div className="col-12">
                   <div className="products__cards mb-3">
                     {hotDeals.slice(0, 20).map((product) => (
                       <ProductCard key={product.id} {...product} />

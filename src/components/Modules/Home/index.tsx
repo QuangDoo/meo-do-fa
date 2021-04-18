@@ -20,23 +20,23 @@ import { ProductsContainer } from './ProductsContainer';
 const Home = ({ dealsOfTheDayData, bestSellingData, promotionProductsData, newProductsData }) => {
   const { t } = useTranslation(['carousels']);
 
-  const { data: dataBannerPC, loading: getingBannerPC } = useQuery<WebBannerData, bannerInputVars>(
+  const { data: dataBanerPC, loading: getingBannerPC } = useQuery<WebBannerData, bannerInputVars>(
     GET_BANNER,
     {
       variables: { type: BannerType.MAIN }
     }
   );
 
-  const { data: dataBannerMobile, loading: getingBannerMobile } = useQuery<
+  const { data: dataBanerMoblie, loading: getingBannerMobile } = useQuery<
     WebBannerData,
     bannerInputVars
   >(GET_BANNER, {
     variables: { type: BannerType.MOBILE }
   });
 
-  const bannerPC = dataBannerPC?.getWebsiteBanner;
+  const bannerPC = dataBanerPC?.getWebsiteBanner;
 
-  const bannerMobile = dataBannerMobile?.getWebsiteBanner;
+  const banerMoblie = dataBanerMoblie?.getWebsiteBanner;
 
   const token = useToken();
 
@@ -89,7 +89,7 @@ const Home = ({ dealsOfTheDayData, bestSellingData, promotionProductsData, newPr
         dots
         dotsClass="slick__dots bullet slick-dots"
         className="align-items-center mb-0 slick-dotted d-block d-sm-none">
-        {bannerMobile?.map(({ image, id }) => (
+        {banerMoblie?.map(({ image, id }) => (
           <div className="banner__slide" key={image}>
             <div className="banner__img banner__img--mobile">
               <div className="banner-wrapper">

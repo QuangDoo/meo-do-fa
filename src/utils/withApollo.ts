@@ -1,4 +1,4 @@
-import { ApolloClient, DefaultOptions, from, HttpLink, InMemoryCache } from '@apollo/client';
+import { ApolloClient, from, HttpLink, InMemoryCache } from '@apollo/client';
 import { onError } from '@apollo/client/link/error';
 import { withApollo } from 'next-apollo';
 import getConfig from 'next/config';
@@ -27,13 +27,12 @@ const httpLink = new HttpLink({
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors)
-    graphQLErrors.forEach(({ message, locations, path, extensions }) => {
+    graphQLErrors.forEach(({ locations, path, extensions }) => {
       console.log(
         `=========⚠️ [GraphQL error] ========\n
 - Code: ${extensions.code} \n
 - Location: ${locations} \n
 - Path: ${path} \n
-- Message: ${message} \n
 ===================================\n
       `.trim()
       );
@@ -44,18 +43,10 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
   }
 });
 
-const defaultOptions: DefaultOptions = {
-  query: {
-    fetchPolicy: 'no-cache',
-    errorPolicy: 'all'
-  }
-};
-
 const apolloClient = new ApolloClient({
   ssrMode: true,
   link: from([errorLink, httpLink]),
-  cache: new InMemoryCache(),
-  defaultOptions: defaultOptions
+  cache: new InMemoryCache()
 });
 
 export default withApollo(apolloClient);

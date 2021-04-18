@@ -1013,7 +1013,6 @@ textarea.form-control.is-invalid {
 }
 .pagination {
   display: flex;
-  font-size: 1.125rem;
   padding-left: 0;
   list-style: none;
   border-radius: 0.25rem;
@@ -2988,13 +2987,16 @@ button.bg-dark:focus {
 }
 
 .extraCart {
-  font-weight: 500;
+  font-size: 0.8rem !important;
   white-space: nowrap;
-  margin-left: 0.5em;
+  margin: 0.5rem 0.5rem 0 0.5rem ;
 }
 @media (max-width: 576px) {
   .extraCart {
     display: none;
+  }
+  .mr-4 {
+    margin-right: 1.5rem !important;
   }
 }
 
@@ -10544,7 +10546,7 @@ abbr[title] {
   border-radius: 0;
 }
 
-.elevated .mt-3 {
+.elevated .mt-3{
   padding-bottom: 15px;
 }
 .form__label {
@@ -10614,11 +10616,6 @@ abbr[title] {
   z-index: 100;
   font-size: 1rem;
 }
-@media (max-width: 576px) {
-  .search-icon-input {
-    top: calc(50% - 1em);
-  }
-}
 .in-the-news__items {
   align-items: center;
   max-width: 50em;
@@ -10659,7 +10656,7 @@ abbr[title] {
   color: white;
   font-size: 0.75em;
   position: absolute;
-  top: -6px;
+  top: -10px;
   right: -16px;
   display: flex;
   align-items: center;
@@ -11130,7 +11127,7 @@ abbr[title] {
 .page-nav .page.disabled {
   display: none;
 }
-@media (max-width: 768px) {
+@media (max-width:768px){
   .page-nav {
     --page-width: 1.5em;
     display: flex;
@@ -12328,6 +12325,7 @@ abbr[title] {
   .my-orders__detail .content {
     padding-left: 0;
   }
+  
 }
 .my-orders__invoice .btn {
   width: 10rem;
@@ -13257,10 +13255,6 @@ abbr[title] {
   overflow: hidden;
 }
 
-.text-sub {
-  font-size: 14px;
-}
-
 .price-filter {
   input {
     width: 80px;
@@ -13276,19 +13270,4 @@ abbr[title] {
   input[type='number'] {
     -moz-appearance: textfield;
   }
-}
-
-.c-text {
-  padding: 0.5rem 1rem 0.5rem 1rem;
-  // background-color: #17a2b8;
-  // color: white;
-}
-.c-size {
-  font-size: 16px;
-}
-.c-img {
-  display: flex;
-  flex-wrap: 'wrap';
-  justify-content: 'space-around';
-  overflow: 'hidden';
 }

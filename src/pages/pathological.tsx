@@ -18,7 +18,7 @@ function Pathological() {
       </Head>
 
       <div className="container text-center py-3">
-        <h1 className="text-sub">{t('common:updating')}</h1>
+        <h1>{t('common:updating')}</h1>
       </div>
     </MainLayout>
   );
