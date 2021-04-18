@@ -10,7 +10,7 @@ variables:
   DOCKER_DRIVER: overlay2
   # See https://github.com/docker-library/docker/pull/166
   DOCKER_TLS_CERTDIR: ""
-  REGISTRY: "registry.gitlab.com/bebuy.vn/clients/thuocn/frontend"
+  REGISTRY: "registry.gitlab.com/medofa/medofa-web"
 
 stages:
   # - prepare
@@ -22,11 +22,21 @@ stages:
 .pre-deploy-dev:
   before_script:
     - apk update  && apk add --no-cache curl git
-    # - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
-    # - chmod +x ./kubectl && mv ./kubectl /usr/local/bin/kubectl
-    # - mkdir -p $HOME/.kube
-    # - cp $KUBE_CONFIG_DEV $HOME/.kube/config
-    - git clone https://${DOCKER_USER}:${DOCKER_PASSWORD}@gitlab.com/bebuy.vn/clients/thuocn/deployments.git
+    - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+    - chmod +x ./kubectl && mv ./kubectl /usr/local/bin/kubectl
+    - mkdir -p $HOME/.kube
+    - cp $KUBE_CONFIG_DEV $HOME/.kube/config
+    - git clone https://${DOCKER_USER}:${DOCKER_PASSWORD}@gitlab.com/medofa/medofa-deployments.git
+    - apk add --no-cache python3 py3-pip && pip3 install --upgrade pip && pip3 install awscli && rm -rf /var/cache/apk/*
+    - aws --version
+    - curl -o aws-iam-authenticator https://amazon-eks.s3.us-west-2.amazonaws.com/1.15.10/2020-02-22/bin/linux/amd64/aws-iam-authenticator
+    - chmod +x ./aws-iam-authenticator
+    - mv ./aws-iam-authenticator /usr/local/bin
+    - mkdir -p $HOME/.aws
+    - ls -lha $HOME
+    - ls -lha $HOME/.aws
+    - cp ${AWS_CONFIG} $HOME/.aws/config
+    - cp ${AWS_CREDENTIALS} $HOME/.aws/credentials
 
 .pre-deploy-master:
   before_script:
@@ -35,7 +45,7 @@ stages:
     - chmod +x ./kubectl && mv ./kubectl /usr/local/bin/kubectl
     - mkdir -p $HOME/.kube
     - cp $KUBE_CONFIG $HOME/.kube/config
-    - git clone -b master https://${DOCKER_USER}:${DOCKER_PASSWORD}@gitlab.com/bebuy.vn/clients/thuocn/deployments.git
+    - git clone -b master https://${DOCKER_USER}:${DOCKER_PASSWORD}@gitlab.com/medofa/medofa-deployments.git
 
 
 lint-frontend:
@@ -131,7 +141,8 @@ deploy-frontend-dev:
     - .pre-deploy-dev
 
   script:
-    - cd ./deployments/charts/frontend
+    - cd ./medofa-deployments/charts/frontend
+    - cat ./custom-values.dev.yaml
     - helm upgrade --install -n medofa frontend "./" -f "./custom-values.dev.yaml"
 
 build-frontend-prod:
@@ -170,5 +181,5 @@ deploy-frontend-prod:
     - .pre-deploy-master
 
   script:
-    - cd ./deployments/charts/frontend
+    - cd ./medofa-deployments/charts/frontend
     - helm upgrade --install -n medofa frontend "./" -f "./custom-values.prod.yaml"

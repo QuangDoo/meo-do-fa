@@ -59,5 +59,6 @@ export const mainLayoutNamespacesRequired = [
   'password',
   'termPopup',
   'promotions',
-  'myAccount'
+  'myAccount',
+  'cart'
 ];

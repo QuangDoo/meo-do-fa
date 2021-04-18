@@ -21,7 +21,7 @@
   "representative_label": "Legal representative name",
   "representative_placeholder": "ex. John Doe",
   "business_license_label": "Pharmacy/Clinic business license",
-  "business_license_placeholder": "Choose a file",
+  "business_license_placeholder": "Add image",
   "invoice_info": "Invoice information",
   "tax_code_label": "Tax code",
   "tax_code_placeholder": "ex. 8026906145",
@@ -46,5 +46,10 @@
   "oldPassword_required": "Please provide a current password",
   "retype_newPassword": "Retype a new password",
   "retype_newPassword_required": "Please retype new password",
-  "active": "Please verify your account <Link>here</Link> to continue purchasing"
+  "active": "Please verify your account <Link>here</Link> to continue purchasing",
+  "menu_view_image": "View image",
+  "menu_change_image": "Change image",
+  "menu_delete_image": "Delete image",
+  "certificate_image_load_error": "Server error",
+  "otp_label":"OTP code"
 }

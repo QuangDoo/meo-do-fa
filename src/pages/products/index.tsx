@@ -1,4 +1,5 @@
 import { useQuery } from '@apollo/client';
+import { isNullableType } from 'graphql';
 import { Trans, useTranslation } from 'i18n';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
@@ -26,7 +27,8 @@ import {
   GET_PRODUCTS,
   GetProductsData,
   GetProductsVars,
-  ProductTag
+  ProductTag,
+  TagType
 } from 'src/graphql/product/getProducts';
 import asyncQuery from 'src/utils/asyncQuery';
 
@@ -50,13 +52,13 @@ Products.getInitialProps = async (ctx) => {
       pageSize: PAGE_SIZE,
       type: ctx.query.tag as ProductTag,
       condition: {
-        manufacturer_id: ctx.query.manufacturer,
-        category_id: ctx.query.category,
-        name: ctx.query.search,
+        manufacturer_id: (ctx.query.manufacturer as string) || null,
+        category_id: (ctx.query.category as string) || null,
+        name: (ctx.query.search as string) || null,
         order_type: ctx.query.sort || NAME_ASCENDING,
         min_price: +ctx.query.priceFrom || 1,
         max_price: +ctx.query.priceTo || 10000000,
-        pathology_id: ctx.query.pathology
+        pathology_id: (ctx.query.pathology as string) || null
       }
     },
     fetchPolicy: 'network-only'
@@ -84,6 +86,19 @@ function Products() {
 
   const search = router.query.search as string;
 
+  const tag = router.query.searchtag as string;
+
+  // ["product", "manufacturer", "ingredient", "supplier"]
+
+  const searchTag =
+    tag === 'supplier'
+      ? TagType.SUPPLIER
+      : tag === 'manufacturer'
+      ? TagType.MANUFATURE
+      : tag === 'ingredient'
+      ? TagType.INGREDIENT
+      : TagType.PRODUCT;
+
   // GET ALL CATEGORIES FOR SIDEBAR FILTER
   const { data: categoriesLevelData } = useQuery<GetCategoriesLevelData, undefined>(
     GET_CATEGORIES_LEVEL,
@@ -107,13 +122,15 @@ function Products() {
       pageSize: PAGE_SIZE,
       type: router.query.tag as ProductTag,
       condition: {
-        manufacturer_id: router.query.manufacturer as string,
-        category_id: router.query.category as string,
+        manufacturer_id: (router.query.manufacturer as string) || null,
+        category_id: (router.query.category as string) || null,
         name: search,
         order_type: (router.query.sort as string) || NAME_ASCENDING,
         min_price: Number(router.query.priceFrom) || 1,
         max_price: Number(router.query.priceTo) || 10000000,
-        pathology_id: router.query.pathology as string
+        pathology_id: (router.query.pathology as string) || null,
+        supplier_id: (router.query.supplier as string) || null,
+        search_tag: searchTag
       }
     },
     fetchPolicy: 'network-only',

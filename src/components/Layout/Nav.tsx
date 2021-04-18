@@ -1,4 +1,4 @@
-import { Menu } from '@material-ui/core';
+import { Menu, useMediaQuery } from '@material-ui/core';
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import { useTranslation } from 'i18n';
 import cookies from 'js-cookie';
@@ -7,7 +7,8 @@ import React, { useState } from 'react';
 import { useCart } from 'src/contexts/Cart';
 import { useToken } from 'src/contexts/Token';
 
-import PathologyMenu from '../Modules/PathologyMenu';
+import PathologyMenu from '../Modules/Navbar/PathologyMenu';
+import HotTags from './HotTags';
 
 const Nav = () => {
   const token = useToken();
@@ -45,8 +46,10 @@ const Nav = () => {
 
   // const categories = categoriesData?.getCategoriesLevel || [];
 
+  const isSmallScreen = useMediaQuery('(max-width: 575px)');
+
   return (
-    <nav className="rockland-nav shrink header-menu">
+    <nav className="rockland-nav shrink header-menu d-none d-sm-block">
       <div className="container">
         <div className="row">
           <div className="col-12 d-flex align-items-center justify-content-between">
@@ -148,6 +151,14 @@ const Nav = () => {
                       </a>
                     </Link>
                   </li>
+                  <li className="dropdown-item">
+                    <Link href="/promotions">
+                      <a className="dropdown-item-text p-0">
+                        <i className="rockland-nav__icon fab fa-product-hunt" />
+                        <span>{t('navbar:promotions')}</span>
+                      </a>
+                    </Link>
+                  </li>
                 </ul>
               </li>
 
@@ -170,13 +181,13 @@ const Nav = () => {
                     <Link href="/cart">
                       <a className="rockland-nav__link notification" title={t('cart:cart')}>
                         <ShoppingCartOutlinedIcon />
-                        <span className="extraCart d-none d-sm-block "> {t('cart:cart')} </span>
+                        <span className="extraCart"> {t('cart:cart')} </span>
                         {totalQty > 0 && <span className="notification__counter">{totalQty}</span>}
                       </a>
                     </Link>
                   </li>
 
-                  <li className="nav-item">
+                  <li className="nav-item ml-4">
                     <button className="rockland-nav__link" onClick={openMenu}>
                       <i className="fas fa-bars rockland-nav__icon m-0" />
                     </button>
@@ -274,6 +285,8 @@ const Nav = () => {
             )}
           </div>
         </div>
+        {/* hot tags */}
+        <HotTags />
       </div>
     </nav>
   );

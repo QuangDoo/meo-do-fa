@@ -19,6 +19,7 @@
     "graphql": "^15.4.0",
     "http-proxy-middleware": "^1.0.6",
     "js-cookie": "^2.2.1",
+    "jwt-decode": "^3.1.2",
     "luxon": "^1.25.0",
     "moment": "^2.29.1",
     "next": "^10.0.9",
