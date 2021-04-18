@@ -71,13 +71,6 @@ export default function OrderItem(props: Props) {
           <button className="btn btn-outline-danger btn-sm" onClick={() => setOpen(true)}>
             {t('myOrders:cancel_order')}
           </button>
-          <>
-            <button
-              className="btn btn-outline-complain btn-sm"
-              onClick={() => setOpenComplain(true)}>
-              {t('myOrders:send_fb')}
-            </button>
-          </>
         </div>
       )}
 
@@ -86,6 +79,13 @@ export default function OrderItem(props: Props) {
           <a href="tel:1900232436" className="btn btn-outline-primary btn-sm">
             {t('myOrders:help')}
           </a>
+          {/* <>
+            <button
+              className="btn btn-outline-complain btn-sm"
+              onClick={() => setOpenComplain(true)}>
+              {t('myOrders:send_fb')}
+            </button>
+          </> */}
         </div>
       )}
 

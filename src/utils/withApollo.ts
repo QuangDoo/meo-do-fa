@@ -27,12 +27,13 @@ const httpLink = new HttpLink({
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors)
-    graphQLErrors.forEach(({ locations, path, extensions }) => {
+    graphQLErrors.forEach(({ message, locations, path, extensions }) => {
       console.log(
         `=========⚠️ [GraphQL error] ========\n
 - Code: ${extensions.code} \n
 - Location: ${locations} \n
 - Path: ${path} \n
+- Message: ${message} \n
 ===================================\n
       `.trim()
       );
