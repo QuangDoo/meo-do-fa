@@ -1,8 +1,11 @@
 import { useMutation } from '@apollo/client';
+import axios from 'axios';
 import { Trans, useTranslation } from 'i18n';
 import cookies from 'js-cookie';
+import jwt_decode from 'jwt-decode';
+import getConfig from 'next/config';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { emailRegex, noSpecialChars } from 'src/assets/regex/email';
@@ -11,6 +14,7 @@ import { viPhoneNumberRegex } from 'src/assets/regex/viPhoneNumber';
 import Button from 'src/components/Form/Button';
 import Checkbox from 'src/components/Form/Checkbox';
 import Input from 'src/components/Form/Input';
+import Loading from 'src/components/Layout/Loading';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { useModalControlDispatch } from 'src/contexts/ModalControl';
 import { useUser } from 'src/contexts/User';
@@ -29,12 +33,22 @@ type Inputs = {
   tax: string;
 };
 
-const accountTypes = ['PHARMACY', 'DRUGSTORE', 'CLINIC', 'HOSPITAL'];
+const accountTypes = ['PHARMACY', 'DRUGSTORE'];
+
+const { publicRuntimeConfig } = getConfig();
+
+type DECODE = { userId: number };
 
 const RegisterForm = () => {
   const { t } = useTranslation(['register', 'errors']);
 
   const router = useRouter();
+
+  const FILES_GATEWAY = `https://${
+    publicRuntimeConfig.FILES_GATEWAY_EXT || process.env.NEXT_PUBLIC_FILES_GATEWAY
+  }`;
+
+  const [file, setFile] = useState<File>();
 
   const { register, handleSubmit, watch, setValue } = useForm<Inputs>();
 
@@ -54,6 +68,22 @@ const RegisterForm = () => {
     {
       onCompleted: (data) => {
         cookies.set('token', data.createUser.token);
+
+        const decode: DECODE = jwt_decode(data.createUser.token.substr(7));
+        const { userId } = decode;
+        if (file) {
+          const formData = new FormData();
+
+          formData.append('image', file);
+          formData.append('id', userId + '');
+
+          axios
+            .post(`${FILES_GATEWAY}/certificate`, formData)
+
+            .catch((err) => {
+              console.log('Image upload error:', err);
+            });
+        }
         closeModal();
         refetchUser();
         router.reload();
@@ -66,21 +96,23 @@ const RegisterForm = () => {
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.currentTarget.files[0];
-
+    setFile(file);
     const isImage = file.type.startsWith('image');
 
     if (!isImage) {
-      setValue('businessLicense', undefined);
       toast.error(t('cart:file_is_not_image'));
+      return;
     }
   };
+
   // On form submit
   const onFormSubmit = (data: Inputs) => {
+    const fullName = t(`register:${currentAccountType.toLowerCase()}`) + ' ' + data.name;
     createUser({
       variables: {
         inputs: {
           account_type: data.account_type,
-          name: data.name,
+          name: fullName,
           email: data.email,
           password: data.password,
           phone: data.phone.toString(),
@@ -125,9 +157,25 @@ const RegisterForm = () => {
                   />
                   <h6 className="business-group__item__text font-weight-bold">
                     {t(`register:${accountType.toLowerCase()}`)}
+                    <br />
+                    <small>({t(`register:hospital_clinic`)})</small>
                   </h6>
                 </button>
               ))}
+              <button
+                key="CUSTOMER"
+                type="button"
+                className="col-6 business-group__item p-2"
+                onClick={() => setValue('account_type', 'CUSTOMER')}>
+                <img
+                  alt=""
+                  className="img-fluid"
+                  src={`/assets/images/account-type__customer.png`}
+                />
+                <h6 className="business-group__item__text font-weight-bold">
+                  {t(`register:other`)}
+                </h6>
+              </button>
             </div>
           </div>
         </div>
@@ -151,7 +199,7 @@ const RegisterForm = () => {
           <Input
             name="name"
             ref={register({
-              required: `${t('input_name_error_required')}`
+              required: `${t('register:input_name_error_required')}`
             })}
             containerClass="mb-4"
             iconClass="icomoon icon-user"

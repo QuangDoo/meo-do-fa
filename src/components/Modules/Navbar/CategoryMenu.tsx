@@ -13,7 +13,7 @@ import {
   GetCategoriesLevelData
 } from 'src/graphql/category/getCategoriesLevel';
 
-import Dropdown from '../Form/Dropdown';
+import Dropdown from '../../Form/Dropdown';
 
 type Props = {
   categories: Category[];

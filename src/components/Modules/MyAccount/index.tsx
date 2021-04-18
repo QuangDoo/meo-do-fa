@@ -1,29 +1,29 @@
-import { useLazyQuery, useQuery } from '@apollo/client';
 import axios from 'axios';
 import { useTranslation } from 'i18n';
-import getConfig from 'next/config';
 import React, { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
+import { animateScroll } from 'react-scroll';
 import { toast } from 'react-toastify';
 import Button from 'src/components/Form/Button';
+import FormGroup from 'src/components/Form/FormGroup';
+import FormGroupLabel from 'src/components/Form/FormGroupLabel';
 import InputWithLabel from 'src/components/Form/InputWithLabel';
-import SelectWithLabel from 'src/components/Form/SelectWithLabel';
-import Loading from 'src/components/Layout/Loading';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
+import { FILES_GATEWAY } from 'src/constants';
 import { useUser } from 'src/contexts/User';
-import { GET_CITIES, GetCitiesData } from 'src/graphql/address/getCities';
-import {
-  GET_DISTRICTS,
-  GetDistrictsData,
-  GetDistrictsVars
-} from 'src/graphql/address/getDistricts';
-import { GET_WARDS, GetWardsData, GetWardsVars } from 'src/graphql/address/getWards';
 import { UPDATE_USER, UpdateUserData, UpdateUserVars } from 'src/graphql/user/updateUser';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 
 import ProfileLayout from '../ProfileLayout';
+import AddCertificate from './AddCertificate';
+import AddressSelect from './AddressSelect';
+import CertificateImage from './CertificateImage';
 import FormCard from './FormCard';
-const { publicRuntimeConfig } = getConfig();
+
+export type ImageObject = {
+  file?: File;
+  src: string;
+};
 
 type Inputs = {
   name: string;
@@ -33,7 +33,6 @@ type Inputs = {
   accountType: string;
   companyName: string;
   representative: string;
-  // businessLicense: FileList;
   businessLicense: string;
   taxCode: string;
   companyStreet: string;
@@ -46,159 +45,107 @@ type Inputs = {
   deliveryWard: string;
 };
 
-const FILES_GATEWAY = `https://${
-  publicRuntimeConfig.FILES_GATEWAY_EXT || process.env.NEXT_PUBLIC_FILES_GATEWAY
-}`;
-
 export default function MyAccountPage() {
   const { t } = useTranslation(['myAccount', 'common', 'errors']);
 
   const { data: user, refetch: refetchUser } = useUser();
 
-  const { register, handleSubmit, watch, setValue } = useForm<Inputs>();
+  const methods = useForm<Inputs>();
 
-  const [licenseHidden, setLicenseHidden] = useState<boolean>(false);
-  const [licenseTime, setLicenseTime] = useState<number>(new Date().getTime());
-  const [loadingCertificate, setLoadingCertificate] = useState<boolean>(false);
+  const { register, handleSubmit } = methods;
 
-  const [firstLoadCities, setFirstLoadCities] = useState(true);
-  const [firstLoadDistricts, setFirstLoadDistricts] = useState(true);
-  const [firstLoadWards, setFirstLoadWards] = useState(true);
+  const [updatingUser, setUpdatingUser] = useState<boolean>(false);
 
-  const { data: citiesData } = useQuery<GetCitiesData, undefined>(GET_CITIES);
+  const [updateUser] = useMutationAuth<UpdateUserData, UpdateUserVars>(UPDATE_USER, {
+    onError: (err) => {
+      setUpdatingUser(false);
 
-  const cities = citiesData?.getCities || [];
-
-  const chosenCity = watch('companyCity');
-  console.log(`user`, user);
-  useEffect(() => {
-    if (!user?.contact_address || !citiesData || !firstLoadCities) return;
-
-    setFirstLoadCities(false);
-    const { city } = user.contact_address;
-    setValue('companyCity', city.name + '__' + city.id);
-    getDistricts({
-      variables: {
-        city_id: city.id
-      }
-    });
-  }, [citiesData, user]);
-
-  const handleCityChange = (event) => {
-    const { value } = event.target;
-
-    setValue('companyDistrict', '');
-    setValue('companyWard', '');
-
-    if (value) {
-      getDistricts({
-        variables: {
-          city_id: +value.split('__')[1]
-        }
-      });
-    }
-  };
-
-  const [getDistricts, { data: districtsData }] = useLazyQuery<GetDistrictsData, GetDistrictsVars>(
-    GET_DISTRICTS,
-    {
-      onCompleted: () => {
-        if (!firstLoadDistricts || !user?.contact_address) return;
-
-        setFirstLoadDistricts(false);
-        const { district } = user.contact_address;
-        setValue('companyDistrict', district.name + '__' + district.id);
-        getWards({
-          variables: {
-            district_id: district.id
-          }
-        });
-      }
-    }
-  );
-
-  const handleDistrictChange = (event) => {
-    const { value } = event.target;
-
-    setValue('companyWard', '');
-
-    if (value) {
-      getWards({
-        variables: {
-          district_id: +value.split('__')[1]
-        }
-      });
-    }
-  };
-
-  const districts = districtsData?.getDistricts || [];
-
-  const chosenDistrict = watch('companyDistrict');
-
-  const [getWards, { data: wardsData }] = useLazyQuery<GetWardsData, GetWardsVars>(GET_WARDS, {
-    onCompleted: () => {
-      if (!firstLoadWards || !user?.contact_address) return;
-
-      setFirstLoadWards(false);
-      const { ward } = user.contact_address;
-      setValue('companyWard', ward.name + '__' + ward.id);
+      toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
     }
   });
 
-  const wards = wardsData?.getWards || [];
+  const [previewImages, setPreviewImages] = useState<ImageObject[]>([]);
 
-  const [updateUser, { loading: updatingUser }] = useMutationAuth<UpdateUserData, UpdateUserVars>(
-    UPDATE_USER,
-    {
-      onCompleted: () => {
-        refetchUser().then(() => {
-          toast.success(t('myAccount:update_success'));
-        });
-        window.scrollTo(0, 0);
-      },
-      onError: (err) => {
-        toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
-      }
-    }
-  );
+  // On user load
+  useEffect(() => {
+    if (!user) return;
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.currentTarget.files[0];
+    if (!user.business_license) return;
 
-    const isImage = file.type.startsWith('image');
+    // Uploaded image ids
+    const ids = user.business_license?.split(',');
 
-    if (!isImage) {
-      toast.error(t('cart:file_is_not_image'));
-      return;
-    }
+    // Display uploaded images
+    setPreviewImages(
+      ids?.map((id) => ({
+        src: `${FILES_GATEWAY}/certificate/${id}`
+      }))
+    );
+  }, [user]);
 
+  const [deletedImageIds, setDeletedImageIds] = useState<string[]>([]);
+
+  const uploadNewImages = async () => {
+    // Get new images (images that has file)
+    const newImages = previewImages.filter((o) => o.file);
+
+    if (newImages.length === 0) return;
+
+    // Form data to upload new images
     const formData = new FormData();
 
-    formData.append('image', file);
-    formData.append('id', user?.id + '');
-    setLoadingCertificate(true);
+    // Add new images to form data
+    newImages.forEach((image) => {
+      formData.append('images', image.file);
+    });
+
+    try {
+      // Upload new images
+      // response.data is a string array containing updated image ids
+      const response = await axios.post(`${FILES_GATEWAY}/certificate`, formData);
+
+      return response.data;
+    } catch (error) {
+      console.log('Upload certificates error:', error);
+    }
+  };
+
+  const deleteOldImages = async () => {
+    if (deletedImageIds.length === 0) return;
+
+    // Delete images
     axios
-      .post(`${FILES_GATEWAY}/certificate`, formData)
-
-      .then(() => {
-        setLicenseTime(new Date().getTime());
-        setLicenseHidden(false);
-        setLoadingCertificate(false);
+      .delete(`${FILES_GATEWAY}/certificate`, {
+        data: {
+          ids: deletedImageIds
+        }
       })
-
-      .catch((err) => {
-        console.log('Image upload error:', err);
+      .then(() => {
+        setDeletedImageIds([]);
+      })
+      .catch((error) => {
+        console.log('Delete certificates error:', error);
+        console.log('Certificate ids to delete:', deletedImageIds);
       });
   };
 
   const onSubmit = async (data: Inputs) => {
+    setUpdatingUser(true);
+
+    deleteOldImages();
+
+    const newIds = await uploadNewImages();
+
+    const imageIds = previewImages.map((o) =>
+      o.src.startsWith(FILES_GATEWAY) ? o.src.split('/').pop() : newIds.shift()
+    );
+
     const regVat = /(^[0-9]{10}$)|(^[0-9]{13}$)/g;
 
     let userVat = data?.taxCode.replace(/-/g, '');
 
     if (userVat !== '' && !regVat.test(userVat)) {
       toast.error(t('errors:tax_code_invalid'));
-
       return;
     }
 
@@ -209,6 +156,7 @@ export default function MyAccountPage() {
     const [cityName, cityId] = data.companyCity.split('__');
     const [districtName, districtId] = data.companyDistrict.split('__');
     const [wardName, wardId] = data.companyWard.split('__');
+
     updateUser({
       variables: {
         name: data.name,
@@ -229,13 +177,23 @@ export default function MyAccountPage() {
           }
         },
         company_name: data.companyName,
-        vat: userVat,
-        representative: data.representative
+        vat: userVat || undefined,
+        representative: data.representative,
+        business_license: imageIds.join(',')
       }
-    });
+    })
+      .then(() => refetchUser())
+      .then(() => {
+        setUpdatingUser(false);
+
+        animateScroll.scrollToTop();
+
+        toast.success(t('myAccount:update_success'));
+      });
   };
-  // console.log(typeof user.vat);
-  const vat = user.vat?.replace('-', ' - ');
+
+  const vat = user?.vat?.replace('-', ' - ') || '';
+
   const onError = (error) => {
     toast.error(error[Object.keys(error)[0]].message);
   };
@@ -244,197 +202,125 @@ export default function MyAccountPage() {
     <ProfileLayout title={t('myAccount:title')}>
       <LoadingBackdrop open={updatingUser} />
 
-      <form onSubmit={handleSubmit(onSubmit, onError)}>
-        <FormCard title={t('myAccount:account_info')}>
-          {/* Full name */}
-          <InputWithLabel
-            ref={register({
-              required: t('myAccount:name_required') + ''
-            })}
-            required
-            label={t('myAccount:name_label')}
-            name="name"
-            type="text"
-            placeholder={t('myAccount:name_placeholder')}
-            defaultValue={user?.name}
-            maxLength={100}
-          />
+      <FormProvider {...methods}>
+        <form onSubmit={handleSubmit(onSubmit, onError)}>
+          <FormCard title={t('myAccount:account_info')}>
+            {/* Full name */}
+            <InputWithLabel
+              ref={register({
+                required: t('myAccount:name_required') + ''
+              })}
+              required
+              label={t('myAccount:name_label')}
+              name="name"
+              type="text"
+              placeholder={t('myAccount:name_placeholder')}
+              defaultValue={user?.name}
+              maxLength={100}
+            />
 
-          {/* Phone number */}
-          <InputWithLabel
-            disabled
-            label={t('myAccount:phone_label')}
-            type="text"
-            defaultValue={user?.phone}
-          />
-
-          {/* Email */}
-          <InputWithLabel
-            disabled
-            label={t('myAccount:email_label')}
-            type="text"
-            defaultValue={user?.email}
-          />
-        </FormCard>
-
-        <FormCard title={t('myAccount:business_info')}>
-          <div className="row">
-            {/* Account type */}
+            {/* Phone number */}
             <InputWithLabel
               disabled
-              containerClass="col-md-4"
-              label={t('myAccount:account_type_label')}
+              label={t('myAccount:phone_label')}
               type="text"
-              defaultValue={
-                user?.account_type ? t(`myAccount:account_type_${user.account_type}`) : ''
-              }
+              defaultValue={user?.phone || ''}
             />
 
-            {/* Pharmacy/clinic name */}
+            {/* Email */}
             <InputWithLabel
-              ref={register}
-              containerClass="col-md-8"
-              label={t('myAccount:company_name_label')}
-              name="companyName"
+              disabled
+              label={t('myAccount:email_label')}
               type="text"
-              defaultValue={user?.company_name}
-              placeholder={t('myAccount:company_name_placeholder')}
+              defaultValue={user?.email || ''}
             />
-          </div>
+          </FormCard>
 
-          {/* Legal representative */}
-          <InputWithLabel
-            ref={register}
-            label={t('myAccount:representative_label')}
-            name="representative"
-            type="text"
-            defaultValue={user?.representative}
-            placeholder={t('myAccount:representative_placeholder')}
-          />
+          <FormCard title={t('myAccount:business_info')}>
+            <div className="row">
+              {/* Account type */}
+              <InputWithLabel
+                disabled
+                containerClass="col-md-4"
+                label={t('myAccount:account_type_label')}
+                type="text"
+                defaultValue={
+                  user?.account_type ? t(`myAccount:account_type_${user.account_type}`) : ''
+                }
+              />
 
-          {/* Tax code */}
-          <InputWithLabel
-            ref={register}
-            label={t('myAccount:tax_code_label')}
-            name="taxCode"
-            type="text"
-            defaultValue={vat}
-            placeholder={t('myAccount:tax_code_placeholder')}
-          />
-
-          {user.activated ? (
-            <label className="form__label mb-2">{t('myAccount:business_license_label')}</label>
-          ) : (
-            <InputWithLabel
-              label={t('myAccount:business_license_label')}
-              type="file"
-              accept="image/*"
-              placeholder={t('myAccount:business_license_placeholder')}
-              onChange={handleFileChange}
-              containerClass="mb-2"
-              disabled={user.activated}
-            />
-          )}
-
-          <input
-            hidden
-            ref={register}
-            name="businessLicense"
-            defaultValue={user?.business_license}
-          />
-          {loadingCertificate && (
-            <div className="text-center">
-              <Loading />
-            </div>
-          )}
-          {!loadingCertificate && (
-            <div>
-              <img
-                hidden={licenseHidden}
-                alt=""
-                className="mb-3 business-license-img"
-                src={`${FILES_GATEWAY}/certificate/${user?.id}?${licenseTime}`}
-                onError={() => setLicenseHidden(true)}
+              {/* Pharmacy/clinic name */}
+              <InputWithLabel
+                ref={register}
+                containerClass="col-md-8"
+                label={t('myAccount:company_name_label')}
+                name="companyName"
+                type="text"
+                defaultValue={user?.company_name || user?.name || ''}
+                placeholder={t('myAccount:company_name_placeholder')}
               />
             </div>
-          )}
 
-          <InputWithLabel
-            ref={register({
-              required: t('myAccount:street_required') + ''
-            })}
-            label={t('myAccount:company_street_label')}
-            name="companyStreet"
-            type="text"
-            placeholder={t('myAccount:company_street_placeholder')}
-            defaultValue={user?.contact_address?.street || ''}
-            required
-          />
+            {/* Legal representative */}
+            <InputWithLabel
+              ref={register}
+              label={t('myAccount:representative_label')}
+              name="representative"
+              type="text"
+              defaultValue={user?.representative || ''}
+              placeholder={t('myAccount:representative_placeholder')}
+            />
 
-          <div className="row">
-            <SelectWithLabel
-              onChange={handleCityChange}
-              name="companyCity"
+            {/* Tax code */}
+            <InputWithLabel
+              ref={register}
+              label={t('myAccount:tax_code_label')}
+              name="taxCode"
+              type="text"
+              defaultValue={vat || ''}
+              placeholder={t('myAccount:tax_code_placeholder')}
+            />
+
+            <FormGroup>
+              <FormGroupLabel>{t('myAccount:business_license_label')}</FormGroupLabel>
+
+              <div className="certificate-container">
+                {previewImages?.map((image, index) => (
+                  <CertificateImage
+                    key={image.src}
+                    image={image}
+                    index={index}
+                    setCertificateImages={setPreviewImages}
+                    setDeletedImageIds={setDeletedImageIds}
+                  />
+                ))}
+
+                <AddCertificate setPreviewImages={setPreviewImages} previewImages={previewImages} />
+              </div>
+            </FormGroup>
+
+            <InputWithLabel
               ref={register({
-                required: t('myAccount:company_city_required') + ''
+                required: t('myAccount:street_required') + ''
               })}
-              containerClass="col-md-4"
+              label={t('myAccount:company_street_label')}
+              name="companyStreet"
+              type="text"
+              placeholder={t('myAccount:company_street_placeholder')}
+              defaultValue={user?.contact_address?.street || ''}
               required
-              label={t('common:city_select_label')}>
-              <option value="">{t('common:city_select_placeholder')}</option>
+            />
 
-              {cities.map(({ id, name }) => (
-                <option key={id} value={name + '__' + id}>
-                  {name}
-                </option>
-              ))}
-            </SelectWithLabel>
+            <AddressSelect />
+          </FormCard>
 
-            <SelectWithLabel
-              onChange={handleDistrictChange}
-              name="companyDistrict"
-              ref={register({
-                required: t('myAccount:company_district_required') + ''
-              })}
-              containerClass="col-md-4"
-              required
-              label={t('common:district_select_label')}
-              disabled={!districts.length || !chosenCity}>
-              <option value="">{t('common:district_select_placeholder')}</option>
-
-              {districts.map(({ id, name }) => (
-                <option key={id} value={name + '__' + id}>
-                  {name}
-                </option>
-              ))}
-            </SelectWithLabel>
-
-            <SelectWithLabel
-              name="companyWard"
-              ref={register({
-                required: t('myAccount:company_ward_required') + ''
-              })}
-              containerClass="col-md-4"
-              required
-              label={t('common:ward_select_label')}
-              disabled={!wards.length || !chosenCity || !chosenDistrict}>
-              <option value="">{t('common:ward_select_placeholder')}</option>
-
-              {wards.map(({ id, name }) => (
-                <option key={id} value={name + '__' + id}>
-                  {name}
-                </option>
-              ))}
-            </SelectWithLabel>
+          <div className="col-12 d-flex justify-content-center">
+            <Button type="submit" variant="primary" size="lg">
+              {t('update_button')}
+            </Button>
           </div>
-        </FormCard>
-
-        <div className="col-12 d-flex justify-content-center">
-          <Button type="submit" variant="primary" size="lg">
-            {t('update_button')}
-          </Button>
-        </div>
-      </form>
+        </form>
+      </FormProvider>
     </ProfileLayout>
   );
 }
