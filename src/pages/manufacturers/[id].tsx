@@ -61,7 +61,7 @@ function ManufacturerDetail() {
       pageSize: 20,
       condition: {
         order_type: '',
-        manufacturer_id: (manufacturerId as string) || null
+        manufacturer_id: manufacturerId as string
       }
     },
     fetchPolicy: 'network-only',
@@ -86,19 +86,19 @@ function ManufacturerDetail() {
         </div>
         <div className="row pl-3">
           <div className="col-12 mb-3">
-            <h3 className="h3 mb-3">{t('manufacturerDetails:manu_info')}</h3>
-            <p
-              className="text-sub ml-3 mb-3"
+            <h1 className="h3 mb-3">{t('manufacturerDetails:manu_info')}</h1>
+            <div
+              className="ml-3 mb-3"
               dangerouslySetInnerHTML={{ __html: manufacturerDescription }}
             />
           </div>
           {productsByManufacturer?.total !== 0 && (
             <div className="row no-gutters">
               <div className="col-12 mb-3 px-3">
-                <h4 className="my-3">
+                <h3 className="my-3">
                   {t('manufacturerDetails:manu_products')}
                   {manufacturerName}
-                </h4>
+                </h3>
               </div>
               <div className="col-12 my-3 px-3">
                 <div className="products__cards mb-3">

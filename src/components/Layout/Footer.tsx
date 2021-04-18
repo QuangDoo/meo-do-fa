@@ -1,5 +1,4 @@
 import { useMutation } from '@apollo/client';
-import { Grid } from '@material-ui/core';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import React from 'react';
@@ -90,7 +89,7 @@ const Footer = () => {
                 <div className="col-sm-auto d-none d-md-block col-12 align-items-end text-center">
                   <img
                     style={{ height: '80px' }}
-                    src="/assets/images/newsletter-md.png"
+                    src="/assets/images/newsletter.png"
                     alt="newsletter"
                     className="img-fluid"
                   />
@@ -137,7 +136,7 @@ const Footer = () => {
         <div className="container pb-5 pt-0">
           <div className="row justify-content-between">
             <div className="col-xl-4 col-lg-4 col-md-4  col-sm-12">
-              <div className="footer__info mb-4">
+              <div className="footer__info mb-5">
                 <div className="footer__info-logo mb-3">
                   <div className="rockland-logo d-inline-block">
                     <Link href="/">
@@ -182,7 +181,7 @@ const Footer = () => {
               </div>
             </div>
             <div className="col-xl-4 col-lg-5 col-md-4 col-sm-7">
-              <div className="mb-3">
+              <div className="mb-5">
                 <div className="footer__header mb-3">{t('footer:general_info')}</div>
 
                 <div className="row">
@@ -206,105 +205,94 @@ const Footer = () => {
                 </div>
               </div>
             </div>
-            <div className="col-xl-4 col-lg-3 col-md-4 col-sm-5 ">
-              {/* <Grid container spacing={2}> */}
-              <Grid item sm={12}>
-                <div className="footer__header mb-3">{t('footer:contacts')}</div>
-              </Grid>
-              <Grid item sm={12}>
-                <div className="mb-3">
-                  <p className="d-flex align-items-center">
-                    <i className="far fa-envelope footer__icon footer__icon--email" />
+            <div className="col-xl-4 col-lg-3 col-md-4 col-sm-5">
+              <div className="footer__header mb-3">{t('footer:contacts')}</div>
 
-                    <a
-                      className="footer__link footer__link--email px-2 mr-2"
-                      href="mailto: info@medofa.com">
-                      info@medofa.com
-                    </a>
+              <div className="mb-3">
+                <p className="d-flex align-items-center">
+                  <i className="far fa-envelope footer__icon footer__icon--email" />
 
-                    {/* <a className="footer__icon footer__icon--fb">
-                          <i className="fab fa-facebook-f" />
-                        </a> */}
-                  </p>
-                  <p />
-                  <div className="d-flex flex-wrap align-items-center">
-                    <i className="fa fa-phone footer__icon footer__icon--email" />
-                    <a className="text-white pl-2 mr-2" href="tel:1900232436">
-                      1900232436
-                    </a>
-                    <span className="pb-1">|</span>
-                    <a className="text-white px-lg-2 mr-2 pl-md-5 pl-sm-5" href="tel:0914956936">
-                      0914956936
-                    </a>
-                  </div>
-                  {/* <small>{t('footer:work_time')}</small> */}
-                  <p />
+                  <a
+                    className="footer__link footer__link--email px-2 mr-2"
+                    href="mailto: info@medofa.com">
+                    info@medofa.com
+                  </a>
+
+                  {/* <a className="footer__icon footer__icon--fb">
+                    <i className="fab fa-facebook-f" />
+                  </a> */}
+                </p>
+                <p />
+                <div className="d-flex flex-wrap align-items-center">
+                  <i className="fa fa-phone footer__icon footer__icon--email" />
+                  <a className="text-white pl-2 mr-2" href="tel:1900232436">
+                    1900232436
+                  </a>
+                  <span className="pb-1">|</span>
+                  <a className="text-white px-lg-2 mr-2 pl-md-5 pl-sm-5" href="tel:0914956936">
+                    0914956936
+                  </a>
                 </div>
-              </Grid>
-              <Grid container item sm={12}>
-                <Grid item sm={6} lg={12}>
-                  <div className="mb-5">
-                    <div className="footer__header mb-3">{t('footer:delivery')}</div>
+                {/* <small>{t('footer:work_time')}</small> */}
+                <p />
+              </div>
+              <div className="mb-5 mb-sm-0">
+                <div className="footer__header mb-3">{t('footer:delivery')}</div>
 
-                    <div>
-                      <img
-                        className="img-fluid footer__delivery"
-                        src="/assets/images/logo-ghtk.png"
-                        alt="logo-ghtk"
-                      />
+                <div>
+                  <img
+                    className="img-fluid footer__delivery"
+                    src="/assets/images/ghtk-22fbe4903100177078c795a37f7ce7260582b95c1bad6cf37a0dba76127e7f5d.png"
+                    alt="logo-ghtk"
+                  />
 
-                      <img
-                        className="img-fluid footer__delivery"
-                        src="/assets/images/pharma-logistics-logo-sm.png"
-                        alt="logo-logistics-pharma"
-                      />
+                  <img
+                    className="img-fluid footer__delivery"
+                    src="/assets/images/pharma-logistics-logo.png"
+                    alt="logo-logistics-pharma"
+                  />
 
-                      {/* <img
-                          className="img-fluid footer__delivery"
-                          src="/assets/images/ghn-logo.png"
-                          alt="logo-ghn"
-                        /> */}
+                  {/* <img
+                    className="img-fluid footer__delivery"
+                    src="/assets/images/ghn-logo.png"
+                    alt="logo-ghn"
+                  /> */}
 
-                      {/* <img
-                        className="img-fluid footer__delivery"
-                        src="/assets/images/grab-0d623c296e4838dd4d67984a580fa1b244962d8e5e8de76f3acb548cddbf0c6c.png"
-                        alt="MEDOFA"
-                      />
+                  {/* <img
+                  className="img-fluid footer__delivery"
+                  src="/assets/images/grab-0d623c296e4838dd4d67984a580fa1b244962d8e5e8de76f3acb548cddbf0c6c.png"
+                  alt="MEDOFA"
+                />
 
-                      <img
-                        className="img-fluid footer__delivery"
-                        src="/assets/images/ghn-7c7a86d8247685ce42bf1dd7eea07970b502b4a21be9ab6a15787dc0899a3b79.png"
-                        alt="MEDOFA"
-                      />
+                <img
+                  className="img-fluid footer__delivery"
+                  src="/assets/images/ghn-7c7a86d8247685ce42bf1dd7eea07970b502b4a21be9ab6a15787dc0899a3b79.png"
+                  alt="MEDOFA"
+                />
 
-                      <img
-                        className="img-fluid footer__delivery"
-                        src="/assets/images/viettelpost-7e17e215b6fb2451347c386209259806b03dd68db90c636c9d800439cf195b0c.png"
-                        alt="MEDOFA"
-                      /> */}
+                <img
+                  className="img-fluid footer__delivery"
+                  src="/assets/images/viettelpost-7e17e215b6fb2451347c386209259806b03dd68db90c636c9d800439cf195b0c.png"
+                  alt="MEDOFA"
+                /> */}
 
-                      {/* <img
-                        className="img-fluid footer__delivery"
-                        src="/assets/images/ninjavan-df8ca83378c8c4f339ac240d845807ef5cfdef493b0e0a1762b8cb4ccce8feea.png"
-                        alt="MEDOFA"
-                      /> */}
-                    </div>
-                  </div>
-                </Grid>
-                <Grid item sm={6}>
-                  <div className="footer__bct ">
-                    <a rel="nofollow">
-                      <img
-                        alt="Dấu đỏ của Bộ Công Thương"
-                        className="img-fluid"
-                        src="/assets/images/logo_dang_cho_duyet-sm.png"
-                        title="Dấu đỏ của Bộ Công Thương"
-                      />
-                    </a>
-                  </div>
-                </Grid>
-              </Grid>
-              {/* </Grid> */}
+                  {/* <img
+                  className="img-fluid footer__delivery"
+                  src="/assets/images/ninjavan-df8ca83378c8c4f339ac240d845807ef5cfdef493b0e0a1762b8cb4ccce8feea.png"
+                  alt="MEDOFA"
+                /> */}
+                </div>
+              </div>
+              <div className="footer__bct mt-3">
+                <a rel="nofollow">
+                  <img
+                    alt="Dấu đỏ của Bộ Công Thương"
+                    className="img-fluid"
+                    src="/assets/images/logo_dang_cho_duyet.png"
+                    title="Dấu đỏ của Bộ Công Thương"
+                  />
+                </a>
+              </div>
             </div>
           </div>
         </div>

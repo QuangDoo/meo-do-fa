@@ -35,10 +35,5 @@
   "unit_price": "Unit price",
   "vat_invoice": "See information about VAT invoice",
   "wait_for_confirm": "Wait for confirm",
-  "received": "Received",
-  "orderNo" : "Order ID",
-  "feedback": "Feedback Order",
-  "send_fb" : "Send feedback",
-  "img_faults" : "Image for faults",
-  "max_img" : "Select maximum 6 images"
+  "received": "Received"
 }

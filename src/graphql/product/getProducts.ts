@@ -1,12 +1,5 @@
 import { gql } from '@apollo/client';
 
-export enum TagType {
-  PRODUCT = 'PRODUCT',
-  MANUFATURE = 'MANUFATURE',
-  INGREDIENT = 'INGREDIENT',
-  SUPPLIER = 'SUPPLIER'
-}
-
 export const productCardQueryProps = `
   id
   name
@@ -94,8 +87,6 @@ export type Condition = {
   min_price?: number;
   max_price?: number;
   pathology_id?: string;
-  supplier_id?: string;
-  search_tag?: TagType;
 };
 
 export type GetProductsVars = {

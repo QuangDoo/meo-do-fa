@@ -648,20 +648,6 @@ fieldset:disabled a.btn {
 .show > .btn-outline-warning.dropdown-toggle:focus {
   box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.5);
 }
-.btn-outline-complain{
-  color: #17a2b8;
-  border-color: #17a2b8;
-}
-.btn-outline-complain:hover{
-  color: #ffffff;
-  background-color: #17a2b8;
-  border-color: #17a2b8;
-}
-.btn-outline-complain:focus,
-.btn-outline-complain.focus {
-  box-shadow: 0 0 0 0.2rem rgba(13, 197, 197, 0.5);
-}
-
 .btn-outline-danger {
   color: #dc3545;
   border-color: #dc3545;

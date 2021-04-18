@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { Trans, useTranslation } from 'i18n';
 import cookies from 'js-cookie';
 import { useRouter } from 'next/router';
@@ -10,7 +10,6 @@ import Button from 'src/components/Form/Button';
 import Input from 'src/components/Form/Input';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { useModalControlDispatch } from 'src/contexts/ModalControl';
-import { GET_WEBSITE_CONFIG, GetWebsiteConfigData } from 'src/graphql/configs/getWebsiteConfig';
 import { LOGIN_USER, LoginData, LoginVars } from 'src/graphql/user/login';
 
 type Inputs = {
@@ -31,11 +30,6 @@ const LoginForm = () => {
 
   const { register, handleSubmit } = useForm<Inputs>();
 
-  const { data: configData } = useQuery<GetWebsiteConfigData, undefined>(GET_WEBSITE_CONFIG);
-
-  const MAIN_PAGE = configData?.getWebsiteConfig?.find((config) => config.key === 'MAIN_PAGE')
-    ?.value;
-
   const [login, { loading: loggingIn }] = useMutation<LoginData, LoginVars>(LOGIN_USER, {
     onCompleted: (data) => {
       cookies.set('token', data.login.token);
@@ -46,7 +40,7 @@ const LoginForm = () => {
         router.reload();
       } else {
         //router.push("/products");
-        MAIN_PAGE ? router.push(`/${MAIN_PAGE}`) : router.push('/');
+        router.push('/');
       }
     },
     onError: (error) => {

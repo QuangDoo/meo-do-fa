@@ -67,6 +67,22 @@ export default function SearchScreen(props: Props) {
 
   return (
     <div className="filter-search container mobile-content py-3 py-sm-5">
+      <div className="filter-search__search text-right mb-4">
+        <form onSubmit={onSubmit}>
+          <input
+            ref={register}
+            className="search"
+            name="search"
+            placeholder={t(`searchBar:enter_name_${router.pathname.substring(1)}`)}
+            onBlur={onSubmit}
+          />
+
+          <button type="submit" className="btn-search">
+            <i className="fa fa-search" />
+          </button>
+        </form>
+      </div>
+
       <div className="filter my-4">
         {filterChars.map((char) => (
           <div

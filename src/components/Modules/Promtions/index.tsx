@@ -31,10 +31,10 @@ const Promotions = (): JSX.Element => {
       <div className="col-12 mb-3">
         <h1>{t('promotions:promotions')}</h1>
         <div hidden={promotivebanner?.length === 0}>
-          {promotivebanner?.map(({ image, id, link }) => (
+          {promotivebanner?.map(({ image, id }) => (
             <div className="banner__slide__promotion" key={id}>
               <div className="banner__img">
-                <Link href={link}>
+                <Link href={`promotions/1`}>
                   <a>
                     <Image src={image} layout="fill" objectFit="cover" />
                   </a>
