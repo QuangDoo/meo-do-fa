@@ -52,7 +52,6 @@ export default function CartPage() {
     variables: { ids: checkboxCarts },
     nextFetchPolicy: 'network-only'
   });
-
   const cartsCheckBox = dataGetCartByProduct?.getCartByProduct;
 
   const [createCounsel, { loading: creatingCounsel }] = useMutationAuth(CREATE_COUNSEL, {
@@ -157,7 +156,7 @@ export default function CartPage() {
           <div className="row">
             <div className="col-12 mb-3">
               <h1 className="h3">{t('cart:cart')}</h1>
-              {cart.totalQty !== 0 && (
+              {cart?.totalQty !== 0 && (
                 <div className="d-flex align-items-center">
                   <input
                     type="checkbox"

@@ -5,6 +5,7 @@ import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { useCart } from 'src/contexts/Cart';
+import { useCheckboxCarts } from 'src/contexts/CheckboxCarts';
 import { useNotify } from 'src/contexts/Notify';
 import { useUser } from 'src/contexts/User';
 import { CREATE_ORDER, CreateOrderData, CreateOrderVars } from 'src/graphql/order/createOrder';
@@ -80,6 +81,8 @@ const checkoutFormDefaultValues: CheckoutFormInputs = {
 const CheckoutPage = () => {
   const { t } = useTranslation(['checkout', 'errors']);
 
+  const { setCheckboxCarts } = useCheckboxCarts();
+
   const { data: user } = useUser();
 
   // Form handler with default values
@@ -132,7 +135,8 @@ const CheckoutPage = () => {
             icon: 'success'
           })
         )
-        .then(() => router.push('/'));
+        .then(() => router.push('/'))
+        .then(() => setCheckboxCarts([]));
 
       refetchNoti();
     },

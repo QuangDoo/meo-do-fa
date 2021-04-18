@@ -58,7 +58,7 @@ export default function ScrollableTabsButtonAuto(props) {
 
   function parseHTML(string) {
     return ['<p><br></p>', 'false', null].includes(string) ? (
-      t('updating')
+      <div className="text-sub">{t('updating')}</div>
     ) : (
       <p dangerouslySetInnerHTML={{ __html: string }} />
     );

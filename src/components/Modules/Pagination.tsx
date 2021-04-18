@@ -28,7 +28,8 @@ type PageButtonProps = {
 
 const PageButton = (props: PageButtonProps) => (
   <button className={clsx('page', props.active && 'current')} onClick={props.onClick}>
-    {props.children}
+    <div className="text-center fa-xs d-block d-sm-none">{props.children}</div>
+    <div className="text-center d-none d-sm-block">{props.children}</div>
   </button>
 );
 
@@ -73,16 +74,20 @@ const Pagination = (props: PaginationProps) => {
 
   return (
     count > 1 && (
-      <div className="d-flex justify-content-center mb-3">
+      <div className="d-flex justify-content-center mb-3  ">
         <nav aria-label="pager" className="page-nav pagination" role="navigation">
           {/* Previous page button */}
           <button hidden={page === 1} className="page" onClick={() => onChange(page - 1)}>
-            <i className="fas fa-arrow-left" />
+            <i className="fas fa-arrow-left text-center fa-1x d-none d-sm-block" />
+            <i className="fas fa-arrow-left text-center fa-1x d-block d-sm-none" />
           </button>
 
           {/* First page always shown */}
-          <button className={clsx('page', page === 1 && 'current')} onClick={() => onChange(1)}>
-            1
+          <button
+            className={clsx('page text-center', page === 1 && 'current')}
+            onClick={() => onChange(1)}>
+            <div className="text-center fa-xs d-none d-sm-block"> 1</div>
+            <div className="text-center fa-xs d-block d-sm-none"> 1</div>
           </button>
 
           {/* Gap */}
@@ -106,14 +111,16 @@ const Pagination = (props: PaginationProps) => {
 
           {/* Last page always shown */}
           <button
-            className={clsx('page', page === count && 'current')}
+            className={clsx('page text-center', page === count && 'current')}
             onClick={() => onChange(count)}>
-            {count}
+            <div className="text-center fa-xs d-none d-sm-block"> {count}</div>
+            <div className="text-center fa-xs d-block d-sm-none"> {count}</div>
           </button>
 
           {/* Next page button */}
           <button hidden={page === count} className="page" onClick={() => onChange(page + 1)}>
-            <i className="fas fa-arrow-right" />
+            <i className="fas fa-arrow-right text-center fa-1x d-none d-sm-block" />
+            <i className="fas fa-arrow-right text-center fa-1x d-block d-sm-none" />
           </button>
         </nav>
       </div>

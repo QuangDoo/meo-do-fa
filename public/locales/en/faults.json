@@ -1,0 +1,16 @@
+{
+    "fault_": "Fault...",
+    "fault_1": "Incorrect product",
+    "fault_2": "Not match amount",
+    "fault_3": "Error on products",
+    "fault_4": "Lost product",
+    "fault_5": "Incorrect invoice",
+    "fault_6": "Wrong delivery",
+    "fault_7": "Order not enough",
+    "fault_8": "Delay delivery",
+    "fault_9": "Cancel order",
+    "fault_10": "Product quality",
+    "fault_11": "Change amount",
+    "fault_12": "Incorrect price",
+    "fault_13": "Change deliver information"
+}
