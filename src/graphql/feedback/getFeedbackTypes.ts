@@ -3,7 +3,6 @@ import { gql } from '@apollo/client';
 type FeedbackTypes = {
   id: number;
   name: string;
-  info: string;
   code: string;
 };
 
@@ -16,7 +15,6 @@ export const GET_FEEDBACK_TYPES = gql`
     getFeedbackTypes {
       id
       name
-      info
       code
     }
   }

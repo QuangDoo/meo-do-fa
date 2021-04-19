@@ -21,7 +21,7 @@ import { FILES_GATEWAY } from 'src/constants';
 import {
   CREATE_FEEDBACK,
   CreateFeedbackData,
-  CreateFeedbackVar
+  CreateFeedbackVars
 } from 'src/graphql/feedback/createFeedback';
 import { GET_FEEDBACK_TYPES, GetFeedbackTypesData } from 'src/graphql/feedback/getFeedbackTypes';
 import {
@@ -29,7 +29,7 @@ import {
   GetOrderDetailData,
   GetOrderDetailVars
 } from 'src/graphql/order/getOrder';
-import { useQueryAuth } from 'src/hooks/useApolloHookAuth';
+import { useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
 import withToken from 'src/utils/withToken';
 
 Feedback.getInitialProps = async () => ({
@@ -76,7 +76,7 @@ function Feedback() {
   type Input = {
     guessName: string;
     guessPhone: string;
-    type: string;
+    type: number;
     note?: string;
     images: string[];
   };
@@ -84,7 +84,7 @@ function Feedback() {
   const defaultInput: Input = {
     guessName,
     guessPhone,
-    type: '',
+    type: 0,
     note: '',
     images: []
   };
@@ -96,9 +96,11 @@ function Feedback() {
     toast.error(error[Object.keys(error)[0]].message);
   };
 
-  const [createFeedback] = useMutation<CreateFeedbackData, CreateFeedbackVar>(CREATE_FEEDBACK, {
+  const [createFeedback] = useMutationAuth<CreateFeedbackData>(CREATE_FEEDBACK, {
     onCompleted: () => {
       toast.success(t('send_feedback_success'));
+      sessionStorage.setItem('pop_status', '1');
+      router.push('/');
     },
     onError: (error) => {
       toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
@@ -122,6 +124,7 @@ function Feedback() {
     try {
       // Upload new images
       // response.data is a string array containing updated image ids
+
       const response = await axios.post(`${FILES_GATEWAY}/feedback`, formData);
       return response.data;
     } catch (error) {
@@ -135,21 +138,19 @@ function Feedback() {
     const imageIds = previewImages.map((o) =>
       o.src.startsWith(FILES_GATEWAY) ? o.src.split('/').pop() : newIds?.shift()
     );
-    console.log(data);
-    console.log(imageIds);
 
-    // createFeedback({
-    //   variables: {
-    //     inputs: {
-    //       orderNo: orderNo,
-    //       guessName: data.guessName,
-    //       guessPhone: data.guessPhone,
-    //       type: data.type,
-    //       note: data.note,
-    //       images: imageIds
-    //     }
-    //   }
-    // }).catch((error) => toast.error(error));
+    createFeedback({
+      variables: {
+        inputs: {
+          orderId: order.id,
+          guestName: data.guessName,
+          guestPhone: data.guessPhone,
+          type: +data.type,
+          note: data.note,
+          images: imageIds
+        }
+      }
+    });
   };
 
   return (
@@ -218,7 +219,7 @@ function Feedback() {
                   })}
                   label={t('issue_name_label')}
                   required>
-                  <option value="">{t('issue_placeholder')}</option>
+                  <option value={0}>{t('issue_placeholder')}</option>
                   {feedbackTypes?.map((feedback) => (
                     <option key={feedback.id} value={feedback.id}>
                       {feedback.name}

@@ -1,11 +1,11 @@
 import { gql } from '@apollo/client';
 import { ResponseMessage } from 'src/types/responses';
 
-export type FeedbackInput = {
-  orderNo: string;
-  guessName: string;
-  guessPhone: string;
-  type: string;
+type CreateFeedbackInput = {
+  orderId: number;
+  guestName: string;
+  guestPhone: string;
+  type: number;
   note?: string;
   images: string[];
 };
@@ -13,11 +13,11 @@ export type FeedbackInput = {
 export type CreateFeedbackData = {
   createFeedback: ResponseMessage;
 };
-export type CreateFeedbackVar = {
-  inputs: FeedbackInput;
+export type CreateFeedbackVars = {
+  inputs: CreateFeedbackInput;
 };
 export const CREATE_FEEDBACK = gql`
-  mutation createFeedback($inputs: FeedbackInput) {
+  mutation createFeedback($inputs: CreateFeedbackInput!) {
     createFeedback(inputs: $inputs) {
       code
       status

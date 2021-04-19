@@ -68,11 +68,13 @@ export default function OrderItem(props: Props) {
         </div>
       </div>
 
-      {[10, 15].includes(flag) && (
-        <div className="my-orders__invoice">
+      <div className="my-orders__invoice">
+        {[10, 15].includes(flag) && (
           <button className="btn btn-outline-danger btn-sm" onClick={() => setOpen(true)}>
             {t('myOrders:cancel_order')}
           </button>
+        )}
+        {[80].includes(flag) && (
           <Link
             href={{
               pathname: '/feedback',
@@ -83,23 +85,13 @@ export default function OrderItem(props: Props) {
               {t('myOrders:send_fb')}
             </a>
           </Link>
-        </div>
-      )}
-
-      {[20, 30, 40, 80].includes(flag) && (
-        <div className="my-orders__invoice">
+        )}
+        {[20, 30, 40, 80].includes(flag) && (
           <a href="tel:1900232436" className="btn btn-outline-primary btn-sm">
             {t('myOrders:help')}
           </a>
-          {/* <>
-            <button
-              className="btn btn-outline-complain btn-sm"
-              onClick={() => setOpenComplain(true)}>
-              {t('myOrders:send_fb')}
-            </button>
-          </> */}
-        </div>
-      )}
+        )}
+      </div>
 
       <ConfirmCancelOrder
         open={open}
