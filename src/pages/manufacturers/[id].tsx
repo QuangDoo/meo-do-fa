@@ -22,7 +22,7 @@ ManufacturerDetail.getInitialProps = async (ctx) => {
     ctx,
     query: GET_MANUFACTORY_DETAILS,
     variables: {
-      id: manufacturerId
+      id: +manufacturerId
     }
   });
 

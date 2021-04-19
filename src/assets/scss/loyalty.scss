@@ -4,7 +4,6 @@
   color: #212529;
   border-collapse: collapse;
   display: table;
-  border-collapse: separate;
   box-sizing: border-box;
   text-indent: initial;
   border-spacing: 2px;
@@ -48,5 +47,12 @@
   }
   td {
     padding: 10px !important;
+  }
+
+  .loyalty-text-paid {
+    color: $secondary;
+  }
+  .loyalty-text-earn {
+    color: $primary;
   }
 }
