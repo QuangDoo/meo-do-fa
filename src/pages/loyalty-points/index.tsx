@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { useTranslation } from 'i18n';
+import { Trans, useTranslation } from 'i18n';
 import React from 'react';
 import Head from 'src/components/Layout/Head';
 import MainLayout from 'src/components/Modules/MainLayout';
@@ -46,6 +46,8 @@ const loyaltyData = [
   }
 ];
 
+const myPoints = 150;
+
 function LoyaltyPoints() {
   const { t } = useTranslation(['loyalty']);
   return (
@@ -55,7 +57,15 @@ function LoyaltyPoints() {
       </Head>
       <ProfileLayout title={t('title')}>
         <div className="row">
-          <div className="col-12 mb-3 ">{t('points_owner')}</div>
+          <div className="col-12 mb-3 ">
+            <Trans
+              i18nKey="loyalty:points_owner"
+              values={{
+                points: myPoints
+              }}
+              components={{ b: <b /> }}
+            />
+          </div>
           <div className="col-12 mb-3">
             <RedeemPoints />
           </div>
@@ -73,25 +83,23 @@ function LoyaltyPoints() {
                 </tr>
               </thead>
               <tbody className="loyalty-table-tbody">
-                {loyaltyData.map(({ create_date, type, quantity, description }) => (
-                  <>
-                    <tr>
-                      <td>{create_date}</td>
-                      <td
-                        className={clsx(
-                          type === LoyaltyType.EXCHANGE ? 'loyalty-text-paid' : 'loyalty-text-earn'
-                        )}>
-                        {type}
-                      </td>
-                      <td
-                        className={clsx(
-                          type === LoyaltyType.EXCHANGE ? 'loyalty-text-paid' : 'loyalty-text-earn'
-                        )}>
-                        {quantity}
-                      </td>
-                      <td>{description}</td>
-                    </tr>
-                  </>
+                {loyaltyData.map(({ create_date, type, quantity, description }, index) => (
+                  <tr key={index}>
+                    <td>{create_date}</td>
+                    <td
+                      className={clsx(
+                        type === LoyaltyType.EXCHANGE ? 'loyalty-text-paid' : 'loyalty-text-earn'
+                      )}>
+                      {type}
+                    </td>
+                    <td
+                      className={clsx(
+                        type === LoyaltyType.EXCHANGE ? 'loyalty-text-paid' : 'loyalty-text-earn'
+                      )}>
+                      {quantity}
+                    </td>
+                    <td>{description}</td>
+                  </tr>
                 ))}
               </tbody>
             </table>

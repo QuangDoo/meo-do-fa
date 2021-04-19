@@ -1,6 +1,6 @@
 {
   "title": "Cumulative points",
-  "points_owner": "You have {{points}} points to accumulate",
+  "points_owner": "You have <b>{{points}}</b> points to accumulate",
   "redeem_points": "Redeem",
   "points_hisoty_title": "Cumulative points history",
   "created_date": "Created date",
@@ -9,5 +9,8 @@
   "description": "Description",
   "redeem_title": "List of accumulative points redemption",
   "cumulative_points": "Cumulative points",
-  "exchange_value": "Exchange value"
+  "exchange_value": "Exchange value",
+  "change_point_button": "Change",
+  "coupon_name": "Coupon <b>{{value}}</b> VND",
+  "no_enough_points": "No enough points to change"
 }

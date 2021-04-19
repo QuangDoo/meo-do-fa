@@ -1,6 +1,6 @@
 {
   "title": "Điểm tích lũy",
-  "points_owner": "Bạn đang có {{points}} điểm tích lũy",
+  "points_owner": "Bạn đang có <b>{{points}}</b> điểm tích lũy",
   "redeem_points": "Đổi điểm",
   "points_hisoty_title": "Lịch sử điểm tích lũy",
   "created_date": "Ngày tạo",
@@ -9,5 +9,8 @@
   "description": "Mô tả",
   "redeem_title": "Danh sách quy đổi điểm tích lũy",
   "cumulative_points": "Điểm tích lũy",
-  "exchange_value": "Giá trị quy đổi"
+  "exchange_value": "Giá trị quy đổi",
+  "change_point_button": "Đổi ngay",
+  "coupon_name": "Mã giảm giá <b>{{value}}</b> đ",
+  "no_enough_points": "Không đủ điểm để đổi"
 }

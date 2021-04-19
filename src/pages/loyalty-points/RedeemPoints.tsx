@@ -1,7 +1,11 @@
-import { useTranslation } from 'i18n';
+import { Trans, useTranslation } from 'i18n';
 import React, { useState } from 'react';
 import Button from 'src/components/Form/Button';
 import ModalWithHeader from 'src/components/Layout/Modal/ModalWithHeader';
+
+const loyaltyChangeTypes = [50, 100, 200, 500];
+
+const myPoints = 150;
 
 function RedeemPoints() {
   const { t } = useTranslation(['loyalty']);
@@ -16,7 +20,15 @@ function RedeemPoints() {
       {/* Register modal */}
       <ModalWithHeader open={open} title={t('redeem_title')} onClose={() => setOpen(false)}>
         <div className="row">
-          <div className="col-12 mb-3 ">{t('points_owner')}</div>
+          <div className="col-12 mb-3 ">
+            <Trans
+              i18nKey="loyalty:points_owner"
+              values={{
+                points: myPoints
+              }}
+              components={{ b: <b /> }}
+            />
+          </div>
           <div className="col-12 mb-3">
             <table className="loyalty-table">
               <thead className="loyalty-table-thead">
@@ -27,33 +39,29 @@ function RedeemPoints() {
                 </tr>
               </thead>
               <tbody className="loyalty-table-tbody">
-                <tr>
-                  <td>Ngay tao</td>
-                  <td>Ngay tao</td>
-                  <td>
-                    <Button variant="primary" size="sm" className="text-nowrap">
-                      Đổi ngay
-                    </Button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Ngay tao</td>
-                  <td>Ngay tao</td>
-                  <td>
-                    <Button variant="primary" size="sm" className="text-nowrap">
-                      Đổi ngay
-                    </Button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Ngay tao</td>
-                  <td>Ngay tao</td>
-                  <td>
-                    <Button variant="primary" size="sm" className="text-nowrap">
-                      Đổi ngay
-                    </Button>
-                  </td>
-                </tr>
+                {loyaltyChangeTypes.map((value, index) => (
+                  <tr key={index}>
+                    <td>{value}</td>
+                    <td>
+                      <Trans
+                        i18nKey="loyalty:coupon_name"
+                        values={{
+                          value: (value * 1000).toLocaleString('de-DE')
+                        }}
+                        components={{ b: <b /> }}
+                      />
+                    </td>
+                    <td>
+                      {myPoints >= value ? (
+                        <Button variant="primary" size="sm" className="text-nowrap">
+                          {t('change_point_button')}
+                        </Button>
+                      ) : (
+                        t('no_enough_points')
+                      )}
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
