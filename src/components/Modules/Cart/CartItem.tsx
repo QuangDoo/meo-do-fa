@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import React, { useState } from 'react';
@@ -5,6 +6,7 @@ import PriceText from 'src/components/Form/PriceText';
 import ProductCardQuantityInput from 'src/components/Modules/ProductCard/ProductCardQuantityInput';
 import { CartItem as CartItemProps } from 'src/graphql/cart/getCart';
 
+import ProductBadge from '../ProductCard/ProductBadge';
 import ConfirmDeleteItemModal from './ConfirmDeleteItemModal';
 
 type Props = CartItemProps & {
@@ -41,7 +43,7 @@ function CartItem(props: Props) {
   };
 
   return (
-    <div className="d-flex p-3">
+    <div className={clsx(!props.is_available && 'cart-product-available', 'd-flex p-3')}>
       {/* <Checkbox/> */}
       <div className="mr-3">
         <input type="checkbox" onChange={handleChange} checked={props.checked} />
@@ -75,6 +77,7 @@ function CartItem(props: Props) {
                 )}
               </span>
             )}
+            {!props.is_available && <ProductBadge type="out_of_stocks" />}
           </div>
         </div>
 

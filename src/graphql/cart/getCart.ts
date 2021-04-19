@@ -25,6 +25,7 @@ export type CartItem = {
     sale_price: number;
   };
   promotions: PromotionInfo[];
+  is_available: boolean;
 };
 
 export type GetCartData = {
@@ -63,6 +64,7 @@ export const GET_CART = gql`
           reward_product_name
           reward_product_quantity
         }
+        is_available
       }
       totalPrice
       totalNetPrice
