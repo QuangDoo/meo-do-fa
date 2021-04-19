@@ -18,7 +18,7 @@ const Textarea = (props: Props, ref) => {
   return (
     <div className={`form-group ${containerClass}`}>
       <label htmlFor={`${props.htmlFor || 'textarea'}`}>
-        <b>{props.label}</b>
+        <span className="form__label">{props.label}</span>
       </label>
 
       <textarea
