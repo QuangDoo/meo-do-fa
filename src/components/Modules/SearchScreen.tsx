@@ -66,7 +66,7 @@ export default function SearchScreen(props: Props) {
   const router = useRouter();
 
   return (
-    <div className="filter-search container mobile-content py-3 py-sm-5">
+    <div className="filter-search container mobile-content py-sm-5">
       <div className="filter my-4">
         {filterChars.map((char) => (
           <div
