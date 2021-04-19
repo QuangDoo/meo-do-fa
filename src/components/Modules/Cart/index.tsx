@@ -174,7 +174,7 @@ export default function CartPage() {
             </div>
           </div>
           <div className="row">
-            <div className={clsx(cart.totalQty === 0 ? 'col-md-12' : 'col-md-9', 'col-12')}>
+            <div className={clsx(cart?.totalQty === 0 ? 'col-md-12' : 'col-md-9', 'col-12')}>
               {cart?.carts
                 .slice()
                 .reverse()
@@ -194,7 +194,7 @@ export default function CartPage() {
                 {t('cart:back_to_products')} <a href="/products">{t('cart:products')}</a>
               </div>
             </div>
-            <div className="col-12 col-md-3" hidden={cart.totalQty === 0}>
+            <div className="col-12 col-md-3" hidden={cart?.totalQty === 0}>
               {cart && (
                 <div className="cart__info">
                   <div className="elevated row no-gutters mb-2">
