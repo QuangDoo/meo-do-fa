@@ -167,7 +167,7 @@ export default function CartPage() {
                   />
                   <h1 className="h5 ml-2">
                     {t('cart:select_all')}
-                    {checkboxCarts?.length === cart?.carts?.length && ` (${cart.totalQty})`}
+                    {checkboxCarts?.length === cart?.carts?.length && ` (${cart?.totalQty})`}
                   </h1>
                 </div>
               )}
