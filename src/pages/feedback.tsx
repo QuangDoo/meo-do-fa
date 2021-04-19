@@ -135,19 +135,21 @@ function Feedback() {
     const imageIds = previewImages.map((o) =>
       o.src.startsWith(FILES_GATEWAY) ? o.src.split('/').pop() : newIds?.shift()
     );
+    console.log(data);
+    console.log(imageIds);
 
-    createFeedback({
-      variables: {
-        inputs: {
-          orderNo: orderNo,
-          guessName: data.guessName,
-          guessPhone: data.guessPhone,
-          type: data.type,
-          note: data.note,
-          images: imageIds
-        }
-      }
-    }).catch((error) => toast.error(error));
+    // createFeedback({
+    //   variables: {
+    //     inputs: {
+    //       orderNo: orderNo,
+    //       guessName: data.guessName,
+    //       guessPhone: data.guessPhone,
+    //       type: data.type,
+    //       note: data.note,
+    //       images: imageIds
+    //     }
+    //   }
+    // }).catch((error) => toast.error(error));
   };
 
   return (

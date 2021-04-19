@@ -70,7 +70,7 @@ export default function AddCertificate(props: Props) {
   return (
     <React.Fragment>
       {/* Only show 'Add image' button if user is not activated and not enough 6 images yet */}
-      {!user?.activated && previewImages.length < 6 && (
+      {!user?.activated && previewImages?.length < 6 && (
         <button className="add-image-button" onClick={handleClick} type="button">
           <AddIcon />
           <div>{t('myAccount:business_license_placeholder')}</div>

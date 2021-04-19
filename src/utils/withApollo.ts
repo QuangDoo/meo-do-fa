@@ -11,11 +11,11 @@ const getURI = () => {
     `SERVER NEXT PUBLIC... NEXT_PUBLIC_GRAPHQL_GATEWAY: ${process.env.NEXT_PUBLIC_GRAPHQL_GATEWAY},  NEXT_PUBLIC_GRAPHQL_GATEWAY_EXT: ${process.env.NEXT_PUBLIC_GRAPHQL_GATEWAY_EXT} `
   );
 
-  if (typeof window === 'undefined') {
-    return `http://${
-      serverRuntimeConfig.GRAPHQL_GATEWAY || process.env.NEXT_PUBLIC_GRAPHQL_GATEWAY
-    }`;
-  }
+  // if (typeof window === 'undefined') {
+  //   return `http://${
+  //     serverRuntimeConfig.GRAPHQL_GATEWAY || process.env.NEXT_PUBLIC_GRAPHQL_GATEWAY
+  //   }`;
+  // }
   return `https://${
     publicRuntimeConfig.GRAPHQL_GATEWAY_EXT || process.env.NEXT_PUBLIC_GRAPHQL_GATEWAY_EXT
   }`;
@@ -27,12 +27,13 @@ const httpLink = new HttpLink({
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors)
-    graphQLErrors.forEach(({ locations, path, extensions }) => {
+    graphQLErrors.forEach(({ message, locations, path, extensions }) => {
       console.log(
         `=========⚠️ [GraphQL error] ========\n
 - Code: ${extensions.code} \n
 - Location: ${locations} \n
 - Path: ${path} \n
+- Message: ${message} \n
 ===================================\n
       `.trim()
       );
