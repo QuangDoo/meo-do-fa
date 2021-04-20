@@ -58,7 +58,8 @@ Products.getInitialProps = async (ctx) => {
         order_type: ctx.query.sort || NAME_ASCENDING,
         min_price: +ctx.query.priceFrom || 1,
         max_price: +ctx.query.priceTo || 10000000,
-        pathology_id: (ctx.query.pathology as string) || null
+        pathology_id: (ctx.query.pathology as string) || null,
+        supplier_id: (ctx.query.supplier as string) || null
       }
     },
     fetchPolicy: 'network-only'
