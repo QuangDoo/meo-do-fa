@@ -1584,6 +1584,21 @@ textarea.form-control.is-invalid {
   .table-responsive-sm > .table-bordered {
     border: 0;
   }
+  .promotion-nav__item{
+    display: none;
+  }
+  .mobile-nav{
+    display: none;
+  }
+  .register{
+    border-radius: 50px;
+    color: #212529;
+    background-color: #ffcb31;
+    border-color: #ffcb31;
+  }
+  .footer-deli{
+    margin-bottom: -50px;
+  }
 }
 @media (max-width: 767.98px) {
   .table-responsive-md {

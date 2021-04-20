@@ -25,5 +25,8 @@
   "product_category": "Product categories",
   "pathology": "Search by pathology",
   "promotions": "Promotions",
-  "most_searched": "Most searched"
+  "most_searched": "Most searched",
+  "language": "Language",
+  "vn":"VietNamese",
+  "en": "English"
 }

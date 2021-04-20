@@ -1,18 +1,33 @@
 import { Drawer } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
-import { useTranslation } from 'i18n';
+import  {i18n, useTranslation } from 'i18n';
 import cookies from 'js-cookie';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { useUser } from 'src/contexts/User';
 
 import LoginModal from '../LoginModal';
+import RegisterModal from '../RegisterModal';
+
+
+
+export type LanguageCode = 'vi' | 'en';
+
+export const languageNames: Record<LanguageCode, string> = {
+  vi: 'Tiếng Việt',
+  en: 'English'
+}
 
 function MobileNavbar() {
   const { t } = useTranslation(['navbar']);
   const [open, setOpen] = useState(false);
   const { data: user } = useUser();
+
+  const onLanguageClick = (code) => {
+    i18n.changeLanguage(code);
+  };
+
 
   const logOut = () => {
     setOpen(false);
@@ -41,11 +56,13 @@ function MobileNavbar() {
             <div className="mobile-menu-user">
               <div>
                 <div className="mobile-menu-user-link">{t('header:login_title')}</div>
-                <div className="text-center mt-3">
-                  <LoginModal />
-                </div>
+                  <div className="text-center mt-3">
+                    <LoginModal />
+                    <RegisterModal />
+                  </div>
               </div>
             </div>
+            
           )}
           <div className="mobile-menu-content">
             <div>
@@ -151,6 +168,24 @@ function MobileNavbar() {
                 </li>
 
                 <hr className="hr my-3" />
+
+                <div className="mobile-menu-item-title">{t('navbar:language')}</div>
+
+                <div className="change__language">
+                  <div className="language">
+                    <img src="/assets/images/vn.png" alt="vn" />
+                    <p onClick={() => onLanguageClick('vi')} className="language-title">
+                      {t('navbar:vn')}
+                    </p>
+                  </div>
+                  <div className="language language-en">
+                    <img src="/assets/images/en.png" alt="vn" />
+                    <p onClick={() => onLanguageClick('en')} className="language-title">
+                      {t('navbar:en')}
+                    </p>
+                  </div>
+                </div>
+
               </ul>
             </div>
 
