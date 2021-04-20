@@ -10,7 +10,7 @@
   "redeem_title": "List of accumulative points redemption",
   "cumulative_points": "Cumulative points",
   "exchange_value": "Exchange value",
-  "change_point_button": "Change",
+  "exchange_point_button": "Exchange",
   "coupon_name": "Coupon <b>{{value}}</b> VND",
   "no_enough_points": "No enough points to change"
 }

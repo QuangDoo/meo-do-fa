@@ -54,7 +54,7 @@ function RedeemPoints() {
                     <td>
                       {myPoints >= value ? (
                         <Button variant="primary" size="sm" className="text-nowrap">
-                          {t('change_point_button')}
+                          {t('exchange_point_button')}
                         </Button>
                       ) : (
                         t('no_enough_points')

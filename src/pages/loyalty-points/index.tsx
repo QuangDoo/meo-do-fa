@@ -72,7 +72,7 @@ function LoyaltyPoints() {
           <div className="col-12 mb-3 text-info">
             <h4>{t('points_hisoty_title')}</h4>
           </div>
-          <div className="col-12 mb-3">
+          <div className="col-12 mb-3 overflow-auto">
             <table className="loyalty-table">
               <thead className="loyalty-table-thead">
                 <tr>
