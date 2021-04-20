@@ -26,5 +26,6 @@
   "placeholder_ingredients": "Enter ingredient name...",
   "placeholder_suppliers": "Enter supplier name...",
   "showing_results_for": "Showing {{count}} search result for",
-  "showing_results_for_plural": "Showing {{count}} search results for"
+  "showing_results_for_plural": "Showing {{count}} search results for",
+  "enter_name_suppliers": "Enter supplier's name"
 }
