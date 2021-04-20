@@ -207,7 +207,6 @@ export default function FeedbackImage(props: Props) {
             </span>
           </MenuItem>
         </>
-        )
       </Menu>
     </React.Fragment>
   );
