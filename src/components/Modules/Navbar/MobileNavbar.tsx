@@ -10,8 +10,6 @@ import { useUser } from 'src/contexts/User';
 import LoginModal from '../LoginModal';
 import RegisterModal from '../RegisterModal';
 
-
-
 export type LanguageCode = 'vi' | 'en';
 
 export const languageNames: Record<LanguageCode, string> = {
@@ -62,7 +60,6 @@ function MobileNavbar() {
                   </div>
               </div>
             </div>
-            
           )}
           <div className="mobile-menu-content">
             <div>
@@ -93,7 +90,6 @@ function MobileNavbar() {
                         </a>
                       </Link>
                     </li>
-
                     <hr className="hr my-3" />
                   </>
                 )}
@@ -166,11 +162,8 @@ function MobileNavbar() {
                     </a>
                   </Link>
                 </li>
-
                 <hr className="hr my-3" />
-
                 <div className="mobile-menu-item-title">{t('navbar:language')}</div>
-
                 <div className="change__language">
                   <div className="language">
                     <img src="/assets/images/vn.png" alt="vn" />
@@ -185,10 +178,8 @@ function MobileNavbar() {
                     </p>
                   </div>
                 </div>
-
               </ul>
             </div>
-
             {user && (
               <>
                 <hr className="hr my-3" />
