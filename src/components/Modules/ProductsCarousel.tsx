@@ -29,6 +29,8 @@ export const ProductsCarousel = ({ products, slidesToShow = 5 }: ProductsCarouse
   return (
     <Slider
       speed={500}
+      infinite={true}
+      autoplay={true}
       slidesToShow={Math.min(slidesToShow, products?.length)}
       slidesToScroll={3}
       prevArrow={<ArrowButton />}

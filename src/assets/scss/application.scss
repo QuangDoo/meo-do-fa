@@ -13292,3 +13292,8 @@ abbr[title] {
   justify-content: 'space-around';
   overflow: 'hidden';
 }
+@media (max-width: 374) {
+  .custom-header {
+    font-size: 1.3rem !important;
+  }
+}
