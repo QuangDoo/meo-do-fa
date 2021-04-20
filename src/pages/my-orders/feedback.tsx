@@ -1,4 +1,3 @@
-import { useMutation } from '@apollo/client';
 import axios from 'axios';
 import { useTranslation } from 'i18n';
 import { useRouter } from 'next/router';
@@ -16,13 +15,9 @@ import Textarea from 'src/components/Form/Textarea';
 import Head from 'src/components/Layout/Head';
 import AddFeedbackImage from 'src/components/Modules/Feedback/AddFeedbackImage';
 import FeedbackImage from 'src/components/Modules/Feedback/FeedbackImage';
-import { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
+import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import { FILES_GATEWAY } from 'src/constants';
-import {
-  CREATE_FEEDBACK,
-  CreateFeedbackData,
-  CreateFeedbackVars
-} from 'src/graphql/feedback/createFeedback';
+import { CREATE_FEEDBACK, CreateFeedbackData } from 'src/graphql/feedback/createFeedback';
 import { GET_FEEDBACK_TYPES, GetFeedbackTypesData } from 'src/graphql/feedback/getFeedbackTypes';
 import {
   GET_ORDER_DETAIL,
@@ -154,7 +149,7 @@ function Feedback() {
   };
 
   return (
-    <>
+    <MainLayout>
       <Head>
         <title>Medofa</title>
       </Head>
@@ -258,7 +253,7 @@ function Feedback() {
           </form>
         </div>
       </div>
-    </>
+    </MainLayout>
   );
 }
 

@@ -5,7 +5,6 @@ import { useUser } from 'src/contexts/User';
 import { GetOrderList } from 'src/graphql/my-orders/getOrderList';
 
 import ConfirmCancelOrder from './ConfirmCancelOrder';
-import ConfirmComplain from './ConfirmComplain';
 
 const badges = {
   10: { color: 'info', text: 'wait_for_confirm' },
@@ -77,13 +76,10 @@ export default function OrderItem(props: Props) {
         {[80].includes(flag) && (
           <Link
             href={{
-              pathname: '/feedback',
-              query: { orderno: props.orderNo, name: user.company_name, phone: user.phone }
-            }}
-            passHref>
-            <a target="_blank" className="btn btn-outline-complain btn-sm">
-              {t('myOrders:send_fb')}
-            </a>
+              pathname: '/my-orders/feedback',
+              query: { orderno: props.orderNo, name: user?.company_name, phone: user?.phone }
+            }}>
+            <a className="btn btn-outline-complain btn-sm">{t('myOrders:send_fb')}</a>
           </Link>
         )}
         {[20, 30, 40, 80].includes(flag) && (
