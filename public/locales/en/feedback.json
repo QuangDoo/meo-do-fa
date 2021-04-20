@@ -1,0 +1,18 @@
+{
+  "title": "Feedback on the order",
+  "order_no_label": "Order No",
+  "customer_name_label": "Customer's name",
+  "customer_phone_label": "Phone",
+  "note_label": "Note",
+  "issue_name_label": "Issue",
+  "image_label": "The image illustrates the error",
+  "send_request": "Send request",
+  "issue_placeholder": "Choose issue",
+  "name_required": "Please provide a name.",
+  "phone_required": "Please provide a phone number.",
+  "phone_invalid": "Please provide a valid phone number.",
+  "issue_required": "Plesae provide a issue",
+  "send_feedback_success": "Send feedback success",
+  "create_date_label": "Created date",
+  "total_amount_label": "Total amount"
+}

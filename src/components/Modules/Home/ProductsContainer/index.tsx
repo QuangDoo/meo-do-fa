@@ -17,7 +17,7 @@ export const ProductsContainer = (props: ProductsContainerProps) => {
   const { t } = useTranslation(['common']);
 
   return (
-    <section className={clsx('pb-5', props.className, props.deals && 'deals')}>
+    <section className={clsx('pb-5', props.className, props.deals && 'deals', 'mt-4')}>
       <div className="container">
         <div className="mb-4 d-flex flex-wrap justify-content-between align-items-center">
           <div className="d-flex align-items-center mr-3">
@@ -34,7 +34,7 @@ export const ProductsContainer = (props: ProductsContainerProps) => {
           )}
         </div>
 
-        <div>{props.children}</div>
+        <div className="test__container-home">{props.children}</div>
 
         {/* {props.seeMoreUrl && (
           <div className="text-center">
