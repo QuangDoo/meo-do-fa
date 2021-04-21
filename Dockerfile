@@ -8,6 +8,7 @@ WORKDIR /usr/src/app
 
 COPY package.json  ./
 COPY yarn.lock ./
+RUN apk add curl 
 RUN yarn --silent
 
 COPY ./ ./
