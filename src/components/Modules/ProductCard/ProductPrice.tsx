@@ -8,8 +8,6 @@ type ProductPriceProps = {
 };
 
 export const ProductPrice = (props: ProductPriceProps) => {
-  const { t } = useTranslation('common');
-
   const isOnSale = !!props.sale_price && props.sale_price !== props.price;
 
   return isOnSale ? (

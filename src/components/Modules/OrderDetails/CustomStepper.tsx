@@ -6,8 +6,7 @@ import {
   StepIconProps,
   StepLabel,
   Stepper,
-  useMediaQuery,
-  useTheme
+  useMediaQuery
 } from '@material-ui/core';
 import {
   AssignmentTurnedIn,

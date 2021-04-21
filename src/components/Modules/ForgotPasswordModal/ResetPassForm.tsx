@@ -8,11 +8,7 @@ import Button from 'src/components/Form/Button';
 import Input from 'src/components/Form/Input';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { useModalControlDispatch } from 'src/contexts/ModalControl';
-import {
-  RESET_PASSWORD,
-  ResetPasswordData,
-  SaveMailSubscriber
-} from 'src/graphql/user/forgotPassword';
+import { RESET_PASSWORD } from 'src/graphql/user/forgotPassword';
 
 type Inputs = {
   email: string;

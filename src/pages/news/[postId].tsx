@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import News from 'src/components/Modules/News';
 
@@ -83,8 +83,7 @@ import { useQuery } from '@apollo/client';
 import {
   GET_POST_DETAIL,
   GetWebsitePostData,
-  GetWebsitePostVariables,
-  PostDetail
+  GetWebsitePostVariables
 } from 'src/graphql/news/getWebsitePostDetail';
 import withToken from 'src/utils/withToken';
 

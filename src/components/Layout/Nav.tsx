@@ -46,7 +46,7 @@ const Nav = () => {
 
   // const categories = categoriesData?.getCategoriesLevel || [];
 
-  const isSmallScreen = useMediaQuery('(max-width: 575px)');
+  //const isSmallScreen = useMediaQuery('(max-width: 575px)');
 
   return (
     <nav className="rockland-nav shrink header-menu d-none d-sm-block">
