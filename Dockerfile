@@ -9,6 +9,7 @@ WORKDIR /usr/src/app
 COPY package.json  ./
 COPY yarn.lock ./
 RUN apk add curl 
+RUN apk add net-tools 
 RUN yarn --silent
 
 COPY ./ ./
