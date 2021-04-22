@@ -9709,6 +9709,9 @@ abbr[title] {
 .rockland-nav__title {
   font-weight: 500;
 }
+.rockland-nav__title_deal{
+  display: none;
+}
 .rockland-nav__item {
   position: relative;
   padding: 0.75em;
@@ -9768,8 +9771,26 @@ abbr[title] {
 }
 
 @media only screen and (max-width: 1200px) {
-  .rockland-nav.shrink .rockland-nav__title {
+  .rockland-nav__link{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+@media only screen and (max-width: 767.9px) {
+  .rockland-nav__title_deal{
+    display: block;
+  }
+  .rockland-nav__title_d{
     display: none;
+  }
+  .rockland-nav__link{
+    .rockland-nav__title{
+      font-size: 0.8rem;
+    }
+    .rockland-nav__title_deal{
+      font-size: 0.8rem;
+    }
   }
 }
 .promotion-nav {
@@ -11160,6 +11181,9 @@ abbr[title] {
     border-radius: 50px;
     margin: 0.4rem;
     padding: 0 0.1rem 0 0.1rem;
+  }
+  .rockland-nav__title, .rockland-nav__title_d{
+    font-size: 0.8rem;
   }
 }
 .page-nav .page.current {

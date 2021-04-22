@@ -28,5 +28,9 @@
   "most_searched": "Most searched",
   "language": "Language",
   "vn":"VietNamese",
-  "en": "English"
+  "en": "English",
+  "deals_price":"Deals",
+  "deals_today":"of the day",
+  "path_search":"Search",
+  "path_sick":"by pathology"
 }
