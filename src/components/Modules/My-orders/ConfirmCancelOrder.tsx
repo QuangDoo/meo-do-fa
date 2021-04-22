@@ -1,3 +1,4 @@
+import { onError } from '@apollo/client/link/error';
 import { useTranslation } from 'i18n';
 import React from 'react';
 import { useForm } from 'react-hook-form';
@@ -16,7 +17,7 @@ import { useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
 
 type Inputs = {
   reason: string;
-  text: string;
+  notes: string;
   check: true;
 };
 
@@ -51,9 +52,12 @@ const ConfirmCancelOrder = (props: Props) => {
       toast.error(t('cancelOrder:is_check'));
       return;
     }
+
     cancelOrder({
       variables: {
-        orderNo: orderNo
+        orderNo: orderNo,
+        type: +data.reason,
+        content: data.notes
       }
     });
   };
@@ -69,6 +73,10 @@ const ConfirmCancelOrder = (props: Props) => {
 
   const cancelOption = orderCancelTypes?.getOrderCancelTypes;
 
+  const onError = (error) => {
+    toast.error(error[Object.keys(error)[0]].message);
+  };
+
   return (
     <ModalBase open={open} onClose={onClose}>
       <div className="container p-3">
@@ -76,7 +84,7 @@ const ConfirmCancelOrder = (props: Props) => {
           <h3>{t('cancelOrder:request_cancellation')}</h3>
         </div>
 
-        <form className="form" onSubmit={handleSubmit(onSubmit)}>
+        <form className="form" onSubmit={handleSubmit(onSubmit, onError)}>
           <label className="my-1 mr-2">
             <b>{t('cancelOrder:reason_for_cancellation')}</b>
           </label>
@@ -86,7 +94,7 @@ const ConfirmCancelOrder = (props: Props) => {
               cancelOption.map((option) => {
                 const value = t(`cancelOrder:${option.name}`);
                 return (
-                  <option key={option.id} value={value}>
+                  <option key={option.id} value={option.id}>
                     {value}
                   </option>
                 );

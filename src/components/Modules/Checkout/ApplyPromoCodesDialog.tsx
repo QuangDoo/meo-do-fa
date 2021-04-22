@@ -127,7 +127,7 @@ export default function ApplyPromoCodesDialog(props: Props) {
             </Grid>
           ) : (
             availableCoupons
-              .sort((a, b) => (a.code === appliedCode ? -1 : 0))
+              .sort((a) => (a.code === appliedCode ? -1 : 0))
               .map((coupon) => (
                 <Grid key={coupon.code} item xs={12}>
                   <Card variant="outlined">

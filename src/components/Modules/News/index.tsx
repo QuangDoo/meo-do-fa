@@ -1,8 +1,6 @@
 import React, { ReactChild } from 'react';
 import PageLayout from 'src/components/Layout/PageLayout';
 
-import NewsSidebar from '../../Layout/SideBar/NewsSidebar';
-
 type Props = {
   children?: ReactChild;
   bannerImgUrl?: string;

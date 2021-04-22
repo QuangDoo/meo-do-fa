@@ -88,12 +88,14 @@ const Header = () => {
               <RightSideUser />
             </>
           ) : (
-            <div className="d-flex align-items-center justify-content-center">
-              <LoginModal />
+            <div className="d-flex align-items-center justify-content-center ">
+              <div className="mobile-nav">
+                <LoginModal />
 
-              <RegisterModal />
+                <RegisterModal />
 
-              <ForgotPasswordModal />
+                <ForgotPasswordModal />
+              </div>
             </div>
           )}
         </div>

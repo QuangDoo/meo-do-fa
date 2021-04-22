@@ -127,7 +127,11 @@
     color: $primary;
   }
 }
-
+@media (max-width: 768px) {
+  .hottag-button{
+    font-size: 13px;
+  }
+}
 .mobile-menu {
   padding: 10px;
 }
@@ -193,3 +197,24 @@
     color: $primary;
   }
 }
+// language
+.change__language{
+  display: flex;
+  padding-left: 0.5rem;
+  margin-top: 1rem;
+  .language{
+    display: flex;
+    .language-title{
+      color: black;
+    }
+    img{
+      width: 45px;
+      height: 30px;
+      padding: 0 0.5rem 0 0 ;
+    }
+  }
+  .language-en img{
+    margin-left: 0.5rem;
+  }
+}
+

@@ -1,18 +1,29 @@
 import { Drawer } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
-import { useTranslation } from 'i18n';
+import { i18n, useTranslation } from 'i18n';
 import cookies from 'js-cookie';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { useUser } from 'src/contexts/User';
 
 import LoginModal from '../LoginModal';
+import RegisterModal from '../RegisterModal';
+
+export type LanguageCode = 'vi' | 'en';
+
+export const languageNames: Record<LanguageCode, string> = {
+  vi: 'Tiếng Việt',
+  en: 'English'
+};
 
 function MobileNavbar() {
   const { t } = useTranslation(['navbar']);
   const [open, setOpen] = useState(false);
   const { data: user } = useUser();
+
+  const onLanguageClick = (code) => {
+    i18n.changeLanguage(code);
+  };
 
   const logOut = () => {
     setOpen(false);
@@ -43,6 +54,7 @@ function MobileNavbar() {
                 <div className="mobile-menu-user-link">{t('header:login_title')}</div>
                 <div className="text-center mt-3">
                   <LoginModal />
+                  <RegisterModal />
                 </div>
               </div>
             </div>
@@ -149,11 +161,30 @@ function MobileNavbar() {
                     </a>
                   </Link>
                 </li>
-
                 <hr className="hr my-3" />
+                <div className="mobile-menu-item-title">{t('navbar:language')}</div>
+                <div className="change__language">
+                  <div className="language">
+                    <img src="/assets/images/vn.png" alt="vn" />
+                    <a
+                      onClick={() => onLanguageClick('vi')}
+                      aria-hidden="true"
+                      className="language-title">
+                      {t('navbar:vn')}
+                    </a>
+                  </div>
+                  <div className="language language-en">
+                    <img src="/assets/images/en.png" alt="vn" />
+                    <a
+                      onClick={() => onLanguageClick('en')}
+                      aria-hidden="true"
+                      className="language-title">
+                      {t('navbar:en')}
+                    </a>
+                  </div>
+                </div>
               </ul>
             </div>
-
             {user && (
               <>
                 <hr className="hr my-3" />

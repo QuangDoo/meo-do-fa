@@ -24,11 +24,11 @@ type Input = {
 const ConfirmApplyJob: FC<Props> = (props) => {
   const { open, onClose } = props;
 
-  const { register, handleSubmit, watch, errors } = useForm();
+  const { register, handleSubmit } = useForm();
 
   const { t } = useTranslation('applyJob');
 
-  const onSubmit = (data: Input) => {
+  const onSubmit = () => {
     toast.success('Apply this job successful');
     onClose();
   };

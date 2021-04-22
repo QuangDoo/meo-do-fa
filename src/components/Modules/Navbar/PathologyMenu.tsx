@@ -56,7 +56,9 @@ function PathologyMenu() {
           <Link href="/pathological">
             <a className="rockland-nav__link">
               <i className="rockland-nav__icon fas fa-laptop-medical" />
-              <span className="rockland-nav__title">{t('navbar:pathological')}</span>
+              <span className="rockland-nav__title_d">{t('navbar:pathological')}</span>
+              <span className="rockland-nav__title_deal">{t('navbar:path_search')}</span>
+              <span className="rockland-nav__title_deal">{t('navbar:path_sick')}</span>
             </a>
           </Link>
         </div>

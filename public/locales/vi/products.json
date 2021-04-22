@@ -3,5 +3,5 @@
   "no_products_with_keyword": "Không có sản phẩm phù hợp với từ khoá: <bold>{{keyword}}</bold>",
   "title": "Tất cả sản phẩm",
   "results": "Hiển thị <bold>{{start}} - {{end}}</bold> trên tổng số <bold>{{total}}</bold> sản phẩm",
-  "results_with_keyword": "Hiển thị <bold>{{start}} - {{end}}</bold> trên tổng số <bold>{{total}}</bold> kết quả tìm kiếm cho: <bold>{{keyword}}</bold>"
+  "results_with_keyword": "Hiển thị <bold> {{start}} - {{end}} </bold> trên tổng số <bold>{{total}}</bold> kết quả tìm kiếm cho: <bold>{{keyword}}</bold>"
 }

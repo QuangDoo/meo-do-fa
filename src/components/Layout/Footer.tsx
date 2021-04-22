@@ -241,69 +241,72 @@ const Footer = () => {
                   <p />
                 </div>
               </Grid>
-              <Grid container item sm={12}>
-                <Grid item sm={6} lg={12}>
-                  <div className="mb-5">
-                    <div className="footer__header mb-3">{t('footer:delivery')}</div>
+              <div className="footer-deli">
+                <Grid container item sm={12}>
+                  <Grid item sm={6} lg={12}>
+                    <div className="mb-5 ">
+                      <div className="footer__header mb-3">{t('footer:delivery')}</div>
 
-                    <div>
-                      <img
-                        className="img-fluid footer__delivery"
-                        src="/assets/images/logo-ghtk.png"
-                        alt="logo-ghtk"
-                      />
-
-                      <img
-                        className="img-fluid footer__delivery"
-                        src="/assets/images/pharma-logistics-logo-sm.png"
-                        alt="logo-logistics-pharma"
-                      />
-
-                      {/* <img
+                      <div>
+                        <img
                           className="img-fluid footer__delivery"
-                          src="/assets/images/ghn-logo.png"
-                          alt="logo-ghn"
+                          src="/assets/images/logo-ghtk.png"
+                          alt="logo-ghtk"
+                        />
+
+                        <img
+                          className="img-fluid footer__delivery"
+                          src="/assets/images/pharma-logistics-logo-sm.png"
+                          alt="logo-logistics-pharma"
+                        />
+
+                        {/* <img
+                            className="img-fluid footer__delivery"
+                            src="/assets/images/ghn-logo.png"
+                            alt="logo-ghn"
+                          /> */}
+
+                        {/* <img
+                          className="img-fluid footer__delivery"
+                          src="/assets/images/grab-0d623c296e4838dd4d67984a580fa1b244962d8e5e8de76f3acb548cddbf0c6c.png"
+                          alt="MEDOFA"
+                        />
+
+                        <img
+                          className="img-fluid footer__delivery"
+                          src="/assets/images/ghn-7c7a86d8247685ce42bf1dd7eea07970b502b4a21be9ab6a15787dc0899a3b79.png"
+                          alt="MEDOFA"
+                        />
+
+                        <img
+                          className="img-fluid footer__delivery"
+                          src="/assets/images/viettelpost-7e17e215b6fb2451347c386209259806b03dd68db90c636c9d800439cf195b0c.png"
+                          alt="MEDOFA"
                         /> */}
 
-                      {/* <img
-                        className="img-fluid footer__delivery"
-                        src="/assets/images/grab-0d623c296e4838dd4d67984a580fa1b244962d8e5e8de76f3acb548cddbf0c6c.png"
-                        alt="MEDOFA"
-                      />
-
-                      <img
-                        className="img-fluid footer__delivery"
-                        src="/assets/images/ghn-7c7a86d8247685ce42bf1dd7eea07970b502b4a21be9ab6a15787dc0899a3b79.png"
-                        alt="MEDOFA"
-                      />
-
-                      <img
-                        className="img-fluid footer__delivery"
-                        src="/assets/images/viettelpost-7e17e215b6fb2451347c386209259806b03dd68db90c636c9d800439cf195b0c.png"
-                        alt="MEDOFA"
-                      /> */}
-
-                      {/* <img
-                        className="img-fluid footer__delivery"
-                        src="/assets/images/ninjavan-df8ca83378c8c4f339ac240d845807ef5cfdef493b0e0a1762b8cb4ccce8feea.png"
-                        alt="MEDOFA"
-                      /> */}
+                        {/* <img
+                          className="img-fluid footer__delivery"
+                          src="/assets/images/ninjavan-df8ca83378c8c4f339ac240d845807ef5cfdef493b0e0a1762b8cb4ccce8feea.png"
+                          alt="MEDOFA"
+                        /> */}
+                      </div>
                     </div>
-                  </div>
+                  </Grid>
+                  <Grid item sm={6}>
+                    <div className="footer__bct ">
+                      <a rel="nofollow">
+                        <img
+                          alt="Dấu đỏ của Bộ Công Thương"
+                          className="img-fluid"
+                          src="/assets/images/logo_dang_cho_duyet-sm.png"
+                          title="Dấu đỏ của Bộ Công Thương"
+                        />
+                      </a>
+                    </div>
+                  </Grid>
                 </Grid>
-                <Grid item sm={6}>
-                  <div className="footer__bct ">
-                    <a rel="nofollow">
-                      <img
-                        alt="Dấu đỏ của Bộ Công Thương"
-                        className="img-fluid"
-                        src="/assets/images/logo_dang_cho_duyet-sm.png"
-                        title="Dấu đỏ của Bộ Công Thương"
-                      />
-                    </a>
-                  </div>
-                </Grid>
-              </Grid>
+              </div>
+
               {/* </Grid> */}
             </div>
           </div>

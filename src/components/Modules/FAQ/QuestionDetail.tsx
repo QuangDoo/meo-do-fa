@@ -1,7 +1,5 @@
 import React from 'react';
 
-import ContactCardView from '../../Layout/Card/ContactCardView';
-
 type Props = {
   id?: string;
   question?: string;

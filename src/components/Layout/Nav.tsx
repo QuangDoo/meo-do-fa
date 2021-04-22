@@ -46,7 +46,7 @@ const Nav = () => {
 
   // const categories = categoriesData?.getCategoriesLevel || [];
 
-  const isSmallScreen = useMediaQuery('(max-width: 575px)');
+  //const isSmallScreen = useMediaQuery('(max-width: 575px)');
 
   return (
     <nav className="rockland-nav shrink header-menu d-none d-sm-block">
@@ -79,7 +79,9 @@ const Nav = () => {
                 <Link href="/deals-of-the-day">
                   <a className="rockland-nav__link">
                     <i className="rockland-nav__icon icomoon icon-product" />
-                    <span className="rockland-nav__title">{t('navbar:deals_of_the_day')}</span>
+                    <span className="rockland-nav__title_d">{t('navbar:deals_of_the_day')}</span>
+                    <span className="rockland-nav__title_deal">{t('navbar:deals_price')}</span>
+                    <span className="rockland-nav__title_deal">{t('navbar:deals_today')}</span>
                   </a>
                 </Link>
               </li>

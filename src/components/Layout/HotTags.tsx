@@ -1,9 +1,9 @@
-import { useLazyQuery, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import clsx from 'clsx';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React from 'react';
 import { toast } from 'react-toastify';
 import {
   GET_PRODUCT_HOT_TAGS,

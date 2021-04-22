@@ -1,5 +1,4 @@
 import { useQuery } from '@apollo/client';
-import { isNullableType } from 'graphql';
 import { Trans, useTranslation } from 'i18n';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
@@ -210,32 +209,41 @@ function Products() {
 
           <div className="flex-grow-1 w-100">
             <div className="px-2 px-sm-0 mb-2">
-              <div className="d-block d-sm-none mb-3">
-                <ProductsDrawerFilter />
+              <div className="row d-flex flex-row justify-content-between align-items-center">
+                <h1 className="products__header text-capitalize col-9 pr-0 custom-header">
+                  {title}
+                </h1>
+                <div className="d-block d-sm-none mb-3 col-3 pl-0 pr-0">
+                  <ProductsDrawerFilter />
+                </div>
               </div>
-
-              <h1 className="products__header text-capitalize mb-3">{title}</h1>
 
               {!productsLoading &&
                 (total > 0 ? (
-                  <Trans
-                    i18nKey={search ? 'products:results_with_keyword' : 'products:results'}
-                    values={{
-                      start: (page - 1) * PAGE_SIZE + 1,
-                      end: Math.min(page * PAGE_SIZE, total),
-                      total: total,
-                      keyword: search
-                    }}
-                    components={{ bold: <b /> }}
-                  />
+                  <div>
+                    <Trans
+                      i18nKey={search ? 'products:results_with_keyword' : 'products:results'}
+                      values={{
+                        start: (page - 1) * PAGE_SIZE + 1,
+                        end: Math.min(page * PAGE_SIZE, total),
+                        total: total,
+                        keyword: search
+                      }}
+                      components={{ bold: <b /> }}
+                    />
+                  </div>
                 ) : (
-                  <Trans
-                    i18nKey={search ? 'products:no_products_with_keyword' : 'products:no_products'}
-                    values={{
-                      keyword: search
-                    }}
-                    components={{ bold: <b /> }}
-                  />
+                  <div>
+                    <Trans
+                      i18nKey={
+                        search ? 'products:no_products_with_keyword' : 'products:no_products'
+                      }
+                      values={{
+                        keyword: search
+                      }}
+                      components={{ bold: <b /> }}
+                    />
+                  </div>
                 ))}
             </div>
 
