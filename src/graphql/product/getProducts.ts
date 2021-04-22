@@ -34,6 +34,7 @@ export const productCardQueryProps = `
     name
     short_name
   }
+  default_vendor
 `;
 
 export type Product = {
@@ -63,6 +64,7 @@ export type Product = {
     name: string;
     short_name: string;
   };
+  default_vendor: string;
 };
 
 export type ProductTag =
