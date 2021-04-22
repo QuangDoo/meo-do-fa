@@ -2,6 +2,7 @@ import { ApolloClient, DefaultOptions, from, HttpLink, InMemoryCache } from '@ap
 import { onError } from '@apollo/client/link/error';
 import { withApollo } from 'next-apollo';
 import getConfig from 'next/config';
+import fetch from 'node-fetch';
 
 const { serverRuntimeConfig, publicRuntimeConfig } = getConfig();
 
@@ -22,7 +23,11 @@ const getURI = () => {
 };
 
 const httpLink = new HttpLink({
-  uri: getURI()
+  fetch: fetch as any,
+  uri: getURI(),
+  fetchOptions: {
+    timeout: 5000
+  }
 });
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
