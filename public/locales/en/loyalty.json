@@ -1,16 +1,16 @@
 {
-  "title": "Cumulative points",
+  "title": "Loyalty points",
   "points_owner": "You have <b>{{points}}</b> points to accumulate",
   "redeem_points": "Redeem",
-  "points_hisoty_title": "Cumulative points history",
+  "points_hisoty_title": "Loyalty points history",
   "created_date": "Created date",
   "type": "Type",
   "points": "Points",
   "description": "Description",
-  "redeem_title": "List of accumulative points redemption",
-  "cumulative_points": "Cumulative points",
+  "redeem_title": "List of loyalty points redemption",
+  "loyalty_points": "Loyalty points",
   "exchange_value": "Exchange value",
   "exchange_point_button": "Exchange",
-  "coupon_name": "Coupon <b>{{value}}</b> VND",
-  "no_enough_points": "No enough points to change"
+  "no_enough_points": "No enough points to exchange",
+  "exchange_success_notify": "Exchange successfully"
 }

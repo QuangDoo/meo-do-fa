@@ -31,7 +31,7 @@ export default function MainLayout(props: Props) {
     <>
       <DynamicTermPopup />
 
-      {token && !isActive && <ActiveUser />}
+      {token && !isActive && <ActiveUser waiting={dataUser?.waiting} />}
 
       <Header />
 

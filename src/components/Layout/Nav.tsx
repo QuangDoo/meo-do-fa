@@ -268,7 +268,7 @@ const Nav = () => {
                     <Link href="/loyalty-points">
                       <a className="dropdown__item dropdown__item-link">
                         <i className="fas fa-hand-holding-usd dropdown__item-icon" />
-                        {t('navbar:cumulative_points')}
+                        {t('navbar:loyalty_points')}
                       </a>
                     </Link>
 

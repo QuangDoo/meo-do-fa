@@ -72,7 +72,7 @@ const ProfileSidebar = () => {
         iconClass="fas fa-tags"
       />
       <SidebarLink
-        text={t('navbar:cumulative_points')}
+        text={t('navbar:loyalty_points')}
         href="/loyalty-points"
         iconClass="fas fa-hand-holding-usd"
       />

@@ -72,7 +72,7 @@ function MobileNavbar() {
                       <Link href="/loyalty-points">
                         <a className="mobile-menu-link">
                           <i className="fas fa-hand-holding-usd mr-2" />
-                          {t('navbar:cumulative_points')}
+                          {t('navbar:loyalty_points')}
                         </a>
                       </Link>
                     </li>

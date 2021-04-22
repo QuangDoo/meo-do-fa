@@ -1,15 +1,56 @@
 import { Trans, useTranslation } from 'i18n';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import Button from 'src/components/Form/Button';
 import ModalWithHeader from 'src/components/Layout/Modal/ModalWithHeader';
+import {
+  CREATE_LOYALTY_EXCHANGE,
+  LoyaltyExchangeVars
+} from 'src/graphql/loyalty-points/createLoyaltyExchange';
+import {
+  GET_LOYALTY_EXCHANGE,
+  LoyaltyExchangeData
+} from 'src/graphql/loyalty-points/getLoyaltyExchange';
+import { useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
 
-const loyaltyChangeTypes = [50, 100, 200, 500];
-
-const myPoints = 150;
-
-function RedeemPoints() {
+function RedeemPoints({ totalPoints, refetchTotalPoint }) {
   const { t } = useTranslation(['loyalty']);
   const [open, setOpen] = useState(false);
+
+  const { data: loyaltyExchangeData } = useQueryAuth<LoyaltyExchangeData, undefined>(
+    GET_LOYALTY_EXCHANGE,
+    {
+      fetchPolicy: 'network-only',
+      onError: (error) => {
+        toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
+      }
+    }
+  );
+  const loyaltyExchange = loyaltyExchangeData?.getLoyaltyExchange
+    .slice()
+    .sort((a, b) => a.point - b.point);
+
+  const [createLoyaltyExchange] = useMutationAuth<LoyaltyExchangeData, LoyaltyExchangeVars>(
+    CREATE_LOYALTY_EXCHANGE,
+    {
+      onError: (error) => {
+        toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
+      },
+      onCompleted: () => {
+        toast.success(t('exchange_success_notify'));
+        refetchTotalPoint();
+        setOpen(false);
+      }
+    }
+  );
+
+  const handleLoyaltyExchange = (id: number) => {
+    createLoyaltyExchange({
+      variables: {
+        exchangeId: id
+      }
+    });
+  };
 
   return (
     <>
@@ -24,7 +65,7 @@ function RedeemPoints() {
             <Trans
               i18nKey="loyalty:points_owner"
               values={{
-                points: myPoints
+                points: totalPoints
               }}
               components={{ b: <b /> }}
             />
@@ -33,27 +74,23 @@ function RedeemPoints() {
             <table className="loyalty-table">
               <thead className="loyalty-table-thead">
                 <tr>
-                  <th scope="col">{t('cumulative_points')}</th>
+                  <th scope="col">{t('loyalty_points')}</th>
                   <th scope="col">{t('exchange_value')}</th>
                   <th scope="col"></th>
                 </tr>
               </thead>
               <tbody className="loyalty-table-tbody">
-                {loyaltyChangeTypes.map((value, index) => (
-                  <tr key={index}>
-                    <td>{value}</td>
-                    <td>
-                      <Trans
-                        i18nKey="loyalty:coupon_name"
-                        values={{
-                          value: (value * 1000).toLocaleString('de-DE')
-                        }}
-                        components={{ b: <b /> }}
-                      />
-                    </td>
-                    <td>
-                      {myPoints >= value ? (
-                        <Button variant="primary" size="sm" className="text-nowrap">
+                {loyaltyExchange?.map(({ id, name, point }) => (
+                  <tr key={id}>
+                    <td>{point}</td>
+                    <td>{name}</td>
+                    <td className="text-center">
+                      {totalPoints >= point ? (
+                        <Button
+                          variant="primary"
+                          size="sm"
+                          className="text-nowrap"
+                          onClick={() => handleLoyaltyExchange(id)}>
                           {t('exchange_point_button')}
                         </Button>
                       ) : (
