@@ -51,5 +51,6 @@
   "menu_change_image": "Change image",
   "menu_delete_image": "Delete image",
   "certificate_image_load_error": "Server error",
-  "otp_label":"OTP code"
+  "otp_label": "OTP code",
+  "waiting": "Account is awaiting verification from Administrator, please wait to activate your account."
 }

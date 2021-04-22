@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 export type Manufacturer = {
-  id: string;
+  id: number;
   name: string;
   short_name: string;
   description: string;
