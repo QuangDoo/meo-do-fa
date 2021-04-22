@@ -11,7 +11,7 @@ export const GET_ALL_INGREDIENTS = gql`
 
 export type GetAllIngredientsData = {
   getIngredientsAll: {
-    id: string;
+    id: number;
     name: string;
   }[];
 };
