@@ -220,7 +220,7 @@ function Products() {
 
               {!productsLoading &&
                 (total > 0 ? (
-                  <div className="row col-12 mr-0 pl-0 ml-0 pr-0 pb-2 result-text">
+                  <div>
                     <Trans
                       i18nKey={search ? 'products:results_with_keyword' : 'products:results'}
                       values={{
@@ -233,7 +233,7 @@ function Products() {
                     />
                   </div>
                 ) : (
-                  <div className="row col-12 mr-0 pl-0 ml-0 pr-0 pb-2 result-text">
+                  <div>
                     <Trans
                       i18nKey={
                         search ? 'products:no_products_with_keyword' : 'products:no_products'
