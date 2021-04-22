@@ -1,6 +1,5 @@
 import { useQuery } from '@apollo/client';
 import clsx from 'clsx';
-import configs from 'configs';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -45,13 +44,13 @@ export default function CartPage() {
   const FREE_SHIP = +configData?.getWebsiteConfig.find((config) => config.key === 'FREESHIP_PRICE')
     .value;
 
-  const { data: dataGetCartByProduct, loading: gettingCartByProducts } = useQueryAuth<
-    GetCartByProductData,
-    getCartByproductVars
-  >(GET_CART_BY_PRODUCT, {
-    variables: { ids: checkboxCarts },
-    nextFetchPolicy: 'network-only'
-  });
+  const { data: dataGetCartByProduct } = useQueryAuth<GetCartByProductData, getCartByproductVars>(
+    GET_CART_BY_PRODUCT,
+    {
+      variables: { ids: checkboxCarts },
+      nextFetchPolicy: 'network-only'
+    }
+  );
   const cartsCheckBox = dataGetCartByProduct?.getCartByProduct;
 
   const [createCounsel, { loading: creatingCounsel }] = useMutationAuth(CREATE_COUNSEL, {
@@ -281,7 +280,4 @@ export default function CartPage() {
       <LoadingBackdrop open={creatingCounsel} />
     </>
   );
-}
-function checkboxCartsContext(checkboxCartsContext: any) {
-  throw new Error('Function not implemented.');
 }

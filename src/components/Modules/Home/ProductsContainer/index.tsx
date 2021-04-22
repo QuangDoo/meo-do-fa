@@ -2,7 +2,6 @@ import clsx from 'clsx';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import React, { ReactNode } from 'react';
-import Button from 'src/components/Form/Button';
 
 type ProductsContainerProps = {
   deals?: boolean;

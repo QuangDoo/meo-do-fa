@@ -1,6 +1,6 @@
 import React from 'react';
 
-function MessageOurFounder(props) {
+function MessageOurFounder() {
   return (
     <>
       <div className="message-founder">

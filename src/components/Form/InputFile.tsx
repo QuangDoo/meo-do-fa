@@ -7,7 +7,7 @@ type Props = {
   containerClass?: string;
 };
 
-const InputFile = (props: Props, ref) => {
+const InputFile = (props: Props) => {
   const { containerClass = '' } = props;
 
   return (

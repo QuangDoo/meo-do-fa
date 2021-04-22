@@ -2,7 +2,7 @@ import { Dialog, GridList } from '@material-ui/core';
 import axios from 'axios';
 import { useTranslation } from 'i18n';
 import getConfig from 'next/config';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { viPhoneNumberRegex } from 'src/assets/regex/viPhoneNumber';
@@ -41,7 +41,7 @@ const ConfirmComplain = (props: Props) => {
   const { t } = useTranslation(['common', 'myOrders', 'myAccount', 'faults', 'cart', 'register']);
   const [imgTime, setImgTime] = useState<number>(new Date().getTime());
   const [imgsHidden, setImgsHidden] = useState<boolean>(false);
-  const { data: user, refetch: refetchUser } = useUser();
+  const { data: user } = useUser();
   const [fault, setFault] = useState<string>('');
   const { register } = useForm<Inputs>();
 

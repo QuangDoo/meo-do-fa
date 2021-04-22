@@ -23,7 +23,7 @@ const Register = ({ t }: RegisterModalProps) => {
   return (
     <>
       {/* Register button to open modal */}
-      <Button onClick={openRegisterModal} size="sm" variant="primary" className="mr-2">
+      <Button onClick={openRegisterModal} size="sm" variant="primary" className="mr-2 register ">
         {t('header:register')}
       </Button>
 
