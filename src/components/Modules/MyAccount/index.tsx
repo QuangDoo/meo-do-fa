@@ -153,6 +153,7 @@ export default function MyAccountPage() {
       userVat = userVat.slice(0, 10) + '-' + userVat.slice(10, 13);
     }
 
+    console.log(userVat);
     const [cityName, cityId] = data.companyCity.split('__');
     const [districtName, districtId] = data.companyDistrict.split('__');
     const [wardName, wardId] = data.companyWard.split('__');
@@ -192,7 +193,7 @@ export default function MyAccountPage() {
       });
   };
 
-  const vat = user?.vat?.replace('-', ' - ') || '';
+  // const vat = user?.vat?.replace('-','');
 
   const onError = (error) => {
     toast.error(error[Object.keys(error)[0]].message);
@@ -277,7 +278,7 @@ export default function MyAccountPage() {
               label={t('myAccount:tax_code_label')}
               name="taxCode"
               type="text"
-              defaultValue={vat || ''}
+              defaultValue={user?.vat || ''}
               placeholder={t('myAccount:tax_code_placeholder')}
             />
 

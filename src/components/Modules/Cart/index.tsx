@@ -1,6 +1,5 @@
 import { useQuery } from '@apollo/client';
 import clsx from 'clsx';
-import configs from 'configs';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -45,13 +44,13 @@ export default function CartPage() {
   const FREE_SHIP = +configData?.getWebsiteConfig.find((config) => config.key === 'FREESHIP_PRICE')
     .value;
 
-  const { data: dataGetCartByProduct, loading: gettingCartByProducts } = useQueryAuth<
-    GetCartByProductData,
-    getCartByproductVars
-  >(GET_CART_BY_PRODUCT, {
-    variables: { ids: checkboxCarts },
-    nextFetchPolicy: 'network-only'
-  });
+  const { data: dataGetCartByProduct } = useQueryAuth<GetCartByProductData, getCartByproductVars>(
+    GET_CART_BY_PRODUCT,
+    {
+      variables: { ids: checkboxCarts },
+      nextFetchPolicy: 'network-only'
+    }
+  );
   const cartsCheckBox = dataGetCartByProduct?.getCartByProduct;
 
   const [createCounsel, { loading: creatingCounsel }] = useMutationAuth(CREATE_COUNSEL, {
@@ -167,14 +166,14 @@ export default function CartPage() {
                   />
                   <h1 className="h5 ml-2">
                     {t('cart:select_all')}
-                    {checkboxCarts?.length === cart?.carts?.length && ` (${cart.totalQty})`}
+                    {checkboxCarts?.length === cart?.carts?.length && ` (${cart?.totalQty})`}
                   </h1>
                 </div>
               )}
             </div>
           </div>
           <div className="row">
-            <div className={clsx(cart.totalQty === 0 ? 'col-md-12' : 'col-md-9', 'col-12')}>
+            <div className={clsx(cart?.totalQty === 0 ? 'col-md-12' : 'col-md-9', 'col-12')}>
               {cart?.carts
                 .slice()
                 .reverse()
@@ -194,7 +193,7 @@ export default function CartPage() {
                 {t('cart:back_to_products')} <a href="/products">{t('cart:products')}</a>
               </div>
             </div>
-            <div className="col-12 col-md-3" hidden={cart.totalQty === 0}>
+            <div className="col-12 col-md-3" hidden={cart?.totalQty === 0}>
               {cart && (
                 <div className="cart__info">
                   <div className="elevated row no-gutters mb-2">
@@ -281,7 +280,4 @@ export default function CartPage() {
       <LoadingBackdrop open={creatingCounsel} />
     </>
   );
-}
-function checkboxCartsContext(checkboxCartsContext: any) {
-  throw new Error('Function not implemented.');
 }

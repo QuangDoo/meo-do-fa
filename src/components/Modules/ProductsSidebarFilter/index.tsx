@@ -8,7 +8,7 @@ import CategoryFilter from './CategoryFilter';
 import ManufacturerFilter from './ManufacturerFilter';
 import PriceFilter from './PriceFilter';
 import Sort from './Sort';
-
+import SupplierFilter from './SupplierFilter';
 type Props = {
   onClose?: () => void;
 };
@@ -52,6 +52,9 @@ const ProductsSidebarFilter = (props: Props) => {
       <hr className="hr my-3" />
 
       <ManufacturerFilter />
+
+      <hr className="hr my-3" />
+      <SupplierFilter />
     </aside>
   );
 };

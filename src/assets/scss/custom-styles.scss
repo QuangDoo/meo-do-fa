@@ -19,6 +19,7 @@
 @import './coupon.scss';
 @import './search-bar.scss';
 @import './active-message.scss';
+@import './feedback.scss';
 
 button {
   background-color: transparent;
@@ -52,6 +53,7 @@ button {
   .container-lg,
   .container-xl {
     max-width: 1270px;
+    padding: 0 2rem;
   }
 }
 
@@ -79,4 +81,9 @@ button {
   z-index: 1900000000 !important;
   // 2147483000
   // 2000000000!important
+}
+.result-text {
+  b{
+    padding: 0px 5px !important;
+  }
 }

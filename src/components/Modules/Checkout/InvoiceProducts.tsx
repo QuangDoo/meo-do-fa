@@ -2,12 +2,11 @@ import slugify from '@sindresorhus/slugify';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useFormContext } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import Checkbox from 'src/components/Form/Checkbox';
 import PriceText from 'src/components/Form/PriceText';
-import { useCart } from 'src/contexts/Cart';
 import {
   GET_INVOICE_COUNSEL,
   GetInvoiceCounselData,

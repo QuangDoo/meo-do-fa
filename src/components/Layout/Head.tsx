@@ -1,5 +1,5 @@
 import { default as HeadNext } from 'next/head';
-import React, { useEffect } from 'react';
+import React from 'react';
 // const tawkTo = require('tawkto-react')
 // import tawkTo from 'tawkto-react';
 export default function Head(props) {

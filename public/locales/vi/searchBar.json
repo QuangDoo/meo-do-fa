@@ -25,5 +25,6 @@
   "placeholder_manufacturers": "Nhập tên nhà sản xuất cần tìm...",
   "placeholder_ingredients": "Nhập tên hoạt chất cần tìm...",
   "placeholder_suppliers": "Nhập tên nhà cung cấp cần tìm...",
-  "showing_results_for": "Hiển thị {{count}} kết quả tìm kiếm cho"
+  "showing_results_for": "Hiển thị {{count}} kết quả tìm kiếm cho",
+  "enter_name_suppliers": "Nhập tên nhà cung cấp"
 }
