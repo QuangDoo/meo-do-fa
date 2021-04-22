@@ -108,7 +108,7 @@ export default function SupplierFilter() {
 
       {!loadingSuppliers &&
         suppliers?.map(({ name, id }) => (
-          <div key={id} className="mb-2" id={id}>
+          <div key={id} className="mb-2" id={id + ''}>
             <Link href={getHref(id)}>
               <a
                 title={name}
