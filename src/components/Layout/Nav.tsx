@@ -50,10 +50,10 @@ const Nav = () => {
 
   return (
     <nav className="rockland-nav shrink header-menu d-none d-sm-block">
-      <div className="container">
+      <div className="container custom-header-container">
         <div className="row">
           <div className="col-12 d-flex align-items-center justify-content-between">
-            <ul className="nav text-capitalize">
+            <ul className="nav text-capitalize custom-list-menu">
               {/* {categories.length !== 0 ? (
                 <CategoryMenu />
               ) : (
@@ -178,8 +178,8 @@ const Nav = () => {
 
             {token && (
               <div className="header-right flex-shrink-0">
-                <ul className="nav align-items-center">
-                  <li className="nav-item mr-4">
+                <ul className="nav align-items-start">
+                  <li className="nav-item custom-nav-item-cart">
                     <Link href="/cart">
                       <a className="rockland-nav__link notification" title={t('cart:cart')}>
                         <ShoppingCartOutlinedIcon />
