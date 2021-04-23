@@ -9777,7 +9777,7 @@ abbr[title] {
     align-items: center;
   }
 }
-@media only screen and (max-width: 767.9px) {
+@media (min-width: 578px) and (max-width: 992px) {
   .rockland-nav__title_deal{
     display: block;
   }
@@ -9785,12 +9785,22 @@ abbr[title] {
     display: none;
   }
   .rockland-nav__link{
-    .rockland-nav__title{
+    .rockland-nav__title, .rockland-nav__title_deal{
       font-size: 0.8rem;
     }
-    .rockland-nav__title_deal{
-      font-size: 0.8rem;
+  }
+  .extraCart{
+    font-size: 0.8rem;
+  }
+}
+@media (min-width: 578px) and (max-width: 992px) {
+  .rockland-nav__link{
+    .rockland-nav__title, .rockland-nav__title_deal{
+      font-size: 0.6rem;
     }
+  }
+  .extraCart{
+    font-size: 0.6rem;
   }
 }
 .promotion-nav {
