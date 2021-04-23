@@ -4,25 +4,10 @@ import React from 'react';
 import Head from 'src/components/Layout/Head';
 import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import {
-  GET_BEST_SELLING_PRODUCTS,
-  GetBestSellingProductsData,
-  GetBestSellingProductsVars
-} from 'src/graphql/product/getBestSellingProducts';
-import {
   GET_DEALS_OF_THE_DAY,
   GetDealsOfTheDayData,
   GetDealsOfTheDayVars
 } from 'src/graphql/product/getDealsOfTheDay';
-import {
-  GET_NEW_PRODUCTS,
-  GetNewProductsData,
-  GetNewProductsVars
-} from 'src/graphql/product/getNewProducts';
-import {
-  GET_PROMOTION_PRODUCTS,
-  GetPromotionProductsData,
-  GetPromotionProductsVars
-} from 'src/graphql/product/getPromotionProducts';
 import withToken from 'src/utils/withToken';
 
 const DynamicHomePage = dynamic(() => import('src/components/Modules/Home'));
@@ -44,33 +29,13 @@ function Home() {
     paginationVars
   );
 
-  const { data: bestSellingData } = useQuery<
-    GetBestSellingProductsData,
-    GetBestSellingProductsVars
-  >(GET_BEST_SELLING_PRODUCTS, paginationVars);
-
-  const { data: newProductsData } = useQuery<GetNewProductsData, GetNewProductsVars>(
-    GET_NEW_PRODUCTS,
-    paginationVars
-  );
-
-  const { data: promotionProductsData } = useQuery<
-    GetPromotionProductsData,
-    GetPromotionProductsVars
-  >(GET_PROMOTION_PRODUCTS, paginationVars);
-
   return (
     <MainLayout>
       <Head>
         <title>Medofa</title>
       </Head>
 
-      <DynamicHomePage
-        bestSellingData={bestSellingData}
-        newProductsData={newProductsData}
-        promotionProductsData={promotionProductsData}
-        dealsOfTheDayData={dealsOfTheDayData}
-      />
+      <DynamicHomePage dealsOfTheDayData={dealsOfTheDayData} />
       {/* <HomePage
         bestSellingData={bestSellingData}
         newProductsData={newProductsData}
