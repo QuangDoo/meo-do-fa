@@ -1,8 +1,8 @@
 import { ApolloClient, DefaultOptions, from, HttpLink, InMemoryCache } from '@apollo/client';
 import { onError } from '@apollo/client/link/error';
+import fetch from 'cross-fetch';
 import { withApollo } from 'next-apollo';
 import getConfig from 'next/config';
-import fetch from 'node-fetch';
 
 const { serverRuntimeConfig, publicRuntimeConfig } = getConfig();
 
@@ -37,7 +37,6 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
         `=========⚠️ [GraphQL error] ========\n
 - Code: ${extensions.code} \n
 - Location: ${locations} \n
-- Path: ${path} \n
 - Message: ${message} \n
 ===================================\n
       `.trim()
