@@ -1,5 +1,4 @@
 import { useQuery } from '@apollo/client';
-import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React from 'react';
 import Head from 'src/components/Layout/Head';
@@ -12,7 +11,7 @@ import withToken from 'src/utils/withToken';
 
 const pageSize = 20;
 
-PromotionDetail.getInitialProps = async (ctx) => {
+PromotionDetail.getInitialProps = async () => {
   return {
     namespacesRequired: [...mainLayoutNamespacesRequired]
   };
@@ -25,10 +24,7 @@ function PromotionDetail(): JSX.Element {
 
   const { promotionId } = router.query;
 
-  const { data: productsData, refetch: refetchProducts, loading: loadingProducts } = useQuery<
-    GetProductsData,
-    GetProductsVars
-  >(GET_PRODUCTS, {
+  const { data: productsData } = useQuery<GetProductsData, GetProductsVars>(GET_PRODUCTS, {
     variables: {
       page: page,
       pageSize: pageSize,
@@ -39,12 +35,9 @@ function PromotionDetail(): JSX.Element {
     }
   });
 
-  const { data: promontionData, loading: getingPromotion } = useQuery<PromotionData, PromotionVar>(
-    GET_PROMOTION,
-    {
-      variables: { id: Number(promotionId) }
-    }
-  );
+  const { data: promontionData } = useQuery<PromotionData, PromotionVar>(GET_PROMOTION, {
+    variables: { id: Number(promotionId) }
+  });
 
   const content = promontionData?.getWebsitePromotionDetail?.content || '';
 

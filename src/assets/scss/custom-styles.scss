@@ -19,7 +19,11 @@
 @import './coupon.scss';
 @import './search-bar.scss';
 @import './active-message.scss';
+@import './loyalty.scss';
 @import './feedback.scss';
+@import './ingredients.scss';
+@import './quickOrder.scss';
+
 
 button {
   background-color: transparent;
@@ -81,4 +85,9 @@ button {
   z-index: 1900000000 !important;
   // 2147483000
   // 2000000000!important
+}
+.result-text {
+  b{
+    padding: 0px 5px !important;
+  }
 }

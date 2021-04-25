@@ -10,7 +10,7 @@ export type ModalBaseProps = {
   onBackdropClick?: () => void;
 };
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     background: '#f4f7fc',
     borderRadius: '1.25em'

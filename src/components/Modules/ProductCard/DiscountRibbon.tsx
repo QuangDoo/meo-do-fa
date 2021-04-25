@@ -6,8 +6,6 @@ type Props = {
 };
 
 export const DiscountRibbon = (props: Props) => {
-  const { t } = useTranslation('productCard');
-
   return (
     <div className="ribbon price_down">
       <span className="ribbon-percent">-{props.discountPercent}%</span>

@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { APPLY_COUPON, ApplyCouponData, ApplyCouponVars } from 'src/graphql/coupons/applyCoupon';
 import { GET_USED_COUPONS, GetUsedCouponsData } from 'src/graphql/coupons/getUsedCoupons';
-import { OutputCounsel, PromotionInfo } from 'src/graphql/order/getCounsel';
+import { OutputCounsel } from 'src/graphql/order/getCounsel';
 import { useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
 
 import ApplyPromoCodesDialog from './ApplyPromoCodesDialog';

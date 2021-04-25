@@ -3,11 +3,7 @@ import { CartProvider } from 'src/contexts/Cart';
 import { NotifyProvider } from 'src/contexts/Notify';
 import { TokenContext } from 'src/contexts/Token';
 import { UserProvider } from 'src/contexts/User';
-import { GET_CART } from 'src/graphql/cart/getCart';
-import { GET_NOTI } from 'src/graphql/notification/notify.query';
-import { GET_USER } from 'src/graphql/user/getUser';
 
-import asyncQuery from './asyncQuery';
 import getToken from './getToken';
 import protectRoute from './protectRoute';
 import withApollo from './withApollo';

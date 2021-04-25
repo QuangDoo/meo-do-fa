@@ -15,7 +15,7 @@
   "my_order": "My orders",
   "introduce_friends": "Introduce friends",
   "my_promo_code": "My promo codes",
-  "cumulative_points": "Cumulative points",
+  "loyalty_points": "Loyalty points",
   "logout": "Logout",
   "category": "Category",
   "wallet": "Wallet",
@@ -25,5 +25,12 @@
   "product_category": "Product categories",
   "pathology": "Search by pathology",
   "promotions": "Promotions",
-  "most_searched": "Most searched"
+  "most_searched": "Most searched",
+  "language": "Language",
+  "vn":"VietNamese",
+  "en": "English",
+  "deals_price":"Deals",
+  "deals_today":"of the day",
+  "path_search":"Search",
+  "path_sick":"by pathology"
 }

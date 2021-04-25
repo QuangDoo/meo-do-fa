@@ -46,14 +46,14 @@ const Nav = () => {
 
   // const categories = categoriesData?.getCategoriesLevel || [];
 
-  const isSmallScreen = useMediaQuery('(max-width: 575px)');
+  //const isSmallScreen = useMediaQuery('(max-width: 575px)');
 
   return (
     <nav className="rockland-nav shrink header-menu d-none d-sm-block">
-      <div className="container">
+      <div className="container custom-header-container">
         <div className="row">
           <div className="col-12 d-flex align-items-center justify-content-between">
-            <ul className="nav text-capitalize">
+            <ul className="nav text-capitalize custom-list-menu">
               {/* {categories.length !== 0 ? (
                 <CategoryMenu />
               ) : (
@@ -79,7 +79,9 @@ const Nav = () => {
                 <Link href="/deals-of-the-day">
                   <a className="rockland-nav__link">
                     <i className="rockland-nav__icon icomoon icon-product" />
-                    <span className="rockland-nav__title">{t('navbar:deals_of_the_day')}</span>
+                    <span className="rockland-nav__title_d">{t('navbar:deals_of_the_day')}</span>
+                    <span className="rockland-nav__title_deal">{t('navbar:deals_price')}</span>
+                    <span className="rockland-nav__title_deal">{t('navbar:deals_today')}</span>
                   </a>
                 </Link>
               </li>
@@ -176,8 +178,8 @@ const Nav = () => {
 
             {token && (
               <div className="header-right flex-shrink-0">
-                <ul className="nav align-items-center">
-                  <li className="nav-item mr-4">
+                <ul className="nav align-items-start">
+                  <li className="nav-item custom-nav-item-cart">
                     <Link href="/cart">
                       <a className="rockland-nav__link notification" title={t('cart:cart')}>
                         <ShoppingCartOutlinedIcon />
@@ -265,12 +267,12 @@ const Nav = () => {
                       </Link>
                     </div>
 
-                    {/* <Link href="/users/loyalty_points">
+                    <Link href="/loyalty-points">
                       <a className="dropdown__item dropdown__item-link">
                         <i className="fas fa-hand-holding-usd dropdown__item-icon" />
-                        {t('navbar:cumulative_points')}
+                        {t('navbar:loyalty_points')}
                       </a>
-                    </Link> */}
+                    </Link>
 
                     <button
                       type="button"

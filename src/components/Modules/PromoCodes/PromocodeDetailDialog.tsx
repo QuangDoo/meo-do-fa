@@ -70,13 +70,6 @@ function PromocodeDetailDialog(props: Props) {
   });
 
   const promoDetail = dataPromoDetail?.getCouponProgramsDetail;
-  const convertDate = (day) => {
-    const date = new Date(day?.substring(0, day?.indexOf(' ')));
-    if (!isNaN(date?.getTime())) {
-      // Months use 0 index.
-      return date?.getMonth() + 1 + '/' + date?.getDate() + '/' + date?.getFullYear();
-    }
-  };
 
   return (
     <Dialog
@@ -95,7 +88,8 @@ function PromocodeDetailDialog(props: Props) {
         </Typography>
         {promoDetail?.rule_date_to !== 'false' && (
           <Typography gutterBottom>
-            {t('promoCodes:exp_date')}:<b> {convertDate(promoDetail?.rule_date_to)} </b>
+            {t('promoCodes:exp_date')}:
+            <b> {new Date(promoDetail?.rule_date_to).toLocaleDateString('en-GB')} </b>
           </Typography>
         )}
         <hr />

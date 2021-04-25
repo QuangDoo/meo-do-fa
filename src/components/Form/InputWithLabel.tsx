@@ -27,7 +27,7 @@ type Props = {
 const InputWithLabel = (props: Props, ref) => {
   const [showPassword, setShowPassword] = useState(false);
 
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
   const toggleShowPassword = () => {
     setShowPassword((show) => !show);
   };

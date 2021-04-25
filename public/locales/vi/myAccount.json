@@ -52,5 +52,6 @@
   "menu_change_image": "Đổi ảnh",
   "menu_delete_image": "Xóa ảnh",
   "certificate_image_load_error": "Lỗi máy chủ",
-  "otp_label":"Mã OTP"
+  "otp_label": "Mã OTP",
+  "waiting": "Tài khoản đang chờ xác thực từ Quản trị viên, vui lòng chờ đợi kích hoạt tài khoản."
 }

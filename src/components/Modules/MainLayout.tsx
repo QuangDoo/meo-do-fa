@@ -12,7 +12,6 @@ import Footer from '../Layout/Footer';
 import Header from '../Layout/Header';
 import LoadingBackdrop from '../Layout/LoadingBackdrop';
 import Nav from '../Layout/Nav';
-import TermPopup from './TermPopup';
 
 type Props = {
   children: ReactNode;
@@ -31,7 +30,7 @@ export default function MainLayout(props: Props) {
     <>
       <DynamicTermPopup />
 
-      {token && !isActive && <ActiveUser />}
+      {token && !isActive && <ActiveUser waiting={dataUser?.waiting} />}
 
       <Header />
 

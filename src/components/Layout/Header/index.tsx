@@ -7,12 +7,17 @@ import ForgotPasswordModal from 'src/components/Modules/ForgotPasswordModal';
 import LoginModal from 'src/components/Modules/LoginModal';
 import MobileNavbar from 'src/components/Modules/Navbar/MobileNavbar';
 import RegisterModal from 'src/components/Modules/RegisterModal';
+import { useCart } from 'src/contexts/Cart';
 import { useToken } from 'src/contexts/Token';
 
 import RightSideUser from './RightSideUser';
 import SearchBar from './SearchBar';
 
 const Header = () => {
+  const { data: cart } = useCart();
+
+  const totalQty = cart?.totalQty;
+
   const token = useToken();
   const isSmallScreen = useMediaQuery('(max-width: 575px)');
 
@@ -51,8 +56,9 @@ const Header = () => {
                 </div>
                 {token ? (
                   <Link href="/cart">
-                    <a className="mobile-menu-link">
+                    <a className="mobile-menu-link notification">
                       <ShoppingCartOutlinedIcon />
+                      {totalQty > 0 && <span className="notification__counter">{totalQty}</span>}
                     </a>
                   </Link>
                 ) : (
@@ -82,12 +88,14 @@ const Header = () => {
               <RightSideUser />
             </>
           ) : (
-            <div className="d-flex align-items-center justify-content-center">
-              <LoginModal />
+            <div className="d-flex align-items-center justify-content-center ">
+              <div className="mobile-nav">
+                <LoginModal />
 
-              <RegisterModal />
+                <RegisterModal />
 
-              <ForgotPasswordModal />
+                <ForgotPasswordModal />
+              </div>
             </div>
           )}
         </div>
