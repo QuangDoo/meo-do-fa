@@ -1,5 +1,13 @@
+import { CircularProgress, Typography } from '@material-ui/core';
+import Paper from '@material-ui/core/Paper';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
 import { Trans, useTranslation } from 'i18n';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import Button from 'src/components/Form/Button';
 import ModalWithHeader from 'src/components/Layout/Modal/ModalWithHeader';
@@ -12,6 +20,8 @@ import {
   LoyaltyExchangeData
 } from 'src/graphql/loyalty-points/getLoyaltyExchange';
 import { useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
+
+import { TableHeader } from './index';
 
 function RedeemPoints({ totalPoints, refetchTotalPoint }) {
   const { t } = useTranslation(['loyalty']);
@@ -30,19 +40,19 @@ function RedeemPoints({ totalPoints, refetchTotalPoint }) {
     .slice()
     .sort((a, b) => a.point - b.point);
 
-  const [createLoyaltyExchange] = useMutationAuth<LoyaltyExchangeData, LoyaltyExchangeVars>(
-    CREATE_LOYALTY_EXCHANGE,
-    {
-      onError: (error) => {
-        toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
-      },
-      onCompleted: () => {
-        toast.success(t('exchange_success_notify'));
-        refetchTotalPoint();
-        setOpen(false);
-      }
+  const [createLoyaltyExchange, { loading: creatingLoyalty }] = useMutationAuth<
+    LoyaltyExchangeData,
+    LoyaltyExchangeVars
+  >(CREATE_LOYALTY_EXCHANGE, {
+    onError: (error) => {
+      toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
+    },
+    onCompleted: () => {
+      toast.success(t('exchange_success_notify'));
+      refetchTotalPoint();
+      setOpen(false);
     }
-  );
+  });
 
   const handleLoyaltyExchange = (id: number) => {
     createLoyaltyExchange({
@@ -60,49 +70,65 @@ function RedeemPoints({ totalPoints, refetchTotalPoint }) {
 
       {/* Register modal */}
       <ModalWithHeader open={open} title={t('redeem_title')} onClose={() => setOpen(false)}>
-        <div className="row">
-          <div className="col-12 mb-3 ">
-            <Trans
-              i18nKey="loyalty:points_owner"
-              values={{
-                points: totalPoints
-              }}
-              components={{ b: <b /> }}
-            />
+        {!creatingLoyalty ? (
+          <div className="row">
+            <div className="col-12 mb-3 ">
+              <Trans
+                i18nKey="loyalty:points_owner"
+                values={{
+                  points: new Intl.NumberFormat('de-DE').format(totalPoints)
+                }}
+                components={{ b: <b /> }}
+              />
+            </div>
+            <div className="col-12 mb-3">
+              <TableContainer component={Paper}>
+                <TableContainer>
+                  <Table>
+                    <TableHead>
+                      <TableRow>
+                        <TableHeader>{t('loyalty_points')}</TableHeader>
+
+                        <TableHeader>{t('type')}</TableHeader>
+
+                        <TableHeader className="text-center">{t('points')}</TableHeader>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {loyaltyExchange?.map(({ id, name, point }) => (
+                        <TableRow key={id}>
+                          <TableCell component="th" scope="row">
+                            {new Intl.NumberFormat('de-DE').format(point)}
+                          </TableCell>
+                          <TableCell>{name}</TableCell>
+                          <TableCell className="text-center">
+                            {totalPoints >= point ? (
+                              <Button
+                                variant="primary"
+                                size="sm"
+                                className="text-nowrap"
+                                onClick={() => handleLoyaltyExchange(id)}>
+                                {t('exchange_point_button')}
+                              </Button>
+                            ) : (
+                              t('no_enough_points')
+                            )}
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </TableContainer>
+            </div>
           </div>
-          <div className="col-12 mb-3">
-            <table className="loyalty-table">
-              <thead className="loyalty-table-thead">
-                <tr>
-                  <th scope="col">{t('loyalty_points')}</th>
-                  <th scope="col">{t('exchange_value')}</th>
-                  <th scope="col"></th>
-                </tr>
-              </thead>
-              <tbody className="loyalty-table-tbody">
-                {loyaltyExchange?.map(({ id, name, point }) => (
-                  <tr key={id}>
-                    <td>{point}</td>
-                    <td>{name}</td>
-                    <td className="text-center">
-                      {totalPoints >= point ? (
-                        <Button
-                          variant="primary"
-                          size="sm"
-                          className="text-nowrap"
-                          onClick={() => handleLoyaltyExchange(id)}>
-                          {t('exchange_point_button')}
-                        </Button>
-                      ) : (
-                        t('no_enough_points')
-                      )}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+        ) : (
+          <div className="row">
+            <div className="col-12 my-3 text-center">
+              <CircularProgress />
+            </div>
           </div>
-        </div>
+        )}
       </ModalWithHeader>
     </>
   );
