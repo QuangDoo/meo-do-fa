@@ -64,14 +64,6 @@ function MobileNavbar() {
               <ul className="nav text-capitalize mobile-menu-list">
                 {user && (
                   <>
-                    {/* <li className="mobile-menu-list-item">
-                      <Link href="/cart">
-                        <a className="mobile-menu-link">
-                          <ShoppingCartOutlinedIcon />
-                          <span className="ml-2">{t('cart:cart')}</span>
-                        </a>
-                      </Link>
-                    </li> */}
                     <li className="mobile-menu-list-item">
                       <Link href="/my-orders">
                         <a className="mobile-menu-link">
@@ -88,6 +80,15 @@ function MobileNavbar() {
                         </a>
                       </Link>
                     </li>
+                    <li className="mobile-menu-list-item">
+                      <Link href="/loyalty-points">
+                        <a className="mobile-menu-link">
+                          <i className="fas fa-hand-holding-usd mr-2" />
+                          {t('navbar:loyalty_points')}
+                        </a>
+                      </Link>
+                    </li>
+
                     <hr className="hr my-3" />
                   </>
                 )}

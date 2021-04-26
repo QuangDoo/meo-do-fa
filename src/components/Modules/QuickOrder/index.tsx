@@ -47,7 +47,7 @@ function QuickOrderPage() {
   const totalPagination = quickOrderData?.getProductByConditions?.total;
 
   return (
-    <div className="container py-5">
+    <div className="container py-5 quickOrder">
       <div className="cart">
         <div className="row">
           <div className="col-12 mb-3">

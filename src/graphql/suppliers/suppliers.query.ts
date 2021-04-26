@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 export type Supplier = {
-  id: string;
+  id: number;
   name: string;
 };
 

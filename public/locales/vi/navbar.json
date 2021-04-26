@@ -15,7 +15,7 @@
   "my_order": "Đơn hàng của tôi",
   "introduce_friends": "Giới thiệu bạn bè",
   "my_promo_code": "Mã giảm giá của tôi",
-  "cumulative_points": "Điểm tích luỹ",
+  "loyalty_points": "Điểm tích luỹ",
   "logout": "Đăng xuất",
   "category": "Danh mục",
   "wallet": "Ví",
@@ -28,5 +28,9 @@
   "most_searched": "Tìm kiếm nhiều nhất",
   "language": "Ngôn ngữ",
   "vn":"Tiếng Việt",
-  "en": "Tiếng Anh"
+  "en": "Tiếng Anh",
+  "deals_price":"Giá sốc",
+  "deals_today":"Hôm nay",
+  "path_search":"Tra cứu",
+  "path_sick":"Theo Bệnh Lý"
 }

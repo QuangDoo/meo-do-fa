@@ -7,12 +7,12 @@ import { useForm } from 'react-hook-form';
 
 type Props = {
   data: {
-    id: string;
+    id: number;
     name: string;
     short_name?: string;
   }[];
-  getItemHref: (id: string, name: string) => string;
-  getInfoHref?: (id: string) => string;
+  getItemHref: (id: number, name: string) => string;
+  getInfoHref?: (id: number) => string;
 };
 
 const filterChars = 'abcdefghijklmnopqrstuvwxyz#'.split('');
@@ -87,7 +87,7 @@ export default function SearchScreen(props: Props) {
       <div className="filter-search__list py-3">
         {data?.map((item) => (
           <div key={item.id} className="d-flex align-items--center">
-            <Link href={props.getItemHref(item.id.toString(), item.name)}>
+            <Link href={props.getItemHref(item.id, item.name)}>
               <a title={item.name} className="filter-search__list-item mix all">
                 {item.short_name || item.name}
               </a>

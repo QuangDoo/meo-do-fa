@@ -71,18 +71,17 @@ const ProfileSidebar = () => {
         href="/my-promo-codes"
         iconClass="fas fa-tags"
       />
+      <SidebarLink
+        text={t('navbar:loyalty_points')}
+        href="/loyalty-points"
+        iconClass="fas fa-hand-holding-usd"
+      />
 
       <SidebarLink
         text={t('navbar:change_password')}
         href="/change-password"
         iconClass="fa fa-key"
       />
-
-      {/* <SidebarLink
-        text={t('navbar:cumulative_points')}
-        href="/users/loyalty_points"
-        iconClass="fas fa-hand-holding-usd"
-      /> */}
 
       {/* <div className="my-account__sidebar-item">
         {t('navbar:wallet')} -{' '}

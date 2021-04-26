@@ -2,6 +2,7 @@ import { ApolloClient, DefaultOptions, from, HttpLink, InMemoryCache } from '@ap
 import { onError } from '@apollo/client/link/error';
 import { withApollo } from 'next-apollo';
 import getConfig from 'next/config';
+import fetch from 'node-fetch';
 
 const { serverRuntimeConfig, publicRuntimeConfig } = getConfig();
 
@@ -11,18 +12,22 @@ const getURI = () => {
     `SERVER NEXT PUBLIC... NEXT_PUBLIC_GRAPHQL_GATEWAY: ${process.env.NEXT_PUBLIC_GRAPHQL_GATEWAY},  NEXT_PUBLIC_GRAPHQL_GATEWAY_EXT: ${process.env.NEXT_PUBLIC_GRAPHQL_GATEWAY_EXT} `
   );
 
-  // if (typeof window === 'undefined') {
-  //   return `http://${
-  //     serverRuntimeConfig.GRAPHQL_GATEWAY || process.env.NEXT_PUBLIC_GRAPHQL_GATEWAY
-  //   }`;
-  // }
+  if (typeof window === 'undefined') {
+    return `http://${
+      serverRuntimeConfig.GRAPHQL_GATEWAY || process.env.NEXT_PUBLIC_GRAPHQL_GATEWAY
+    }`;
+  }
   return `https://${
     publicRuntimeConfig.GRAPHQL_GATEWAY_EXT || process.env.NEXT_PUBLIC_GRAPHQL_GATEWAY_EXT
   }`;
 };
 
 const httpLink = new HttpLink({
-  uri: getURI()
+  fetch: fetch as any,
+  uri: getURI(),
+  fetchOptions: {
+    timeout: 5000
+  }
 });
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
