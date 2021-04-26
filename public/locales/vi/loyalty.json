@@ -12,5 +12,6 @@
   "exchange_value": "Giá trị quy đổi",
   "exchange_point_button": "Đổi ngay",
   "no_enough_points": "Không đủ điểm để đổi",
-  "exchange_success_notify": "Đổi điểm thành công"
+  "exchange_success_notify": "Đổi điểm thành công",
+  "no_loyalty_history": "Không có lịch sử đổi điểm"
 }
