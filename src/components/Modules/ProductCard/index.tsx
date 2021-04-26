@@ -107,10 +107,9 @@ const ProductCard = (props: Props) => {
                 </small>
               )}
               {props.default_vendor !== null && (
-                <small
-                  title={props.default_vendor}
-                  className="text-muted product-card__manufacturer product-card__name">
-                  {t('productCard:supplier')}: {props.default_vendor}
+                <small title={props.default_vendor} className="product-card__name-supplier">
+                  <div className="text-muted supplier-name">{t('productCard:supplier')}:</div>{' '}
+                  {props.default_vendor}
                 </small>
               )}
               <br />
