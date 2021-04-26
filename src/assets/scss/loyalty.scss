@@ -1,58 +1,6 @@
-.loyalty-table {
-  width: 100%;
-  margin-bottom: 1rem;
-  color: #212529;
-  border-collapse: separate;
-  display: table;
-  box-sizing: border-box;
-  text-indent: initial;
-  border-spacing: 2px;
-  border-color: grey;
-  border: 1px solid rgba(195, 204, 220, 0.4);
+.loyalty-text-paid {
+  color: $secondary;
 }
-
-.loyalty-table-thead {
-  display: table-header-group;
-  vertical-align: middle;
-  border-color: inherit;
-
-  tr {
-    display: table-row;
-    vertical-align: inherit;
-    border-color: inherit;
-
-    th {
-      color: #495057;
-      background-color: #e9ecef;
-      border-color: rgba(195, 204, 220, 0.4);
-      vertical-align: middle;
-      border: 1px solid rgba(195, 204, 220, 0.4);
-      border-bottom: 2px solid rgba(195, 204, 220, 0.4);
-      padding: 10px !important;
-    }
-  }
-}
-
-.loyalty-table-tbody {
-  display: table-row-group;
-  vertical-align: middle;
-  border-color: inherit;
-
-  tr:nth-of-type(odd) {
-    background-color: rgba(0, 0, 0, 0.05);
-  }
-  tr:hover {
-    color: #212529;
-    background-color: rgba(0, 0, 0, 0.075);
-  }
-  td {
-    padding: 10px !important;
-  }
-
-  .loyalty-text-paid {
-    color: $secondary;
-  }
-  .loyalty-text-earn {
-    color: $primary;
-  }
+.loyalty-text-earn {
+  color: $primary;
 }

@@ -12,5 +12,6 @@
   "exchange_value": "Exchange value",
   "exchange_point_button": "Exchange",
   "no_enough_points": "No enough points to exchange",
-  "exchange_success_notify": "Exchange successfully"
+  "exchange_success_notify": "Exchange successfully",
+  "no_loyalty_history": "No loyalty exchange history"
 }
