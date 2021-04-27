@@ -1,4 +1,4 @@
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { Grid } from '@material-ui/core';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
@@ -7,6 +7,7 @@ import { DeepMap, FieldError, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { emailRegex, noSpecialChars } from 'src/assets/regex/email';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
+import { GET_WEBSITE_CONFIG, GetWebsiteConfigData } from 'src/graphql/configs/getWebsiteConfig';
 import {
   SAVE_MAIL_SUBSCRIBE,
   SubscriberData,
@@ -47,6 +48,11 @@ const Footer = () => {
   const { t } = useTranslation(['footer', 'common']);
 
   const { register, handleSubmit, reset } = useForm<Inputs>();
+
+  const { data: configData } = useQuery<GetWebsiteConfigData, undefined>(GET_WEBSITE_CONFIG);
+  const WEBSITE_VERSION = configData?.getWebsiteConfig.find(
+    (config) => config.key === 'WEBSITE_VERSION'
+  ).value;
 
   const [saveMailSubscriber, { loading: loadingSubcribe }] = useMutation<
     SubscriberData,
@@ -313,7 +319,10 @@ const Footer = () => {
         </div>
         <div className="copyright">
           <div>{t('footer:copyright')}</div>
-          <div className="version">Version: 0.9.11</div>
+          <div>
+            {' '}
+            {''} Version: {WEBSITE_VERSION}
+          </div>
         </div>
         <LoadingBackdrop open={loadingSubcribe} />
         <BackToTop />
