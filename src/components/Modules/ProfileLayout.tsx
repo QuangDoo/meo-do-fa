@@ -8,7 +8,7 @@ type Props = {
 
 const ProfileLayout = (props: Props) => {
   return (
-    <section className="py-5 order-list container">
+    <section className="py-4 order-list container">
       <div className="row">
         <div className="col-xl-3 d-xl-block d-none">
           <ProfileSidebar />
