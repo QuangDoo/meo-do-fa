@@ -91,6 +91,22 @@ const Home = ({ dealsOfTheDayData }) => {
       iconClass: 'fas fa-capsules'
     }
   ];
+  const carouselBestseller = [
+    {
+      title: t('carousels:bestseller'),
+      products: bestSellingData?.getProductByConditions.Products || [],
+      seeMoreUrl: '/products?page=1&tag=best-seller',
+      iconClass: 'fas fa-capsules'
+    }
+  ];
+  const carouselNew = [
+    {
+      title: t('carousels:new_products'),
+      products: newProductsData?.getProductByConditions.Products || [],
+      seeMoreUrl: '/products?page=1&tag=new',
+      iconClass: 'fas fa-capsules'
+    }
+  ];
   const promotionProducts = promotionProductsData?.getPrmotionProducts.products;
   const [show, setShow] = useState(false);
 
@@ -99,7 +115,6 @@ const Home = ({ dealsOfTheDayData }) => {
       setShow(true);
     }
   };
-
   useEffect(() => {
     document.addEventListener('scroll', onSetShow);
     return () => document.removeEventListener('scroll', onSetShow);
@@ -143,17 +158,42 @@ const Home = ({ dealsOfTheDayData }) => {
         ))}
       </SlickSlider>
 
-      {carousels.map((carousel, index) => (
-        <div key={index} hidden={carousel.products.length === 0} id="hot-deal-section">
-          <ProductsContainer
-            title={carousel.title}
-            iconClass={carousel.iconClass}
-            seeMoreUrl={carousel.seeMoreUrl}
-            className={clsx(index === 0 && 'mt-5')}>
-            <ProductsCarousel products={carousel.products} />
-          </ProductsContainer>
-        </div>
-      ))}
+      {carousels.map((carousel) => carousel.products.length) > [0]
+        ? carousels.map((carousel, index) => (
+            <div key={index} hidden={carousel.products.length === 0} id="hot-deal-section">
+              <ProductsContainer
+                title={carousel.title}
+                iconClass={carousel.iconClass}
+                seeMoreUrl={carousel.seeMoreUrl}
+                className={clsx(index === 0 && 'mt-5')}>
+                <ProductsCarousel products={carousel.products} />
+              </ProductsContainer>
+            </div>
+          ))
+        : carouselBestseller.map((carousel, index) => (
+            <div key={index} hidden={show}>
+              <ProductsContainer
+                title={carousel.title}
+                iconClass={carousel.iconClass}
+                seeMoreUrl={carousel.seeMoreUrl}
+                className={clsx(index === 0 && 'mt-5')}>
+                <ProductsCarousel products={carousel.products} />
+              </ProductsContainer>
+            </div>
+          ))}
+      {carouselBestseller.map((carousel) => carousel.products.length) > [0]
+        ? null
+        : carouselNew.map((carousel, index) => (
+            <div key={index} hidden={show}>
+              <ProductsContainer
+                title={carousel.title}
+                iconClass={carousel.iconClass}
+                seeMoreUrl={carousel.seeMoreUrl}
+                className={clsx(index === 0 && 'mt-5')}>
+                <ProductsCarousel products={carousel.products} />
+              </ProductsContainer>
+            </div>
+          ))}
       {show && (
         <>
           {carouselMoreData.map((carousel, index) => (
