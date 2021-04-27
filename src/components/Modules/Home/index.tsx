@@ -69,15 +69,13 @@ const Home = ({ dealsOfTheDayData }) => {
 
   const token = useToken();
 
-  const carousels = [
+  const carouselData = [
     {
       title: t('carousels:deal_of_the_day'),
       products: dealsOfTheDayData?.getProductDealOfTheDay || [],
       seeMoreUrl: '/deals-of-the-day',
       iconClass: 'fas fa-capsules'
-    }
-  ];
-  const carouselMoreData = [
+    },
     {
       title: t('carousels:bestseller'),
       products: bestSellingData?.getProductByConditions.Products || [],
@@ -91,19 +89,8 @@ const Home = ({ dealsOfTheDayData }) => {
       iconClass: 'fas fa-capsules'
     }
   ];
+
   const promotionProducts = promotionProductsData?.getPrmotionProducts.products;
-  const [show, setShow] = useState(false);
-
-  const onSetShow = () => {
-    if (!show && window.pageYOffset > 300) {
-      setShow(true);
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener('scroll', onSetShow);
-    return () => document.removeEventListener('scroll', onSetShow);
-  });
 
   return (
     <div>
@@ -143,8 +130,8 @@ const Home = ({ dealsOfTheDayData }) => {
         ))}
       </SlickSlider>
 
-      {carousels.map((carousel, index) => (
-        <div key={index} hidden={carousel.products.length === 0} id="hot-deal-section">
+      {carouselData.map((carousel, index) => (
+        <div key={index} hidden={carousel.products.length === 0}>
           <ProductsContainer
             title={carousel.title}
             iconClass={carousel.iconClass}
@@ -154,21 +141,6 @@ const Home = ({ dealsOfTheDayData }) => {
           </ProductsContainer>
         </div>
       ))}
-      {show && (
-        <>
-          {carouselMoreData.map((carousel, index) => (
-            <div key={index} hidden={carousel.products.length === 0}>
-              <ProductsContainer
-                title={carousel.title}
-                iconClass={carousel.iconClass}
-                seeMoreUrl={carousel.seeMoreUrl}
-                className={clsx(index === 0 && 'mt-5')}>
-                <ProductsCarousel products={carousel.products} />
-              </ProductsContainer>
-            </div>
-          ))}
-        </>
-      )}
 
       {/* Promotion products */}
       <div hidden={!promotionProducts || promotionProducts?.length === 0}>
