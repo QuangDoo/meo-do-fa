@@ -1,6 +1,7 @@
 import { ApolloQueryResult, QueryLazyOptions, useLazyQuery } from '@apollo/client';
 import { useTranslation } from 'i18n';
 import cookies from 'js-cookie';
+import { useRouter } from 'next/router';
 import React, { createContext, useContext, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { GET_USER, GetUserData } from 'src/graphql/user/getUser';
@@ -19,6 +20,8 @@ const useUser = () => useContext(UserContext);
 function UserProvider(props) {
   const { t } = useTranslation(['errors']);
 
+  const router = useRouter();
+
   // Lazy query
   const [fetch, { data, loading, refetch }] = useLazyQuery<GetUserData, undefined>(GET_USER, {
     fetchPolicy: 'network-only',
@@ -31,6 +34,7 @@ function UserProvider(props) {
       if (isClient) {
         if ([500, 107].includes(errorCode)) {
           cookies.remove('token');
+          router.reload();
         }
         toast.error(t(`errors:code_${errorCode}`));
       }

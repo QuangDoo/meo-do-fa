@@ -14,9 +14,10 @@ import { viPhoneNumberRegex } from 'src/assets/regex/viPhoneNumber';
 import Button from 'src/components/Form/Button';
 import Checkbox from 'src/components/Form/Checkbox';
 import Input from 'src/components/Form/Input';
-import Loading from 'src/components/Layout/Loading';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
+import { useCart } from 'src/contexts/Cart';
 import { useModalControlDispatch } from 'src/contexts/ModalControl';
+import { useNotify } from 'src/contexts/Notify';
 import { useUser } from 'src/contexts/User';
 import { CREATE_USER, CreateUserData, CreateUserVars } from 'src/graphql/user/createUser';
 
@@ -63,6 +64,10 @@ const RegisterForm = () => {
   const initialAccountType = '';
   const currentAccountType = watch('account_type', initialAccountType);
 
+  const { getUser } = useUser();
+  const { getCart } = useCart();
+  const { getNotify } = useNotify();
+
   const [createUser, { loading: creatingUser }] = useMutation<CreateUserData, CreateUserVars>(
     CREATE_USER,
     {
@@ -84,6 +89,12 @@ const RegisterForm = () => {
               console.log('Image upload error:', err);
             });
         }
+
+        // Get user data, cart, notify
+        getUser();
+        getCart();
+        getNotify();
+
         closeModal();
         refetchUser();
         router.reload();
