@@ -99,7 +99,7 @@ const CategoryMenu = () => {
           <Link href="/products">
             <a className="rockland-nav__link">
               <i className="rockland-nav__icon fas fa-list-ul" />
-              <span className="rockland-nav__title">{t('navbar:category')}</span>
+              <span className="rockland-nav__title">{t('navbar:product_category')}</span>
             </a>
           </Link>
         </div>
@@ -140,7 +140,7 @@ const CategoryMenu = () => {
           <button onClick={() => setOpen(true)}>
             <a className="rockland-nav__link">
               <i className="rockland-nav__icon fas fa-list-ul" />
-              <span className="rockland-nav__title">{t('navbar:category')}</span>
+              <span className="rockland-nav__title">{t('navbar:product_category')}</span>
             </a>
           </button>
         </div>
