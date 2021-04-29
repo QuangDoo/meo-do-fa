@@ -22,11 +22,11 @@ const links: { href: string; i18nKey: string }[] = [
   { href: '/about-us', i18nKey: 'footer:about_us' },
   { href: '/terms-of-use', i18nKey: 'footer:terms_of_use' },
   { href: '/privacy-policy', i18nKey: 'footer:privacy_policy' },
-  { href: '/help', i18nKey: 'footer:faq' },
   // { href: '/general-policy', i18nKey: 'footer:general_policy' },
   // { href: '/career', i18nKey: 'common:recruitment' },
   { href: '/terms-of-service', i18nKey: 'footer:terms_of_service' },
-  { href: '/dispute-resolution', i18nKey: 'footer:dispute_resolution' }
+  { href: '/dispute-resolution', i18nKey: 'footer:dispute_resolution' },
+  { href: '/help', i18nKey: 'footer:faq' }
   // { href: '/terms-and-conditions', i18nKey: 'footer:terms_and_conditions' },
   // { href: '/operating-regulations', i18nKey: 'footer:operating_regulations' }
   // { href: '', i18nKey: 'common:supply' }
@@ -141,7 +141,7 @@ const Footer = () => {
 
       <div className="footer">
         <div className="container pb-5 pt-0">
-          <div className="row justify-content-between">
+          <div className="row justify-content-between web__margin">
             <div className="col-xl-4 col-lg-4 col-md-4  col-sm-12">
               <div className="footer__info mb-4">
                 <div className="footer__info-logo mb-3">
