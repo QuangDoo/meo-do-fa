@@ -1,4 +1,5 @@
 {
   "view_cart": "View cart",
-  "quick_order": "Quick Order"
+  "quick_order": "Quick Order",
+  "search_quick_order" : "Enter product name..."
 }
