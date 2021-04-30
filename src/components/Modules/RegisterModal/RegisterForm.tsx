@@ -118,12 +118,11 @@ const RegisterForm = () => {
 
   // On form submit
   const onFormSubmit = (data: Inputs) => {
-    const fullName = t(`register:${currentAccountType.toLowerCase()}`) + ' ' + data.name;
     createUser({
       variables: {
         inputs: {
           account_type: data.account_type,
-          name: fullName,
+          name: data.name,
           email: data.email,
           password: data.password,
           phone: data.phone.toString(),
