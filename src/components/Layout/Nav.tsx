@@ -51,9 +51,9 @@ const Nav = () => {
 
   //const isSmallScreen = useMediaQuery('(max-width: 575px)');
   const { data: configData } = useQuery<GetWebsiteConfigData, undefined>(GET_WEBSITE_CONFIG);
-  const SHOW_CATEGORY = configData?.getWebsiteConfig.find(
+  const SHOW_CATEGORY = configData?.getWebsiteConfig?.find(
     (config) => config.key === 'SHOW_CATEGORY'
-  ).value;
+  )?.value;
 
   return (
     <nav className="rockland-nav shrink header-menu d-none d-sm-block">
@@ -61,7 +61,7 @@ const Nav = () => {
         <div className="row">
           <div className="col-12 d-flex align-items-center justify-content-between">
             <ul className="nav text-capitalize custom-list-menu">
-              {SHOW_CATEGORY === 'Yes' ? (
+              {SHOW_CATEGORY === 'Y' ? (
                 <CategoryMenu />
               ) : (
                 <li className="rockland-nav__item">
