@@ -50,9 +50,9 @@ const Footer = () => {
   const { register, handleSubmit, reset } = useForm<Inputs>();
 
   const { data: configData } = useQuery<GetWebsiteConfigData, undefined>(GET_WEBSITE_CONFIG);
-  const WEBSITE_VERSION = configData?.getWebsiteConfig.find(
+  const WEBSITE_VERSION = configData?.getWebsiteConfig?.find(
     (config) => config.key === 'WEBSITE_VERSION'
-  ).value;
+  )?.value;
 
   const [saveMailSubscriber, { loading: loadingSubcribe }] = useMutation<
     SubscriberData,
@@ -319,10 +319,7 @@ const Footer = () => {
         </div>
         <div className="copyright">
           <div>{t('footer:copyright')}</div>
-          <div>
-            {' '}
-            {''} Version: {WEBSITE_VERSION}
-          </div>
+          <div>Version: {WEBSITE_VERSION}</div>
         </div>
         <LoadingBackdrop open={loadingSubcribe} />
         <BackToTop />
