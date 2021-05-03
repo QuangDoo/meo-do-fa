@@ -1,4 +1,4 @@
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { Grid } from '@material-ui/core';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
@@ -7,6 +7,7 @@ import { DeepMap, FieldError, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { emailRegex, noSpecialChars } from 'src/assets/regex/email';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
+import { GET_WEBSITE_CONFIG, GetWebsiteConfigData } from 'src/graphql/configs/getWebsiteConfig';
 import {
   SAVE_MAIL_SUBSCRIBE,
   SubscriberData,
@@ -21,11 +22,11 @@ const links: { href: string; i18nKey: string }[] = [
   { href: '/about-us', i18nKey: 'footer:about_us' },
   { href: '/terms-of-use', i18nKey: 'footer:terms_of_use' },
   { href: '/privacy-policy', i18nKey: 'footer:privacy_policy' },
-  { href: '/help', i18nKey: 'footer:faq' },
   // { href: '/general-policy', i18nKey: 'footer:general_policy' },
   // { href: '/career', i18nKey: 'common:recruitment' },
   { href: '/terms-of-service', i18nKey: 'footer:terms_of_service' },
-  { href: '/dispute-resolution', i18nKey: 'footer:dispute_resolution' }
+  { href: '/dispute-resolution', i18nKey: 'footer:dispute_resolution' },
+  { href: '/help', i18nKey: 'footer:faq' }
   // { href: '/terms-and-conditions', i18nKey: 'footer:terms_and_conditions' },
   // { href: '/operating-regulations', i18nKey: 'footer:operating_regulations' }
   // { href: '', i18nKey: 'common:supply' }
@@ -47,6 +48,11 @@ const Footer = () => {
   const { t } = useTranslation(['footer', 'common']);
 
   const { register, handleSubmit, reset } = useForm<Inputs>();
+
+  const { data: configData } = useQuery<GetWebsiteConfigData, undefined>(GET_WEBSITE_CONFIG);
+  const WEBSITE_VERSION = configData?.getWebsiteConfig?.find(
+    (config) => config.key === 'WEBSITE_VERSION'
+  )?.value;
 
   const [saveMailSubscriber, { loading: loadingSubcribe }] = useMutation<
     SubscriberData,
@@ -135,18 +141,18 @@ const Footer = () => {
 
       <div className="footer">
         <div className="container pb-5 pt-0">
-          <div className="row justify-content-between">
+          <div className="row justify-content-between web__margin">
             <div className="col-xl-4 col-lg-4 col-md-4  col-sm-12">
               <div className="footer__info mb-4">
                 <div className="footer__info-logo mb-3">
                   <div className="rockland-logo d-inline-block">
                     <Link href="/">
-                      <a title="Medofa.com">
+                      <a title="medofa.com">
                         <img
-                          alt="Medofa.com"
+                          alt="medofa.com"
                           className="img-fluid logo-footer"
-                          title="Medofa.com"
-                          src="/assets/images/logo3.png"
+                          title="medofa.com"
+                          src="/assets/images/Logo_MEDOFA_Final.png"
                         />
                       </a>
                     </Link>
@@ -159,10 +165,9 @@ const Footer = () => {
                   <b className="text-primary">Medofa.com</b> {t('footer:website_ownership')}
                   <br />
                   {t('footer:business_certificate_label') + ': '}
-                  <b>{t('footer:business_certificate_number')}</b>
-                  <br />
+                  <b>{t('footer:business_certificate_number') + ' '}</b>
                   {t('footer:business_certificate_issued_at') + ' '}
-                  <b>{t('footer:business_certificate_issue_date')}</b>
+                  <>{t('footer:business_certificate_issue_date')}</>
                   <br />
                   {t('footer:reference_illustration')}
                   <br />
@@ -182,11 +187,11 @@ const Footer = () => {
               </div>
             </div>
             <div className="col-xl-4 col-lg-5 col-md-4 col-sm-7">
-              <div className="mb-3">
+              <div className="mb-3 mobile__margin">
                 <div className="footer__header mb-3">{t('footer:general_info')}</div>
 
                 <div className="row">
-                  <div className="col-12 col-sm-6">
+                  <div className="col-12 ">
                     {links.slice(0, linksHalfLength).map((link, index) => (
                       <React.Fragment key={link.i18nKey}>
                         <FooterLink href={link.href} text={t(link.i18nKey)} />
@@ -195,7 +200,7 @@ const Footer = () => {
                     ))}
                   </div>
 
-                  <div className="col-12 col-sm-6">
+                  <div className="col-12 ">
                     {links.slice(linksHalfLength).map((link, index) => (
                       <React.Fragment key={link.i18nKey}>
                         <FooterLink href={link.href} text={t(link.i18nKey)} />
@@ -206,7 +211,7 @@ const Footer = () => {
                 </div>
               </div>
             </div>
-            <div className="col-xl-4 col-lg-3 col-md-4 col-sm-5 ">
+            <div className="col-xl-4 col-lg-3 col-md-4 col-sm-5 mobile__margin__top">
               {/* <Grid container spacing={2}> */}
               <Grid item sm={12}>
                 <div className="footer__header mb-3">{t('footer:contacts')}</div>
@@ -233,6 +238,7 @@ const Footer = () => {
                       1900232436
                     </a>
                     <span className="pb-1">|</span>
+                    <i className="fas fa-mobile-alt footer__icon footer__icon--email" />
                     <a className="text-white px-lg-2 mr-2 pl-md-5 pl-sm-5" href="tel:0914956936">
                       0914956936
                     </a>
@@ -247,7 +253,7 @@ const Footer = () => {
                     <div className="mb-5 ">
                       <div className="footer__header mb-3">{t('footer:delivery')}</div>
 
-                      <div>
+                      <div className="footer-deli-responsive">
                         <img
                           className="img-fluid footer__delivery"
                           src="/assets/images/logo-ghtk.png"
@@ -313,7 +319,7 @@ const Footer = () => {
         </div>
         <div className="copyright">
           <div>{t('footer:copyright')}</div>
-          <div className="version">Version: 0.9.11</div>
+          <div>Version: {WEBSITE_VERSION}</div>
         </div>
         <LoadingBackdrop open={loadingSubcribe} />
         <BackToTop />

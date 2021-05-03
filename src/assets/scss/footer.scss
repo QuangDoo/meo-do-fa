@@ -104,6 +104,37 @@
   color: #192159;
   padding-left: 0.5rem;
 }
+.mobile__margin{
+  margin-top: 3.5rem;
+  margin-left: 3.5rem;
+}
+.mobile__margin__top{
+  margin-top: 3.5rem;
+}
+.web__margin{
+  margin-left: 57px;
+}
+@media (max-width:1200px){
+  .web__margin{
+    margin-left:-13px;
+  }
+  .footer-deli-responsive{
+    display: flex;
+  }
+  .footer__bct {
+    margin-top: 0;
+  }
+}
+
+@media (max-width:767.98px){
+  .mobile__margin{
+    margin-top: 0;
+    margin-left: 0;
+  }
+  .mobile__margin__top{
+    margin-top: 0;
+  }
+}
 @media (max-width: 575.98px) {
   .footer__bct{
     margin-top: 2rem !important;

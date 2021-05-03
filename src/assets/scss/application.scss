@@ -11547,6 +11547,20 @@ abbr[title] {
   left: 0;
   margin-left: -25px;
 }
+
+@media (max-width: 1200px) {
+  .slider_products button.slide-arrow.slick-arrow.next-arrow
+   {
+    right: 0;
+    margin-right: 0px;
+  }
+  .slider_products button.slide-arrow.slick-arrow.prev-arrow
+   {
+    left: 0;
+    margin-left: 0px;
+  }
+}
+
 .slider_products button.slide-arrow.slick-arrow i.fas,
 .slider_products button.slide-arrow.slick-arrow i.check,
 .slider_products button.slide-arrow.slick-arrow i.my-order__icon--completed,
@@ -12067,7 +12081,7 @@ abbr[title] {
 @media (max-width: 767.98px) {
   .deals--mobile {
     min-height: 100vh;
-    margin-top: -3em;
+    margin-top: -2em;
     padding-top: 4em !important;
   }
 }

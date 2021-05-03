@@ -9,7 +9,10 @@ import { usernameRegex } from 'src/assets/regex/username';
 import Button from 'src/components/Form/Button';
 import Input from 'src/components/Form/Input';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
+import { useCart } from 'src/contexts/Cart';
 import { useModalControlDispatch } from 'src/contexts/ModalControl';
+import { useNotify } from 'src/contexts/Notify';
+import { useUser } from 'src/contexts/User';
 import { GET_WEBSITE_CONFIG, GetWebsiteConfigData } from 'src/graphql/configs/getWebsiteConfig';
 import { LOGIN_USER, LoginData, LoginVars } from 'src/graphql/user/login';
 
@@ -36,9 +39,19 @@ const LoginForm = () => {
   const MAIN_PAGE = configData?.getWebsiteConfig?.find((config) => config.key === 'MAIN_PAGE')
     ?.value;
 
+  const { getUser } = useUser();
+  const { getCart } = useCart();
+  const { getNotify } = useNotify();
+
   const [login, { loading: loggingIn }] = useMutation<LoginData, LoginVars>(LOGIN_USER, {
     onCompleted: (data) => {
+      // Set token in cookies
       cookies.set('token', data.login.token);
+
+      // Get user data, cart, notify
+      getUser();
+      getCart();
+      getNotify();
 
       closeModal();
 

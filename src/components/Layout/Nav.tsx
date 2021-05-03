@@ -1,3 +1,4 @@
+import { useQuery } from '@apollo/client';
 import { Menu, useMediaQuery } from '@material-ui/core';
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import { useTranslation } from 'i18n';
@@ -6,7 +7,9 @@ import Link from 'next/link';
 import React, { useState } from 'react';
 import { useCart } from 'src/contexts/Cart';
 import { useToken } from 'src/contexts/Token';
+import { GET_WEBSITE_CONFIG, GetWebsiteConfigData } from 'src/graphql/configs/getWebsiteConfig';
 
+import CategoryMenu from '../Modules/Navbar/CategoryMenu';
 import PathologyMenu from '../Modules/Navbar/PathologyMenu';
 import HotTags from './HotTags';
 
@@ -47,6 +50,10 @@ const Nav = () => {
   // const categories = categoriesData?.getCategoriesLevel || [];
 
   //const isSmallScreen = useMediaQuery('(max-width: 575px)');
+  const { data: configData } = useQuery<GetWebsiteConfigData, undefined>(GET_WEBSITE_CONFIG);
+  const SHOW_CATEGORY = configData?.getWebsiteConfig?.find(
+    (config) => config.key === 'SHOW_CATEGORY'
+  )?.value;
 
   return (
     <nav className="rockland-nav shrink header-menu d-none d-sm-block">
@@ -54,7 +61,7 @@ const Nav = () => {
         <div className="row">
           <div className="col-12 d-flex align-items-center justify-content-between">
             <ul className="nav text-capitalize custom-list-menu">
-              {/* {categories.length !== 0 ? (
+              {SHOW_CATEGORY === 'Y' ? (
                 <CategoryMenu />
               ) : (
                 <li className="rockland-nav__item">
@@ -65,15 +72,15 @@ const Nav = () => {
                     </a>
                   </Link>
                 </li>
-              )} */}
-              <li className="rockland-nav__item">
+              )}
+              {/* <li className="rockland-nav__item">
                 <Link href="/products">
                   <a className="rockland-nav__link">
                     <i className="rockland-nav__icon fas fa-list-ul" />
                     <span className="rockland-nav__title">{t('navbar:category')}</span>
                   </a>
                 </Link>
-              </li>
+              </li> */}
 
               <li className="rockland-nav__item">
                 <Link href="/deals-of-the-day">
