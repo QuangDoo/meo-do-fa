@@ -5,9 +5,6 @@
     position: relative;
     width: 100%;
     box-shadow: 0px 3px 20px rgb(0 0 0 / 8%);
-    position: sticky;
-    top: 5.8em;
-    z-index: 400;
 }
 .product-search input {
     width: 100%;
@@ -38,14 +35,4 @@
 .product-search button:hover {
     background: #343f99;
     color: #ffffff;
-}
-@media (max-width: 1200px) {
-    .product-search {
-        top: 7em;
-    }
-}
-@media (max-width: 575.98px) {
-    .product-search {
-        top: 0;
-    }
 }

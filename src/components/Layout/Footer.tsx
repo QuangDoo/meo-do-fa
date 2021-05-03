@@ -162,7 +162,7 @@ const Footer = () => {
                   <b className="text-primary text-uppercase">{t('footer:copyright_by_medofa')}</b>
                 </div>
                 <p className="footer__info-company">
-                  <b className="text-primary">Medofa.com</b> {t('footer:website_ownership')}
+                  <b className="text-primary">medofa.com</b> {t('footer:website_ownership')}
                   <br />
                   {t('footer:business_certificate_label') + ': '}
                   <b>{t('footer:business_certificate_number') + ' '}</b>
@@ -319,7 +319,7 @@ const Footer = () => {
         </div>
         <div className="copyright">
           <div>{t('footer:copyright')}</div>
-          <div>Version: {WEBSITE_VERSION}</div>
+          <div className="copyright__version">Version: {WEBSITE_VERSION}</div>
         </div>
         <LoadingBackdrop open={loadingSubcribe} />
         <BackToTop />
