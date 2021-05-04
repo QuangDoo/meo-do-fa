@@ -4,7 +4,7 @@ import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 // import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 // import { toast } from 'react-toastify';
 import PriceText from 'src/components/Form/PriceText';
 import Loading from 'src/components/Layout/Loading';
@@ -27,6 +27,8 @@ function QuickOrderPage() {
 
   const router = useRouter();
 
+  const [searchTerm, setSearchTerm] = useState('');
+
   const { data: cart } = useCart();
 
   const { t } = useTranslation(['cart', 'common', 'quickOrder']);
@@ -40,11 +42,15 @@ function QuickOrderPage() {
     fetchPolicy: 'network-only',
     variables: {
       page: page,
-      pageSize: 10
+      pageSize: 10,
+      name: searchTerm
     }
   });
 
   const totalPagination = quickOrderData?.getProductByConditions?.total;
+  const handleSearchQuickOrder = (e) => {
+    setSearchTerm(e.target.value);
+  };
 
   return (
     <div className="container py-5 quickOrder">
@@ -56,13 +62,24 @@ function QuickOrderPage() {
         </div>
         <div className="row">
           <div className="col-12 col-md-9 col-lg-9">
+            <div className="product-search elevated cart__items mb-3">
+              <input
+                type="text"
+                placeholder={t(`quickOrder:search_quick_order`)}
+                value={searchTerm}
+                onChange={handleSearchQuickOrder}
+              />
+              <button>
+                <i className="fa fa-search"></i>
+              </button>
+            </div>
             <div className="elevated cart__items mb-3">
               {getQuickOrderLoading ? (
                 <div className="w-100 text-center">
                   <Loading />
                 </div>
               ) : (
-                quickOrderData?.getProductByConditions?.Products.map((item, index) => (
+                quickOrderData?.getProductByConditions?.Products?.map((item, index) => (
                   <QuickOrderItem
                     key={index}
                     _id={item.id}
