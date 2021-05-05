@@ -5,7 +5,7 @@ import React, { MouseEvent, useState } from 'react';
 export type LanguageCode = 'vi' | 'en';
 
 export const languageNames: Record<LanguageCode, string> = {
-  vi: 'VietNamese',
+  vi: 'Vietnamese',
   en: 'English'
 };
 

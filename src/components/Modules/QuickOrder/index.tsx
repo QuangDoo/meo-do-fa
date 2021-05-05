@@ -33,6 +33,10 @@ function QuickOrderPage() {
 
   const { t } = useTranslation(['cart', 'common', 'quickOrder']);
 
+  useEffect(() => {
+    router.query.page = '1';
+  }, [searchTerm]);
+
   const page = +router.query.page || 1;
 
   const { data: quickOrderData, loading: getQuickOrderLoading } = useQuery<
@@ -62,23 +66,26 @@ function QuickOrderPage() {
         </div>
         <div className="row">
           <div className="col-12 col-md-9 col-lg-9">
-            <div className="product-search elevated cart__items mb-3">
-              <input
-                type="text"
-                placeholder={t(`quickOrder:search_quick_order`)}
-                value={searchTerm}
-                onChange={handleSearchQuickOrder}
-              />
-              <button>
-                <i className="fa fa-search"></i>
-              </button>
-            </div>
+            {token && (
+              <div className="product-search elevated cart__items mb-3">
+                <input
+                  type="text"
+                  placeholder={t(`quickOrder:search_quick_order`)}
+                  value={searchTerm}
+                  onChange={handleSearchQuickOrder}
+                />
+                <button>
+                  <i className="fa fa-search"></i>
+                </button>
+              </div>
+            )}
+
             <div className="elevated cart__items mb-3">
               {getQuickOrderLoading ? (
                 <div className="w-100 text-center">
                   <Loading />
                 </div>
-              ) : (
+              ) : quickOrderData?.getProductByConditions?.Products?.length > 0 ? (
                 quickOrderData?.getProductByConditions?.Products?.map((item, index) => (
                   <QuickOrderItem
                     key={index}
@@ -93,6 +100,10 @@ function QuickOrderPage() {
                     discount_percentage={item.discount_percentage}
                   />
                 ))
+              ) : (
+                <>
+                  {t(`quickOrder:no_item_search`)} &#34;{searchTerm}&#34;
+                </>
               )}
             </div>
           </div>
