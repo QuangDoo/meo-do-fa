@@ -59,8 +59,6 @@ const RegisterForm = () => {
 
   const openLoginModal = () => openModal('LOGIN');
 
-  const { refetch: refetchUser } = useUser();
-
   const initialAccountType = '';
   const currentAccountType = watch('account_type', initialAccountType);
 
@@ -96,7 +94,6 @@ const RegisterForm = () => {
         getNotify();
 
         closeModal();
-        refetchUser();
         router.reload();
       },
       onError: (error) => {
