@@ -96,7 +96,12 @@ function MobileNavbar() {
                 <li className="mobile-menu-list-item">
                   <Link href="/products">
                     <a className="mobile-menu-link">
-                      <i className="rockland-nav__icon fas fa-list-ul" />
+                      {/* <i className="rockland-nav__icon fas fa-list-ul" /> */}
+                      <img
+                        className="nav__icon"
+                        src="/assets/images/sanpham.png"
+                        alt="icon_product"
+                      />
                       <span>{t('navbar:category')}</span>
                     </a>
                   </Link>
@@ -104,7 +109,12 @@ function MobileNavbar() {
                 <li className="mobile-menu-list-item">
                   <Link href="/deals-of-the-day">
                     <a className="mobile-menu-link">
-                      <i className="rockland-nav__icon icomoon icon-product" />
+                      {/* <i className="rockland-nav__icon icomoon icon-product" /> */}
+                      <img
+                        className="nav__icon"
+                        src="/assets/images/giasochomnay.png"
+                        alt="icon_giasochomnay"
+                      />
                       <span>{t('navbar:deals_of_the_day')}</span>
                     </a>
                   </Link>
@@ -112,7 +122,12 @@ function MobileNavbar() {
                 <li className="mobile-menu-list-item">
                   <Link href="/quick-order">
                     <a className="mobile-menu-link">
-                      <i className="rockland-nav__icon icomoon icon-quick-order" />
+                      {/* <i className="rockland-nav__icon icomoon icon-quick-order" /> */}
+                      <img
+                        className="nav__icon"
+                        src="/assets/images/dathangnhanh.png"
+                        alt="icon_dathangnhanh"
+                      />
                       <span>{t('navbar:fast_order')}</span>
                     </a>
                   </Link>
@@ -120,7 +135,12 @@ function MobileNavbar() {
                 <li className="mobile-menu-list-item">
                   <Link href="/pathological">
                     <a className="mobile-menu-link">
-                      <i className="rockland-nav__icon fas fa-laptop-medical" />
+                      {/* <i className="rockland-nav__icon fas fa-laptop-medical" /> */}
+                      <img
+                        className="nav__icon"
+                        src="/assets/images/tracuubenhly.png"
+                        alt="icon_tracuubenhly"
+                      />
                       <span>{t('navbar:pathological')}</span>
                     </a>
                   </Link>
@@ -128,7 +148,12 @@ function MobileNavbar() {
                 <li className="mobile-menu-list-item">
                   <Link href="/ingredients">
                     <a className="mobile-menu-link">
-                      <i className="rockland-nav__icon icomoon icon-ingredients" />
+                      {/* <i className="rockland-nav__icon icomoon icon-ingredients" /> */}
+                      <img
+                        className="nav__icon"
+                        src="/assets/images/hoatchat.png"
+                        alt="icon_hoatchat"
+                      />
                       <span>{t('navbar:ingredient')}</span>
                     </a>
                   </Link>
@@ -140,7 +165,12 @@ function MobileNavbar() {
                 <li className="mobile-menu-list-item">
                   <Link href="/promo-codes">
                     <a className="mobile-menu-link">
-                      <i className="rockland-nav__icon fas fa-tag" />
+                      {/* <i className="rockland-nav__icon fas fa-tag" /> */}
+                      <img
+                        className="nav__icon"
+                        src="/assets/images/makhuyenmai.png"
+                        alt="icon_makhuyenmai"
+                      />
                       <span>{t('navbar:promo_code')}</span>
                     </a>
                   </Link>
@@ -148,7 +178,12 @@ function MobileNavbar() {
                 <li className="mobile-menu-list-item">
                   <Link href="/deals">
                     <a className="mobile-menu-link">
-                      <i className="rockland-nav__icon fas fa-gifts" />
+                      {/* <i className="rockland-nav__icon fas fa-gifts" /> */}
+                      <img
+                        className="nav__icon"
+                        src="/assets/images/sanphamkhuyenmai.png"
+                        alt="icon_sanphamkhuyenmai"
+                      />
                       <span>{t('navbar:promo_products')}</span>
                     </a>
                   </Link>
@@ -156,7 +191,12 @@ function MobileNavbar() {
                 <li className="mobile-menu-list-item">
                   <Link href="/promotions">
                     <a className="mobile-menu-link">
-                      <i className="rockland-nav__icon fab fa-product-hunt" />
+                      {/* <i className="rockland-nav__icon fab fa-product-hunt" /> */}
+                      <img
+                        className="nav__icon"
+                        src="/assets/images/chuongtrinhkhuyenmai.png"
+                        alt="icon_chuongtrinhkhuyenmai"
+                      />
                       <span>{t('navbar:promotions')}</span>
                     </a>
                   </Link>

@@ -67,7 +67,12 @@ const Nav = () => {
                 <li className="rockland-nav__item">
                   <Link href="/products">
                     <a className="rockland-nav__link">
-                      <i className="rockland-nav__icon fas fa-list-ul" />
+                      {/* <i className="rockland-nav__icon fas fa-list-ul" /> */}
+                      <img
+                        className="nav__icon"
+                        src="/assets/images/sanpham.png"
+                        alt="icon_product"
+                      />
                       <span className="rockland-nav__title">{t('navbar:category')}</span>
                     </a>
                   </Link>
@@ -85,7 +90,12 @@ const Nav = () => {
               <li className="rockland-nav__item">
                 <Link href="/deals-of-the-day">
                   <a className="rockland-nav__link">
-                    <i className="rockland-nav__icon icomoon icon-product" />
+                    {/* <i className="rockland-nav__icon icomoon icon-product" /> */}
+                    <img
+                      className="nav__icon"
+                      src="/assets/images/giasochomnay.png"
+                      alt="icon_giasochomnay"
+                    />
                     <span className="rockland-nav__title_d">{t('navbar:deals_of_the_day')}</span>
                     <span className="rockland-nav__title_deal">{t('navbar:deals_price')}</span>
                     <span className="rockland-nav__title_deal">{t('navbar:deals_today')}</span>
@@ -96,7 +106,12 @@ const Nav = () => {
               <li className="rockland-nav__item">
                 <Link href="/quick-order">
                   <a className="rockland-nav__link">
-                    <i className="rockland-nav__icon icomoon icon-quick-order" />
+                    {/* <i className="rockland-nav__icon icomoon icon-quick-order" /> */}
+                    <img
+                      className="nav__icon"
+                      src="/assets/images/dathangnhanh.png"
+                      alt="icon_dathangnhanh"
+                    />
                     <span className="rockland-nav__title">{t('navbar:fast_order')}</span>
                   </a>
                 </Link>
@@ -105,7 +120,12 @@ const Nav = () => {
               <li className="d-none d-sm-block rockland-nav__item dropdown dropdown-nav">
                 <div data-toggle="dropdown" data-hover="dropdown">
                   <a className="rockland-nav__link">
-                    <i className="rockland-nav__icon fab fa-hotjar" />
+                    {/* <i className="rockland-nav__icon fab fa-hotjar" /> */}
+                    <img
+                      className="nav__icon"
+                      src="/assets/images/khuyenmai.png"
+                      alt="icon_khuyenmai"
+                    />
                     <span className="rockland-nav__title">{t('navbar:promotion')}</span>
                   </a>
                 </div>
@@ -113,7 +133,12 @@ const Nav = () => {
                   <li className="dropdown-item">
                     <Link href="/promo-codes">
                       <a className="dropdown-item-text p-0">
-                        <i className="rockland-nav__icon fas fa-tag" />
+                        {/* <i className="rockland-nav__icon fas fa-tag" /> */}
+                        <img
+                          className="nav__icon"
+                          src="/assets/images/makhuyenmai.png"
+                          alt="icon_makhuyenmai"
+                        />
                         <span>{t('navbar:promo_code')}</span>
                       </a>
                     </Link>
@@ -121,7 +146,12 @@ const Nav = () => {
                   <li className="dropdown-item">
                     <Link href="/deals">
                       <a className="dropdown-item-text p-0">
-                        <i className="rockland-nav__icon fas fa-gifts" />
+                        {/* <i className="rockland-nav__icon fas fa-gifts" /> */}
+                        <img
+                          className="nav__icon"
+                          src="/assets/images/sanphamkhuyenmai.png"
+                          alt="icon_sanphamkhuyenmai"
+                        />
                         <span>{t('navbar:promo_products')}</span>
                       </a>
                     </Link>
@@ -129,7 +159,12 @@ const Nav = () => {
                   <li className="dropdown-item">
                     <Link href="/promotions">
                       <a className="dropdown-item-text p-0">
-                        <i className="rockland-nav__icon fab fa-product-hunt" />
+                        {/* <i className="rockland-nav__icon fab fa-product-hunt" /> */}
+                        <img
+                          className="nav__icon"
+                          src="/assets/images/chuongtrinhkhuyenmai.png"
+                          alt="icon_chuongtrinhkhuyenmai"
+                        />
                         <span>{t('navbar:promotions')}</span>
                       </a>
                     </Link>
@@ -139,7 +174,12 @@ const Nav = () => {
               <li className="d-block d-sm-none rockland-nav__item dropdown dropdown-nav">
                 <div data-toggle="dropdown" data-hover="dropdown">
                   <a className="rockland-nav__link">
-                    <i className="rockland-nav__icon fab fa-hotjar" />
+                    {/* <i className="rockland-nav__icon fab fa-hotjar" /> */}
+                    <img
+                      className="nav__icon"
+                      src="/assets/images/khuyenmai.png"
+                      alt="icon_khuyenmai"
+                    />
                     <span className="rockland-nav__title">{t('navbar:promotion')}</span>
                   </a>
                 </div>
@@ -147,7 +187,12 @@ const Nav = () => {
                   <li className="dropdown-item">
                     <Link href="/promo-codes">
                       <a className="dropdown-item-text p-0">
-                        <i className="rockland-nav__icon fas fa-tag" />
+                        {/* <i className="rockland-nav__icon fas fa-tag" /> */}
+                        <img
+                          className="nav__icon"
+                          src="/assets/images/makhuyenmai.png"
+                          alt="icon_makhuyenmai"
+                        />
                         <span>{t('navbar:promo_code')}</span>
                       </a>
                     </Link>
@@ -155,7 +200,12 @@ const Nav = () => {
                   <li className="dropdown-item">
                     <Link href="/deals">
                       <a className="dropdown-item-text p-0">
-                        <i className="rockland-nav__icon fas fa-gifts" />
+                        {/* <i className="rockland-nav__icon fas fa-gifts" /> */}
+                        <img
+                          className="nav__icon"
+                          src="/assets/images/sanphamkhuyenmai.png"
+                          alt="icon_sanphamkhuyenmai"
+                        />
                         <span>{t('navbar:promo_products')}</span>
                       </a>
                     </Link>
@@ -163,7 +213,12 @@ const Nav = () => {
                   <li className="dropdown-item">
                     <Link href="/promotions">
                       <a className="dropdown-item-text p-0">
-                        <i className="rockland-nav__icon fab fa-product-hunt" />
+                        {/* <i className="rockland-nav__icon fab fa-product-hunt" /> */}
+                        <img
+                          className="nav__icon"
+                          src="/assets/images/chuongtrinhkhuyenmai.png"
+                          alt="icon_chuongtrinhkhuyenmai"
+                        />
                         <span>{t('navbar:promotions')}</span>
                       </a>
                     </Link>
@@ -176,7 +231,12 @@ const Nav = () => {
               <li className="rockland-nav__item">
                 <Link href="/ingredients">
                   <a className="rockland-nav__link">
-                    <i className="rockland-nav__icon icomoon icon-ingredients" />
+                    {/* <i className="rockland-nav__icon icomoon icon-ingredients" /> */}
+                    <img
+                      className="nav__icon"
+                      src="/assets/images/hoatchat.png"
+                      alt="icon_hoatchat"
+                    />
                     <span className="rockland-nav__title">{t('navbar:ingredient')}</span>
                   </a>
                 </Link>
