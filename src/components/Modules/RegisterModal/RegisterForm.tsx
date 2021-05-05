@@ -91,13 +91,13 @@ const RegisterForm = () => {
         }
 
         // Get user data, cart, notify
-        router.reload();
         getUser();
         getCart();
         getNotify();
 
         closeModal();
         refetchUser();
+        router.reload();
       },
       onError: (error) => {
         toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
