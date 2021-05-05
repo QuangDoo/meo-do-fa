@@ -37,8 +37,8 @@ function UserProvider(props) {
           router.reload();
           router.push('/');
         }
+        toast.error(t(`errors:code_${errorCode}`));
       }
-      toast.error(t(`errors:code_${errorCode}`));
     }
   });
 
