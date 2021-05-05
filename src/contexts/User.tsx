@@ -35,6 +35,7 @@ function UserProvider(props) {
         if ([500, 107].includes(errorCode)) {
           cookies.remove('token');
           router.reload();
+          router.push('/');
         }
         toast.error(t(`errors:code_${errorCode}`));
       }
