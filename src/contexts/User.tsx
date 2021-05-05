@@ -36,8 +36,8 @@ function UserProvider(props) {
           cookies.remove('token');
           router.reload();
         }
+        toast.error(t(`errors:code_${errorCode}`));
       }
-      toast.error(t(`errors:code_${errorCode}`));
     }
   });
 
@@ -59,7 +59,6 @@ function UserProvider(props) {
     if (!token) return;
 
     getUser();
-    router.push('/');
   }, []);
 
   return (
