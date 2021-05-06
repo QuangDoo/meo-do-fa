@@ -31,6 +31,7 @@ export type GetOrderDetailData = {
         name: string;
         list_price: number;
         slug: string;
+        image_128: string;
       };
       state: string;
       product_type: string;
@@ -79,6 +80,7 @@ export const GET_ORDER_DETAIL = gql`
           name
           list_price
           slug
+          image_128
         }
         state
         product_type
