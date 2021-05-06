@@ -238,12 +238,14 @@ const Footer = () => {
                       1900232436
                     </a>
                     <span className="pb-1">|</span>
-                    <i className="fas fa-mobile-alt footer__icon footer__icon--email" />
-                    <a
-                      className="text-white px-lg-2 mr-2 pl-md-5 pl-sm-5 tele__mobile"
-                      href="tel:0914956936">
-                      0914956936
-                    </a>
+                    <div className="tele__mobile">
+                      <i className="fas fa-mobile-alt footer__icon footer__icon--email" />
+                      <a
+                        className="text-white px-lg-2 mr-2 pl-md-5 pl-sm-5 tele__mobile-number "
+                        href="tel:0914956936">
+                        0914956936
+                      </a>
+                    </div>
                   </div>
                   {/* <small>{t('footer:work_time')}</small> */}
                   <p />
