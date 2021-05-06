@@ -1,5 +1,6 @@
 import { useMediaQuery } from '@material-ui/core';
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
+import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import React from 'react';
 import LanguagePicker from 'src/components/Layout/Header/LanguagePicker';
@@ -15,6 +16,7 @@ import SearchBar from './SearchBar';
 
 const Header = () => {
   const { data: cart } = useCart();
+  const { t } = useTranslation(['header']);
 
   const totalQty = cart?.totalQty;
 
@@ -28,6 +30,14 @@ const Header = () => {
           <div className="row">
             <div className="col-12 d-flex align-items-center justify-content-end">
               <ul className="nav">
+                <li className="promotion-nav__item">
+                  <Link href="/news">
+                    <a className="promotion-nav__link">
+                      <i className="promotion-nav__icon far fa-newspaper" />
+                      <span>{t('header:news')}</span>
+                    </a>
+                  </Link>
+                </li>
                 <li className="promotion-nav__item">
                   <LanguagePicker />
                 </li>
