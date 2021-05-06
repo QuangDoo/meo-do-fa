@@ -96,7 +96,7 @@
   color: $secondary;
   background: rgb(0 0 0 / 40%);
   width: 100%;
-  padding: 1em 0;
+  padding: 1em 1em;
   display: flex;
   justify-content: center;
 }
@@ -184,6 +184,9 @@
   .back-to-top.show {
     bottom: 8em;
   }
+  .tele__mobile{
+    margin-left: 0.5em;
+  }
 }
 .logo-footer {
   max-height: 40px;
@@ -215,3 +218,4 @@
 // .theme-background-color {
 //   background-color: $secondary !important;
 // }
+

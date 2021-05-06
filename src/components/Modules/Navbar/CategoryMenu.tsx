@@ -87,7 +87,7 @@ const CategoryMenu = () => {
   const categories = categoriesData?.getCategoriesLevel || [];
 
   useEffect(() => {
-    if (categories[1].name === null && categories[2].name === null) {
+    if (categories[1]?.name === null && categories[2].name === null) {
       refetch();
     }
   }, [categoriesData]);

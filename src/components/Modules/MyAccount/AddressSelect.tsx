@@ -77,7 +77,7 @@ export default function AddressSelect() {
       setCities(response.data.getCities);
 
       // If user has contact address, set city value to user's city
-      if (user.contact_address) {
+      if (user?.contact_address) {
         const { city } = user.contact_address;
 
         setValue('companyCity', city.name + '__' + city.id);
