@@ -55,7 +55,6 @@ function QuickOrderPage() {
   const handleSearchQuickOrder = (e) => {
     setSearchTerm(e.target.value);
   };
-
   return (
     <div className="container py-5 quickOrder">
       <div className="cart">
@@ -125,6 +124,26 @@ function QuickOrderPage() {
                     <div className="cart__info-item text-center text-lg-right">
                       <div className="mb-2">
                         <div>{t('cart:total')}</div>
+                      </div>
+                      <div className="cart__total">
+                        <PriceText price={cart?.totalNetPrice - cart?.totalShippingFee} />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-md-12 col-lg-12 cart__info-total">
+                    <div className="cart__info-item text-center text-lg-left">
+                      <div className="mb-2">
+                        <div>{t('cart:shipping_fee')}</div>
+                      </div>
+                      <div className="cart__total">
+                        <PriceText price={cart?.totalShippingFee} />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-md-12 col-lg-12 cart__info-total">
+                    <div className="cart__info-item text-center text-lg-left">
+                      <div className="mb-2">
+                        <div>{t('cart:price_total')}</div>
                       </div>
                       <div className="cart__total">
                         <PriceText price={cart?.totalNetPrice} />
