@@ -22,6 +22,8 @@ export type WebsitePostData = {
     content: string;
     link: string;
     slug: string;
+    create_date: Date;
+    signature: string;
   }[];
 };
 
@@ -30,10 +32,11 @@ export const GET_POST = gql`
     getWebsitePost(type: $type) {
       id
       name
-      type
       content
       link
       slug
+      create_date
+      signature
     }
   }
 `;
