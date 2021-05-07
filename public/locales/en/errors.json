@@ -43,6 +43,7 @@
   "code_138": "Can't apply promo code",
   "code_139": "This promo code only applies for the first order.",
   "code_140": "Please verify your account",
+  "code_140_waiting": "Your account is waiting to be verified",
   "code_141": "Product is unvailable",
   "code_142": "vat is invalid",
   "add_to_cart_success": "Add to cart success.",
