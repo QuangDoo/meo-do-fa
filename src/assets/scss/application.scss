@@ -10489,7 +10489,10 @@ abbr[title] {
   --deal-bar-height: 1em;
   --deal-bar-background-color: #f6cdd1;
   --deal-bar-background-gradient: linear-gradient(to right, $secondary 0%, #f53900 70%);
-  border: 1px solid #f53900;
+  border: 2.5px solid #f53900;
+}
+.availabel-img{
+  opacity: 0.3;
 }
 .deal-card__description {
   line-height: 1rem;
@@ -12759,6 +12762,11 @@ abbr[title] {
   padding: 0.25em 0.75em;
   margin-right: 0.25em;
   white-space: normal;
+}
+.product__status .out_of_stocks{
+  color: red;
+  font-size: 1em;
+  font-weight: 600;
 }
 .product__status .only_medofa {
   color: $primary;
