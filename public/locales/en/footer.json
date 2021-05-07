@@ -30,5 +30,6 @@
   "subscribe_content": "Don't miss out on thousands of super cool products and promotions",
   "email_input": "Your email",
   "subscribe": "Subscribe",
-  "success_subscribe": "Successfully subscribed"
+  "success_subscribe": "Successfully subscribed",
+  "version": "Version:"
 }
