@@ -59,7 +59,7 @@ function Deal() {
   return (
     <MainLayout>
       <Head>
-        <title>Medofa</title>
+        <title>Medofa - {t('deals:promotion')}</title>
       </Head>
 
       <section className="deals deals--mobile py-5">

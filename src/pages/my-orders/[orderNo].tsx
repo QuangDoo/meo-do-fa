@@ -119,7 +119,7 @@ function OrderDetails() {
   return (
     <MainLayout>
       <Head>
-        <title>Medofa</title>
+        <title>Medofa - {t('myOrders:order_detail')}</title>
       </Head>
 
       <ProfileLayout>

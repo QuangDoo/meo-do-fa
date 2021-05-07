@@ -18,7 +18,7 @@ Ingredients.getInitialProps = async () => ({
 });
 
 function Ingredients() {
-  const { t } = useTranslation('errors');
+  const { t } = useTranslation(['errors', 'navbar']);
 
   const { data, loading, error } = useQuery<GetAllIngredientsData, undefined>(GET_ALL_INGREDIENTS, {
     onError: (error) => {
@@ -34,7 +34,7 @@ function Ingredients() {
   return (
     <MainLayout>
       <Head>
-        <title>Medofa</title>
+        <title>Medofa - {t('navbar:ingredient')}</title>
       </Head>
 
       {loading ? (

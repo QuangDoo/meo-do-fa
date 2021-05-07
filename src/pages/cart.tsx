@@ -1,3 +1,4 @@
+import { useTranslation } from 'i18n';
 import React from 'react';
 import Head from 'src/components/Layout/Head';
 import CartPage from 'src/components/Modules/Cart';
@@ -9,10 +10,11 @@ Cart.getInitialProps = async () => ({
 });
 
 function Cart() {
+  const { t } = useTranslation(['cart']);
   return (
     <MainLayout>
       <Head>
-        <title>Medofa</title>
+        <title>Medofa - {t('cart:cart')}</title>
       </Head>
 
       <CartPage />

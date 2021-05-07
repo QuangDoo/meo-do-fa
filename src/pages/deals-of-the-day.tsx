@@ -82,7 +82,7 @@ function DealOfTheDay() {
   return (
     <MainLayout>
       <Head>
-        <title>Medofa</title>
+        <title>Medofa - {t('dealsOfTheDay:title')}</title>
       </Head>
 
       <div className="deals deals--mobile py-5 ">

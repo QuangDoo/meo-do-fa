@@ -9,12 +9,12 @@ Pathological.getInitialProps = async () => ({
 });
 
 function Pathological() {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation(['common', 'navbar']);
 
   return (
     <MainLayout>
       <Head>
-        <title>Medofa</title>
+        <title>Medofa - {t('navbar:pathological')}</title>
       </Head>
 
       <div className="container text-center py-3">

@@ -15,7 +15,7 @@ NewsPage.getInitialProps = async () => ({
 });
 
 function NewsPage() {
-  const { t } = useTranslation(['common', 'news']);
+  const { t } = useTranslation(['common', 'news', 'header']);
   const newsList = useWebsitePost('NEWS');
 
   const arrNews = [
@@ -45,7 +45,7 @@ function NewsPage() {
   return (
     <MainLayout>
       <Head>
-        <title>Medofa</title>
+        <title>Medofa - {t('header:news')}</title>
       </Head>
       {/* {newsList ? (
         <div className="container py-5">

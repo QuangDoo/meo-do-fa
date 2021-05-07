@@ -151,7 +151,7 @@ function Feedback() {
   return (
     <MainLayout>
       <Head>
-        <title>Medofa</title>
+        <title>Medofa - {t('title')}</title>
       </Head>
       <div className="container">
         <div className="feedback-title">{t('title')}</div>

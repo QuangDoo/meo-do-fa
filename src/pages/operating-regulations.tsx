@@ -14,7 +14,7 @@ function OperatingRegulations() {
   return (
     <MainLayout>
       <Head>
-        <title>Medofa</title>
+        <title>Medofa - {t('operatingRegulations:title')}</title>
       </Head>
 
       <div className="container my-5">

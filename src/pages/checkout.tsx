@@ -1,3 +1,4 @@
+import { useTranslation } from 'i18n';
 import React from 'react';
 import Head from 'src/components/Layout/Head';
 import CheckoutPage from 'src/components/Modules/Checkout';
@@ -20,10 +21,11 @@ Checkout.getInitialProps = async (ctx) => {
 };
 
 function Checkout() {
+  const { t } = useTranslation(['checkout']);
   return (
     <MainLayout>
       <Head>
-        <title>Medofa</title>
+        <title>Medofa - {t('checkout:checkout')}</title>
       </Head>
 
       <CheckoutPage />

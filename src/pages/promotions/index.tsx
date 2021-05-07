@@ -1,3 +1,4 @@
+import { useTranslation } from 'i18n';
 import Head from 'next/head';
 import React from 'react';
 import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
@@ -9,10 +10,11 @@ Promotion.getInitialProps = async () => ({
 });
 
 function Promotion(): JSX.Element {
+  const { t } = useTranslation('promotions');
   return (
     <MainLayout>
       <Head>
-        <title>Medofa</title>
+        <title>Medofa - {t('promotions:promotions')}</title>
       </Head>
 
       <Promotions />

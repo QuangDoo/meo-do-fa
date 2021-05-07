@@ -1,4 +1,5 @@
 import { useQuery } from '@apollo/client';
+import { useTranslation } from 'i18n';
 import { useRouter } from 'next/router';
 import React from 'react';
 import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
@@ -22,11 +23,13 @@ const HelpDetail = () => {
       variables: { id: +router.query.helpId }
     }
   );
+  const { t } = useTranslation(['help']);
 
+  const title = helpData?.getWebsitePostDetail?.name;
   return (
     <MainLayout>
       <Head>
-        <title>Medofa</title>
+        <title>Medofa - {title}</title>
       </Head>
 
       <FAQ>

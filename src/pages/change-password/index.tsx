@@ -75,7 +75,7 @@ function ChangePassWord() {
   return (
     <MainLayout>
       <Head>
-        <title>Medofa</title>
+        <title>Medofa - {t('myAccount:change_password')}</title>
       </Head>
 
       <ProfileLayout title={t('myAccount:title')}>

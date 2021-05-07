@@ -84,7 +84,7 @@ function MyOrders(): JSX.Element {
   return (
     <MainLayout>
       <Head>
-        <title>Medofa</title>
+        <title>Medofa - {t('myOrders:my_orders')}</title>
       </Head>
 
       <ProfileLayout title={t('myOrders:my_orders')}>

@@ -43,10 +43,11 @@ function PromotionDetail(): JSX.Element {
 
   const promotionProducts = productsData?.getProductByConditions?.Products || [];
 
+  const title = promontionData?.getWebsitePromotionDetail?.name;
   return (
     <MainLayout>
       <Head>
-        <title>Medofa</title>
+        <title>Medofa - {title}</title>
       </Head>
       <div className="container py-5">
         <div dangerouslySetInnerHTML={{ __html: content }} />
