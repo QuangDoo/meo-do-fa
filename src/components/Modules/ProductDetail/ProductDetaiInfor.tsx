@@ -248,6 +248,7 @@ const ProductDetailInfor = (props: ProductDetails) => {
                 onPlusClick={handlePlusClick}
                 onMinusClick={handleMinusClick}
                 onBlur={handleBlur}
+                available={true}
               />
 
               <ConfirmDeleteItemModal
