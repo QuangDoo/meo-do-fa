@@ -67,7 +67,12 @@ function MobileNavbar() {
                     <li className="mobile-menu-list-item">
                       <Link href="/my-orders">
                         <a className="mobile-menu-link">
-                          <i className="icomoon icon-assignment mr-2" />
+                          {/* <i className="icomoon icon-assignment mr-2" /> */}
+                          <img
+                            className="nav__icon"
+                            src="/assets/images/donhangcuatoi.png"
+                            alt="icon_donhangcuatoi"
+                          />
                           {t('navbar:my_order')}
                         </a>
                       </Link>
@@ -75,7 +80,12 @@ function MobileNavbar() {
                     <li className="mobile-menu-list-item">
                       <Link href="/my-promo-codes">
                         <a className="mobile-menu-link">
-                          <i className="fas fa-tags mr-2" />
+                          {/* <i className="fas fa-tags mr-2" /> */}
+                          <img
+                            className="nav__icon"
+                            src="/assets/images/magiamgia.png"
+                            alt="icon_magiamgiacuatoi"
+                          />
                           {t('navbar:my_promo_code')}
                         </a>
                       </Link>
@@ -83,7 +93,12 @@ function MobileNavbar() {
                     <li className="mobile-menu-list-item">
                       <Link href="/loyalty-points">
                         <a className="mobile-menu-link">
-                          <i className="fas fa-hand-holding-usd mr-2" />
+                          {/* <i className="fas fa-hand-holding-usd mr-2" /> */}
+                          <img
+                            className="nav__icon"
+                            src="/assets/images/diemtichluy.png"
+                            alt="icon_magiamgiacuatoi"
+                          />
                           {t('navbar:loyalty_points')}
                         </a>
                       </Link>
@@ -168,7 +183,7 @@ function MobileNavbar() {
                       {/* <i className="rockland-nav__icon fas fa-tag" /> */}
                       <img
                         className="nav__icon"
-                        src="/assets/images/makhuyenmai.png"
+                        src="/assets/images/magiamgia.png"
                         alt="icon_makhuyenmai"
                       />
                       <span>{t('navbar:promo_code')}</span>
@@ -229,7 +244,7 @@ function MobileNavbar() {
               <>
                 <hr className="hr my-3" />
                 <button type="button" className="mobile-menu-list-item pb-3" onClick={logOut}>
-                  <i className="fas fa-sign-out-alt dropdown__item-icon" />
+                  <i className="fas fa-sign-out-alt dropdown__item-icon logout__mobile" />
                   {t('navbar:logout')}
                 </button>
               </>

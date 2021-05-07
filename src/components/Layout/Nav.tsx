@@ -135,8 +135,8 @@ const Nav = () => {
                       <a className="dropdown-item-text p-0">
                         {/* <i className="rockland-nav__icon fas fa-tag" /> */}
                         <img
-                          className="nav__icon"
-                          src="/assets/images/makhuyenmai.png"
+                          className="nav__icon_nav"
+                          src="/assets/images/magiamgia.png"
                           alt="icon_makhuyenmai"
                         />
                         <span>{t('navbar:promo_code')}</span>
@@ -148,7 +148,7 @@ const Nav = () => {
                       <a className="dropdown-item-text p-0">
                         {/* <i className="rockland-nav__icon fas fa-gifts" /> */}
                         <img
-                          className="nav__icon"
+                          className="nav__icon_nav"
                           src="/assets/images/sanphamkhuyenmai.png"
                           alt="icon_sanphamkhuyenmai"
                         />
@@ -161,7 +161,7 @@ const Nav = () => {
                       <a className="dropdown-item-text p-0">
                         {/* <i className="rockland-nav__icon fab fa-product-hunt" /> */}
                         <img
-                          className="nav__icon"
+                          className="nav__icon_nav"
                           src="/assets/images/chuongtrinhkhuyenmai.png"
                           alt="icon_chuongtrinhkhuyenmai"
                         />
@@ -189,8 +189,8 @@ const Nav = () => {
                       <a className="dropdown-item-text p-0">
                         {/* <i className="rockland-nav__icon fas fa-tag" /> */}
                         <img
-                          className="nav__icon"
-                          src="/assets/images/makhuyenmai.png"
+                          className="nav__icon_nav"
+                          src="/assets/images/magiamgia.png"
                           alt="icon_makhuyenmai"
                         />
                         <span>{t('navbar:promo_code')}</span>
@@ -202,7 +202,7 @@ const Nav = () => {
                       <a className="dropdown-item-text p-0">
                         {/* <i className="rockland-nav__icon fas fa-gifts" /> */}
                         <img
-                          className="nav__icon"
+                          className="nav__icon_nav"
                           src="/assets/images/sanphamkhuyenmai.png"
                           alt="icon_sanphamkhuyenmai"
                         />
@@ -215,7 +215,7 @@ const Nav = () => {
                       <a className="dropdown-item-text p-0">
                         {/* <i className="rockland-nav__icon fab fa-product-hunt" /> */}
                         <img
-                          className="nav__icon"
+                          className="nav__icon_nav"
                           src="/assets/images/chuongtrinhkhuyenmai.png"
                           alt="icon_chuongtrinhkhuyenmai"
                         />
@@ -294,7 +294,12 @@ const Nav = () => {
                     <div>
                       <Link href="/my-account">
                         <a className="dropdown__item dropdown__item-link">
-                          <i className="far fa-user-circle dropdown__item-icon" />
+                          {/* <i className="far fa-user-circle dropdown__item-icon" /> */}
+                          <img
+                            className="nav__icon_nav"
+                            src="/assets/images/thongtintaikhoan.png"
+                            alt="icon_acc_info"
+                          />
                           {t('navbar:account_info')}
                         </a>
                       </Link>
@@ -312,7 +317,12 @@ const Nav = () => {
                     <div>
                       <Link href="/my-orders">
                         <a className="dropdown__item dropdown__item-link">
-                          <i className="icomoon icon-assignment dropdown__item-icon" />
+                          {/* <i className="icomoon icon-assignment dropdown__item-icon" /> */}
+                          <img
+                            className="nav__icon_nav"
+                            src="/assets/images/donhangcuatoi.png"
+                            alt="icon_my_order"
+                          />
                           {t('navbar:my_order')}
                         </a>
                       </Link>
@@ -328,7 +338,12 @@ const Nav = () => {
                     <div>
                       <Link href="/my-promo-codes">
                         <a className="dropdown__item dropdown__item-link">
-                          <i className="fas fa-tags dropdown__item-icon" />
+                          {/* <i className="fas fa-tags dropdown__item-icon" /> */}
+                          <img
+                            className="nav__icon_nav"
+                            src="/assets/images/magiamgia.png"
+                            alt="my_promo_code"
+                          />
                           {t('navbar:my_promo_code')}
                         </a>
                       </Link>
@@ -336,7 +351,12 @@ const Nav = () => {
 
                     <Link href="/loyalty-points">
                       <a className="dropdown__item dropdown__item-link">
-                        <i className="fas fa-hand-holding-usd dropdown__item-icon" />
+                        {/* <i className="fas fa-hand-holding-usd dropdown__item-icon" /> */}
+                        <img
+                          className="nav__icon_nav"
+                          src="/assets/images/diemtichluy.png"
+                          alt="loyalty_points"
+                        />
                         {t('navbar:loyalty_points')}
                       </a>
                     </Link>
@@ -345,7 +365,12 @@ const Nav = () => {
                       type="button"
                       className="dropdown__item dropdown__item-link w-100"
                       onClick={logOut}>
-                      <i className="fas fa-sign-out-alt dropdown__item-icon" />
+                      {/* <i className="fas fa-sign-out-alt dropdown__item-icon" /> */}
+                      <img
+                        className="nav__icon_nav"
+                        src="/assets/images/dangxuat.png"
+                        alt="logout"
+                      />
                       {t('navbar:logout')}
                     </button>
                   </Menu>
