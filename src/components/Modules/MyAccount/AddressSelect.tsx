@@ -73,7 +73,7 @@ export default function AddressSelect() {
   // On user load
   useEffect(() => {
     // Always get cities, regardless if user has contact address or not
-    getCities().then((response) => {
+    getCities()?.then((response) => {
       setCities(response.data.getCities);
 
       // If user has contact address, set city value to user's city

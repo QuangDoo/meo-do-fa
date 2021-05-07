@@ -59,6 +59,7 @@ function QuickOrderItem(props: Props) {
                       productPrice={props.list_price}
                       productName={props.productName}
                       productImg={image}
+                      available={true}
                     />
                   </div>
                 )}

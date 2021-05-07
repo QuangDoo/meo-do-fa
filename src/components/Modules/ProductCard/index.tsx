@@ -50,7 +50,7 @@ const ProductCard = (props: Props) => {
                   <div className="banner-wrapper">
                     <img
                       src={props.image_256 || '/assets/images/no_images.jpg'}
-                      className="banner--image"
+                      className={clsx('banner--image', isAvailable && 'availabel-img')}
                       alt="Medofa product"
                     />
                   </div>
@@ -129,6 +129,7 @@ const ProductCard = (props: Props) => {
                     productPrice={props.list_price}
                     productName={props.name}
                     productImg={props.image_512}
+                    available={isAvailable}
                   />
                 </div>
               </>

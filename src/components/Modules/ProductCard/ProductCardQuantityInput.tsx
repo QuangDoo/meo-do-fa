@@ -17,13 +17,14 @@ type Props = {
   productPrice: number;
   productName: string;
   productImg: string;
+  available: boolean;
 };
 
 // const MIN_QUANTITY = configs.MIN_QUANTITY;
 // const MAX_QUANTITY = configs.MAX_QUANTITY;
 
 function ProductCardQuantityInput(props: Props) {
-  const { productId, productPrice, productName, productImg } = props;
+  const { productId, productPrice, productName, productImg, available } = props;
 
   const { t } = useTranslation(['errors', 'success', 'cart']);
 
@@ -146,6 +147,7 @@ function ProductCardQuantityInput(props: Props) {
         onBlur={handleBlur}
         min={MIN_QUANTITY}
         max={MAX_QUANTITY}
+        available={available}
       />
 
       <ConfirmDeleteItemModal
