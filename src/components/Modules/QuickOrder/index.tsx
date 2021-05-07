@@ -130,26 +130,25 @@ function QuickOrderPage() {
                       </div>
                     </div>
                   </div>
-                  <div className="col-md-12 col-lg-12 cart__info-total">
-                    <div className="cart__info-item text-center text-lg-left">
-                      <div className="mb-2">
-                        <div>{t('cart:shipping_fee')}</div>
+                  <div className="col-md-20 col-lg-12 cart__info-total ">
+                    <div className="cart__info-item text-lg-left text-center ">
+                      <div className="mb-2  text-lg-left float-xl-left">
+                        {t('cart:shipping_fee')}
                       </div>
-                      <div className="cart__total">
+                      <div className="cart__total  text-lg-right">
                         <PriceText price={cart?.totalShippingFee} />
                       </div>
                     </div>
                   </div>
-                  <div className="col-md-12 col-lg-12 cart__info-total">
-                    <div className="cart__info-item text-center text-lg-left">
-                      <div className="mb-2">
-                        <div>{t('cart:price_total')}</div>
-                      </div>
-                      <div className="cart__total">
+                  <div className="col-md-20 col-lg-12 cart__info-total ">
+                    <div className="cart__info-item text-center font-weight-bold  ">
+                      <div className="mb-2 text-lg-left float-xl-left">{t('cart:price_total')}</div>
+                      <div className="cart__total  text-lg-right font-weight-bold">
                         <PriceText price={cart?.totalNetPrice} />
                       </div>
                     </div>
                   </div>
+
                   {cart?.totalNetPrice > 0 && (
                     <div className="col-12">
                       <div className="cart__info-item">
