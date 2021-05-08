@@ -67,7 +67,6 @@ const Nav = () => {
                 <li className="rockland-nav__item">
                   <Link href="/products">
                     <a className="rockland-nav__link">
-                      {/* <i className="rockland-nav__icon fas fa-list-ul" /> */}
                       <img
                         className="nav__icon"
                         src="/assets/images/sanpham.png"
@@ -90,7 +89,6 @@ const Nav = () => {
               <li className="rockland-nav__item">
                 <Link href="/deals-of-the-day">
                   <a className="rockland-nav__link">
-                    {/* <i className="rockland-nav__icon icomoon icon-product" /> */}
                     <img
                       className="nav__icon"
                       src="/assets/images/giasochomnay.png"
@@ -106,7 +104,6 @@ const Nav = () => {
               <li className="rockland-nav__item">
                 <Link href="/quick-order">
                   <a className="rockland-nav__link">
-                    {/* <i className="rockland-nav__icon icomoon icon-quick-order" /> */}
                     <img
                       className="nav__icon"
                       src="/assets/images/dathangnhanh.png"
@@ -120,7 +117,6 @@ const Nav = () => {
               <li className="d-none d-sm-block rockland-nav__item dropdown dropdown-nav">
                 <div data-toggle="dropdown" data-hover="dropdown">
                   <a className="rockland-nav__link">
-                    {/* <i className="rockland-nav__icon fab fa-hotjar" /> */}
                     <img
                       className="nav__icon"
                       src="/assets/images/khuyenmai.png"
@@ -133,7 +129,6 @@ const Nav = () => {
                   <li className="dropdown-item">
                     <Link href="/promo-codes">
                       <a className="dropdown-item-text p-0">
-                        {/* <i className="rockland-nav__icon fas fa-tag" /> */}
                         <img
                           className="nav__icon_nav"
                           src="/assets/images/magiamgia.png"
@@ -146,7 +141,6 @@ const Nav = () => {
                   <li className="dropdown-item">
                     <Link href="/deals">
                       <a className="dropdown-item-text p-0">
-                        {/* <i className="rockland-nav__icon fas fa-gifts" /> */}
                         <img
                           className="nav__icon_nav"
                           src="/assets/images/sanphamkhuyenmai.png"
@@ -159,7 +153,6 @@ const Nav = () => {
                   <li className="dropdown-item">
                     <Link href="/promotions">
                       <a className="dropdown-item-text p-0">
-                        {/* <i className="rockland-nav__icon fab fa-product-hunt" /> */}
                         <img
                           className="nav__icon_nav"
                           src="/assets/images/chuongtrinhkhuyenmai.png"
@@ -174,7 +167,6 @@ const Nav = () => {
               <li className="d-block d-sm-none rockland-nav__item dropdown dropdown-nav">
                 <div data-toggle="dropdown" data-hover="dropdown">
                   <a className="rockland-nav__link">
-                    {/* <i className="rockland-nav__icon fab fa-hotjar" /> */}
                     <img
                       className="nav__icon"
                       src="/assets/images/khuyenmai.png"
@@ -187,7 +179,6 @@ const Nav = () => {
                   <li className="dropdown-item">
                     <Link href="/promo-codes">
                       <a className="dropdown-item-text p-0">
-                        {/* <i className="rockland-nav__icon fas fa-tag" /> */}
                         <img
                           className="nav__icon_nav"
                           src="/assets/images/magiamgia.png"
@@ -200,7 +191,6 @@ const Nav = () => {
                   <li className="dropdown-item">
                     <Link href="/deals">
                       <a className="dropdown-item-text p-0">
-                        {/* <i className="rockland-nav__icon fas fa-gifts" /> */}
                         <img
                           className="nav__icon_nav"
                           src="/assets/images/sanphamkhuyenmai.png"
@@ -213,7 +203,6 @@ const Nav = () => {
                   <li className="dropdown-item">
                     <Link href="/promotions">
                       <a className="dropdown-item-text p-0">
-                        {/* <i className="rockland-nav__icon fab fa-product-hunt" /> */}
                         <img
                           className="nav__icon_nav"
                           src="/assets/images/chuongtrinhkhuyenmai.png"
@@ -231,7 +220,6 @@ const Nav = () => {
               <li className="rockland-nav__item">
                 <Link href="/ingredients">
                   <a className="rockland-nav__link">
-                    {/* <i className="rockland-nav__icon icomoon icon-ingredients" /> */}
                     <img
                       className="nav__icon"
                       src="/assets/images/hoatchat.png"
@@ -294,7 +282,6 @@ const Nav = () => {
                     <div>
                       <Link href="/my-account">
                         <a className="dropdown__item dropdown__item-link">
-                          {/* <i className="far fa-user-circle dropdown__item-icon" /> */}
                           <img
                             className="nav__icon_nav"
                             src="/assets/images/thongtintaikhoan.png"
@@ -317,7 +304,6 @@ const Nav = () => {
                     <div>
                       <Link href="/my-orders">
                         <a className="dropdown__item dropdown__item-link">
-                          {/* <i className="icomoon icon-assignment dropdown__item-icon" /> */}
                           <img
                             className="nav__icon_nav"
                             src="/assets/images/donhangcuatoi.png"
@@ -338,7 +324,6 @@ const Nav = () => {
                     <div>
                       <Link href="/my-promo-codes">
                         <a className="dropdown__item dropdown__item-link">
-                          {/* <i className="fas fa-tags dropdown__item-icon" /> */}
                           <img
                             className="nav__icon_nav"
                             src="/assets/images/magiamgia.png"
@@ -351,7 +336,6 @@ const Nav = () => {
 
                     <Link href="/loyalty-points">
                       <a className="dropdown__item dropdown__item-link">
-                        {/* <i className="fas fa-hand-holding-usd dropdown__item-icon" /> */}
                         <img
                           className="nav__icon_nav"
                           src="/assets/images/diemtichluy.png"
@@ -365,7 +349,6 @@ const Nav = () => {
                       type="button"
                       className="dropdown__item dropdown__item-link w-100"
                       onClick={logOut}>
-                      {/* <i className="fas fa-sign-out-alt dropdown__item-icon" /> */}
                       <img
                         className="nav__icon_nav"
                         src="/assets/images/dangxuat.png"

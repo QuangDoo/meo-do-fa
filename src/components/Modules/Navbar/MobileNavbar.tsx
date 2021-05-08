@@ -67,7 +67,6 @@ function MobileNavbar() {
                     <li className="mobile-menu-list-item">
                       <Link href="/my-orders">
                         <a className="mobile-menu-link">
-                          {/* <i className="icomoon icon-assignment mr-2" /> */}
                           <img
                             className="nav__icon"
                             src="/assets/images/donhangcuatoi.png"
@@ -80,7 +79,6 @@ function MobileNavbar() {
                     <li className="mobile-menu-list-item">
                       <Link href="/my-promo-codes">
                         <a className="mobile-menu-link">
-                          {/* <i className="fas fa-tags mr-2" /> */}
                           <img
                             className="nav__icon"
                             src="/assets/images/magiamgia.png"
@@ -93,7 +91,6 @@ function MobileNavbar() {
                     <li className="mobile-menu-list-item">
                       <Link href="/loyalty-points">
                         <a className="mobile-menu-link">
-                          {/* <i className="fas fa-hand-holding-usd mr-2" /> */}
                           <img
                             className="nav__icon"
                             src="/assets/images/diemtichluy.png"
@@ -111,7 +108,6 @@ function MobileNavbar() {
                 <li className="mobile-menu-list-item">
                   <Link href="/products">
                     <a className="mobile-menu-link">
-                      {/* <i className="rockland-nav__icon fas fa-list-ul" /> */}
                       <img
                         className="nav__icon"
                         src="/assets/images/sanpham.png"
@@ -124,7 +120,6 @@ function MobileNavbar() {
                 <li className="mobile-menu-list-item">
                   <Link href="/deals-of-the-day">
                     <a className="mobile-menu-link">
-                      {/* <i className="rockland-nav__icon icomoon icon-product" /> */}
                       <img
                         className="nav__icon"
                         src="/assets/images/giasochomnay.png"
@@ -137,7 +132,6 @@ function MobileNavbar() {
                 <li className="mobile-menu-list-item">
                   <Link href="/quick-order">
                     <a className="mobile-menu-link">
-                      {/* <i className="rockland-nav__icon icomoon icon-quick-order" /> */}
                       <img
                         className="nav__icon"
                         src="/assets/images/dathangnhanh.png"
@@ -150,7 +144,6 @@ function MobileNavbar() {
                 <li className="mobile-menu-list-item">
                   <Link href="/pathological">
                     <a className="mobile-menu-link">
-                      {/* <i className="rockland-nav__icon fas fa-laptop-medical" /> */}
                       <img
                         className="nav__icon"
                         src="/assets/images/tracuubenhly.png"
@@ -163,7 +156,6 @@ function MobileNavbar() {
                 <li className="mobile-menu-list-item">
                   <Link href="/ingredients">
                     <a className="mobile-menu-link">
-                      {/* <i className="rockland-nav__icon icomoon icon-ingredients" /> */}
                       <img
                         className="nav__icon"
                         src="/assets/images/hoatchat.png"
@@ -180,7 +172,6 @@ function MobileNavbar() {
                 <li className="mobile-menu-list-item">
                   <Link href="/promo-codes">
                     <a className="mobile-menu-link">
-                      {/* <i className="rockland-nav__icon fas fa-tag" /> */}
                       <img
                         className="nav__icon"
                         src="/assets/images/magiamgia.png"
@@ -193,7 +184,6 @@ function MobileNavbar() {
                 <li className="mobile-menu-list-item">
                   <Link href="/deals">
                     <a className="mobile-menu-link">
-                      {/* <i className="rockland-nav__icon fas fa-gifts" /> */}
                       <img
                         className="nav__icon"
                         src="/assets/images/sanphamkhuyenmai.png"
@@ -206,7 +196,6 @@ function MobileNavbar() {
                 <li className="mobile-menu-list-item">
                   <Link href="/promotions">
                     <a className="mobile-menu-link">
-                      {/* <i className="rockland-nav__icon fab fa-product-hunt" /> */}
                       <img
                         className="nav__icon"
                         src="/assets/images/chuongtrinhkhuyenmai.png"
