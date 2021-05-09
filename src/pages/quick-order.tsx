@@ -1,3 +1,4 @@
+import { useTranslation } from 'i18n';
 import React from 'react';
 import Head from 'src/components/Layout/Head';
 import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
@@ -9,10 +10,11 @@ QuickOrder.getInitialProps = async () => ({
 });
 
 function QuickOrder() {
+  const { t } = useTranslation(['quickOrder']);
   return (
     <MainLayout>
       <Head>
-        <title>Medofa</title>
+        <title>Medofa - {t('quickOrder:quick_order')}</title>
       </Head>
 
       <QuickOrderPage />

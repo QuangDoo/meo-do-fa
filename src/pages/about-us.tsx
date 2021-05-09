@@ -1,3 +1,4 @@
+import { useTranslation } from 'i18n';
 import React from 'react';
 import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import StaticPage from 'src/components/Modules/StaticPage';
@@ -8,11 +9,11 @@ import Head from '../components/Layout/Head';
 
 function AboutUs() {
   const aboutUsData = useWebsitePost('ABOUT');
-
+  const { t } = useTranslation(['aboutUs']);
   return (
     <MainLayout>
       <Head>
-        <title>Medofa</title>
+        <title>Medofa - {t('aboutUs:title')}</title>
       </Head>
 
       <StaticPage pageContent={aboutUsData} />

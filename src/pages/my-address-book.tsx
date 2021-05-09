@@ -66,7 +66,7 @@ function MyAddresses() {
   return (
     <MainLayout>
       <Head>
-        <title>Medofa</title>
+        <title>Medofa - {t('myAddressBook:title')}</title>
       </Head>
 
       <LoadingBackdrop open={loading} />

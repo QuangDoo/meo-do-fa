@@ -1,3 +1,4 @@
+import { useTranslation } from 'i18n';
 import React from 'react';
 import Head from 'src/components/Layout/Head';
 import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
@@ -9,10 +10,11 @@ PromotionCode.getInitialProps = async () => ({
 });
 
 function PromotionCode() {
+  const { t } = useTranslation('promoCodes');
   return (
     <MainLayout>
       <Head>
-        <title>Medofa</title>
+        <title>Medofa - {t('promoCodes:promo_codes')}</title>
       </Head>
 
       <PromoCodes />

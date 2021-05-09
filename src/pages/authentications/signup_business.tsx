@@ -99,7 +99,7 @@ function SignupBusiness() {
   return (
     <>
       <Head>
-        <title>Medofa</title>
+        <title>Medofa </title>
       </Head>
       <header className="bg-white header-nonav">
         <div className="container py-2">
