@@ -239,7 +239,7 @@ function OrderDetails() {
                     </TableCell>
                     <TableCell></TableCell>
 
-                    {['quantity', 'unit_price', 'tax', 'total'].map((key) => (
+                    {['quantity', 'unit_price', 'tax', 'sub_total'].map((key) => (
                       <TableCell key={key} align="right">
                         <Typography variant="button" color="primary" noWrap>
                           {t(`myOrders:${key}`)}
@@ -326,10 +326,10 @@ function OrderDetails() {
                       {product.product_uom_qty} x <PriceText price={product.price_unit} />
                     </div>
                     <div className="my-order__item-price">
-                      {t('myOrders:total')}: <PriceText price={product.price_total} />
-                    </div>
-                    <div className="my-order__item-price-tax">
                       {t('myOrders:tax')}: <PriceText price={product.price_tax} />
+                    </div>
+                    <div className="my-order__item-price">
+                      {t('myOrders:sub_total')}: <PriceText price={product.price_total} />
                     </div>
                   </div>
                 </div>
