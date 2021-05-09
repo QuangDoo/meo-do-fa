@@ -184,9 +184,21 @@
   .back-to-top.show {
     bottom: 8em;
   }
+  .tele__mobile .tele__mobile-number{
+    margin-left: .6em;
+  }  
+}
+@media (min-width: 576px) and (max-width:991.98px) {
   .tele__mobile{
-    margin-left: 0.5em;
+    margin-top: .5em;
   }
+  .tele__mobile .tele__mobile-number{
+    margin-left: -2.5em;
+  }  
+}
+.tele__mobile{
+  display: flex;
+  margin-top: .45em;
 }
 .logo-footer {
   max-height: 40px;
