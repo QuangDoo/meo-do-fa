@@ -73,6 +73,7 @@ button {
   width: 130px;
   height: 130px;
   object-fit: contain;
+  pointer-events: none;
 }
 
 .cart-item__name {
