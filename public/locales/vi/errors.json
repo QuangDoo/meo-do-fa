@@ -43,6 +43,7 @@
   "code_138": "Không thể áp dụng mã giảm giá.",
   "code_139": "Mã khuyến mãi này chỉ áp dụng cho đơn hàng đầu tiên.",
   "code_140": "Hãy xác thực tài khoản của bạn",
+  "code_140_waiting": "Tài khoản của bạn đang chờ xác thực",
   "code_141": "Sản phẩm không có sẵn",
   "code_142": "Mã số thuế không hợp lệ",
   "add_to_cart_success": "Thêm vào giỏ hàng thành công.",
@@ -52,5 +53,5 @@
   "error_retype_pw": "Mật khẩu không trùng khớp",
   "error_match_pw": "Mật khẩu hiện tại và mật khẩu cũ không được trùng khớp",
   "error_wrong_cr_pw": "Mật khẩu hiên tại không đúng",
-  "tax_code_invalid":"Mã số thuế không hợp lệ"
+  "tax_code_invalid": "Mã số thuế không hợp lệ"
 }

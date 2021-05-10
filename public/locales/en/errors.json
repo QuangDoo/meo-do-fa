@@ -43,6 +43,7 @@
   "code_138": "Can't apply promo code",
   "code_139": "This promo code only applies for the first order.",
   "code_140": "Please verify your account",
+  "code_140_waiting": "Your account is waiting to be verified",
   "code_141": "Product is unvailable",
   "code_142": "vat is invalid",
   "add_to_cart_success": "Add to cart success.",
@@ -52,5 +53,5 @@
   "error_retype_pw": "Password do not match",
   "error_match_pw": "Current password and new password cannot be matched",
   "error_wrong_cr_pw": "Current password is incorrect",
-  "tax_code_invalid":"Tax Code is invalid"
+  "tax_code_invalid": "Tax Code is invalid"
 }
