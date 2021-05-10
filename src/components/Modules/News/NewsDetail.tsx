@@ -1,3 +1,4 @@
+import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import React from 'react';
 
@@ -10,6 +11,7 @@ type Props = {
   imgUrl?: string;
 };
 function NewsDetail(props: Props) {
+  const { t } = useTranslation('common');
   function createMarkup() {
     return { __html: props.description };
   }
@@ -19,7 +21,7 @@ function NewsDetail(props: Props) {
         <div className="news-header">
           <div className="news-header__category">
             {props.categories.map((category, index) => (
-              <span key={index}>
+              <span key={index} className="news-span__category">
                 <Link href={category.href}>
                   <a className="news-header__link text-small">{category.title}</a>
                 </Link>
@@ -29,13 +31,13 @@ function NewsDetail(props: Props) {
           <h1 className="news-header__title">{props.title}</h1>
           <div className="post-item__content-divider"></div>
           <div className="news-header__poston text-small">
-            {`post on `}
+            {t('common:post_on')}
             <Link href="/news">
               <a href="/news" className="news-header__link text-small">
-                SEPTEMBER 14,2020
+                SEPTEMBER 14, 2020
               </a>
             </Link>
-            {`,by `}
+            {t('common:by')}
             <Link href="/news">
               <a href="/news" className="news-header__link text-small">
                 {props.author}

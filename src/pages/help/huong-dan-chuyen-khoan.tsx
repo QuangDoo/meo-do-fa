@@ -1,3 +1,4 @@
+import { useTranslation } from 'i18n';
 import React from 'react';
 import { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import TermPopup from 'src/components/Modules/TermPopup';
@@ -33,11 +34,11 @@ const HelpDetail = () => {
     <p>Nhân viên xác nhận lại số tiền và lên đơn hàng cho khách</p>
     `
   };
-
+  const { t } = useTranslation(['checkout']);
   return (
     <>
       <Head>
-        <title>Medofa</title>
+        <title>Medofa - {t('checkout:instruction')}</title>
       </Head>
 
       <TermPopup />

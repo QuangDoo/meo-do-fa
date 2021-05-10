@@ -32,6 +32,7 @@
   "tax": "Tax",
   "time_out_invoice": "Your order has timed out to invoice",
   "total": "Total",
+  "sub_total": "Total",
   "unit_price": "Unit price",
   "vat_invoice": "See information about VAT invoice",
   "wait_for_confirm": "Wait for confirm",

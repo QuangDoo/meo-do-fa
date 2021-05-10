@@ -1,3 +1,4 @@
+import { useTranslation } from 'i18n';
 import React from 'react';
 import Head from 'src/components/Layout/Head';
 import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
@@ -11,7 +12,7 @@ TermsOfService.getInitialProps = async () => ({
 
 function TermsOfService() {
   const termsOfServiceData = useWebsitePost('TOS');
-
+  const { t } = useTranslation(['cart']);
   return (
     <MainLayout>
       <Head>

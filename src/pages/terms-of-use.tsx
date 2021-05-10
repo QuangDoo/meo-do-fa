@@ -1,3 +1,4 @@
+import { useTranslation } from 'i18n';
 import React from 'react';
 import Head from 'src/components/Layout/Head';
 import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
@@ -11,11 +12,11 @@ TermsOfUse.getInitialProps = async () => ({
 
 function TermsOfUse() {
   const termsOfUseData = useWebsitePost('TOU');
-
+  const { t } = useTranslation(['termsOfService']);
   return (
     <MainLayout>
       <Head>
-        <title>Medofa</title>
+        <title>Medofa - {t('termsOfService:title')}</title>
       </Head>
 
       <StaticPage pageContent={termsOfUseData} />

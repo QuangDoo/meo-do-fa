@@ -1,3 +1,4 @@
+import { useTranslation } from 'i18n';
 import React from 'react';
 import Head from 'src/components/Layout/Head';
 import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
@@ -11,11 +12,11 @@ DisputeResolution.getInitialProps = async () => ({
 
 function DisputeResolution() {
   const disputeResolutionData = useWebsitePost('DISPUTE');
-
+  const { t } = useTranslation(['disputeResolution']);
   return (
     <MainLayout>
       <Head>
-        <title>Medofa</title>
+        <title>Medofa - {t('disputeResolution:title')}</title>
       </Head>
 
       <StaticPage pageContent={disputeResolutionData} />

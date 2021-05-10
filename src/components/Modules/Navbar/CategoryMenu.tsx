@@ -87,7 +87,7 @@ const CategoryMenu = () => {
   const categories = categoriesData?.getCategoriesLevel || [];
 
   useEffect(() => {
-    if (categories[1].name === null && categories[2].name === null) {
+    if (categories[1]?.name === null && categories[2].name === null) {
       refetch();
     }
   }, [categoriesData]);
@@ -109,7 +109,7 @@ const CategoryMenu = () => {
               <li className="menu-item">
                 <div className="item-title">
                   <img
-                    src={`/assets/images/category_${priority}.svg`}
+                    src={`/assets/images/cate_${priority}.png`}
                     className="menu-icon"
                     alt={`category-item-${priority}`}
                     width="60"

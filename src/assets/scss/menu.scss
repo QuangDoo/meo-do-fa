@@ -49,6 +49,8 @@
 
         .menu-icon {
           padding-right: 5px;
+          height: 30px;
+          width: 40px;
         }
         .item-link {
           color: $gray-900;
@@ -127,7 +129,7 @@
     color: $primary;
   }
 }
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .hottag-button{
     font-size: 13px;
   }
@@ -200,7 +202,6 @@
 // language
 .change__language{
   display: flex;
-  padding-left: 0.5rem;
   margin-top: 1rem;
   .language{
     display: flex;

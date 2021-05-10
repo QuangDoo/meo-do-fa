@@ -1,3 +1,4 @@
+import { useTranslation } from 'i18n';
 import React from 'react';
 import Head from 'src/components/Layout/Head';
 import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
@@ -11,11 +12,11 @@ PrivacyPolicy.getInitialProps = async () => ({
 
 function PrivacyPolicy() {
   const privacyPolicyData = useWebsitePost('PPOLICY');
-
+  const { t } = useTranslation(['privacyPolicy']);
   return (
     <MainLayout>
       <Head>
-        <title>Medofa</title>
+        <title>Medofa - {t('privacyPolicy:title')}</title>
       </Head>
 
       <StaticPage pageContent={privacyPolicyData} />

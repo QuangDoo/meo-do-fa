@@ -116,11 +116,10 @@ function OrderDetails() {
   const partnerShipping = getOrderDetailData?.getOrderDetail?.partner_shipping;
 
   const classes = useStyles();
-
   return (
     <MainLayout>
       <Head>
-        <title>Medofa</title>
+        <title>Medofa - {t('myOrders:order_detail')}</title>
       </Head>
 
       <ProfileLayout>
@@ -229,7 +228,7 @@ function OrderDetails() {
           </Grid>
 
           <Grid item xs={12}>
-            <TableContainer component={Paper}>
+            <TableContainer component={Paper} className="none">
               <Table className={classes.table} aria-label="simple table">
                 <TableHead>
                   <TableRow>
@@ -238,8 +237,9 @@ function OrderDetails() {
                         {t('myOrders:product')}
                       </Typography>
                     </TableCell>
+                    <TableCell></TableCell>
 
-                    {['quantity', 'unit_price', 'tax', 'total'].map((key) => (
+                    {['quantity', 'unit_price', 'tax', 'sub_total'].map((key) => (
                       <TableCell key={key} align="right">
                         <Typography variant="button" color="primary" noWrap>
                           {t(`myOrders:${key}`)}
@@ -252,6 +252,16 @@ function OrderDetails() {
                 <TableBody>
                   {getOrderDetailData?.getOrderDetail?.order_lines?.map((product) => (
                     <TableRow key={product.name}>
+                      <TableCell className="image-webs" align="right">
+                        {product.product_type == 'reward' ? (
+                          <img src="/assets/images/rewards.png" alt="reward" />
+                        ) : (
+                          <img
+                            src={product.product.image_128 || '/assets/images/no_images.jpg'}
+                            alt="product"
+                          />
+                        )}
+                      </TableCell>
                       <TableCell component="th" scope="row">
                         {product.product_type !== 'product' ? (
                           <div>{product.name}</div>
@@ -279,7 +289,7 @@ function OrderDetails() {
 
                 <TableFooter>
                   <TableRow>
-                    <TableCell colSpan={5}>
+                    <TableCell colSpan={6}>
                       <Typography color="initial" variant="h5" align="right">
                         {t('myOrders:total')}{' '}
                         <Typography color="primary" variant="h4" display="inline">
@@ -291,6 +301,44 @@ function OrderDetails() {
                 </TableFooter>
               </Table>
             </TableContainer>
+            <div className="my-order__mobile-list">
+              {getOrderDetailData?.getOrderDetail?.order_lines?.map((product) => (
+                <div key={product.name} className="product-item">
+                  {product.product_type == 'reward' ? (
+                    <img src="/assets/images/rewards.png" alt="reward" />
+                  ) : (
+                    <img
+                      src={product.product.image_128 || '/assets/images/no_images.jpg'}
+                      alt="product"
+                    />
+                  )}
+                  <div className="info">
+                    <div className="name">
+                      {product.product_type !== 'product' ? (
+                        <div>{product.name}</div>
+                      ) : (
+                        <Link href={`/products/${product.product.slug}`}>
+                          <a>{product.name}</a>
+                        </Link>
+                      )}
+                    </div>
+                    <div className="my-order__item-price">
+                      {product.product_uom_qty} x <PriceText price={product.price_unit} />
+                    </div>
+                    <div className="my-order__item-price">
+                      {t('myOrders:tax')}: <PriceText price={product.price_tax} />
+                    </div>
+                    <div className="my-order__item-price">
+                      {t('myOrders:sub_total')}: <PriceText price={product.price_total} />
+                    </div>
+                  </div>
+                </div>
+              ))}
+              <div className="my-order__total-price">
+                {t('myOrders:total')}
+                {'  '} <PriceText price={getOrderDetailData?.getOrderDetail?.amount_total} />
+              </div>
+            </div>
           </Grid>
         </Grid>
       </ProfileLayout>

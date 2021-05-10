@@ -67,7 +67,7 @@ function MyPromoCodes() {
   return (
     <MainLayout>
       <Head>
-        <title>Medofa</title>
+        <title>Medofa - {t('myPromoCodes:my_promo_codes')}</title>
       </Head>
 
       <ProfileLayout title={t('myPromoCodes:my_promo_codes')}>

@@ -50,7 +50,7 @@ function LoyaltyPoints() {
   return (
     <MainLayout>
       <Head>
-        <title>Medofa</title>
+        <title>Medofa - {t('title')}</title>
       </Head>
       <ProfileLayout title={t('title')}>
         <div className="row">

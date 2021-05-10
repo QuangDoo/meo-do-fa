@@ -10,6 +10,12 @@ import PriceText from 'src/components/Form/PriceText';
 import Loading from 'src/components/Layout/Loading';
 import { useCart } from 'src/contexts/Cart';
 import { useToken } from 'src/contexts/Token';
+import {
+  GET_CART_BY_PRODUCT,
+  GetCartByProductData,
+  getCartByproductVars
+} from 'src/graphql/cart/getCartByProduct';
+import { GET_WEBSITE_CONFIG, GetWebsiteConfigData } from 'src/graphql/configs/getWebsiteConfig';
 // import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 // import { CREATE_COUNSEL } from 'src/graphql/order/order.mutation';
 import {
@@ -26,12 +32,22 @@ function QuickOrderPage() {
   const token = useToken();
 
   const router = useRouter();
+  const { data: configData } = useQuery<GetWebsiteConfigData, undefined>(GET_WEBSITE_CONFIG);
+  const MIN_PRICE = +configData?.getWebsiteConfig.find((config) => config.key === 'MIN_PRICE')
+    .value;
+
+  const FREE_SHIP = +configData?.getWebsiteConfig.find((config) => config.key === 'FREESHIP_PRICE')
+    .value;
 
   const [searchTerm, setSearchTerm] = useState('');
 
   const { data: cart } = useCart();
 
   const { t } = useTranslation(['cart', 'common', 'quickOrder']);
+
+  useEffect(() => {
+    router.query.page = '1';
+  }, [searchTerm]);
 
   const page = +router.query.page || 1;
 
@@ -47,11 +63,15 @@ function QuickOrderPage() {
     }
   });
 
+  const total = cart?.totalNetPrice - cart?.totalShippingFee;
+
+  const checkoutDisabled = total < MIN_PRICE;
+
+  const enableShippingFee = total > MIN_PRICE && total < FREE_SHIP;
   const totalPagination = quickOrderData?.getProductByConditions?.total;
   const handleSearchQuickOrder = (e) => {
     setSearchTerm(e.target.value);
   };
-
   return (
     <div className="container py-5 quickOrder">
       <div className="cart">
@@ -62,23 +82,26 @@ function QuickOrderPage() {
         </div>
         <div className="row">
           <div className="col-12 col-md-9 col-lg-9">
-            <div className="product-search elevated cart__items mb-3">
-              <input
-                type="text"
-                placeholder={t(`quickOrder:search_quick_order`)}
-                value={searchTerm}
-                onChange={handleSearchQuickOrder}
-              />
-              <button>
-                <i className="fa fa-search"></i>
-              </button>
-            </div>
+            {token && (
+              <div className="product-search elevated cart__items mb-3">
+                <input
+                  type="text"
+                  placeholder={t(`quickOrder:search_quick_order`)}
+                  value={searchTerm}
+                  onChange={handleSearchQuickOrder}
+                />
+                <button>
+                  <i className="fa fa-search"></i>
+                </button>
+              </div>
+            )}
+
             <div className="elevated cart__items mb-3">
               {getQuickOrderLoading ? (
                 <div className="w-100 text-center">
                   <Loading />
                 </div>
-              ) : (
+              ) : quickOrderData?.getProductByConditions?.Products?.length > 0 ? (
                 quickOrderData?.getProductByConditions?.Products?.map((item, index) => (
                   <QuickOrderItem
                     key={index}
@@ -93,6 +116,10 @@ function QuickOrderPage() {
                     discount_percentage={item.discount_percentage}
                   />
                 ))
+              ) : (
+                <>
+                  {t(`quickOrder:no_item_search`)} &#34;{searchTerm}&#34;
+                </>
               )}
             </div>
           </div>
@@ -116,21 +143,32 @@ function QuickOrderPage() {
                         <div>{t('cart:total')}</div>
                       </div>
                       <div className="cart__total">
-                        <PriceText price={cart?.totalNetPrice} />
+                        <PriceText price={total} />
                       </div>
                     </div>
                   </div>
-                  {cart?.totalNetPrice > 0 && (
-                    <div className="col-12">
-                      <div className="cart__info-item">
-                        <Link href="/cart">
-                          <a className="btn btn-secondary btn-block text-small">
-                            {t('quickOrder:view_cart')}
-                          </a>
-                        </Link>
+                  <div
+                    hidden={!enableShippingFee}
+                    className="col-12 p-3 text-center cart__info-total">
+                    {t('cart:shipping_fee') + ': '}
+                    <PriceText price={cart?.totalShippingFee} />
+                  </div>
+
+                  <div className="col-12 text-center">
+                    <div className="cart__info-item ">
+                      <Link href="/cart">
+                        <button
+                          disabled={checkoutDisabled}
+                          className="btn btn-secondary btn-block text-small">
+                          {t('quickOrder:view_cart')}
+                        </button>
+                      </Link>
+                      <div hidden={!checkoutDisabled} className="text-center mt-1">
+                        {t('cart:minimum_price') + ' '}
+                        <PriceText price={MIN_PRICE} />
                       </div>
                     </div>
-                  )}
+                  </div>
                 </div>
               </div>
             )}
