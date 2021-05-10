@@ -36,6 +36,7 @@
     "react-image-magnifiers": "^1.4.0",
     "react-number-format": "^4.4.1",
     "react-scroll": "^1.8.1",
+    "react-share": "^4.4.0",
     "react-slick": "^0.27.13",
     "react-toastify": "^6.1.0",
     "slick-carousel": "^1.8.1",

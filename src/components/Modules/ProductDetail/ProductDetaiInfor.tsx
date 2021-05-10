@@ -1,8 +1,10 @@
 import { useQuery } from '@apollo/client';
 import { useTranslation } from 'i18n';
+import getConfig from 'next/config';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
+import { FacebookIcon, FacebookShareButton, TwitterIcon, TwitterShareButton } from 'react-share';
 import { toast } from 'react-toastify';
 import PriceText from 'src/components/Form/PriceText';
 import QuantityInput from 'src/components/Form/QuantityInput';
@@ -277,6 +279,21 @@ const ProductDetailInfor = (props: ProductDetails) => {
             </div>
           </React.Fragment>
         )}
+
+        <FacebookShareButton url={`https://medofa.com/products/${props.slug}`}>
+          <FacebookIcon size="2.5rem" />
+        </FacebookShareButton>
+
+        <TwitterShareButton url={`https://medofa.com/products/${props.slug}`}>
+          <TwitterIcon size="2.5rem" className="ml-2" />
+        </TwitterShareButton>
+        <div
+          className="zalo-share-button"
+          data-href="<?php the_permalink(); ?>"
+          data-oaid="3853758560685742933"
+          data-layout="1"
+          data-color="blue"
+          data-customize={false}></div>
       </div>
     </div>
   );

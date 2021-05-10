@@ -56,6 +56,7 @@ class MyDocument extends Document {
           <style type="text/css">{globalStyles}</style>
 
           <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js"></script>
+
           <script
             dangerouslySetInnerHTML={{
               __html: `
@@ -151,6 +152,7 @@ class MyDocument extends Document {
               `
             }}
           />
+          <script src="https://sp.zalo.me/plugins/sdk.js"></script>
         </body>
       </Html>
     );
