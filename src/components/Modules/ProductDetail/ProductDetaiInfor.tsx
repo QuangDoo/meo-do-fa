@@ -209,17 +209,6 @@ const ProductDetailInfor = (props: ProductDetails) => {
           </div>
         )}
 
-        {props?.manufacturer?.id !== null && (
-          <div className="mt-3">
-            <div className="product__info-label">{t('productDetail:manufacturer')}</div>
-            <div className="text-capitalize">
-              <Link href={`/manufacturers/${props.manufacturer?.id}`}>
-                <a>{props.manufacturer?.name}</a>
-              </Link>
-            </div>
-          </div>
-        )}
-
         {categories.length > 0 && (
           <div className="mt-3">
             <div className="product__info-label">{t('productDetail:category')}</div>
@@ -234,6 +223,24 @@ const ProductDetailInfor = (props: ProductDetails) => {
                 {index < arr.length - 1 && '; '}
               </>
             ))}
+          </div>
+        )}
+
+        {props?.manufacturer?.id !== null && (
+          <div className="mt-3">
+            <div className="product__info-label">{t('productDetail:manufacturer')}</div>
+            <div className="text-capitalize">
+              <Link href={`/manufacturers/${props.manufacturer?.id}`}>
+                <a>{props.manufacturer?.name}</a>
+              </Link>
+            </div>
+          </div>
+        )}
+
+        {props?.default_vendor !== null && (
+          <div className="mt-3">
+            <div className="product__info-label">{t('productDetail:manufacturer')}</div>
+            <div className="text-capitalize">{props.default_vendor}</div>
           </div>
         )}
 
