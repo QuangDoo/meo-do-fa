@@ -1,4 +1,4 @@
-import { ApolloQueryResult, QueryLazyOptions, useLazyQuery } from '@apollo/client';
+import { ApolloError, ApolloQueryResult, QueryLazyOptions } from '@apollo/client';
 import { useTranslation } from 'i18n';
 import cookies from 'js-cookie';
 import { useRouter } from 'next/router';
@@ -6,10 +6,10 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { ADD_TO_CART, AddToCartData, AddToCartVars } from 'src/graphql/cart/addToCart';
 import { DELETE_CART, DeleteCartData, DeleteCartVars } from 'src/graphql/cart/deleteCart.mutation';
+import { DELETE_CARTS, DeleteCartsData, DeleteCartsVars } from 'src/graphql/cart/deleteCarts';
 import { GET_CART, GetCartData } from 'src/graphql/cart/getCart';
-import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
+import { useLazyQueryAuth, useMutationAuth } from 'src/hooks/useApolloHookAuth';
 
-import { useCheckboxCarts } from './CheckboxCarts';
 import { useUser } from './User';
 
 type Props = {
@@ -24,6 +24,11 @@ type ContextValue = {
   addToCart: (variables: AddToCartVars) => void;
   buyNow: ContextValue['addToCart'];
   deleteCart: (variables: DeleteCartVars) => void;
+  deleteCarts: (variables: DeleteCartsVars) => void;
+  checkboxCarts: string[];
+  setCheckboxCarts: React.Dispatch<React.SetStateAction<string[]>>;
+  checkCart: (id: string) => void;
+  uncheckCart: (id: string) => void;
 };
 
 const CartContext = createContext<ContextValue>(undefined);
@@ -35,43 +40,43 @@ const CartProvider = (props: Props) => {
 
   const [isFirstLoad, setIsFirstLoad] = useState(true);
 
-  const { setCheckboxCarts } = useCheckboxCarts();
-
   const router = useRouter();
 
   const { data: user } = useUser();
 
-  // Lazy query to get cart
-  const [fetch, { data, loading: gettingCart, refetch }] = useLazyQuery<GetCartData, undefined>(
-    GET_CART,
-    {
-      fetchPolicy: 'network-only',
-      onError: (error) => {
-        const errorCode = error.graphQLErrors?.[0]?.extensions?.code;
+  const [checkboxCarts, setCheckboxCarts] = useState<string[]>([]);
 
-        toast.error(t(`errors:code_${errorCode}`));
-      },
-      // Set all cart items to checked on first load
-      onCompleted: () => {
-        if (isFirstLoad) {
-          setCheckboxCarts(data?.getCart?.carts.map((cart) => cart._id));
-          setIsFirstLoad(false);
-        }
-      }
-    }
-  );
-
-  const getCart = () => {
-    fetch({
-      context: {
-        Headers: {
-          authorization: cookies.get('token') || ''
-        }
-      }
-    });
+  // Check a cart item
+  const checkCart = (id: string) => {
+    setCheckboxCarts((checkboxCarts) => [...checkboxCarts, id]);
   };
 
-  // Get cart on mount if has token in cookies
+  // Uncheck a cart item
+  const uncheckCart = (id: string) => {
+    setCheckboxCarts((checkboxCarts) => checkboxCarts.filter((cart) => cart !== id));
+  };
+
+  // Handle general error
+  const toastError = (error: ApolloError) => {
+    toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
+  };
+
+  // Lazy query to get cart
+  const [getCart, { data, loading: gettingCart, refetch }] = useLazyQueryAuth<
+    GetCartData,
+    undefined
+  >(GET_CART, {
+    fetchPolicy: 'network-only',
+    onError: toastError,
+    onCompleted: () => {
+      if (isFirstLoad) {
+        setCheckboxCarts(data?.getCart?.carts.map((cart) => cart._id));
+        setIsFirstLoad(false);
+      }
+    }
+  });
+
+  // Get cart on mount if token is in cookies
   useEffect(() => {
     const token = cookies.get('token');
 
@@ -80,56 +85,41 @@ const CartProvider = (props: Props) => {
     getCart();
   }, []);
 
-  // Mutation to add product to cart
+  // Mutation to add a product to cart
   const [addToCartMutation, { loading: addingToCart }] = useMutationAuth<
     AddToCartData,
     AddToCartVars
-  >(ADD_TO_CART, {
-    onError: (err) => {
-      const errorCode = err.graphQLErrors?.[0]?.extensions?.code;
+  >(ADD_TO_CART);
 
-      // Refetch cart, then toast error
-      refetch().then(() => {
-        switch (errorCode) {
-          case 121: {
-            toast.error(
-              t('errors:code_121', {
-                name: err.graphQLErrors[0].message.replace(
-                  'Sales price changed. Please remove product on cart. Product: ',
-                  ''
-                )
-              })
-            );
-            break;
-          }
-          case 140: {
-            toast.error(t('errors:' + user.waiting ? 'code_140_waiting' : 'code_140'));
-            break;
-          }
-          default: {
-            toast.error(t(`errors:code_${errorCode}`));
-          }
+  // Handle add to cart special errors
+  const handleAddToCartError = (error: ApolloError) => {
+    const errorCode = error.graphQLErrors?.[0]?.extensions?.code;
+
+    refetch().then(() => {
+      switch (errorCode) {
+        case 121: {
+          toast.error(
+            t('errors:code_121', {
+              name: error.graphQLErrors[0].message.replace(
+                'Sales price changed. Please remove product on cart. Product: ',
+                ''
+              )
+            })
+          );
+          break;
         }
-      });
-    }
-  });
+        case 140: {
+          toast.error(t('errors:code_140' + user.waiting ? '_waiting' : ''));
+          break;
+        }
+        default: {
+          toast.error(t(`errors:code_${errorCode}`));
+        }
+      }
+    });
+  };
 
-  // Mutation to delete cart item
-  const [deleteCartMutation, { loading: deletingCart }] = useMutationAuth<
-    DeleteCartData,
-    DeleteCartVars
-  >(DELETE_CART, {
-    onCompleted: () => {
-      refetch().then(() => {
-        toast.success(t(`success:delete_cart`));
-      });
-    },
-    onError: (err) => {
-      toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
-    }
-  });
-
-  // Add product to cart
+  // Add a product to cart
   const addToCart = (variables: AddToCartVars) => {
     addToCartMutation({ variables })
       .then(refetch)
@@ -139,10 +129,11 @@ const CartProvider = (props: Props) => {
           data.data.getCart.carts.find((product) => product.productId === variables.productId)._id
         ]);
         toast.success(t(`success:update_cart`));
-      });
+      })
+      .catch(handleAddToCartError);
   };
 
-  // Buy product now
+  // Buy a product now
   const buyNow: typeof addToCart = (variables: AddToCartVars) => {
     addToCartMutation({ variables })
       .then(refetch)
@@ -152,10 +143,17 @@ const CartProvider = (props: Props) => {
         ]);
         toast.success(t(`success:update_cart`));
         router.push('/cart');
-      });
+      })
+      .catch(handleAddToCartError);
   };
 
-  // Delete cart item
+  // Mutation to delete a cart item
+  const [deleteCartMutation, { loading: deletingCart }] = useMutationAuth<
+    DeleteCartData,
+    DeleteCartVars
+  >(DELETE_CART);
+
+  // Delete a cart item
   const deleteCart = (variables: DeleteCartVars) => {
     deleteCartMutation({ variables })
       .then(refetch)
@@ -163,19 +161,43 @@ const CartProvider = (props: Props) => {
         setCheckboxCarts((checkboxCarts) =>
           checkboxCarts.filter((checkbox) => checkbox !== variables._id)
         );
-      });
+        toast.success(t(`success:delete_cart`));
+      })
+      .catch(toastError);
+  };
+
+  // Mutation to delete many cart items
+  const [deleteCartsMutation, { loading: deletingCarts }] = useMutationAuth<
+    DeleteCartsData,
+    DeleteCartsVars
+  >(DELETE_CARTS);
+
+  // Delete many cart items
+  const deleteCarts = (variables: DeleteCartsVars) => {
+    deleteCartsMutation({ variables })
+      .then(refetch)
+      .then(() => {
+        toast.success(t(`cart:delete_checked_success`));
+        setCheckboxCarts([]);
+      })
+      .catch(toastError);
   };
 
   return (
     <CartContext.Provider
       value={{
         data: data?.getCart,
-        loading: gettingCart || addingToCart || deletingCart,
+        loading: gettingCart || addingToCart || deletingCart || deletingCarts,
         refetch,
         getCart,
         addToCart,
         buyNow,
-        deleteCart
+        deleteCart,
+        checkboxCarts,
+        setCheckboxCarts,
+        deleteCarts,
+        checkCart,
+        uncheckCart
       }}>
       {props.children}
     </CartContext.Provider>

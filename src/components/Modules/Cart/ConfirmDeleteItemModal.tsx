@@ -2,7 +2,6 @@ import React from 'react';
 import PriceText from 'src/components/Form/PriceText';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { useCart } from 'src/contexts/Cart';
-import { useCheckboxCarts } from 'src/contexts/CheckboxCarts';
 
 import ConfirmModal, { ConfirmModalProps } from './ConfirmModal';
 
@@ -18,16 +17,12 @@ export default function ConfirmDeleteItemModal(props: Props) {
 
   const { deleteCart, loading } = useCart();
 
-  const { checkboxCarts, setCheckboxCarts } = useCheckboxCarts();
-
   const handleConfirmDelete = () => {
     props.onClose();
 
     deleteCart({
       _id: cartId
     });
-
-    setCheckboxCarts(checkboxCarts.filter((checkbox) => checkbox !== cartId));
   };
 
   return (

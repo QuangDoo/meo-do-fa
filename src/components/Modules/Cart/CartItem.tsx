@@ -4,19 +4,18 @@ import Link from 'next/link';
 import React, { useState } from 'react';
 import PriceText from 'src/components/Form/PriceText';
 import ProductCardQuantityInput from 'src/components/Modules/ProductCard/ProductCardQuantityInput';
+import { useCart } from 'src/contexts/Cart';
 import { CartItem as CartItemProps } from 'src/graphql/cart/getCart';
 
 import ProductBadge from '../ProductCard/ProductBadge';
 import ConfirmDeleteItemModal from './ConfirmDeleteItemModal';
 
-type Props = CartItemProps & {
-  addToCheckCart?: () => void;
-  deleteToCheckCart?: () => void;
-  checked?: boolean;
-};
+type Props = CartItemProps;
 
 function CartItem(props: Props) {
   const { t } = useTranslation(['cart', 'errors']);
+
+  const { checkCart, uncheckCart, checkboxCarts } = useCart();
 
   const totalDiscountAmount = props.promotions
     .filter((promo) => promo.reward_type === 'discount')
@@ -36,9 +35,9 @@ function CartItem(props: Props) {
 
   const handleChange = (e) => {
     if (e.target.checked) {
-      props.addToCheckCart();
+      checkCart(props._id);
     } else {
-      props.deleteToCheckCart();
+      uncheckCart(props._id);
     }
   };
 
@@ -46,7 +45,11 @@ function CartItem(props: Props) {
     <div className={clsx(!props.is_available && 'cart-product-available', 'd-flex p-3')}>
       {/* <Checkbox/> */}
       <div className="mr-3">
-        <input type="checkbox" onChange={handleChange} checked={props.checked} />
+        <input
+          type="checkbox"
+          onChange={handleChange}
+          checked={checkboxCarts.includes(props._id)}
+        />
       </div>
       <Link href={productLink}>
         <a>

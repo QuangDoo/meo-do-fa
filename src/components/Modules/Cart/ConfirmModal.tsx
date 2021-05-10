@@ -2,7 +2,7 @@ import { useTranslation } from 'i18n';
 import React from 'react';
 import ModalBase, { ModalBaseProps } from 'src/components/Layout/Modal/ModalBase';
 
-export type ConfirmModalProps = ModalBaseProps & {
+export type ConfirmModalProps = Omit<ModalBaseProps, 'children'> & {
   onConfirm: () => void;
   title: string;
   question?: string;
