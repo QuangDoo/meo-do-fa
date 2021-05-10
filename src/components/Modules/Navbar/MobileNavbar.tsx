@@ -233,8 +233,12 @@ function MobileNavbar() {
               <>
                 <hr className="hr my-3" />
                 <button type="button" className="mobile-menu-list-item pb-3" onClick={logOut}>
-                  <i className="fas fa-sign-out-alt dropdown__item-icon logout__mobile" />
-                  {t('navbar:logout')}
+                  <img
+                    className="nav__icon"
+                    src="/assets/images/dangxuat.png"
+                    alt="icon_dangxuat"
+                  />
+                  <span>{t('navbar:logout')}</span>
                 </button>
               </>
             )}
