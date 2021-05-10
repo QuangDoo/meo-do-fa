@@ -109,7 +109,7 @@ const CategoryMenu = () => {
               <li className="menu-item">
                 <div className="item-title">
                   <img
-                    src={`/assets/images/category_${priority}.svg`}
+                    src={`/assets/images/cate_${priority}.png`}
                     className="menu-icon"
                     alt={`category-item-${priority}`}
                     width="60"

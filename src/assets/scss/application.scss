@@ -9737,10 +9737,33 @@ abbr[title] {
   margin-right: 0.5em;
   cursor: pointer;
 }
+.nav__icon{
+  height: 24px;
+  width: auto;
+  margin-right: 0.5em;
+  cursor: pointer;
+}
+.nav__icon_nav{
+  height: 24px;
+  width: 24px;
+  margin-right: 0.5em;
+  cursor: pointer;
+}
 .rockland-nav__tag {
   position: absolute;
   right: -1.25em;
   top: -0.25em;
+}
+.logout__mobile{
+  color: #2f3b97;
+}
+@media (max-width: 575px) {
+  .nav__icon{
+    height: 24px;
+    width: 24px;
+    margin-right: 1em;
+    cursor: pointer;
+  }
 }
 .rockland-nav .rockland-logo {
   display: none;
