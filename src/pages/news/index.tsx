@@ -1,4 +1,4 @@
-import { Button, Grid, IconButton, InputBase, Paper } from '@material-ui/core';
+import { Box, Button, Grid, IconButton, InputBase, Paper } from '@material-ui/core';
 import { Search } from '@material-ui/icons';
 import { Trans, useTranslation } from 'i18n';
 import Head from 'next/head';
@@ -77,12 +77,14 @@ function NewsPage() {
 
       <div className="container wrap-entry">
         <Grid container>
-          <Grid item sm={12}>
-            <Entry />
-            <Entry />
-            <h2>PAGINATION HERE</h2>
+          <Grid item sm={12} lg={8}>
+            <Box className="wrapper_content">
+              <Entry />
+              <Entry />
+              <h2>PAGINATION HERE</h2>
+            </Box>
           </Grid>
-          <Grid item sm={12}>
+          <Grid item sm={12} lg={4}>
             <div className="post-sidebar">
               <aside className="widget widget-search">
                 <Paper component="form" className="box-search">
