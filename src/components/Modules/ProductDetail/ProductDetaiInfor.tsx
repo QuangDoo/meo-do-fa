@@ -239,7 +239,7 @@ const ProductDetailInfor = (props: ProductDetails) => {
 
         {props?.default_vendor !== null && (
           <div className="mt-3">
-            <div className="product__info-label">{t('productDetail:manufacturer')}</div>
+            <div className="product__info-label">{t('productDetail:supplier')}</div>
             <div className="text-capitalize">{props.default_vendor}</div>
           </div>
         )}
