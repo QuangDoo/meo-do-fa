@@ -78,6 +78,13 @@ class MyDocument extends Document {
         <body>
           <Main />
           <NextScript />
+          <div
+            className="zalo-chat-widget"
+            data-oaid="3215746340374733717"
+            data-welcome-message="Rất vui khi được hỗ trợ bạn!"
+            data-autopopup="5"
+            data-width="300"
+            data-height="300"></div>
 
           <script
             dangerouslySetInnerHTML={{
@@ -151,6 +158,7 @@ class MyDocument extends Document {
               `
             }}
           />
+          <script src="https://sp.zalo.me/plugins/sdk.js"></script>
         </body>
       </Html>
     );
