@@ -117,7 +117,7 @@ function ProductDetail() {
           name="viewport"
           content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"
         />
-        <meta property="og:image" content="{product?.image_128}" />
+        <meta property="og:image" content={product?.image_128} />
       </Head>
 
       {/* <div className="product container py-2">
