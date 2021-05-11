@@ -13,12 +13,12 @@ export type SaveMailSubscriber = {
 };
 
 export type ResetPasswordVars = {
-  inputs: { email: string };
+  inputs: { username: string };
 };
 
 export const RESET_PASSWORD = gql`
-  mutation resetPassword($email: String!) {
-    resetPassword(inputs: { email: $email }) {
+  mutation resetPassword($username: String!) {
+    resetPassword(inputs: { username: $username }) {
       code
       status
       message

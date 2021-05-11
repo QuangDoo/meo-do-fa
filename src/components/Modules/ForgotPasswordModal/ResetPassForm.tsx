@@ -4,6 +4,7 @@ import React from 'react';
 import { DeepMap, FieldError, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { emailRegex } from 'src/assets/regex/email';
+import { usernameRegex } from 'src/assets/regex/username';
 import Button from 'src/components/Form/Button';
 import Input from 'src/components/Form/Input';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
@@ -11,7 +12,7 @@ import { useModalControlDispatch } from 'src/contexts/ModalControl';
 import { RESET_PASSWORD } from 'src/graphql/user/forgotPassword';
 
 type Inputs = {
-  email: string;
+  username: string;
 };
 
 const ResetPassForm = () => {
@@ -28,10 +29,10 @@ const ResetPassForm = () => {
   const [resetPassword, { loading: loadingResetPassword }] = useMutation(RESET_PASSWORD);
 
   const onSubmit = (data: Inputs) => {
-    const { email } = data;
+    const { username } = data;
     resetPassword({
       variables: {
-        email: email
+        username: username
       }
     })
       .then(() => {
@@ -47,10 +48,10 @@ const ResetPassForm = () => {
     <div>
       <form className="reset_pass" onSubmit={handleSubmit(onSubmit, onFormError)}>
         <Input
-          name="email"
+          name="username"
           ref={register({
             pattern: {
-              value: emailRegex,
+              value: usernameRegex || emailRegex,
               message: `${t('register:input_email_error_invalid')}`
             }
           })}
