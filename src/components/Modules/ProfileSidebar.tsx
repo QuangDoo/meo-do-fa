@@ -7,12 +7,12 @@ import { useUser } from 'src/contexts/User';
 
 type SidebarLinkProps = {
   href: string;
-  iconClass: string;
+  icon: string;
   text: string;
 };
 
 const SidebarLink = (props: SidebarLinkProps) => {
-  const { href, iconClass, text } = props;
+  const { href, icon, text } = props;
 
   const router = useRouter();
 
@@ -23,7 +23,8 @@ const SidebarLink = (props: SidebarLinkProps) => {
           'my-account__sidebar-item my-account__sidebar-link',
           router.pathname === href && 'active'
         )}>
-        <i className={clsx('my-account__sidebar-icon', iconClass)} />
+        {/* <i className={clsx('my-account__sidebar-icon', iconClass)} /> */}
+        <img className="nav__icon_nav" src={icon} alt="icon_acc_info" />
         {text}
       </a>
     </Link>
@@ -45,19 +46,19 @@ const ProfileSidebar = () => {
       <SidebarLink
         text={t('navbar:account_info')}
         href="/my-account"
-        iconClass="fas fa-user-circle"
+        icon="/assets/images/thongtintaikhoan.png"
       />
 
       <SidebarLink
         text={t('navbar:my_order')}
         href="/my-orders"
-        iconClass="icomoon icon-assignment"
+        icon="/assets/images/donhangcuatoi.png"
       />
 
       <SidebarLink
         text={t('navbar:address_book')}
         href="/my-address-book"
-        iconClass="fas fa-map-marker-alt"
+        icon="/assets/images/sodiachi.png"
       />
 
       {/* <SidebarLink
@@ -69,18 +70,18 @@ const ProfileSidebar = () => {
       <SidebarLink
         text={t('navbar:my_promo_code')}
         href="/my-promo-codes"
-        iconClass="fas fa-tags"
+        icon="/assets/images/magiamgia.png"
       />
       <SidebarLink
         text={t('navbar:loyalty_points')}
         href="/loyalty-points"
-        iconClass="fas fa-hand-holding-usd"
+        icon="/assets/images/diemtichluy.png"
       />
 
       <SidebarLink
         text={t('navbar:change_password')}
         href="/change-password"
-        iconClass="fa fa-key"
+        icon="/assets/images/doimatkhau.png"
       />
 
       {/* <div className="my-account__sidebar-item">

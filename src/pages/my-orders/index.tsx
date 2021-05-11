@@ -84,7 +84,17 @@ function MyOrders(): JSX.Element {
   return (
     <MainLayout>
       <Head>
-        <title>Medofa</title>
+        <title>Medofa - {t('myOrders:my_orders')}</title>
+        <meta property="og:title" content="My orders" />
+        <meta
+          property="og:description"
+          content="Medofa là giải pháp công nghệ ngành dược kết nối nhà máy, nhà phân phối, nhà thuốc, dược sĩ nhằm hợp tác tạo mối liên kết trực tiếp và gia tăng doanh thu."
+        />
+        <meta property="og:url" content="https://medofa.com/" />
+        <meta
+          property="og:image"
+          content="https://medofa.com/icons/favicon-32x32-medofa-manifest-20129.png"
+        />
       </Head>
 
       <ProfileLayout title={t('myOrders:my_orders')}>

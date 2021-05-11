@@ -9737,10 +9737,33 @@ abbr[title] {
   margin-right: 0.5em;
   cursor: pointer;
 }
+.nav__icon{
+  height: 24px;
+  width: auto;
+  margin-right: 0.5em;
+  cursor: pointer;
+}
+.nav__icon_nav{
+  height: 24px;
+  width: 24px;
+  margin-right: 0.5em;
+  cursor: pointer;
+}
 .rockland-nav__tag {
   position: absolute;
   right: -1.25em;
   top: -0.25em;
+}
+.logout__mobile{
+  color: #2f3b97;
+}
+@media (max-width: 575px) {
+  .nav__icon{
+    height: 24px;
+    width: 24px;
+    margin-right: 1em;
+    cursor: pointer;
+  }
 }
 .rockland-nav .rockland-logo {
   display: none;
@@ -10489,7 +10512,10 @@ abbr[title] {
   --deal-bar-height: 1em;
   --deal-bar-background-color: #f6cdd1;
   --deal-bar-background-gradient: linear-gradient(to right, $secondary 0%, #f53900 70%);
-  border: 1px solid #f53900;
+  border: 2.5px solid #f53900;
+}
+.availabel-img{
+  opacity: 0.3;
 }
 .deal-card__description {
   line-height: 1rem;
@@ -12759,6 +12785,11 @@ abbr[title] {
   padding: 0.25em 0.75em;
   margin-right: 0.25em;
   white-space: normal;
+}
+.product__status .out_of_stocks{
+  color: red;
+  font-size: 1em;
+  font-weight: 600;
 }
 .product__status .only_medofa {
   color: $primary;

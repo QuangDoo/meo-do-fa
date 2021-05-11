@@ -61,6 +61,7 @@ const RegisterForm = () => {
 
   const initialAccountType = '';
   const currentAccountType = watch('account_type', initialAccountType);
+  const PrefixName = t(`register:${currentAccountType.toLowerCase()}`);
 
   const { getUser } = useUser();
   const { getCart } = useCart();
@@ -115,20 +116,25 @@ const RegisterForm = () => {
 
   // On form submit
   const onFormSubmit = (data: Inputs) => {
-    const fullName = t(`register:${currentAccountType.toLowerCase()}`) + ' ' + data.name;
-    createUser({
-      variables: {
-        inputs: {
-          account_type: data.account_type,
-          name: fullName,
-          email: data.email,
-          password: data.password,
-          phone: data.phone.toString(),
-          ref_email: data.referEmail,
-          vat: data.tax
+    const nameInput = document.querySelector('#name');
+    if (data.name != PrefixName) {
+      createUser({
+        variables: {
+          inputs: {
+            account_type: data.account_type,
+            name: data.name,
+            email: data.email,
+            password: data.password,
+            phone: data.phone.toString(),
+            ref_email: data.referEmail,
+            vat: data.tax
+          }
         }
-      }
-    });
+      });
+    } else {
+      nameInput.setAttribute('autoFocus', 'true');
+      document.querySelector('.err-text').innerHTML = `${t('register:input_name_error_required')}`;
+    }
   };
 
   // On form error
@@ -206,15 +212,18 @@ const RegisterForm = () => {
 
           <Input
             name="name"
+            id="name"
             ref={register({
               required: `${t('register:input_name_error_required')}`
             })}
-            containerClass="mb-4"
+            containerClass="mb-1"
             iconClass="icomoon icon-user"
             placeholder={t('register:input_name_placeholder')}
+            defaultValue={PrefixName}
             required
             maxLength={100}
           />
+          <p className="text-danger err-text"></p>
 
           <Input
             name="phone"

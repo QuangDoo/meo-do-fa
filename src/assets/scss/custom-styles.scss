@@ -23,6 +23,9 @@
 @import './feedback.scss';
 @import './ingredients.scss';
 @import './quickOrder.scss';
+@import './news-page.scss';
+@import './zalo.scss';
+@import './facebook.scss';
 
 
 button {
@@ -73,6 +76,7 @@ button {
   width: 130px;
   height: 130px;
   object-fit: contain;
+  pointer-events: none;
 }
 
 .cart-item__name {

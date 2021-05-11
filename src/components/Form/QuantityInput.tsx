@@ -11,6 +11,7 @@ type Props = {
   onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
   min?: number;
   max?: number;
+  available: boolean;
 };
 
 export default function QuantityInput(props: Props) {
@@ -23,7 +24,8 @@ export default function QuantityInput(props: Props) {
     onKeyDown,
     onBlur,
     onMinusClick,
-    onPlusClick
+    onPlusClick,
+    available
   } = props;
 
   useEffect(() => {
@@ -69,7 +71,7 @@ export default function QuantityInput(props: Props) {
   return (
     <div className="qty js-qty">
       <button
-        disabled={quantity <= min}
+        disabled={quantity <= min || available}
         className="btn btn-sm qty__button qty__button--minus"
         onClick={onMinusClick}>
         <i className="fas fa-minus" />
@@ -87,7 +89,7 @@ export default function QuantityInput(props: Props) {
       />
 
       <button
-        disabled={quantity >= max}
+        disabled={quantity >= max || available}
         className="btn btn-sm qty__button qty__button--plus"
         onClick={onPlusClick}>
         <i className="fas fa-plus" />

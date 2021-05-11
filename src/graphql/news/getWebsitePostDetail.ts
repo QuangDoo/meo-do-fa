@@ -6,6 +6,8 @@ export type PostDetail = {
   content: string;
   link: string;
   slug: string;
+  create_date: Date;
+  signature: string;
 };
 export type GetWebsitePostData = {
   getWebsitePostDetail: PostDetail;
@@ -23,6 +25,8 @@ export const GET_POST_DETAIL = gql`
       content
       link
       slug
+      create_date
+      signature
     }
   }
 `;

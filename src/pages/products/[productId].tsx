@@ -101,6 +101,13 @@ function ProductDetail() {
     <MainLayout>
       <Head>
         <title>Medofa - {product?.name}</title>
+        <meta property="og:title" content={product?.name} />
+        <meta
+          property="og:description"
+          content="Medofa là giải pháp công nghệ ngành dược kết nối nhà máy, nhà phân phối, nhà thuốc, dược sĩ nhằm hợp tác tạo mối liên kết trực tiếp và gia tăng doanh thu."
+        />
+        <meta property="og:url" content="https://medofa.com/" />
+        <meta property="og:image" content={product?.image_128} />
       </Head>
 
       {/* <div className="product container py-2">

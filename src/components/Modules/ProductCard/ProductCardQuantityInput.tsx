@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { useCart } from 'src/contexts/Cart';
 import { useCheckboxCarts } from 'src/contexts/CheckboxCarts';
+import { useUser } from 'src/contexts/User';
 import { ADD_TO_CART, AddToCartData, AddToCartVars } from 'src/graphql/cart/addToCart';
 import { GET_WEBSITE_CONFIG, GetWebsiteConfigData } from 'src/graphql/configs/getWebsiteConfig';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
@@ -17,17 +18,20 @@ type Props = {
   productPrice: number;
   productName: string;
   productImg: string;
+  available: boolean;
 };
 
 // const MIN_QUANTITY = configs.MIN_QUANTITY;
 // const MAX_QUANTITY = configs.MAX_QUANTITY;
 
 function ProductCardQuantityInput(props: Props) {
-  const { productId, productPrice, productName, productImg } = props;
+  const { productId, productPrice, productName, productImg, available } = props;
 
   const { t } = useTranslation(['errors', 'success', 'cart']);
 
   const { data: cart, refetch: refetchCart } = useCart();
+
+  const { data: user } = useUser();
 
   const thisProductInCart = cart?.carts.find((product) => product.productId === productId);
 
@@ -70,17 +74,25 @@ function ProductCardQuantityInput(props: Props) {
 
         setQuantity(quantityInCart);
 
-        if (errorCode === 121) {
-          toast.error(
-            t(`errors:code_${errorCode}`, {
-              name: err.graphQLErrors[0].message.replace(
-                'Sales price changed. Please remove product on cart. Product: ',
-                ''
-              )
-            })
-          );
-        } else {
-          toast.error(t(`errors:code_${errorCode}`));
+        switch (errorCode) {
+          case 121: {
+            toast.error(
+              t('errors:code_121', {
+                name: err.graphQLErrors[0].message.replace(
+                  'Sales price changed. Please remove product on cart. Product: ',
+                  ''
+                )
+              })
+            );
+            break;
+          }
+          case 140: {
+            toast.error(t('errors:code_141' + user.waiting ? '_waiting' : ''));
+            break;
+          }
+          default: {
+            toast.error(t(`errors:code_${errorCode}`));
+          }
         }
       }
     }
@@ -146,6 +158,7 @@ function ProductCardQuantityInput(props: Props) {
         onBlur={handleBlur}
         min={MIN_QUANTITY}
         max={MAX_QUANTITY}
+        available={available}
       />
 
       <ConfirmDeleteItemModal

@@ -205,6 +205,10 @@
   text-align: center;
   margin-bottom: 0.5rem;
 }
+.news-span__category{
+  display: inline;
+  padding: 0rem 1rem;
+}
 .news-header__link{
   line-height: 1.05;
   letter-spacing: 0.05em;
@@ -321,7 +325,7 @@
   flex-wrap: wrap;
 }
 .text-small {
-  font-size: 0.8rem;
+  font-size: 0.9rem;
 }
 .job-detail-form{
   border: 1px solid $gray-300;
