@@ -1,9 +1,17 @@
 'use strict';
+
 import { ServerStyleSheets as MaterialUiServerStyleSheets } from '@material-ui/core/styles';
 import Document, { Head, Html, Main, NextScript } from 'next/document';
 import React from 'react';
+import { AriaAttributes, DOMAttributes } from 'react';
 import { ServerStyleSheet } from 'styled-components';
 
+declare module 'react' {
+  interface HTMLAttributes<T> extends AriaAttributes, DOMAttributes<T> {
+    attribution?: string;
+    page_id?: string;
+  }
+}
 const globalStyles = `
 * {
   box-sizing: border-box;
@@ -15,7 +23,9 @@ const globalStyles = `
   outline: 0 !important;
 }
 `;
-
+const fbInit = () => (
+  <div className="fb-customerchat" attribution="page_inbox" page_id="105284771164047"></div>
+);
 class MyDocument extends Document {
   static async getInitialProps(ctx) {
     const sheet = new ServerStyleSheet();
@@ -119,7 +129,8 @@ class MyDocument extends Document {
           />
 
           <div id="fb-root"></div>
-          <div className="fb-customerchat" attribution="page_inbox" page_id="105284771164047"></div>
+          {fbInit()}
+          {/* <div className="fb-customerchat" attribution="page_inbox" page_id="105284771164047"></div> */}
           <script
             dangerouslySetInnerHTML={{
               __html: `
