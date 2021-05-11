@@ -7,11 +7,11 @@ export type ResetPasswordData = {
 };
 
 export type ResetPasswordVars = {
-  email: string;
+  username: string;
 };
 
 export const RESET_PASSWORD = gql`
-  mutation($email: String!) {
-    resetPassword(inputs: { email: $email })
+  mutation($username: String!) {
+    resetPassword(inputs: { username: $username })
   }
 `;
