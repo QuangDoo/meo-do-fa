@@ -50,6 +50,7 @@ export type ProductDetails = {
   ingredients: Ingredient[];
   manufacturer: Manufacturer;
   badges: string[];
+  slug: string;
   default_vendor: string;
 };
 
@@ -108,7 +109,7 @@ export const GET_PRODUCT = gql`
         slug
       }
       badges
-      default_vendor
+      slug
     }
   }
 `;

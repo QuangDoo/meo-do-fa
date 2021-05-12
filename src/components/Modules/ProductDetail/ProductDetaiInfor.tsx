@@ -3,6 +3,7 @@ import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
+import { FacebookIcon, FacebookShareButton, TwitterIcon, TwitterShareButton } from 'react-share';
 import { toast } from 'react-toastify';
 import PriceText from 'src/components/Form/PriceText';
 import QuantityInput from 'src/components/Form/QuantityInput';
@@ -181,6 +182,15 @@ const ProductDetailInfor = (props: ProductDetails) => {
 
   const hasBadge =
     props?.is_quick_invoice || props?.is_exclusive || props?.is_vn || !props?.is_available;
+
+  useEffect(() => {
+    const script = document.createElement('script');
+
+    script.src = 'https://sp.zalo.me/plugins/sdk.js';
+    script.async = true;
+
+    document.body.appendChild(script);
+  }, []);
 
   return (
     <div className="row">
