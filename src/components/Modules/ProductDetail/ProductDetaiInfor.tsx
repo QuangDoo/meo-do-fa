@@ -209,34 +209,6 @@ const ProductDetailInfor = (props: ProductDetails) => {
           </div>
         )}
 
-        {props?.manufacturer?.id !== null && (
-          <div className="mt-3">
-            <div className="product__info-label">{t('productDetail:manufacturer')}</div>
-            <div className="text-capitalize">
-              <Link href={`/manufacturers/${props.manufacturer?.id}`}>
-                <a>{props.manufacturer?.name}</a>
-              </Link>
-            </div>
-          </div>
-        )}
-
-        {categories.length > 0 && (
-          <div className="mt-3">
-            <div className="product__info-label">{t('productDetail:category')}</div>
-
-            {categories.map((item, index, arr) => (
-              <>
-                <Link href={`/products?category=${item.id}`}>
-                  <a className="text-capitalize" key={index}>
-                    {item.name}
-                  </a>
-                </Link>
-                {index < arr.length - 1 && '; '}
-              </>
-            ))}
-          </div>
-        )}
-
         {!!token && (
           <React.Fragment>
             <div className="col-6 px-0 mt-3">
@@ -277,6 +249,34 @@ const ProductDetailInfor = (props: ProductDetails) => {
             </div>
           </React.Fragment>
         )}
+
+        {/* {props?.manufacturer?.id !== null && (
+          <div className="mt-3">
+            <div className="product__info-label">{t('productDetail:manufacturer')}</div>
+            <div className="text-capitalize">
+              <Link href={`/manufacturers/${props.manufacturer?.id}`}>
+                <a>{props.manufacturer?.name}</a>
+              </Link>
+            </div>
+          </div>
+        )}
+
+        {categories.length > 0 && (
+          <div className="mt-3">
+            <div className="product__info-label">{t('productDetail:category')}</div>
+
+            {categories.map((item, index, arr) => (
+              <>
+                <Link href={`/products?category=${item.id}`}>
+                  <a className="text-capitalize" key={index}>
+                    {item.name}
+                  </a>
+                </Link>
+                {index < arr.length - 1 && '; '}
+              </>
+            ))}
+          </div>
+        )} */}
       </div>
     </div>
   );
