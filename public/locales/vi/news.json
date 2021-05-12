@@ -1,3 +1,4 @@
 {
+    "title": "Tin tức",
     "post_on": "Được đăng vào <b>{{create_date}}</b> bởi <b>{{signature}}<b>"
 }
