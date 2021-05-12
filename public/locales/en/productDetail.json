@@ -12,5 +12,6 @@
   "manufacturer": "Manufacturer",
   "supplier": "Supplier",
   "related_product": "Similar products",
-  "vat_included": "VAT included"
+  "vat_included": "VAT included",
+  "share": "Share"
 }
