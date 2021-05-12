@@ -65,6 +65,7 @@ class MyDocument extends Document {
           <style type="text/css">{globalStyles}</style>
 
           <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js"></script>
+
           <script
             dangerouslySetInnerHTML={{
               __html: `
