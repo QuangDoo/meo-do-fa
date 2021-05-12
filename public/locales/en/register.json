@@ -13,7 +13,7 @@
   "input_phone_error_required": "Please provide a phone number.",
   "input_phone_error_invalid": "Please provide a valid phone number.",
   "input_address_placeholder": "Address",
-  "input_email_placeholder": "Email",
+  "input_email_placeholder": "Email or Phone number",
   "input_email_error_invalid": "Please provide a valid email.",
   "input_email_error_noSpecialChars": "Email cannot contain special characters.",
   "input_tax_placeholder": "TAX Code",
