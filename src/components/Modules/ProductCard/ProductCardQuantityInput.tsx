@@ -1,7 +1,6 @@
 import { useQuery } from '@apollo/client';
 import { useTranslation } from 'i18n';
 import React, { useEffect, useState } from 'react';
-import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { useCart } from 'src/contexts/Cart';
 import { GET_WEBSITE_CONFIG, GetWebsiteConfigData } from 'src/graphql/configs/getWebsiteConfig';
 import useDebounce from 'src/hooks/useDebounce';
@@ -22,7 +21,7 @@ function ProductCardQuantityInput(props: Props) {
 
   const { t } = useTranslation(['errors', 'success', 'cart']);
 
-  const { data: cart, addToCart, loading } = useCart();
+  const { data: cart, addToCart } = useCart();
 
   const thisProductInCart = cart?.carts.find((product) => product.productId === productId);
 
@@ -120,8 +119,6 @@ function ProductCardQuantityInput(props: Props) {
         name={productName}
         price={productPrice}
       />
-
-      <LoadingBackdrop open={loading} />
     </>
   );
 }

@@ -1,4 +1,4 @@
-import { ApolloError, ApolloQueryResult, QueryLazyOptions, useLazyQuery } from '@apollo/client';
+import { ApolloError, ApolloQueryResult, QueryLazyOptions, useApolloClient } from '@apollo/client';
 import { useTranslation } from 'i18n';
 import cookies from 'js-cookie';
 import { useRouter } from 'next/router';
@@ -8,7 +8,12 @@ import { ADD_TO_CART, AddToCartData, AddToCartVars } from 'src/graphql/cart/addT
 import { DELETE_CART, DeleteCartData, DeleteCartVars } from 'src/graphql/cart/deleteCart.mutation';
 import { DELETE_CARTS, DeleteCartsData, DeleteCartsVars } from 'src/graphql/cart/deleteCarts';
 import { GET_CART, GetCartData } from 'src/graphql/cart/getCart';
-import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
+import {
+  GET_CART_BY_PRODUCT,
+  GetCartByProductData,
+  getCartByproductVars
+} from 'src/graphql/cart/getCartByProduct';
+import { useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
 
 import { useUser } from './User';
 
@@ -18,6 +23,7 @@ type Props = {
 
 type ContextValue = {
   data: GetCartData['getCart'];
+  checkedData: GetCartByProductData['getCartByProduct'];
   loading: boolean;
   refetch: () => Promise<ApolloQueryResult<GetCartData>>;
   getCart: (options?: QueryLazyOptions<undefined>) => void;
@@ -29,6 +35,9 @@ type ContextValue = {
   setCheckboxCarts: React.Dispatch<React.SetStateAction<string[]>>;
   checkCart: (id: string) => void;
   uncheckCart: (id: string) => void;
+  addingToCart: boolean;
+  deletingCart: boolean;
+  deletingCarts: boolean;
 };
 
 const CartContext = createContext<ContextValue>(undefined);
@@ -38,6 +47,8 @@ const useCart = () => useContext(CartContext);
 const CartProvider = (props: Props) => {
   const { t } = useTranslation(['errors']);
 
+  const client = useApolloClient();
+
   const [isFirstLoad, setIsFirstLoad] = useState(true);
 
   const router = useRouter();
@@ -45,6 +56,15 @@ const CartProvider = (props: Props) => {
   const { data: user } = useUser();
 
   const [checkboxCarts, setCheckboxCarts] = useState<string[]>([]);
+
+  // Checked cart data
+  const { data: getCartByProductData } = useQueryAuth<GetCartByProductData, getCartByproductVars>(
+    GET_CART_BY_PRODUCT,
+    {
+      variables: { ids: checkboxCarts },
+      nextFetchPolicy: 'network-only'
+    }
+  );
 
   // Check a cart item
   const checkCart = (id: string) => {
@@ -61,29 +81,41 @@ const CartProvider = (props: Props) => {
     toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
   };
 
-  // Lazy query to get cart
-  const [getCartQuery, { data, loading: gettingCart, refetch }] = useLazyQuery<
-    GetCartData,
-    undefined
-  >(GET_CART, {
-    fetchPolicy: 'network-only',
-    onError: toastError,
-    onCompleted: () => {
+  // Whole cart data
+  const [getCartData, setGetCartData] = useState<GetCartData>();
+
+  const [gettingCart, setGettingCart] = useState(false);
+
+  const getCart = async () => {
+    try {
+      setGettingCart(true);
+
+      const response = await client.query<GetCartData, undefined>({
+        query: GET_CART,
+        context: {
+          headers: {
+            authorization: cookies.get('token') || ''
+          }
+        },
+        fetchPolicy: 'no-cache'
+      });
+
+      setGetCartData(response.data);
+
+      setGettingCart(false);
+
+      // Check all cart if this is the first time loading
       if (isFirstLoad) {
-        setCheckboxCarts(data?.getCart?.carts.map((cart) => cart._id));
+        setCheckboxCarts(response.data.getCart?.carts.map((cart) => cart._id));
+
         setIsFirstLoad(false);
       }
-    }
-  });
 
-  const getCart = () => {
-    getCartQuery({
-      context: {
-        headers: {
-          authorization: cookies.get('token') || ''
-        }
-      }
-    });
+      return Promise.resolve(response);
+    } catch (error) {
+      toastError(error);
+      return Promise.reject(error);
+    }
   };
 
   // Get cart on mount if token is in cookies
@@ -105,7 +137,7 @@ const CartProvider = (props: Props) => {
   const handleAddToCartError = (error: ApolloError) => {
     const errorCode = error.graphQLErrors?.[0]?.extensions?.code;
 
-    refetch().then(() => {
+    getCart().then(() => {
       switch (errorCode) {
         case 121: {
           toast.error(
@@ -132,7 +164,7 @@ const CartProvider = (props: Props) => {
   // Add a product to cart
   const addToCart = (variables: AddToCartVars) => {
     addToCartMutation({ variables })
-      .then(refetch)
+      .then(getCart)
       .then((data) => {
         setCheckboxCarts((checkboxCarts) => [
           ...checkboxCarts,
@@ -146,7 +178,7 @@ const CartProvider = (props: Props) => {
   // Buy a product now
   const buyNow: typeof addToCart = (variables: AddToCartVars) => {
     addToCartMutation({ variables })
-      .then(refetch)
+      .then(getCart)
       .then((cartData) => {
         setCheckboxCarts([
           cartData.data.getCart.carts.find((cart) => cart.productId === variables.productId)._id
@@ -166,7 +198,7 @@ const CartProvider = (props: Props) => {
   // Delete a cart item
   const deleteCart = (variables: DeleteCartVars) => {
     deleteCartMutation({ variables })
-      .then(refetch)
+      .then(getCart)
       .then(() => {
         setCheckboxCarts((checkboxCarts) =>
           checkboxCarts.filter((checkbox) => checkbox !== variables._id)
@@ -185,7 +217,7 @@ const CartProvider = (props: Props) => {
   // Delete many cart items
   const deleteCarts = (variables: DeleteCartsVars) => {
     deleteCartsMutation({ variables })
-      .then(refetch)
+      .then(getCart)
       .then(() => {
         toast.success(t(`cart:delete_checked_success`));
         setCheckboxCarts([]);
@@ -196,9 +228,13 @@ const CartProvider = (props: Props) => {
   return (
     <CartContext.Provider
       value={{
-        data: data?.getCart,
-        loading: gettingCart || addingToCart || deletingCart || deletingCarts,
-        refetch,
+        data: getCartData?.getCart,
+        checkedData: getCartByProductData?.getCartByProduct,
+        addingToCart,
+        deletingCart,
+        deletingCarts,
+        loading: gettingCart,
+        refetch: getCart,
         getCart,
         addToCart,
         buyNow,

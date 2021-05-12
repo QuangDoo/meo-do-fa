@@ -43,7 +43,6 @@ function CartItem(props: Props) {
 
   return (
     <div className={clsx(!props.is_available && 'cart-product-available', 'd-flex p-3')}>
-      {/* <Checkbox/> */}
       <div className="mr-3">
         <input
           type="checkbox"

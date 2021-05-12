@@ -38,17 +38,6 @@ const Nav = () => {
     setAnchorEl(null);
   };
 
-  // const { data: categoriesData } = useQuery<GetCategoriesLevelData, undefined>(
-  //   GET_CATEGORIES_LEVEL,
-  //   {
-  //     onError: (error) => {
-  //       toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
-  //     }
-  //   }
-  // );
-
-  // const categories = categoriesData?.getCategoriesLevel || [];
-
   //const isSmallScreen = useMediaQuery('(max-width: 575px)');
   const { data: configData } = useQuery<GetWebsiteConfigData, undefined>(GET_WEBSITE_CONFIG);
   const SHOW_CATEGORY = configData?.getWebsiteConfig?.find(

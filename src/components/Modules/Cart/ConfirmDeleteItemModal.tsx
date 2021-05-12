@@ -15,7 +15,7 @@ type Props = Omit<ConfirmModalProps, 'children' | 'onConfirm'> & {
 export default function ConfirmDeleteItemModal(props: Props) {
   const { cartId, img, name, price, ...rest } = props;
 
-  const { deleteCart, loading } = useCart();
+  const { deleteCart } = useCart();
 
   const handleConfirmDelete = () => {
     props.onClose();
@@ -47,8 +47,6 @@ export default function ConfirmDeleteItemModal(props: Props) {
           </div>
         </div>
       </ConfirmModal>
-
-      <LoadingBackdrop open={loading} />
     </React.Fragment>
   );
 }

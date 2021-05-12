@@ -4,7 +4,6 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import PriceText from 'src/components/Form/PriceText';
 import QuantityInput from 'src/components/Form/QuantityInput';
-import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { useCart } from 'src/contexts/Cart';
 import { useToken } from 'src/contexts/Token';
 import { GET_WEBSITE_CONFIG, GetWebsiteConfigData } from 'src/graphql/configs/getWebsiteConfig';
@@ -53,7 +52,7 @@ const ProductDetailInfor = (props: ProductDetails) => {
 
   const categories = props?.categories?.slice().filter((c) => c.id !== null) || [];
 
-  const { data: cart, buyNow, addToCart, loading } = useCart();
+  const { data: cart, buyNow, addToCart } = useCart();
 
   const thisProductInCart = cart?.carts.find((product) => product.productId === props.id);
 
@@ -122,8 +121,6 @@ const ProductDetailInfor = (props: ProductDetails) => {
 
   return (
     <div className="row">
-      <LoadingBackdrop open={loading} />
-
       <div className="col-12">
         <h1 className="h3 text-capitalize">{props.name}</h1>
 
