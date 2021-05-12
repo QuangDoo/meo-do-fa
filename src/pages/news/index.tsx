@@ -85,41 +85,8 @@ function NewsPage() {
         </div>
       )} */}
 
-      <div className="container wrap-entry">
-        <Grid container>
-          <Grid item sm={12} lg={8}>
-            <Box className="wrapper_content">
-              <Entry />
-              <Entry />
-              <h2>PAGINATION HERE</h2>
-            </Box>
-          </Grid>
-          <Grid item sm={12} lg={4}>
-            <div className="post-sidebar">
-              <aside className="widget widget-search">
-                <Paper component="form" className="box-search">
-                  <InputBase
-                    placeholder="Search Google Maps"
-                    inputProps={{ 'aria-label': 'search google maps' }}
-                  />
-                  <IconButton className="search-icon" aria-label="search">
-                    <Search />
-                  </IconButton>
-                </Paper>
-              </aside>
-
-              <aside className="widget widget-recent-entries">
-                <span className="widget-title">BÀI VIẾT MỚI NHẤT</span>
-                <div className="is-devider"></div>
-                <ul>{postNews}</ul>
-              </aside>
-            </div>
-          </Grid>
-        </Grid>
-
-        {/* <div className="section_secondary">
-
-        </div> */}
+      <div className="d-flex justify-content-center align-items-center p-5">
+        {t('common:updating')}
       </div>
     </MainLayout>
   );
