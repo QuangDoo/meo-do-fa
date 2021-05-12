@@ -24,7 +24,6 @@ type Props = {
 type ContextValue = {
   data: GetCartData['getCart'];
   checkedData: GetCartByProductData['getCartByProduct'];
-  loading: boolean;
   refetch: () => Promise<ApolloQueryResult<GetCartData>>;
   getCart: (options?: QueryLazyOptions<undefined>) => void;
   addToCart: (variables: AddToCartVars) => void;
@@ -35,6 +34,7 @@ type ContextValue = {
   setCheckboxCarts: React.Dispatch<React.SetStateAction<string[]>>;
   checkCart: (id: string) => void;
   uncheckCart: (id: string) => void;
+  gettingCart: boolean;
   addingToCart: boolean;
   deletingCart: boolean;
   deletingCarts: boolean;
@@ -233,7 +233,7 @@ const CartProvider = (props: Props) => {
         addingToCart,
         deletingCart,
         deletingCarts,
-        loading: gettingCart,
+        gettingCart,
         refetch: getCart,
         getCart,
         addToCart,
