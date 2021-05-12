@@ -13,6 +13,28 @@ interface TabPanelProps {
   value: number;
 }
 
+type ProducerInformation = {
+  info?: string;
+  indication?: string;
+  contraindication?: string;
+  direction?: string;
+  interaction?: string;
+  preservation?: string;
+  overdose?: string;
+  pharmacodynamics?: string;
+  pharmacokinetics?: string;
+  labelInfo?: string;
+  labelIndication?: string;
+  labelContraindion?: string;
+  labelDirection?: string;
+  labelInteraction?: string;
+  labelPreservation?: string;
+  labelOverdose?: string;
+  labelPharmacodynamics?: string;
+  labelPharmacokinetics?: string;
+  init: number;
+};
+
 function TabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
 
@@ -46,9 +68,9 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-export default function ScrollableTabsButtonAuto(props) {
+export default function ScrollableTabsButtonAuto(props: ProducerInformation) {
   const classes = useStyles();
-  const [value, setValue] = useState<number>(0);
+  const [value, setValue] = useState<number>(props.init);
 
   const handleChange = (_, newValue: number) => {
     setValue(newValue);
@@ -72,18 +94,54 @@ export default function ScrollableTabsButtonAuto(props) {
           onChange={handleChange}
           indicatorColor="primary"
           textColor="primary"
-          variant="scrollable"
-          scrollButtons="on"
+          variant="fullWidth"
+          centered
           aria-label="scrollable auto tabs example">
-          <Tab label={props.labelInfo} {...a11yProps(0)} />
-          <Tab label={props.labelIndication} {...a11yProps(1)} />
-          <Tab label={props.labelContraindion} {...a11yProps(2)} />
-          <Tab label={props.labelDirection} {...a11yProps(3)} />
-          <Tab label={props.labelInteraction} {...a11yProps(4)} />
-          <Tab label={props.labelPreservation} {...a11yProps(5)} />
-          <Tab label={props.labelOverdose} {...a11yProps(6)} />
-          <Tab label={props.labelPharmacodynamics} {...a11yProps(7)} />
-          <Tab label={props.labelPharmacokinetics} {...a11yProps(8)} />
+          <Tab
+            label={props.labelInfo}
+            {...a11yProps(0)}
+            hidden={typeof props.info == 'undefined'}
+          />
+          <Tab
+            label={props.labelIndication}
+            {...a11yProps(1)}
+            hidden={typeof props.indication == 'undefined'}
+          />
+          <Tab
+            label={props.labelContraindion}
+            {...a11yProps(2)}
+            hidden={typeof props.contraindication == 'undefined'}
+          />
+          <Tab
+            label={props.labelDirection}
+            {...a11yProps(3)}
+            hidden={typeof props.direction == 'undefined'}
+          />
+          <Tab
+            label={props.labelInteraction}
+            {...a11yProps(4)}
+            hidden={typeof props.interaction == 'undefined'}
+          />
+          <Tab
+            label={props.labelPreservation}
+            {...a11yProps(5)}
+            hidden={typeof props.preservation == 'undefined'}
+          />
+          <Tab
+            label={props.labelOverdose}
+            {...a11yProps(6)}
+            hidden={typeof props.overdose == 'undefined'}
+          />
+          <Tab
+            label={props.labelPharmacodynamics}
+            {...a11yProps(7)}
+            hidden={typeof props.pharmacodynamics == 'undefined'}
+          />
+          <Tab
+            label={props.labelPharmacokinetics}
+            {...a11yProps(8)}
+            hidden={typeof props.pharmacokinetics == 'undefined'}
+          />
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
