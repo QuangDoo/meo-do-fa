@@ -1,6 +1,8 @@
 import { useQuery } from '@apollo/client';
+import clsx from 'clsx';
 import { useTranslation } from 'i18n';
 import Head from 'next/head';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { MagnifierContainer, SideBySideMagnifier } from 'react-image-magnifiers';
@@ -86,6 +88,7 @@ function ProductDetail() {
 
   const relatedProducts = getRelatedProductsData?.getRelatedProducts;
 
+  const categories = product?.categories?.slice().filter((c) => c.id !== null) || [];
   if (!product) {
     return (
       <MainLayout>
@@ -115,7 +118,7 @@ function ProductDetail() {
 
       <div className="product container py-5">
         <div className="elevated">
-          <div className="row p-3 mb-5">
+          <div className="row p-3 mb-3">
             <div className="col-md-8">
               <div className="row">
                 <div className="col-md-6">
@@ -143,6 +146,38 @@ function ProductDetail() {
               <ProductSidebar />
             </div>
           </div>
+
+          <div className="row px-3 mb-4">
+            <div className="col-12">
+              {product?.manufacturer?.id !== null && (
+                <div className="row px-3 mb-3 d-flex ">
+                  <div className="product__info-label mr-4">{t('productDetail:manufacturer')}</div>
+                  <div className="text-capitalize">
+                    <Link href={`/manufacturers/${product.manufacturer?.id}`}>
+                      <a>{product.manufacturer?.name}</a>
+                    </Link>
+                  </div>
+                </div>
+              )}
+
+              {categories.length > 0 && (
+                <div className="row px-3 mb-3 d-flex ">
+                  <div className="product__info-label mr-4">{t('productDetail:category')}</div>
+                  {categories.map((item, index, arr) => (
+                    <>
+                      <Link href={`/products?category=${item.id}`}>
+                        <a className="text-capitalize" key={index}>
+                          {item.name}
+                        </a>
+                      </Link>
+                      {index < arr.length - 1 && '; '}
+                    </>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+
           <div className="row px-3">
             <div className="col-12">
               <ProducerInformation {...product} />

@@ -161,41 +161,6 @@ const ProductDetailInfor = (props: ProductDetails) => {
           </div>
         )}
 
-        {categories.length > 0 && (
-          <div className="mt-3">
-            <div className="product__info-label">{t('productDetail:category')}</div>
-
-            {categories.map((item, index, arr) => (
-              <>
-                <Link href={`/products?category=${item.id}`}>
-                  <a className="text-capitalize" key={index}>
-                    {item.name}
-                  </a>
-                </Link>
-                {index < arr.length - 1 && '; '}
-              </>
-            ))}
-          </div>
-        )}
-
-        {props?.manufacturer?.id !== null && (
-          <div className="mt-3">
-            <div className="product__info-label">{t('productDetail:manufacturer')}</div>
-            <div className="text-capitalize">
-              <Link href={`/manufacturers/${props.manufacturer?.id}`}>
-                <a>{props.manufacturer?.name}</a>
-              </Link>
-            </div>
-          </div>
-        )}
-
-        {props?.default_vendor !== null && (
-          <div className="mt-3">
-            <div className="product__info-label">{t('productDetail:supplier')}</div>
-            <div className="text-capitalize">{props.default_vendor}</div>
-          </div>
-        )}
-
         {!!token && (
           <React.Fragment>
             <div className="col-6 px-0 mt-3">
@@ -237,27 +202,33 @@ const ProductDetailInfor = (props: ProductDetails) => {
           </React.Fragment>
         )}
 
-        <div>{t('productDetail:share')}</div>
-
-        <div className="social-share-container">
-          <FacebookShareButton url={`https://medofa.com/products/${props.slug}`}>
-            <div className="social-share-button facebook-button">
-              <img src="/assets/images/facebook-icon.png" alt="Facebook icon" />
-              <span>Facebook</span>
-            </div>
-          </FacebookShareButton>
-
-          <div
-            className="zalo-share-button"
-            data-href={`https://medofa.com/products/${props.slug}`}
-            data-oaid="3215746340374733717"
-            data-customize={true}>
-            <div className="social-share-button zalo-button">
-              <img src="/assets/images/zalo-icon.png" alt="Zalo icon" />
-              <span>Zalo</span>
+        {/* {props?.manufacturer?.id !== null && (
+          <div className="mt-3">
+            <div className="product__info-label">{t('productDetail:manufacturer')}</div>
+            <div className="text-capitalize">
+              <Link href={`/manufacturers/${props.manufacturer?.id}`}>
+                <a>{props.manufacturer?.name}</a>
+              </Link>
             </div>
           </div>
-        </div>
+        )}
+
+        {categories.length > 0 && (
+          <div className="mt-3">
+            <div className="product__info-label">{t('productDetail:category')}</div>
+
+            {categories.map((item, index, arr) => (
+              <>
+                <Link href={`/products?category=${item.id}`}>
+                  <a className="text-capitalize" key={index}>
+                    {item.name}
+                  </a>
+                </Link>
+                {index < arr.length - 1 && '; '}
+              </>
+            ))}
+          </div>
+        )} */}
       </div>
     </div>
   );
