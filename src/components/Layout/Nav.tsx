@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client';
-import { Menu, useMediaQuery } from '@material-ui/core';
+import { Menu } from '@material-ui/core';
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import { useTranslation } from 'i18n';
 import cookies from 'js-cookie';

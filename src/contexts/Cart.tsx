@@ -1,4 +1,4 @@
-import { ApolloError, ApolloQueryResult, QueryLazyOptions } from '@apollo/client';
+import { ApolloError, ApolloQueryResult, QueryLazyOptions, useLazyQuery } from '@apollo/client';
 import { useTranslation } from 'i18n';
 import cookies from 'js-cookie';
 import { useRouter } from 'next/router';
@@ -8,7 +8,7 @@ import { ADD_TO_CART, AddToCartData, AddToCartVars } from 'src/graphql/cart/addT
 import { DELETE_CART, DeleteCartData, DeleteCartVars } from 'src/graphql/cart/deleteCart.mutation';
 import { DELETE_CARTS, DeleteCartsData, DeleteCartsVars } from 'src/graphql/cart/deleteCarts';
 import { GET_CART, GetCartData } from 'src/graphql/cart/getCart';
-import { useLazyQueryAuth, useMutationAuth } from 'src/hooks/useApolloHookAuth';
+import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 
 import { useUser } from './User';
 
@@ -62,7 +62,7 @@ const CartProvider = (props: Props) => {
   };
 
   // Lazy query to get cart
-  const [getCart, { data, loading: gettingCart, refetch }] = useLazyQueryAuth<
+  const [getCartQuery, { data, loading: gettingCart, refetch }] = useLazyQuery<
     GetCartData,
     undefined
   >(GET_CART, {
@@ -75,6 +75,16 @@ const CartProvider = (props: Props) => {
       }
     }
   });
+
+  const getCart = () => {
+    getCartQuery({
+      context: {
+        headers: {
+          authorization: cookies.get('token') || ''
+        }
+      }
+    });
+  };
 
   // Get cart on mount if token is in cookies
   useEffect(() => {
