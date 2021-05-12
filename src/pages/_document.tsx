@@ -1,8 +1,17 @@
+'use strict';
+
 import { ServerStyleSheets as MaterialUiServerStyleSheets } from '@material-ui/core/styles';
 import Document, { Head, Html, Main, NextScript } from 'next/document';
 import React from 'react';
+import { AriaAttributes, DOMAttributes } from 'react';
 import { ServerStyleSheet } from 'styled-components';
 
+declare module 'react' {
+  interface HTMLAttributes<T> extends AriaAttributes, DOMAttributes<T> {
+    attribution?: string;
+    page_id?: string;
+  }
+}
 const globalStyles = `
 * {
   box-sizing: border-box;
@@ -78,6 +87,13 @@ class MyDocument extends Document {
         <body>
           <Main />
           <NextScript />
+          <div
+            className="zalo-chat-widget"
+            data-oaid="3215746340374733717"
+            data-welcome-message="Rất vui khi được hỗ trợ bạn!"
+            data-autopopup="5"
+            data-width="350px"
+            data-height="420px"></div>
 
           <script
             dangerouslySetInnerHTML={{
@@ -106,6 +122,29 @@ class MyDocument extends Document {
                   })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
                 }, 10000);
               });
+              `
+            }}
+          />
+
+          <div id="fb-root"></div>
+          <div className="fb-customerchat" attribution="page_inbox" page_id="100283725313030"></div>
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+              window.fbAsyncInit = function() {
+                FB.init({
+                  xfbml            : true,
+                  version          : 'v10.0'
+                });
+              };
+      
+              (function(d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return;
+                js = d.createElement(s); js.id = id;
+                js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
+                fjs.parentNode.insertBefore(js, fjs);
+              }(document, 'script', 'facebook-jssdk'));
               `
             }}
           />
@@ -151,6 +190,7 @@ class MyDocument extends Document {
               `
             }}
           />
+          <script src="https://sp.zalo.me/plugins/sdk.js"></script>
         </body>
       </Html>
     );

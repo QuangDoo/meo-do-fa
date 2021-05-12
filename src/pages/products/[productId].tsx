@@ -1,12 +1,13 @@
 import { useQuery } from '@apollo/client';
 import clsx from 'clsx';
 import { useTranslation } from 'i18n';
+//import Head from 'src/components/Layout/Head';
+import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { MagnifierContainer, SideBySideMagnifier } from 'react-image-magnifiers';
 import { toast } from 'react-toastify';
-import Head from 'src/components/Layout/Head';
 // import SimpleBreadcrumbs from 'src/components/Modules/BreadCrum/BreadCrum';
 import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import { DiscountRibbon } from 'src/components/Modules/ProductCard/DiscountRibbon';
@@ -104,6 +105,13 @@ function ProductDetail() {
     <MainLayout>
       <Head>
         <title>Medofa - {product?.name}</title>
+        <meta property="og:title" content={product?.name} />
+        <meta
+          property="og:description"
+          content="Medofa là giải pháp công nghệ ngành dược kết nối nhà máy, nhà phân phối, nhà thuốc, dược sĩ nhằm hợp tác tạo mối liên kết trực tiếp và gia tăng doanh thu."
+        />
+        <meta property="og:url" content="https://medofa.com/" />
+        <meta property="og:image" content={product?.image_128} />
       </Head>
 
       {/* <div className="product container py-2">

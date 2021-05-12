@@ -10,6 +10,7 @@ import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { useCart } from 'src/contexts/Cart';
 import { useCheckboxCarts } from 'src/contexts/CheckboxCarts';
 import { useToken } from 'src/contexts/Token';
+import { useUser } from 'src/contexts/User';
 import { ADD_TO_CART, AddToCartData, AddToCartVars } from 'src/graphql/cart/addToCart';
 import { GET_WEBSITE_CONFIG, GetWebsiteConfigData } from 'src/graphql/configs/getWebsiteConfig';
 import { ProductDetails } from 'src/graphql/product/product.query';
@@ -20,11 +21,10 @@ import ConfirmDeleteItemModal from '../Cart/ConfirmDeleteItemModal';
 import LoginModal from '../LoginModal';
 import ProductBadges from '../ProductCard/ProductBadges';
 
-// const MAX_QUANTITY = 100000;
-// const MIN_QUANTITY = 0;
-
 const ProductDetailInfor = (props: ProductDetails) => {
   const token = useToken();
+
+  const { data: user } = useUser();
 
   const { t } = useTranslation(['common', 'productDetail', 'success']);
 
@@ -87,17 +87,27 @@ const ProductDetailInfor = (props: ProductDetails) => {
       onError: (err) => {
         const errorCode = err.graphQLErrors?.[0]?.extensions?.code;
 
-        if (errorCode === 121) {
-          toast.error(
-            t(`errors:code_${errorCode}`, {
-              name: err.graphQLErrors[0].message.replace(
-                'Sales price changed. Please remove product on cart. Product: ',
-                ''
-              )
-            })
-          );
-        } else {
-          toast.error(t(`errors:code_${errorCode}`));
+        setQuantity(quantityInCart);
+
+        switch (errorCode) {
+          case 121: {
+            toast.error(
+              t('errors:code_121', {
+                name: err.graphQLErrors[0].message.replace(
+                  'Sales price changed. Please remove product on cart. Product: ',
+                  ''
+                )
+              })
+            );
+            break;
+          }
+          case 140: {
+            toast.error(t('errors:code_141' + user.waiting ? '_waiting' : ''));
+            break;
+          }
+          default: {
+            toast.error(t(`errors:code_${errorCode}`));
+          }
         }
       }
     }

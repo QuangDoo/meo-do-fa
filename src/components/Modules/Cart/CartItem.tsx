@@ -53,7 +53,7 @@ function CartItem(props: Props) {
           <img
             className="cart-item-img"
             src={props.product.image_512 || '/assets/images/no_images.jpg'}
-            alt={props.product.image_512}
+            alt={props.productName}
           />
         </a>
       </Link>
@@ -101,7 +101,7 @@ function CartItem(props: Props) {
               productName={props.productName}
               productPrice={props.price}
               productImg={props.product.image_512}
-              available={true}
+              available={false}
             />
 
             <div className="ml-3">

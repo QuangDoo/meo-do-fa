@@ -1,4 +1,4 @@
-import { Button, Grid, IconButton, InputBase, Paper } from '@material-ui/core';
+import { Box, Button, Grid, IconButton, InputBase, Paper } from '@material-ui/core';
 import { Search } from '@material-ui/icons';
 import { Trans, useTranslation } from 'i18n';
 import Head from 'next/head';
@@ -46,6 +46,16 @@ function NewsPage() {
     <MainLayout>
       <Head>
         <title>Medofa - {t('header:news')}</title>
+        <meta property="og:title" content="News" />
+        <meta
+          property="og:description"
+          content="Medofa là giải pháp công nghệ ngành dược kết nối nhà máy, nhà phân phối, nhà thuốc, dược sĩ nhằm hợp tác tạo mối liên kết trực tiếp và gia tăng doanh thu."
+        />
+        <meta property="og:url" content="https://medofa.com/" />
+        <meta
+          property="og:image"
+          content="https://medofa.com/icons/favicon-32x32-medofa-manifest-20129.png"
+        />
       </Head>
       {/* {newsList ? (
         <div className="container py-5">
@@ -77,12 +87,14 @@ function NewsPage() {
 
       <div className="container wrap-entry">
         <Grid container>
-          <Grid item sm={12}>
-            <Entry />
-            <Entry />
-            <h2>PAGINATION HERE</h2>
+          <Grid item sm={12} lg={8}>
+            <Box className="wrapper_content">
+              <Entry />
+              <Entry />
+              <h2>PAGINATION HERE</h2>
+            </Box>
           </Grid>
-          <Grid item sm={12}>
+          <Grid item sm={12} lg={4}>
             <div className="post-sidebar">
               <aside className="widget widget-search">
                 <Paper component="form" className="box-search">

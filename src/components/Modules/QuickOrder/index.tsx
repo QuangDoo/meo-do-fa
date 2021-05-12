@@ -10,6 +10,12 @@ import PriceText from 'src/components/Form/PriceText';
 import Loading from 'src/components/Layout/Loading';
 import { useCart } from 'src/contexts/Cart';
 import { useToken } from 'src/contexts/Token';
+import {
+  GET_CART_BY_PRODUCT,
+  GetCartByProductData,
+  getCartByproductVars
+} from 'src/graphql/cart/getCartByProduct';
+import { GET_WEBSITE_CONFIG, GetWebsiteConfigData } from 'src/graphql/configs/getWebsiteConfig';
 // import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 // import { CREATE_COUNSEL } from 'src/graphql/order/order.mutation';
 import {
@@ -26,6 +32,12 @@ function QuickOrderPage() {
   const token = useToken();
 
   const router = useRouter();
+  const { data: configData } = useQuery<GetWebsiteConfigData, undefined>(GET_WEBSITE_CONFIG);
+  const MIN_PRICE = +configData?.getWebsiteConfig.find((config) => config.key === 'MIN_PRICE')
+    .value;
+
+  const FREE_SHIP = +configData?.getWebsiteConfig.find((config) => config.key === 'FREESHIP_PRICE')
+    .value;
 
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -51,6 +63,11 @@ function QuickOrderPage() {
     }
   });
 
+  const total = cart?.totalNetPrice - cart?.totalShippingFee;
+
+  const checkoutDisabled = total < MIN_PRICE;
+
+  const enableShippingFee = total > MIN_PRICE && total < FREE_SHIP;
   const totalPagination = quickOrderData?.getProductByConditions?.total;
   const handleSearchQuickOrder = (e) => {
     setSearchTerm(e.target.value);
@@ -126,40 +143,32 @@ function QuickOrderPage() {
                         <div>{t('cart:total')}</div>
                       </div>
                       <div className="cart__total">
-                        <PriceText price={cart?.totalNetPrice - cart?.totalShippingFee} />
+                        <PriceText price={total} />
                       </div>
                     </div>
                   </div>
-                  <div className="col-md-20 col-lg-12 cart__info-total ">
-                    <div className="cart__info-item text-lg-left text-center ">
-                      <div className="mb-2  text-lg-left float-xl-left">
-                        {t('cart:shipping_fee')}
-                      </div>
-                      <div className="cart__total  text-lg-right">
-                        <PriceText price={cart?.totalShippingFee} />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-md-20 col-lg-12 cart__info-total ">
-                    <div className="cart__info-item text-center font-weight-bold  ">
-                      <div className="mb-2 text-lg-left float-xl-left">{t('cart:price_total')}</div>
-                      <div className="cart__total  text-lg-right font-weight-bold">
-                        <PriceText price={cart?.totalNetPrice} />
-                      </div>
-                    </div>
+                  <div
+                    hidden={!enableShippingFee}
+                    className="col-12 p-3 text-center cart__info-total">
+                    {t('cart:shipping_fee') + ': '}
+                    <PriceText price={cart?.totalShippingFee} />
                   </div>
 
-                  {cart?.totalNetPrice > 0 && (
-                    <div className="col-12">
-                      <div className="cart__info-item">
-                        <Link href="/cart">
-                          <a className="btn btn-secondary btn-block text-small">
-                            {t('quickOrder:view_cart')}
-                          </a>
-                        </Link>
+                  <div className="col-12 text-center">
+                    <div className="cart__info-item ">
+                      <Link href="/cart">
+                        <button
+                          disabled={checkoutDisabled}
+                          className="btn btn-secondary btn-block text-small">
+                          {t('quickOrder:view_cart')}
+                        </button>
+                      </Link>
+                      <div hidden={!checkoutDisabled} className="text-center mt-1">
+                        {t('cart:minimum_price') + ' '}
+                        <PriceText price={MIN_PRICE} />
                       </div>
                     </div>
-                  )}
+                  </div>
                 </div>
               </div>
             )}
