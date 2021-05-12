@@ -104,6 +104,8 @@ function IngredientDetails() {
               labelOverdose={t('overdose_label')}
               labelPharmacodynamics={t('pharmacodynamics_label')}
               labelPharmacokinetics={t('pharmacokinetics_label')}
+              init={0}
+              vari="scrollable"
             />
           </div>
         </div>

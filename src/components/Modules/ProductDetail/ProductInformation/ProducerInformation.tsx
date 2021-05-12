@@ -59,6 +59,7 @@ const ProducerInformation = (props: ProductDetails) => {
         labelIndication={t('indication_label')}
         labelContraindion={t('contraindication_label')}
         init={1}
+        vari="fullWidth"
       />
 
       <ScrollableTabsButtonAuto
@@ -67,6 +68,7 @@ const ProducerInformation = (props: ProductDetails) => {
         labelDirection={t('user_manual')}
         labelInteraction={t('interaction_label')}
         init={3}
+        vari="fullWidth"
       />
 
       <ScrollableTabsButtonAuto
@@ -75,6 +77,7 @@ const ProducerInformation = (props: ProductDetails) => {
         labelPreservation={t('preservation_label')}
         labelOverdose={t('overdose_label')}
         init={5}
+        vari="fullWidth"
       />
 
       <ScrollableTabsButtonAuto
@@ -83,6 +86,7 @@ const ProducerInformation = (props: ProductDetails) => {
         labelPharmacodynamics={t('pharmacodynamics_label')}
         labelPharmacokinetics={t('pharmacokinetics_label')}
         init={7}
+        vari="fullWidth"
       />
     </div>
   );

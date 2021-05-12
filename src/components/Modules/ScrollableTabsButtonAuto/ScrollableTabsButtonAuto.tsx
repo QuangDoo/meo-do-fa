@@ -5,7 +5,7 @@ import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 import Typography from '@material-ui/core/Typography';
 import { useTranslation } from 'i18n';
-import React, { useState } from 'react';
+import React, { Attributes, useState } from 'react';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -33,6 +33,7 @@ type ProducerInformation = {
   labelPharmacodynamics?: string;
   labelPharmacokinetics?: string;
   init: number;
+  vari;
 };
 
 function TabPanel(props: TabPanelProps) {
@@ -94,8 +95,7 @@ export default function ScrollableTabsButtonAuto(props: ProducerInformation) {
           onChange={handleChange}
           indicatorColor="primary"
           textColor="primary"
-          variant="fullWidth"
-          centered
+          variant={props.vari}
           aria-label="scrollable auto tabs example">
           <Tab
             label={props.labelInfo}
