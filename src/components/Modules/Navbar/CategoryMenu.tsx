@@ -98,7 +98,7 @@ const CategoryMenu = () => {
         <div className="menu-title">
           <Link href="/products">
             <a className="rockland-nav__link">
-              <i className="rockland-nav__icon fas fa-list-ul" />
+              <img className="nav__icon" src="/assets/images/sanpham.png" alt="icon_product" />
               <span className="rockland-nav__title">{t('navbar:product_category')}</span>
             </a>
           </Link>

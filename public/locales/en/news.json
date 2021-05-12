@@ -1,3 +1,4 @@
 {
+    "title": "News",
     "post_on": "Post on <b>{{create_date}}</b> by <b>{{signature}}<b>"
 }

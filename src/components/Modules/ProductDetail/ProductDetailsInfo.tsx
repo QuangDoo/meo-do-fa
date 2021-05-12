@@ -2,6 +2,7 @@ import { useQuery } from '@apollo/client';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
+import { FacebookIcon, FacebookShareButton, TwitterIcon, TwitterShareButton } from 'react-share';
 import PriceText from 'src/components/Form/PriceText';
 import QuantityInput from 'src/components/Form/QuantityInput';
 import { useCart } from 'src/contexts/Cart';
@@ -13,9 +14,6 @@ import useDebounce from 'src/hooks/useDebounce';
 import ConfirmDeleteItemModal from '../Cart/ConfirmDeleteItemModal';
 import LoginModal from '../LoginModal';
 import ProductBadges from '../ProductCard/ProductBadges';
-
-// const MAX_QUANTITY = 100000;
-// const MIN_QUANTITY = 0;
 
 const ProductDetailInfor = (props: ProductDetails) => {
   const token = useToken();
@@ -118,6 +116,15 @@ const ProductDetailInfor = (props: ProductDetails) => {
 
   const hasBadge =
     props?.is_quick_invoice || props?.is_exclusive || props?.is_vn || !props?.is_available;
+
+  useEffect(() => {
+    const script = document.createElement('script');
+
+    script.src = 'https://sp.zalo.me/plugins/sdk.js';
+    script.async = true;
+
+    document.body.appendChild(script);
+  }, []);
 
   return (
     <div className="row">
@@ -229,6 +236,28 @@ const ProductDetailInfor = (props: ProductDetails) => {
             </div>
           </React.Fragment>
         )}
+
+        <div>{t('productDetail:share')}</div>
+
+        <div className="social-share-container">
+          <FacebookShareButton url={`https://medofa.com/products/${props.slug}`}>
+            <div className="social-share-button facebook-button">
+              <img src="/assets/images/facebook-icon.png" alt="Facebook icon" />
+              <span>Facebook</span>
+            </div>
+          </FacebookShareButton>
+
+          <div
+            className="zalo-share-button"
+            data-href={`https://medofa.com/products/${props.slug}`}
+            data-oaid="3215746340374733717"
+            data-customize={true}>
+            <div className="social-share-button zalo-button">
+              <img src="/assets/images/zalo-icon.png" alt="Zalo icon" />
+              <span>Zalo</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

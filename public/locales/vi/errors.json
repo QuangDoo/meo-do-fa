@@ -53,5 +53,5 @@
   "error_retype_pw": "Mật khẩu không trùng khớp",
   "error_match_pw": "Mật khẩu hiện tại và mật khẩu cũ không được trùng khớp",
   "error_wrong_cr_pw": "Mật khẩu hiên tại không đúng",
-  "tax_code_invalid":"Mã số thuế không hợp lệ"
+  "tax_code_invalid": "Mã số thuế không hợp lệ"
 }

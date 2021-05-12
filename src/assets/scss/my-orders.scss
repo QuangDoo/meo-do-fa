@@ -17,6 +17,7 @@
 .image-webs img{
   width: 60px;
   max-height: 60px;
+  pointer-events: none;
 }
 .my-order__mobile-list {
   margin-bottom: 1.25em;
@@ -33,6 +34,7 @@
 .my-order__mobile-list .product-item img {
  width: 60px;
  max-height: 60px;
+ pointer-events: none;
 }
 .info .my-order__item-price{
   padding-top: 10px;

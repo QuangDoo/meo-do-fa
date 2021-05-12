@@ -188,17 +188,34 @@
     margin-left: .6em;
   }  
 }
+@media (max-width:322.98px) {
+  .tele__mobile i{
+    margin-left: -0.5em;
+  }
+  .tele__mobile .tele__mobile-number{
+    margin-left: .4em;
+  }  
+}
 @media (min-width: 576px) and (max-width:991.98px) {
-  .tele__mobile{
-    margin-top: .5em;
+  .tele__mobile i{
+    margin-left: -0.5em;
   }
   .tele__mobile .tele__mobile-number{
     margin-left: -2.5em;
   }  
 }
+@media (min-width: 992px) and (max-width:1199.98px) {
+  .tele__mobile i{
+    margin-left: -0.5em;
+  }
+  .tele__mobile .tele__mobile-number{
+    margin-left: 0.2em;
+  }  
+}
 .tele__mobile{
   display: flex;
-  margin-top: .45em;
+  margin-top: .4em;
+  margin-left: 0.6em;
 }
 .logo-footer {
   max-height: 40px;
