@@ -30,14 +30,14 @@ const Header = () => {
           <div className="row">
             <div className="col-12 d-flex align-items-center justify-content-end">
               <ul className="nav">
-                <li className="promotion-nav__item">
+                {/* <li className="promotion-nav__item">
                   <Link href="/news">
                     <a className="promotion-nav__link">
                       <i className="promotion-nav__icon far fa-newspaper" />
                       <span>{t('header:news')}</span>
                     </a>
                   </Link>
-                </li>
+                </li> */}
                 <li className="promotion-nav__item">
                   <LanguagePicker />
                 </li>
