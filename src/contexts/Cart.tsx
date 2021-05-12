@@ -34,10 +34,7 @@ type ContextValue = {
   setCheckboxCarts: React.Dispatch<React.SetStateAction<string[]>>;
   checkCart: (id: string) => void;
   uncheckCart: (id: string) => void;
-  gettingCart: boolean;
-  addingToCart: boolean;
-  deletingCart: boolean;
-  deletingCarts: boolean;
+  loading: boolean;
 };
 
 const CartContext = createContext<ContextValue>(undefined);
@@ -56,6 +53,8 @@ const CartProvider = (props: Props) => {
   const { data: user } = useUser();
 
   const [checkboxCarts, setCheckboxCarts] = useState<string[]>([]);
+
+  const [loading, setLoading] = useState(false);
 
   // Checked cart data
   const { data: getCartByProductData } = useQueryAuth<GetCartByProductData, getCartByproductVars>(
@@ -84,11 +83,9 @@ const CartProvider = (props: Props) => {
   // Whole cart data
   const [getCartData, setGetCartData] = useState<GetCartData>();
 
-  const [gettingCart, setGettingCart] = useState(false);
-
   const getCart = async () => {
     try {
-      setGettingCart(true);
+      setLoading(true);
 
       const response = await client.query<GetCartData, undefined>({
         query: GET_CART,
@@ -102,7 +99,7 @@ const CartProvider = (props: Props) => {
 
       setGetCartData(response.data);
 
-      setGettingCart(false);
+      setLoading(false);
 
       // Check all cart if this is the first time loading
       if (isFirstLoad) {
@@ -128,10 +125,7 @@ const CartProvider = (props: Props) => {
   }, []);
 
   // Mutation to add a product to cart
-  const [addToCartMutation, { loading: addingToCart }] = useMutationAuth<
-    AddToCartData,
-    AddToCartVars
-  >(ADD_TO_CART);
+  const [addToCartMutation] = useMutationAuth<AddToCartData, AddToCartVars>(ADD_TO_CART);
 
   // Handle add to cart special errors
   const handleAddToCartError = (error: ApolloError) => {
@@ -163,6 +157,8 @@ const CartProvider = (props: Props) => {
 
   // Add a product to cart
   const addToCart = (variables: AddToCartVars) => {
+    setLoading(true);
+
     addToCartMutation({ variables })
       .then(getCart)
       .then((data) => {
@@ -177,6 +173,8 @@ const CartProvider = (props: Props) => {
 
   // Buy a product now
   const buyNow: typeof addToCart = (variables: AddToCartVars) => {
+    setLoading(true);
+
     addToCartMutation({ variables })
       .then(getCart)
       .then((cartData) => {
@@ -190,13 +188,12 @@ const CartProvider = (props: Props) => {
   };
 
   // Mutation to delete a cart item
-  const [deleteCartMutation, { loading: deletingCart }] = useMutationAuth<
-    DeleteCartData,
-    DeleteCartVars
-  >(DELETE_CART);
+  const [deleteCartMutation] = useMutationAuth<DeleteCartData, DeleteCartVars>(DELETE_CART);
 
   // Delete a cart item
   const deleteCart = (variables: DeleteCartVars) => {
+    setLoading(true);
+
     deleteCartMutation({ variables })
       .then(getCart)
       .then(() => {
@@ -209,13 +206,12 @@ const CartProvider = (props: Props) => {
   };
 
   // Mutation to delete many cart items
-  const [deleteCartsMutation, { loading: deletingCarts }] = useMutationAuth<
-    DeleteCartsData,
-    DeleteCartsVars
-  >(DELETE_CARTS);
+  const [deleteCartsMutation] = useMutationAuth<DeleteCartsData, DeleteCartsVars>(DELETE_CARTS);
 
   // Delete many cart items
   const deleteCarts = (variables: DeleteCartsVars) => {
+    setLoading(true);
+
     deleteCartsMutation({ variables })
       .then(getCart)
       .then(() => {
@@ -230,10 +226,7 @@ const CartProvider = (props: Props) => {
       value={{
         data: getCartData?.getCart,
         checkedData: getCartByProductData?.getCartByProduct,
-        addingToCart,
-        deletingCart,
-        deletingCarts,
-        gettingCart,
+        loading,
         refetch: getCart,
         getCart,
         addToCart,

@@ -18,7 +18,7 @@ type Props = {
 };
 
 export default function MainLayout(props: Props) {
-  const { gettingCart: loadingCart } = useCart();
+  const { loading: loadingCart } = useCart();
 
   const { data: dataUser, loading: gettingUser } = useUser();
 
