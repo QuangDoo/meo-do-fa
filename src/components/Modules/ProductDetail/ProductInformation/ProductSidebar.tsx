@@ -1,5 +1,4 @@
 import { Trans, useTranslation } from 'i18n';
-import Link from 'next/link';
 import React from 'react';
 
 function ProductSidebar() {
@@ -25,7 +24,7 @@ function ProductSidebar() {
   ];
 
   return (
-    <>
+    <React.Fragment>
       <table className="table table-bordered table-sm ">
         <tbody>
           <tr>
@@ -35,7 +34,7 @@ function ProductSidebar() {
             <td>
               {links.map((item) => {
                 return (
-                  <>
+                  <React.Fragment key={item.title}>
                     <div>
                       <div className="pledge ">
                         <img className="pledge_item" src={item.itemImgUrl} alt=""></img>
@@ -51,19 +50,16 @@ function ProductSidebar() {
                             }}
                           />
                         </div>
-                        {/* <div className="pledge_content px-1">{item.title}</div> */}
                       </div>
                     </div>
-                  </>
+                  </React.Fragment>
                 );
               })}
             </td>
           </tr>
         </tbody>
       </table>
-
-      {/* <NewsBanner itemImgUrl={imgUrl} title="Trải nghiệm MEDOFA"></NewsBanner> */}
-    </>
+    </React.Fragment>
   );
 }
 

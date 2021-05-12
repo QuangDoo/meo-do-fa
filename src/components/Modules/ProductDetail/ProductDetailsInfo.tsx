@@ -1,21 +1,14 @@
 import { useQuery } from '@apollo/client';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { FacebookIcon, FacebookShareButton, TwitterIcon, TwitterShareButton } from 'react-share';
-import { toast } from 'react-toastify';
 import PriceText from 'src/components/Form/PriceText';
 import QuantityInput from 'src/components/Form/QuantityInput';
-import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { useCart } from 'src/contexts/Cart';
-import { useCheckboxCarts } from 'src/contexts/CheckboxCarts';
 import { useToken } from 'src/contexts/Token';
-import { useUser } from 'src/contexts/User';
-import { ADD_TO_CART, AddToCartData, AddToCartVars } from 'src/graphql/cart/addToCart';
 import { GET_WEBSITE_CONFIG, GetWebsiteConfigData } from 'src/graphql/configs/getWebsiteConfig';
 import { ProductDetails } from 'src/graphql/product/product.query';
-import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import useDebounce from 'src/hooks/useDebounce';
 
 import ConfirmDeleteItemModal from '../Cart/ConfirmDeleteItemModal';
@@ -24,8 +17,6 @@ import ProductBadges from '../ProductCard/ProductBadges';
 
 const ProductDetailInfor = (props: ProductDetails) => {
   const token = useToken();
-
-  const { data: user } = useUser();
 
   const { t } = useTranslation(['common', 'productDetail', 'success']);
 
@@ -59,74 +50,22 @@ const ProductDetailInfor = (props: ProductDetails) => {
 
   const categories = props?.categories?.slice().filter((c) => c.id !== null) || [];
 
-  const { data: cart, refetch: refetchCart } = useCart();
+  const { data: cart, buyNow, addToCart } = useCart();
 
   const thisProductInCart = cart?.carts.find((product) => product.productId === props.id);
 
   const quantityInCart = thisProductInCart?.quantity || 0;
 
-  const { checkboxCarts, setCheckboxCarts } = useCheckboxCarts();
-
   useEffect(() => {
-    if (!quantityInCart) return;
-
     setQuantity(quantityInCart);
   }, [quantityInCart]);
 
-  const [addToCart, { loading: addingToCart }] = useMutationAuth<AddToCartData, AddToCartVars>(
-    ADD_TO_CART,
-    {
-      onCompleted: () => {
-        refetchCart().then((data) => {
-          setCheckboxCarts([
-            ...checkboxCarts,
-            data.data.getCart?.carts.find((product) => product.productId === props.id)?._id
-          ]);
-          toast.success(t(`success:update_cart`));
-        });
-      },
-      onError: (err) => {
-        const errorCode = err.graphQLErrors?.[0]?.extensions?.code;
-
-        setQuantity(quantityInCart);
-
-        switch (errorCode) {
-          case 121: {
-            toast.error(
-              t('errors:code_121', {
-                name: err.graphQLErrors[0].message.replace(
-                  'Sales price changed. Please remove product on cart. Product: ',
-                  ''
-                )
-              })
-            );
-            break;
-          }
-          case 140: {
-            toast.error(t('errors:code_141' + user.waiting ? '_waiting' : ''));
-            break;
-          }
-          default: {
-            toast.error(t(`errors:code_${errorCode}`));
-          }
-        }
-      }
-    }
-  );
-
-  const router = useRouter();
-
   const handleBuyNow = () => {
-    addToCart({
-      variables: {
-        price: props.list_price,
-        productId: props.id,
-        productName: props.name,
-        quantity: quantity
-      }
-    }).then(() => {
-      setCheckboxCarts([cart.carts.find((cart) => cart.productId === props.id)._id]);
-      router.push('/cart');
+    buyNow({
+      price: props.list_price,
+      productId: props.id,
+      productName: props.name,
+      quantity: quantity
     });
   };
 
@@ -137,13 +76,10 @@ const ProductDetailInfor = (props: ProductDetails) => {
     }
 
     addToCart({
-      variables: {
-        price: props.list_price,
-        productId: props.id,
-        productName: props.name,
-        quantity: quantity
-        // addToCheckCart?:
-      }
+      price: props.list_price,
+      productId: props.id,
+      productName: props.name,
+      quantity: quantity
     });
   };
 
@@ -164,12 +100,10 @@ const ProductDetailInfor = (props: ProductDetails) => {
     }
 
     addToCart({
-      variables: {
-        price: price,
-        productId: id,
-        productName: name,
-        quantity: newQuantity || 0
-      }
+      price: price,
+      productId: id,
+      productName: name,
+      quantity: newQuantity || 0
     });
   };
 
@@ -194,8 +128,6 @@ const ProductDetailInfor = (props: ProductDetails) => {
 
   return (
     <div className="row">
-      <LoadingBackdrop open={addingToCart} />
-
       <div className="col-12">
         <h1 className="h3 text-capitalize">{props.name}</h1>
 

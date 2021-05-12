@@ -1,15 +1,13 @@
 import { useQuery } from '@apollo/client';
 import { useTranslation } from 'i18n';
-//import Head from 'src/components/Layout/Head';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { MagnifierContainer, SideBySideMagnifier } from 'react-image-magnifiers';
 import { toast } from 'react-toastify';
-// import SimpleBreadcrumbs from 'src/components/Modules/BreadCrum/BreadCrum';
 import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import { DiscountRibbon } from 'src/components/Modules/ProductCard/DiscountRibbon';
-import ProductDetailInfor from 'src/components/Modules/ProductDetail/ProductDetaiInfor';
+import ProductDetailInfor from 'src/components/Modules/ProductDetail/ProductDetailsInfo';
 import ProducerInformation from 'src/components/Modules/ProductDetail/ProductInformation/ProducerInformation';
 import ProductSidebar from 'src/components/Modules/ProductDetail/ProductInformation/ProductSidebar';
 import RelativeProducts from 'src/components/Modules/ProductDetail/RelativeProducts';
