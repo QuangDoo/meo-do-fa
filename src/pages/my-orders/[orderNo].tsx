@@ -1,3 +1,4 @@
+import { useQuery } from '@apollo/client';
 import {
   Box,
   Button,
@@ -29,6 +30,7 @@ import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules
 import CustomCard from 'src/components/Modules/OrderDetails/CustomCard';
 import CustomStepper from 'src/components/Modules/OrderDetails/CustomStepper';
 import ProfileLayout from 'src/components/Modules/ProfileLayout';
+import { GET_WEBSITE_CONFIG, GetWebsiteConfigData } from 'src/graphql/configs/getWebsiteConfig';
 import {
   GET_ORDER_DETAIL,
   GetOrderDetailData,
@@ -88,7 +90,7 @@ OrderDetails.getInitialProps = async (ctx) => {
 const flagSteps = [10, 15, 20, 30, 40, 80];
 
 function OrderDetails() {
-  const { t } = useTranslation(['myOrders', 'common']);
+  const { t, i18n } = useTranslation(['myOrders', 'common']);
 
   const router = useRouter();
 
@@ -116,6 +118,13 @@ function OrderDetails() {
   const partnerShipping = getOrderDetailData?.getOrderDetail?.partner_shipping;
 
   const classes = useStyles();
+  const { data: configData } = useQuery<GetWebsiteConfigData, undefined>(GET_WEBSITE_CONFIG);
+  const WARNING_CART_DELIVERY_COVID_EN = configData?.getWebsiteConfig?.find(
+    (config) => config.key === 'WARNING_CART_DELIVERY_COVID_EN'
+  )?.value;
+  const WARNING_CART_DELIVERY_COVID_VI = configData?.getWebsiteConfig?.find(
+    (config) => config.key === 'WARNING_CART_DELIVERY_COVID_VI'
+  )?.value;
   return (
     <MainLayout>
       <Head>
@@ -147,7 +156,12 @@ function OrderDetails() {
                   <Box my={2}>
                     <Divider />
                   </Box>
-
+                  {flag == 40 && (
+                    <div className="alert alert-warning d-block" role="alert">
+                      {i18n.language == 'en' && <span>{WARNING_CART_DELIVERY_COVID_EN}</span>}
+                      {i18n.language == 'vi' && <span>{WARNING_CART_DELIVERY_COVID_VI}</span>}
+                    </div>
+                  )}
                   <Box display="flex" justifyContent="space-between" alignItems="center">
                     {flag !== 25 && flag !== 80 && (
                       <Typography>
