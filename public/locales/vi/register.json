@@ -13,7 +13,7 @@
   "input_phone_error_required": "Xin nhập số điện thoại.",
   "input_phone_error_invalid": "Xin nhập số điện thoại hợp lệ.",
   "input_address_placeholder": "Nhập địa chỉ",
-  "input_email_placeholder": "Nhập email",
+  "input_email_placeholder": "Nhập email hoặc số điện thoại",
   "input_email_error_invalid": "Xin nhập email hợp lệ.",
   "input_email_error_noSpecialChars": "Email không được chứa kí tự đặc biệt.",
   "input_tax_placeholder": "Mã số thuế",

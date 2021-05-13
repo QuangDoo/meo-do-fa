@@ -8,6 +8,13 @@ import { ProductDetails } from 'src/graphql/product/product.query';
 const ProducerInformation = (props: ProductDetails) => {
   const { t } = useTranslation(['ingredientDetails']);
 
+  const handleCheck = (props) => {
+    if (!props) return;
+    const isData = ['<p><br></p>', 'false', null].some((string) => props.includes(string));
+
+    return isData;
+  };
+
   return (
     <div>
       <div hidden={props.ingredients?.length === 0}>
@@ -52,42 +59,47 @@ const ProducerInformation = (props: ProductDetails) => {
         labelPharmacokinetics={t('pharmacokinetics_label')}
         init={0}
       /> */}
+      {handleCheck(props.indication) || handleCheck(props.contraindication) ? null : (
+        <ScrollableTabsButtonAuto
+          indication={props.indication}
+          contraindication={props.contraindication}
+          labelIndication={t('indication_label')}
+          labelContraindion={t('contraindication_label')}
+          init={1}
+          vari="fullWidth"
+        />
+      )}
 
-      <ScrollableTabsButtonAuto
-        indication={props.indication}
-        contraindication={props.contraindication}
-        labelIndication={t('indication_label')}
-        labelContraindion={t('contraindication_label')}
-        init={1}
-        vari="fullWidth"
-      />
-
-      <ScrollableTabsButtonAuto
-        direction={props.direction}
-        interaction={props.interaction}
-        labelDirection={t('user_manual')}
-        labelInteraction={t('interaction_label')}
-        init={3}
-        vari="fullWidth"
-      />
-
-      <ScrollableTabsButtonAuto
-        preservation={props.preservation}
-        overdose={props.overdose}
-        labelPreservation={t('preservation_label')}
-        labelOverdose={t('overdose_label')}
-        init={5}
-        vari="fullWidth"
-      />
-
-      <ScrollableTabsButtonAuto
-        pharmacodynamics={props.pharmacodynamics}
-        pharmacokinetics={props.pharmacokinetics}
-        labelPharmacodynamics={t('pharmacodynamics_label')}
-        labelPharmacokinetics={t('pharmacokinetics_label')}
-        init={7}
-        vari="fullWidth"
-      />
+      {handleCheck(props.direction) || handleCheck(props.interaction) ? null : (
+        <ScrollableTabsButtonAuto
+          direction={props.direction}
+          interaction={props.interaction}
+          labelDirection={t('user_manual')}
+          labelInteraction={t('interaction_label')}
+          init={3}
+          vari="fullWidth"
+        />
+      )}
+      {handleCheck(props.preservation) || handleCheck(props.overdose) ? null : (
+        <ScrollableTabsButtonAuto
+          preservation={props.preservation}
+          overdose={props.overdose}
+          labelPreservation={t('preservation_label')}
+          labelOverdose={t('overdose_label')}
+          init={5}
+          vari="fullWidth"
+        />
+      )}
+      {handleCheck(props.pharmacodynamics) || handleCheck(props.pharmacokinetics) ? null : (
+        <ScrollableTabsButtonAuto
+          pharmacodynamics={props.pharmacodynamics}
+          pharmacokinetics={props.pharmacokinetics}
+          labelPharmacodynamics={t('pharmacodynamics_label')}
+          labelPharmacokinetics={t('pharmacokinetics_label')}
+          init={7}
+          vari="fullWidth"
+        />
+      )}
     </div>
   );
 };
