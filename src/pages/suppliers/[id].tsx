@@ -18,7 +18,7 @@ import withToken from 'src/utils/withToken';
 
 SupplierDetailPage.getInitialProps = async (ctx) => {
   const supplierId = ctx.query.id;
-  console.log('supplierId', supplierId);
+
   await asyncQuery<GetSupplierDetailsData, GetSupplierDetailsVars>({
     ctx,
     query: GET_SUPPLIER_DETAIL,

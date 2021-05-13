@@ -10,7 +10,6 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import App, { AppProps } from 'next/app';
 import React, { useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
-import { CheckboxCartsProvider } from 'src/contexts/CheckboxCarts';
 import { ModalControlProvider } from 'src/contexts/ModalControl';
 import { muiTheme } from 'src/theme';
 
@@ -27,9 +26,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
     <ThemeProvider theme={muiTheme}>
       <ModalControlProvider>
-        <CheckboxCartsProvider>
-          <Component {...pageProps} />
-        </CheckboxCartsProvider>
+        <Component {...pageProps} />
 
         <ToastContainer autoClose={1500} />
       </ModalControlProvider>

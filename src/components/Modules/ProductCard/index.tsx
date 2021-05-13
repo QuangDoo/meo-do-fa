@@ -1,7 +1,6 @@
 import { Tooltip } from '@material-ui/core';
 import clsx from 'clsx';
 import { useTranslation } from 'i18n';
-import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import { useToken } from 'src/contexts/Token';
@@ -54,11 +53,6 @@ const ProductCard = (props: Props) => {
                       alt="Medofa product"
                     />
                   </div>
-                  {/* <Image
-                    src={props.image_256 || '/assets/images/no_images.jpg'}
-                    layout="fill"
-                    objectFit={props.image_256 ? 'contain' : 'cover'}
-                  /> */}
                 </div>
               </a>
             </Link>
@@ -108,8 +102,8 @@ const ProductCard = (props: Props) => {
               )}
               {props.default_vendor !== null && (
                 <small title={props.default_vendor} className="product-card__name-supplier">
-                  <div className="text-muted supplier-name">{t('productCard:supplier')}:</div>{' '}
-                  {props.default_vendor}
+                  <div className="text-muted supplier-name">{t('productCard:supplier')}:</div>
+                  <Link href={`/suppliers/${props.default_vendor_id}`}>{props.default_vendor}</Link>
                 </small>
               )}
               <br />
@@ -129,7 +123,7 @@ const ProductCard = (props: Props) => {
                     productPrice={props.list_price}
                     productName={props.name}
                     productImg={props.image_512}
-                    available={isAvailable}
+                    available={props.is_available}
                   />
                 </div>
               </>

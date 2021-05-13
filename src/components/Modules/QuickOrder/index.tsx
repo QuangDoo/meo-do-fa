@@ -114,6 +114,7 @@ function QuickOrderPage() {
                     productName={item.name}
                     slug={item.slug}
                     discount_percentage={item.discount_percentage}
+                    isAvailable={item.is_available}
                   />
                 ))
               ) : (

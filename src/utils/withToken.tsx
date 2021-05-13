@@ -34,38 +34,6 @@ export default function withToken({ ssr = false, isProtected = false }: Options)
 
       const token = getToken(ctx);
 
-      // if (token) {
-      //   await Promise.all([
-      //     // Get user
-      //     asyncQuery({
-      //       ctx,
-      //       query: GET_USER,
-      //       fetchPolicy: 'network-only',
-      //       auth: true
-      //     }),
-      //     // Get cart
-      //     asyncQuery({
-      //       ctx,
-      //       query: GET_CART,
-      //       fetchPolicy: 'network-only',
-      //       auth: true
-      //     }),
-      //     // Get notifications
-      //     asyncQuery({
-      //       ctx,
-      //       query: GET_NOTI,
-      //       variables: {
-      //         page: 1,
-      //         pageSize: 5
-      //       },
-      //       fetchPolicy: 'network-only',
-      //       auth: true
-      //     })
-      //   ]).catch((err) => {
-      //     console.log('Error:', err);
-      //   });
-      // }
-
       return { token, ...(await Component.getInitialProps?.(ctx)) };
     };
 

@@ -16,6 +16,7 @@ type Props = {
   _id: number;
   slug: string;
   discount_percentage: number;
+  isAvailable: boolean;
 };
 
 function QuickOrderItem(props: Props) {
@@ -59,7 +60,7 @@ function QuickOrderItem(props: Props) {
                       productPrice={props.list_price}
                       productName={props.productName}
                       productImg={image}
-                      available={false}
+                      available={props.isAvailable}
                     />
                   </div>
                 )}
