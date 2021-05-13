@@ -21,9 +21,9 @@
   "minimum_price": "Đơn hàng tối thiểu",
   "file_is_not_image": "Chỉ chấp nhận file ảnh.",
   "shipping_fee": "Phí ship",
-  "delete_all_button_label": "Xóa sản phẩm đã chọn",
-  "delete_all_success": "Đã xóa tất cả sản phẩm khỏi giỏ hàng.",
-  "remove_all_confirm": "Bạn có chắc muốn xóa tất cả sản phẩm đã chọn khỏi giỏ hàng?",
+  "delete_checked_button_label": "Xóa sản phẩm đã chọn",
+  "delete_checked_success": "Đã xóa những sản phẩm đã chọn khỏi giỏ hàng.",
+  "remove_checked_confirm": "Bạn có chắc muốn xóa những sản phẩm đã chọn khỏi giỏ hàng?",
   "select_all": "Chọn tất cả sản phẩm",
   "price_total": "Thành tiền"
 }

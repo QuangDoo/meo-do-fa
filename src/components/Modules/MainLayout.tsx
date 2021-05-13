@@ -18,7 +18,7 @@ type Props = {
 };
 
 export default function MainLayout(props: Props) {
-  const { loading: gettingCart } = useCart();
+  const { loading: loadingCart } = useCart();
 
   const { data: dataUser, loading: gettingUser } = useUser();
 
@@ -36,7 +36,7 @@ export default function MainLayout(props: Props) {
 
       <Nav />
 
-      {token && <LoadingBackdrop open={gettingCart || gettingUser} />}
+      {token && <LoadingBackdrop open={loadingCart || gettingUser} />}
 
       {props.children}
 

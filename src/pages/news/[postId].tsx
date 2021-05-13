@@ -44,8 +44,8 @@ function NewsDetailPage() {
       <Nav />
       {newsDetailData ? (
         <div className="container py-5">
-          <h2>{name}</h2>
-          <div>
+          <h2 className="news-title mb-3">{name}</h2>
+          <div className="news-subtitle mb-3">
             <Trans
               i18nKey={'news:post_on'}
               values={{
@@ -55,6 +55,7 @@ function NewsDetailPage() {
               components={{ b: <b /> }}
             />
           </div>
+          <hr className="hr my-3" />
           <div
             dangerouslySetInnerHTML={{
               __html: content

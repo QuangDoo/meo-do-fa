@@ -1,18 +1,13 @@
 import { useQuery } from '@apollo/client';
 import { useTranslation } from 'i18n';
 import React, { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
-import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { useCart } from 'src/contexts/Cart';
-import { useCheckboxCarts } from 'src/contexts/CheckboxCarts';
-import { useUser } from 'src/contexts/User';
-import { ADD_TO_CART, AddToCartData, AddToCartVars } from 'src/graphql/cart/addToCart';
 import { GET_WEBSITE_CONFIG, GetWebsiteConfigData } from 'src/graphql/configs/getWebsiteConfig';
-import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 import useDebounce from 'src/hooks/useDebounce';
 
 import QuantityInput from '../../Form/QuantityInput';
 import ConfirmDeleteItemModal from '../Cart/ConfirmDeleteItemModal';
+
 type Props = {
   productId: number;
   productPrice: number;
@@ -21,17 +16,12 @@ type Props = {
   available: boolean;
 };
 
-// const MIN_QUANTITY = configs.MIN_QUANTITY;
-// const MAX_QUANTITY = configs.MAX_QUANTITY;
-
 function ProductCardQuantityInput(props: Props) {
   const { productId, productPrice, productName, productImg, available } = props;
 
   const { t } = useTranslation(['errors', 'success', 'cart']);
 
-  const { data: cart, refetch: refetchCart } = useCart();
-
-  const { data: user } = useUser();
+  const { data: cart, addToCart } = useCart();
 
   const thisProductInCart = cart?.carts.find((product) => product.productId === productId);
 
@@ -51,52 +41,9 @@ function ProductCardQuantityInput(props: Props) {
     configData?.getWebsiteConfig.find((config) => config.key === 'MAX_QUANTITY').value
   );
 
-  const { checkboxCarts, setCheckboxCarts } = useCheckboxCarts();
-
   useEffect(() => {
     setQuantity(quantityInCart);
   }, [quantityInCart]);
-
-  const [addToCart, { loading: addingToCart }] = useMutationAuth<AddToCartData, AddToCartVars>(
-    ADD_TO_CART,
-    {
-      onCompleted: () => {
-        refetchCart().then((data) => {
-          setCheckboxCarts([
-            ...checkboxCarts,
-            data.data.getCart?.carts.find((product) => product.productId === props.productId)?._id
-          ]);
-          toast.success(t(`success:update_cart`));
-        });
-      },
-      onError: (err) => {
-        const errorCode = err.graphQLErrors?.[0]?.extensions?.code;
-
-        setQuantity(quantityInCart);
-
-        switch (errorCode) {
-          case 121: {
-            toast.error(
-              t('errors:code_121', {
-                name: err.graphQLErrors[0].message.replace(
-                  'Sales price changed. Please remove product on cart. Product: ',
-                  ''
-                )
-              })
-            );
-            break;
-          }
-          case 140: {
-            toast.error(t('errors:code_141' + user.waiting ? '_waiting' : ''));
-            break;
-          }
-          default: {
-            toast.error(t(`errors:code_${errorCode}`));
-          }
-        }
-      }
-    }
-  );
 
   const handleUpdate = (
     prevQuantity: number,
@@ -115,12 +62,10 @@ function ProductCardQuantityInput(props: Props) {
     }
 
     addToCart({
-      variables: {
-        price: price,
-        productId: id,
-        productName: name,
-        quantity: newQuantity || 0
-      }
+      price: price,
+      productId: id,
+      productName: name,
+      quantity: newQuantity || 0
     });
   };
 
@@ -144,7 +89,10 @@ function ProductCardQuantityInput(props: Props) {
   };
 
   const handleCloseModal = () => {
+    // Close delete modal
     setOpen(false);
+
+    // Set quantity back to previous value in cart (because cart isn't updated)
     setQuantity(quantityInCart);
   };
 
@@ -171,8 +119,6 @@ function ProductCardQuantityInput(props: Props) {
         name={productName}
         price={productPrice}
       />
-
-      <LoadingBackdrop open={addingToCart} />
     </>
   );
 }

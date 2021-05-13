@@ -1,12 +1,7 @@
-import { useTranslation } from 'i18n';
 import React from 'react';
-import { toast } from 'react-toastify';
 import PriceText from 'src/components/Form/PriceText';
 import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { useCart } from 'src/contexts/Cart';
-import { useCheckboxCarts } from 'src/contexts/CheckboxCarts';
-import { DELETE_CART, DeleteCartData, DeleteCartVars } from 'src/graphql/cart/deleteCart.mutation';
-import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 
 import ConfirmModal, { ConfirmModalProps } from './ConfirmModal';
 
@@ -20,36 +15,14 @@ type Props = Omit<ConfirmModalProps, 'children' | 'onConfirm'> & {
 export default function ConfirmDeleteItemModal(props: Props) {
   const { cartId, img, name, price, ...rest } = props;
 
-  const { refetch: refetchCart } = useCart();
-
-  const { checkboxCarts, setCheckboxCarts } = useCheckboxCarts();
-
-  const { t } = useTranslation(['errors', 'success', 'cart']);
-
-  const [deleteCart, { loading: deletingCart }] = useMutationAuth<DeleteCartData, DeleteCartVars>(
-    DELETE_CART,
-    {
-      onCompleted: () => {
-        refetchCart().then(() => {
-          toast.success(t(`success:delete_cart`));
-        });
-      },
-      onError: (err) => {
-        toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
-      }
-    }
-  );
+  const { deleteCart } = useCart();
 
   const handleConfirmDelete = () => {
     props.onClose();
 
     deleteCart({
-      variables: {
-        _id: cartId
-      }
+      _id: cartId
     });
-
-    setCheckboxCarts(checkboxCarts.filter((checkbox) => checkbox !== cartId));
   };
 
   return (
@@ -74,8 +47,6 @@ export default function ConfirmDeleteItemModal(props: Props) {
           </div>
         </div>
       </ConfirmModal>
-
-      <LoadingBackdrop open={deletingCart} />
     </React.Fragment>
   );
 }

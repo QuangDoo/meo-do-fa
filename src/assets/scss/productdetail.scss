@@ -68,3 +68,48 @@
   object-fit: contain;
   pointer-events: none;
 }
+
+.social-share-container {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.social-share-button {
+  overflow: visible !important;
+  display: flex;
+  align-items: center;
+  padding: 0 10px 0 0;
+  margin-right: 10px;
+  border-radius: 5px;
+
+  img {
+    height: 32px;
+    width: 32px;
+    margin-right: 5px;
+  }
+
+  span {
+    color: white;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.facebook-button {
+  background-color: rgb(59, 89, 152);
+
+  &:hover {
+    background-color: rgba(59, 89, 152, 0.9);
+  }
+}
+
+.zalo-button {
+  background-color: rgb(182, 209, 221);
+
+  &:hover {
+    background-color: rgba(182, 209, 221, 0.8);
+  }
+}

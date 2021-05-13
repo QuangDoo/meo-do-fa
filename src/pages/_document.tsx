@@ -65,6 +65,7 @@ class MyDocument extends Document {
           <style type="text/css">{globalStyles}</style>
 
           <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js"></script>
+
           <script
             dangerouslySetInnerHTML={{
               __html: `
@@ -92,8 +93,8 @@ class MyDocument extends Document {
             data-oaid="3215746340374733717"
             data-welcome-message="Rất vui khi được hỗ trợ bạn!"
             data-autopopup="5"
-            data-width="300"
-            data-height="300"></div>
+            data-width="350px"
+            data-height="420px"></div>
 
           <script
             dangerouslySetInnerHTML={{

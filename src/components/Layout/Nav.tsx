@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client';
-import { Menu, useMediaQuery } from '@material-ui/core';
+import { Menu } from '@material-ui/core';
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import { useTranslation } from 'i18n';
 import cookies from 'js-cookie';
@@ -37,17 +37,6 @@ const Nav = () => {
   const closeMenu = () => {
     setAnchorEl(null);
   };
-
-  // const { data: categoriesData } = useQuery<GetCategoriesLevelData, undefined>(
-  //   GET_CATEGORIES_LEVEL,
-  //   {
-  //     onError: (error) => {
-  //       toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
-  //     }
-  //   }
-  // );
-
-  // const categories = categoriesData?.getCategoriesLevel || [];
 
   //const isSmallScreen = useMediaQuery('(max-width: 575px)');
   const { data: configData } = useQuery<GetWebsiteConfigData, undefined>(GET_WEBSITE_CONFIG);
