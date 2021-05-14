@@ -16,6 +16,8 @@ import { useUser } from 'src/contexts/User';
 import { GET_WEBSITE_CONFIG, GetWebsiteConfigData } from 'src/graphql/configs/getWebsiteConfig';
 import { LOGIN_USER, LoginData, LoginVars } from 'src/graphql/user/login';
 
+import LoginFaceBookButton from './LoginFaceBookButton';
+
 type Inputs = {
   username: string;
   password: string;
@@ -139,7 +141,7 @@ const LoginForm = () => {
         <Button type="submit" variant="gradient" block className="mb-5">
           {t('login:login')}
         </Button>
-
+        <LoginFaceBookButton />
         <span className="text-capitalize ">
           <Trans
             i18nKey="login:login_for_deals"
