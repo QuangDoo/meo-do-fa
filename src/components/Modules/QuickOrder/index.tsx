@@ -10,11 +10,6 @@ import PriceText from 'src/components/Form/PriceText';
 import Loading from 'src/components/Layout/Loading';
 import { useCart } from 'src/contexts/Cart';
 import { useToken } from 'src/contexts/Token';
-import {
-  GET_CART_BY_PRODUCT,
-  GetCartByProductData,
-  getCartByproductVars
-} from 'src/graphql/cart/getCartByProduct';
 import { GET_WEBSITE_CONFIG, GetWebsiteConfigData } from 'src/graphql/configs/getWebsiteConfig';
 // import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 // import { CREATE_COUNSEL } from 'src/graphql/order/order.mutation';

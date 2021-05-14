@@ -11,9 +11,9 @@ import { GET_CART, GetCartData } from 'src/graphql/cart/getCart';
 import {
   GET_CART_BY_PRODUCT,
   GetCartByProductData,
-  getCartByproductVars
+  GetCartByProductVars
 } from 'src/graphql/cart/getCartByProduct';
-import { useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
+import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 
 import { useUser } from './User';
 
@@ -52,27 +52,52 @@ const CartProvider = (props: Props) => {
 
   const { data: user } = useUser();
 
-  const [checkboxCarts, setCheckboxCarts] = useState<string[]>([]);
+  // Contains IDs of checked cart items
+  const [checkedCarts, setCheckedCarts] = useState<string[]>([]);
 
+  // Loading state, used for all cart related queries and mutations
   const [loading, setLoading] = useState(false);
 
-  // Checked cart data
-  const { data: getCartByProductData } = useQueryAuth<GetCartByProductData, getCartByproductVars>(
-    GET_CART_BY_PRODUCT,
-    {
-      variables: { ids: checkboxCarts },
-      nextFetchPolicy: 'network-only'
-    }
-  );
+  // Data of checked cart items
+  const [checkedCartsData, setCheckedCartsData] = useState<
+    GetCartByProductData['getCartByProduct']
+  >();
+
+  // Update checked cart data when checkedCarts changes
+  useEffect(() => {
+    const token = cookies.get('token') || '';
+
+    if (!token) return;
+
+    const getCartByProduct = async () => {
+      try {
+        const response = await client.query<GetCartByProductData, GetCartByProductVars>({
+          query: GET_CART_BY_PRODUCT,
+          context: {
+            headers: {
+              authorization: token
+            }
+          },
+          fetchPolicy: 'no-cache'
+        });
+
+        setCheckedCartsData(response.data.getCartByProduct);
+      } catch (error) {
+        toastError(error);
+      }
+    };
+
+    getCartByProduct();
+  }, [checkedCarts]);
 
   // Check a cart item
   const checkCart = (id: string) => {
-    setCheckboxCarts((checkboxCarts) => [...checkboxCarts, id]);
+    setCheckedCarts((checkboxCarts) => [...checkboxCarts, id]);
   };
 
   // Uncheck a cart item
   const uncheckCart = (id: string) => {
-    setCheckboxCarts((checkboxCarts) => checkboxCarts.filter((cart) => cart !== id));
+    setCheckedCarts((checkboxCarts) => checkboxCarts.filter((cart) => cart !== id));
   };
 
   // Handle general error
@@ -81,8 +106,9 @@ const CartProvider = (props: Props) => {
   };
 
   // Whole cart data
-  const [getCartData, setGetCartData] = useState<GetCartData>();
+  const [cartData, setCartData] = useState<GetCartData['getCart']>();
 
+  // Get cart function, returns a promise
   const getCart = async () => {
     try {
       setLoading(true);
@@ -97,13 +123,13 @@ const CartProvider = (props: Props) => {
         fetchPolicy: 'no-cache'
       });
 
-      setGetCartData(response.data);
+      setCartData(response.data.getCart);
 
       setLoading(false);
 
       // Check all cart if this is the first time loading
       if (isFirstLoad) {
-        setCheckboxCarts(response.data.getCart?.carts.map((cart) => cart._id));
+        setCheckedCarts(response.data.getCart?.carts.map((cart) => cart._id));
 
         setIsFirstLoad(false);
       }
@@ -162,7 +188,7 @@ const CartProvider = (props: Props) => {
     addToCartMutation({ variables })
       .then(getCart)
       .then((data) => {
-        setCheckboxCarts((checkboxCarts) => [
+        setCheckedCarts((checkboxCarts) => [
           ...checkboxCarts,
           data.data.getCart.carts.find((product) => product.productId === variables.productId)._id
         ]);
@@ -178,7 +204,7 @@ const CartProvider = (props: Props) => {
     addToCartMutation({ variables })
       .then(getCart)
       .then((cartData) => {
-        setCheckboxCarts([
+        setCheckedCarts([
           cartData.data.getCart.carts.find((cart) => cart.productId === variables.productId)._id
         ]);
         toast.success(t(`success:update_cart`));
@@ -197,7 +223,7 @@ const CartProvider = (props: Props) => {
     deleteCartMutation({ variables })
       .then(getCart)
       .then(() => {
-        setCheckboxCarts((checkboxCarts) =>
+        setCheckedCarts((checkboxCarts) =>
           checkboxCarts.filter((checkbox) => checkbox !== variables._id)
         );
         toast.success(t(`success:delete_cart`));
@@ -216,7 +242,7 @@ const CartProvider = (props: Props) => {
       .then(getCart)
       .then(() => {
         toast.success(t(`cart:delete_checked_success`));
-        setCheckboxCarts([]);
+        setCheckedCarts([]);
       })
       .catch(toastError);
   };
@@ -224,16 +250,16 @@ const CartProvider = (props: Props) => {
   return (
     <CartContext.Provider
       value={{
-        data: getCartData?.getCart,
-        checkedData: getCartByProductData?.getCartByProduct,
+        data: cartData,
+        checkedData: checkedCartsData,
         loading,
         refetch: getCart,
         getCart,
         addToCart,
         buyNow,
         deleteCart,
-        checkboxCarts,
-        setCheckboxCarts,
+        checkboxCarts: checkedCarts,
+        setCheckboxCarts: setCheckedCarts,
         deleteCarts,
         checkCart,
         uncheckCart
