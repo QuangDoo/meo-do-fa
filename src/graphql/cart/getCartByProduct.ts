@@ -2,7 +2,7 @@ import { gql } from '@apollo/client';
 
 import { CartItem } from './getCart';
 
-export type getCartByproductVars = {
+export type GetCartByProductVars = {
   ids: string[];
 };
 
