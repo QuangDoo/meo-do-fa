@@ -1,3 +1,4 @@
+import { useQuery } from '@apollo/client';
 import slugify from '@sindresorhus/slugify';
 import clsx from 'clsx';
 import { useTranslation } from 'i18n';
@@ -5,6 +6,7 @@ import Link from 'next/link';
 import React, { useState } from 'react';
 import Button from 'src/components/Form/Button';
 import PriceText from 'src/components/Form/PriceText';
+import { GET_WEBSITE_CONFIG, GetWebsiteConfigData } from 'src/graphql/configs/getWebsiteConfig';
 import { OutputCounsel } from 'src/graphql/order/getCounsel';
 
 const PRODUCTS_QTY_SHOW = 3;
@@ -34,10 +36,17 @@ type Props = {
 };
 
 const StickySidebar = (props: Props): JSX.Element => {
+  const { data: configData } = useQuery<GetWebsiteConfigData, undefined>(GET_WEBSITE_CONFIG);
+  const WARNING_CART_DELIVERY_COVID_EN = configData?.getWebsiteConfig?.find(
+    (config) => config.key === 'WARNING_CART_DELIVERY_COVID_EN'
+  )?.value;
+  const WARNING_CART_DELIVERY_COVID_VI = configData?.getWebsiteConfig?.find(
+    (config) => config.key === 'WARNING_CART_DELIVERY_COVID_VI'
+  )?.value;
   const { counselData } = props;
   const [showMore, setShowMore] = useState(false);
 
-  const { t } = useTranslation(['checkout', 'common', 'errors']);
+  const { t, i18n } = useTranslation(['checkout', 'common', 'errors']);
 
   if (!counselData) return null;
 
@@ -142,7 +151,11 @@ const StickySidebar = (props: Props): JSX.Element => {
           </span>
         </SidebarItem>
       </div>
-
+      {/*  */}
+      <div className="alert alert-warning d-block" role="alert">
+        {i18n.language == 'en' && <span>{WARNING_CART_DELIVERY_COVID_EN}</span>}
+        {i18n.language == 'vi' && <span>{WARNING_CART_DELIVERY_COVID_VI}</span>}
+      </div>
       <div className="text-right">
         <div className="mb-2">
           <small>{t('checkout:confirm_checkout_doubleCheck')}</small>

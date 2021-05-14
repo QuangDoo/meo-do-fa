@@ -1,5 +1,6 @@
 {
   "add_to_cart": "Added product to cart.",
   "update_cart": "Updated cart.",
-  "delete_cart": "Removed product from cart."
+  "delete_cart": "Removed product from cart.",
+  "send_password_to_email_success": "The new password has been sent to your inbox. Please check your email!"
 }

@@ -1,5 +1,7 @@
 {
   "add_to_cart": "Đã thêm sản phẩm vào giỏ hàng.",
   "update_cart": "Đã cập nhật giỏ hàng.",
-  "delete_cart": "Đã xóa sản phẩm khỏi giỏ hàng."
+  "delete_cart": "Đã xóa sản phẩm khỏi giỏ hàng.",
+  "send_password_to_email_success": "Mật khẩu mới đã được gửi đến hộp thư đến của bạn. Xin vui lòng kiểm tra email của bạn!",
+  "send_password_to_phone_number_success": "Mật khẩu mới đã được gửi đến số điện thoại của bạn. Xin vui lòng kiểm tra tin nhắn của bạn!"
 }
