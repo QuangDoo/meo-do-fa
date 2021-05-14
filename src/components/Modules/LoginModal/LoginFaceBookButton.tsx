@@ -13,7 +13,7 @@ export default function LoginFaceBookButton() {
     <div>
       {isLogin ? null : (
         <FaceBookLogin
-          appId="2906564336298995"
+          appId="1480275125646533"
           autoLoad={true}
           fields="name,email,picture"
           callback={responseFacebook}

@@ -103,7 +103,7 @@ function CartItem(props: Props) {
               productName={props.productName}
               productPrice={props.price}
               productImg={props.product.image_512}
-              available={false}
+              available={props.is_available}
             />
 
             <div className="ml-3">

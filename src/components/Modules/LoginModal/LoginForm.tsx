@@ -3,6 +3,7 @@ import { Trans, useTranslation } from 'i18n';
 import cookies from 'js-cookie';
 import { useRouter } from 'next/router';
 import React from 'react';
+import { GoogleLogin } from 'react-google-login';
 import { DeepMap, FieldError, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { usernameRegex } from 'src/assets/regex/username';
@@ -38,8 +39,11 @@ const LoginForm = () => {
 
   const { data: configData } = useQuery<GetWebsiteConfigData, undefined>(GET_WEBSITE_CONFIG);
 
-  const MAIN_PAGE = configData?.getWebsiteConfig?.find((config) => config.key === 'MAIN_PAGE')
-    ?.value;
+  const handleFindGetConfigData = (key: string) => {
+    const res = configData?.getWebsiteConfig?.find((config) => config.key === key)?.value;
+
+    return res;
+  };
 
   const { getUser } = useUser();
   const { getCart } = useCart();
@@ -61,7 +65,9 @@ const LoginForm = () => {
         router.reload();
       } else {
         //router.push("/products");
-        MAIN_PAGE ? router.push(`/${MAIN_PAGE}`) : router.push('/');
+        handleFindGetConfigData('MAIN_PAGE')
+          ? router.push(`/${handleFindGetConfigData('MAIN_PAGE')}`)
+          : router.push('/');
       }
     },
     onError: (error) => {
@@ -82,6 +88,11 @@ const LoginForm = () => {
         }
       }
     });
+  };
+
+  const responseGoogle = (res) => {
+    console.log(`res`, res);
+    console.log(`res.profileObj`, res.profileObj);
   };
 
   return (
@@ -141,7 +152,18 @@ const LoginForm = () => {
         <Button type="submit" variant="gradient" block className="mb-5">
           {t('login:login')}
         </Button>
-        <LoginFaceBookButton />
+        {handleFindGetConfigData('LOGIN_BY_FACEBOOK') === 'Y' && <LoginFaceBookButton />}
+
+        {handleFindGetConfigData('LOGIN_BY_GOOGLE') === 'Y' && (
+          <GoogleLogin
+            clientId="837554125152-a1idjamfft6r9jksqjraqgiavacn6m4p.apps.googleusercontent.com"
+            buttonText="Login By Google"
+            onSuccess={responseGoogle}
+            onFailure={responseGoogle}
+            cookiePolicy={'single_host_origin'}
+          />
+        )}
+
         <span className="text-capitalize ">
           <Trans
             i18nKey="login:login_for_deals"
