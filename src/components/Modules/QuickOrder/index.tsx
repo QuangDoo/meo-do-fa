@@ -78,16 +78,14 @@ function QuickOrderPage() {
         <div className="row">
           <div className="col-12 col-md-9 col-lg-9">
             {token && (
-              <div className="product-search elevated cart__items mb-3">
+              <div className=" input-group form__input-group btn-border-rad  elevated cart__items mb-3">
                 <input
+                  className="form-control form-control-sm search-input hide-focus keep-border"
                   type="text"
                   placeholder={t(`quickOrder:search_quick_order`)}
                   value={searchTerm}
                   onChange={handleSearchQuickOrder}
                 />
-                <button>
-                  <i className="fa fa-search"></i>
-                </button>
               </div>
             )}
 
@@ -109,13 +107,14 @@ function QuickOrderPage() {
                     productName={item.name}
                     slug={item.slug}
                     discount_percentage={item.discount_percentage}
+                    product={item}
                     isAvailable={item.is_available}
                   />
                 ))
               ) : (
-                <>
-                  {t(`quickOrder:no_item_search`)} &#34;{searchTerm}&#34;
-                </>
+                <div className="search-quick-order__no-products">
+                  {t(`quickOrder:no_item_search`)} <p>{searchTerm}</p>
+                </div>
               )}
             </div>
           </div>
