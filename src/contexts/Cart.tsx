@@ -73,6 +73,7 @@ const CartProvider = (props: Props) => {
       try {
         const response = await client.query<GetCartByProductData, GetCartByProductVars>({
           query: GET_CART_BY_PRODUCT,
+          variables: { ids: checkedCarts },
           context: {
             headers: {
               authorization: token
