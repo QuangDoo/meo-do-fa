@@ -126,21 +126,17 @@
 .mypage-block__content {
   font-size: 12px;
 }
-
+.accept, .no-accept {
+  min-width: 60%;
+  text-align: center;
+  color: #fff;
+  padding: .25rem 1rem;
+}
 .accept {
   background: #2b3695;
-  width: 50%;
-  text-align: center;
-  color: #fff;
-  padding: 2.5px;
 }
-
 .no-accept {
   background: #ffcb31;
-  width: 50%;
-  text-align: center;
-  color: #fff;
-  padding: 2.5px;
 }
 .closePopup {
   background: url(//theme.hstatic.net/200000142961/1000600858/14/fancybox_sprite.png?v=739) top left
