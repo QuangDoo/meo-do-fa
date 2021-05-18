@@ -303,7 +303,7 @@ const Footer = () => {
                     </div>
                   </Grid>
                   <Grid item sm={6}>
-                    <div className="footer__bct ">
+                    <div className="footer__bct d-none">
                       <a rel="nofollow">
                         <img
                           alt="Dấu đỏ của Bộ Công Thương"
