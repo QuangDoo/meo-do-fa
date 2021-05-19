@@ -1,38 +1,21 @@
 .quickOrder{
     padding-top: 1.7rem !important;
 }
-.product-search {
+.search-quick-order__no-products p{
+    font-weight: bold;
+    display: inline;
+}
+.discount__quick-order{
     position: relative;
-    width: 100%;
-    box-shadow: 0px 3px 20px rgb(0 0 0 / 8%);
 }
-.product-search input {
-    width: 100%;
-    height: 35px;
-    padding: 0 15px;
-    color: #999999;
-    background: transparent;
-    border: 1px solid #353535;
-    border-radius: 4px;
-    transition: all .3s;
-}
-.product-search input:focus {
-    border-color: #343f99;
-}
-.product-search button {
+.discount__quick-order .discount__quick-order-percent{
     position: absolute;
-    width: 35px;
-    height: 33px;
-    top: 1px;
-    right: 1px;
-    text-align: center;
-    background: transparent;
-    color: #353535;
-    border: none;
-    border-radius: 0 4px 4px 0;
-    transition: all .3s;
-}
-.product-search button:hover {
-    background: #343f99;
-    color: #ffffff;
+    top: 0;
+    right: 0;
+    background-color: #f5b700;
+    color: #fff;
+    font-size: 12px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
 }

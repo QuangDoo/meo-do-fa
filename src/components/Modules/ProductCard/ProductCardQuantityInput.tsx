@@ -106,7 +106,7 @@ function ProductCardQuantityInput(props: Props) {
         onBlur={handleBlur}
         min={MIN_QUANTITY}
         max={MAX_QUANTITY}
-        available={available}
+        isAvailable={available}
       />
 
       <ConfirmDeleteItemModal

@@ -1,6 +1,6 @@
 {
   "view_cart": "View cart",
   "quick_order": "Quick Order",
-  "search_quick_order" : "Enter product name...",
+  "search_quick_order" : "Enter product name in quick order...",
   "no_item_search":"No products with keyword"
 }

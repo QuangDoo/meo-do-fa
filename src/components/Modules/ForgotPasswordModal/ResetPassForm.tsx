@@ -18,7 +18,7 @@ type Inputs = {
 const ResetPassForm = () => {
   const { register, handleSubmit } = useForm<Inputs>();
 
-  const { t } = useTranslation(['password', 'errors', 'register']);
+  const { t } = useTranslation(['password', 'errors', 'register', 'success']);
 
   const { closeModal } = useModalControlDispatch();
 
@@ -28,6 +28,16 @@ const ResetPassForm = () => {
 
   const [resetPassword, { loading: loadingResetPassword }] = useMutation(RESET_PASSWORD);
 
+  const messageContent = (value) => {
+    const checkEmail = /\S+@\S+\.\S+/.test(value);
+
+    const message = !checkEmail
+      ? t(`success:send_password_to_phone_number_success`)
+      : t(`success:send_password_to_email_success`);
+
+    return message;
+  };
+
   const onSubmit = (data: Inputs) => {
     const { username } = data;
     resetPassword({
@@ -36,7 +46,7 @@ const ResetPassForm = () => {
       }
     })
       .then(() => {
-        toast.success(t(`errors:send_password_to_email_success`));
+        toast.success(messageContent(data.username));
         closeModal();
       })
       .catch((error) => {

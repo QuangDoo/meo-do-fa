@@ -88,7 +88,7 @@ OrderDetails.getInitialProps = async (ctx) => {
 const flagSteps = [10, 15, 20, 30, 40, 80];
 
 function OrderDetails() {
-  const { t } = useTranslation(['myOrders', 'common']);
+  const { t, i18n } = useTranslation(['myOrders', 'common']);
 
   const router = useRouter();
 
@@ -147,7 +147,6 @@ function OrderDetails() {
                   <Box my={2}>
                     <Divider />
                   </Box>
-
                   <Box display="flex" justifyContent="space-between" alignItems="center">
                     {flag !== 25 && flag !== 80 && (
                       <Typography>

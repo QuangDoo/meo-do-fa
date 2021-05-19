@@ -205,38 +205,6 @@ export default function MyAccountPage() {
 
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(onSubmit, onError)}>
-          <FormCard title={t('myAccount:account_info')}>
-            {/* Full name */}
-            <InputWithLabel
-              ref={register({
-                required: t('myAccount:name_required') + ''
-              })}
-              required
-              label={t('myAccount:name_label')}
-              name="name"
-              type="text"
-              placeholder={t('myAccount:name_placeholder')}
-              defaultValue={user?.name}
-              maxLength={100}
-            />
-
-            {/* Phone number */}
-            <InputWithLabel
-              disabled
-              label={t('myAccount:phone_label')}
-              type="text"
-              defaultValue={user?.phone || ''}
-            />
-
-            {/* Email */}
-            <InputWithLabel
-              disabled
-              label={t('myAccount:email_label')}
-              type="text"
-              defaultValue={user?.email || ''}
-            />
-          </FormCard>
-
           <FormCard title={t('myAccount:business_info')}>
             <div className="row">
               {/* Account type */}
@@ -315,6 +283,37 @@ export default function MyAccountPage() {
             <AddressSelect />
           </FormCard>
 
+          <FormCard title={t('myAccount:account_info')}>
+            {/* Full name */}
+            <InputWithLabel
+              ref={register({
+                required: t('myAccount:name_required') + ''
+              })}
+              required
+              label={t('myAccount:name_label')}
+              name="name"
+              type="text"
+              placeholder={t('myAccount:name_placeholder')}
+              defaultValue={user?.name}
+              maxLength={100}
+            />
+
+            {/* Phone number */}
+            <InputWithLabel
+              disabled
+              label={t('myAccount:phone_label')}
+              type="text"
+              defaultValue={user?.phone || ''}
+            />
+
+            {/* Email */}
+            <InputWithLabel
+              disabled
+              label={t('myAccount:email_label')}
+              type="text"
+              defaultValue={user?.email || ''}
+            />
+          </FormCard>
           <div className="col-12 d-flex justify-content-center">
             <Button type="submit" variant="primary" size="lg">
               {t('update_button')}
