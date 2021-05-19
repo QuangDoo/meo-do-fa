@@ -1,7 +1,7 @@
 {
   "title": "Cập nhật hồ sơ",
-  "account_info": "Thông tin tài khoản",
-  "name_label": "Họ tên khách hàng",
+  "account_info": "Thông tin người đại diện doanh nghiệp",
+  "name_label": " Họ tên người đại diện doanh nghiêp",
   "name_placeholder": "vd Trần Thị B",
   "name_required": "Xin nhập họ tên.",
   "phone_label": "Số điện thoại",
