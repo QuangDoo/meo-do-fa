@@ -162,7 +162,6 @@ const Footer = () => {
                   <b className="text-primary text-uppercase">{t('footer:copyright_by_medofa')}</b>
                 </div>
                 <p className="footer__info-company">
-                  <br />
                   {t('footer:business_certificate_label') + ': '}
                   <b>{t('footer:business_certificate_number') + ' '}</b>
                   {t('footer:business_certificate_issued_at') + ' '}
@@ -317,11 +316,11 @@ const Footer = () => {
           </div>
         </div>
         <div className="copyright d-flex flex-column">
-          <p>
+          <p className="m-0">
             {t('footer:reference_illustration')}. {t('footer:the_use_of_drug')}.
           </p>
           <hr />
-          <p className="d-flex flex-row justify-content-center">
+          <p className="d-flex flex-row justify-content-center mb-0">
             <div>{t('footer:copyright')}</div>
             <div className="copyright__version">
               {t('footer:version')} {WEBSITE_VERSION}
