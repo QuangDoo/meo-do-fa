@@ -16,5 +16,6 @@
   "phone": "Phone",
   "create": "Add a new address",
   "edit": "Edit",
-  "delete": "Delete"
+  "delete": "Delete",
+  "notification":"The address of shipping is follow by the address which registered in your business license."
 }

@@ -16,5 +16,6 @@
   "phone": "Điện thoại",
   "create": "Thêm địa chỉ mới",
   "edit": "Sửa",
-  "delete": "Xóa"
+  "delete": "Xóa",
+  "notification":"Địa chỉ giao hàng theo địa chỉ trên giấy phép kinh doanh."
 }
