@@ -90,6 +90,7 @@ export default function EditDeliveryAddressDialog({ address, open, onClose, ...p
       maxWidth="md"
       fullWidth
       title={t('myAddressBook:edit_dialog_title')}
+      note={t('myAddressBook:notification')}
       actionsNode={
         <Button
           color="primary"

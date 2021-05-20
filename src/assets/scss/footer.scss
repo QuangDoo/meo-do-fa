@@ -114,6 +114,29 @@
 .web__margin{
   margin-left: 57px;
 }
+@media (min-width: 568px) {
+  .wrapper__copyright_bottom {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+}
+@media (min-width: 446px) and (max-width:567px) {
+  .wrapper__copyright_bottom {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+@media (max-width: 446px) {
+  .wrapper__copyright_bottom {
+    display: block;
+    .copyright_content, .copyright__version{
+      display: inline-block;
+    }
+  }
+}
+
 @media (max-width:1200px){
   .web__margin{
     margin-left:-13px;
@@ -135,6 +158,7 @@
     margin-top: 0;
   }
 }
+
 .copyright__version{
   margin-left: 0.2rem;
 }
