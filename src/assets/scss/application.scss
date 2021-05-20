@@ -12783,6 +12783,9 @@ abbr[title] {
   font-weight: 500;
   text-transform: uppercase;
 }
+.title-info div:first-child{
+  width: 14rem;
+}
 .product__status .display-status {
   color: $secondary;
   font-weight: 500;
