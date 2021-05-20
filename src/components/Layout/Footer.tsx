@@ -320,12 +320,12 @@ const Footer = () => {
             {t('footer:reference_illustration')}. {t('footer:the_use_of_drug')}.
           </p>
           <hr />
-          <p className="d-flex flex-row justify-content-center mb-0">
-            <div>{t('footer:copyright')}</div>
-            <div className="copyright__version">
+          <div className="wrapper__copyright_bottom">
+            <span className="copyright_content">{t('footer:copyright')}</span>
+            <span className="copyright__version">
               {t('footer:version')} {WEBSITE_VERSION}
-            </div>
-          </p>
+            </span>
+          </div>
         </div>
         <LoadingBackdrop open={loadingSubcribe} />
         <BackToTop />
