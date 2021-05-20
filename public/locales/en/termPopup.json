@@ -1,7 +1,12 @@
 {
-    "trading_floor": "E-commerce trading floor",
+    "trading_floor": "is the e-commerce website of Dayton Pharma Joint Stock Company. ",
     "exchanges": "Exchanges",
-    "content":"is set up to membersengaged in wholesale trading of pharmaceutical products, medical supplies, cosmetics and other productsallowed to circulate in Vietnam. Members participating in the Exchange are companies, organizations, pharmacies, drugstores and clinics are granted the right to distribute pharmaceuticals and objectsmedical investment and other products; and must have a person in charge of expertise as prescribedunder the law. Information about prices, drug product information posted on the floorTransactions are intended to provide information to identifiable purchasing members characteristics of the commodity to make a purchase decision. The good use of prescription drugs Treatment must strictly follow the instructions of a medical professional pharmacy. The Exchange is not responsible for any arbitrary consequences use of the drug based on the above information and the circumstances in which the member buys the drug consumption purposes.",
+    "content":"Customers need to purchase products on the website must meet the following conditions:",
+    "content_1":"Business establishments affiliated to establishments having the function of medical examination and treatment.",
+    "content_2":"Must have a certificate of eligibility for pharmaceutical business.",
+    "content_3":"Must do business at the registered location in the business registration license.",
+    "content_4":" Register as a member and get verified by MEDOFA",
+    "content_5":"Individual and institutional customers who are not eligible for pharmaceutical business are not supported on this website.",
     "message":"You must agree to the terms in order to access the website",
     "agree":"I AGREE",
     "no_agree":"I DO NOT AGREE"

@@ -1,7 +1,12 @@
 {
-    "trading_floor": " Sàn giao dịch thương mại điện tử",
+    "trading_floor": "là website thương mại điện tử của Công ty Cổ phần dược phẩm Dayton.",
     "exchanges":"Sàn Giao Dịch",
-    "content":"được thiết lập để các thành viên tham gia mua bán sỉ các sản phẩm dược phẩm, vật tư y tế, mỹ phẩm và các sản phẩm được phép lưu hành tại Việt Nam. Thành viên tham gia Sàn Giao Dịch là các công ty, tổ chức, nhà thuốc, quầy thuốc, phòng khám được cấp quyền phân phối dược phẩm, vật tư y tế và các sản phẩm khác; và phải có người phụ trách chuyên môn theo quy định của pháp luật. Các thông tin về giá cả, thông tin sản phẩm thuốc đăng tải lên Sàn Giao Dịch nhằm mục đích cung cấp thông tin cho thành viên mua hàng có thể xác định các đặc tính của hàng hóa để đưa ra quyết định mua. Việc sử dụng thuốc kê đơn hay chữa bệnh phải tuyệt đối tuân thủ theo sự hướng dẫn của người có chuyên môn về y dược. Sàn Giao Dịch không chịu trách nhiệm cho bất cứ hậu quả nào xảy ra do tự ý dùng thuốc dựa trên các thông tin trên và các trường hợp thành viên mua thuốc cho mục đích tiêu dùng.",
+    "content":"Khách hàng có nhu cầu mua sản phẩm trên website bắt buộc phải đáp ứng các điều kiện sau:",
+    "content_1":"Cơ sở kinh doanh trực thuộc cơ sở có chức năng khám, chữa bệnh.",
+    "content_2":"Phải có chứng nhận đủ điều kiện kinh doanh Dược.",
+    "content_3":"Phải kinh doanh tại địa điểm đăng ký trong giấy phép đăng ký kinh doanh",
+    "content_4":"Đăng ký làm thành viên và được xác thực bởi MEDOFA.",
+    "content_5":"Khách hàng cá nhân và tổ chức không đủ điều kiện kinh doanh dược chưa được hỗ trợ trên website này.",
     "message":"Bạn phải đồng ý điều khoản thì mới có thể truy cập được website",
     "agree":"TÔI ĐỒNG Ý",
     "no_agree":"TÔI KHÔNG ĐỒNG Ý"
