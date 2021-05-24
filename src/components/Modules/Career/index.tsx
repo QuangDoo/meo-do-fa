@@ -47,7 +47,7 @@ type Job = {
   jobName: string;
 };
 
-function Career() {
+function Career(props) {
   const [tempJobs, setTempJobs] = useState<Job[]>(jobs);
   const onFilter = (key) => {
     const temp = jobs.filter((job) => job.jobName.toLowerCase().indexOf(key?.toLowerCase()) !== -1);
@@ -60,7 +60,7 @@ function Career() {
     <>
       <Banner bannerImgUrl={imgUrl} rightImgUrl={rightImgUrl} />
 
-      <Jobs jobs={tempJobs} keySearch={(x) => onFilter(x)} />
+      <Jobs jobs={props.hrList} keySearch={(x) => onFilter(x)} />
 
       <BoxImage images={images} />
 
