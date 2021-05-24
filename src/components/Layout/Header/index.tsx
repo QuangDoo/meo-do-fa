@@ -10,6 +10,7 @@ import MobileNavbar from 'src/components/Modules/Navbar/MobileNavbar';
 import RegisterModal from 'src/components/Modules/RegisterModal';
 import { useCart } from 'src/contexts/Cart';
 import { useToken } from 'src/contexts/Token';
+import useWebsitePost from 'src/hooks/useWebsitePost';
 
 import RightSideUser from './RightSideUser';
 import SearchBar from './SearchBar';
@@ -17,6 +18,7 @@ import SearchBar from './SearchBar';
 const Header = () => {
   const { data: cart } = useCart();
   const { t } = useTranslation(['header']);
+  const newsList = useWebsitePost('NEWS');
 
   const totalQty = cart?.totalQty;
 
@@ -30,14 +32,16 @@ const Header = () => {
           <div className="row">
             <div className="col-12 d-flex align-items-center justify-content-end">
               <ul className="nav">
-                {/* <li className="promotion-nav__item">
-                  <Link href="/news">
-                    <a className="promotion-nav__link">
-                      <i className="promotion-nav__icon far fa-newspaper" />
-                      <span>{t('header:news')}</span>
-                    </a>
-                  </Link>
-                </li> */}
+                {newsList?.length > 0 ? (
+                  <li className="promotion-nav__item">
+                    <Link href="/news">
+                      <a className="promotion-nav__link">
+                        <i className="promotion-nav__icon far fa-newspaper" />
+                        <span>{t('header:news')}</span>
+                      </a>
+                    </Link>
+                  </li>
+                ) : null}
                 <li className="promotion-nav__item">
                   <LanguagePicker />
                 </li>
