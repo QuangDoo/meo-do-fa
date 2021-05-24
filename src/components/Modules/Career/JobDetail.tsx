@@ -64,12 +64,6 @@ export default function JobDetail(props: Props) {
           </ul>
         </div>
       </div>
-      <div className="d-block text-center w-100 mb-3">
-        <button className="btn btn-primary" onClick={() => setOpen(true)}>
-          {t('jobDetail:button_title')}
-        </button>
-        <ConfirmApplyJob open={open} onClose={() => setOpen(false)} />
-      </div>
     </div>
   );
 }

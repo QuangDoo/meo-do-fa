@@ -1,5 +1,7 @@
+import { Trans, useTranslation } from 'i18n';
 import React from 'react';
 import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
+import useWebsitePost from 'src/hooks/useWebsitePost';
 import redirect from 'src/utils/redirect';
 import withToken from 'src/utils/withToken';
 
@@ -7,6 +9,9 @@ import Head from '../../components/Layout/Head';
 import Career from '../../components/Modules/Career';
 
 const CareerPage = () => {
+  const { t } = useTranslation(['common', 'hr', 'header']);
+  const hrList = useWebsitePost('HR');
+
   return (
     <MainLayout>
       <Head>
@@ -22,17 +27,16 @@ const CareerPage = () => {
           content="https://medofa.com/icons/favicon-32x32-medofa-manifest-20129.png"
         />
       </Head>
-
-      <Career />
+      <Career hrList={hrList} />
     </MainLayout>
   );
 };
 
 CareerPage.getInitialProps = async (ctx) => {
-  redirect({
-    ctx,
-    location: '/'
-  });
+  // redirect({
+  //   ctx,
+  //   location: '/'
+  // });
 
   return {
     namespacesRequired: [...mainLayoutNamespacesRequired]
