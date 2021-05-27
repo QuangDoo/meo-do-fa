@@ -47,8 +47,15 @@ export default function TermPopup(): JSX.Element {
         <div className="mypage">
           <p className="mypage-block">
             <span className="mypage-block__content">
-              {t('termPopup:trading_floor')} MEDOFA.COM (“
-              <strong>{t('termPopup:exchanges')}</strong>”) {t('termPopup:content')}
+              <strong>MEDOFA.COM (“MEDOFA”) </strong>
+              {t('termPopup:trading_floor')} {t('termPopup:content')}
+              <ul className="pl-4 pt-2 pb-2 mb-0">
+                <li>{t('termPopup:content_1')}</li>
+                <li>{t('termPopup:content_2')}</li>
+                <li>{t('termPopup:content_3')}</li>
+                <li>{t('termPopup:content_4')}</li>
+              </ul>
+              <span>{t('termPopup:content_5')}</span>
             </span>
           </p>
         </div>

@@ -24,8 +24,8 @@ const links: { href: string; i18nKey: string }[] = [
   { href: '/privacy-policy', i18nKey: 'footer:privacy_policy' },
   // { href: '/general-policy', i18nKey: 'footer:general_policy' },
   // { href: '/career', i18nKey: 'common:recruitment' },
-  { href: '/terms-of-service', i18nKey: 'footer:terms_of_service' },
-  { href: '/dispute-resolution', i18nKey: 'footer:dispute_resolution' },
+  //{ href: '/terms-of-service', i18nKey: 'footer:terms_of_service' },
+  //{ href: '/dispute-resolution', i18nKey: 'footer:dispute_resolution' },
   { href: '/help', i18nKey: 'footer:faq' }
   // { href: '/terms-and-conditions', i18nKey: 'footer:terms_and_conditions' },
   // { href: '/operating-regulations', i18nKey: 'footer:operating_regulations' }
@@ -140,7 +140,7 @@ const Footer = () => {
       </div>
 
       <div className="footer">
-        <div className="container pb-5 pt-0">
+        <div className="container pb-2 pt-0">
           <div className="row justify-content-between web__margin">
             <div className="col-xl-4 col-lg-4 col-md-4  col-sm-12">
               <div className="footer__info mb-4">
@@ -158,20 +158,14 @@ const Footer = () => {
                     </Link>
                   </div>
                 </div>
-                <div className="footer__info-title mb-3">
+                <div className="footer__info-title mb-3 d-none">
                   <b className="text-primary text-uppercase">{t('footer:copyright_by_medofa')}</b>
                 </div>
                 <p className="footer__info-company">
-                  <b className="text-primary">medofa.com</b> {t('footer:website_ownership')}
-                  <br />
                   {t('footer:business_certificate_label') + ': '}
                   <b>{t('footer:business_certificate_number') + ' '}</b>
                   {t('footer:business_certificate_issued_at') + ' '}
                   <>{t('footer:business_certificate_issue_date')}</>
-                  <br />
-                  {t('footer:reference_illustration')}
-                  <br />
-                  {t('footer:the_use_of_drug')}
                 </p>
 
                 {/* <div className="footer__bct">
@@ -303,7 +297,7 @@ const Footer = () => {
                     </div>
                   </Grid>
                   <Grid item sm={6}>
-                    <div className="footer__bct ">
+                    <div className="footer__bct d-none">
                       <a rel="nofollow">
                         <img
                           alt="Dấu đỏ của Bộ Công Thương"
@@ -321,11 +315,17 @@ const Footer = () => {
             </div>
           </div>
         </div>
-        <div className="copyright">
-          <div>{t('footer:copyright')}</div>
-          <div className="copyright__version">
-            {t('footer:version')} {WEBSITE_VERSION}
-          </div>
+        <div className="copyright d-flex flex-column">
+          <p className="m-0">
+            {t('footer:reference_illustration')}. {t('footer:the_use_of_drug')}.
+          </p>
+          <hr />
+          <p className="d-flex flex-row justify-content-center mb-0">
+            <div>{t('footer:copyright')}</div>
+            <div className="copyright__version">
+              {t('footer:version')} {WEBSITE_VERSION}
+            </div>
+          </p>
         </div>
         <LoadingBackdrop open={loadingSubcribe} />
         <BackToTop />
