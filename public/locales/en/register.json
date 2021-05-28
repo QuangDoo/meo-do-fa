@@ -28,8 +28,11 @@
   "checkbox_acceptTerms_error_required": "Please agree with the Terms of Use.",
   "go_to_login": "If you already have an account, please <button><b>Login</b></button>",
   "submit_button_text": "Create account",
-  "input_refer_placeholder": "Referral code",
-  "customer":"Customer",
+  "input_refer_placeholder": "Referral phone number",
+  "customer":"New user",
   "other":"Other",
-  "hospital_clinic": "Hospital / Clinic"
+  "hospital_clinic": "Hospital / Clinic",
+  "confirm_account":"Confirm account",
+  "otp_code":"Enter OTP code",
+  "send_otp":"Gửi mã OTP"
 }

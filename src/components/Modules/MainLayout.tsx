@@ -24,6 +24,8 @@ export default function MainLayout(props: Props) {
 
   const isActive = dataUser?.activated;
 
+  const isOTP = true;
+
   const token = useToken();
 
   return (

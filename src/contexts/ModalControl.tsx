@@ -1,12 +1,13 @@
 import React, { createContext, useCallback, useContext, useMemo, useState } from 'react';
 
-type Modal = 'LOGIN' | 'REGISTER' | 'RESET_PASSWORD';
+type Modal = 'LOGIN' | 'REGISTER' | 'RESET_PASSWORD' | 'CONFIRM_ACCOUNT';
 
 type State =
   | {
       loginIsOpen: boolean;
       registerIsOpen: boolean;
       resetPassIsOpen: boolean;
+      confirmAccountIsOpen: boolean;
     }
   | Record<string, never>;
 
@@ -30,7 +31,8 @@ DispatchContext.displayName = 'ModalControlDispatchContext';
 const initialState: State = {
   loginIsOpen: false,
   registerIsOpen: false,
-  resetPassIsOpen: false
+  resetPassIsOpen: false,
+  confirmAccountIsOpen: false
 };
 
 const ModalControlProvider = ({ children }: Props) => {
@@ -48,6 +50,9 @@ const ModalControlProvider = ({ children }: Props) => {
         break;
       case 'RESET_PASSWORD':
         newState.resetPassIsOpen = true;
+        break;
+      case 'CONFIRM_ACCOUNT':
+        newState.confirmAccountIsOpen = true;
         break;
       default:
         throw new Error(`Unknown modal type: ${modal}`);
