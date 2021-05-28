@@ -279,6 +279,7 @@ const RegisterForm = () => {
             name="tax"
             //type="text"
             ref={register({
+              required: `${t('register:input_tax_error_required')}`,
               pattern: {
                 value: taxCodeRegex,
                 message: t('errors:tax_code_invalid')
@@ -288,6 +289,7 @@ const RegisterForm = () => {
             containerClass="mb-4"
             iconClass="fas fa-file-invoice-dollar"
             placeholder={t('register:input_tax_placeholder')}
+            required
           />
 
           <Input

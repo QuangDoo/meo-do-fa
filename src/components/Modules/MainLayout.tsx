@@ -24,6 +24,8 @@ export default function MainLayout(props: Props) {
 
   const isActive = dataUser?.activated;
 
+  const isAuthOtp = dataUser.is_auth_otp;
+
   const token = useToken();
 
   return (
@@ -31,6 +33,8 @@ export default function MainLayout(props: Props) {
       <DynamicTermPopup />
 
       {token && !isActive && <ActiveUser waiting={dataUser?.waiting} />}
+
+      {/* {!isAuthOtp &&} */}
 
       <Header />
 
