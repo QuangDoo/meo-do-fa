@@ -22,7 +22,7 @@ export type GetCouponsByUserVars = {
 };
 
 export const GET_COUPONS_BY_USER = gql`
-  query($page: Int!, $pageSize: Int!) {
+  query ($page: Int!, $pageSize: Int!) {
     getCouponsByUser(page: $page, pageSize: $pageSize) {
       coupons {
         display_name

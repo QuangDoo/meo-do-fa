@@ -20,10 +20,11 @@ SuppliersPage.getInitialProps = async () => ({
 function SuppliersPage() {
   const { t } = useTranslation(['general', 'errors']);
 
-  const { data: getSuppliersData, loading: loadingSuppliers, error: errorReturn } = useQuery<
-    GetAllSuppliersData,
-    GetSuppliersVars
-  >(GET_ALL_SUPPLIERS, {
+  const {
+    data: getSuppliersData,
+    loading: loadingSuppliers,
+    error: errorReturn
+  } = useQuery<GetAllSuppliersData, GetSuppliersVars>(GET_ALL_SUPPLIERS, {
     variables: { page: 1, pageSize: 20, name: '' },
     onError: (error) => {
       toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));

@@ -18,7 +18,7 @@ export type GetCartByProductData = {
 };
 
 export const GET_CART_BY_PRODUCT = gql`
-  query($ids: [String!]!) {
+  query ($ids: [String!]!) {
     getCartByProduct(ids: $ids) {
       carts {
         _id
