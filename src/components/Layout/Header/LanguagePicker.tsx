@@ -22,24 +22,21 @@ const LanguagePicker = () => {
   const closeMenu = () => setAnchorEl(null);
 
   const onLanguageClick = (code: LanguageCode) => {
-    i18n.changeLanguage(code).then(() => {
-      let newPath = window.location.pathname
-        .split('/')
-        .map((path) => t(`routes:${path}`))
-        .join('/');
+    i18n.changeLanguage(code);
+    // .then(() => {
+    //   let newPath = window.location.pathname
+    //     .split('/')
+    //     .map((path) => t(`routes:${path}`))
+    //     .join('/');
 
-      newPath += window.location.search;
+    //   newPath += window.location.search;
 
-      console.log('New path:', newPath);
+    //   console.log('New path:', newPath);
 
-      router.replace(newPath); // ???
-    });
+    //   router.replace(newPath); // ???
+    // });
     closeMenu();
   };
-
-  useEffect(() => {
-    console.log('Language:', i18n.language);
-  }, [i18n.language]);
 
   return (
     <>

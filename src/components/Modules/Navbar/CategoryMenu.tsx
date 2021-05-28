@@ -97,16 +97,16 @@ const CategoryMenu = () => {
     <>
       <li className="main-menu rockland-nav__item d-none d-sm-block">
         <div className="menu-title">
-          <I18nLink href="/products" className="rockland-nav__link">
+          {/* <I18nLink href="/products" className="rockland-nav__link">
             <img className="nav__icon" src="/assets/images/sanpham.png" alt="icon_product" />
             <span className="rockland-nav__title">{t('navbar:product_category')}</span>
-          </I18nLink>
-          {/* <Link href="/products">
+          </I18nLink> */}
+          <Link href="/products">
             <a className="rockland-nav__link">
               <img className="nav__icon" src="/assets/images/sanpham.png" alt="icon_product" />
               <span className="rockland-nav__title">{t('navbar:product_category')}</span>
             </a>
-          </Link> */}
+          </Link>
         </div>
         <ul className="container-menu">
           {categories.map(({ id, name, categorySub, priority }) => (
