@@ -62,7 +62,7 @@ function SupplierDetailPage() {
       pageSize: 20,
       condition: {
         order_type: '',
-        manufacturer_id: (supplierId as string) || null
+        supplier_id: (supplierId as string) || null
       }
     },
     fetchPolicy: 'network-only',

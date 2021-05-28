@@ -20,7 +20,9 @@ export const ProductsContainer = (props: ProductsContainerProps) => {
       <div className="container">
         <div className="mb-4 d-flex flex-wrap justify-content-between align-items-center">
           <div className="d-flex align-items-center mr-3">
-            {props.icon && <img className="nav__icon_nav" src={props.icon} alt="icon_home_page" />}
+            {props.icon && (
+              <img className="nav__icon_nav_home" src={props.icon} alt="icon_home_page" />
+            )}
             <h2 className={props.deals && 'text-white'}>{props.title}</h2>
           </div>
           {props.seeMoreUrl && (

@@ -1,3 +1,4 @@
+import { useTranslation } from 'i18n';
 import React from 'react';
 
 type Props = {
@@ -6,6 +7,7 @@ type Props = {
 };
 
 function Banner(props: Props) {
+  const { t } = useTranslation('career');
   return (
     <>
       <section className="banner">
@@ -16,10 +18,8 @@ function Banner(props: Props) {
           <div className="banner-overlay"></div>
         </div>
         <div className="banner-conent container text-white text-center">
-          <h3 className="banner-title mb-3">Join us now</h3>
-          <div className="banner-text">
-            We build health ecosystems which no one else has dared to build.
-          </div>
+          <h3 className="banner-title mb-3">{`${t('career:banner_title')}`}</h3>
+          <div className="banner-text">{`${t('career:banner_test')}`}</div>
         </div>
       </section>
       <div className="container">
@@ -27,12 +27,8 @@ function Banner(props: Props) {
           <div className="row align-items-center">
             <div className="col-md-6 animated fadeIn">
               <div className="wrapper">
-                <h3 className="about-us__title">We Modernise Healthcare Distribution</h3>
-                <p>
-                  Medofa is the leading e-commerce healthcare e-commerce platform in Vietnam. The
-                  platform serves healthcare practices including pharmacies, clinics and hospitals
-                  by providing a wide variety of products with quality service and fast delivery
-                </p>
+                <h3 className="about-us__title">{`${t('career:about_us_title')}`}</h3>
+                <p>{`${t('career:about_us_test')}`}</p>
               </div>
             </div>
             <div className="col-md-6 animated fadeOut">
