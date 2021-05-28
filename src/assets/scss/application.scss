@@ -9749,6 +9749,12 @@ abbr[title] {
   margin-right: 0.5em;
   cursor: pointer;
 }
+.nav__icon_nav_home{
+  height: 30px;
+  width: 30px;
+  margin-right: 0.5em;
+  cursor: pointer;
+}
 .rockland-nav__tag {
   position: absolute;
   right: -1.25em;
@@ -12782,6 +12788,9 @@ abbr[title] {
 .product__info-label {
   font-weight: 500;
   text-transform: uppercase;
+}
+.title-info div:first-child{
+  width: 14rem;
 }
 .product__status .display-status {
   color: $secondary;

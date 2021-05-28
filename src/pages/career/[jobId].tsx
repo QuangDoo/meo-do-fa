@@ -1,10 +1,18 @@
+import { useQuery } from '@apollo/client';
+import { useTranslation } from 'i18n';
+import { useRouter } from 'next/router';
 import React from 'react';
 import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
+import {
+  GET_POST_DETAIL,
+  GetWebsitePostData,
+  GetWebsitePostVariables
+} from 'src/graphql/news/getWebsitePostDetail';
 import redirect from 'src/utils/redirect';
 import withToken from 'src/utils/withToken';
 
-import Head from '../../../components/Layout/Head';
-import JobDetail from '../../../components/Modules/Career/JobDetail';
+import Head from '../../components/Layout/Head';
+import JobDetail from '../../components/Modules/Career/JobDetail';
 
 const job = {
   name: 'Tax Accountant',
@@ -36,7 +44,22 @@ const job = {
   ]
 };
 
-const CareerPage = () => {
+function getPostId(slug: string): number {
+  return +slug.split('-').pop().replace('nid', '');
+}
+
+function CareerPage() {
+  const { t } = useTranslation(['common', 'career']);
+  const router = useRouter();
+
+  const { data: hrDetailData } = useQuery<GetWebsitePostData, GetWebsitePostVariables>(
+    GET_POST_DETAIL,
+    {
+      variables: { id: getPostId(router.query.jobId as string) }
+    }
+  );
+  const { name, content, create_date, signature } = hrDetailData?.getWebsitePostDetail || {};
+
   return (
     <MainLayout>
       <Head>
@@ -54,13 +77,13 @@ const CareerPage = () => {
       />
     </MainLayout>
   );
-};
+}
 
 CareerPage.getInitialProps = async (ctx) => {
-  redirect({
-    ctx,
-    location: '/'
-  });
+  // redirect({
+  //   ctx,
+  //   location: '/'
+  // });
 
   return {
     namespacesRequired: [...mainLayoutNamespacesRequired]

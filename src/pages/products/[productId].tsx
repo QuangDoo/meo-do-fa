@@ -150,8 +150,8 @@ function ProductDetail() {
           <div className="row px-3 mb-4">
             <div className="col-12">
               {product?.manufacturer?.id !== null && (
-                <div className="row px-3 mb-3 d-flex ">
-                  <div className="product__info-label mr-4">{t('productDetail:manufacturer')}</div>
+                <div className="row px-3 mb-3 d-flex title-info ">
+                  <div className="product__info-label ">{t('productDetail:manufacturer')}</div>
                   <div className="text-capitalize">
                     <Link href={`/manufacturers/${product.manufacturer?.id}`}>
                       <a>{product.manufacturer?.name}</a>
@@ -159,10 +159,20 @@ function ProductDetail() {
                   </div>
                 </div>
               )}
+              {product?.default_vendor !== null && (
+                <div className="row px-3 mb-3 d-flex title-info ">
+                  <div className="product__info-label ">{t('productDetail:supplier')}</div>
+                  <div className="text-capitalize">
+                    <Link href={`/suppliers/${product.default_vendor_id}`}>
+                      <a>{product.default_vendor}</a>
+                    </Link>
+                  </div>
+                </div>
+              )}
 
               {categories.length > 0 && (
-                <div className="row px-3 mb-3 d-flex ">
-                  <div className="product__info-label mr-4">{t('productDetail:category')}</div>
+                <div className="row px-3 mb-3 d-flex title-info ">
+                  <div className="product__info-label ">{t('productDetail:category')}</div>
                   {categories.map((item, index, arr) => (
                     <>
                       <Link href={`/products?category=${item.id}`}>

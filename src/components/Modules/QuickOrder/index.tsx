@@ -78,7 +78,7 @@ function QuickOrderPage() {
         <div className="row">
           <div className="col-12 col-md-9 col-lg-9">
             {token && (
-              <div className=" input-group form__input-group btn-border-rad  elevated cart__items mb-3">
+              <div className=" input-group form__input-group btn-border-rad mb-3">
                 <input
                   className="form-control form-control-sm search-input hide-focus keep-border"
                   type="text"

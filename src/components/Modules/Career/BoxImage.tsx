@@ -32,7 +32,7 @@ export default function BoxImage(props: Props) {
   return (
     <section className="box-image">
       <div className="container mb-3">
-        <h3 className="text-center about-us__title">Life At Medofa</h3>
+        {/* <h3 className="text-center about-us__title">Life At Medofa</h3> */}
       </div>
       <div className={classes.root}>
         <Grid container>
