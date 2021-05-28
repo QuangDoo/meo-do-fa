@@ -14,6 +14,7 @@ import {
 } from 'src/graphql/category/getCategoriesLevel';
 
 import Dropdown from '../../Form/Dropdown';
+import I18nLink from '../Link/I18nLink';
 
 type Props = {
   categories: Category[];
@@ -96,16 +97,20 @@ const CategoryMenu = () => {
     <>
       <li className="main-menu rockland-nav__item d-none d-sm-block">
         <div className="menu-title">
-          <Link href="/products">
+          <I18nLink href="/products" className="rockland-nav__link">
+            <img className="nav__icon" src="/assets/images/sanpham.png" alt="icon_product" />
+            <span className="rockland-nav__title">{t('navbar:product_category')}</span>
+          </I18nLink>
+          {/* <Link href="/products">
             <a className="rockland-nav__link">
               <img className="nav__icon" src="/assets/images/sanpham.png" alt="icon_product" />
               <span className="rockland-nav__title">{t('navbar:product_category')}</span>
             </a>
-          </Link>
+          </Link> */}
         </div>
         <ul className="container-menu">
           {categories.map(({ id, name, categorySub, priority }) => (
-            <Link href={`/products?category=${id}`} key={id}>
+            <I18nLink href={`/products?category=${id}`} key={id}>
               <li className="menu-item">
                 <div className="item-title">
                   <img
@@ -131,7 +136,7 @@ const CategoryMenu = () => {
                   </ul>
                 </div>
               </li>
-            </Link>
+            </I18nLink>
           ))}
         </ul>
       </li>
