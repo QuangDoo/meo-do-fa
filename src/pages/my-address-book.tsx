@@ -45,10 +45,11 @@ function MyAddresses() {
 
   const [openCreate, setOpenCreate] = useState<boolean>(false);
 
-  const { data: addressInfoUserData, refetch: refetchAddressInfoUser, loading } = useQueryAuth<
-    GetAddressInfoUserData,
-    undefined
-  >(GET_ADDRESS_INFO_USER, {
+  const {
+    data: addressInfoUserData,
+    refetch: refetchAddressInfoUser,
+    loading
+  } = useQueryAuth<GetAddressInfoUserData, undefined>(GET_ADDRESS_INFO_USER, {
     fetchPolicy: 'network-only',
     notifyOnNetworkStatusChange: true,
     onError: (err) => {
@@ -101,7 +102,7 @@ function MyAddresses() {
               </Button>
             </Card>
           </Grid>
-          <div className="alert alert-primary ml-2 mr-2" role="alert">
+          <div className="alert alert-primary ml-2 mr-2 w-100 mb-0" role="alert">
             {t('myAddressBook:notification')}
           </div>
           {addressBook.map((address) => (

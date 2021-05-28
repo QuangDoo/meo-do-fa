@@ -68,7 +68,7 @@ export default function OrderItem(props: Props) {
       </div>
 
       <div className="my-orders__invoice">
-        {[10, 15].includes(flag) && (
+        {[10].includes(flag) && (
           <button className="btn btn-outline-danger btn-sm" onClick={() => setOpen(true)}>
             {t('myOrders:cancel_order')}
           </button>
@@ -82,7 +82,7 @@ export default function OrderItem(props: Props) {
             <a className="btn btn-outline-complain btn-sm">{t('myOrders:send_fb')}</a>
           </Link>
         )}
-        {[20, 30, 40, 80].includes(flag) && (
+        {[15, 20, 30, 40, 80].includes(flag) && (
           <a href="tel:1900232436" className="btn btn-outline-primary btn-sm">
             {t('myOrders:help')}
           </a>
