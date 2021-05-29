@@ -1,6 +1,7 @@
 import { useQuery } from '@apollo/client';
 import clsx from 'clsx';
 import { useTranslation } from 'i18n';
+import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import SlickSlider from 'react-slick';
 import { useToken } from 'src/contexts/Token';
@@ -30,7 +31,6 @@ import ProductCard from '../ProductCard';
 import { ProductsCarousel } from '../ProductsCarousel';
 import { Login } from './Login';
 import { ProductsContainer } from './ProductsContainer';
-
 const paginationVars = {
   variables: {
     page: 1,
@@ -103,10 +103,10 @@ const Home = ({ dealsOfTheDayData }) => {
         {bannerPC?.map(({ image, id }) => (
           <div className="banner__slide" key={id}>
             <div className="banner__img">
-              <div className="banner-wrapper">
+              {/* <div className="banner-wrapper">
                 <img alt={image} src={image} className="banner--image" />
-              </div>
-              {/* <Image src={image} layout="fill" objectFit="cover" /> */}
+              </div> */}
+              <Image src={image} layout="fill" objectFit="cover" />
             </div>
           </div>
         ))}
@@ -121,10 +121,10 @@ const Home = ({ dealsOfTheDayData }) => {
         {bannerMobile?.map(({ image }) => (
           <div className="banner__slide" key={image}>
             <div className="banner__img banner__img--mobile">
-              <div className="banner-wrapper">
+              {/* <div className="banner-wrapper">
                 <img alt={image} src={image} className="banner--image" />
-              </div>
-              {/* <Image src={image} layout="fill" objectFit="cover" /> */}
+              </div> */}
+              <Image src={image} layout="fill" objectFit="cover" />
             </div>
           </div>
         ))}

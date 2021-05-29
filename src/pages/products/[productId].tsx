@@ -4,7 +4,7 @@ import { useTranslation } from 'i18n';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { MagnifierContainer, SideBySideMagnifier } from 'react-image-magnifiers';
 import { toast } from 'react-toastify';
 import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
@@ -53,7 +53,7 @@ ProductDetail.getInitialProps = async (ctx) => {
 };
 
 function ProductDetail() {
-  const { t } = useTranslation(['productDetail']);
+  const { t, i18n } = useTranslation(['productDetail']);
 
   const router = useRouter();
 
@@ -85,6 +85,28 @@ function ProductDetail() {
   );
 
   const product = getProductData?.getProduct;
+
+  useEffect(() => {
+    const changePathname = () => {
+      if (product) {
+        i18n.off('languageChanged');
+        i18n.on('languageChanged', (lang) => {
+          setTimeout(() => {
+            if (lang === 'vi') {
+              console.log('vi');
+              router.push(`/san-pham/${product?.slug}`, undefined, { shallow: true });
+            } else {
+              console.log('en');
+              router.push(`/products/${product?.slug}`, undefined, { shallow: true });
+            }
+          });
+        });
+      }
+    };
+    changePathname();
+    return () => changePathname();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [product]);
 
   const relatedProducts = getRelatedProductsData?.getRelatedProducts;
 
@@ -175,7 +197,10 @@ function ProductDetail() {
                   <div className="product__info-label ">{t('productDetail:category')}</div>
                   {categories.map((item, index, arr) => (
                     <>
-                      <Link href={`/products?category=${item.id}`}>
+                      <Link
+                        href={`${i18n?.language === 'en' ? '/products' : '/san-pham'}?category=${
+                          item.id
+                        }`}>
                         <a className="text-capitalize" key={index}>
                           {item.name}
                         </a>
