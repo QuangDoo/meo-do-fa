@@ -17,6 +17,7 @@ import {
 import { Receipt } from '@material-ui/icons';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import { useTranslation } from 'i18n';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
@@ -266,7 +267,10 @@ function OrderDetails() {
                         {product.product_type !== 'product' ? (
                           <div>{product.name}</div>
                         ) : (
-                          <Link href={`/products/${product.product.slug}`}>
+                          <Link
+                            href={`${i18n?.language === 'vi' ? '/san-pham' : '/products'}/${
+                              product.product.slug
+                            }`}>
                             <a>{product.name}</a>
                           </Link>
                         )}
@@ -307,7 +311,11 @@ function OrderDetails() {
                   {product.product_type == 'reward' ? (
                     <img src="/assets/images/rewards.png" alt="reward" />
                   ) : (
-                    <img
+                    <Image
+                      width={60}
+                      height={60}
+                      layout="responsive"
+                      objectFit="contain"
                       src={product.product.image_128 || '/assets/images/no_images.jpg'}
                       alt="product"
                     />
@@ -317,7 +325,10 @@ function OrderDetails() {
                       {product.product_type !== 'product' ? (
                         <div>{product.name}</div>
                       ) : (
-                        <Link href={`/products/${product.product.slug}`}>
+                        <Link
+                          href={`${i18n?.language === 'vi' ? '/san-pham' : '/products'}/${
+                            product.product.slug
+                          }`}>
                           <a>{product.name}</a>
                         </Link>
                       )}

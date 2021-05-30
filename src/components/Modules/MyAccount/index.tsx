@@ -153,7 +153,6 @@ export default function MyAccountPage() {
       userVat = userVat.slice(0, 10) + '-' + userVat.slice(10, 13);
     }
 
-    console.log(userVat);
     const [cityName, cityId] = data.companyCity.split('__');
     const [districtName, districtId] = data.companyDistrict.split('__');
     const [wardName, wardId] = data.companyWard.split('__');
