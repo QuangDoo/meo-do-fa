@@ -6,7 +6,7 @@ import React, { MouseEvent, useEffect, useMemo, useState } from 'react';
 export type LanguageCode = 'vi' | 'en';
 
 export const languageNames: Record<LanguageCode, string> = {
-  vi: 'Vietnamese',
+  vi: 'Tiếng Việt',
   en: 'English'
 };
 
@@ -51,7 +51,8 @@ const LanguagePicker = () => {
             key={code}
             onClick={() => onLanguageClick(code)}
             selected={code === i18n.language}>
-            {languageNames[code]}
+            {/* {languageNames[code]} */}
+            {t(`header:${code}`)}
           </MenuItem>
         ))}
       </Menu>

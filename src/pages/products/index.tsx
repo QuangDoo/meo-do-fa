@@ -78,9 +78,26 @@ Products.getInitialProps = async (ctx) => {
 };
 
 function Products() {
-  const { t } = useTranslation(['products', 'errors']);
+  const { t, i18n } = useTranslation(['products', 'errors']);
 
   const router = useRouter();
+
+  console.log(`router`, router);
+  console.log(`i18n lang`, i18n.language);
+  useEffect(() => {
+    if (router) {
+      i18n.off('languageChanged');
+      i18n.on('languageChanged', (lang) => {
+        setTimeout(() => {
+          if (lang === 'en') {
+            router.push('/products', undefined, { shallow: true });
+          } else if (lang === 'vi') {
+            router.push('/san-pham', undefined, { shallow: true });
+          }
+        });
+      });
+    }
+  }, [router, i18n]);
 
   const page = +router.query.page || 1;
 
