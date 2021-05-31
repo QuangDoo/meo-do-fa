@@ -17,6 +17,7 @@ import {
 import Button from '../Form/Button';
 import Input from '../Form/Input';
 import BackToTop from '../Layout/BackToTop';
+import ConfirmAccountModal from '../Modules/ConfirmAccountModal';
 
 const links: { href: string; i18nKey: string }[] = [
   { href: '/about-us', i18nKey: 'footer:about_us' },
@@ -107,7 +108,7 @@ const Footer = () => {
                 </div>
               </div>
             </div>
-
+            <ConfirmAccountModal />
             <form
               className=" align-items-center d-flex justify-content-center text-sm-left text-center col-md-5 col-12"
               onSubmit={handleSubmit(onSubmit, onError)}>
@@ -320,12 +321,12 @@ const Footer = () => {
             {t('footer:reference_illustration')}. {t('footer:the_use_of_drug')}.
           </p>
           <hr />
-          <p className="d-flex flex-row justify-content-center mb-0">
-            <div>{t('footer:copyright')}</div>
-            <div className="copyright__version">
+          <div className="wrapper__copyright_bottom">
+            <span className="copyright_content">{t('footer:copyright')}</span>
+            <span className="copyright__version">
               {t('footer:version')} {WEBSITE_VERSION}
-            </div>
-          </p>
+            </span>
+          </div>
         </div>
         <LoadingBackdrop open={loadingSubcribe} />
         <BackToTop />

@@ -18,6 +18,7 @@ type ActionButtonProps = {
 
 type Props = DialogProps & {
   title?: string;
+  note?: string;
   onClose: () => void;
   open: boolean;
   cancelButton?: ActionButtonProps;
@@ -40,7 +41,11 @@ export default function MuiDialog(props: Props) {
           <CloseIcon />
         </IconButton>
       </DialogTitle>
-
+      {props.note && (
+        <DialogContent className={classes.dialogContent}>
+          <div className="text-warning mt-0">*{props.note}</div>
+        </DialogContent>
+      )}
       <DialogContent dividers className={classes.dialogContent}>
         {props.children}
       </DialogContent>

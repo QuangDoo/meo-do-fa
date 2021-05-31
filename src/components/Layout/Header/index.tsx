@@ -4,6 +4,7 @@ import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import React from 'react';
 import LanguagePicker from 'src/components/Layout/Header/LanguagePicker';
+import ConfirmAccountModal from 'src/components/Modules/ConfirmAccountModal';
 import ForgotPasswordModal from 'src/components/Modules/ForgotPasswordModal';
 import LoginModal from 'src/components/Modules/LoginModal';
 import MobileNavbar from 'src/components/Modules/Navbar/MobileNavbar';
@@ -105,6 +106,8 @@ const Header = () => {
                 <RegisterModal />
 
                 <ForgotPasswordModal />
+
+                <ConfirmAccountModal />
               </div>
             </div>
           )}

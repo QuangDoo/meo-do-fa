@@ -10,7 +10,7 @@ export type verifyUserVar = {
   otp: string;
 };
 
-const VERIFY_USER = gql`
+export const VERIFY_USER = gql`
   mutation ($otp: String!) {
     verifyUser(otp: $otp) {
       code

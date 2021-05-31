@@ -1,6 +1,7 @@
 import { Menu, MenuItem } from '@material-ui/core';
-import { i18n, useTranslation } from 'i18n';
-import React, { MouseEvent, useState } from 'react';
+import { useTranslation } from 'i18n';
+import { useRouter } from 'next/router';
+import React, { MouseEvent, useEffect, useMemo, useState } from 'react';
 
 export type LanguageCode = 'vi' | 'en';
 
@@ -12,7 +13,9 @@ export const languageNames: Record<LanguageCode, string> = {
 const LanguagePicker = () => {
   const [anchorEl, setAnchorEl] = useState(null);
 
-  const { t } = useTranslation(['header']);
+  const { t, i18n } = useTranslation(['header', 'routes']);
+
+  const router = useRouter();
 
   const openMenu = (event: MouseEvent) => setAnchorEl(event.currentTarget);
 
@@ -20,6 +23,18 @@ const LanguagePicker = () => {
 
   const onLanguageClick = (code: LanguageCode) => {
     i18n.changeLanguage(code);
+    // .then(() => {
+    //   let newPath = window.location.pathname
+    //     .split('/')
+    //     .map((path) => t(`routes:${path}`))
+    //     .join('/');
+
+    //   newPath += window.location.search;
+
+    //   console.log('New path:', newPath);
+
+    //   router.replace(newPath); // ???
+    // });
     closeMenu();
   };
 

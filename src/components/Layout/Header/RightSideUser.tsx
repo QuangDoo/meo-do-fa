@@ -19,8 +19,6 @@ type NotiItem = {
 const RightSideUser = () => {
   const { data: user } = useUser();
 
-  console.log(`user`, user);
-
   const { t } = useTranslation(['noti', 'errors']);
 
   const { data, refetch } = useNotify();
