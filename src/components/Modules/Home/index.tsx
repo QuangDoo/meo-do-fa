@@ -30,6 +30,7 @@ import {
 import ProductCard from '../ProductCard';
 import { ProductsCarousel } from '../ProductsCarousel';
 import { Login } from './Login';
+import { Partner } from './Partner';
 import { ProductsContainer } from './ProductsContainer';
 const paginationVars = {
   variables: {
@@ -156,13 +157,13 @@ const Home = ({ dealsOfTheDayData }) => {
         </ProductsContainer>
       </div>
 
+      <Partner />
+
       {/* <Strength /> */}
 
       {!token && <Login />}
 
       {/* <Question /> */}
-
-      {/* <Partner /> */}
 
       {/* <Customer /> */}
 
