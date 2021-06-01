@@ -47,7 +47,7 @@ export type CreateOrderData = {
 };
 
 export const CREATE_ORDER = gql`
-  mutation ($inputs: OrderInput) {
+  mutation($inputs: OrderInput) {
     createOrder(inputs: $inputs) {
       code
       status

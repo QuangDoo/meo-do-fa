@@ -32,7 +32,7 @@ function HotTags() {
             <Link
               key={id}
               href={{
-                pathname: '/products',
+                pathname: '/hot-tag-products',
                 query: {
                   searchtag: type,
                   search: name
