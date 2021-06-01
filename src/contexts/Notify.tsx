@@ -1,6 +1,7 @@
-import { ApolloQueryResult, QueryLazyOptions, useLazyQuery } from '@apollo/client';
+import { ApolloQueryResult, QueryLazyOptions, ServerError, useLazyQuery } from '@apollo/client';
 import { useTranslation } from 'i18n';
 import cookies from 'js-cookie';
+import { useRouter } from 'next/router';
 import React, { createContext, useContext, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { GET_NOTI, GetNotiData, GetNotiVars } from 'src/graphql/notification/notify.query';
@@ -18,26 +19,7 @@ const useNotify = () => useContext(NotifyContext);
 function NotifyProvider(props) {
   const { t } = useTranslation(['errors']);
 
-  // const { data, loading, refetch } = useQueryAuth<GetNotiData, GetNotiVars>(GET_NOTI, {
-  //   variables: {
-  //     page: 1,
-  //     pageSize: 5
-  //   },
-  //   fetchPolicy: 'network-only',
-  //   notifyOnNetworkStatusChange: true,
-  //   onError: (error) => {
-  //     toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
-  //   },
-  //   onCompleted: () => {
-  //     setTimeout(() => {
-  //       refetch({
-  //         page: 1,
-  //         pageSize: 5
-  //       });
-  //     }, 600000);
-  //   },
-  //   skip: !token
-  // });
+  const router = useRouter();
 
   // Lazy query
   const [fetch, { data, loading, refetch }] = useLazyQuery<GetNotiData, GetNotiVars>(GET_NOTI, {
@@ -48,7 +30,22 @@ function NotifyProvider(props) {
     fetchPolicy: 'network-only',
     notifyOnNetworkStatusChange: true,
     onError: (error) => {
-      toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
+      if ((error.networkError as ServerError).statusCode === 401) {
+        cookies.remove('token');
+        router.reload();
+        router.push('/');
+        return;
+      }
+
+      const errorCode = error.graphQLErrors?.[0]?.extensions?.code;
+
+      if ([500, 107].includes(errorCode)) {
+        cookies.remove('token');
+        router.reload();
+        router.push('/');
+      }
+
+      toast.error(t(`errors:code_${errorCode}`));
     },
     onCompleted: () => {
       setTimeout(() => {
