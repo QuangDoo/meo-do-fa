@@ -13,7 +13,7 @@ export type DeleteCartsVars = {
 };
 
 export const DELETE_CARTS = gql`
-  mutation ($ids: [String!]!) {
+  mutation($ids: [String!]!) {
     deleteCarts(inputs: { listId: $ids }) {
       code
       status

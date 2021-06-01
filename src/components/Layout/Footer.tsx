@@ -88,7 +88,7 @@ const Footer = () => {
 
   return (
     <>
-      <div className="subscribe-container">
+      <div className="subscribe-container d-none">
         <div className="container">
           <div className="row align-items-center ">
             <div className="col-xs col-md-7 text-md-center mb-2">
@@ -143,7 +143,7 @@ const Footer = () => {
         <div className="container pb-2 pt-0">
           <div className="row justify-content-between web__margin">
             <div className="col-xl-4 col-lg-4 col-md-4  col-sm-12">
-              <div className="footer__info mb-4">
+              <div className="footer__info mb-3">
                 <div className="footer__info-logo mb-3">
                   <div className="rockland-logo d-inline-block">
                     <Link href="/">
@@ -181,7 +181,7 @@ const Footer = () => {
               </div>
             </div>
             <div className="col-xl-4 col-lg-5 col-md-4 col-sm-7">
-              <div className="mb-3 mobile__margin">
+              <div className="mb-2 mobile__margin">
                 <div className="footer__header mb-3">{t('footer:general_info')}</div>
 
                 <div className="row">
@@ -260,15 +260,20 @@ const Footer = () => {
 
                         <img
                           className="img-fluid footer__delivery"
+                          src="/assets/images/ahamove.png"
+                          alt="ahamove"
+                        />
+                        <img
+                          className="img-fluid footer__delivery"
+                          src="/assets/images/kerry-express.png"
+                          alt="ahamove"
+                        />
+
+                        <img
+                          className="img-fluid footer__delivery"
                           src="/assets/images/pharma-logistics-logo-sm.png"
                           alt="logo-logistics-pharma"
                         />
-
-                        {/* <img
-                            className="img-fluid footer__delivery"
-                            src="/assets/images/ghn-logo.png"
-                            alt="logo-ghn"
-                          /> */}
 
                         {/* <img
                           className="img-fluid footer__delivery"
