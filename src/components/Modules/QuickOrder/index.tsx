@@ -53,7 +53,7 @@ function QuickOrderPage() {
     fetchPolicy: 'network-only',
     variables: {
       page: page,
-      pageSize: 10,
+      pageSize: 20,
       name: searchTerm
     }
   });
@@ -170,7 +170,7 @@ function QuickOrderPage() {
           </div>
         </div>
         <Pagination
-          count={Math.ceil(totalPagination / 12)}
+          count={Math.ceil(totalPagination / 20)}
           page={page}
           siblingCount={4}
           onChange={(page) => {
