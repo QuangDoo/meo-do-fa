@@ -1,4 +1,4 @@
-import { ApolloQueryResult, QueryLazyOptions, useLazyQuery } from '@apollo/client';
+import { ApolloQueryResult, QueryLazyOptions, ServerError, useLazyQuery } from '@apollo/client';
 import { useTranslation } from 'i18n';
 import cookies from 'js-cookie';
 import { useRouter } from 'next/router';
@@ -27,18 +27,22 @@ function UserProvider(props) {
     fetchPolicy: 'network-only',
     notifyOnNetworkStatusChange: true,
     onError: (error) => {
+      if ((error.networkError as ServerError).statusCode === 401) {
+        cookies.remove('token');
+        router.reload();
+        router.push('/');
+        return;
+      }
+
       const errorCode = error.graphQLErrors?.[0]?.extensions?.code;
 
-      const isClient = typeof window !== 'undefined';
-
-      if (isClient) {
-        if ([500, 107].includes(errorCode)) {
-          cookies.remove('token');
-          router.reload();
-          router.push('/');
-        }
-        toast.error(t(`errors:code_${errorCode}`));
+      if ([500, 107].includes(errorCode)) {
+        cookies.remove('token');
+        router.reload();
+        router.push('/');
       }
+
+      toast.error(t(`errors:code_${errorCode}`));
     }
   });
 
