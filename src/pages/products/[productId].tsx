@@ -8,7 +8,7 @@ import { useTranslation } from 'i18n';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MagnifierContainer, SideBySideMagnifier } from 'react-image-magnifiers';
 import Slider from 'react-slick';
 import { toast } from 'react-toastify';
@@ -92,6 +92,8 @@ function ProductDetail() {
 
   const [subImageIndex, setSubImageIndex] = useState<number>(0);
 
+  const [subImages, setSubImages] = useState<string[]>([]);
+
   const settings = {
     dots: true,
     infinite: true,
@@ -133,6 +135,17 @@ function ProductDetail() {
 
   const product = getProductData?.getProduct;
 
+  useEffect(() => {
+    if (!product?.sub_images) return;
+
+    setSubImages(product?.sub_images);
+  }, [product]);
+
+  const listImage = [...subImages];
+
+  listImage.unshift(product?.image_512);
+  // console.log(`abc`, abc);
+
   const relatedProducts = getRelatedProductsData?.getRelatedProducts;
 
   const categories = product?.categories?.slice().filter((c) => c.id !== null) || [];
@@ -146,17 +159,7 @@ function ProductDetail() {
     );
   }
 
-  const images = [
-    'https://salt.tikicdn.com/cache/w64/ts/product/55/37/ae/e4965a029fc2f485b4e2566bbf6f7c87.jpg',
-    'https://salt.tikicdn.com/cache/w444/ts/product/0c/98/a8/1d2b9828c9a60c6f880620ee1b6f311d.jpg',
-    'https://salt.tikicdn.com/cache/w64/ts/product/55/37/ae/e4965a029fc2f485b4e2566bbf6f7c87.jpg',
-    'https://salt.tikicdn.com/cache/w64/ts/product/55/37/ae/e4965a029fc2f485b4e2566bbf6f7c87.jpg',
-    'https://salt.tikicdn.com/cache/w64/ts/product/55/37/ae/e4965a029fc2f485b4e2566bbf6f7c87.jpg'
-  ];
-
-  images.unshift(product?.image_512);
-
-  const imagesSlice = images.slice(0, 4);
+  const imagesSlice = listImage.slice(0, 4);
 
   const imagesSliceLength = imagesSlice.length;
 
@@ -183,11 +186,11 @@ function ProductDetail() {
             <div className="col-md-8">
               <div className="row">
                 <div className="col-md-6">
-                  <div className="product__image">
+                  <div className="product__image d-none d-sm-block">
                     <MagnifierContainer>
                       <SideBySideMagnifier
                         alwaysInPlace={true}
-                        imageSrc={images[subImageIndex]}
+                        imageSrc={listImage[subImageIndex]}
                         className="product-img-magnifier"
                       />
                     </MagnifierContainer>
@@ -196,7 +199,27 @@ function ProductDetail() {
                       <DiscountRibbon discountPercent={product.discount_percentage} />
                     )}
                   </div>
-                  <section className="box-image">
+                  <div className="product__image d-sm-none">
+                    <Slider
+                      {...settings}
+                      prevArrow={<ArrowButton />}
+                      nextArrow={<ArrowButton type="next" />}>
+                      {listImage.map((image, index) => (
+                        <MagnifierContainer key={index}>
+                          <SideBySideMagnifier
+                            alwaysInPlace={true}
+                            imageSrc={image}
+                            className="product-img-magnifier"
+                          />
+                        </MagnifierContainer>
+                      ))}
+                    </Slider>
+
+                    {product?.discount_percentage > 0 && (
+                      <DiscountRibbon discountPercent={product.discount_percentage} />
+                    )}
+                  </div>
+                  <section className="box-image d-none d-sm-block">
                     <div className="container mb-3">
                       {/* <h3 className="text-center about-us__title">Life At Medofa</h3> */}
                     </div>
@@ -217,7 +240,7 @@ function ProductDetail() {
                                   onClick={() => setOpenModalImage(true)}
                                   className={'border-sub__image_lastimage'}
                                   key={index}>
-                                  <img src={image} alt={image} style={{ width: '90%' }} />
+                                  <img src={image} alt={image} className="img-fluid" />
                                   <span>{t('productDetail:see_more')}</span>
                                 </div>
                               ) : (
@@ -229,7 +252,7 @@ function ProductDetail() {
                                     subImageIndex === index ? 'active' : ''
                                   } `}
                                   key={index}>
-                                  <img src={image} alt={image} style={{ width: '90%' }} />
+                                  <img src={image} alt={image} className="img-fluid" />
                                 </div>
                               )}
                             </Paper>
@@ -241,7 +264,7 @@ function ProductDetail() {
                           {...settings}
                           prevArrow={<ArrowButton />}
                           nextArrow={<ArrowButton type="next" />}>
-                          {images.map((image, index) => (
+                          {listImage.map((image, index) => (
                             <img src={image} alt={image} style={{ width: '100%' }} key={index} />
                           ))}
                         </Slider>
