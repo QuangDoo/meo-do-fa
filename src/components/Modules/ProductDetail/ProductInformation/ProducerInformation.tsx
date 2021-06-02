@@ -3,9 +3,9 @@ import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import React from 'react';
 import ScrollableTabsButtonAuto from 'src/components/Modules/ScrollableTabsButtonAuto/ScrollableTabsButtonAuto';
-import { ProductDetails } from 'src/graphql/product/product.query';
+import { ProductDetail } from 'src/graphql/product/product.query';
 
-const ProducerInformation = (props: ProductDetails) => {
+const ProducerInformation = (props: ProductDetail) => {
   const { t } = useTranslation(['ingredientDetails']);
 
   const handleCheck = (props) => {

@@ -4,10 +4,10 @@ import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
-import { ProductDetails } from 'src/graphql/product/product.query';
+import { ProductDetail } from 'src/graphql/product/product.query';
 
 type Props = {
-  categories: ProductDetails['categories'];
+  categories: ProductDetail['categories'];
 };
 
 const SimpleBreadcrumbs = (props: Props) => {
