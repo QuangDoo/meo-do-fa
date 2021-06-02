@@ -37,17 +37,25 @@ const SearchBar = () => {
 
   const router = useRouter();
 
-  const [searchProducts, { data: productsData, loading: loadingProducts }] =
-    useLazyQuery<SearchProductData, SearchProductVars>(SEARCH_PRODUCT);
+  const [searchProducts, { data: productsData, loading: loadingProducts }] = useLazyQuery<
+    SearchProductData,
+    SearchProductVars
+  >(SEARCH_PRODUCT);
 
-  const [searchManufacturers, { data: manufacturersData, loading: loadingManufacturers }] =
-    useLazyQuery<SearchManufacturerData, SearchManufacturerVars>(SEARCH_MANUFACTURER);
+  const [
+    searchManufacturers,
+    { data: manufacturersData, loading: loadingManufacturers }
+  ] = useLazyQuery<SearchManufacturerData, SearchManufacturerVars>(SEARCH_MANUFACTURER);
 
-  const [searchIngredients, { data: ingredientsData, loading: loadingIngredients }] =
-    useLazyQuery<SearchIngredientData, SearchIngredientVars>(SEARCH_INGREDIENT);
+  const [searchIngredients, { data: ingredientsData, loading: loadingIngredients }] = useLazyQuery<
+    SearchIngredientData,
+    SearchIngredientVars
+  >(SEARCH_INGREDIENT);
 
-  const [searchSuppliers, { data: supplierData, loading: loadingSuppliers }] =
-    useLazyQuery<SearchSupplierData, SearchSupplierVars>(SEARCH_SUPPLIER);
+  const [searchSuppliers, { data: supplierData, loading: loadingSuppliers }] = useLazyQuery<
+    SearchSupplierData,
+    SearchSupplierVars
+  >(SEARCH_SUPPLIER);
 
   const [value, setValue] = useState('');
 
