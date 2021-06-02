@@ -88,25 +88,26 @@ function ProductDetail() {
 
   useEffect(() => {
     const changePathname = () => {
-      if (product) {
+      if (router) {
         i18n.off('languageChanged');
         i18n.on('languageChanged', (lang) => {
           setTimeout(() => {
             if (lang === 'vi') {
-              console.log('vi');
-              router.push(`/san-pham/${product?.slug}`, undefined, { shallow: true });
+              router.push(`/san-pham/${router?.query?.productId}`, undefined, { shallow: true });
             } else {
-              console.log('en');
-              router.push(`/products/${product?.slug}`, undefined, { shallow: true });
+              router.push(`/products/${router?.query?.productId}`, undefined, { shallow: true });
             }
           });
         });
       }
     };
     changePathname();
-    return () => changePathname();
+    return () => {
+      changePathname();
+      i18n.off('languageChanged');
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [product]);
+  }, [router]);
 
   const relatedProducts = getRelatedProductsData?.getRelatedProducts;
 

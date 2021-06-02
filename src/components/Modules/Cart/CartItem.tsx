@@ -13,7 +13,7 @@ import ConfirmDeleteItemModal from './ConfirmDeleteItemModal';
 type Props = CartItemProps;
 
 function CartItem(props: Props) {
-  const { t } = useTranslation(['cart', 'errors']);
+  const { t, i18n } = useTranslation(['cart', 'errors']);
 
   const { checkCart, uncheckCart, checkboxCarts } = useCart();
 
@@ -31,7 +31,9 @@ function CartItem(props: Props) {
 
   const handleCloseModal = () => setOpen(false);
 
-  const productLink = 'products/' + props.product.slug;
+  const productLink = `${i18n?.language === 'vi' ? '/san-pham' : '/products'}/${
+    props?.product?.slug
+  }`;
 
   const handleChange = (e) => {
     if (e.target.checked) {

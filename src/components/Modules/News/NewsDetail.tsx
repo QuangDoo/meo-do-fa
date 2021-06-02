@@ -1,4 +1,5 @@
 import { useTranslation } from 'i18n';
+import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
@@ -46,7 +47,15 @@ function NewsDetail(props: Props) {
           </div>
         </div>
         <div className="post-item__img">
-          <img className="post-item__img-item" alt={props.title} src={props.imgUrl}></img>
+          <Image
+            className="post-item__img-item"
+            alt={props.title}
+            width={'100%'}
+            height="auto"
+            layout="responsive"
+            objectFit={props.imgUrl ? 'contain' : 'cover'}
+            src={props.imgUrl || '/assets/images/no_images.jpg'}
+          />
         </div>
         <div className="news-detail__content">
           <div dangerouslySetInnerHTML={createMarkup()} />
