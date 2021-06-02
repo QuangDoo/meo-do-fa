@@ -34,5 +34,6 @@
   "hospital_clinic": "Hospital / Clinic",
   "confirm_account":"Confirm account",
   "otp_code":"Enter OTP code",
-  "send_otp":"Gửi mã OTP"
+  "send_otp":"Sen OTP code",
+  "otp_alert":"Provide a OTP code"
 }

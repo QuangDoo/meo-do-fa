@@ -317,7 +317,6 @@ const RegisterForm = () => {
           <Input
             type="number"
             ref={register({
-              required: `${t('register:input_phone_error_required')}`,
               pattern: {
                 value: viPhoneNumberRegex,
                 message: `${t('register:input_phone_error_invalid')}`

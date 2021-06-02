@@ -3,5 +3,7 @@
   "update_cart": "Updated cart.",
   "delete_cart": "Removed product from cart.",
   "send_password_to_email_success": "If your email address exists in our database, you will receive a new password at your email address in a few minutes.",
-  "send_password_to_phone_number_success":" If your phone number exists in our database, you will receive a new password  at your messages in a few minutes."
+  "send_password_to_phone_number_success":" If your phone number exists in our database, you will receive a new password  at your messages in a few minutes.",
+  "register_successfully": "Successful account registration",
+  "auth_otp_successfully": "OTP code verification successful"
 }

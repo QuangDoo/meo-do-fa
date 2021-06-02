@@ -1,18 +1,20 @@
-import { useMutation } from '@apollo/client';
 import { useTranslation } from 'i18n';
 import React from 'react';
 import { DeepMap, FieldError, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { emailRegex } from 'src/assets/regex/email';
-import { usernameRegex } from 'src/assets/regex/username';
 import Button from 'src/components/Form/Button';
 import Input from 'src/components/Form/Input';
-import LoadingBackdrop from 'src/components/Layout/LoadingBackdrop';
 import { useModalControlDispatch } from 'src/contexts/ModalControl';
-import { RESET_PASSWORD } from 'src/graphql/user/forgotPassword';
+import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
+
+import {
+  VERIFY_USER,
+  verifyUserData,
+  verifyUserVar
+} from '../../../graphql/user/verifyUser.mutation';
 
 type Inputs = {
-  username: string;
+  otp_code: string;
 };
 
 const ConfirmAccountForm = () => {
@@ -26,26 +28,38 @@ const ConfirmAccountForm = () => {
     Object.keys(errors).forEach((field) => toast.error(errors[field].message));
   };
 
+  const [send_otp] = useMutationAuth<verifyUserData, verifyUserVar>(VERIFY_USER, {
+    onCompleted: (data) => {
+      toast.success(t(`success:auth_otp_successfully`));
+      closeModal();
+    },
+    onError: (err) => {
+      toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
+    }
+  });
+
   const onSubmit = (data: Inputs) => {
-    console.log(`data`, data);
+    send_otp({
+      variables: {
+        otp: data.otp_code
+      }
+    });
   };
 
   return (
-    <div>
-      <form className="reset_pass" onSubmit={handleSubmit(onSubmit, onFormError)}>
-        <Input
-          name="otp_code"
-          ref={register}
-          containerClass="mb-4"
-          iconClass="icomoon icon-mail"
-          placeholder={t('register:otp_code')}
-        />
+    <form className="reset_pass" onSubmit={handleSubmit(onSubmit, onFormError)}>
+      <Input
+        name="otp_code"
+        ref={register}
+        containerClass="mb-4"
+        iconClass="icomoon icon-mail"
+        placeholder={t('register:otp_code')}
+      />
 
-        <Button type="submit" variant="gradient" block>
-          {t('password:send_otp')}
-        </Button>
-      </form>
-    </div>
+      <Button type="submit" variant="gradient" block>
+        {t('register:send_otp')}
+      </Button>
+    </form>
   );
 };
 
