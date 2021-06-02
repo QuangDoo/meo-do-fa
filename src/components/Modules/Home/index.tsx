@@ -75,7 +75,7 @@ const Home = ({ dealsOfTheDayData }) => {
       title: t('carousels:deal_of_the_day'),
       products: dealsOfTheDayData?.getProductDealOfTheDay || [],
       seeMoreUrl: '/deals-of-the-day',
-      icon: '/assets/images/giasochomnay.png'
+      icon: '/assets/images/fLash-sale.gif'
     },
     {
       title: t('carousels:bestseller'),
