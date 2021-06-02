@@ -1,12 +1,18 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import { useQuery } from '@apollo/client';
-import clsx from 'clsx';
+import { makeStyles } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
 import { useTranslation } from 'i18n';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useState } from 'react';
 import { MagnifierContainer, SideBySideMagnifier } from 'react-image-magnifiers';
+import Slider from 'react-slick';
 import { toast } from 'react-toastify';
+import ModalBase from 'src/components/Layout/Modal/ModalBase';
 import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import { DiscountRibbon } from 'src/components/Modules/ProductCard/DiscountRibbon';
 import ProductDetailInfor from 'src/components/Modules/ProductDetail/ProductDetailsInfo';
@@ -52,8 +58,49 @@ ProductDetail.getInitialProps = async (ctx) => {
   };
 };
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+    position: 'relative'
+  },
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: 'center',
+    color: theme.palette.text.secondary
+  }
+}));
+type ArrowButtonProps = {
+  onClick?: () => void;
+  type?: 'prev' | 'next';
+};
+
+const ArrowButton = ({ onClick, type = 'prev' }: ArrowButtonProps) => {
+  return (
+    <button
+      onClick={onClick}
+      className={`slide-arrow-image ${type}-arrow slick-arrow`}
+      aria-disabled="true">
+      <i className={`fas fa-chevron-${type === 'prev' ? 'left' : 'right'}`}></i>
+    </button>
+  );
+};
+
 function ProductDetail() {
   const { t } = useTranslation(['productDetail']);
+
+  const classes = useStyles();
+
+  const [subImageIndex, setSubImageIndex] = useState<number>(0);
+
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1
+  };
+
+  const [openModalImage, setOpenModalImage] = useState<boolean>(false);
 
   const router = useRouter();
 
@@ -99,6 +146,20 @@ function ProductDetail() {
     );
   }
 
+  const images = [
+    'https://salt.tikicdn.com/cache/w64/ts/product/55/37/ae/e4965a029fc2f485b4e2566bbf6f7c87.jpg',
+    'https://salt.tikicdn.com/cache/w444/ts/product/0c/98/a8/1d2b9828c9a60c6f880620ee1b6f311d.jpg',
+    'https://salt.tikicdn.com/cache/w64/ts/product/55/37/ae/e4965a029fc2f485b4e2566bbf6f7c87.jpg',
+    'https://salt.tikicdn.com/cache/w64/ts/product/55/37/ae/e4965a029fc2f485b4e2566bbf6f7c87.jpg',
+    'https://salt.tikicdn.com/cache/w64/ts/product/55/37/ae/e4965a029fc2f485b4e2566bbf6f7c87.jpg'
+  ];
+
+  images.unshift(product?.image_512);
+
+  const imagesSlice = images.slice(0, 4);
+
+  const imagesSliceLength = imagesSlice.length;
+
   return (
     <MainLayout>
       <Head>
@@ -126,7 +187,7 @@ function ProductDetail() {
                     <MagnifierContainer>
                       <SideBySideMagnifier
                         alwaysInPlace={true}
-                        imageSrc={product?.image_512 || '/assets/images/no_images.jpg'}
+                        imageSrc={images[subImageIndex]}
                         className="product-img-magnifier"
                       />
                     </MagnifierContainer>
@@ -135,6 +196,58 @@ function ProductDetail() {
                       <DiscountRibbon discountPercent={product.discount_percentage} />
                     )}
                   </div>
+                  <section className="box-image">
+                    <div className="container mb-3">
+                      {/* <h3 className="text-center about-us__title">Life At Medofa</h3> */}
+                    </div>
+                    <div className={classes.root}>
+                      <Grid container>
+                        {imagesSlice.map((image, index) => (
+                          <Grid
+                            xs={6}
+                            sm={4}
+                            md={3}
+                            lg={3}
+                            item
+                            key={index}
+                            className="grid-sub-image">
+                            <Paper>
+                              {imagesSliceLength === index + 1 ? (
+                                <div
+                                  onClick={() => setOpenModalImage(true)}
+                                  className={'border-sub__image_lastimage'}
+                                  key={index}>
+                                  <img src={image} alt={image} style={{ width: '90%' }} />
+                                  <span>{t('productDetail:see_more')}</span>
+                                </div>
+                              ) : (
+                                <div
+                                  onClick={() => {
+                                    setSubImageIndex(index);
+                                  }}
+                                  className={`border-sub__image ${
+                                    subImageIndex === index ? 'active' : ''
+                                  } `}
+                                  key={index}>
+                                  <img src={image} alt={image} style={{ width: '90%' }} />
+                                </div>
+                              )}
+                            </Paper>
+                          </Grid>
+                        ))}
+                      </Grid>
+                      <ModalBase open={openModalImage} onClose={() => setOpenModalImage(false)}>
+                        <Slider
+                          {...settings}
+                          prevArrow={<ArrowButton />}
+                          nextArrow={<ArrowButton type="next" />}>
+                          {images.map((image, index) => (
+                            <img src={image} alt={image} style={{ width: '100%' }} key={index} />
+                          ))}
+                        </Slider>
+                      </ModalBase>
+                    </div>
+                  </section>
                   <small className="text-muted">* {t('productDetail:image_change')}</small>
                 </div>
                 <div className="col-md-6">
