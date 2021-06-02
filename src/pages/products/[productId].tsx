@@ -86,7 +86,7 @@ const ArrowButton = ({ onClick, type = 'prev' }: ArrowButtonProps) => {
 };
 
 function ProductDetail() {
-  const { t } = useTranslation(['productDetail']);
+  const { t, i18n } = useTranslation(['productDetail']);
 
   const classes = useStyles();
 
@@ -140,6 +140,30 @@ function ProductDetail() {
 
     setSubImages(product?.sub_images);
   }, [product]);
+
+  useEffect(() => {
+    const changePathname = () => {
+      if (router) {
+        i18n.off('languageChanged');
+        i18n.on('languageChanged', (lang) => {
+          setTimeout(() => {
+            if (lang === 'vi') {
+              router.push(`/san-pham/${router?.query?.productId}`, undefined, { shallow: true });
+            } else {
+              router.push(`/products/${router?.query?.productId}`, undefined, { shallow: true });
+            }
+          });
+        });
+      }
+    };
+    changePathname();
+
+    return () => {
+      changePathname();
+      i18n.off('languageChanged');
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [router]);
 
   const listImage = [...subImages];
 
@@ -311,7 +335,10 @@ function ProductDetail() {
                   <div className="product__info-label ">{t('productDetail:category')}</div>
                   {categories.map((item, index, arr) => (
                     <>
-                      <Link href={`/products?category=${item.id}`}>
+                      <Link
+                        href={`${i18n?.language === 'en' ? '/products' : '/san-pham'}?category=${
+                          item.id
+                        }`}>
                         <a className="text-capitalize" key={index}>
                           {item.name}
                         </a>

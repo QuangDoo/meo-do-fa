@@ -91,8 +91,8 @@ const LoginForm = () => {
   };
 
   const responseGoogle = (res) => {
-    console.log(`res`, res);
-    console.log(`res.profileObj`, res.profileObj);
+    // console.log(`res`, res);
+    // console.log(`res.profileObj`, res.profileObj);
   };
 
   return (

@@ -28,7 +28,7 @@ type Inputs = {
   email: string;
   password: string;
   phone: number;
-  referEmail: string;
+  referPhoneNumber: string;
   acceptTerms: boolean;
   businessLicense: FileList;
   tax: string;
@@ -73,21 +73,21 @@ const RegisterForm = () => {
       onCompleted: (data) => {
         cookies.set('token', data.createUser.token);
 
-        const decode: DECODE = jwt_decode(data.createUser.token.substr(7));
-        const { userId } = decode;
-        if (file) {
-          const formData = new FormData();
+        // const decode: DECODE = jwt_decode(data.createUser.token.substr(7));
+        // const { userId } = decode;
+        // if (file) {
+        //   const formData = new FormData();
 
-          formData.append('image', file);
-          formData.append('id', userId + '');
+        //   formData.append('image', file);
+        //   formData.append('id', userId + '');
 
-          axios
-            .post(`${FILES_GATEWAY}/certificate`, formData)
+        //   axios
+        //     .post(`${FILES_GATEWAY}/certificate`, formData)
 
-            .catch((err) => {
-              console.log('Image upload error:', err);
-            });
-        }
+        //     .catch((err) => {
+        //       console.log('Image upload error:', err);
+        //     });
+        // }
 
         // Get user data, cart, notify
         getUser();
@@ -102,17 +102,18 @@ const RegisterForm = () => {
       }
     }
   );
+  /* file business lisence */
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.currentTarget.files[0];
-    setFile(file);
-    const isImage = file.type.startsWith('image');
+  // const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const file = e.currentTarget.files[0];
+  //   setFile(file);
+  //   const isImage = file.type.startsWith('image');
 
-    if (!isImage) {
-      toast.error(t('cart:file_is_not_image'));
-      return;
-    }
-  };
+  //   if (!isImage) {
+  //     toast.error(t('cart:file_is_not_image'));
+  //     return;
+  //   }
+  // };
 
   // On form submit
   const onFormSubmit = (data: Inputs) => {
@@ -126,7 +127,7 @@ const RegisterForm = () => {
             email: data.email,
             password: data.password,
             phone: data.phone.toString(),
-            ref_email: data.referEmail,
+            ref_email: data.referPhoneNumber,
             vat: data.tax
           }
         }
@@ -198,8 +199,7 @@ const RegisterForm = () => {
         <div hidden={currentAccountType === initialAccountType} className="account-information">
           <div className="welcome-account mb-3">
             {t('register:welcome')}
-            <span className="welcome-account__business">
-              {' '}
+            <span className="welcome-account__business ml-1">
               {t(`register:${currentAccountType.toLowerCase()}`)}!
             </span>
             <button
@@ -219,7 +219,7 @@ const RegisterForm = () => {
             containerClass="mb-1"
             iconClass="icomoon icon-user"
             placeholder={t('register:input_name_placeholder')}
-            defaultValue={PrefixName}
+            defaultValue={currentAccountType !== 'CUSTOMER' ? PrefixName : null}
             required
             maxLength={100}
           />
@@ -279,6 +279,7 @@ const RegisterForm = () => {
             name="tax"
             //type="text"
             ref={register({
+              required: `${t('register:input_tax_error_required')}`,
               pattern: {
                 value: taxCodeRegex,
                 message: t('errors:tax_code_invalid')
@@ -288,9 +289,10 @@ const RegisterForm = () => {
             containerClass="mb-4"
             iconClass="fas fa-file-invoice-dollar"
             placeholder={t('register:input_tax_placeholder')}
+            required
           />
 
-          <Input
+          {/* <Input
             ref={register}
             name="businessLicense"
             type="file"
@@ -303,7 +305,7 @@ const RegisterForm = () => {
                 : t('register:input_business_license_placeholder')
             }
             onChange={handleFileChange}
-          />
+          /> */}
 
           {/* <Input
             name="address"
@@ -313,8 +315,14 @@ const RegisterForm = () => {
           /> */}
 
           <Input
-            ref={register}
-            name="referEmail"
+            type="number"
+            ref={register({
+              pattern: {
+                value: viPhoneNumberRegex,
+                message: `${t('register:input_phone_error_invalid')}`
+              }
+            })}
+            name="referPhoneNumber"
             containerClass="mb-4"
             iconClass="fas fa-user-friends"
             placeholder={t('register:input_refer_placeholder')}

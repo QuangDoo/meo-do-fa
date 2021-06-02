@@ -5,7 +5,6 @@ import LinkText from 'src/components/Form/LinkText';
 import { GET_COUPON_PROGRAMS } from 'src/graphql/coupons/getCouponPrograms';
 
 import PromoCodeItem from './PromoCodeItem';
-import SpecialPromoCodeItem from './SpecialPromoCodeItem';
 
 export default function PromoCodes() {
   const { data: couponsData } = useQuery(GET_COUPON_PROGRAMS);
@@ -81,33 +80,6 @@ export default function PromoCodes() {
           <div className="row" />
         </div> */}
       </div>
-
-      {/* <div className="special-promocodes pt-4 pb-5 mb-5">
-        <div className="container">
-          <div className="row mb-4">
-            <div className="col-12 text-center">
-              <h2 className="text-white">
-                <Trans i18nKey="promoCodes:special_codes" />
-              </h2>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-12 coupons2">
-              {couponsData?.getCouponPrograms &&
-                couponsData?.getCouponPrograms.map((coupon, index) => (
-                  <SpecialPromoCodeItem
-                    key={index}
-                    couponAmount={coupon.name}
-                    couponCode={coupon.promo_code}
-                    desctiption={coupon.reward_id[1]}
-                  />
-                ))}
-            </div>
-          </div>
-        </div>
-      </div> */}
-
-      {/* <SpecialPromoCodes data={couponsData?.getCouponPrograms} /> */}
 
       <div className="another-promocodes mb-5">
         <div className="container">

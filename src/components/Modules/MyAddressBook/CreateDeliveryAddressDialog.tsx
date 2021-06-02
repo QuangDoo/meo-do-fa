@@ -102,6 +102,7 @@ export default function CreateDeliveryAddressDialog(props: Props) {
       maxWidth="md"
       fullWidth
       title={t('myAddressBook:create_dialog_title')}
+      note={t('myAddressBook:notification')}
       actionsNode={
         <Button
           color="primary"
