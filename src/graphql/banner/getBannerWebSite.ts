@@ -20,7 +20,7 @@ export type WebBannerData = {
 };
 
 export const GET_BANNER = gql`
-  query ($type: BannerType) {
+  query($type: BannerType) {
     getWebsiteBanner(type: $type) {
       id
       name
