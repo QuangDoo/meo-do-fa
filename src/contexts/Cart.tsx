@@ -1,4 +1,10 @@
-import { ApolloError, ApolloQueryResult, QueryLazyOptions, useApolloClient } from '@apollo/client';
+import {
+  ApolloError,
+  ApolloQueryResult,
+  QueryLazyOptions,
+  ServerError,
+  useApolloClient
+} from '@apollo/client';
 import { useTranslation } from 'i18n';
 import cookies from 'js-cookie';
 import { useRouter } from 'next/router';
@@ -84,6 +90,21 @@ const CartProvider = (props: Props) => {
 
         setCheckedCartsData(response.data.getCartByProduct);
       } catch (error) {
+        if ((error.networkError as ServerError).statusCode === 401) {
+          cookies.remove('token');
+          router.reload();
+          router.push('/');
+          return;
+        }
+
+        const errorCode = error.graphQLErrors?.[0]?.extensions?.code;
+
+        if ([500, 107].includes(errorCode)) {
+          cookies.remove('token');
+          router.reload();
+          router.push('/');
+        }
+
         toastError(error);
       }
     };
@@ -137,6 +158,21 @@ const CartProvider = (props: Props) => {
 
       return Promise.resolve(response);
     } catch (error) {
+      if ((error.networkError as ServerError).statusCode === 401) {
+        cookies.remove('token');
+        router.reload();
+        router.push('/');
+        return Promise.reject(error);
+      }
+
+      const errorCode = error.graphQLErrors?.[0]?.extensions?.code;
+
+      if ([500, 107].includes(errorCode)) {
+        cookies.remove('token');
+        router.reload();
+        router.push('/');
+      }
+
       toastError(error);
       return Promise.reject(error);
     }

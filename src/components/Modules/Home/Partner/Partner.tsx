@@ -5,15 +5,20 @@ import Slider from 'react-slick';
 import PartnerImg from './PartnerImg';
 
 const examplePartners = [
-  'assets/images/partner1.jpg',
-  'assets/images/partner2.jpg',
-  'assets/images/partner3.jpg',
-  'assets/images/partner1.jpg',
-  'assets/images/partner2.jpg',
-  'assets/images/partner3.jpg',
-  'assets/images/partner1.jpg',
-  'assets/images/partner2.jpg',
-  'assets/images/partner3.jpg'
+  'assets/images/DuocVietHa.png',
+  'assets/images/hadiphar.jpeg',
+  'assets/images/logo-reliv-helthcare-01.png',
+  'assets/images/nic.jpeg',
+  'assets/images/PhucVinh_Logo-01.png',
+  'assets/images/SaoThaiDuong.jpeg',
+  'assets/images/agimex.jpeg',
+  'assets/images/davipharm.png',
+  'assets/images/DuocMinhHai.png',
+  'assets/images/DuocTamBinh.png',
+  'assets/images/DuocTamHanh.jpeg',
+  'assets/images/DuocTraVinh.png',
+  'assets/images/stada.jpeg',
+  'assets/images/stadipharm.png'
 ];
 
 const Parner = () => {
@@ -23,7 +28,7 @@ const Parner = () => {
       <div className="container">
         <div>
           <div className="text-center mb-3">
-            <h2 className="text-primary">{t('partner:partner')}</h2>
+            <h2>{t('partner:partner')}</h2>
           </div>
           <div className="mt-5">
             <Slider slidesToShow={6} slidesToScroll={3} arrows={false}>

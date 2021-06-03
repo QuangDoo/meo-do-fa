@@ -28,8 +28,12 @@
   "checkbox_acceptTerms_error_required": "Xin đồng ý với Điều khoản sử dụng.",
   "go_to_login": "Nếu bạn đã có tài khoản, vui lòng <button><b>Đăng nhập</b></button>",
   "submit_button_text": "Tạo tài khoản",
-  "input_refer_placeholder": "Mã giới thiệu",
-  "customer": "Khách hàng",
+  "input_refer_placeholder": "Số điện thoại người giới thiệu",
+  "customer": "Bạn",
   "other": "Khác",
-  "hospital_clinic": "Bệnh viện / phòng khám"
+  "hospital_clinic": "Bệnh viện / phòng khám",
+  "confirm_account":"Xác thực tài khoản",
+  "otp_code":"Nhập mã OTP",
+  "send_otp":"Gửi mã OTP",
+  "otp_alert":"Bạn phải nhập mã OTP"
 }

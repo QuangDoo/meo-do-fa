@@ -17,6 +17,7 @@ import {
 import Button from '../Form/Button';
 import Input from '../Form/Input';
 import BackToTop from '../Layout/BackToTop';
+import ConfirmAccountModal from '../Modules/ConfirmAccountModal';
 
 const links: { href: string; i18nKey: string }[] = [
   { href: '/about-us', i18nKey: 'footer:about_us' },
@@ -88,7 +89,7 @@ const Footer = () => {
 
   return (
     <>
-      <div className="subscribe-container">
+      <div className="subscribe-container d-none">
         <div className="container">
           <div className="row align-items-center ">
             <div className="col-xs col-md-7 text-md-center mb-2">
@@ -107,7 +108,7 @@ const Footer = () => {
                 </div>
               </div>
             </div>
-
+            <ConfirmAccountModal />
             <form
               className=" align-items-center d-flex justify-content-center text-sm-left text-center col-md-5 col-12"
               onSubmit={handleSubmit(onSubmit, onError)}>
@@ -143,7 +144,7 @@ const Footer = () => {
         <div className="container pb-2 pt-0">
           <div className="row justify-content-between web__margin">
             <div className="col-xl-4 col-lg-4 col-md-4  col-sm-12">
-              <div className="footer__info mb-4">
+              <div className="footer__info mb-3">
                 <div className="footer__info-logo mb-3">
                   <div className="rockland-logo d-inline-block">
                     <Link href="/">
@@ -181,7 +182,7 @@ const Footer = () => {
               </div>
             </div>
             <div className="col-xl-4 col-lg-5 col-md-4 col-sm-7">
-              <div className="mb-3 mobile__margin">
+              <div className="mb-2 mobile__margin">
                 <div className="footer__header mb-3">{t('footer:general_info')}</div>
 
                 <div className="row">
@@ -260,15 +261,20 @@ const Footer = () => {
 
                         <img
                           className="img-fluid footer__delivery"
+                          src="/assets/images/ahamove.png"
+                          alt="ahamove"
+                        />
+                        <img
+                          className="img-fluid footer__delivery"
+                          src="/assets/images/kerry-express.png"
+                          alt="ahamove"
+                        />
+
+                        <img
+                          className="img-fluid footer__delivery"
                           src="/assets/images/pharma-logistics-logo-sm.png"
                           alt="logo-logistics-pharma"
                         />
-
-                        {/* <img
-                            className="img-fluid footer__delivery"
-                            src="/assets/images/ghn-logo.png"
-                            alt="logo-ghn"
-                          /> */}
 
                         {/* <img
                           className="img-fluid footer__delivery"
@@ -320,12 +326,12 @@ const Footer = () => {
             {t('footer:reference_illustration')}. {t('footer:the_use_of_drug')}.
           </p>
           <hr />
-          <p className="d-flex flex-row justify-content-center mb-0">
-            <div>{t('footer:copyright')}</div>
-            <div className="copyright__version">
+          <div className="wrapper__copyright_bottom">
+            <span className="copyright_content">{t('footer:copyright')}</span>
+            <span className="copyright__version">
               {t('footer:version')} {WEBSITE_VERSION}
-            </div>
-          </p>
+            </span>
+          </div>
         </div>
         <LoadingBackdrop open={loadingSubcribe} />
         <BackToTop />

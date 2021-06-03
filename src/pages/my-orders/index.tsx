@@ -57,7 +57,7 @@ MyOrders.getInitialProps = async (ctx) => {
 };
 
 function MyOrders(): JSX.Element {
-  const { t } = useTranslation(['myOrders', 'errors']);
+  const { t, i18n } = useTranslation(['myOrders', 'errors']);
 
   const router = useRouter();
 
@@ -132,7 +132,7 @@ function MyOrders(): JSX.Element {
               <Box textAlign="center">
                 <p>{t('myOrders:no_orders')}</p>
                 <p>
-                  <Link href="/products">
+                  <Link href={`${i18n?.language === 'vi' ? '/san-pham' : '/products'}`}>
                     <a className="btn btn-primary" role="button">
                       {t('myOrders:back_to_products_page')}
                     </a>

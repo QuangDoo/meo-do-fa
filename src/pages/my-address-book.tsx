@@ -101,7 +101,7 @@ function MyAddresses() {
               </Button>
             </Card>
           </Grid>
-          <div className="alert alert-primary ml-2 mr-2" role="alert">
+          <div className="alert alert-primary ml-2 mr-2 w-100 mb-0" role="alert">
             {t('myAddressBook:notification')}
           </div>
           {addressBook.map((address) => (

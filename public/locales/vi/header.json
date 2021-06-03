@@ -3,5 +3,7 @@
   "login": "Đăng nhập",
   "register": "Tạo tài khoản",
   "language": "Ngôn ngữ",
-  "login_title": "Đăng nhập để tìm hiểu sản phẩm"
+  "login_title": "Đăng nhập để tìm hiểu sản phẩm",
+  "vi":"Tiếng Việt",
+  "en": "Tiếng Anh"
 }

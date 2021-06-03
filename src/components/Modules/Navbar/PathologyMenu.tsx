@@ -13,7 +13,7 @@ type Props = {
 };
 
 function PathologyDropdownMenu(props: Props) {
-  const { t } = useTranslation(['navbar']);
+  const { t, i18n } = useTranslation(['navbar']);
   const { pathologies, onClose } = props;
   return (
     <>
@@ -31,7 +31,7 @@ function PathologyDropdownMenu(props: Props) {
       </div>
       {pathologies.map(({ id, name }) => (
         <div key={id} className="mb-2">
-          <Link href={`/products?pathology=${id}`}>
+          <Link href={`${i18n?.language === 'vi' ? '/san-pham' : '/products'}?pathology=${id}`}>
             <a type="button" role="button" onClick={onClose} onKeyDown={onClose} tabIndex={0}>
               {name}
             </a>
@@ -43,7 +43,7 @@ function PathologyDropdownMenu(props: Props) {
 }
 
 function PathologyMenu() {
-  const { t } = useTranslation(['navbar']);
+  const { t, i18n } = useTranslation(['navbar']);
   const [open, setOpen] = useState(false);
 
   const { data: pathologiesData } = useQuery<GetPathologiesData, undefined>(GET_PATHOLOGIES);
@@ -72,7 +72,8 @@ function PathologyMenu() {
             {pathologies.map(({ id, name }) => (
               <li className="menu-item" key={id}>
                 <div className="item-title">
-                  <Link href={`/products?pathology=${id}`}>
+                  <Link
+                    href={`${i18n?.language === 'vi' ? '/san-pham' : '/products'}?pathology=${id}`}>
                     <a className="item-link">{name}</a>
                   </Link>
                 </div>

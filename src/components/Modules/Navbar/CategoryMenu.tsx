@@ -14,13 +14,14 @@ import {
 } from 'src/graphql/category/getCategoriesLevel';
 
 import Dropdown from '../../Form/Dropdown';
+import I18nLink from '../Link/I18nLink';
 
 type Props = {
   categories: Category[];
   onClose: () => void;
 };
 const CategoryDropdownMenu = (props: Props) => {
-  const { t } = useTranslation(['navbar']);
+  const { t, i18n } = useTranslation(['navbar']);
   const { categories, onClose } = props;
 
   return (
@@ -39,7 +40,7 @@ const CategoryDropdownMenu = (props: Props) => {
       </div>
       {categories.map(({ name, id, categorySub }) => (
         <div key={id} className="mb-2">
-          <Link href={`/products?category=${id}`}>
+          <Link href={`${i18n?.language === 'vi' ? '/san-pham' : '/products'}?category=${id}`}>
             <Dropdown initialShow={false} label={name}>
               <div className="mb-3">
                 {categorySub
@@ -47,7 +48,10 @@ const CategoryDropdownMenu = (props: Props) => {
                   .sort((a, b) => a.name?.localeCompare(b.name))
                   .map(({ name, id }) => (
                     <div key={id} className="ml-2 mb-1">
-                      <Link href={`/products?category=${id}`}>
+                      <Link
+                        href={`${
+                          i18n?.language === 'vi' ? '/san-pham' : '/products'
+                        }?category=${id}`}>
                         <a
                           type="button"
                           role="button"
@@ -73,7 +77,7 @@ const CategoryDropdownMenu = (props: Props) => {
 };
 
 const CategoryMenu = () => {
-  const { t } = useTranslation(['navbar']);
+  const { t, i18n } = useTranslation(['navbar']);
   const [open, setOpen] = useState(false);
 
   const { data: categoriesData, refetch } = useQuery<GetCategoriesLevelData, undefined>(
@@ -96,7 +100,11 @@ const CategoryMenu = () => {
     <>
       <li className="main-menu rockland-nav__item d-none d-sm-block">
         <div className="menu-title">
-          <Link href="/products">
+          {/* <I18nLink href="/products" className="rockland-nav__link">
+            <img className="nav__icon" src="/assets/images/sanpham.png" alt="icon_product" />
+            <span className="rockland-nav__title">{t('navbar:product_category')}</span>
+          </I18nLink> */}
+          <Link href={`${i18n?.language === 'vi' ? '/san-pham' : '/products'}`}>
             <a className="rockland-nav__link">
               <img className="nav__icon" src="/assets/images/sanpham.png" alt="icon_product" />
               <span className="rockland-nav__title">{t('navbar:product_category')}</span>
@@ -105,7 +113,9 @@ const CategoryMenu = () => {
         </div>
         <ul className="container-menu">
           {categories.map(({ id, name, categorySub, priority }) => (
-            <Link href={`/products?category=${id}`} key={id}>
+            <I18nLink
+              href={`${i18n?.language === 'vi' ? '/san-pham' : '/products'}?category=${id}`}
+              key={id}>
               <li className="menu-item">
                 <div className="item-title">
                   <img
@@ -122,7 +132,11 @@ const CategoryMenu = () => {
                 <div className="sub-menu">
                   <ul>
                     {categorySub?.map(({ id, name }) => (
-                      <Link href={`/products?category=${id}`} key={id}>
+                      <Link
+                        href={`${
+                          i18n?.language === 'vi' ? '/san-pham' : '/products'
+                        }?category=${id}`}
+                        key={id}>
                         <li className="sub-menu-item">
                           <a className="sub-item-link">{name}</a>
                         </li>
@@ -131,7 +145,7 @@ const CategoryMenu = () => {
                   </ul>
                 </div>
               </li>
-            </Link>
+            </I18nLink>
           ))}
         </ul>
       </li>
