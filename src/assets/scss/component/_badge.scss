@@ -145,3 +145,18 @@
     outline: 0;
     box-shadow: 0 0 0 0.2rem rgba(52, 58, 64, 0.5);
   }
+
+  .badge-gray {
+    color: #ffffff;
+    background-color: #6c6d6e;
+  }
+  a.badge-gray:hover,
+  a.badge-gray:focus {
+    color: #ffffff;
+    background-color: #6c6d6e;
+  }
+  a.badge-gray:focus,
+  a.badge-gray.focus {
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(116, 116, 116, 0.5);
+  }

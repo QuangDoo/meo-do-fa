@@ -57,11 +57,10 @@ function DealOfTheDay() {
   const hotDeals = productsData?.getProductByConditions?.Products || [];
   const numberHotDeals = productsData?.getProductByConditions?.total || 0;
 
-  const {
-    data: otherDealData,
-    refetch: refetchProducts,
-    loading: otherDealLoading
-  } = useQuery<GetProductsData, GetProductsVars>(GET_PRODUCTS, {
+  const { data: otherDealData, refetch: refetchProducts, loading: otherDealLoading } = useQuery<
+    GetProductsData,
+    GetProductsVars
+  >(GET_PRODUCTS, {
     variables: {
       page: page,
       pageSize: PAGE_SIZE,
