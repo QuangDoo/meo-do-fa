@@ -5,5 +5,6 @@
   "name": "Name",
   "email": "Email",
   "email_not_provided": "Not provided",
-  "phone": "Phone"
+  "phone": "Phone",
+  "company_name": "Business Name"
 }

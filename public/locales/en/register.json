@@ -3,7 +3,7 @@
   "pharmacy": "Pharmacy",
   "clinic": "Clinic",
   "drugstore": "Drugstore",
-  "hospital": "Hospital/ Pharmaceutical company",
+  "hospital": "Hospital",
   "welcome": "Welcome",
   "edit": "Edit",
   "you_are": "You are a",
@@ -32,6 +32,7 @@
   "customer":"New user",
   "other":"Other",
   "hospital_clinic": "Hospital / Clinic",
+  "pharmacy_drugstore": "Pharmacy / Drugstore",
   "confirm_account":"Confirm account",
   "otp_code":"Enter OTP code",
   "send_otp":"Gửi mã OTP"
