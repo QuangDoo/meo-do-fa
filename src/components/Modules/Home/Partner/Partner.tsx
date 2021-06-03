@@ -7,20 +7,34 @@ import PartnerImg from './PartnerImg';
 const examplePartners = [
   'assets/images/DuocVietHa.png',
   'assets/images/hadiphar.jpeg',
-  'assets/images/logo-reliv-helthcare-01.png',
-  'assets/images/nic.jpeg',
+  'assets/images/davipharm.png',
   'assets/images/PhucVinh_Logo-01.png',
   'assets/images/SaoThaiDuong.jpeg',
   'assets/images/agimex.jpeg',
-  'assets/images/davipharm.png',
   'assets/images/DuocMinhHai.png',
-  'assets/images/DuocTamBinh.png',
   'assets/images/DuocTamHanh.jpeg',
+  'assets/images/nic.jpeg',
+  'assets/images/DuocTamBinh.png',
   'assets/images/DuocTraVinh.png',
+  'assets/images/logo-reliv-helthcare-01.png',
   'assets/images/stada.jpeg',
   'assets/images/stadipharm.png'
 ];
+type ArrowButtonProps = {
+  onClick?: () => void;
+  type?: 'prev' | 'next';
+};
 
+const ArrowButton = ({ onClick, type = 'prev' }: ArrowButtonProps) => {
+  return (
+    <button
+      onClick={onClick}
+      className={`slide-arrow ${type}-arrow slick-arrow`}
+      aria-disabled="true">
+      <i className={`fas fa-chevron-${type === 'prev' ? 'left' : 'right'}`}></i>
+    </button>
+  );
+};
 const Parner = () => {
   const { t } = useTranslation(['partner']);
   return (
@@ -31,7 +45,43 @@ const Parner = () => {
             <h2>{t('partner:partner')}</h2>
           </div>
           <div className="mt-5">
-            <Slider slidesToShow={6} slidesToScroll={3} arrows={false}>
+            <Slider
+              slidesToShow={6}
+              slidesToScroll={3}
+              arrows={true}
+              prevArrow={<ArrowButton />}
+              nextArrow={<ArrowButton type="next" />}
+              className="m-0 p-0 slider_products"
+              responsive={[
+                {
+                  breakpoint: 1105,
+                  settings: {
+                    slidesToShow: 5,
+                    slidesToScroll: 2
+                  }
+                },
+                {
+                  breakpoint: 890,
+                  settings: {
+                    slidesToShow: 5,
+                    slidesToScroll: 2
+                  }
+                },
+                {
+                  breakpoint: 675,
+                  settings: {
+                    slidesToShow: 4,
+                    slidesToScroll: 1
+                  }
+                },
+                {
+                  breakpoint: 460,
+                  settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 1
+                  }
+                }
+              ]}>
               {examplePartners.map((url, index) => (
                 <PartnerImg key={index} imgUrl={url} />
               ))}
