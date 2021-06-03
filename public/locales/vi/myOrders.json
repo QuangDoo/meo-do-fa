@@ -8,6 +8,7 @@
   "complete": "Hoàn tất",
   "completed": "Đã hoàn thành",
   "confirmed": "Đã xác nhận",
+  "return": "Trả hàng",
   "date_order": "Ngày mua:",
   "delivering": "Đang vận chuyển",
   "delivery_address": "Địa chỉ giao hàng",
@@ -37,9 +38,9 @@
   "vat_invoice": "Xem thông tin xuất hoá đơn đỏ",
   "wait_for_confirm": "Chờ xác nhận",
   "received": "Đã tiếp nhận",
-  "orderNo" : "Mã đơn hàng",
+  "orderNo": "Mã đơn hàng",
   "feedback": "Phản hồi về đơn hàng",
-  "send_fb" : "Gửi phản hồi",
-  "img_faults" : "Hình ảnh minh hoạ lỗi",
+  "send_fb": "Gửi phản hồi",
+  "img_faults": "Hình ảnh minh hoạ lỗi",
   "max_img": "Chọn tối đa 6 ảnh"
 }
