@@ -41,5 +41,6 @@
   "feedback": "Feedback Order",
   "send_fb" : "Send feedback",
   "img_faults" : "Image for faults",
-  "max_img" : "Select maximum 6 images"
+  "max_img" : "Select maximum 6 images",
+  "return": "Return"
 }

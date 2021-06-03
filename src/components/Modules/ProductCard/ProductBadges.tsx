@@ -1,11 +1,11 @@
 import React from 'react';
 import { Product } from 'src/graphql/product/getProducts';
-import { ProductDetails } from 'src/graphql/product/product.query';
+import { ProductDetail } from 'src/graphql/product/product.query';
 
 import ProductBadge from './ProductBadge';
 
 type Props = {
-  product: Product | ProductDetails;
+  product: Product | ProductDetail;
 };
 
 export default function ProductBadges(props: Props) {

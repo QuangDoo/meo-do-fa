@@ -160,6 +160,7 @@ function ProductDetail() {
       }
     };
     changePathname();
+
     return () => {
       changePathname();
       i18n.off('languageChanged');

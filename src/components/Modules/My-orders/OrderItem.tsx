@@ -13,6 +13,7 @@ const badges = {
   25: { color: 'danger', text: 'canceled' },
   30: { color: 'secondary', text: 'in_proceed' },
   40: { color: 'warning', text: 'delivering' },
+  60: { color: 'gray', text: 'return' },
   80: { color: 'primary', text: 'completed' }
 };
 
