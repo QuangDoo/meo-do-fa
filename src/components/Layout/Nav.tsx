@@ -7,9 +7,11 @@ import Link from 'next/link';
 import React, { useState } from 'react';
 import { useCart } from 'src/contexts/Cart';
 import { useToken } from 'src/contexts/Token';
+import { useUser } from 'src/contexts/User';
 import { GET_WEBSITE_CONFIG, GetWebsiteConfigData } from 'src/graphql/configs/getWebsiteConfig';
 
 import CategoryMenu from '../Modules/Navbar/CategoryMenu';
+import CategorySpecialMenu from '../Modules/Navbar/CategorySpecialMenu';
 import PathologyMenu from '../Modules/Navbar/PathologyMenu';
 import HotTags from './HotTags';
 
@@ -17,6 +19,8 @@ const Nav = () => {
   const token = useToken();
 
   const { data: cart } = useCart();
+
+  const { data: user } = useUser();
 
   const totalQty = cart?.totalQty;
 
@@ -42,6 +46,10 @@ const Nav = () => {
   const { data: configData } = useQuery<GetWebsiteConfigData, undefined>(GET_WEBSITE_CONFIG);
   const SHOW_CATEGORY = configData?.getWebsiteConfig?.find(
     (config) => config.key === 'SHOW_CATEGORY'
+  )?.value;
+
+  const SHOW_CATEGORY_SPECIAL = configData?.getWebsiteConfig?.find(
+    (config) => config.key === 'SHOW_CATEGORY_SPECIAL'
   )?.value;
 
   return (
@@ -203,8 +211,11 @@ const Nav = () => {
                   </li>
                 </ul>
               </li>
-
-              <PathologyMenu />
+              {user?.account_type === 'DISTRIBUTER' && SHOW_CATEGORY_SPECIAL === 'Y' ? (
+                <CategorySpecialMenu />
+              ) : (
+                <PathologyMenu />
+              )}
 
               <li className="rockland-nav__item">
                 <Link href="/ingredients">

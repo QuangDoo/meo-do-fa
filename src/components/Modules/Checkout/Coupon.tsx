@@ -23,13 +23,20 @@ export default function Coupon(props: Props) {
         </div>
 
         <div className="promo-coupon__amount">
-          {'Giảm giá '}
-
           {!!promotion.discount_fixed_amount && (
-            <PriceText price={promotion.discount_fixed_amount} />
+            <>
+              {'Giảm giá '}
+              <PriceText price={promotion.discount_fixed_amount} />
+            </>
           )}
 
           {!!promotion.discount_percentage && promotion.discount_percentage + '%'}
+
+          {!!promotion.reward_product_name && (
+            <>
+              {'Tặng '} {promotion.reward_product_quantity} {promotion.reward_product_name}
+            </>
+          )}
         </div>
       </div>
 

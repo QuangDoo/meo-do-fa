@@ -81,8 +81,6 @@ function Products() {
 
   const router = useRouter();
 
-  console.log(`router`, router);
-  console.log(`i18n lang`, i18n.language);
   useEffect(() => {
     if (router) {
       i18n.off('languageChanged');

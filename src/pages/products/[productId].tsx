@@ -140,6 +140,10 @@ function ProductDetail() {
     setSubImages(product?.sub_images);
   }, [product]);
 
+  const listImage = [...subImages];
+
+  listImage.unshift(product?.image_512);
+  // console.log(`abc`, abc);
   useEffect(() => {
     const changePathname = () => {
       if (router) {
@@ -161,13 +165,7 @@ function ProductDetail() {
       changePathname();
       i18n.off('languageChanged');
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router]);
-
-  const listImage = [...subImages];
-
-  listImage.unshift(product?.image_512);
-  // console.log(`abc`, abc);
 
   const relatedProducts = getRelatedProductsData?.getRelatedProducts;
 
@@ -246,53 +244,55 @@ function ProductDetail() {
                     <div className="container mb-3">
                       {/* <h3 className="text-center about-us__title">Life At Medofa</h3> */}
                     </div>
-                    <div className={classes.root}>
-                      <Grid container>
-                        {imagesSlice.map((image, index) => (
-                          <Grid
-                            xs={6}
-                            sm={4}
-                            md={3}
-                            lg={3}
-                            item
-                            key={index}
-                            className="grid-sub-image">
-                            <Paper>
-                              {imagesSliceLength === index + 1 ? (
-                                <div
-                                  onClick={() => setOpenModalImage(true)}
-                                  className={'border-sub__image_lastimage'}
-                                  key={index}>
-                                  <img src={image} alt={image} className="img-fluid" />
-                                  <span>{t('productDetail:see_more')}</span>
-                                </div>
-                              ) : (
-                                <div
-                                  onClick={() => {
-                                    setSubImageIndex(index);
-                                  }}
-                                  className={`border-sub__image ${
-                                    subImageIndex === index ? 'active' : ''
-                                  } `}
-                                  key={index}>
-                                  <img src={image} alt={image} className="img-fluid" />
-                                </div>
-                              )}
-                            </Paper>
-                          </Grid>
-                        ))}
-                      </Grid>
-                      <ModalBase open={openModalImage} onClose={() => setOpenModalImage(false)}>
-                        <Slider
-                          {...settings}
-                          prevArrow={<ArrowButton />}
-                          nextArrow={<ArrowButton type="next" />}>
-                          {listImage.map((image, index) => (
-                            <img src={image} alt={image} style={{ width: '100%' }} key={index} />
+                    {listImage.length > 1 && (
+                      <div className={classes.root}>
+                        <Grid container>
+                          {imagesSlice.map((image, index) => (
+                            <Grid
+                              xs={6}
+                              sm={4}
+                              md={3}
+                              lg={3}
+                              item
+                              key={index}
+                              className="grid-sub-image">
+                              <Paper>
+                                {imagesSliceLength === index + 1 ? (
+                                  <div
+                                    onClick={() => setOpenModalImage(true)}
+                                    className={'border-sub__image_lastimage'}
+                                    key={index}>
+                                    <img src={image} alt={image} className="img-fluid" />
+                                    <span>{t('productDetail:see_more')}</span>
+                                  </div>
+                                ) : (
+                                  <div
+                                    onClick={() => {
+                                      setSubImageIndex(index);
+                                    }}
+                                    className={`border-sub__image ${
+                                      subImageIndex === index ? 'active' : ''
+                                    } `}
+                                    key={index}>
+                                    <img src={image} alt={image} className="img-fluid" />
+                                  </div>
+                                )}
+                              </Paper>
+                            </Grid>
                           ))}
-                        </Slider>
-                      </ModalBase>
-                    </div>
+                        </Grid>
+                        <ModalBase open={openModalImage} onClose={() => setOpenModalImage(false)}>
+                          <Slider
+                            {...settings}
+                            prevArrow={<ArrowButton />}
+                            nextArrow={<ArrowButton type="next" />}>
+                            {listImage.map((image, index) => (
+                              <img src={image} alt={image} style={{ width: '100%' }} key={index} />
+                            ))}
+                          </Slider>
+                        </ModalBase>
+                      </div>
+                    )}
                   </section>
                   <small className="text-muted">* {t('productDetail:image_change')}</small>
                 </div>
