@@ -16,7 +16,7 @@ export type GetCategoryLevelVar = {
 };
 
 export const GET_CATEGORIES_LEVEL = gql`
-  query($isSpecial: Boolean) {
+  query ($isSpecial: Boolean) {
     getCategoriesLevel(isSpecial: $isSpecial) {
       id
       name

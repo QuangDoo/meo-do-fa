@@ -34,10 +34,11 @@ export const TableHeader = ({ children, ...props }) => {
 function LoyaltyPoints() {
   const { t } = useTranslation(['loyalty']);
 
-  const { data: loyaltyHistoryData, loading, refetch } = useQueryAuth<
-    LoyaltyHistoryData,
-    undefined
-  >(GET_LOYALTY_HISTORY, {
+  const {
+    data: loyaltyHistoryData,
+    loading,
+    refetch
+  } = useQueryAuth<LoyaltyHistoryData, undefined>(GET_LOYALTY_HISTORY, {
     fetchPolicy: 'network-only',
     onError: (err) => {
       toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));

@@ -29,7 +29,7 @@ export type GetSupplierDetailsVars = {
 };
 
 export const GET_SUPPLIER_DETAIL = gql`
-  query($id: Int!) {
+  query ($id: Int!) {
     getSupplier(id: $id) {
       id
       name
