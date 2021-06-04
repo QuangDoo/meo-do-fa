@@ -94,8 +94,6 @@ const CategorySpecialMenu = () => {
     }
   }, [categoriesData]);
 
-  console.log(`categoriesData`, categoriesData);
-
   return (
     <>
       <li className="main-menu rockland-nav__item d-none d-sm-block">

@@ -7,6 +7,7 @@ import Link from 'next/link';
 import React, { useState } from 'react';
 import { useCart } from 'src/contexts/Cart';
 import { useToken } from 'src/contexts/Token';
+import { useUser } from 'src/contexts/User';
 import { GET_WEBSITE_CONFIG, GetWebsiteConfigData } from 'src/graphql/configs/getWebsiteConfig';
 
 import CategoryMenu from '../Modules/Navbar/CategoryMenu';
@@ -18,6 +19,8 @@ const Nav = () => {
   const token = useToken();
 
   const { data: cart } = useCart();
+
+  const { data: user } = useUser();
 
   const totalQty = cart?.totalQty;
 
@@ -208,7 +211,11 @@ const Nav = () => {
                   </li>
                 </ul>
               </li>
-              {SHOW_CATEGORY_SPECIAL === 'N' ? <CategorySpecialMenu /> : <PathologyMenu />}
+              {user?.account_type === 'DISTRIBUTER' && SHOW_CATEGORY_SPECIAL === 'Y' ? (
+                <CategorySpecialMenu />
+              ) : (
+                <PathologyMenu />
+              )}
 
               <li className="rockland-nav__item">
                 <Link href="/ingredients">
