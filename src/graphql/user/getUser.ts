@@ -23,6 +23,7 @@ export type User = {
   cust_no: string;
   activated: boolean;
   waiting: boolean;
+  is_auth_otp: boolean;
 };
 
 export type GetUserData = {
@@ -59,6 +60,7 @@ export const GET_USER = gql`
       cust_no
       activated
       waiting
+      is_auth_otp
     }
   }
 `;

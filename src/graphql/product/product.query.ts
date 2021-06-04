@@ -19,7 +19,7 @@ type Manufacturer = {
   slug: string;
 };
 
-export type ProductDetails = {
+export type ProductDetail = {
   id: number;
   name: string;
   list_price: number;
@@ -53,10 +53,11 @@ export type ProductDetails = {
   slug: string;
   default_vendor: string;
   default_vendor_id: string;
+  sub_images: string[];
 };
 
 export type GetProductData = {
-  getProduct: ProductDetails;
+  getProduct: ProductDetail;
 };
 
 export type GetProductVars = {
@@ -113,6 +114,7 @@ export const GET_PRODUCT = gql`
       slug
       default_vendor
       default_vendor_id
+      sub_images
     }
   }
 `;

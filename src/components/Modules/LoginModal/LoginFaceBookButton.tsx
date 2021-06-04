@@ -5,7 +5,7 @@ export default function LoginFaceBookButton() {
   const [isLogin, setIsLogin] = useState<boolean>(false);
 
   const responseFacebook = (response) => {
-    console.log(response);
+    // console.log(response);
     setIsLogin(true);
   };
 

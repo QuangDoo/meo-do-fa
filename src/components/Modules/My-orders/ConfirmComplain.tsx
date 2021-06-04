@@ -108,7 +108,6 @@ const ConfirmComplain = (props: Props) => {
 
   const handleSearchTypeChange = (e) => {
     setFault(e.target.value); //No.Fault
-    console.log(e.target.value);
   };
 
   return (

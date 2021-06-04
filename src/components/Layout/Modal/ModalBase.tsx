@@ -3,7 +3,7 @@ import React from 'react';
 
 export type ModalBaseProps = {
   open: boolean;
-  onClose: () => void;
+  onClose?: () => void;
   children: React.ReactNode;
   disableBackdropClick?: boolean;
   disableEscapeKeyDown?: boolean;

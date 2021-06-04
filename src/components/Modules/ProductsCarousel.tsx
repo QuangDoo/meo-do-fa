@@ -13,7 +13,6 @@ type ArrowButtonProps = {
   onClick?: () => void;
   type?: 'prev' | 'next';
 };
-
 const ArrowButton = ({ onClick, type = 'prev' }: ArrowButtonProps) => {
   return (
     <button

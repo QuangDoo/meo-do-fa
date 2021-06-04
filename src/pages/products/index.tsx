@@ -1,6 +1,7 @@
 import { useQuery } from '@apollo/client';
 import { Trans, useTranslation } from 'i18n';
 import { useRouter } from 'next/router';
+import queryString from 'querystring';
 import React, { useEffect } from 'react';
 import { animateScroll } from 'react-scroll';
 import { toast } from 'react-toastify';
@@ -78,9 +79,36 @@ Products.getInitialProps = async (ctx) => {
 };
 
 function Products() {
-  const { t } = useTranslation(['products', 'errors']);
+  const { t, i18n } = useTranslation(['products', 'errors']);
 
   const router = useRouter();
+  useEffect(() => {
+    const changePathname = () => {
+      if (router) {
+        i18n.off('languageChanged');
+        i18n.on('languageChanged', (lang) => {
+          const requestQuery = queryString.stringify(router?.query);
+          setTimeout(() => {
+            if (lang === 'en') {
+              router.push(`/products${requestQuery ? '?' + requestQuery : ''}`, undefined, {
+                shallow: true
+              });
+            } else if (lang === 'vi') {
+              router.push(`/san-pham${requestQuery ? '?' + requestQuery : ''}`, undefined, {
+                shallow: true
+              });
+            }
+          });
+        });
+      }
+    };
+    changePathname();
+    return () => {
+      changePathname();
+      i18n.off('languageChanged');
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [router]);
 
   const page = +router.query.page || 1;
 

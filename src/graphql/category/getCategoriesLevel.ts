@@ -11,9 +11,13 @@ export type GetCategoriesLevelData = {
   getCategoriesLevel: Category[];
 };
 
+export type GetCategoryLevelVar = {
+  isSpecial?: boolean;
+};
+
 export const GET_CATEGORIES_LEVEL = gql`
-  query {
-    getCategoriesLevel {
+  query($isSpecial: Boolean) {
+    getCategoriesLevel(isSpecial: $isSpecial) {
       id
       name
       priority

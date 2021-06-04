@@ -1,7 +1,7 @@
 .footer {
   background: $blue3;
   color: #fff;
-  padding-top: 5.5em;
+  padding-top: 4em;
   position: relative;
   .text-primary {
     color: $secondary !important;
@@ -104,13 +104,15 @@
   color: #192159;
   padding-left: 0.5rem;
 }
-.mobile__margin{
-  margin-top: 3.5rem;
-  margin-left: 3.5rem;
+@media (min-width: 991.1px) {
+  .mobile__margin{
+  //margin-top: 3.5rem;
+    margin-left: 3.5rem;
+  }
 }
-.mobile__margin__top{
-  margin-top: 3.5rem;
-}
+// .mobile__margin__top{
+//   margin-top: 3.5rem;
+// }
 .web__margin{
   margin-left: 57px;
 }
@@ -143,6 +145,7 @@
   }
   .footer-deli-responsive{
     display: flex;
+    flex-wrap: wrap;
   }
   .footer__bct {
     margin-top: 0;
