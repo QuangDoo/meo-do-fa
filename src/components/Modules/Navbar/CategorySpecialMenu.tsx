@@ -100,7 +100,11 @@ const CategorySpecialMenu = () => {
         <div className="menu-title">
           <Link href="/products">
             <a className="rockland-nav__link">
-              <img className="nav__icon" src="/assets/images/sanpham.png" alt="icon_product" />
+              <img
+                className="nav__icon"
+                src="/assets/images/tracuubenhly.png"
+                alt="icon_tracuubenhly"
+              />
               <span className="rockland-nav__title">{t('navbar:product_category_special')}</span>
             </a>
           </Link>
