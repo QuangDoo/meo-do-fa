@@ -68,7 +68,7 @@ export default function PromoCodeItem(props: Props) {
           {props.couponDateFrom !== 'false' && (
             <div className="text-muted">{`${t('promoCodes:HSD')}: ${new Date(
               props.couponDateTo
-            ).toLocaleDateString('en-GB')}}`}</div>
+            ).toLocaleDateString('en-GB')}`}</div>
           )}
         </div>
         <div className="col-7 justify-content-between text-center">
