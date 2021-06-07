@@ -53,6 +53,7 @@ export type ProductDetails = {
   slug: string;
   default_vendor: string;
   default_vendor_id: string;
+  sub_images: [string];
 };
 
 export type GetProductData = {
@@ -113,6 +114,7 @@ export const GET_PRODUCT = gql`
       slug
       default_vendor
       default_vendor_id
+      sub_images
     }
   }
 `;

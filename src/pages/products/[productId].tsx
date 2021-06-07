@@ -1,12 +1,18 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import { useQuery } from '@apollo/client';
-import clsx from 'clsx';
+import { makeStyles } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
 import { useTranslation } from 'i18n';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { MagnifierContainer, SideBySideMagnifier } from 'react-image-magnifiers';
+import Slider from 'react-slick';
 import { toast } from 'react-toastify';
+import ModalBase from 'src/components/Layout/Modal/ModalBase';
 import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import { DiscountRibbon } from 'src/components/Modules/ProductCard/DiscountRibbon';
 import ProductDetailInfor from 'src/components/Modules/ProductDetail/ProductDetailsInfo';
@@ -52,8 +58,50 @@ ProductDetail.getInitialProps = async (ctx) => {
   };
 };
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+    position: 'relative'
+  },
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: 'center',
+    color: theme.palette.text.secondary
+  }
+}));
+type ArrowButtonProps = {
+  onClick?: () => void;
+  type?: 'prev' | 'next';
+};
+
+const ArrowButton = ({ onClick, type = 'prev' }: ArrowButtonProps) => {
+  return (
+    <button
+      onClick={onClick}
+      className={`slide-arrow-image ${type}-arrow slick-arrow`}
+      aria-disabled="true">
+      <i className={`fas fa-chevron-${type === 'prev' ? 'left' : 'right'}`}></i>
+    </button>
+  );
+};
+
 function ProductDetail() {
-  const { t } = useTranslation(['productDetail']);
+  const { t, i18n } = useTranslation(['productDetail']);
+
+  const classes = useStyles();
+
+  const [subImageIndex, setSubImageIndex] = useState<number>(0);
+
+  const [subImages, setSubImages] = useState<string[]>([]);
+
+  const settings = {
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1
+  };
+
+  const [openModalImage, setOpenModalImage] = useState<boolean>(false);
 
   const router = useRouter();
 
@@ -86,6 +134,39 @@ function ProductDetail() {
 
   const product = getProductData?.getProduct;
 
+  useEffect(() => {
+    if (!product?.sub_images) return;
+
+    setSubImages(product?.sub_images);
+  }, [product]);
+
+  const listImage = [...subImages];
+
+  listImage.unshift(product?.image_512);
+
+  useEffect(() => {
+    const changePathname = () => {
+      if (router) {
+        i18n.off('languageChanged');
+        i18n.on('languageChanged', (lang) => {
+          setTimeout(() => {
+            if (lang === 'vi') {
+              router.push(`/san-pham/${router?.query?.productId}`, undefined, { shallow: true });
+            } else {
+              router.push(`/products/${router?.query?.productId}`, undefined, { shallow: true });
+            }
+          });
+        });
+      }
+    };
+    changePathname();
+
+    return () => {
+      changePathname();
+      i18n.off('languageChanged');
+    };
+  }, [i18n, router]);
+
   const relatedProducts = getRelatedProductsData?.getRelatedProducts;
 
   const categories = product?.categories?.slice().filter((c) => c.id !== null) || [];
@@ -98,6 +179,10 @@ function ProductDetail() {
       </MainLayout>
     );
   }
+
+  const imagesSlice = listImage.slice(0, 4);
+
+  const imagesSliceLength = imagesSlice.length;
 
   return (
     <MainLayout>
@@ -122,11 +207,11 @@ function ProductDetail() {
             <div className="col-md-8">
               <div className="row">
                 <div className="col-md-6">
-                  <div className="product__image">
+                  <div className="product__image d-none d-sm-block">
                     <MagnifierContainer>
                       <SideBySideMagnifier
                         alwaysInPlace={true}
-                        imageSrc={product?.image_512 || '/assets/images/no_images.jpg'}
+                        imageSrc={listImage[subImageIndex] || '/assets/images/no_images.jpg'}
                         className="product-img-magnifier"
                       />
                     </MagnifierContainer>
@@ -135,6 +220,83 @@ function ProductDetail() {
                       <DiscountRibbon discountPercent={product.discount_percentage} />
                     )}
                   </div>
+                  <div className="product__image d-sm-none">
+                    {listImage.length > 1 && (
+                      <Slider
+                        infinite={true}
+                        slidesToShow={1}
+                        slidesToScroll={1}
+                        prevArrow={<ArrowButton />}
+                        nextArrow={<ArrowButton type="next" />}>
+                        {listImage.map((image, index) => (
+                          <MagnifierContainer key={index}>
+                            <SideBySideMagnifier
+                              alwaysInPlace={true}
+                              imageSrc={image}
+                              className="product-img-magnifier"
+                            />
+                          </MagnifierContainer>
+                        ))}
+                      </Slider>
+                    )}
+                    {product?.discount_percentage > 0 && (
+                      <DiscountRibbon discountPercent={product.discount_percentage} />
+                    )}
+                  </div>
+                  <section className="box-image d-none d-sm-block">
+                    <div className="container mb-3">
+                      {/* <h3 className="text-center about-us__title">Life At Medofa</h3> */}
+                    </div>
+                    {listImage.length > 1 && (
+                      <div className={classes.root}>
+                        <Grid container>
+                          {imagesSlice.map((image, index) => (
+                            <Grid
+                              xs={6}
+                              sm={4}
+                              md={3}
+                              lg={3}
+                              item
+                              key={index}
+                              className="grid-sub-image">
+                              <Paper>
+                                {imagesSliceLength === index + 1 ? (
+                                  <div
+                                    onClick={() => setOpenModalImage(true)}
+                                    className={'border-sub__image_lastimage'}
+                                    key={index}>
+                                    <img src={image} alt={image} className="img-fluid" />
+                                    <span>{t('productDetail:see_more')}</span>
+                                  </div>
+                                ) : (
+                                  <div
+                                    onClick={() => {
+                                      setSubImageIndex(index);
+                                    }}
+                                    className={`border-sub__image ${
+                                      subImageIndex === index ? 'active' : ''
+                                    } `}
+                                    key={index}>
+                                    <img src={image} alt={image} className="img-fluid" />
+                                  </div>
+                                )}
+                              </Paper>
+                            </Grid>
+                          ))}
+                        </Grid>
+                        <ModalBase open={openModalImage} onClose={() => setOpenModalImage(false)}>
+                          <Slider
+                            {...settings}
+                            prevArrow={<ArrowButton />}
+                            nextArrow={<ArrowButton type="next" />}>
+                            {listImage.map((image, index) => (
+                              <img src={image} alt={image} style={{ width: '100%' }} key={index} />
+                            ))}
+                          </Slider>
+                        </ModalBase>
+                      </div>
+                    )}
+                  </section>
                   <small className="text-muted">* {t('productDetail:image_change')}</small>
                 </div>
                 <div className="col-md-6">
@@ -175,7 +337,10 @@ function ProductDetail() {
                   <div className="product__info-label ">{t('productDetail:category')}</div>
                   {categories.map((item, index, arr) => (
                     <>
-                      <Link href={`/products?category=${item.id}`}>
+                      <Link
+                        href={`${i18n?.language === 'en' ? '/products' : '/san-pham'}?category=${
+                          item.id
+                        }`}>
                         <a className="text-capitalize" key={index}>
                           {item.name}
                         </a>
