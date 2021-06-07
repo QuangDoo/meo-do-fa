@@ -143,7 +143,6 @@ function ProductDetail() {
   const listImage = [...subImages];
 
   listImage.unshift(product?.image_512);
-  // console.log(`abc`, abc);
   useEffect(() => {
     const changePathname = () => {
       if (router) {
@@ -165,7 +164,7 @@ function ProductDetail() {
       changePathname();
       i18n.off('languageChanged');
     };
-  }, [router]);
+  }, [i18n, router]);
 
   const relatedProducts = getRelatedProductsData?.getRelatedProducts;
 
@@ -211,7 +210,7 @@ function ProductDetail() {
                     <MagnifierContainer>
                       <SideBySideMagnifier
                         alwaysInPlace={true}
-                        imageSrc={listImage[subImageIndex]}
+                        imageSrc={listImage[subImageIndex] || '/assets/images/no_images.jpg'}
                         className="product-img-magnifier"
                       />
                     </MagnifierContainer>
@@ -221,21 +220,24 @@ function ProductDetail() {
                     )}
                   </div>
                   <div className="product__image d-sm-none">
-                    <Slider
-                      {...settings}
-                      prevArrow={<ArrowButton />}
-                      nextArrow={<ArrowButton type="next" />}>
-                      {listImage.map((image, index) => (
-                        <MagnifierContainer key={index}>
-                          <SideBySideMagnifier
-                            alwaysInPlace={true}
-                            imageSrc={image}
-                            className="product-img-magnifier"
-                          />
-                        </MagnifierContainer>
-                      ))}
-                    </Slider>
-
+                    {listImage.length > 1 && (
+                      <Slider
+                        infinite={true}
+                        slidesToShow={1}
+                        slidesToScroll={1}
+                        prevArrow={<ArrowButton />}
+                        nextArrow={<ArrowButton type="next" />}>
+                        {listImage.map((image, index) => (
+                          <MagnifierContainer key={index}>
+                            <SideBySideMagnifier
+                              alwaysInPlace={true}
+                              imageSrc={image}
+                              className="product-img-magnifier"
+                            />
+                          </MagnifierContainer>
+                        ))}
+                      </Slider>
+                    )}
                     {product?.discount_percentage > 0 && (
                       <DiscountRibbon discountPercent={product.discount_percentage} />
                     )}
