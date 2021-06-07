@@ -143,7 +143,7 @@ deploy-frontend-dev:
   script:
     - cd ./medofa-deploy/charts/frontend
     - cat ./custom-values.dev.yaml
-    - helm upgrade --install -n medofa frontend "./" -f "./custom-values.dev.yaml"
+    - helm upgrade --install -n medofa frontend-deployment "./" -f "./custom-values.dev.yaml"
 
 build-frontend-prod:
   stage: build
