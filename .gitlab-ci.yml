@@ -182,4 +182,4 @@ deploy-frontend-prod:
 
   script:
     - cd ./medofa-deploy/charts/frontend
-    - helm upgrade --install -n medofa frontend "./" -f "./custom-values.prod.yaml"
+    - helm upgrade --install -n medofa frontend-deployment "./" -f "./custom-values.prod.yaml"
