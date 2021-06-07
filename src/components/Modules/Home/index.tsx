@@ -1,6 +1,7 @@
 import { useQuery } from '@apollo/client';
 import clsx from 'clsx';
 import { useTranslation } from 'i18n';
+import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import SlickSlider from 'react-slick';
 import { useToken } from 'src/contexts/Token';
@@ -29,8 +30,8 @@ import {
 import ProductCard from '../ProductCard';
 import { ProductsCarousel } from '../ProductsCarousel';
 import { Login } from './Login';
+import { Partner } from './Partner';
 import { ProductsContainer } from './ProductsContainer';
-
 const paginationVars = {
   variables: {
     page: 1,
@@ -74,7 +75,7 @@ const Home = ({ dealsOfTheDayData }) => {
       title: t('carousels:deal_of_the_day'),
       products: dealsOfTheDayData?.getProductDealOfTheDay || [],
       seeMoreUrl: '/deals-of-the-day',
-      icon: '/assets/images/giasochomnay.png'
+      icon: '/assets/images/fLash-sale.gif'
     },
     {
       title: t('carousels:bestseller'),
@@ -98,15 +99,16 @@ const Home = ({ dealsOfTheDayData }) => {
         arrows={false}
         autoplay
         dots
+        autoplaySpeed={7000}
         dotsClass="slick__dots bullet slick-dots"
         className="align-items-center mb-0 slick-dotted d-none d-sm-block">
         {bannerPC?.map(({ image, id }) => (
           <div className="banner__slide" key={id}>
             <div className="banner__img">
-              <div className="banner-wrapper">
+              {/* <div className="banner-wrapper">
                 <img alt={image} src={image} className="banner--image" />
-              </div>
-              {/* <Image src={image} layout="fill" objectFit="cover" /> */}
+              </div> */}
+              <Image src={image} layout="fill" objectFit="cover" />
             </div>
           </div>
         ))}
@@ -116,15 +118,16 @@ const Home = ({ dealsOfTheDayData }) => {
         arrows={false}
         autoplay
         dots
+        autoplaySpeed={7000}
         dotsClass="slick__dots bullet slick-dots"
         className="align-items-center mb-0 slick-dotted d-block d-sm-none">
         {bannerMobile?.map(({ image }) => (
           <div className="banner__slide" key={image}>
             <div className="banner__img banner__img--mobile">
-              <div className="banner-wrapper">
+              {/* <div className="banner-wrapper">
                 <img alt={image} src={image} className="banner--image" />
-              </div>
-              {/* <Image src={image} layout="fill" objectFit="cover" /> */}
+              </div> */}
+              <Image src={image} layout="fill" objectFit="cover" />
             </div>
           </div>
         ))}
@@ -156,13 +159,13 @@ const Home = ({ dealsOfTheDayData }) => {
         </ProductsContainer>
       </div>
 
+      <Partner />
+
       {/* <Strength /> */}
 
       {!token && <Login />}
 
       {/* <Question /> */}
-
-      {/* <Partner /> */}
 
       {/* <Customer /> */}
 

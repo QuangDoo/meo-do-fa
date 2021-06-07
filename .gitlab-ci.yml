@@ -26,7 +26,7 @@ stages:
     - chmod +x ./kubectl && mv ./kubectl /usr/local/bin/kubectl
     - mkdir -p $HOME/.kube
     - cp $KUBE_CONFIG_DEV $HOME/.kube/config
-    - git clone https://${DOCKER_USER}:${DOCKER_PASSWORD}@gitlab.com/medofa/medofa-deployments.git
+    - git clone https://${DOCKER_USER}:${DOCKER_PASSWORD}@gitlab.com/medofa/medofa-deploy.git
     - apk add --no-cache python3 py3-pip && pip3 install --upgrade pip && pip3 install awscli && rm -rf /var/cache/apk/*
     - aws --version
     - curl -o aws-iam-authenticator https://amazon-eks.s3.us-west-2.amazonaws.com/1.15.10/2020-02-22/bin/linux/amd64/aws-iam-authenticator
@@ -45,7 +45,7 @@ stages:
     - chmod +x ./kubectl && mv ./kubectl /usr/local/bin/kubectl
     - mkdir -p $HOME/.kube
     - cp $KUBE_CONFIG $HOME/.kube/config
-    - git clone -b master https://${DOCKER_USER}:${DOCKER_PASSWORD}@gitlab.com/medofa/medofa-deployments.git
+    - git clone -b master https://${DOCKER_USER}:${DOCKER_PASSWORD}@gitlab.com/medofa/medofa-deploy.git
 
 
 lint-frontend:
@@ -141,7 +141,7 @@ deploy-frontend-dev:
     - .pre-deploy-dev
 
   script:
-    - cd ./medofa-deployments/charts/frontend
+    - cd ./medofa-deploy/charts/frontend
     - cat ./custom-values.dev.yaml
     - helm upgrade --install -n medofa frontend "./" -f "./custom-values.dev.yaml"
 
@@ -181,5 +181,5 @@ deploy-frontend-prod:
     - .pre-deploy-master
 
   script:
-    - cd ./medofa-deployments/charts/frontend
-    - helm upgrade --install -n medofa frontend "./" -f "./custom-values.prod.yaml"
+    - cd ./medofa-deploy/charts/frontend
+    - helm upgrade --install -n medofa frontend-deployment "./" -f "./custom-values.prod.yaml"

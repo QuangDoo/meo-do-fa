@@ -2,6 +2,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import Tooltip from '@material-ui/core/Tooltip';
 import { useTranslation } from 'i18n';
+import Image from 'next/image';
 import React, { useState } from 'react';
 
 import PromocodeDetailDialog from './PromocodeDetailDialog';
@@ -38,7 +39,8 @@ export default function PromoCodeItem(props: Props) {
         return (
           <div className="mb-1 benefit">
             <div className="discount">
-              <img src={imgUrl} alt="coupon gift" className="img-fluid" width={60} height={60} />
+              {/* <img src={imgUrl} alt="coupon gift" className="img-fluid" width={60} height={60} /> */}
+              <Image src={imgUrl} alt="coupon gift" className="img-fluid" width={60} height={60} />
             </div>
             <div className="suffix">{t('promoCodes:present')}</div>
           </div>
@@ -68,7 +70,7 @@ export default function PromoCodeItem(props: Props) {
           {props.couponDateFrom !== 'false' && (
             <div className="text-muted">{`${t('promoCodes:HSD')}: ${new Date(
               props.couponDateTo
-            ).toLocaleDateString('en-GB')}}`}</div>
+            ).toLocaleDateString('en-GB')}`}</div>
           )}
         </div>
         <div className="col-7 justify-content-between text-center">

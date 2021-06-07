@@ -8,14 +8,14 @@ import QuantityInput from 'src/components/Form/QuantityInput';
 import { useCart } from 'src/contexts/Cart';
 import { useToken } from 'src/contexts/Token';
 import { GET_WEBSITE_CONFIG, GetWebsiteConfigData } from 'src/graphql/configs/getWebsiteConfig';
-import { ProductDetails } from 'src/graphql/product/product.query';
+import { ProductDetail } from 'src/graphql/product/product.query';
 import useDebounce from 'src/hooks/useDebounce';
 
 import ConfirmDeleteItemModal from '../Cart/ConfirmDeleteItemModal';
 import LoginModal from '../LoginModal';
 import ProductBadges from '../ProductCard/ProductBadges';
 
-const ProductDetailInfor = (props: ProductDetails) => {
+const ProductDetailInfor = (props: ProductDetail) => {
   const token = useToken();
 
   const { t } = useTranslation(['common', 'productDetail', 'success']);

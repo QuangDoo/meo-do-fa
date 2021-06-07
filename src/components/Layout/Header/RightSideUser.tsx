@@ -87,7 +87,9 @@ const RightSideUser = () => {
 
         {user?.name && (
           <div className="header__user ml-3">
-            <div className="header__user-name text-break text-center">{user?.name}</div>
+            <div className="header__user-name text-break text-center">
+              {user?.company_name || user?.name || ''}
+            </div>
           </div>
         )}
       </ul>

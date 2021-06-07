@@ -143,7 +143,6 @@ function ProductDetail() {
   const listImage = [...subImages];
 
   listImage.unshift(product?.image_512);
-
   useEffect(() => {
     const changePathname = () => {
       if (router) {

@@ -1,4 +1,5 @@
 import { useTranslation } from 'i18n';
+import Image from 'next/image';
 import React from 'react';
 
 type Props = {
@@ -33,7 +34,13 @@ function Banner(props: Props) {
             </div>
             <div className="col-md-6 animated fadeOut">
               <div className="wrapper">
-                <img src={props?.rightImgUrl} alt="medofa" className="about-us__img" />
+                <Image
+                  alt="medofa"
+                  className="about-us__img"
+                  layout="fill"
+                  objectFit={props?.rightImgUrl ? 'contain' : 'cover'}
+                  src={props?.rightImgUrl || '/assets/images/no_images.jpg'}
+                />
               </div>
             </div>
           </div>
