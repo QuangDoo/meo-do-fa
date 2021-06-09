@@ -12,6 +12,7 @@ import React, { useEffect, useState } from 'react';
 import { MagnifierContainer, SideBySideMagnifier } from 'react-image-magnifiers';
 import Slider from 'react-slick';
 import { toast } from 'react-toastify';
+import SocialMediaButtons from 'src/components/Form/SocialMediaButtons';
 import ModalBase from 'src/components/Layout/Modal/ModalBase';
 import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import { DiscountRibbon } from 'src/components/Modules/ProductCard/DiscountRibbon';
