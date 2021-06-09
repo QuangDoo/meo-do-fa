@@ -45,7 +45,7 @@ function QuickOrderItem(props: Props) {
         <div className="flex-1 pl-2 pr-2 ">
           <div className="d-flex align-items-center ">
             <div>
-              <Link href={`${i18n?.language === 'vi' ? '/san-pham' : '/products'}` + props.slug}>
+              <Link href={`${i18n?.language === 'vi' ? '/san-pham' : '/products'}/` + props.slug}>
                 <a className="cart-item__name" title={props.productName}>
                   {props.productName}
                 </a>

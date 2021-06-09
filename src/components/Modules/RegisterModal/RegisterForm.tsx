@@ -34,7 +34,7 @@ type Inputs = {
   tax: string;
 };
 
-const accountTypes = ['PHARMACY', 'DRUGSTORE'];
+const accountTypes = ['HOSPITAL', 'CLINIC'];
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -173,7 +173,7 @@ const RegisterForm = () => {
                   <h6 className="business-group__item__text font-weight-bold">
                     {t(`register:${accountType.toLowerCase()}`)}
                     <br />
-                    <small>({t(`register:hospital_clinic`)})</small>
+                    <small>({t(`register:pharmacy_drugstore`)})</small>
                   </h6>
                 </button>
               ))}
