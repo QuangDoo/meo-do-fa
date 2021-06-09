@@ -125,7 +125,6 @@ const ProductDetailInfor = (props: ProductDetail) => {
 
     document.body.appendChild(script);
   }, []);
-  console.log(`props`, props);
 
   return (
     <div className="row">
@@ -202,9 +201,6 @@ const ProductDetailInfor = (props: ProductDetail) => {
             </div>
           </React.Fragment>
         )}
-        <FacebookShareButton url={`https://medofa.com/products/${props.slug}`}>
-          <FacebookIcon size={14} />
-        </FacebookShareButton>
 
         {/* {props?.manufacturer?.id !== null && (
           <div className="mt-3">
@@ -234,6 +230,9 @@ const ProductDetailInfor = (props: ProductDetail) => {
           </div>
         )} */}
       </div>
+      <FacebookShareButton url={`https://medofa.com/products/${props.slug}`}>
+        <FacebookIcon size="2.5rem" />
+      </FacebookShareButton>
     </div>
   );
 };
