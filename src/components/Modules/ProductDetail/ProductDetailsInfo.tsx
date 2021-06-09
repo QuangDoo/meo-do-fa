@@ -29,6 +29,10 @@ const ProductDetailInfor = (props: ProductDetail) => {
   const MAX_QUANTITY = parseInt(
     configData?.getWebsiteConfig.find((config) => config.key === 'MAX_QUANTITY').value
   );
+  const SHOW_SOCIAL_SHARE = configData?.getWebsiteConfig.find(
+    (config) => config.key === 'SHOW_SOCIAL_SHARE'
+  )?.value;
+  console.log('SHOW_SOCIAL_SHARE', SHOW_SOCIAL_SHARE);
 
   const [quantity, setQuantity] = useState<number>(MIN_QUANTITY);
 
@@ -229,10 +233,30 @@ const ProductDetailInfor = (props: ProductDetail) => {
             ))}
           </div>
         )} */}
+        {SHOW_SOCIAL_SHARE === 'Y' && (
+          <>
+            <FacebookShareButton url={`https://medofa.com/products/${props.slug}`}>
+              <FacebookIcon size="2.5rem" />
+            </FacebookShareButton>
+            {/* <TwitterShareButton url={`https://medofa.com/products/${props.slug}`}>
+          <TwitterIcon size="2.5rem" className="ml-2" />
+        </TwitterShareButton> */}
+            <button
+              className="zalo-share-button ml-2"
+              data-href={`https://medofa.com/products/${props.slug}`}
+              data-oaid="3125746340374733717"
+              data-layout="1"
+              data-color="blue"
+              data-customize={true}>
+              <div className="social-share-button zalo-button">
+                <img src="/assets/images/zalo-icon.png" alt="Zalo icon" />
+              </div>
+            </button>
+          </>
+        )}
+
+        <i className="far fa-heart"></i>
       </div>
-      <FacebookShareButton url={`https://medofa.com/products/${props.slug}`}>
-        <FacebookIcon size="2.5rem" />
-      </FacebookShareButton>
     </div>
   );
 };

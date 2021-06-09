@@ -61,6 +61,7 @@ class MyDocument extends Document {
             href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
             rel="stylesheet"
           />
+          <script src="https://sp.zalo.me/plugins/sdk.js"></script>
 
           <style type="text/css">{globalStyles}</style>
 

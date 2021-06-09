@@ -61,6 +61,8 @@ const CartProvider = (props: Props) => {
   // Contains IDs of checked cart items
   const [checkedCarts, setCheckedCarts] = useState<string[]>([]);
 
+  console.log(`checkedCarts`, checkedCarts);
+
   // Loading state, used for all cart related queries and mutations
   const [loading, setLoading] = useState(false);
 

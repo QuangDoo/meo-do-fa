@@ -35,6 +35,7 @@ export type GetOrderDetailData = {
       };
       state: string;
       product_type: string;
+      list_price: number;
     }[];
     amount_total: number;
     amount_tax: number;
@@ -84,6 +85,7 @@ export const GET_ORDER_DETAIL = gql`
         }
         state
         product_type
+        list_price
       }
       amount_total
       amount_tax
