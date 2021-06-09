@@ -58,7 +58,7 @@ const DeliveryInfo = () => {
     <InputCard title={t('checkout:deliveryInfo_title')} hasRequired={!chosenAddress}>
       {chosenAddress ? (
         <h6 className="delivery-address-content">
-          <div className="font-weight-bold">{t('chooseDeliveryAddress:name')}:</div>
+          <div className="font-weight-bold">{t('chooseDeliveryAddress:company_name')}:</div>
           <div className="font-weight-bold">{chosenAddress.name}</div>
 
           <div>{t('chooseDeliveryAddress:address')}:</div>

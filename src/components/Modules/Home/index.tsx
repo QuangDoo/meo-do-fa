@@ -99,6 +99,7 @@ const Home = ({ dealsOfTheDayData }) => {
         arrows={false}
         autoplay
         dots
+        autoplaySpeed={7000}
         dotsClass="slick__dots bullet slick-dots"
         className="align-items-center mb-0 slick-dotted d-none d-sm-block">
         {bannerPC?.map(({ image, id }) => (
@@ -117,6 +118,7 @@ const Home = ({ dealsOfTheDayData }) => {
         arrows={false}
         autoplay
         dots
+        autoplaySpeed={7000}
         dotsClass="slick__dots bullet slick-dots"
         className="align-items-center mb-0 slick-dotted d-block d-sm-none">
         {bannerMobile?.map(({ image }) => (
