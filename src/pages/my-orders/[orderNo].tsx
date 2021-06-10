@@ -120,18 +120,23 @@ function OrderDetails() {
     }
   });
 
-  const handleAddOrderToCart = () => {
-    if (!getOrderDetailData) return;
+  // console.log('getOrderDetailData?.getOrderDetail?.order_lines', getOrderDetailData?.getOrderDetail?.order_lines.filter((order)=> {order}));
 
-    getOrderDetailData?.getOrderDetail?.order_lines.map((order) =>
-      addToCart({
-        price: order.list_price,
-        productId: getProductId(order.product.slug),
-        productName: order.name,
-        quantity: order.product_uom_qty || 0
+  const handleAddOrderToCart = () => {
+    getOrderDetailData?.getOrderDetail?.order_lines
+      .filter((order) => {
+        if (order.active === true) {
+          return order;
+        }
       })
-    );
-    console.log('getOrderDetailData: ', getOrderDetailData?.getOrderDetail?.order_lines);
+      .map((order) =>
+        addToCart({
+          price: order.list_price,
+          productId: getProductId(order.product.slug),
+          productName: order.name,
+          quantity: order.product_uom_qty || 0
+        })
+      );
   };
 
   const flag = getOrderDetailData?.getOrderDetail?.flag;
