@@ -25,7 +25,9 @@ function HotTags() {
   return (
     <div className="row my-1 d-none d-md-block">
       <div className="col-12 d-flex align-items-center">
-        <span className="rockland-nav__title mx-3">{t('navbar:most_searched')}</span>
+        <span className="rockland-nav__title mx-3 title__search--res">
+          {t('navbar:most_searched')}
+        </span>
 
         {hotTags?.map(({ id, name, type }) => {
           return (
