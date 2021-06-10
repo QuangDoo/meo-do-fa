@@ -120,8 +120,6 @@ function OrderDetails() {
     }
   });
 
-  // console.log('getOrderDetailData?.getOrderDetail?.order_lines', getOrderDetailData?.getOrderDetail?.order_lines.filter((order)=> {order}));
-
   const handleAddOrderToCart = () => {
     getOrderDetailData?.getOrderDetail?.order_lines
       .filter((order) => {
