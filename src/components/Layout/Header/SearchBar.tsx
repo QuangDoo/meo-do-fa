@@ -197,7 +197,7 @@ const SearchBar = () => {
             <div className="input-group form__input-group btn-border-rad">
               <input
                 type="search"
-                placeholder={t(`searchBar:placeholder_${type}`)}
+                placeholder={t(`searchBar:placeholder_all`)}
                 aria-label="search"
                 className="form-control form-control-sm search-input hide-focus keep-border"
                 value={value}
@@ -205,7 +205,7 @@ const SearchBar = () => {
                 onFocus={handleFocus}
               />
 
-              <Select
+              {/* <Select
                 value={type}
                 onChange={handleSearchTypeChange}
                 className="search-type-select hide-focus search-sm">
@@ -214,7 +214,7 @@ const SearchBar = () => {
                     {t(`searchBar:search_by_${type}`)}
                   </option>
                 ))}
-              </Select>
+              </Select> */}
 
               <div className="input-group-prepend">
                 <Button type="submit" variant="primary">

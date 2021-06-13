@@ -4,7 +4,8 @@ export enum TagType {
   PRODUCT = 'PRODUCT',
   MANUFATURE = 'MANUFATURE',
   INGREDIENT = 'INGREDIENT',
-  SUPPLIER = 'SUPPLIER'
+  SUPPLIER = 'SUPPLIER',
+  ALL = 'ALL'
 }
 
 export const productCardQueryProps = `
