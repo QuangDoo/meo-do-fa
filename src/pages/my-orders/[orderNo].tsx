@@ -326,20 +326,22 @@ function OrderDetails() {
                       </Typography>
                     </TableCell>
                   </TableRow>
-                  <TableRow>
-                    <TableCell colSpan={6}>
-                      <Typography align="right">
-                        <Button
-                          size="small"
-                          startIcon={<ShoppingCartIcon />}
-                          variant="contained"
-                          onClick={handleAddOrderToCart}
-                          color="primary">
-                          {t('myOrders:repurchase_order')}
-                        </Button>
-                      </Typography>
-                    </TableCell>
-                  </TableRow>
+                  {flag !== 60 && (
+                    <TableRow>
+                      <TableCell colSpan={6}>
+                        <Typography align="right">
+                          <Button
+                            size="small"
+                            startIcon={<ShoppingCartIcon />}
+                            variant="contained"
+                            onClick={handleAddOrderToCart}
+                            color="primary">
+                            {t('myOrders:repurchase_order')}
+                          </Button>
+                        </Typography>
+                      </TableCell>
+                    </TableRow>
+                  )}
                 </TableFooter>
               </Table>
             </TableContainer>
