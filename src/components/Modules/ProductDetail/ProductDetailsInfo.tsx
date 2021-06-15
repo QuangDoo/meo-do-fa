@@ -214,17 +214,29 @@ const ProductDetailInfor = (props: ProductDetail) => {
 
         {!!token && (
           <React.Fragment>
-            <div className="col-6 px-0 mt-3">
-              <QuantityInput
-                quantity={quantity}
-                setQuantity={setQuantity}
-                min={MIN_QUANTITY}
-                max={MAX_QUANTITY}
-                onPlusClick={handlePlusClick}
-                onMinusClick={handleMinusClick}
-                onBlur={handleBlur}
-                isAvailable={props.is_available}
-              />
+            <div className="d-flex mt-3 w-100">
+              <div className="d-flex">
+                <QuantityInput
+                  quantity={quantity}
+                  setQuantity={setQuantity}
+                  min={MIN_QUANTITY}
+                  max={MAX_QUANTITY}
+                  onPlusClick={handlePlusClick}
+                  onMinusClick={handleMinusClick}
+                  onBlur={handleBlur}
+                  isAvailable={props.is_available}
+                />
+
+                {!isWishProduct ? (
+                  <button className="heart-icon-wrap" onClick={handleLikeProduct}>
+                    <img src="/assets/images/chaichimfixpts.png" alt="like-product" />
+                  </button>
+                ) : (
+                  <button className="heart-icon-wrap" onClick={handleLikeProduct}>
+                    <img src="/assets/images/traichimdofix.png" alt="unlike-product" />
+                  </button>
+                )}
+              </div>
 
               <ConfirmDeleteItemModal
                 title={t('cart:remove_title')}
@@ -298,15 +310,6 @@ const ProductDetailInfor = (props: ProductDetail) => {
               </div>
             </button>
           </>
-        )}
-        {!isWishProduct ? (
-          <button className="heart-icon-wrap" onClick={handleLikeProduct}>
-            <i className="far fa-heart"></i>
-          </button>
-        ) : (
-          <button className="heart-icon-wrap" onClick={handleLikeProduct}>
-            <i className="fas fa-heart"></i>
-          </button>
         )}
       </div>
     </div>
