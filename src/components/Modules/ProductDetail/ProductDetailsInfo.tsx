@@ -1,14 +1,23 @@
 import { useQuery } from '@apollo/client';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { FacebookIcon, FacebookShareButton, TwitterIcon, TwitterShareButton } from 'react-share';
+import { toast } from 'react-toastify';
 import PriceText from 'src/components/Form/PriceText';
 import QuantityInput from 'src/components/Form/QuantityInput';
 import { useCart } from 'src/contexts/Cart';
 import { useToken } from 'src/contexts/Token';
 import { GET_WEBSITE_CONFIG, GetWebsiteConfigData } from 'src/graphql/configs/getWebsiteConfig';
+import { GET_WISH_LIST, GetWishListData, GetWishListVar } from 'src/graphql/product/getWishList';
+import {
+  CreateWishProductData,
+  CreateWishProductVars,
+  LIKE_PRODUCT
+} from 'src/graphql/product/likeProduct';
 import { ProductDetail } from 'src/graphql/product/product.query';
+import { useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
 import useDebounce from 'src/hooks/useDebounce';
 
 import ConfirmDeleteItemModal from '../Cart/ConfirmDeleteItemModal';
@@ -17,6 +26,8 @@ import ProductBadges from '../ProductCard/ProductBadges';
 
 const ProductDetailInfor = (props: ProductDetail) => {
   const token = useToken();
+
+  const router = useRouter();
 
   const { t } = useTranslation(['common', 'productDetail', 'success']);
 
@@ -32,7 +43,33 @@ const ProductDetailInfor = (props: ProductDetail) => {
   const SHOW_SOCIAL_SHARE = configData?.getWebsiteConfig.find(
     (config) => config.key === 'SHOW_SOCIAL_SHARE'
   )?.value;
-  console.log('SHOW_SOCIAL_SHARE', SHOW_SOCIAL_SHARE);
+
+  const { data: dataWishList, refetch: refechDataListWish } = useQueryAuth<
+    GetWishListData,
+    GetWishListVar
+  >(GET_WISH_LIST, {
+    variables: { page: 1, pageSize: 20 },
+    fetchPolicy: 'network-only',
+    notifyOnNetworkStatusChange: true,
+    onError: (error) => {
+      toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
+    }
+  });
+
+  const [likeProduct, { loading: loadingLike }] = useMutationAuth<
+    CreateWishProductData,
+    CreateWishProductVars
+  >(LIKE_PRODUCT, {
+    onCompleted: () => {
+      toast.success(t('productDetail:like_product'));
+      refechDataListWish();
+    },
+    onError: (error) => {
+      toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
+    }
+  });
+
+  const isWishProduct = dataWishList?.getWishList.find((item) => item.id === props.id);
 
   const [quantity, setQuantity] = useState<number>(MIN_QUANTITY);
 
@@ -112,6 +149,16 @@ const ProductDetailInfor = (props: ProductDetail) => {
   };
 
   const debouncedHandleUpdate = useDebounce(handleUpdate, 450);
+
+  const handleLikeProduct = () => {
+    const { id, name } = props;
+    likeProduct({
+      variables: {
+        productId: id,
+        productName: name
+      }
+    });
+  };
 
   // Update quantity on blur
   const handleBlur = () => {
@@ -238,9 +285,7 @@ const ProductDetailInfor = (props: ProductDetail) => {
             <FacebookShareButton url={`https://medofa.com/products/${props.slug}`}>
               <FacebookIcon size="2.5rem" />
             </FacebookShareButton>
-            {/* <TwitterShareButton url={`https://medofa.com/products/${props.slug}`}>
-          <TwitterIcon size="2.5rem" className="ml-2" />
-        </TwitterShareButton> */}
+
             <button
               className="zalo-share-button ml-2"
               data-href={`https://medofa.com/products/${props.slug}`}
@@ -254,8 +299,15 @@ const ProductDetailInfor = (props: ProductDetail) => {
             </button>
           </>
         )}
-
-        <i className="far fa-heart"></i>
+        {!isWishProduct ? (
+          <button className="heart-icon-wrap" onClick={handleLikeProduct}>
+            <i className="far fa-heart"></i>
+          </button>
+        ) : (
+          <button className="heart-icon-wrap" onClick={handleLikeProduct}>
+            <i className="fas fa-heart"></i>
+          </button>
+        )}
       </div>
     </div>
   );
