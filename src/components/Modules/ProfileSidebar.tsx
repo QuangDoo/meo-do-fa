@@ -84,6 +84,12 @@ const ProfileSidebar = () => {
         icon="/assets/images/doimatkhau.png"
       />
 
+      <SidebarLink
+        text={t('navbar:wish_list')}
+        href="/products/wish-list"
+        icon="/assets/images/wishlist.png"
+      />
+
       {/* <div className="my-account__sidebar-item">
         {t('navbar:wallet')} -{' '}
         <span>
