@@ -49,7 +49,7 @@ export default function Head(props) {
       <meta name="theme-color" content="#2f3b97" />
 
       <meta property="og:url" content="https://medofa.com/" />
-      <meta property="og:image" content="https://medofa.com/icons/logo-200.png" />
+      <meta property="og:image" content="/icons/logo-200.png" />
 
       <script async src="https://www.googletagmanager.com/gtag/js?id=G-95PXEWD1KY"></script>
       <script async src="https://www.googletagmanager.com/gtag/js?id=G-TPL3K1KQZN"></script>
