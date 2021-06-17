@@ -23,7 +23,7 @@ const HelpDetail = () => {
       variables: { id: +router.query.helpId }
     }
   );
-  const { t } = useTranslation(['help']);
+  const { t, i18n } = useTranslation(['help']);
 
   const title = helpData?.getWebsitePostDetail?.name;
   return (
@@ -33,7 +33,11 @@ const HelpDetail = () => {
       </Head>
 
       <FAQ>
-        <QuestionDetail answer={helpData?.getWebsitePostDetail?.content} />
+        {i18n?.language === 'vi' ? (
+          <QuestionDetail answer={helpData?.getWebsitePostDetail?.content} />
+        ) : (
+          <QuestionDetail answer={helpData?.getWebsitePostDetail?.content_en} />
+        )}
       </FAQ>
     </MainLayout>
   );
