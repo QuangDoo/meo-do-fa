@@ -54,6 +54,7 @@ export type ProductDetail = {
   default_vendor: string;
   default_vendor_id: string;
   sub_images: string[];
+  max_qty_per_order: number;
 };
 
 export type GetProductData = {
@@ -115,6 +116,7 @@ export const GET_PRODUCT = gql`
       default_vendor
       default_vendor_id
       sub_images
+      max_qty_per_order
     }
   }
 `;

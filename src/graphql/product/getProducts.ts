@@ -37,6 +37,7 @@ export const productCardQueryProps = `
   }
   default_vendor
   default_vendor_id
+  max_qty_per_order
 `;
 
 export type Product = {
@@ -68,6 +69,7 @@ export type Product = {
   };
   default_vendor: string;
   default_vendor_id: string;
+  max_qty_per_order: number;
 };
 
 export type ProductTag =
