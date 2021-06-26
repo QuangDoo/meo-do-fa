@@ -211,7 +211,11 @@ const ProductDetailInfor = (props: ProductDetail) => {
             )}
           </div>
         )}
-
+        {props.max_qty_per_order > 0 && (
+          <p className="text-danger">
+            {t('common:maximum_quantity')}: {props.max_qty_per_order} &nbsp;{t('common:product(s)')}
+          </p>
+        )}
         {!!token && (
           <React.Fragment>
             <div className="d-flex mt-3 w-100">

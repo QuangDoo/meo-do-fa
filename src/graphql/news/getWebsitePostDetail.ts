@@ -4,6 +4,7 @@ export type PostDetail = {
   id: number;
   name: string;
   content: string;
+  content_en: string;
   link: string;
   slug: string;
   create_date: Date;
@@ -23,6 +24,7 @@ export const GET_POST_DETAIL = gql`
       id
       name
       content
+      content_en
       link
       slug
       create_date

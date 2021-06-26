@@ -21,7 +21,7 @@ const isNotNull = (category: Product['categories'][0]) => {
 const ProductCard = (props: Props) => {
   const token = useToken();
 
-  const { t } = useTranslation('productCard');
+  const { t } = useTranslation(['productCard', 'common']);
 
   const isDiscount = props.discount_percentage > 0;
 
@@ -104,6 +104,12 @@ const ProductCard = (props: Props) => {
                 <small title={props.default_vendor} className="product-card__name-supplier">
                   <div className="text-muted supplier-name">{t('productCard:supplier')}:</div>
                   <Link href={`/suppliers/${props.default_vendor_id}`}>{props.default_vendor}</Link>
+                </small>
+              )}
+              {props.max_qty_per_order > 0 && (
+                <small className="text-danger">
+                  {t('common:maximum_quantity')}: {props.max_qty_per_order}&nbsp;
+                  {t('common:product(s)')}
                 </small>
               )}
               <br />

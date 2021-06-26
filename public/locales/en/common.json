@@ -14,5 +14,7 @@
   "see_more":"See More",
   "show_less": "Show less",
   "post_on": "POST ON ",
-  "by": ", BY "
+  "by": ", BY ",
+  "maximum_quantity":"Maximum quantity",
+  "product(s)":"product(s)"
 }

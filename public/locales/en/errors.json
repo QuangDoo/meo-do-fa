@@ -47,6 +47,7 @@
   "code_141": "Product is unvailable",
   "code_142": "vat is invalid",
   "code_143": "OTP does not match. Please re-enter OTP code",
+  "code_146": "The quantity is higher than the maximum allowed quantity of product",
   "add_to_cart_success": "Add to cart success.",
   "add_to_cart_quantity_0": "Please provide quantity.",
   "add_to_cart_less_than_0": "Quantity must be greater than 0",
