@@ -107,7 +107,7 @@ const ProductCard = (props: Props) => {
                 </small>
               )}
               {props.max_qty_per_order > 0 && (
-                <small className="text-danger">
+                <small className="text-danger d-block">
                   {t('common:maximum_quantity')}: {props.max_qty_per_order}&nbsp;
                   {t('common:product(s)')}
                 </small>

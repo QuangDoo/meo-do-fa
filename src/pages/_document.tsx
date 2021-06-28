@@ -128,7 +128,7 @@ class MyDocument extends Document {
             }}
           />
 
-          <div id="fb-root"></div>
+          {/* <div id="fb-root"></div>
           <div className="fb-customerchat" attribution="page_inbox" page_id="100283725313030"></div>
           <script
             dangerouslySetInnerHTML={{
@@ -149,9 +149,9 @@ class MyDocument extends Document {
               }(document, 'script', 'facebook-jssdk'));
               `
             }}
-          />
+          /> */}
 
-          <script
+          {/* <script
             dangerouslySetInnerHTML={{
               __html: `
               document.addEventListener("DOMContentLoaded", function(event) {
@@ -178,7 +178,7 @@ class MyDocument extends Document {
               });
               `
             }}
-          />
+          /> */}
 
           <script
             dangerouslySetInnerHTML={{
@@ -192,7 +192,7 @@ class MyDocument extends Document {
               `
             }}
           />
-          <script src="https://sp.zalo.me/plugins/sdk.js"></script>
+          {/* <script src="https://sp.zalo.me/plugins/sdk.js"></script> */}
         </body>
       </Html>
     );

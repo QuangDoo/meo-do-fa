@@ -262,7 +262,7 @@
   }
 }
 .back-to-top {
-  right: 30px;
+  left: 20px;
 }
 
 .back-to-top.show {
@@ -270,7 +270,11 @@
   width: 2.3em;
   height: 2.3em;
 }
-
+@media (max-width: 538px){
+  .back-to-top {
+    left: 25px;
+  }
+}
 // .theme-background-color {
 //   background-color: $secondary !important;
 // }
