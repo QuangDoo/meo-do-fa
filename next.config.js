@@ -57,7 +57,8 @@ module.exports = withPWA({
       'firebasestorage.googleapis.com',
       'googleapis.com',
       'files.medofa.com',
-      'files.medofa.bedigital.vn'
+      'files.medofa.bedigital.vn',
+      'files.dev.medofa.com'
     ]
   },
   pwa: {
