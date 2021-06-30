@@ -23,6 +23,7 @@ export type CartItem = {
     is_quick_invoice: boolean;
     old_price: number;
     sale_price: number;
+    max_qty_per_order: number;
   };
   promotions: PromotionInfo[];
   is_available: boolean;
@@ -56,6 +57,7 @@ export const GET_CART = gql`
           is_quick_invoice
           old_price
           sale_price
+          max_qty_per_order
         }
         promotions {
           reward_type

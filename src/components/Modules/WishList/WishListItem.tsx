@@ -1,13 +1,10 @@
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import React from 'react';
-import { useToken } from 'src/contexts/Token';
 import { Product } from 'src/graphql/product/getProducts';
 
 import { DiscountRibbon } from '../ProductCard/DiscountRibbon';
-import LoginToSeePrice from '../ProductCard/LoginToSeePrice';
 import ProductBadges from '../ProductCard/ProductBadges';
-import ProductCardQuantityInput from '../ProductCard/ProductCardQuantityInput';
 import { ProductPrice } from '../ProductCard/ProductPrice';
 
 type Props = {
@@ -22,12 +19,11 @@ type Props = {
   discount_percentage: number;
   product: Product;
   isAvailable: boolean;
-  max_qty_per_order: number;
+  onDelete: (id) => void;
 };
 
-function QuickOrderItem(props: Props) {
-  const { i18n, t } = useTranslation(['common']);
-  const token = useToken();
+function WishListItem(props: Props) {
+  const { i18n } = useTranslation();
   const image = props?.image || '/assets/images/no-image.jpg';
   const isDiscount = props.discount_percentage > 0;
   return (
@@ -58,38 +54,20 @@ function QuickOrderItem(props: Props) {
             <div className="flex-1 flex-column">
               <div className="d-flex justify-content-between align-items-center">
                 <div>
-                  {token ? (
-                    <>
-                      <ProductPrice price={props.price} sale_price={props.sale_price} />
-                      <div className="product__status ml-2 mb-2 d-inline">
-                        <ProductBadges product={props.product} />
-                      </div>
-                    </>
-                  ) : (
-                    <LoginToSeePrice />
-                  )}
-                </div>
-
-                {token && (
-                  <div className="cart-item__qty">
-                    <ProductCardQuantityInput
-                      productId={props.productId}
-                      productPrice={props.list_price}
-                      productName={props.productName}
-                      productImg={image}
-                      available={props.isAvailable}
-                    />
-                    {props.max_qty_per_order > 0 && (
-                      <small className="text-danger text-right">
-                        Đặt tối đa {props.max_qty_per_order} sản phẩm
-                        {t('common:maximum_quantity')}: {props.max_qty_per_order}{' '}
-                        {t('common:maximum_quantity')}
-                      </small>
-                    )}
+                  <div>
+                    <ProductPrice price={props.price} sale_price={props.sale_price} />
+                    <div className="product__status ml-2 mb-2 d-inline">
+                      <ProductBadges product={props.product} />
+                    </div>
                   </div>
-                )}
+                </div>
               </div>
             </div>
+          </div>
+          <div>
+            <button className="btn-delete" onClick={() => props.onDelete(props._id)}>
+              ×
+            </button>
           </div>
         </div>
       </div>
@@ -97,4 +75,4 @@ function QuickOrderItem(props: Props) {
   );
 }
 
-export default QuickOrderItem;
+export default WishListItem;

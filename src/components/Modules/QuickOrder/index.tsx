@@ -109,6 +109,7 @@ function QuickOrderPage() {
                     discount_percentage={item.discount_percentage}
                     product={item}
                     isAvailable={item.is_available}
+                    max_qty_per_order={item.max_qty_per_order}
                   />
                 ))
               ) : (

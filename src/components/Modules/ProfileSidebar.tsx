@@ -39,7 +39,7 @@ const ProfileSidebar = () => {
     <aside className="my-account__sidebar mb-3">
       <div className="mb-3">
         {t('navbar:account_of')}
-        <h5 className="text-break">{user?.name}</h5>
+        <h5 className="text-break">{user?.company_name || user?.name || ''}</h5>
         <h5>{user?.cust_no}</h5>
       </div>
 
@@ -82,6 +82,12 @@ const ProfileSidebar = () => {
         text={t('navbar:change_password')}
         href="/change-password"
         icon="/assets/images/doimatkhau.png"
+      />
+
+      <SidebarLink
+        text={t('navbar:wish_list')}
+        href="/products/wish-list"
+        icon="/assets/images/wishlist.png"
       />
 
       {/* <div className="my-account__sidebar-item">

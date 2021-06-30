@@ -24,7 +24,7 @@ function getPostId(slug: string): number {
 }
 
 function NewsDetailPage() {
-  const { t } = useTranslation(['common', 'news']);
+  const { t, i18n } = useTranslation(['common', 'news']);
   const router = useRouter();
   const { data: newsDetailData } = useQuery<GetWebsitePostData, GetWebsitePostVariables>(
     GET_POST_DETAIL,
@@ -33,7 +33,8 @@ function NewsDetailPage() {
     }
   );
 
-  const { name, content, create_date, signature } = newsDetailData?.getWebsitePostDetail || {};
+  const { name, content, content_en, create_date, signature } =
+    newsDetailData?.getWebsitePostDetail || {};
 
   return (
     <>
@@ -56,11 +57,19 @@ function NewsDetailPage() {
             />
           </div>
           <hr className="hr my-3" />
-          <div
-            dangerouslySetInnerHTML={{
-              __html: content
-            }}
-          />
+          {i18n?.language === 'vi' ? (
+            <div
+              dangerouslySetInnerHTML={{
+                __html: content
+              }}
+            />
+          ) : (
+            <div
+              dangerouslySetInnerHTML={{
+                __html: content_en
+              }}
+            />
+          )}
         </div>
       ) : (
         <div className="d-flex justify-content-center align-items-center p-5">
