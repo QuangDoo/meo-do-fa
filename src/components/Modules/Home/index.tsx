@@ -102,13 +102,18 @@ const Home = ({ dealsOfTheDayData }) => {
         autoplaySpeed={7000}
         dotsClass="slick__dots bullet slick-dots"
         className="align-items-center mb-0 slick-dotted d-none d-sm-block">
-        {bannerPC?.map(({ image, id }) => (
+        {bannerPC?.map(({ image, id, link }) => (
           <div className="banner__slide" key={id}>
             <div className="banner__img">
               {/* <div className="banner-wrapper">
                 <img alt={image} src={image} className="banner--image" />
               </div> */}
-              <Image src={image} layout="fill" objectFit="cover" />
+              {link && (
+                <a href={link} target="_blank" rel="noreferrer">
+                  <Image src={image} layout="fill" objectFit="cover" />
+                </a>
+              )}
+              {!link && <Image src={image} layout="fill" />}
             </div>
           </div>
         ))}
@@ -121,13 +126,18 @@ const Home = ({ dealsOfTheDayData }) => {
         autoplaySpeed={7000}
         dotsClass="slick__dots bullet slick-dots"
         className="align-items-center mb-0 slick-dotted d-block d-sm-none">
-        {bannerMobile?.map(({ image }) => (
+        {bannerMobile?.map(({ image, link }) => (
           <div className="banner__slide" key={image}>
             <div className="banner__img banner__img--mobile">
               {/* <div className="banner-wrapper">
                 <img alt={image} src={image} className="banner--image" />
               </div> */}
-              <Image src={image} layout="fill" objectFit="cover" />
+              {link && (
+                <a href={link} rel="noreferrer">
+                  <Image src={image} layout="fill" objectFit="cover" />
+                </a>
+              )}
+              {!link && <Image src={image} layout="fill" objectFit="cover" />}
             </div>
           </div>
         ))}
