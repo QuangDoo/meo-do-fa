@@ -53,7 +53,7 @@ function QuickOrderPage() {
     fetchPolicy: 'network-only',
     variables: {
       page: page,
-      pageSize: 10,
+      pageSize: 28,
       name: searchTerm
     }
   });
