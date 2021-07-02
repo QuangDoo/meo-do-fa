@@ -109,6 +109,7 @@ function QuickOrderPage() {
                     discount_percentage={item.discount_percentage}
                     product={item}
                     isAvailable={item.is_available}
+                    max_qty_per_order={item.max_qty_per_order}
                   />
                 ))
               ) : (
@@ -170,7 +171,7 @@ function QuickOrderPage() {
           </div>
         </div>
         <Pagination
-          count={Math.ceil(totalPagination / 12)}
+          count={Math.ceil(totalPagination / 20)}
           page={page}
           siblingCount={4}
           onChange={(page) => {

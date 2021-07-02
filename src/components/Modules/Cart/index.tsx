@@ -18,7 +18,7 @@ import ConfirmModal from './ConfirmModal';
 export default function CartPage() {
   const { data: cart, checkboxCarts, setCheckboxCarts, deleteCarts, checkedData } = useCart();
 
-  const { t } = useTranslation(['cart', 'common', 'errors']);
+  const { t, i18n } = useTranslation(['cart', 'common', 'errors']);
 
   const [deleteAllIsOpen, setDeleteAllIsOpen] = useState<boolean>(false);
 
@@ -195,7 +195,7 @@ export default function CartPage() {
                     onConfirm={handleConfirmDeleteChecked}
                   />
 
-                  <Link href="/products">
+                  <Link href={`${i18n?.language === 'vi' ? '/san-pham' : '/products'}`}>
                     <a className="d-block">
                       <button className="w-100 p-2 btn-link text-left">
                         <i className="fas fa-fw fa-chevron-left mr-1" />

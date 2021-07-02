@@ -46,6 +46,8 @@
   "code_140_waiting": "Tài khoản của bạn đang chờ được xác thực",
   "code_141": "Sản phẩm không có sẵn",
   "code_142": "Mã số thuế không hợp lệ",
+  "code_143": "Mã OTP không đúng. Vui lòng nhập lại mã OTP",
+  "code_146": "Số lượng đặt hàng không được vượt quá số lượng cho phép.",
   "add_to_cart_success": "Thêm vào giỏ hàng thành công.",
   "add_to_cart_quantity_0": "Xin hãy nhập số lượng.",
   "add_to_cart_less_than_0": "Số lượng phải lớn hơn 0",

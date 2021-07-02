@@ -21,7 +21,7 @@ type Props = {
 };
 
 const InvoiceProducts = (props: Props) => {
-  const { t } = useTranslation(['checkout']);
+  const { t, i18n } = useTranslation(['checkout']);
 
   const { register, watch } = useFormContext<CheckoutFormInputs>();
 
@@ -53,7 +53,9 @@ const InvoiceProducts = (props: Props) => {
       label={t('checkout:list_products_have_invoice')}>
       <div className="mt-2" hidden={!showInvoiceProducts}>
         {products.map((item, index) => {
-          const productLink = `products/${slugify(item.name as string)}-pid${item.id}`;
+          const productLink = `${i18n?.language === 'vi' ? '/san-pham' : '/products'}/${slugify(
+            item.name as string
+          )}-pid${item.id}`;
 
           return (
             <div className="cart-item" key={index}>

@@ -1,3 +1,4 @@
+import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import React from 'react';
 import { useToken } from 'src/contexts/Token';
@@ -21,9 +22,11 @@ type Props = {
   discount_percentage: number;
   product: Product;
   isAvailable: boolean;
+  max_qty_per_order: number;
 };
 
 function QuickOrderItem(props: Props) {
+  const { i18n, t } = useTranslation(['common']);
   const token = useToken();
   const image = props?.image || '/assets/images/no-image.jpg';
   const isDiscount = props.discount_percentage > 0;
@@ -43,7 +46,7 @@ function QuickOrderItem(props: Props) {
         <div className="flex-1 pl-2 pr-2 ">
           <div className="d-flex align-items-center ">
             <div>
-              <Link href={'products/' + props.slug}>
+              <Link href={`${i18n?.language === 'vi' ? '/san-pham' : '/products'}/` + props.slug}>
                 <a className="cart-item__name" title={props.productName}>
                   {props.productName}
                 </a>
@@ -76,6 +79,13 @@ function QuickOrderItem(props: Props) {
                       productImg={image}
                       available={props.isAvailable}
                     />
+                    {props.max_qty_per_order > 0 && (
+                      <small className="text-danger text-right">
+                        Đặt tối đa {props.max_qty_per_order} sản phẩm
+                        {t('common:maximum_quantity')}: {props.max_qty_per_order}{' '}
+                        {t('common:maximum_quantity')}
+                      </small>
+                    )}
                   </div>
                 )}
               </div>

@@ -23,6 +23,7 @@
   "see_all_notifications": "See all notifications",
   "change_password": "Change password",
   "product_category": "Product categories",
+  "product_category_special":"List of industries",
   "pathology": "Search by pathology",
   "promotions": "Promotions",
   "most_searched": "Most searched",
@@ -32,5 +33,6 @@
   "deals_price":"Deals",
   "deals_today":"of the day",
   "path_search":"Search",
-  "path_sick":"by pathology"
+  "path_sick":"by pathology",
+  "wish_list":"Wish list"
 }

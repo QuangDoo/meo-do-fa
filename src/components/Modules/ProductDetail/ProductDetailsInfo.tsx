@@ -1,22 +1,33 @@
 import { useQuery } from '@apollo/client';
 import { useTranslation } from 'i18n';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { FacebookIcon, FacebookShareButton, TwitterIcon, TwitterShareButton } from 'react-share';
+import { toast } from 'react-toastify';
 import PriceText from 'src/components/Form/PriceText';
 import QuantityInput from 'src/components/Form/QuantityInput';
 import { useCart } from 'src/contexts/Cart';
 import { useToken } from 'src/contexts/Token';
 import { GET_WEBSITE_CONFIG, GetWebsiteConfigData } from 'src/graphql/configs/getWebsiteConfig';
-import { ProductDetails } from 'src/graphql/product/product.query';
+import { GET_WISH_LIST, GetWishListData, GetWishListVar } from 'src/graphql/product/getWishList';
+import {
+  CreateWishProductData,
+  CreateWishProductVars,
+  LIKE_PRODUCT
+} from 'src/graphql/product/likeProduct';
+import { ProductDetail } from 'src/graphql/product/product.query';
+import { useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
 import useDebounce from 'src/hooks/useDebounce';
 
 import ConfirmDeleteItemModal from '../Cart/ConfirmDeleteItemModal';
 import LoginModal from '../LoginModal';
 import ProductBadges from '../ProductCard/ProductBadges';
 
-const ProductDetailInfor = (props: ProductDetails) => {
+const ProductDetailInfor = (props: ProductDetail) => {
   const token = useToken();
+
+  const router = useRouter();
 
   const { t } = useTranslation(['common', 'productDetail', 'success']);
 
@@ -29,6 +40,36 @@ const ProductDetailInfor = (props: ProductDetails) => {
   const MAX_QUANTITY = parseInt(
     configData?.getWebsiteConfig.find((config) => config.key === 'MAX_QUANTITY').value
   );
+  const SHOW_SOCIAL_SHARE = configData?.getWebsiteConfig.find(
+    (config) => config.key === 'SHOW_SOCIAL_SHARE'
+  )?.value;
+
+  const { data: dataWishList, refetch: refechDataListWish } = useQueryAuth<
+    GetWishListData,
+    GetWishListVar
+  >(GET_WISH_LIST, {
+    variables: { page: 1, pageSize: 20 },
+    fetchPolicy: 'network-only',
+    notifyOnNetworkStatusChange: true,
+    onError: (error) => {
+      toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
+    }
+  });
+
+  const [likeProduct, { loading: loadingLike }] = useMutationAuth<
+    CreateWishProductData,
+    CreateWishProductVars
+  >(LIKE_PRODUCT, {
+    onCompleted: () => {
+      toast.success(t('productDetail:like_product'));
+      refechDataListWish();
+    },
+    onError: (error) => {
+      toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
+    }
+  });
+
+  const isWishProduct = dataWishList?.getWishList.find((item) => item.id === props.id);
 
   const [quantity, setQuantity] = useState<number>(MIN_QUANTITY);
 
@@ -109,6 +150,16 @@ const ProductDetailInfor = (props: ProductDetails) => {
 
   const debouncedHandleUpdate = useDebounce(handleUpdate, 450);
 
+  const handleLikeProduct = () => {
+    const { id, name } = props;
+    likeProduct({
+      variables: {
+        productId: id,
+        productName: name
+      }
+    });
+  };
+
   // Update quantity on blur
   const handleBlur = () => {
     handleUpdate(quantityInCart, quantity);
@@ -160,20 +211,36 @@ const ProductDetailInfor = (props: ProductDetails) => {
             )}
           </div>
         )}
-
+        {props.max_qty_per_order > 0 && (
+          <p className="text-danger">
+            {t('common:maximum_quantity')}: {props.max_qty_per_order} &nbsp;{t('common:product(s)')}
+          </p>
+        )}
         {!!token && (
           <React.Fragment>
-            <div className="col-6 px-0 mt-3">
-              <QuantityInput
-                quantity={quantity}
-                setQuantity={setQuantity}
-                min={MIN_QUANTITY}
-                max={MAX_QUANTITY}
-                onPlusClick={handlePlusClick}
-                onMinusClick={handleMinusClick}
-                onBlur={handleBlur}
-                isAvailable={props.is_available}
-              />
+            <div className="d-flex mt-3 w-100">
+              <div className="d-flex">
+                <QuantityInput
+                  quantity={quantity}
+                  setQuantity={setQuantity}
+                  min={MIN_QUANTITY}
+                  max={MAX_QUANTITY}
+                  onPlusClick={handlePlusClick}
+                  onMinusClick={handleMinusClick}
+                  onBlur={handleBlur}
+                  isAvailable={props.is_available}
+                />
+
+                {!isWishProduct ? (
+                  <button className="heart-icon-wrap" onClick={handleLikeProduct}>
+                    <img src="/assets/images/chaichimfixpts.png" alt="like-product" />
+                  </button>
+                ) : (
+                  <button className="heart-icon-wrap" onClick={handleLikeProduct}>
+                    <img src="/assets/images/traichimdofix.png" alt="unlike-product" />
+                  </button>
+                )}
+              </div>
 
               <ConfirmDeleteItemModal
                 title={t('cart:remove_title')}
@@ -229,6 +296,25 @@ const ProductDetailInfor = (props: ProductDetails) => {
             ))}
           </div>
         )} */}
+        {SHOW_SOCIAL_SHARE === 'Y' && (
+          <>
+            <FacebookShareButton url={`https://medofa.com/products/${props.slug}`}>
+              <FacebookIcon size="2.5rem" />
+            </FacebookShareButton>
+
+            <button
+              className="zalo-share-button ml-2"
+              data-href={`https://medofa.com/products/${props.slug}`}
+              data-oaid="3125746340374733717"
+              data-layout="1"
+              data-color="blue"
+              data-customize={true}>
+              <div className="social-share-button zalo-button">
+                <img src="/assets/images/zalo-icon.png" alt="Zalo icon" />
+              </div>
+            </button>
+          </>
+        )}
       </div>
     </div>
   );

@@ -4,16 +4,16 @@ import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
-import { ProductDetails } from 'src/graphql/product/product.query';
+import { ProductDetail } from 'src/graphql/product/product.query';
 
 type Props = {
-  categories: ProductDetails['categories'];
+  categories: ProductDetail['categories'];
 };
 
 const SimpleBreadcrumbs = (props: Props) => {
   const router = useRouter();
 
-  const { t } = useTranslation(['breadcrumb']);
+  const { t, i18n } = useTranslation(['breadcrumb']);
 
   const [parentCategory, setParentCategory] = useState([]);
 
@@ -34,13 +34,18 @@ const SimpleBreadcrumbs = (props: Props) => {
         <a>{t('breadcrumb:home_page')}</a>
       </Link>
 
-      <Link href={`/products?category=${parentCategory[0]}`}>
+      <Link
+        href={`${i18n?.language === 'vi' ? '/san-pham' : '/products'}?category=${
+          parentCategory[0]
+        }`}>
         <a>{parentCategory[1]}</a>
       </Link>
 
       {categories?.map(({ name, id }) => (
         <>
-          <Link key={id} href={`/products?category=${id}`}>
+          <Link
+            key={id}
+            href={`${i18n?.language === 'vi' ? '/san-pham' : '/products'}?category=${id}`}>
             <a>{name}</a>
           </Link>
         </>

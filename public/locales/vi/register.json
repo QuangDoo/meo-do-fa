@@ -3,7 +3,7 @@
   "pharmacy": "Nhà thuốc",
   "clinic": "Phòng khám",
   "drugstore": "Quầy thuốc",
-  "hospital": "Bệnh viện/Công ty Dược",
+  "hospital": "Bệnh viện",
   "welcome": "Xin chào",
   "edit": "Chỉnh sửa",
   "you_are": "Bạn là",
@@ -32,7 +32,9 @@
   "customer": "Bạn",
   "other": "Khác",
   "hospital_clinic": "Bệnh viện / phòng khám",
+  "pharmacy_drugstore": "Nhà thuốc / Quầy thuốc",
   "confirm_account":"Xác thực tài khoản",
   "otp_code":"Nhập mã OTP",
-  "send_otp":"Send OTP Code"
+  "send_otp":"Gửi mã OTP",
+  "otp_alert":"Bạn phải nhập mã OTP"
 }

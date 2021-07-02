@@ -77,15 +77,12 @@
 
 .social-share-button {
   overflow: visible !important;
-  display: flex;
   align-items: center;
-  padding: 0 10px 0 0;
   margin-right: 10px;
-  border-radius: 5px;
 
   img {
-    height: 32px;
-    width: 32px;
+    height: 40px;
+    width: 40px;
     margin-right: 5px;
   }
 
@@ -111,5 +108,136 @@
 
   &:hover {
     background-color: rgba(182, 209, 221, 0.8);
+  }
+}
+.grid-sub-image {
+  cursor: pointer;
+  position: relative;
+  margin-right: 12px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.border-sub__image_lastimage {
+  border: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+.border-sub__image.active > img {
+  border: 1px solid #35409a;
+  border-radius: 4px;
+}
+
+.border-sub__image_lastimage > span {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 9px;
+  color: rgb(255, 255, 255);
+  font-size: 11px;
+  line-height: 16px;
+  font-weight: 300;
+  text-align: center;
+  z-index: 2;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+button.slide-arrow-image.slick-arrow.prev-arrow,
+.banner button.slide-arrow-image.slick-arrow.prev-arrow {
+  left: 0;
+}
+
+button.slide-arrow-image.slick-arrow,
+.banner button.slide-arrow-image.slick-arrow {
+  position: absolute;
+  top: 50%;
+  margin-top: -20px;
+  width: 40px;
+  z-index: 3;
+  border-radius: 50%;
+  background-color: rgba(52, 58, 64, 0.5);
+  height: 40px;
+  border: 1px solid #bfc0c2;
+}
+button.slide-arrow-image.slick-arrow,
+.banner button.slide-arrow-image.slick-arrow {
+  position: absolute;
+  top: 50%;
+  margin-top: -20px;
+  width: 40px;
+  z-index: 3;
+  border-radius: 50%;
+  background-color: rgba(52, 58, 64, 0.5);
+  height: 40px;
+  border: 1px solid #bfc0c2;
+}
+button.slide-arrow-image.slick-arrow.next-arrow,
+.banner button.slide-arrow-image.slick-arrow.next-arrow {
+  right: 0;
+}
+
+button.slide-arrow-image.slick-arrow,
+.banner button.slide-arrow-image.slick-arrow {
+  position: absolute;
+  top: 50%;
+  margin-top: -20px;
+  width: 40px;
+  z-index: 3;
+  border-radius: 50%;
+  background-color: rgba(52, 58, 64, 0.5);
+  height: 40px;
+  border: 1px solid #bfc0c2;
+}
+button.slide-arrow-image.slick-arrow,
+.banner button.slide-arrow-image.slick-arrow {
+  position: absolute;
+  top: 50%;
+  margin-top: -20px;
+  width: 40px;
+  z-index: 3;
+  border-radius: 50%;
+  background-color: rgba(52, 58, 64, 0.5);
+  height: 40px;
+  border: 1px solid #bfc0c2;
+}
+button.slide-arrow-image.slick-arrow,
+.banner button.slide-arrow-image.slick-arrow {
+  position: absolute;
+  top: 50%;
+  margin-top: -20px;
+  width: 40px;
+  z-index: 3;
+  border-radius: 50%;
+  background-color: rgba(52, 58, 64, 0.5);
+  height: 40px;
+  border: 1px solid #bfc0c2;
+}
+.heart-icon-wrap {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  box-shadow: rgb(47 83 151 / 10%) 0px 2px 6px 0px;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  display: flex;
+  margin-left: 12px;
+  cursor: pointer;
+  background: white;
+}
+
+@media screen and (max-width: 768px) and (min-width: 576px) {
+  div > img.img-fluid {
+    display: none;
+  }
+  .makeStyles-root-1 {
+    display: none;
   }
 }

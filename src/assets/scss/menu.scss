@@ -129,9 +129,12 @@
     color: $primary;
   }
 }
-@media (max-width: 1024px) {
+@media (max-width: 1200px) {
   .hottag-button{
-    font-size: 13px;
+    font-size: .6rem;
+  }
+  .title__search--res{
+    font-size: .8rem;
   }
 }
 .mobile-menu {

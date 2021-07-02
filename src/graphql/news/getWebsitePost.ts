@@ -20,6 +20,7 @@ export type WebsitePostData = {
     id: number;
     name: string;
     content: string;
+    content_en: string;
     link: string;
     slug: string;
     create_date: Date;
@@ -33,6 +34,7 @@ export const GET_POST = gql`
       id
       name
       content
+      content_en
       link
       slug
       create_date

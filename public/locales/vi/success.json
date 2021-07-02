@@ -3,5 +3,7 @@
   "update_cart": "Đã cập nhật giỏ hàng.",
   "delete_cart": "Đã xóa sản phẩm khỏi giỏ hàng.",
   "send_password_to_email_success": "Nếu địa chỉ email của bạn tồn tại trong cơ sở dữ liệu của chúng tôi, bạn sẽ nhận được mật khẩu mới tại địa chỉ email của mình sau vài phút.",
-  "send_password_to_phone_number_success": "Nếu số điện thoại của bạn tồn tại trong cơ sở dữ liệu của chúng tôi, bạn sẽ nhận được mật khẩu mới trong tin nhắn của mình sau vài phút."
+  "send_password_to_phone_number_success": "Nếu số điện thoại của bạn tồn tại trong cơ sở dữ liệu của chúng tôi, bạn sẽ nhận được mật khẩu mới trong tin nhắn của mình sau vài phút.",
+  "register_successfully": "Successful account registration",
+  "auth_otp_successfully": "Xác thực mã OTP thành công"
 }

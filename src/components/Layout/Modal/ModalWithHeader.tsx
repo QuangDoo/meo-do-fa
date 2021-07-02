@@ -24,12 +24,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ModalWithHeader: FC<Props> = (props) => {
-  const { children, open, onClose, title, className } = props;
+  const { children, open, onClose, title, className, onBackdropClick } = props;
 
   const classes = useStyles();
 
   return (
-    <ModalBase open={open} onClose={onClose}>
+    <ModalBase open={open} onClose={onClose} onBackdropClick={onBackdropClick}>
       <DialogTitle
         disableTypography
         classes={{

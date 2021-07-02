@@ -1,6 +1,7 @@
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
+import Image from 'next/image';
 import React from 'react';
 
 const useStyles = makeStyles((theme) => ({
@@ -39,7 +40,15 @@ export default function BoxImage(props: Props) {
           {images.map((image) => (
             <Grid xs={6} sm={4} md={3} lg={3} item key={image?.imgUrl}>
               <Paper>
-                <img src={image?.imgUrl} alt={image.title} style={{ width: '100%' }} />
+                <Image
+                  // src={image?.imgUrl}
+                  alt={image.title}
+                  width={'100%'}
+                  height="auto"
+                  layout="responsive"
+                  objectFit={image?.imgUrl ? 'contain' : 'cover'}
+                  src={image?.imgUrl || '/assets/images/no_images.jpg'}
+                />
               </Paper>
             </Grid>
           ))}

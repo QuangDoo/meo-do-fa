@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
@@ -15,7 +16,13 @@ export default function CardView(props: Props) {
     <Link href={`/news/${props?.slug}`}>
       <div className="post-item">
         <div className="post-item__img">
-          <img className="post-item__img-item" alt={props?.title} src={props?.imgUrl}></img>
+          <Image
+            className="post-item__img-item"
+            alt={props?.title}
+            layout="fill"
+            objectFit={props?.imgUrl ? 'contain' : 'cover'}
+            src={props?.imgUrl || '/assets/images/no_images.jpg'}
+          />
         </div>
         <div className="post-item__content">
           <div className="post-item__content-title">{props?.title}</div>

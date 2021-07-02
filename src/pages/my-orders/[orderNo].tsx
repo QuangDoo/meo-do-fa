@@ -16,7 +16,9 @@ import {
 } from '@material-ui/core';
 import { Receipt } from '@material-ui/icons';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import { useTranslation } from 'i18n';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
@@ -29,6 +31,7 @@ import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules
 import CustomCard from 'src/components/Modules/OrderDetails/CustomCard';
 import CustomStepper from 'src/components/Modules/OrderDetails/CustomStepper';
 import ProfileLayout from 'src/components/Modules/ProfileLayout';
+import { useCart } from 'src/contexts/Cart';
 import {
   GET_ORDER_DETAIL,
   GetOrderDetailData,
@@ -87,10 +90,16 @@ OrderDetails.getInitialProps = async (ctx) => {
 
 const flagSteps = [10, 15, 20, 30, 40, 80];
 
+function getProductId(slug: string): number {
+  return +slug.split('-').pop().replace('pid', '');
+}
+
 function OrderDetails() {
   const { t, i18n } = useTranslation(['myOrders', 'common']);
 
   const router = useRouter();
+
+  const { addToCart } = useCart();
 
   const [open, setOpen] = useState(false);
 
@@ -110,6 +119,23 @@ function OrderDetails() {
       toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
     }
   });
+
+  const handleAddOrderToCart = () => {
+    getOrderDetailData?.getOrderDetail?.order_lines
+      .filter((order) => {
+        if (order.active === true) {
+          return order;
+        }
+      })
+      .map((order) =>
+        addToCart({
+          price: order.list_price,
+          productId: getProductId(order.product.slug),
+          productName: order.name,
+          quantity: order.product_uom_qty || 0
+        })
+      );
+  };
 
   const flag = getOrderDetailData?.getOrderDetail?.flag;
   const name = getOrderDetailData?.getOrderDetail?.name;
@@ -265,7 +291,10 @@ function OrderDetails() {
                         {product.product_type !== 'product' ? (
                           <div>{product.name}</div>
                         ) : (
-                          <Link href={`/products/${product.product.slug}`}>
+                          <Link
+                            href={`${i18n?.language === 'vi' ? '/san-pham' : '/products'}/${
+                              product.product.slug
+                            }`}>
                             <a>{product.name}</a>
                           </Link>
                         )}
@@ -297,6 +326,22 @@ function OrderDetails() {
                       </Typography>
                     </TableCell>
                   </TableRow>
+                  {flag !== 60 && (
+                    <TableRow>
+                      <TableCell colSpan={6}>
+                        <Typography align="right">
+                          <Button
+                            size="small"
+                            startIcon={<ShoppingCartIcon />}
+                            variant="contained"
+                            onClick={handleAddOrderToCart}
+                            color="primary">
+                            {t('myOrders:repurchase_order')}
+                          </Button>
+                        </Typography>
+                      </TableCell>
+                    </TableRow>
+                  )}
                 </TableFooter>
               </Table>
             </TableContainer>
@@ -306,7 +351,11 @@ function OrderDetails() {
                   {product.product_type == 'reward' ? (
                     <img src="/assets/images/rewards.png" alt="reward" />
                   ) : (
-                    <img
+                    <Image
+                      width={60}
+                      height={60}
+                      layout="responsive"
+                      objectFit="contain"
                       src={product.product.image_128 || '/assets/images/no_images.jpg'}
                       alt="product"
                     />
@@ -316,7 +365,10 @@ function OrderDetails() {
                       {product.product_type !== 'product' ? (
                         <div>{product.name}</div>
                       ) : (
-                        <Link href={`/products/${product.product.slug}`}>
+                        <Link
+                          href={`${i18n?.language === 'vi' ? '/san-pham' : '/products'}/${
+                            product.product.slug
+                          }`}>
                           <a>{product.name}</a>
                         </Link>
                       )}

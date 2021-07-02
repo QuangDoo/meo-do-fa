@@ -34,6 +34,7 @@ export const GET_CART_BY_PRODUCT = gql`
           is_quick_invoice
           old_price
           sale_price
+          max_qty_per_order
         }
         promotions {
           reward_type
