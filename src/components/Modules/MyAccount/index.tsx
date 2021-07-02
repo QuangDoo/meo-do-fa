@@ -283,20 +283,34 @@ export default function MyAccountPage() {
           </FormCard>
 
           <FormCard title={t('myAccount:account_info')}>
-            {/* Full name */}
-            <InputWithLabel
-              ref={register({
-                required: t('myAccount:name_required') + ''
-              })}
-              required
-              label={t('myAccount:name_label')}
-              name="name"
-              type="text"
-              placeholder={t('myAccount:name_placeholder')}
-              defaultValue={user?.name}
-              maxLength={100}
-            />
-
+            <div className="row">
+              {/* Full name */}
+              <InputWithLabel
+                ref={register({
+                  required: t('myAccount:name_required') + ''
+                })}
+                required
+                label={t('myAccount:name_label')}
+                containerClass="col-lg-8 col-md-7 col-12"
+                name="name"
+                type="text"
+                placeholder={t('myAccount:name_placeholder')}
+                defaultValue={user?.name}
+                maxLength={100}
+              />
+              <InputWithLabel
+                ref={register({
+                  required: t('myAccount:name_required') + ''
+                })}
+                disabled
+                containerClass="col-lg-4 col-md-5 col-12"
+                label={t('myAccount:customer_id')}
+                name="customer_id"
+                type="text"
+                defaultValue={String(user?.id)}
+                maxLength={100}
+              />
+            </div>
             {/* Phone number */}
             <InputWithLabel
               disabled
