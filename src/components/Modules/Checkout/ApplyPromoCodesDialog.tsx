@@ -134,7 +134,7 @@ export default function ApplyPromoCodesDialog(props: Props) {
                     <CardContent>
                       <Grid container spacing={2}>
                         <Grid item xs={2}>
-                          {coupon.program.reward_type === 'discount' ? (
+                          {coupon.program?.reward_type === 'discount' ? (
                             <PromoDiscountIcon fill="#35409a" />
                           ) : (
                             <PromoGiftIcon fill="#35409a" />
@@ -146,11 +146,11 @@ export default function ApplyPromoCodesDialog(props: Props) {
                             color="primary"
                             gutterBottom
                             className={classes.promoTypeLabel}>
-                            {t(`checkout:reward_type_${coupon.program.reward_type}`)}
+                            {t(`checkout:reward_type_${coupon.program?.reward_type}`)}
                           </Typography>
 
                           <Typography color="textPrimary" gutterBottom>
-                            {coupon.program.name}
+                            {coupon.program?.name}
                           </Typography>
 
                           <Box display="flex" alignItems="center" justifyContent="space-between">
