@@ -81,9 +81,8 @@ function QuickOrderItem(props: Props) {
                     />
                     {props.max_qty_per_order > 0 && (
                       <small className="text-danger text-right">
-                        Đặt tối đa {props.max_qty_per_order} sản phẩm
                         {t('common:maximum_quantity')}: {props.max_qty_per_order}{' '}
-                        {t('common:maximum_quantity')}
+                        {t('common:product(s)')}
                       </small>
                     )}
                   </div>

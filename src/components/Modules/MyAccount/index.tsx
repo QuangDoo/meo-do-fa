@@ -307,7 +307,7 @@ export default function MyAccountPage() {
                 label={t('myAccount:customer_id')}
                 name="customer_id"
                 type="text"
-                defaultValue={String(user?.id)}
+                defaultValue={String(user?.cust_no)}
                 maxLength={100}
               />
             </div>
