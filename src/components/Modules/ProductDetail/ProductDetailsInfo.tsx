@@ -212,7 +212,7 @@ const ProductDetailInfor = (props: ProductDetail) => {
           </div>
         )}
         {props.max_qty_per_order > 0 && (
-          <p className="text-danger">
+          <p className="text-danger d-block">
             {t('common:maximum_quantity')}: {props.max_qty_per_order} &nbsp;{t('common:product(s)')}
           </p>
         )}

@@ -127,7 +127,7 @@ function CartItem(props: Props) {
           </div>
           <div className="row mr-1">
             {props.product.max_qty_per_order > 0 && (
-              <small className="text-danger text-right">
+              <small className="text-danger text-right d-block">
                 {t('common:maximum_quantity')}: {props.product.max_qty_per_order}&nbsp;
                 {t('common:product(s)')}
               </small>
