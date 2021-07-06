@@ -98,7 +98,7 @@ const CheckoutPage = () => {
     fetchPolicy: 'network-only',
     onCompleted: (data) => {
       setCounselData(data.getCounsel);
-      if (data.getCounsel.totalDcPayment > 0) {
+      if (data.getCounsel?.totalDcPayment > 0) {
         setValue('paymentMethodId', '2');
       }
     },
