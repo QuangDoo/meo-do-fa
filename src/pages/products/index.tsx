@@ -34,7 +34,7 @@ import asyncQuery from 'src/utils/asyncQuery';
 
 const PAGE_SIZE = 24;
 
-const NAME_ASCENDING = '07'; // Name ascending
+const NAME_ASCENDING = '00'; // Name ascending
 
 import withToken from 'src/utils/withToken';
 
@@ -167,6 +167,8 @@ function Products() {
       toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
     }
   });
+
+  console.log(`router.query.sort`, router.query.sort);
 
   // PRODUCTS DATA
   const products = productsData?.getProductByConditions?.Products || [];
