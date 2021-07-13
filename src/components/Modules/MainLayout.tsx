@@ -1,5 +1,5 @@
 import dynamic from 'next/dynamic';
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useEffect } from 'react';
 import { useCart } from 'src/contexts/Cart';
 import { useModalControlDispatch } from 'src/contexts/ModalControl';
 import { useToken } from 'src/contexts/Token';
@@ -28,9 +28,15 @@ export default function MainLayout(props: Props) {
 
   const isAuthOtp = dataUser?.is_auth_otp;
 
+  console.log(`isAuthOtp`, isAuthOtp);
+
   const { openModal } = useModalControlDispatch();
 
   const token = useToken();
+
+  useEffect(() => {
+    token && isAuthOtp && openModal('CONFIRM_ACCOUNT');
+  }, [isAuthOtp]);
 
   return (
     <>
@@ -41,8 +47,6 @@ export default function MainLayout(props: Props) {
       <Header />
 
       <Nav />
-
-      {token && isAuthOtp && openModal('CONFIRM_ACCOUNT')}
 
       {token && <LoadingBackdrop open={loadingCart || gettingUser} />}
 

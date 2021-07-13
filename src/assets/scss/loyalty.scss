@@ -4,3 +4,38 @@
 .loyalty-text-earn {
   color: $primary;
 }
+.loyalty-medofa {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+.account__loyalty-medofa > div {
+  margin-bottom: 10px;
+}
+
+.account__loyalty-medofa img {
+  vertical-align: middle;
+  margin-right: 5px;
+}
+
+.account__loyalty-medofa span.big {
+  font-size: 36px;
+  vertical-align: middle;
+}
+
+.account__loyalty-medofa span {
+  color: #343f99;
+  font-weight: 700;
+  font-size: 13px;
+  margin-left: 4px;
+}
+
+.account__loyalty-medofa {
+  -webkit-box-shadow: none;
+  width: 100%;
+  background-color: #fff;
+  padding: 45px;
+}
+.button_exchange {
+  top: 10px;
+}

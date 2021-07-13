@@ -8,8 +8,9 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import clsx from 'clsx';
 import { Trans, useTranslation } from 'i18n';
-import React from 'react';
+import React, { useState } from 'react';
 import { toast } from 'react-toastify';
+import Button from 'src/components/Form/Button';
 import Head from 'src/components/Layout/Head';
 import MainLayout from 'src/components/Modules/MainLayout';
 import ProfileLayout from 'src/components/Modules/ProfileLayout';
@@ -26,13 +27,15 @@ import RedeemPoints from './RedeemPoints';
 export const TableHeader = ({ children, ...props }) => {
   return (
     <TableCell {...props}>
-      <Typography variant="button">{children}</Typography>
+      <Typography>{children}</Typography>
     </TableCell>
   );
 };
 
 function LoyaltyPoints() {
   const { t } = useTranslation(['loyalty']);
+
+  const [open, setOpen] = useState<boolean>(false);
 
   const { data: loyaltyHistoryData, loading, refetch } = useQueryAuth<
     LoyaltyHistoryData,
@@ -65,16 +68,32 @@ function LoyaltyPoints() {
       <ProfileLayout title={t('title')}>
         <div className="row">
           <div className="col-12 mb-3 ">
-            <Trans
-              i18nKey="loyalty:points_owner"
-              values={{
-                points: new Intl.NumberFormat('de-DE').format(totalPoints)
-              }}
-              components={{ b: <b /> }}
-            />
+            <div className="loyalty-medofa text-center">
+              <div className="well-sm account__loyalty-medofa">
+                <div>
+                  <img src="https://salt.tikicdn.com/desktop/img/account/tiki-xu.svg" alt="" />{' '}
+                  <span className="big"> {new Intl.NumberFormat('de-DE').format(totalPoints)}</span>
+                </div>
+                Bạn có <span>{new Intl.NumberFormat('de-DE').format(totalPoints)}</span> điểm trong
+                tài khoản của bạn.
+                <div className="mt-3">
+                  <Button
+                    onClick={() => setOpen(true)}
+                    variant="primary"
+                    className="mr-2 px-5 align-items-center">
+                    {t('redeem_points')}
+                  </Button>
+                </div>
+              </div>
+            </div>
           </div>
           <div className="col-12 mb-3">
-            <RedeemPoints totalPoints={totalPoints} refetchTotalPoint={refetch} />
+            <RedeemPoints
+              totalPoints={totalPoints}
+              refetchTotalPoint={refetch}
+              open={open}
+              setOpen={() => setOpen(false)}
+            />
           </div>
           <div className="col-12 mb-3">
             <TableContainer component={Paper}>

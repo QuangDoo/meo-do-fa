@@ -1,10 +1,12 @@
 import { useTranslation } from 'i18n';
+import { useRouter } from 'next/router';
 import React from 'react';
 import { DeepMap, FieldError, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import Button from 'src/components/Form/Button';
 import Input from 'src/components/Form/Input';
 import { useModalControlDispatch } from 'src/contexts/ModalControl';
+import { useUser } from 'src/contexts/User';
 import { useMutationAuth } from 'src/hooks/useApolloHookAuth';
 
 import {
@@ -20,6 +22,10 @@ type Inputs = {
 const ConfirmAccountForm = () => {
   const { register, handleSubmit } = useForm<Inputs>();
 
+  const { getUser, refetch: refectUser } = useUser();
+
+  const route = useRouter();
+
   const { t } = useTranslation(['password', 'errors', 'register', 'success']);
 
   const { closeModal } = useModalControlDispatch();
@@ -29,9 +35,11 @@ const ConfirmAccountForm = () => {
   };
 
   const [send_otp] = useMutationAuth<verifyUserData, verifyUserVar>(VERIFY_USER, {
-    onCompleted: (data) => {
-      toast.success(t(`success:auth_otp_successfully`));
+    onCompleted: () => {
+      toast.success(t(`success:auth_otp_succesfully`));
       closeModal();
+
+      refectUser();
     },
     onError: (err) => {
       toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
