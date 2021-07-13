@@ -86,20 +86,20 @@ function MyPromoCodes() {
                     </div>
                     <div className="polyxgo_title">
                       <span className="polyxgo_bold">{t('myPromoCodes:receive_date')}:</span>
-                      <span className="pxg_price">{coupon.create_date}</span>
+                      <span className="pxg_price"> {coupon.create_date}</span>
                       <div>
                         <span className="polyxgo_bold">{t('myPromoCodes:expire_date')}:</span>
-                        <span className="pxg_price">{coupon.expiration_date}</span>
+                        <span className="pxg_price"> {coupon.expiration_date}</span>
                       </div>
                       <div>
-                        <span className="polyxgo_bold"> {t('myPromoCodes:status')}:</span>
-                        {coupon.state}
+                        <span className="polyxgo_bold">{t('myPromoCodes:status')}:</span>
+                        <span className="pxg_price"> {coupon.state}</span>
                       </div>
                       <div>
                         <span className="polyxgo_bold">
                           {t('myPromoCodes:related_order_number')}:
                         </span>
-                        {coupon.orderNo}
+                        <span className="pxg_price"> {coupon.orderNo}</span>
                       </div>
                     </div>
                   </div>
