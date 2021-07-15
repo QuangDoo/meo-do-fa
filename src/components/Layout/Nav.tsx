@@ -292,10 +292,14 @@ const Nav = () => {
                       </Link>
                     </div>
 
-                    <div className="d-block d-sm-none">
+                    <div>
                       <Link href="/change-password">
                         <a className="dropdown__item dropdown__item-link">
-                          <i className="fa fa-key dropdown__item-icon" />
+                          <img
+                            className="nav__icon_nav"
+                            src="/assets/images/doimatkhau.png"
+                            alt="icon_acc_info"
+                          />
                           {t('navbar:change_password')}
                         </a>
                       </Link>
@@ -310,6 +314,19 @@ const Nav = () => {
                             alt="icon_my_order"
                           />
                           {t('navbar:my_order')}
+                        </a>
+                      </Link>
+                    </div>
+
+                    <div>
+                      <Link href="/my-address-book">
+                        <a className="dropdown__item dropdown__item-link">
+                          <img
+                            className="nav__icon_nav"
+                            src="/assets/images/sodiachi.png"
+                            alt="icon_acc_info"
+                          />
+                          {t('navbar:address_book')}
                         </a>
                       </Link>
                     </div>
@@ -342,6 +359,17 @@ const Nav = () => {
                           alt="loyalty_points"
                         />
                         {t('navbar:loyalty_points')}
+                      </a>
+                    </Link>
+
+                    <Link href="/products/wish-list">
+                      <a className="dropdown__item dropdown__item-link">
+                        <img
+                          className="nav__icon_nav"
+                          src="/assets/images/wishlist.png"
+                          alt="loyalty_points"
+                        />
+                        {t('navbar:wish_list')}
                       </a>
                     </Link>
 

@@ -1,14 +1,9 @@
-import { CircularProgress, Typography } from '@material-ui/core';
-import Paper from '@material-ui/core/Paper';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
+import { Card, Grid, makeStyles, Tooltip, Typography } from '@material-ui/core';
 import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
 import { useTranslation } from 'i18n';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 import Head from 'src/components/Layout/Head';
 import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import Pagination from 'src/components/Modules/Pagination';
@@ -22,14 +17,6 @@ import { useQueryAuth } from 'src/hooks/useApolloHookAuth';
 import withToken from 'src/utils/withToken';
 
 const pageSize = 10;
-
-const TableHeader = ({ children, ...props }) => {
-  return (
-    <TableCell {...props}>
-      <Typography variant="button">{children}</Typography>
-    </TableCell>
-  );
-};
 
 MyPromoCodes.getinitialProps = async () => ({
   namespacesRequired: [...mainLayoutNamespacesRequired, 'myPromoCodes']
@@ -54,6 +41,8 @@ function MyPromoCodes() {
 
   const total = data?.getCouponsByUser.total || 0;
 
+  const coupons = data?.getCouponsByUser?.coupons;
+
   const handlePageChange = (page: number) => {
     router.push({
       pathname: router.pathname,
@@ -62,6 +51,11 @@ function MyPromoCodes() {
         pageSize: pageSize
       }
     });
+  };
+
+  const handleCopy = (name) => {
+    navigator.clipboard.writeText(name || '');
+    toast.success('Đã copy mã giảm giá');
   };
 
   return (
@@ -81,52 +75,53 @@ function MyPromoCodes() {
       </Head>
 
       <ProfileLayout title={t('myPromoCodes:my_promo_codes')}>
-        <TableContainer component={Paper}>
-          <TableContainer>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableHeader>{t('myPromoCodes:promo_code')}</TableHeader>
+        <Grid container spacing={2} hidden={total === 0}>
+          {coupons?.map((coupon) => (
+            <Grid item md={6} xs={12} key={coupon.display_name}>
+              <div className="offers-details">
+                <div className="mgg-bl">
+                  <div className="mgg-row">
+                    <div className="mgg-top">
+                      <div className="mgg-discount">{coupon.display_name}</div>
+                    </div>
+                    <div className="polyxgo_title">
+                      <span className="polyxgo_bold">{t('myPromoCodes:receive_date')}:</span>
+                      <span className="pxg_price"> {coupon.create_date}</span>
+                      <div>
+                        <span className="polyxgo_bold">{t('myPromoCodes:expire_date')}:</span>
+                        <span className="pxg_price"> {coupon.expiration_date}</span>
+                      </div>
+                      <div>
+                        <span className="polyxgo_bold">{t('myPromoCodes:status')}:</span>
+                        <span className="pxg_price"> {coupon.state}</span>
+                      </div>
+                      <div>
+                        <span className="polyxgo_bold">
+                          {t('myPromoCodes:related_order_number')}:
+                        </span>
+                        <span className="pxg_price"> {coupon.orderNo}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <Tooltip title={coupon.display_name} placement="top">
+                    <div className="mgg-bottom">
+                      <div className="coupon-code">
+                        <span className="vc-mgg">{coupon.display_name}</span>
+                        <button className="cp-mgg" onClick={() => handleCopy(coupon.display_name)}>
+                          <i className="far fa-copy"></i> COPY
+                        </button>
+                      </div>
+                    </div>
+                  </Tooltip>
+                </div>
+              </div>
+            </Grid>
+          ))}
+        </Grid>
 
-                  <TableHeader align="right">{t('myPromoCodes:receive_date')}</TableHeader>
-
-                  <TableHeader align="right">{t('myPromoCodes:expire_date')}</TableHeader>
-
-                  <TableHeader align="right">{t('myPromoCodes:status')}</TableHeader>
-
-                  <TableHeader align="right">{t('myPromoCodes:related_order_number')}</TableHeader>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {loading ? (
-                  <TableRow>
-                    <TableCell colSpan={5} className="p-5 text-center">
-                      <CircularProgress />
-                    </TableCell>
-                  </TableRow>
-                ) : total > 0 ? (
-                  data.getCouponsByUser.coupons.map((coupon, index) => (
-                    <TableRow key={index}>
-                      <TableCell component="th" scope="row">
-                        {coupon.display_name}
-                      </TableCell>
-                      <TableCell align="right">{coupon.create_date}</TableCell>
-                      <TableCell align="right">{coupon.expiration_date}</TableCell>
-                      <TableCell align="right">{coupon.state}</TableCell>
-                      <TableCell align="right">{coupon.orderNo}</TableCell>
-                    </TableRow>
-                  ))
-                ) : (
-                  <TableRow>
-                    <TableCell colSpan={5} className="p-5 text-center">
-                      <Typography variant="button">{t('myPromoCodes:no_promo_codes')}</Typography>
-                    </TableCell>
-                  </TableRow>
-                )}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </TableContainer>
+        <div className="p-5 text-center" hidden={total > 0}>
+          <Typography variant="button">{t('myPromoCodes:no_promo_codes')}</Typography>
+        </div>
 
         <Pagination count={total / pageSize} page={page} onChange={handlePageChange} />
       </ProfileLayout>

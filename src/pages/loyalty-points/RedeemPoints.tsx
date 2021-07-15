@@ -23,9 +23,8 @@ import { useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
 
 import { TableHeader } from './index';
 
-function RedeemPoints({ totalPoints, refetchTotalPoint }) {
+function RedeemPoints({ totalPoints, refetchTotalPoint, open, setOpen }) {
   const { t } = useTranslation(['loyalty']);
-  const [open, setOpen] = useState(false);
 
   const { data: loyaltyExchangeData } = useQueryAuth<LoyaltyExchangeData, undefined>(
     GET_LOYALTY_EXCHANGE,
@@ -50,7 +49,7 @@ function RedeemPoints({ totalPoints, refetchTotalPoint }) {
     onCompleted: () => {
       toast.success(t('exchange_success_notify'));
       refetchTotalPoint();
-      setOpen(false);
+      // setOpen(false);
     }
   });
 
@@ -64,10 +63,6 @@ function RedeemPoints({ totalPoints, refetchTotalPoint }) {
 
   return (
     <>
-      <Button onClick={() => setOpen(true)} variant="primary" className="mr-2">
-        {t('redeem_points')}
-      </Button>
-
       {/* Register modal */}
       <ModalWithHeader open={open} title={t('redeem_title')} onClose={() => setOpen(false)}>
         {!creatingLoyalty ? (
@@ -87,7 +82,7 @@ function RedeemPoints({ totalPoints, refetchTotalPoint }) {
                   <Table>
                     <TableHead>
                       <TableRow>
-                        <TableHeader>{t('loyalty_points')}</TableHeader>
+                        <TableHeader className="text-center">{t('loyalty_points')}</TableHeader>
 
                         <TableHeader>{t('type')}</TableHeader>
 
