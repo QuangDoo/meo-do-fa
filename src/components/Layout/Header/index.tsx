@@ -64,7 +64,7 @@ const Header = () => {
                         alt="Medofa.com"
                         className="img-fluid logo-header d-block mx-auto"
                         title="Medofa.com"
-                        src="/assets/images/logo-md.png"
+                        src="/assets/images/logo-rn.png"
                       />
                     </a>
                   </Link>
@@ -88,7 +88,7 @@ const Header = () => {
                       alt="Medofa.com"
                       className="img-fluid logo-header d-block mx-auto"
                       title="Medofa.com"
-                      src="/assets/images/logo-md.png"
+                      src="/assets/images/logo-rn.png"
                     />
                   </a>
                 </Link>
