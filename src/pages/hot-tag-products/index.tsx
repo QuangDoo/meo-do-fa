@@ -102,6 +102,7 @@ function Products() {
 
   const tag = router.query.searchtag as string;
 
+  const tag_id = +router.query.tag_id;
   // ["product", "manufacturer", "ingredient", "supplier"]
 
   const searchTag =
@@ -144,7 +145,8 @@ function Products() {
         max_price: Number(router.query.priceTo) || 10000000,
         pathology_id: (router.query.pathology as string) || null,
         supplier_id: (router.query.supplier as string) || null,
-        search_tag: searchTag
+        search_tag: searchTag,
+        tag_id: tag_id
       }
     },
     fetchPolicy: 'network-only',
