@@ -103,6 +103,7 @@ export type Condition = {
   pathology_id?: string;
   supplier_id?: string;
   search_tag?: TagType;
+  tag_id?: number;
 };
 
 export type GetProductsVars = {
