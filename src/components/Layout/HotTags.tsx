@@ -12,12 +12,15 @@ import {
 
 function HotTags() {
   const { t } = useTranslation(['error', 'navbar']);
+
   const router = useRouter();
+
   const { data: hotTagsData } = useQuery<GetProductHotTags, undefined>(GET_PRODUCT_HOT_TAGS, {
     onError: (error) => {
       toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
     }
   });
+
   const hotTags = hotTagsData?.getProductHotTags;
 
   if (hotTags?.length === 0) return null;
@@ -37,7 +40,8 @@ function HotTags() {
                 pathname: '/hot-tag-products',
                 query: {
                   searchtag: type,
-                  search: name
+                  search: name,
+                  tag_id: id
                 }
               }}>
               <a

@@ -28,8 +28,6 @@ export default function MainLayout(props: Props) {
 
   const isAuthOtp = dataUser?.is_auth_otp;
 
-  console.log(`isAuthOtp`, isAuthOtp);
-
   const { openModal } = useModalControlDispatch();
 
   const token = useToken();
