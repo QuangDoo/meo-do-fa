@@ -11,7 +11,7 @@ export type DeleteDeliveryUserVars = {
 };
 
 export const DELETE_DELIVERY_USER = gql`
-  mutation($id: Int!) {
+  mutation ($id: Int!) {
     deleteDeliveryUser(id: $id) {
       code
       status

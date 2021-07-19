@@ -24,10 +24,11 @@ function Deal() {
 
   const page = +router.query.page || 1;
 
-  const { data: productsData, refetch: refetchProducts, loading: loadingProducts } = useQuery<
-    GetProductsData,
-    GetProductsVars
-  >(GET_PRODUCTS, {
+  const {
+    data: productsData,
+    refetch: refetchProducts,
+    loading: loadingProducts
+  } = useQuery<GetProductsData, GetProductsVars>(GET_PRODUCTS, {
     variables: {
       page: page,
       pageSize: pageSize,
