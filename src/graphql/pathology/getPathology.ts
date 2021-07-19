@@ -11,7 +11,7 @@ export type GetPathologyData = {
 };
 
 export const GET_PATHOLOGY = gql`
-  query($id: Int!) {
+  query ($id: Int!) {
     getPathology(id: $id) {
       id
       name
