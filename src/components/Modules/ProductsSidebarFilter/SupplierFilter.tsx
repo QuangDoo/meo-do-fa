@@ -26,11 +26,10 @@ export default function SupplierFilter() {
   const router = useRouter();
 
   // SEARCH suppliers
-  const {
-    data: getData,
-    loading: loadingSuppliers,
-    error: errorHere
-  } = useQuery<GetAllSuppliersData, GetSuppliersVars>(GET_ALL_SUPPLIERS, {
+  const { data: getData, loading: loadingSuppliers, error: errorHere } = useQuery<
+    GetAllSuppliersData,
+    GetSuppliersVars
+  >(GET_ALL_SUPPLIERS, {
     variables: { page: 1, pageSize: 20, name: searchValue }, // TRIGGERED ON SEARCH VALUE CHANGE
     notifyOnNetworkStatusChange: true,
     onError: (err) => {

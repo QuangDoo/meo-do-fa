@@ -42,7 +42,7 @@ export const SEARCH_MANUFACTURERS = gql`
 `;
 
 export const GET_MANUFACTORY_DETAILS = gql`
-  query ($id: Int!) {
+  query($id: Int!) {
     getManufactory(id: $id) {
       id
       name

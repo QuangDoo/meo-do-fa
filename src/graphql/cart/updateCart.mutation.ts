@@ -16,7 +16,7 @@ export type UpdateCartData = {
 };
 
 export const UPDATE_CART = gql`
-  mutation ($inputs: UpdateCartInput!) {
+  mutation($inputs: UpdateCartInput!) {
     updateCart(inputs: $inputs) {
       code
       status

@@ -65,8 +65,9 @@ const CartProvider = (props: Props) => {
   const [loading, setLoading] = useState(false);
 
   // Data of checked cart items
-  const [checkedCartsData, setCheckedCartsData] =
-    useState<GetCartByProductData['getCartByProduct']>();
+  const [checkedCartsData, setCheckedCartsData] = useState<
+    GetCartByProductData['getCartByProduct']
+  >();
 
   // Update checked cart data when checkedCarts changes
   useEffect(() => {

@@ -29,7 +29,7 @@ export type WebsitePostData = {
 };
 
 export const GET_POST = gql`
-  query ($type: PostType) {
+  query($type: PostType) {
     getWebsitePost(type: $type) {
       id
       name

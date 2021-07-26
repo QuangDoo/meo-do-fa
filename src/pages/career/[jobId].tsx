@@ -1,7 +1,10 @@
 import { useQuery } from '@apollo/client';
 import { useTranslation } from 'i18n';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useCallback, useState } from 'react';
+import { useDropzone } from 'react-dropzone';
+import Button from 'src/components/Form/Button';
+import Input from 'src/components/Form/Input';
 import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import {
   GET_POST_DETAIL,
@@ -10,9 +13,39 @@ import {
 } from 'src/graphql/news/getWebsitePostDetail';
 import redirect from 'src/utils/redirect';
 import withToken from 'src/utils/withToken';
+import styled from 'styled-components';
 
 import Head from '../../components/Layout/Head';
 import JobDetail from '../../components/Modules/Career/JobDetail';
+
+const getColor = (props) => {
+  if (props.isDragAccept) {
+    return '#00e676';
+  }
+  if (props.isDragReject) {
+    return '#ff1744';
+  }
+  if (props.isDragActive) {
+    return '#2196f3';
+  }
+  return '#eeeeee';
+};
+
+const Container = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  border-width: 2px;
+  border-radius: 2px;
+  border-color: ${(props) => getColor(props)};
+  border-style: dashed;
+  background-color: #fafafa;
+  color: #bdbdbd;
+  outline: none;
+  transition: border 0.24s ease-in-out;
+`;
 
 const job = {
   name: 'Tax Accountant',
@@ -49,7 +82,7 @@ function getPostId(slug: string): number {
 }
 
 function CareerPage() {
-  const { t } = useTranslation(['common', 'career']);
+  const { t, i18n } = useTranslation(['common', 'career']);
   const router = useRouter();
 
   const { data: hrDetailData } = useQuery<GetWebsitePostData, GetWebsitePostVariables>(
@@ -58,23 +91,87 @@ function CareerPage() {
       variables: { id: getPostId(router.query.jobId as string) }
     }
   );
-  const { name, content, create_date, signature } = hrDetailData?.getWebsitePostDetail || {};
+  const { name, content, create_date, signature, content_en } =
+    hrDetailData?.getWebsitePostDetail || {};
+
+  const {
+    getRootProps,
+    getInputProps,
+    isDragActive,
+    isDragAccept,
+    isDragReject,
+    acceptedFiles
+  } = useDropzone();
+
+  const files = acceptedFiles.map((file) => <li key={file.name}>{file.name}</li>);
 
   return (
     <MainLayout>
       <Head>
         <title>Medofa</title>
       </Head>
+      <div className="container">
+        {hrDetailData ? (
+          i18n?.language === 'vi' ? (
+            <div
+              dangerouslySetInnerHTML={{
+                __html: content + ''
+              }}
+            />
+          ) : (
+            <div
+              dangerouslySetInnerHTML={{
+                __html: content_en + ''
+              }}
+            />
+          )
+        ) : (
+          <div className="d-flex justify-content-center align-items-center p-5">
+            {t('common:updating')}
+          </div>
+        )}
+      </div>
 
-      <JobDetail
-        name={job.name}
-        requirements={job.requirements}
-        level={job.level}
-        jobDescription={job.jobDescription}
-        description={job.description}
-        department={job.department}
-        location={job.location}
-      />
+      <div className="container">
+        <h1 className="text-center">Nộp hồ sơ</h1>
+        <div className="row">
+          <div className="col-6">
+            <Input
+              name="candidateName"
+              containerClass="mb-4"
+              iconClass="icomoon icon-user"
+              placeholder="Họ và tên"
+              required
+            />
+            <Input
+              name="phone"
+              containerClass="mb-4"
+              iconClass="icomoon icon-phone"
+              placeholder="Số điện thoại"
+              required
+            />
+            <Input
+              name="phone"
+              containerClass="mb-4"
+              iconClass="icomoon icon-mail"
+              placeholder="Email"
+              required
+            />
+          </div>
+          <div className="col-6">
+            <Container {...getRootProps({ isDragActive, isDragAccept, isDragReject })}>
+              <input {...getInputProps()} />
+              <p>Drag drop some files here, or click to select files</p>
+              {files}
+            </Container>
+          </div>
+        </div>
+        <div className="text-center mb-4">
+          <Button type="submit" variant="gradient">
+            {t('apply')}
+          </Button>
+        </div>
+      </div>
     </MainLayout>
   );
 }

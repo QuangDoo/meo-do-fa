@@ -17,7 +17,7 @@ export type GetAllIngredientsData = {
 };
 
 export const GET_INGREDIENT_DETAILS = gql`
-  query ($id: Int!) {
+  query($id: Int!) {
     getIngredient(id: $id) {
       name
       info

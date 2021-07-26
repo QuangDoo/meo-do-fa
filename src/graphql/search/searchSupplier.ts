@@ -13,7 +13,7 @@ export type SearchSupplierVars = {
 };
 
 export const SEARCH_SUPPLIER = gql`
-  query ($page: Int!, $pageSize: Int!, $name: String!) {
+  query($page: Int!, $pageSize: Int!, $name: String!) {
     getSuppliers(page: $page, pageSize: $pageSize, name: $name) {
       id
       name
