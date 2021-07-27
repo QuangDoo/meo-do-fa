@@ -44,7 +44,7 @@
   "code_139": "Mã khuyến mãi này chỉ áp dụng cho đơn hàng đầu tiên.",
   "code_140": "Hãy xác thực tài khoản của bạn",
   "code_140_waiting": "Tài khoản của bạn đang chờ được xác thực",
-  "code_141": "Sản phẩm không có sẵn",
+  "code_141": "Sản phẩm {{name}} đang tạm hết hàng. Vui lòng xóa sản phẩm khỏi giỏ hàng.",
   "code_142": "Mã số thuế không hợp lệ",
   "code_143": "Mã OTP không đúng. Vui lòng nhập lại mã OTP",
   "code_146": "Số lượng đặt hàng không được vượt quá số lượng cho phép.",
