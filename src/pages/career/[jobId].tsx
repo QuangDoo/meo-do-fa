@@ -132,7 +132,7 @@ function CareerPage() {
         )}
       </div>
 
-      <div className="container">
+      {/* <div className="container">
         <h1 className="text-center">Nộp hồ sơ</h1>
         <div className="row">
           <div className="col-6">
@@ -171,7 +171,7 @@ function CareerPage() {
             {t('apply')}
           </Button>
         </div>
-      </div>
+      </div> */}
     </MainLayout>
   );
 }
