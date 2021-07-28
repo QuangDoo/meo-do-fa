@@ -11,7 +11,7 @@ export type verifyUserVar = {
 };
 
 export const VERIFY_USER = gql`
-  mutation($otp: String!) {
+  mutation ($otp: String!) {
     verifyUser(otp: $otp) {
       code
       status

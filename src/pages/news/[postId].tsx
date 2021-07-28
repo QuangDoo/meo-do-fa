@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client';
 import { Trans, useTranslation } from 'i18n';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { mainLayoutNamespacesRequired } from 'src/components/Modules/MainLayout';
 import {
   GET_POST_DETAIL,
@@ -36,6 +36,19 @@ function NewsDetailPage() {
   const { name, content, content_en, create_date, signature } =
     newsDetailData?.getWebsitePostDetail || {};
 
+  const addImageDomainToContent = (content: string) => {
+    if (typeof window !== undefined && content) {
+      const { hostname } = window.location;
+
+      const imgDomain =
+        hostname === 'medofa.com' ? 'https://erp.medofa.com' : 'https://erp.dev.medofa.com';
+
+      return content.replaceAll(`src="/`, `src="${imgDomain}/`);
+    }
+
+    return content;
+  };
+
   return (
     <>
       <Head>
@@ -45,8 +58,8 @@ function NewsDetailPage() {
       <Nav />
       {newsDetailData ? (
         <div className="container py-5">
-          <h2 className="news-title mb-3">{name}</h2>
-          <div className="news-subtitle mb-3">
+          <h2 className="mb-3 news-title">{name}</h2>
+          <div className="mb-3 news-subtitle">
             <Trans
               i18nKey={'news:post_on'}
               values={{
@@ -56,23 +69,16 @@ function NewsDetailPage() {
               components={{ b: <b /> }}
             />
           </div>
-          <hr className="hr my-3" />
-          {i18n?.language === 'vi' ? (
-            <div
-              dangerouslySetInnerHTML={{
-                __html: content
-              }}
-            />
-          ) : (
-            <div
-              dangerouslySetInnerHTML={{
-                __html: content_en
-              }}
-            />
-          )}
+          <hr className="my-3 hr" />
+
+          <div
+            dangerouslySetInnerHTML={{
+              __html: addImageDomainToContent(i18n?.language === 'vi' ? content : content_en)
+            }}
+          />
         </div>
       ) : (
-        <div className="d-flex justify-content-center align-items-center p-5">
+        <div className="p-5 d-flex justify-content-center align-items-center">
           {t('common:updating')}
         </div>
       )}
