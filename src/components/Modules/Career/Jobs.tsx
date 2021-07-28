@@ -1,5 +1,15 @@
+import Paper from '@material-ui/core/Paper';
+import { makeStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
 import { useTranslation } from 'i18n';
-import React from 'react';
+import Link from 'next/link';
+import React, { useEffect, useState } from 'react';
+import { TableHeader } from 'src/pages/loyalty-points';
 
 import InputSearch from '../News/InputSearch';
 
@@ -10,36 +20,75 @@ type Props = {
 };
 
 function Jobs(props: Props) {
+  const useStyles = makeStyles({
+    table: {
+      minWidth: 650
+    }
+  });
+  const classes = useStyles();
   const { t } = useTranslation('career');
+
   const { jobs } = props;
+
+  const [jobsData, setJobsData] = useState([]);
+
+  useEffect(() => {
+    setJobsData(jobs);
+  }, [jobs]);
+
+  const handleSearch = (x) => {
+    if (!jobs) return;
+
+    const jobSearchData = [...jobs]?.filter((item) => {
+      return item.name.toLowerCase().includes(x.toLowerCase());
+    });
+    setJobsData(jobSearchData);
+  };
+  console.log(`jobs`, jobs);
   return (
     <>
       <div className="container mt-3">
-        <div className="wrapper">
-          <h4 className="about-us__title text-center">{`${t('career:job_title')}`}</h4>
-          <div className="row">
-            <div className="col-12">
-              <div className="mb-3 mt-3">
-                <InputSearch placeholder="Search..." keySearch={(x) => console.log(x)} />
-              </div>
+        <h4 className="about-us__title text-center">{`${t('career:job_title')}`}</h4>
+        <div className="row">
+          <div className="col-12">
+            <div className="mb-3 mt-3">
+              <InputSearch placeholder="Search..." keySearch={(x) => handleSearch(x)} />
             </div>
           </div>
-          <div className="jobs">
-            {jobs?.map((job, index) => (
-              <a key={index} href={`/career/${job?.slug}`} className="job-item">
-                <div className="jobs-item p-3 bg-white">
-                  <div className="jobs-item__title mb-2">{job?.name}</div>
-                  <div className="jobs-item__readmore text-small">
-                    {`More Details `}
-                    <span>
-                      <i className="fas fa-long-arrow-alt-right"></i>
-                    </span>
-                  </div>
-                </div>
-              </a>
-            ))}
-          </div>
         </div>
+        <TableContainer component={Paper}>
+          <TableContainer>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableHeader>{t('position')}</TableHeader>
+
+                  <TableHeader>{t('type')}</TableHeader>
+
+                  <TableHeader>{t('location')}</TableHeader>
+
+                  <TableHeader>{t('end_apply_date')}</TableHeader>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {jobsData?.map((job) => (
+                  // <a key={job.name}>
+                  <Link href={`/career/${job?.slug}`} key={job.name}>
+                    <TableRow>
+                      <TableCell component="th" scope="job">
+                        {job.name}
+                      </TableCell>
+                      <TableCell>{job.signature}</TableCell>
+                      <TableCell>HCM City</TableCell>
+                      <TableCell>{job.create_date}</TableCell>
+                    </TableRow>
+                  </Link>
+                  // </a>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </TableContainer>
       </div>
     </>
   );

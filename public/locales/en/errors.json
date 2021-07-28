@@ -44,7 +44,7 @@
   "code_139": "This promo code only applies for the first order.",
   "code_140": "Please verify your account",
   "code_140_waiting": "Your account is waiting to be verified",
-  "code_141": "Product is unvailable",
+  "code_141": "Product {{name}} is unvailable. Please remove this product from your cart.",
   "code_142": "vat is invalid",
   "code_143": "OTP does not match. Please re-enter OTP code",
   "code_146": "The quantity is higher than the maximum allowed quantity of product",

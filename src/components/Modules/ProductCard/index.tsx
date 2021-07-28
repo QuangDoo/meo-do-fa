@@ -21,6 +21,8 @@ const isNotNull = (category: Product['categories'][0]) => {
 const ProductCard = (props: Props) => {
   const token = useToken();
 
+  console.log('token', token);
+
   const { t } = useTranslation(['productCard', 'common']);
 
   const isDiscount = props.discount_percentage > 0;

@@ -48,6 +48,12 @@ export default function CartPage() {
             )
           })
         );
+      } else if (errorCode === 141) {
+        toast.error(
+          t('errors:code_141', {
+            name: err.graphQLErrors[0].message.replace('Product is unvailable. Product:', '')
+          })
+        );
       } else {
         toast.error(t(`errors:code_${errorCode}`));
       }

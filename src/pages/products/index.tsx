@@ -172,11 +172,8 @@ function Products() {
     }
   });
 
-  console.log(`router.query.sort`, router.query.sort);
-
   // PRODUCTS DATA
   const products = productsData?.getProductByConditions?.Products || [];
-
   // TOTAL AMOUNT OF PRODUCTS, USED TO CALCULATE PAGE COUNT
   const total = productsData?.getProductByConditions?.total || 0;
 
