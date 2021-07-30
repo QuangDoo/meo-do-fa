@@ -71,14 +71,10 @@ function CartItem(props: Props) {
           </Link>
 
           <div className="product__status">
-            {props.product.is_quick_invoice && (
+            {props.product.is_quick_invoice && props.tax !== -1 && (
               <span className="badge badge-light display-status mr-1 mb-1 invoice_exportable">
-                {props.tax !== -1 && (
-                  <>
-                    <i className="fas mr-1"></i>
-                    {t(`cart:quick_invoice`)}{' '}
-                  </>
-                )}
+                <i className="fas mr-1"></i>
+                {t(`cart:quick_invoice`)}{' '}
               </span>
             )}
 
@@ -88,6 +84,13 @@ function CartItem(props: Props) {
               <span className="badge badge-light display-status mr-1 mb-1 out_of_stocks">
                 <i className="fas mr-1"></i>
                 {t(`cart:stopped_selling`)}{' '}
+              </span>
+            )}
+
+            {!props.is_change_price && (
+              <span className="badge badge-light display-status mr-1 mb-1 out_of_stocks">
+                <i className="fas mr-1"></i>
+                {t(`cart:changed_price`)}{' '}
               </span>
             )}
           </div>

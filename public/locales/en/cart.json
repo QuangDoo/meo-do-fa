@@ -26,5 +26,6 @@
   "remove_checked_confirm": "Are you sure you want to remove selected products from your cart?",
   "select_all": "Select all products",
   "price_total": "Total",
-  "stopped_selling": "Stopped selling"
+  "stopped_selling": "Stopped selling",
+  "changed_price": "Changed price"
 }
