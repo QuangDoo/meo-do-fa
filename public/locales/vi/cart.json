@@ -26,5 +26,6 @@
   "remove_checked_confirm": "Bạn có chắc muốn xóa những sản phẩm đã chọn khỏi giỏ hàng?",
   "select_all": "Chọn tất cả sản phẩm",
   "price_total": "Thành tiền",
-  "stopped_selling": "Ngưng bán"
+  "stopped_selling": "Ngưng bán",
+  "changed_price": "Thay đổi giá"
 }
