@@ -48,21 +48,20 @@ function Notification() {
 
   const { refetch: refetchNotiContext } = useNotify();
 
-  const {
-    data,
-    loading,
-    refetch: refetchNotiCurrent
-  } = useQueryAuth<GetNotiData, GetNotiVars>(GET_NOTI, {
-    variables: {
-      page,
-      pageSize: PAGE_SIZE
-    },
-    fetchPolicy: 'network-only',
-    notifyOnNetworkStatusChange: true,
-    onError: (err) => {
-      toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
+  const { data, loading, refetch: refetchNotiCurrent } = useQueryAuth<GetNotiData, GetNotiVars>(
+    GET_NOTI,
+    {
+      variables: {
+        page,
+        pageSize: PAGE_SIZE
+      },
+      fetchPolicy: 'network-only',
+      notifyOnNetworkStatusChange: true,
+      onError: (err) => {
+        toast.error(t(`errors:code_${err.graphQLErrors?.[0]?.extensions?.code}`));
+      }
     }
-  });
+  );
 
   const [seenNotify] = useMutationAuth(SEEN_NOTI);
 

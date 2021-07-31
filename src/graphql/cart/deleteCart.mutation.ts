@@ -13,7 +13,7 @@ export type DeleteCartVars = {
 };
 
 export const DELETE_CART = gql`
-  mutation ($_id: String!) {
+  mutation($_id: String!) {
     deleteCart(_id: $_id) {
       code
       status

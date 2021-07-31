@@ -94,8 +94,14 @@ function CareerPage() {
   const { name, content, create_date, signature, content_en } =
     hrDetailData?.getWebsitePostDetail || {};
 
-  const { getRootProps, getInputProps, isDragActive, isDragAccept, isDragReject, acceptedFiles } =
-    useDropzone();
+  const {
+    getRootProps,
+    getInputProps,
+    isDragActive,
+    isDragAccept,
+    isDragReject,
+    acceptedFiles
+  } = useDropzone();
 
   const files = acceptedFiles.map((file) => <li key={file.name}>{file.name}</li>);
 

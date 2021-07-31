@@ -19,7 +19,7 @@ export type GetWebsitePostVariables = {
 };
 
 export const GET_POST_DETAIL = gql`
-  query ($id: Int!) {
+  query($id: Int!) {
     getWebsitePostDetail(id: $id) {
       id
       name
