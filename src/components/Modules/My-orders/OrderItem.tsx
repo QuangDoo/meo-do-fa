@@ -2,7 +2,7 @@ import { useTranslation } from 'i18n';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { useUser } from 'src/contexts/User';
-import { GetOrderList } from 'src/graphql/my-orders/getOrderList';
+import { Order } from 'src/graphql/my-orders/getOrderList';
 
 import ConfirmCancelOrder from './ConfirmCancelOrder';
 
@@ -17,7 +17,7 @@ const badges = {
   80: { color: 'primary', text: 'completed' }
 };
 
-type Props = GetOrderList & {
+type Props = Order & {
   onCancelCompleted: () => void;
 };
 

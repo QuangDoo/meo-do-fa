@@ -61,13 +61,13 @@ function Jobs(props: Props) {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableHeader>{t('position')}</TableHeader>
+                  <TableHeader>{t('career:position')}</TableHeader>
 
-                  <TableHeader>{t('type')}</TableHeader>
+                  {/* <TableHeader>{t('career:type')}</TableHeader> */}
 
-                  <TableHeader>{t('location')}</TableHeader>
+                  <TableHeader>{t('career:location')}</TableHeader>
 
-                  <TableHeader>{t('end_apply_date')}</TableHeader>
+                  {/* <TableHeader>{t('end_apply_date')}</TableHeader> */}
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -78,9 +78,9 @@ function Jobs(props: Props) {
                       <TableCell component="th" scope="job">
                         {job.name}
                       </TableCell>
-                      <TableCell>{job.signature}</TableCell>
+                      {/* <TableCell>{job.signature}</TableCell> */}
                       <TableCell>HCM City</TableCell>
-                      <TableCell>{job.create_date}</TableCell>
+                      {/* <TableCell>{job.create_date}</TableCell> */}
                     </TableRow>
                   </Link>
                   // </a>

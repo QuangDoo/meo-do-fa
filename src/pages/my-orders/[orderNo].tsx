@@ -105,11 +105,10 @@ function OrderDetails() {
 
   const [activeStep, setActiveStep] = useState(-1);
 
-  const {
-    data: getOrderDetailData,
-    refetch,
-    loading: loadingOrderDetail
-  } = useQueryAuth<GetOrderDetailData, GetOrderDetailVars>(GET_ORDER_DETAIL, {
+  const { data: getOrderDetailData, refetch, loading: loadingOrderDetail } = useQueryAuth<
+    GetOrderDetailData,
+    GetOrderDetailVars
+  >(GET_ORDER_DETAIL, {
     fetchPolicy: 'network-only',
     notifyOnNetworkStatusChange: true,
     variables: { orderNo: router.query.orderNo as string },

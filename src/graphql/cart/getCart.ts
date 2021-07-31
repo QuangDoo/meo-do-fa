@@ -27,6 +27,7 @@ export type CartItem = {
   };
   promotions: PromotionInfo[];
   is_available: boolean;
+  is_change_price: boolean;
   sale_ok: boolean;
 };
 
@@ -41,40 +42,45 @@ export type GetCartData = {
   };
 };
 
+export const GET_CART_DATA = `
+  carts {
+    _id
+    quantity
+    productId
+    productName
+    price
+    oldPrice
+    tax
+    product {
+      slug
+      image_512
+      is_quick_invoice
+      old_price
+      sale_price
+      max_qty_per_order
+    }
+    promotions {
+      reward_type
+      discount_percentage
+      reward_product_id
+      reward_product_name
+      reward_product_quantity
+    }
+    is_available
+    is_change_price
+    sale_ok
+  }
+  totalPrice
+  totalNetPrice
+  totalDc
+  totalShippingFee
+  totalQty
+`;
+
 export const GET_CART = gql`
   query {
     getCart {
-      carts {
-        _id
-        quantity
-        productId
-        productName
-        price
-        oldPrice
-        tax
-        product {
-          slug
-          image_512
-          is_quick_invoice
-          old_price
-          sale_price
-          max_qty_per_order
-        }
-        promotions {
-          reward_type
-          discount_percentage
-          reward_product_id
-          reward_product_name
-          reward_product_quantity
-        }
-        is_available
-        sale_ok
-      }
-      totalPrice
-      totalNetPrice
-      totalDc
-      totalShippingFee
-      totalQty
+      ${GET_CART_DATA}
     }
   }
 `;

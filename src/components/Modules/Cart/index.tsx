@@ -39,23 +39,29 @@ export default function CartPage() {
     onError: (err) => {
       const errorCode = err.graphQLErrors?.[0]?.extensions?.code;
 
-      if (errorCode === 121) {
-        toast.error(
-          t(`errors:code_${errorCode}`, {
-            name: err.graphQLErrors[0].message.replace(
-              'Sales price changed. Please remove product on cart. Product: ',
-              ''
-            )
-          })
-        );
-      } else if (errorCode === 141) {
-        toast.error(
-          t('errors:code_141', {
-            name: err.graphQLErrors[0].message.replace('Product is unvailable. Product:', '')
-          })
-        );
-      } else {
-        toast.error(t(`errors:code_${errorCode}`));
+      switch (errorCode) {
+        case 121: {
+          toast.error(
+            t('errors:code_121', {
+              name: err.graphQLErrors[0].message.replace(
+                'Sales price changed. Please remove product on cart. Product: ',
+                ''
+              )
+            })
+          );
+          break;
+        }
+        case 141: {
+          toast.error(
+            t('errors:code_141', {
+              name: err.graphQLErrors[0].message.replace('Product is unvailable. Product:', '')
+            })
+          );
+          break;
+        }
+        default: {
+          toast.error(t(`errors:code_${errorCode}`));
+        }
       }
     }
   });

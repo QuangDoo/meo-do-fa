@@ -20,17 +20,6 @@ import withToken from 'src/utils/withToken';
 
 const PAGE_SIZE = 20;
 
-const FLAGS = {
-  ALL: 0,
-  WAIT_CONFIRM: 10,
-  RECEIVED: 15,
-  CONFIRMED: 20,
-  HANDLING: 30,
-  DELIVERING: 40,
-  COMPLETED: 80,
-  CANCELED: 25
-};
-
 MyOrders.getInitialProps = async (ctx) => {
   try {
     await ctx.apolloClient.query({
@@ -61,17 +50,16 @@ function MyOrders(): JSX.Element {
 
   const router = useRouter();
 
-  const [flag, setFlag] = useState<number>(FLAGS.ALL);
+  const [flag, setFlag] = useState<OrderFlag>(OrderFlag.ALL);
 
-  const {
-    data: orderListData,
-    refetch,
-    loading
-  } = useQueryAuth<GetOrderListData, GetOrderListVars>(GET_ORDER_LIST, {
+  const { data: orderListData, refetch, loading } = useQueryAuth<
+    GetOrderListData,
+    GetOrderListVars
+  >(GET_ORDER_LIST, {
     variables: {
       page: +router.query.page || 1,
       pageSize: PAGE_SIZE,
-      flag: (flag as OrderFlag) || undefined
+      flag
     },
     fetchPolicy: 'network-only',
     notifyOnNetworkStatusChange: true,
@@ -110,14 +98,14 @@ function MyOrders(): JSX.Element {
                 indicatorColor="primary"
                 textColor="primary"
                 aria-label="scrollable auto tabs example">
-                <Tab value={0} label={t('myOrders:all_order')} />
-                <Tab value={10} label={t('myOrders:wait_for_confirm')} />
-                <Tab value={15} label={t('myOrders:received')} />
-                <Tab value={20} label={t('myOrders:confirmed')} />
-                <Tab value={30} label={t('myOrders:handling')} />
-                <Tab value={40} label={t('myOrders:delivering')} />
-                <Tab value={80} label={t('myOrders:completed')} />
-                <Tab value={25} label={t('myOrders:canceled')} />
+                <Tab value={OrderFlag.ALL} label={t('myOrders:all_order')} />
+                <Tab value={OrderFlag.WAIT_RECEIVE} label={t('myOrders:wait_receive')} />
+                <Tab value={OrderFlag.RECEIVED} label={t('myOrders:received')} />
+                <Tab value={OrderFlag.CONFIRMED} label={t('myOrders:confirmed')} />
+                <Tab value={OrderFlag.HANDLING} label={t('myOrders:handling')} />
+                <Tab value={OrderFlag.DELIVERING} label={t('myOrders:delivering')} />
+                <Tab value={OrderFlag.COMPLETED} label={t('myOrders:completed')} />
+                <Tab value={OrderFlag.CANCELED} label={t('myOrders:canceled')} />
               </Tabs>
             </AppBar>
           </Grid>

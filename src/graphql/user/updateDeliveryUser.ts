@@ -24,7 +24,7 @@ export type UpdateDeliveryUserVars = {
 };
 
 export const UPDATE_DELIVERY_USER = gql`
-  mutation ($inputs: UpdateDeliveryUserInput!) {
+  mutation($inputs: UpdateDeliveryUserInput!) {
     updateDeliveryUser(inputs: $inputs) {
       code
       status
