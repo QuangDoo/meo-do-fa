@@ -63,7 +63,7 @@ function Jobs(props: Props) {
                 <TableRow>
                   <TableHeader>{t('career:position')}</TableHeader>
 
-                  <TableHeader>{t('career:type')}</TableHeader>
+                  {/* <TableHeader>{t('career:type')}</TableHeader> */}
 
                   <TableHeader>{t('career:location')}</TableHeader>
 
@@ -78,7 +78,7 @@ function Jobs(props: Props) {
                       <TableCell component="th" scope="job">
                         {job.name}
                       </TableCell>
-                      <TableCell>{job.signature}</TableCell>
+                      {/* <TableCell>{job.signature}</TableCell> */}
                       <TableCell>HCM City</TableCell>
                       {/* <TableCell>{job.create_date}</TableCell> */}
                     </TableRow>
