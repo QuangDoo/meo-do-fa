@@ -79,7 +79,7 @@ function Jobs(props: Props) {
                         {job.name}
                       </TableCell>
                       {/* <TableCell>{job.signature}</TableCell> */}
-                      <TableCell>HCM City</TableCell>
+                      <TableCell>{t('career:location_hcmc')}</TableCell>
                       {/* <TableCell>{job.create_date}</TableCell> */}
                     </TableRow>
                   </Link>

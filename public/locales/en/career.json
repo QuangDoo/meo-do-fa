@@ -3,9 +3,11 @@
   "banner_test": "We build health ecosystems which no one else has dared to build.",
   "about_us_title": "We Modernise Healthcare Distribution",
   "about_us_test": "Medofa is the leading e-commerce healthcare e-commerce platform in Vietnam. The platform serves healthcare practices including pharmacies, clinics and hospitals by providing a wide variety of products with quality service and fast delivery",
-  "job_title": "Find Your Passion",
+  "job_title": "Find Some Job",
   "apply": "Apply",
-  "position":"Position",
-  "Type":"Type",
-  "location":"Location"
+  "position": "Position",
+  "Type": "Type",
+  "location": "Location",
+  "location_hcmc":"Ho Chi Minh City",
+  "email_btn":"Email us now"
 }

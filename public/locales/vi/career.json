@@ -7,5 +7,7 @@
   "apply": "Ứng tuyển",
   "position":"Vị trí",
   "Type":"Loại hình",
-  "location":"Địa điểm"
+  "location":"Địa điểm",
+  "location_hcmc":"TP Hồ Chí Minh",
+  "email_btn":"Gửi email"
 }
