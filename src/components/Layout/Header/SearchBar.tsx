@@ -42,8 +42,10 @@ const SearchBar = () => {
     SearchProductVars
   >(SEARCH_PRODUCT);
 
-  const [searchManufacturers, { data: manufacturersData, loading: loadingManufacturers }] =
-    useLazyQuery<SearchManufacturerData, SearchManufacturerVars>(SEARCH_MANUFACTURER);
+  const [
+    searchManufacturers,
+    { data: manufacturersData, loading: loadingManufacturers }
+  ] = useLazyQuery<SearchManufacturerData, SearchManufacturerVars>(SEARCH_MANUFACTURER);
 
   const [searchIngredients, { data: ingredientsData, loading: loadingIngredients }] = useLazyQuery<
     SearchIngredientData,

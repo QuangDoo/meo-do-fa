@@ -62,9 +62,9 @@ function Career(props) {
 
       <Jobs jobs={props.hrList} keySearch={(x) => onFilter(x)} />
 
-      <BoxImage images={images} />
+      {/* <BoxImage images={images} /> */}
 
-      <MessageOurFounder />
+      {/* <MessageOurFounder /> */}
 
       <div className="container">
         <div className="row">

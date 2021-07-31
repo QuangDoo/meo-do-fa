@@ -24,7 +24,7 @@ const links: { href: string; i18nKey: string }[] = [
   { href: '/terms-of-use', i18nKey: 'footer:terms_of_use' },
   { href: '/privacy-policy', i18nKey: 'footer:privacy_policy' },
   // { href: '/general-policy', i18nKey: 'footer:general_policy' },
-  // { href: '/career', i18nKey: 'common:recruitment' },
+  { href: '/career', i18nKey: 'common:recruitment' },
   //{ href: '/terms-of-service', i18nKey: 'footer:terms_of_service' },
   //{ href: '/dispute-resolution', i18nKey: 'footer:dispute_resolution' },
   { href: '/help', i18nKey: 'footer:faq' }
