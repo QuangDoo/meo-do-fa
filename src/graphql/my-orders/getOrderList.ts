@@ -1,21 +1,27 @@
 import { gql } from '@apollo/client';
 
-export type OrderFlag = 10 | 20 | 25 | 30 | 40 | 80;
+export enum OrderFlag {
+  ALL = 0,
+  WAIT_RECEIVE = 10,
+  RECEIVED = 15,
+  CONFIRMED = 20,
+  HANDLING = 30,
+  DELIVERING = 40,
+  COMPLETED = 80,
+  CANCELED = 25
+}
 
-export type GetOrderList = {
+export type Order = {
   id: string;
   orderNo: string;
   date_order: string;
   expected_date: string;
-  order_lines: {
-    price_total: number;
-  }[];
   is_expired: boolean;
   flag: OrderFlag;
 };
 
 export type GetOrderListData = {
-  getOrderList: GetOrderList[];
+  getOrderList: Order[];
 };
 
 export type GetOrderListVars = {
@@ -33,7 +39,6 @@ export const GET_ORDER_LIST = gql`
       expected_date
       is_expired
       flag
-      state
     }
   }
 `;
