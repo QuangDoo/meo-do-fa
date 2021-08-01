@@ -1,6 +1,8 @@
+@use 'sass:math';
+
 .promo-coupon {
   $circle-size: 20px;
-  $half-circle-size: $circle-size / 2;
+  $half-circle-size: math.div($circle-size, 2);
   $half-circle-bg: #f4f7fc;
 
   overflow: hidden;

@@ -10,8 +10,11 @@ type Info = {
   use?: boolean;
   zipCode: number;
   city: string;
+  city_id: number;
   district: string;
+  district_id: number;
   ward: string;
+  ward_id: number;
   street: string;
 };
 
@@ -47,7 +50,7 @@ export type CreateOrderData = {
 };
 
 export const CREATE_ORDER = gql`
-  mutation($inputs: OrderInput) {
+  mutation ($inputs: OrderInput) {
     createOrder(inputs: $inputs) {
       code
       status

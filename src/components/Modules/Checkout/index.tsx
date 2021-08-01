@@ -21,16 +21,14 @@ import PaymentOption from './PaymentOption';
 import PromoCodes from './PromoCodes';
 import StickySidebar from './StickySidebar';
 
-// Các city, district, ward đều có dạng "name__id"
-
 export type CheckoutFormInputs = {
   deliveryName: string;
   deliveryPhone: string;
   deliveryEmail: string;
   deliveryStreet: string;
-  deliveryCity: string;
-  deliveryDistrict: string;
-  deliveryWard: string;
+  deliveryCity: string; // format: name__id
+  deliveryDistrict: string; // format: name__id
+  deliveryWard: string; // format: name__id
   deliveryPartnerId: string;
 
   deliveryMethodId: string;
@@ -41,40 +39,13 @@ export type CheckoutFormInputs = {
   invoiceName: string;
   invoiceEmail: string;
   invoiceStreet: string;
-  invoiceCity: string;
-  invoiceDistrict: string;
-  invoiceWard: string;
+  invoiceCity: string; // format: name__id
+  invoiceDistrict: string; // format: name__id
+  invoiceWard: string; // format: name__id
   invoiceTaxCode: string;
 
   customerNotes: string;
   agreement: boolean;
-};
-
-const checkoutFormDefaultValues: CheckoutFormInputs = {
-  deliveryName: '',
-  deliveryPhone: '',
-  deliveryEmail: '',
-  deliveryStreet: '',
-  deliveryCity: '',
-  deliveryDistrict: '',
-  deliveryWard: '',
-  deliveryPartnerId: '',
-
-  deliveryMethodId: '0',
-  paymentMethodId: '1',
-
-  isInvoice: false,
-  showInvoiceProducts: false,
-  invoiceName: '',
-  invoiceEmail: '',
-  invoiceStreet: '',
-  invoiceCity: '',
-  invoiceDistrict: '',
-  invoiceWard: '',
-  invoiceTaxCode: '',
-
-  customerNotes: '',
-  agreement: false
 };
 
 const CheckoutPage = () => {
@@ -86,7 +57,32 @@ const CheckoutPage = () => {
 
   // Form handler with default values
   const methods = useForm<CheckoutFormInputs>({
-    defaultValues: checkoutFormDefaultValues
+    defaultValues: {
+      deliveryName: '',
+      deliveryPhone: '',
+      deliveryEmail: '',
+      deliveryStreet: '',
+      deliveryCity: '',
+      deliveryDistrict: '',
+      deliveryWard: '',
+      deliveryPartnerId: '',
+
+      deliveryMethodId: '0',
+      paymentMethodId: '1',
+
+      isInvoice: false,
+      showInvoiceProducts: false,
+      invoiceName: '',
+      invoiceEmail: '',
+      invoiceStreet: '',
+      invoiceCity: '',
+      invoiceDistrict: '',
+      invoiceWard: '',
+      invoiceTaxCode: '',
+
+      customerNotes: '',
+      agreement: false
+    }
   });
 
   const { register, handleSubmit, setValue } = methods;
@@ -150,8 +146,13 @@ const CheckoutPage = () => {
   });
 
   const onSubmit: SubmitHandler<CheckoutFormInputs> = (data) => {
-    const [deliveryWard, deliveryZipCode] = data.deliveryWard?.split('__') || [];
-    const [invoiceWard, invoiceZipCode] = data.invoiceWard?.split('__') || [];
+    const [deliveryCityName, deliveryCityID] = data.deliveryCity?.split('__') || [];
+    const [deliveryDistrictName, deliveryDistrictID] = data.deliveryDistrict?.split('__') || [];
+    const [deliveryWardName, deliveryWardID] = data.deliveryWard?.split('__') || [];
+
+    const [invoiceCityName, invoiceCityID] = data.invoiceCity?.split('__') || [];
+    const [invoiceDistrictName, invoiceDistrictID] = data.invoiceDistrict?.split('__') || [];
+    const [invoiceWardName, invoiceWardID] = data.invoiceWard?.split('__') || [];
 
     createOrder({
       variables: {
@@ -167,10 +168,13 @@ const CheckoutPage = () => {
               email: data.deliveryEmail,
               partnerId: +data.deliveryPartnerId || undefined,
               isNew: !data.deliveryPartnerId,
-              zipCode: +deliveryZipCode || 0,
-              city: data.deliveryCity?.split('__')[0] || '',
-              district: data.deliveryDistrict?.split('__')[0] || '',
-              ward: deliveryWard || '',
+              zipCode: +deliveryWardID || 0,
+              city: deliveryCityName || '',
+              city_id: +(deliveryCityID || 0),
+              district: deliveryDistrictName || '',
+              district_id: +(deliveryDistrictID || 0),
+              ward: deliveryWardName || '',
+              ward_id: +(deliveryWardID || 0),
               street: data.deliveryStreet || ''
             },
             billing_address: data.isInvoice
@@ -180,10 +184,13 @@ const CheckoutPage = () => {
                   tax: data.invoiceTaxCode,
                   partnerId: 0,
                   isNew: true,
-                  zipCode: +invoiceZipCode || 0,
-                  city: data.invoiceCity?.split('__')[0] || '',
-                  district: data.invoiceDistrict?.split('__')[0] || '',
-                  ward: invoiceWard || '',
+                  zipCode: +invoiceWardID || 0,
+                  city: invoiceCityName || '',
+                  city_id: +(invoiceCityID || 0),
+                  district: invoiceDistrictName || '',
+                  district_id: +(invoiceDistrictID || 0),
+                  ward: invoiceWardName || '',
+                  ward_id: +(invoiceWardID || 0),
                   street: data.invoiceStreet || ''
                 }
               : {
@@ -194,8 +201,11 @@ const CheckoutPage = () => {
                   isNew: false,
                   zipCode: +user.contact_address?.ward.id || 0,
                   city: user.contact_address?.city.name || '',
+                  city_id: user.contact_address?.city.id || 0,
                   district: user.contact_address?.district.name || '',
+                  district_id: user.contact_address?.district.id || 0,
                   ward: user.contact_address?.ward.name || '',
+                  ward_id: user.contact_address?.ward.id || 0,
                   street: user.contact_address?.street || ''
                 }
           },
