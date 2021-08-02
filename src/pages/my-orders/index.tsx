@@ -52,10 +52,11 @@ function MyOrders(): JSX.Element {
 
   const [flag, setFlag] = useState<OrderFlag>(OrderFlag.ALL);
 
-  const { data: orderListData, refetch, loading } = useQueryAuth<
-    GetOrderListData,
-    GetOrderListVars
-  >(GET_ORDER_LIST, {
+  const {
+    data: orderListData,
+    refetch,
+    loading
+  } = useQueryAuth<GetOrderListData, GetOrderListVars>(GET_ORDER_LIST, {
     variables: {
       page: +router.query.page || 1,
       pageSize: PAGE_SIZE,

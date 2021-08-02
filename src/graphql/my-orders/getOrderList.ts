@@ -31,7 +31,7 @@ export type GetOrderListVars = {
 };
 
 export const GET_ORDER_LIST = gql`
-  query($page: Int!, $pageSize: Int!, $flag: Int) {
+  query ($page: Int!, $pageSize: Int!, $flag: Int) {
     getOrderList(page: $page, pageSize: $pageSize, flag: $flag) {
       id
       orderNo

@@ -1,16 +1,16 @@
-import { createMuiTheme } from '@material-ui/core';
+import { createTheme } from '@material-ui/core/styles';
 
 // declare module '@material-ui/core/styles/createPalette' {
 //   interface Palette {}
 //   interface PaletteOptions {}
 // }
 
-// declare module '@material-ui/core/styles/createMuiTheme' {
+// declare module '@material-ui/core/styles/createTheme' {
 //   interface Theme {}
 //   interface ThemeOptions {}
 // }
 
-const muiTheme = createMuiTheme({
+const muiTheme = createTheme({
   typography: {
     fontFamily: "'UTM AVO', Arial, Helvetica, sans-serif"
   },
