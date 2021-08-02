@@ -7,7 +7,7 @@ import { Order } from 'src/graphql/my-orders/getOrderList';
 import ConfirmCancelOrder from './ConfirmCancelOrder';
 
 const badges = {
-  10: { color: 'info', text: 'wait_for_confirm' },
+  10: { color: 'info', text: 'wait_receive' },
   15: { color: 'info', text: 'received' },
   20: { color: 'success', text: 'confirmed' },
   25: { color: 'danger', text: 'canceled' },
@@ -31,7 +31,7 @@ export default function OrderItem(props: Props) {
   const { data: user } = useUser();
 
   return (
-    <div className="my-orders__item p-3 my-1">
+    <div className="p-3 my-1 my-orders__item">
       <div className="my-orders__info">
         <h2 className="h4 d-flex align-items-center">
           <Link href={`/my-orders/${props.orderNo}`}>

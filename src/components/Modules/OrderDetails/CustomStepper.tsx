@@ -122,7 +122,7 @@ const CustomStepConnector = (props: StepConnectorProps) => {
 const steps = [
   {
     icon: <Receipt />,
-    text: 'wait_for_confirm'
+    text: 'wait_receive'
   },
   {
     icon: <CallReceived />,
