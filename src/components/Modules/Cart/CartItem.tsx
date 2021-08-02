@@ -87,7 +87,7 @@ function CartItem(props: Props) {
               </span>
             )}
 
-            {!props.is_change_price && (
+            {props.is_change_price && (
               <span className="badge badge-light display-status mr-1 mb-1 out_of_stocks">
                 <i className="fas mr-1"></i>
                 {t(`cart:changed_price`)}{' '}
