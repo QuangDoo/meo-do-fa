@@ -36,5 +36,6 @@
   "confirm_account":"Confirm account",
   "otp_code":"Enter OTP code",
   "send_otp":"Sen OTP code",
-  "otp_alert":"Provide a OTP code"
+  "otp_alert":"Provide a OTP code",
+  "input_referPhoneNumber_error_minLength":"Referral code requires a minimum of 13 characters."
 }
