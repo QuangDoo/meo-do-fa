@@ -320,6 +320,10 @@ const RegisterForm = () => {
               pattern: {
                 value: viPhoneNumberRegex,
                 message: `${t('register:input_phone_error_invalid')}`
+              },
+              minLength: {
+                value: viPhoneNumberRegex ? 10 : 13,
+                message: `${t('register:input_referPhoneNumber_error_minLength')}`
               }
             })}
             name="referPhoneNumber"
