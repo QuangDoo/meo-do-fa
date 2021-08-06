@@ -315,16 +315,15 @@ const RegisterForm = () => {
           /> */}
 
           <Input
-            type="number"
             ref={register({
-              pattern: {
-                value: viPhoneNumberRegex,
-                message: `${t('register:input_phone_error_invalid')}`
-              },
-              minLength: {
-                value: viPhoneNumberRegex ? 10 : 13,
-                message: `${t('register:input_referPhoneNumber_error_minLength')}`
+              maxLength: {
+                value: 30,
+                message: `${t('register:input_referPhoneNumber_error_maxLength')}`
               }
+              // minLength: {
+              //   value: 6,
+              //   message: `${t('register:input_referPhoneNumber_error_minLength')}`
+              // }
             })}
             name="referPhoneNumber"
             containerClass="mb-4"
