@@ -37,5 +37,5 @@
   "otp_code":"Nhập mã OTP",
   "send_otp":"Gửi mã OTP",
   "otp_alert":"Bạn phải nhập mã OTP",
-  "input_referPhoneNumber_error_minLength":"Mã giới thiệu yêu cầu tối thiểu 13 ký tự."
+  "input_referPhoneNumber_error_minLength":"Mã giới thiệu tối đa 30 ký tự."
 }
