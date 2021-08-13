@@ -1,3 +1,4 @@
+import { useTranslation } from 'i18n';
 import React, { useState } from 'react';
 
 import Banner from './Banner';
@@ -56,9 +57,11 @@ function Career(props) {
   const imgUrl = `/assets/images/drugstore2.jpg`;
   const rightImgUrl = `/assets/images/no-image.jpg`;
 
+  const { t } = useTranslation('career');
+
   return (
     <>
-      <Banner bannerImgUrl={imgUrl} rightImgUrl={rightImgUrl} />
+      {/* <Banner bannerImgUrl={imgUrl} rightImgUrl={rightImgUrl} /> */}
 
       <Jobs jobs={props.hrList} keySearch={(x) => onFilter(x)} />
 
@@ -69,9 +72,8 @@ function Career(props) {
       <div className="container">
         <div className="row">
           <div className="col text-center m-5">
-            <h3 className="text-primary">Interested?</h3>
-            <a href="mailto:info@medofa.com" className="btn btn-primary">
-              Email us now
+            <a href="mailto:tuyendung@medofa.com" className="btn btn-primary">
+              {t('career:email_btn')}
             </a>
           </div>
         </div>
