@@ -7,6 +7,7 @@ import MainLayout, { mainLayoutNamespacesRequired } from 'src/components/Modules
 import ProductCard from 'src/components/Modules/ProductCard';
 import { GET_PRODUCTS, GetProductsData, GetProductsVars } from 'src/graphql/product/getProducts';
 import { GET_PROMOTION, PromotionData, PromotionVar } from 'src/graphql/promotion/getPromotion';
+import { addImageDomainToContent } from 'src/utils/addImageDomain';
 import withToken from 'src/utils/withToken';
 
 const pageSize = 20;
@@ -50,7 +51,7 @@ function PromotionDetail(): JSX.Element {
         <title>Medofa - {title}</title>
       </Head>
       <div className="container py-5">
-        <div dangerouslySetInnerHTML={{ __html: content }} />
+        <div dangerouslySetInnerHTML={{ __html: addImageDomainToContent(content) }} />
         <div className="mt-3">
           <div hidden={promotionProducts.length === 0}>
             <ProductsContainer
