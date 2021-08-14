@@ -8,6 +8,7 @@ import {
   GetWebsitePostData,
   GetWebsitePostVariables
 } from 'src/graphql/news/getWebsitePostDetail';
+import { addImageDomainToContent } from 'src/utils/addImageDomain';
 import withToken from 'src/utils/withToken';
 
 import Footer from '../../components/Layout/Footer';
@@ -36,18 +37,18 @@ function NewsDetailPage() {
   const { name, content, content_en, create_date, signature } =
     newsDetailData?.getWebsitePostDetail || {};
 
-  const addImageDomainToContent = (content: string) => {
-    if (typeof window !== undefined && content) {
-      const { hostname } = window.location;
+  // const addImageDomainToContent = (content: string) => {
+  //   if (typeof window !== undefined && content) {
+  //     const { hostname } = window.location;
 
-      const imgDomain =
-        hostname === 'medofa.com' ? 'https://erp.medofa.com' : 'https://erp.dev.medofa.com';
+  //     const imgDomain =
+  //       hostname === 'medofa.com' ? 'https://erp.medofa.com' : 'https://erp.dev.medofa.com';
 
-      return content.replaceAll(`src="/`, `src="${imgDomain}/`);
-    }
+  //     return content.replaceAll(`src="/`, `src="${imgDomain}/`);
+  //   }
 
-    return content;
-  };
+  //   return content;
+  // };
 
   return (
     <>
