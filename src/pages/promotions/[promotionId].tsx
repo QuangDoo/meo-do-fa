@@ -12,6 +12,10 @@ import withToken from 'src/utils/withToken';
 
 const pageSize = 20;
 
+function getProductId(slug: string): number {
+  return +slug.split('-').pop();
+}
+
 PromotionDetail.getInitialProps = async () => {
   return {
     namespacesRequired: [...mainLayoutNamespacesRequired]
@@ -37,7 +41,7 @@ function PromotionDetail(): JSX.Element {
   });
 
   const { data: promontionData } = useQuery<PromotionData, PromotionVar>(GET_PROMOTION, {
-    variables: { id: Number(promotionId) }
+    variables: { id: getProductId(promotionId + '') }
   });
 
   const content = promontionData?.getWebsitePromotionDetail?.content || '';
