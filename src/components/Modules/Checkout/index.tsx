@@ -51,7 +51,7 @@ export type CheckoutFormInputs = {
 const CheckoutPage = () => {
   const { t } = useTranslation(['checkout', 'errors']);
 
-  const { setCheckboxCarts } = useCart();
+  const { setCheckedCartIDs } = useCart();
 
   const { data: user } = useUser();
 
@@ -112,7 +112,7 @@ const CheckoutPage = () => {
 
   const router = useRouter();
 
-  const { data: cart, refetch: refetchCart } = useCart();
+  const { cart, getCart } = useCart();
 
   const { refetch: refetchNoti } = useNotify();
 
@@ -121,7 +121,7 @@ const CheckoutPage = () => {
     CreateOrderVars
   >(CREATE_ORDER, {
     onCompleted: (data) => {
-      refetchCart()
+      getCart()
         .then(() =>
           swal({
             title: t('checkout:order_success_message', {
@@ -131,7 +131,7 @@ const CheckoutPage = () => {
           })
         )
         .then(() => router.push('/'))
-        .then(() => setCheckboxCarts([]));
+        .then(() => setCheckedCartIDs([]));
 
       refetchNoti();
     },

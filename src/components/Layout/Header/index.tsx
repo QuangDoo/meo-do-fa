@@ -17,7 +17,7 @@ import RightSideUser from './RightSideUser';
 import SearchBar from './SearchBar';
 
 const Header = () => {
-  const { data: cart } = useCart();
+  const { cart } = useCart();
   const { t } = useTranslation(['header']);
   const newsList = useWebsitePost('NEWS');
 
