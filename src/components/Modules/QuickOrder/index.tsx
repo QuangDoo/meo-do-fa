@@ -36,7 +36,7 @@ function QuickOrderPage() {
 
   const [searchTerm, setSearchTerm] = useState('');
 
-  const { data: cart } = useCart();
+  const { cart } = useCart();
 
   const { t } = useTranslation(['cart', 'common', 'quickOrder']);
 

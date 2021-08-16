@@ -21,7 +21,7 @@ function ProductCardQuantityInput(props: Props) {
 
   const { t } = useTranslation(['errors', 'success', 'cart']);
 
-  const { data: cart, addToCart } = useCart();
+  const { cart, addToCart } = useCart();
 
   const thisProductInCart = cart?.carts.find((product) => product.productId === productId);
 
