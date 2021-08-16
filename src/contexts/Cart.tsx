@@ -166,7 +166,11 @@ const CartProvider = (props: Props) => {
 
     if (!token) return;
 
-    getCartByProduct();
+    getCartByProduct({
+      variables: {
+        ids: checkedCartIDs
+      }
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [checkedCartIDs]);
 
