@@ -60,7 +60,6 @@ const ProducerInformation = (props: ProductDetail) => {
         labelPharmacokinetics={t('pharmacokinetics_label')}
         init={0}
       /> */}
-      {props.info}
       {props.info && (
         <ScrollableTabsButtonAuto
           info={addImageDomainToContent(props.info)}
