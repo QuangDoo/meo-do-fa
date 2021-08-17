@@ -13,5 +13,6 @@
   "products_containing_ingredient": "Danh sách các thuốc có {{ingredientName}}",
   "updating": "Đang cập nhật",
   "name": "Tên",
-  "concentrations": "Hàm lượng"
+  "concentrations": "Hàm lượng",
+  "product_description": "Mô tả sản phẩm"
 }
