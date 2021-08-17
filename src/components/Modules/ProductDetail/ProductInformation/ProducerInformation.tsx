@@ -4,6 +4,7 @@ import Link from 'next/link';
 import React from 'react';
 import ScrollableTabsButtonAuto from 'src/components/Modules/ScrollableTabsButtonAuto/ScrollableTabsButtonAuto';
 import { ProductDetail } from 'src/graphql/product/product.query';
+import { addImageDomainToContent } from 'src/utils/addImageDomain';
 
 const ProducerInformation = (props: ProductDetail) => {
   const { t } = useTranslation(['ingredientDetails']);
@@ -59,6 +60,17 @@ const ProducerInformation = (props: ProductDetail) => {
         labelPharmacokinetics={t('pharmacokinetics_label')}
         init={0}
       /> */}
+      {props.info}
+      {props.info && (
+        <ScrollableTabsButtonAuto
+          info={addImageDomainToContent(props.info)}
+          labelInfo={t('product_description')}
+          init={0}
+          vari="fullWidth"
+          className="overflow-hidden"
+        />
+      )}
+
       {handleCheck(props.indication) || handleCheck(props.contraindication) ? null : (
         <ScrollableTabsButtonAuto
           indication={props.indication}

@@ -13,5 +13,6 @@
   "products_containing_ingredient": "Products containing {{ingredientName}}",
   "updating": "Updating",
   "name": "Name",
-  "concentrations": "Concentrations"
+  "concentrations": "Concentrations",
+  "product_description":"Product Description"
 }
