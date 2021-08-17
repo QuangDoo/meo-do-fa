@@ -2,10 +2,9 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable no-undef */
 const { nextI18NextRewrites } = require('next-i18next/rewrites');
-const withPWA = require('next-pwa');
 const localeSubpaths = {};
 
-module.exports = withPWA({
+module.exports = {
   rewrites: async () => nextI18NextRewrites(localeSubpaths),
   async rewrites() {
     return [
@@ -60,13 +59,7 @@ module.exports = withPWA({
       'files.medofa.bedigital.vn',
       'files.dev.medofa.com'
     ]
-  },
-  pwa: {
-    disable: process.env.NODE_ENV === 'development',
-    register: true,
-    sw: 'service-worker.js',
-    dest: 'public'
   }
-});
+};
 // source: String - is the incoming request path pattern.
 // destination: String is the path you want to route to.

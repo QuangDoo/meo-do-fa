@@ -18,7 +18,7 @@ import HotTags from './HotTags';
 const Nav = () => {
   const token = useToken();
 
-  const { data: cart } = useCart();
+  const { cart } = useCart();
 
   const { data: user } = useUser();
 

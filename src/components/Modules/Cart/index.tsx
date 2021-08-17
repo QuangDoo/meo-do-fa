@@ -16,7 +16,7 @@ import CartItem from './CartItem';
 import ConfirmModal from './ConfirmModal';
 
 export default function CartPage() {
-  const { data: cart, checkboxCarts, setCheckboxCarts, deleteCarts, checkedData } = useCart();
+  const { cart, checkedCartIDs, setCheckedCartIDs, deleteCarts, checkedCart } = useCart();
 
   const { t, i18n } = useTranslation(['cart', 'common', 'errors']);
 
@@ -69,7 +69,7 @@ export default function CartPage() {
   const handleCheckoutClick = () => {
     if (cart?.carts.length === 0) return;
 
-    const cartIds = checkboxCarts;
+    const cartIds = checkedCartIDs;
 
     createCounsel({
       variables: {
@@ -78,7 +78,7 @@ export default function CartPage() {
     });
   };
 
-  const total = checkedData?.totalNetPrice - checkedData?.totalShippingFee;
+  const total = checkedCart?.totalNetPrice - checkedCart?.totalShippingFee;
 
   const checkoutDisabled = total < MIN_PRICE;
 
@@ -92,15 +92,15 @@ export default function CartPage() {
     setDeleteAllIsOpen(false);
 
     deleteCarts({
-      ids: checkboxCarts
+      ids: checkedCartIDs
     });
   };
 
   const handleSelectAll = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
-      setCheckboxCarts(cart?.carts.map((item) => item._id));
+      setCheckedCartIDs(cart?.carts.map((item) => item._id));
     } else {
-      setCheckboxCarts([]);
+      setCheckedCartIDs([]);
     }
   };
 
@@ -117,12 +117,12 @@ export default function CartPage() {
                     type="checkbox"
                     onChange={handleSelectAll}
                     checked={
-                      cart?.carts?.length > 0 && checkboxCarts?.length === cart?.carts?.length
+                      cart?.carts?.length > 0 && checkedCartIDs?.length === cart?.carts?.length
                     }
                   />
                   <h1 className="h5 ml-2">
                     {t('cart:select_all')}
-                    {checkboxCarts?.length === cart?.carts?.length && ` (${cart?.totalQty})`}
+                    {checkedCartIDs?.length === cart?.carts?.length && ` (${cart?.totalQty})`}
                   </h1>
                 </div>
               )}
@@ -154,7 +154,7 @@ export default function CartPage() {
                           <div>{t('cart:quantity')}</div>
                         </div>
                         <div className="cart__quantity text-secondary">
-                          <b>{checkedData?.totalQty}</b>
+                          <b>{checkedCart?.totalQty}</b>
                         </div>
                       </div>
                     </div>
@@ -171,7 +171,7 @@ export default function CartPage() {
 
                     <div hidden={!enableShippingFee} className="col-12 p-3 cart__info-total">
                       {t('cart:shipping_fee') + ': '}
-                      <PriceText price={checkedData?.totalShippingFee} />
+                      <PriceText price={checkedCart?.totalShippingFee} />
                     </div>
 
                     <div className="col-12">
@@ -192,7 +192,7 @@ export default function CartPage() {
                   </div>
 
                   <button
-                    hidden={checkedData?.carts?.length === 0}
+                    hidden={checkedCart?.carts?.length === 0}
                     onClick={handleOpenDeleteAllModal}
                     className="w-100 p-2 btn-link text-danger text-left">
                     <i className="fas fa-fw fa-trash mr-1" />

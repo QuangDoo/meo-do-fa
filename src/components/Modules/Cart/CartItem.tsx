@@ -15,13 +15,11 @@ type Props = CartItemProps;
 function CartItem(props: Props) {
   const { t, i18n } = useTranslation(['cart', 'errors', 'common']);
 
-  const { checkCart, uncheckCart, checkboxCarts } = useCart();
+  const { checkCart, uncheckCart, checkedCartIDs } = useCart();
 
-  const totalDiscountAmount = props.promotions
+  const totalDiscountPercentage = props.promotions
     .filter((promo) => promo.reward_type === 'discount')
-    .reduce((total, promo) => {
-      return total + promo.discount_percentage;
-    }, 0);
+    .reduce((total, promo) => total + promo.discount_percentage, 0);
 
   const [open, setOpen] = useState<boolean>(false);
 
@@ -49,7 +47,7 @@ function CartItem(props: Props) {
         <input
           type="checkbox"
           onChange={handleChange}
-          checked={checkboxCarts.includes(props._id)}
+          checked={checkedCartIDs.includes(props._id)}
         />
       </div>
       <Link href={productLink}>
@@ -101,12 +99,12 @@ function CartItem(props: Props) {
             <PriceText price={props.product.sale_price} />
           </div>
 
-          {totalDiscountAmount > 0 && (
+          {totalDiscountPercentage > 0 && (
             <small className="d-flex align-items-center">
               <del className="text-muted">
                 <PriceText price={props.product.old_price} />
               </del>
-              <div className="mx-2">I</div>-{totalDiscountAmount}%
+              <div className="mx-2">I</div>-{totalDiscountPercentage}%
             </small>
           )}
 
