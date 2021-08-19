@@ -5,6 +5,7 @@ import Slider from 'react-slick';
 import PartnerImg from './PartnerImg';
 
 const examplePartners = [
+  'assets/images/LogoEzin_700x350px.png',
   'assets/images/imexpharm.png',
   'assets/images/hasan.png',
   'assets/images/dhg.jpeg',
