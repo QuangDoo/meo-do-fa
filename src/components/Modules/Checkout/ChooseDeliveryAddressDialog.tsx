@@ -11,7 +11,7 @@ import {
 import { useTranslation } from 'i18n';
 import React from 'react';
 import MuiDialog from 'src/components/Layout/Modal/MuiDialog';
-import { Address } from 'src/graphql/user/getAddressInfoUser';
+import { DeliveryAddress } from 'src/graphql/user/getAddressInfoUser';
 
 const useStyles = makeStyles(() => ({
   cardContent: {
@@ -23,8 +23,8 @@ type Props = {
   open: boolean;
   onClose: () => void;
   onCompleted?: () => void;
-  onChoose: (address: Address) => void;
-  addresses: Address[];
+  onChoose: (address: DeliveryAddress) => void;
+  addresses: DeliveryAddress[];
 };
 
 export default function ChooseDeliveryAddressDialog(props: Props) {

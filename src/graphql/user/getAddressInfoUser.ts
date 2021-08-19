@@ -1,8 +1,7 @@
 import { gql } from '@apollo/client';
 
-export type Address = {
+export type DeliveryAddress = {
   id: number;
-  use: boolean;
   name: string;
   phone: string;
   email: string;
@@ -14,8 +13,7 @@ export type Address = {
 
 export type GetAddressInfoUserData = {
   getAddressInfoUser: {
-    deliveries: Address[];
-    invoices: Address[];
+    deliveries: DeliveryAddress[];
   };
 };
 
@@ -23,17 +21,6 @@ export const GET_ADDRESS_INFO_USER = gql`
   query {
     getAddressInfoUser {
       deliveries {
-        id
-        use
-        name
-        phone
-        email
-        street
-        city
-        district
-        ward
-      }
-      invoices {
         id
         use
         name
