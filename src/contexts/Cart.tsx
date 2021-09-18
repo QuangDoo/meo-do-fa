@@ -189,7 +189,11 @@ const CartProvider = (props: Props) => {
     setLoading(true);
 
     addToCartMutation({ variables })
-      .then(getCart)
+      .then(() => {
+        getCart().then((data) => {
+          setCheckedCartIDs(data.getCart.carts.map((cart) => cart._id));
+        });
+      })
       .then(() => {
         toast.success(t(`success:update_cart`));
       })
