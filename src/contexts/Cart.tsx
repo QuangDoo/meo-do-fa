@@ -236,6 +236,7 @@ const CartProvider = (props: Props) => {
           checkboxCarts.filter((checkbox) => checkbox !== variables._id)
         );
         toast.success(t(`success:delete_cart`));
+        setLoading(false);
       })
       .catch((error) => {
         toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
@@ -251,6 +252,7 @@ const CartProvider = (props: Props) => {
       .then(() => {
         toast.success(t(`cart:delete_checked_success`));
         setCheckedCartIDs([]);
+        setLoading(false);
       })
       .catch((error) => {
         toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
