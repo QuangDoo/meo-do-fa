@@ -5,7 +5,7 @@ import { useFormContext } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { useUser } from 'src/contexts/User';
 import {
-  Address,
+  DeliveryAddress,
   GET_ADDRESS_INFO_USER,
   GetAddressInfoUserData
 } from 'src/graphql/user/getAddressInfoUser';
@@ -24,7 +24,7 @@ const DeliveryInfo = () => {
 
   const [open, setOpen] = useState(false);
 
-  const [chosenAddress, setChosenAddress] = useState<Address>(undefined);
+  const [chosenAddress, setChosenAddress] = useState<DeliveryAddress>(undefined);
 
   const { setValue } = useFormContext<CheckoutFormInputs>();
 
@@ -43,7 +43,7 @@ const DeliveryInfo = () => {
     }
   });
 
-  const handleAddressChoose = (address: Address) => {
+  const handleAddressChoose = (address: DeliveryAddress) => {
     setOpen(false);
     setChosenAddress(address);
     setValue('deliveryPartnerId', address.id);

@@ -34,6 +34,7 @@ type ProducerInformation = {
   labelPharmacokinetics?: string;
   init: number;
   vari;
+  className?: string;
 };
 
 function TabPanel(props: TabPanelProps) {
@@ -83,7 +84,7 @@ export default function ScrollableTabsButtonAuto(props: ProducerInformation) {
     return ['<p><br></p>', 'false', null].includes(string) ? (
       <div className="text-sub">{t('updating')}</div>
     ) : (
-      <p dangerouslySetInnerHTML={{ __html: string }} />
+      <p className={props.className} dangerouslySetInnerHTML={{ __html: string }} />
     );
   }
 
