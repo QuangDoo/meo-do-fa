@@ -34,7 +34,7 @@ type Inputs = {
   tax: string;
 };
 
-const accountTypes = ['HOSPITAL', 'CLINIC'];
+const accountTypes = ['HOSPITAL', 'CLINIC', 'PHARMACY'];
 
 const { publicRuntimeConfig } = getConfig();
 
