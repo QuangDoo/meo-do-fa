@@ -61,6 +61,7 @@ class MyDocument extends Document {
             href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
             rel="stylesheet"
           />
+
           <script src="https://sp.zalo.me/plugins/sdk.js"></script>
 
           <style type="text/css">{globalStyles}</style>
@@ -89,13 +90,13 @@ class MyDocument extends Document {
         <body>
           <Main />
           <NextScript />
+
           <div
             className="zalo-chat-widget"
             data-oaid="3215746340374733717"
-            data-welcome-message="Rất vui khi được hỗ trợ bạn!"
-            data-autopopup="5"
-            data-width="350px"
-            data-height="420px"></div>
+            data-autopopup="0"
+            data-width="200px"
+            data-height="200px"></div>
 
           <script
             dangerouslySetInnerHTML={{
@@ -103,7 +104,7 @@ class MyDocument extends Document {
               const terminationEvent = 'onpagehide' in self ? 'pagehide' : 'unload';
 
               addEventListener(terminationEvent, (event) => {
-                console.log(event)
+                // console.log(event)
               }, {capture: true});
               `
             }}
