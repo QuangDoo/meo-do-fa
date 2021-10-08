@@ -94,9 +94,10 @@ class MyDocument extends Document {
           <div
             className="zalo-chat-widget"
             data-oaid="3215746340374733717"
+            data-welcome-message="Rất vui khi được hỗ trợ bạn!"
             data-autopopup="0"
-            data-width="200px"
-            data-height="200px"></div>
+            data-width=""
+            data-height=""></div>
 
           <script
             dangerouslySetInnerHTML={{
