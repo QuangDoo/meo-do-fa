@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useQuery } from '@apollo/client';
 import { useTranslation } from 'i18n';
 import { useRouter } from 'next/router';
@@ -16,7 +17,7 @@ import {
   LIKE_PRODUCT
 } from 'src/graphql/product/likeProduct';
 import { ProductDetail } from 'src/graphql/product/product.query';
-import { useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
+import { useLazyQueryAuth, useMutationAuth, useQueryAuth } from 'src/hooks/useApolloHookAuth';
 import useDebounce from 'src/hooks/useDebounce';
 
 import ConfirmDeleteItemModal from '../Cart/ConfirmDeleteItemModal';
@@ -43,7 +44,7 @@ const ProductDetailInfor = (props: ProductDetail) => {
     (config) => config.key === 'SHOW_SOCIAL_SHARE'
   )?.value;
 
-  const { data: dataWishList, refetch: refechDataListWish } = useQueryAuth<
+  const [getWishList, { data: dataWishList, refetch: refechDataListWish }] = useLazyQueryAuth<
     GetWishListData,
     GetWishListVar
   >(GET_WISH_LIST, {
@@ -55,20 +56,32 @@ const ProductDetailInfor = (props: ProductDetail) => {
     }
   });
 
+  useEffect(() => {
+    if (!token) return;
+
+    getWishList({
+      variables: { page: 1, pageSize: 20 }
+    });
+  }, [token]);
+
+  const isWishProduct = dataWishList?.getWishList.find((item) => item.id === props.id);
+
   const [likeProduct, { loading: loadingLike }] = useMutationAuth<
     CreateWishProductData,
     CreateWishProductVars
   >(LIKE_PRODUCT, {
     onCompleted: () => {
-      toast.success(t('productDetail:like_product'));
+      {
+        !isWishProduct
+          ? toast.success(t('productDetail:like_product'))
+          : toast.success(t('productDetail:unlike_product'));
+      }
       refechDataListWish();
     },
     onError: (error) => {
       toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
     }
   });
-
-  const isWishProduct = dataWishList?.getWishList.find((item) => item.id === props.id);
 
   const [quantity, setQuantity] = useState<number>(MIN_QUANTITY);
 
@@ -165,14 +178,14 @@ const ProductDetailInfor = (props: ProductDetail) => {
   const hasBadge =
     props?.is_quick_invoice || props?.is_exclusive || props?.is_vn || !props?.is_available;
 
-  useEffect(() => {
-    const script = document.createElement('script');
+  // useEffect(() => {
+  //   const script = document.createElement('script');
 
-    script.src = 'https://sp.zalo.me/plugins/sdk.js';
-    script.async = true;
+  //   script.src = 'https://sp.zalo.me/plugins/sdk.js';
+  //   script.async = true;
 
-    document.body.appendChild(script);
-  }, []);
+  //   document.body.appendChild(script);
+  // }, []);
 
   return (
     <div className="row">
@@ -230,11 +243,11 @@ const ProductDetailInfor = (props: ProductDetail) => {
 
                 {!isWishProduct ? (
                   <button className="heart-icon-wrap" onClick={handleLikeProduct}>
-                    <img src="/assets/images/chaichimfixpts.png" alt="like-product" />
+                    <img src="/assets/images/heart.png" alt="like-product" />
                   </button>
                 ) : (
                   <button className="heart-icon-wrap" onClick={handleLikeProduct}>
-                    <img src="/assets/images/traichimdofix.png" alt="unlike-product" />
+                    <img src="/assets/images/redheart.png" alt="unlike-product" />
                   </button>
                 )}
               </div>

@@ -45,7 +45,6 @@ function WishList() {
       toast.error(t(`errors:code_${error.graphQLErrors?.[0]?.extensions?.code}`));
     }
   });
-  console.log(`dataWishList`, dataWishList);
 
   const [delLikeProduct] = useMutationAuth<delLikeProductData, delLikeProductVar>(DEL_LIKEPRODUCT, {
     onCompleted: () => {
