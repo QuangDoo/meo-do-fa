@@ -80,8 +80,8 @@ export default function QuantityInput(props: Props) {
       <input
         type="tel"
         className="form-control px-1 no-spinner text-center qty__input"
-        min={min as unknown as string}
-        max={max as unknown as string}
+        min={min}
+        max={max}
         value={quantity}
         onChange={handleChange}
         onKeyDown={handleKeyDown}
