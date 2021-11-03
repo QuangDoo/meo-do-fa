@@ -1,95 +1,100 @@
-.info{
-    &:hover {
-         cursor: pointer;
-       }
+.info {
+  &:hover {
+    cursor: pointer;
+  }
 }
 
-.hide{
-    display: none;
-
+.hide {
+  display: none;
 }
 
 .offers-details {
-    overflow: visible;
-    width: calc(100% / 3);
-    display: inline-block;
+  overflow: visible;
+  width: calc(100% / 3);
+  display: inline-block;
 }
 .offers-details {
-    width: 100%;
-    overflow: hidden;
+  width: 100%;
+  overflow: hidden;
 }
 .offers-details {
-    font-size: 13px;
-    margin-bottom: 22px;
+  font-size: 13px;
+  margin-bottom: 22px;
 }
+
 .mgg-bl {
-    background: #fff;
-    border-radius: 10px;
-    margin: 7px;
-    box-shadow: 5px 5px 7px #d5d5d5b0;
-    padding: 5px;
+  background: #fff;
+  border-radius: 10px;
+  margin: 7px;
+  box-shadow: 5px 5px 7px #d5d5d5b0;
+  padding: 5px;
 }
 .mgg-top {
-    display: inline-block;
-    width: 100%;
-    padding: 10px;
+  display: inline-block;
+  width: 100%;
+  padding: 10px;
 }
+
 .mgg-discount {
-    font-size: 24px;
-    text-align: left;
-    font-weight: 800;
-    color: #cf0d55;
-    padding: 5px 0;
+  font-size: 24px;
+  text-align: left;
+  font-weight: 800;
+  color: #cf0d55;
+  padding: 5px 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 }
 
 .polyxgo_title {
-    padding-top: 0;
-    min-height: 50px;
-    font-size: 14px;
-    line-height: 1.6;
-    color: #333;
-    width: 100%;
+  padding-top: 0;
+  min-height: 50px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333;
+  width: 100%;
+  margin-left: 12px;
 }
 .polyxgo_bold {
-    font-weight: 700;
-    color: #343F99;
+  font-weight: 700;
+  color: #343f99;
 }
 .mgg-bottom {
-    display: block;
-    padding-left: 8px;
-    padding-right: 8px;
+  display: block;
+  padding-left: 8px;
+  padding-right: 8px;
 }
 .coupon-code {
-    display: grid;
-    grid-template-columns: auto auto;
-    margin: 20px 0px;
-    width: 100%;
+  display: grid;
+  grid-template-columns: auto auto;
+  margin: 20px 0px;
+  width: 100%;
 }
 .vc-mgg {
-    background: #fff;
-    border: 1px solid #343F99;
-    color: #d10a53;
-    font-size: 15px;
-    font-weight: 700;
-    border-radius: 5px 0 0 5px;
-    text-align: center;
-    overflow: hidden;
-    padding-top: 10px;
-    display: inline-block;
-    right: -2px;
-    position: relative;
-    padding: 8px;
+  background: #fff;
+  border: 1px solid #343f99;
+  color: #d10a53;
+  font-size: 15px;
+  font-weight: 700;
+  border-radius: 5px 0 0 5px;
+  text-align: center;
+  overflow: hidden;
+  padding-top: 10px;
+  display: inline-block;
+  right: -2px;
+  position: relative;
+  padding: 8px;
 }
 .cp-mgg {
-    display: inline-block;
-    background: #343F99;
-    padding: 7px;
-    position: relative;
-    left: -2px;
-    text-align: center;
-    color: #fff;
-    border-radius: 0 5px 5px 0;
-    font-size: 18px;
-    font-weight: 700;
-    cursor: pointer;
+  display: inline-block;
+  background: #343f99;
+  padding: 7px;
+  position: relative;
+  left: -2px;
+  text-align: center;
+  color: #fff;
+  border-radius: 0 5px 5px 0;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
 }

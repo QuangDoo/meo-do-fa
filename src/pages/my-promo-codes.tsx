@@ -54,8 +54,10 @@ function MyPromoCodes() {
   };
 
   const handleCopy = (name) => {
-    navigator.clipboard.writeText(name || '');
-    toast.success('Đã copy mã giảm giá');
+    navigator.clipboard
+      .writeText(name || '')
+      .then(() => toast.success('Đã copy mã giảm giá'))
+      .catch(() => toast.error('Copy thất bại'));
   };
 
   return (
@@ -82,7 +84,7 @@ function MyPromoCodes() {
                 <div className="mgg-bl">
                   <div className="mgg-row">
                     <div className="mgg-top">
-                      <div className="mgg-discount">{coupon.display_name}</div>
+                      <div className="mgg-discount">{coupon.program.name}</div>
                     </div>
                     <div className="polyxgo_title">
                       <span className="polyxgo_bold">{t('myPromoCodes:receive_date')}:</span>
