@@ -80,7 +80,7 @@ const StickySidebar = (props: Props): JSX.Element => {
 
       <div className="elevated p-3 checkout__info row no-gutters mb-3">
         {counselsList.map((product) => {
-          const discountedPrice = product.price - product.dcAmtProduct;
+          const discountedPrice = product.price - product.dcAmtProduct / product.quantity;
 
           const salePrice = [-1, 0].includes(product.tax)
             ? discountedPrice
