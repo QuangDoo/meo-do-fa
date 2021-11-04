@@ -11,6 +11,9 @@ export type GetCouponsByUserData = {
       state: CouponStatus;
       orderId: number;
       orderNo: string;
+      program: {
+        name: string;
+      };
     }[];
     total: number;
   };
@@ -31,6 +34,9 @@ export const GET_COUPONS_BY_USER = gql`
         state
         orderId
         orderNo
+        program {
+          name
+        }
       }
       total
     }

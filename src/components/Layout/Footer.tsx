@@ -276,6 +276,12 @@ const Footer = () => {
                           alt="logo-logistics-pharma"
                         />
 
+                        <img
+                          className="img-fluid footer__delivery"
+                          src="/assets/images/logo-viettel-post.png"
+                          alt="viettel-post"
+                        />
+
                         {/* <img
                           className="img-fluid footer__delivery"
                           src="/assets/images/grab-0d623c296e4838dd4d67984a580fa1b244962d8e5e8de76f3acb548cddbf0c6c.png"
