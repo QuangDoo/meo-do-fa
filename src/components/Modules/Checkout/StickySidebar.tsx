@@ -80,13 +80,13 @@ const StickySidebar = (props: Props): JSX.Element => {
 
       <div className="elevated p-3 checkout__info row no-gutters mb-3">
         {counselsList.map((product) => {
-          const discountedPrice = product.price - product.dcAmtProduct / product.quantity;
+          const discountedPrice = product.price - product.dcAmtProduct;
 
-          const salePrice = [-1, 0].includes(product.tax)
-            ? discountedPrice
-            : discountedPrice * (1 + product.tax / 100);
+          // const salePrice = [-1, 0].includes(product.tax)
+          //   ? discountedPrice
+          //   : discountedPrice * (1 + product.tax / 100);
 
-          const truncatedSalePrice = Math.trunc(salePrice);
+          // const truncatedSalePrice = Math.trunc(salePrice);
 
           return (
             <div
@@ -104,7 +104,7 @@ const StickySidebar = (props: Props): JSX.Element => {
               </div>
 
               <div className="d-flex flex-shrink-0 ml-3">
-                <PriceText price={truncatedSalePrice} />
+                <PriceText price={product.price} />
               </div>
             </div>
           );
